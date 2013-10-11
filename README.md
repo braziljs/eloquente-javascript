@@ -21,7 +21,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 * [CSS3](#css3) (00)
 * [MongoDB](#mongodb) (00)
 * [NoSQL](#nosql) (00)
-* [Sugestões](#sugestoes) 
+* [Sugestões](#sugestões) 
 
 ---
 
@@ -49,8 +49,8 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 # Sugestões
 Deixe aqui suas sugestões! 
 
-01 - 
-02 - 
-03 - 
-04 - 
-05 - 
+01 - <br>
+02 - <br>
+03 - <br>
+04 - <br>
+05 - <br>

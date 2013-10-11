@@ -16,7 +16,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 * [JavaScript](#javascript) (03)
 * [AngularJS](#angularjs) (00)
-* [Node.js](#node.js) (00)
+* [NodeJS](#node.js) (00)
 * [HTML5](#html5) (00)
 * [CSS3](#css3) (00)
 * [MongoDB](#mongodb) (00)
@@ -35,7 +35,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 # AngularJS
 
-# Node.js
+# NodeJS
 
 # HTML5
 
@@ -48,11 +48,11 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 # Sugestões
 Deixe aqui suas sugestões! 
 
-[01]
-[02]
-[03]
-[04]
-[05]
+[01] - 
+[02] - 
+[03] - 
+[04] - 
+[05] - 
 .
 .
 .

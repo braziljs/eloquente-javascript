@@ -36,7 +36,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 # AngularJS
 
-01 - [anguarjs-style-guide](https://github.com/mgechev/angularjs-style-guide) || [guia de estilo angularjs](https://github.com/eoop/angularjs-style-guide)
+01 - [anguarjs-style-guide](https://github.com/mgechev/angularjs-style-guide) || [guia de estilo angularjs](https://github.com/eoop/angularjs-style-guide/blob/master/README-pt-br.md)
 
 # NodeJS
 

@@ -14,7 +14,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 ### Índice
 
-* [JavaScript](#javascript) (03)
+* [JavaScript](#javascript) (04)
 * [AngularJS](#angularjs) (01)
 * [NodeJS](#node.js) (00)
 * [HTML5](#html5) (00)
@@ -33,6 +33,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 03 - [JavaScript Variable Scope and Hoisting Explained](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) || [Escopo de Variável e Hoisting no JavaScript Explicado](http://javascriptbrasil.com/2013/10/11/escopo-de-variavel-e-hoisting-no-javascript-explicado/)
 
+04 - [Understand JavaScript Closures With Ease](http://javascriptissexy.com/understand-javascript-closures-with-ease/) || [Entenda Closures no JavaScript com Facilidade](http://javascriptbrasil.com/2013/10/12/entenda-closures-no-javascript-com-facilidade/)
 
 # AngularJS
 

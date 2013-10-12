@@ -15,7 +15,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 ### Índice
 
 * [JavaScript](#javascript) (03)
-* [AngularJS](#angularjs) (00)
+* [AngularJS](#angularjs) (01)
 * [NodeJS](#node.js) (00)
 * [HTML5](#html5) (00)
 * [CSS3](#css3) (00)
@@ -35,6 +35,8 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 
 # AngularJS
+
+01 - [anguarjs-style-guide](https://github.com/mgechev/angularjs-style-guide) || [guia de estilo angularjs](https://github.com/eoop/angularjs-style-guide)
 
 # NodeJS
 

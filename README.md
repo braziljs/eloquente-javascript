@@ -15,7 +15,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 ### Índice
 
 * [JavaScript](#javascript) (04)
-* [AngularJS](#angularjs) (02)
+* [AngularJS](#angularjs) (03)
 * [NodeJS](#node.js) (00)
 * [HTML5](#html5) (00)
 * [CSS3](#css3) (00)
@@ -41,6 +41,8 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 01 - [anguarjs-style-guide](https://github.com/mgechev/angularjs-style-guide) || [guia de estilo angularjs](https://github.com/eoop/angularjs-style-guide/blob/master/README-pt-br.md)
 
 02 - [Ultimate guide to learning AngularJS in one day](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/) || [Guia Definitivo para Aprender AngularJS em Um Dia](http://javascriptbrasil.com/2013/10/18/guia-definitivo-para-aprender-angularjs-em-um-dia/) 
+
+03 - [Learn AngularJS With These 5 Practical Examples](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) || [Aprenda AngularJS com estes 5 exemplos práticos](http://javascriptbrasil.com/2013/10/23/aprenda-angularjs-com-estes-5-exemplos-praticos/)
 
 # NodeJS
 

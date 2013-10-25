@@ -61,7 +61,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 # Sugestões
 Deixe aqui suas sugestões! 
 
-01 - <br>
+01 - RailsGuides - http://guides.rubyonrails.org <br>
 02 - <br>
 03 - <br>
 04 - <br>

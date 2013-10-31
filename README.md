@@ -1,5 +1,6 @@
-# Seja muito bem vindo! 
+# Traduz ai!
 
+### Seja muito bem vindo!
 Com este projeto, tenho como objetivo **traduzir o máximo de artigos** para que os mesmos fiquem disponíveis para todos os desenvolvedores, principalmente os iniciantes que são os que mais sofrem com o problema da falta de conteúdo em português, encontrando uma dupla barreira em relação as linguagens, tanto a escrita/falada, quanto a que quer realmente ser aprendida (linguagem de programação/marcação/etc).
 
 Além dos materiais que vou separar para tradução, aceito e ficarei muito agradecido se você puder contribuir através da indicação de novos artigos para as traduções. Sendo assim, irei deixar um espaço para sugestões!

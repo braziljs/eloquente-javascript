@@ -1,20 +1,20 @@
 #### Artigo traduzido. Postado originalmente em [JavaScript.is(Sexy)](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) em 31/01/2013
 
-	Neste artigo, nós vamos aprender sobre escopo de variáveis e hoisting (hasteamento) no JavaScript e tudo sobre as idiosscincrasias (pecularidades) de ambos.
+Neste artigo, nós vamos aprender sobre escopo de variáveis e hoisting (hasteamento) no JavaScript e tudo sobre as idiosscincrasias (pecularidades) de ambos.
 
-	É imperativo que nós temos entendimento de como o escopo de variável e o hasteamento de variável funciona no JavaScript. Estes conceitos podem parecer simples, mas não são. Há algumas importantes sutilezas que nós devemos entender, se nós quisermos ser desenvolvedores JavaScript bem sucedidos.
+É imperativo que nós temos entendimento de como o escopo de variável e o hasteamento de variável funciona no JavaScript. Estes conceitos podem parecer simples, mas não são. Há algumas importantes sutilezas que nós devemos entender, se nós quisermos ser desenvolvedores JavaScript bem sucedidos.
 
-	##Escopo de Variável
+##Escopo de Variável
 	
-	Um escopo de variável é o contexto em que a variável existe. Ele especifica onde e se você pode acessar uma variável.
+Um escopo de variável é o contexto em que a variável existe. Ele especifica onde e se você pode acessar uma variável.
 
-	Variáveis tem ou um escopo local ou um escopo global.
+Variáveis tem ou um escopo local ou um escopo global.
 
-	##Variáveis Locais (Escopo Nível-Função [Function-Level])
+##Variáveis Locais (Escopo Nível-Função [Function-Level])
 	
-	Ao contrário da maioria das linguagens de programação, o JavaScript não tem um escopo em nível de bloco (escopo de variável envolvido por chaves); como alternativa, no JavaScript temos escopo por nível-função. Variáveis declaradas dentro de uma função são variáveis locais e são somente acessíveis dentro desta função ou por funções dentro da função. Veja meu post de [Closures](http://javascriptissexy.com/javascript-closures-in-lovely-detail/) para saber mais em como acessar variáveis em funções exteriores a partir de funções interiores.
+Ao contrário da maioria das linguagens de programação, o JavaScript não tem um escopo em nível de bloco (escopo de variável envolvido por chaves); como alternativa, no JavaScript temos escopo por nível-função. Variáveis declaradas dentro de uma função são variáveis locais e são somente acessíveis dentro desta função ou por funções dentro da função. Veja meu post de [Closures](http://javascriptissexy.com/javascript-closures-in-lovely-detail/) para saber mais em como acessar variáveis em funções exteriores a partir de funções interiores.
 
-	Demonstração de Escopo de Nível-Função
+Demonstração de Escopo de Nível-Função
 
 ```javascript
 

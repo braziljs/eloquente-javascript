@@ -73,20 +73,19 @@ Você irá aprender sobre toda a linguagem javascript (e jQuery e um pouco de HT
 1. Se você ainda não sabe HTML e CSS muito bem, complete os “Fundamentos Web” no site Codecademy.
 
 2. Leia o Prefácio e os capítulos 1 e 2 de Javascript: The Definitie Guide.
-
 Ou leia a Introdução e os capítulos 1 e 2 de Professional Javascript for Web Developers.
 
 3. Muito Importante: Cada exemplo de código que você encontrar no livro, escreva-o, teste e experimente o código nos browsers Firefox e Chrome. Ou use o JSFiddle. Não use o Safari. Eu recomendo o Firefox – adicione o Firebug add on para firefox e use isso para testar e debugar seu código. O console do browser é a área do browser onde você poderá escrever e rodar o código javascript.
 
-JSFiddle é uma aplicação web que permite a você escrever e testar seu código online, como no seu browser. Você pode testar todo tipo de código, incluindo uma combinação de HTML, CSS e Javascript (e jQuery).
+    JSFiddle é uma aplicação web que permite a você escrever e testar seu código online, como no seu browser. Você pode testar todo tipo de código, incluindo uma combinação de HTML, CSS e Javascript (e jQuery).
 
 4. Trabalhe através da seção Introdução ao Javascript na JavaScript Track em Codecademy.
 
 5. Leia os capítulos 3 e 4 de JavaScript: The Definitive Guide.
 
-Ou leia o Prefácio e os capítulos 3 e 4 de Professional JavaScript for Web Developers. Você pode pular a seção “Bitwise Operators”; dificilmente você irá usar isso na sua carreira JavaScript.
+    Ou leia o Prefácio e os capítulos 3 e 4 de Professional JavaScript for Web Developers. Você pode pular a seção “Bitwise Operators”; dificilmente você irá usar isso na sua carreira JavaScript.
 
-E novamente, assegure-se de parar e escrever os códigos exemplos no seu browser (ou JSFiddle) e experimentar – mude algumas variáveis e saboreie um pouco do código.
+    E novamente, assegure-se de parar e escrever os códigos exemplos no seu browser (ou JSFiddle) e experimentar – mude algumas variáveis e saboreie um pouco do código.
 
 6. Leia o capítulo 5 de JavaScript: The Definitive Guide. Sem leituras adicionais para Professional JavaScript for Web Developers, você já leu o material no último capítulo.
 
@@ -96,25 +95,25 @@ E novamente, assegure-se de parar e escrever os códigos exemplos no seu browser
 
 1. Leia meu post Objetos Javascript em detalhe
 
-Ou leia o capítulo 6 de Javascript: The Definitive Guide.
+    Ou leia o capítulo 6 de Javascript: The Definitive Guide.
 
-Ou leia o capítulo 6 de Professional Javascript for Web Developers. NOTA: Somente leia a seção “Entendendo Objetos”.
+    Ou leia o capítulo 6 de Professional Javascript for Web Developers. NOTA: Somente leia a seção “Entendendo Objetos”.
 
-Qualquer um dos 3 são bons, embora os 2 textos dos livros entram em maiores detalhes: os detalhes extra você pode pular com confiança, se você ler e compreender corretamente meu post.
+    Qualquer um dos 3 são bons, embora os 2 textos dos livros entram em maiores detalhes: os detalhes extra você pode pular com confiança, se você ler e compreender corretamente meu post.
 
 2. Leia os capítulos 7 e 8 de Javascript: The Definitive Guide.
 
-Ou leia os capítulos 5 e 7 de Professional Javascript for Web Developers.
+    Ou leia os capítulos 5 e 7 de Professional Javascript for Web Developers.
 
 3. Neste momento, você deve gastar bastante tempo escrevendo código em seu console do browser e testando as declarações if-else, loops for, arrays, funções, objetos e mais. É extremamente importante que você saiba (e continue praticando) como programar independentemente (sem ajuda do Codecademy) em seu browser. Quando você voltar para o Codecademy, você não precisará de nenhuma ajuda ou dica. Cada tarefa já será fácil para você.
 
-Se você ainda está tendo dificuldades com Codecademy, volte ao seu browser e continue tentando. É ai que você vai aprender mais. Isto é o análogo ao Lebron James aprimorando suas habilidades nas ruas (nas quadras de basquete do seu bairro), ou ao Bill Gates trabalhando em seu porão.
+    Se você ainda está tendo dificuldades com Codecademy, volte ao seu browser e continue tentando. É ai que você vai aprender mais. Isto é o análogo ao Lebron James aprimorando suas habilidades nas ruas (nas quadras de basquete do seu bairro), ou ao Bill Gates trabalhando em seu porão.
 
-Há um enorme valor em você mexer e aprender pouco a pouco por conta própria. Você tem que perceber o valor dessa estratégia, e também abraçar e acreditar que isso vai dar certo!
+    Há um enorme valor em você mexer e aprender pouco a pouco por conta própria. Você tem que perceber o valor dessa estratégia, e também abraçar e acreditar que isso vai dar certo!
 
-Há uma falsa sensação de sucesso quando se usa o Codecademy. O maior problema com Codecademy é que as dicas e o pequeno fragmento de código o ajuda tanto que você tem a falsa sensação de sucesso quando você avança nos exercícios facilmente. Você não sabia disso ainda, mas muito do que você está fazendo não é por si próprio.
+    Há uma falsa sensação de sucesso quando se usa o Codecademy. O maior problema com Codecademy é que as dicas e o pequeno fragmento de código o ajuda tanto que você tem a falsa sensação de sucesso quando você avança nos exercícios facilmente. Você não sabia disso ainda, mas muito do que você está fazendo não é por si próprio.
 
-Agora, Codecademy continua sendo de grande ajuda para se aprender como programar, particularmente na maneira em que o orienta através do processo de desenvolvimento de pequenos projetos e pequenas aplicações de construções de código básicas como if, for, funções e variáveis.
+    Agora, Codecademy continua sendo de grande ajuda para se aprender como programar, particularmente na maneira em que o orienta através do processo de desenvolvimento de pequenos projetos e pequenas aplicações de construções de código básicas como if, for, funções e variáveis.
 
 4. Volte ao Codecademy e complete o Javascript track trabalhando nas seções 6, 7 e 8 (Estrutura de Dados até Objetos 2).
 
@@ -122,9 +121,9 @@ Agora, Codecademy continua sendo de grande ajuda para se aprender como programar
 
 6. Leia os capítulos 13, 15, 16 e 19 de Javascript: The Definitive Guide.
 
-Ou leia os capítulos 8, 9, 10, 11 e 14 de Professional Javascript for Web Developers. Este livro não trata sobre jQuery, e o que Codecademy trata sobre jQuery é insuficiente. Siga esse curso de jQuery – é grátis: http://try.jquery.com/
+    Ou leia os capítulos 8, 9, 10, 11 e 14 de Professional Javascript for Web Developers. Este livro não trata sobre jQuery, e o que Codecademy trata sobre jQuery é insuficiente. Siga esse curso de jQuery – é grátis: http://try.jquery.com/
 
-E você pode ler o capítulo 19 de Javascript: The Definite Guide, se você tiver o livro, para mais sobre jQuery.
+    E você pode ler o capítulo 19 de Javascript: The Definite Guide, se você tiver o livro, para mais sobre jQuery.
 
 7. Trabalhe através de todo o curso em http://try.jquery.com/
 
@@ -165,7 +164,7 @@ var todasPerguntas = [{pergunta: "Quem é o primeiro ministro do Reino Unido?", 
 
 1. Leia os capítulos 10, 14, 17 e 20 de Javascript: The Definitive Guide.
 
-Ou leia os capítulos 13, 20, e 23 de Professional Javascript for Web Developers.
+    Ou leia os capítulos 13, 20, e 23 de Professional Javascript for Web Developers.
 
 2. Lembre-se de manter-se escrevendo todos os exemplos de códigos no console do Firefox e ajustar cada pedaço de código para experimentá-lo e assim realmente entender como ele funciona e porque funciona.
 
@@ -173,31 +172,31 @@ Ou leia os capítulos 13, 20, e 23 de Professional Javascript for Web Developers
 
 4. Melhore sua aplicação de questionário anterior:
 
-- Adicione uma validação “client-side” (no lado do usuário): tenha certeza que o usuário respondeu cada pergunta antes de continuar para a próxima.
-- Adicione um botão “Voltar” para permitir que o usuário volte e mude sua resposta. O usuário pode voltar até a primeira questão. Para as questões que o usuário já tiver respondido, certifique-se de mostrar o botão “radio” selecionado, então o usuário não será forçado a responder a questão novamente, pois ela já foi concluída.
-- Use jQuery para adicionar uma animação (“fade out” para a pergunta atual e “fade in” para a próxima pergunta).
-- Teste o questionário no IE8 e 9 (Internet Explorer 8 e 9), e conserte todos os erros. Isso irá lhe dar um bom trabalho ; )
-- Armazene as perguntas do questionário em um arquivo JSON externo.
-- Adicione uma autenticação de usuário: permita o login de usuários, e salve suas informações de login no “local storage” (armazenador do navegador em HTML5).
-- Use “cookies” para lembrar o usuário, e mostre uma mensagem “Bem vindo, Primeiro Nome” quando o usuário retornar ao questionário.
+    - Adicione uma validação “client-side” (no lado do usuário): tenha certeza que o usuário respondeu cada pergunta antes de continuar para a próxima.
+    - Adicione um botão “Voltar” para permitir que o usuário volte e mude sua resposta. O usuário pode voltar até a primeira questão. Para as questões que o usuário já tiver respondido, certifique-se de mostrar o botão “radio” selecionado, então o usuário não será forçado a responder a questão novamente, pois ela já foi concluída.
+    - Use jQuery para adicionar uma animação (“fade out” para a pergunta atual e “fade in” para a próxima pergunta).
+    - Teste o questionário no IE8 e 9 (Internet Explorer 8 e 9), e conserte todos os erros. Isso irá lhe dar um bom trabalho ; )
+    - Armazene as perguntas do questionário em um arquivo JSON externo.
+    - Adicione uma autenticação de usuário: permita o login de usuários, e salve suas informações de login no “local storage” (armazenador do navegador em HTML5).
+    - Use “cookies” para lembrar o usuário, e mostre uma mensagem “Bem vindo, Primeiro Nome” quando o usuário retornar ao questionário.
 
 ## Semana 7 e se necessária 8 (Classes, Herança, mais HTML5)
 
 1. Leia os capítulos 9, 18, 21 e 22 de Javascript the Definitive Guide
 
-Ou leia meu post no blog, POO em Javascript: O que você PRECISA de saber 
+    Ou leia meu post no blog, POO em Javascript: O que você PRECISA de saber 
 
-Ou leia os capítulos 6 (somente as seções “Criação de Objeto” e “Herança” desta vez), 16, 22 e 24 de Professional Javascript for Web Developers.
+    Ou leia os capítulos 6 (somente as seções “Criação de Objeto” e “Herança” desta vez), 16, 22 e 24 de Professional Javascript for Web Developers.
 
-NOTA: A leitura nesta seção do livro é a mais técnica que você vai encontrar neste roteiro inteiro. Cabe a você escolher se vai ler tudo isso. Você deve pelo menos aprender Padrões “Prototype”, “Factory” e Herança de Protótipos. Você não tem que saber todos os outros padrões.
+    **NOTA:** A leitura nesta seção do livro é a mais técnica que você vai encontrar neste roteiro inteiro. Cabe a você escolher se vai ler tudo isso. Você deve pelo menos aprender Padrões “Prototype”, “Factory” e Herança de Protótipos. Você não tem que saber todos os outros padrões.
 
 2. Melhore seu questionário ainda mais:
 
-- Use o Twitter Bootstrap para todo o layout da página, incluindo os elementos de questionário para fazê-lo aparentar mais profissional. E como um bônus adicional, use os componentes da interface de abas do Twitter Bootstrap e apresente 4 questionários diferentes, um em cada aba.
+    - Use o Twitter Bootstrap para todo o layout da página, incluindo os elementos de questionário para fazê-lo aparentar mais profissional. E como um bônus adicional, use os componentes da interface de abas do Twitter Bootstrap e apresente 4 questionários diferentes, um em cada aba.
 
-- Aprenda Handlebars.js e adicione o modelo de Handlebars.js ao questionário. Você não deve ter nada de HTML no seu código javascript. Seu questionário está ficando mais avançado pouco a pouco.
+    - Aprenda Handlebars.js e adicione o modelo de Handlebars.js ao questionário. Você não deve ter nada de HTML no seu código javascript. Seu questionário está ficando mais avançado pouco a pouco.
 
-- Pegue a pontuação de todos os usuários que responderam o questionário e mostre a pontuação de cada um no rank geral com todas as pontuações.
+    - Pegue a pontuação de todos os usuários que responderam o questionário e mostre a pontuação de cada um no rank geral com todas as pontuações.
 
 3. Mais tarde (após você aprender Backbone.js e Node.js), você irá usar essas duas tecnologias para refazer seu questionário e tornar este mesmo questionário em um sofisticado, “single-page”, aplicativo web moderno, feito com os últimos frameworks. E você irá guardar as credenciais de autenticação do usuário e sua pontuação em um banco de dados MongoDB.
 

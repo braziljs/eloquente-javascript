@@ -34,21 +34,21 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 # JavaScript
 
-01 - [How to Learn JavaScript Properly](http://javascriptissexy.com/how-to-learn-javascript-properly/) || [Como aprender Javascript Corretamente](http://codeinbrasil.wordpress.com/2013/04/28/como-aprender-javascript-corretamente-javascript-is-sexy/)
+01 - [How to Learn JavaScript Properly](http://javascriptissexy.com/how-to-learn-javascript-properly/) || [Como aprender Javascript Corretamente](https://github.com/eoop/traduz-ai/blob/master/javascript/001-como-aprender-js-corretamente.md#como-aprender-javascript-corretamente--javascriptis-sexy)
 
-02 - [JavaScript Objects in Detail](http://javascriptissexy.com/javascript-objects-in-detail/) || [Objetos JavaScript em Detalhe](http://javascriptbrasil.com/2013/10/07/objetos-javascript-em-detalhe/)
+02 - [JavaScript Objects in Detail](http://javascriptissexy.com/javascript-objects-in-detail/) || [Objetos JavaScript em Detalhe](https://github.com/eoop/traduz-ai/blob/master/javascript/002-objetos-js-em-detalhe.md#objetos-javascript-em-detalhe)
 
-03 - [JavaScript Variable Scope and Hoisting Explained](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) || [Escopo de Variável e Hoisting no JavaScript Explicado](http://javascriptbrasil.com/2013/10/11/escopo-de-variavel-e-hoisting-no-javascript-explicado/)
+03 - [JavaScript Variable Scope and Hoisting Explained](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) || [Escopo de Variável e Hoisting no JavaScript Explicado](https://github.com/eoop/traduz-ai/blob/master/javascript/003-escopo-de-variavel-js-e-hoisting-explicado.md#escopo-de-vari%C3%A1vel-javascript-e-hoisting-explicado)
 
-04 - [Understand JavaScript Closures With Ease](http://javascriptissexy.com/understand-javascript-closures-with-ease/) || [Entenda Closures no JavaScript com Facilidade](http://javascriptbrasil.com/2013/10/12/entenda-closures-no-javascript-com-facilidade/)
+04 - [Understand JavaScript Closures With Ease](http://javascriptissexy.com/understand-javascript-closures-with-ease/) || [Entenda Closures no JavaScript com Facilidade](https://github.com/eoop/traduz-ai/blob/master/javascript/004-entenda-closures-no-javaScript-com-facilidade.md#entenda-closures-no-javascript-com-facilidade)
 
 # AngularJS
 
-01 - [anguarjs-style-guide](https://github.com/mgechev/angularjs-style-guide) || [guia de estilo angularjs](https://github.com/eoop/angularjs-style-guide/blob/master/README-pt-br.md)
+01 - [anguarjs-style-guide](https://github.com/mgechev/angularjs-style-guide) || [guia de estilo angularjs](https://github.com/eoop/traduz-ai/blob/master/angularjs/001-guia-definitivo-para-aprender-angularjs.md#guia-definitivo-para-aprender-angularjs-em-um-dia)
 
 02 - [Ultimate guide to learning AngularJS in one day](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/) || [Guia Definitivo para Aprender AngularJS em Um Dia](http://javascriptbrasil.com/2013/10/18/guia-definitivo-para-aprender-angularjs-em-um-dia/) 
 
-03 - [Learn AngularJS With These 5 Practical Examples](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) || [Aprenda AngularJS com estes 5 exemplos práticos](http://javascriptbrasil.com/2013/10/23/aprenda-angularjs-com-estes-5-exemplos-praticos/)
+03 - [Learn AngularJS With These 5 Practical Examples](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) || [Aprenda AngularJS com estes 5 exemplos práticos](https://github.com/eoop/traduz-ai/blob/master/angularjs/002-aprenda-angularjs-com-5-exemplos.md#aprenda-angularjs-com-estes-5-exemplos-pr%C3%A1ticos)
 
 # NodeJS
 

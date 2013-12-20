@@ -45,7 +45,7 @@ Primeiro, nós precisamos de fato configurar o essencial para um projeto Angular
 
 Um pouco de HTML com declarações ng-*:
 
-```javascript
+```html
 
 <div ng-app="myApp">
 	<div ng-controller="MainCtrl">
@@ -98,7 +98,7 @@ Agora que você compreendeu o conceito do MVC e a configuração básica, vamos 
 
 Pegando o exemplo acima, nós podemos fazer um 'baby-step' (passo de bebê) em como inserir alguns dados no DOM a partir de um controlador. O Angular usa estilo de template com sintaxe <i>{{ handlebars }}</i> para conversar com o seu HTML. O HTML (preferencialmente) não deve conter textos físicos ou pesados códigos, para que se faça o melhor do Angular. Aqui temos um exemplo de inserção de uma simples String no DOM.
 
-```javascript
+```html
 
 <div ng-app="myApp">
 	<div ng-controller="MainCtrl">
@@ -148,7 +148,7 @@ myApp.controller('UserCtrl', ['$scope', function ($scope) {
 
 Agora portando isso para o DOM para mostrarmos estes dados:
 
-```javascript
+```html
 
 <div ng-app="myApp">
 	<div ng-controller="UserCtrl">
@@ -185,7 +185,7 @@ Então para o quê as diretivas são usadas? Vários coisas, incluir componentes
 
 Para este exercício, irei deixar isso realmente simples e criar um tipo de botão customizado (chamado customButton) que injeta alguma marcação que eu odeio do ter que ficar escrevendo. Há várias maneiras de definir Diretivas no DOM, elas podem se parecer com isso:
 
-```javascript
+```html
 
 <!-- 1: como uma declaração de atributo -->
 <a custom-button>Click me</a>
@@ -266,7 +266,7 @@ myApp.directive('customButton', function () {
 
 E dentro do seu arquivo(nome do arquivo não é sensitivo a todos):
 
-```javascript
+```html
 
 <!-- dentro do customButton.html -->
 <a href="" class="myawesomebutton" ng-transclude>
@@ -277,7 +277,7 @@ E dentro do seu arquivo(nome do arquivo não é sensitivo a todos):
 
 O que é realmente bom em se fazer isso. é que o navegador irá efetivamente <i>cachear</i> o arquivo HTML, bravo! A outra alternativa que não utiliza o cache é declarar o template dentro da tag script:
 
-```javascript
+```html
 
 <script type="text/ng-template" id="customButton.html">
 	<a href="" class="myawesomebutton" ng-transclude>
@@ -398,7 +398,7 @@ myApp.controller('MainCtrl', ['$scope', function ($scope) {
 
 Uso no DOM:
 
-```javascript
+```html
 
 <div ng-app="myApp">
 	<div ng-controller="MainCtrl">
@@ -413,7 +413,7 @@ Saída: http://jsfiddle.net/toddmotto/pmh4s/light/
 
 Utilizando dentro de um ng-repeat:
 
-```javascript
+```html
 
 <ul>
 	<li ng-repeat="number in myNumbers | filter:oddNumbers">{{ number }}</li>
@@ -442,7 +442,7 @@ myApp.controller('MainCtrl', ['$scope', function ($scope) {
 
 E seu uso dentro de um ng-repeat:
 
-```javascript
+```html
 
 <li ng-repeat="number in numbers | filter:greaterThanNum">
 	{{ number }}
@@ -460,7 +460,7 @@ Quando eu ouvi sobre two-way data-binding (duas vias para ligação de dados), e
 
 Aqui eu criei um input e o liguei ao modelo chamado 'myModel', assim eu posso então usar a sintaxe de chaves para refletir este modelo e ele será atualizado no View no mesmo momento:
 
-```javascript
+```html
 
 <div ng-app="myApp">
 	<div ng-controller="MainCtrl">
@@ -571,7 +571,7 @@ myApp.controller ('UserCtrl', ['$scope', function ($scope) {
 
 E agora no DOM, nós podemos fazer o seguinte:
 
-```javascript
+```html
 
 <div ng-controller="UserCtrl">
 	<p>{{ user.username }}</p>
@@ -619,7 +619,7 @@ myApp.controller ('EmailCtrl', ['$scope', function ($scope) {
 
 Agora precisamos conectar isso dentro do nosso HTML. Aqui é onde nós vamos usar as ligações declarativas (declarative binding) para declarar o que a aplicação irá fazer para criar nosso primeiro pedaço de HTML dinâmico. Vamos usar a diretiva do Angular <i>ng-repeat</i> embutida, que vai iterar sobre os dados e renderizar uma saída sem absolutamente nenhum callback ou mudanã de estado, é tudo de graça:
 
-```javascript
+```html
 
 <ul>
 	<li ng-repeat="message in emails.messages">
@@ -655,7 +655,7 @@ myApp.controller ('MainCtrl', ['$scope', function ($scope) {
 
 Ligar funções ao escopo também ocorre através das Diretivas ng-*, agora usaremos a Diretiva ng-click:
 
-```javascript
+```html
 
 <a ng-click="deleteEmail($index)">Delete Email</a>
 
@@ -669,7 +669,7 @@ Resultado (delete alguns emails!): http://jsfiddle.net/toddmotto/BgZmt/light/
 
 Agora nós vamos entrar nos métodos DOM, eles são Diretivas e simulam funcionalidades no DOM que você tem normalmente que escrever mais códigos e lógicas para tal. Um grande exemplo disto pode ser um simples navegador que alterna (toggle). Usando ng-show e um simples ng-click configurados, nós podemos criar um perfeito "toggling nav":
 
-```javascript
+```html
 
 <a href="" ng-click="toggle = !toggle">Toggle Nav</a>
 <ul ng-show="toggle">
@@ -704,7 +704,7 @@ elem.onclick = function (data) {
 
 Isso pode ser potencialmente um callback vindo de uma requisição GET, e você vai alterar o DOM baseado no estado do dado. Angular lhe dá isso gratuitamente também, e você será capaz de fazer isto inline sem escrever qualquer código JavaScript!
 
-```javascript
+```html
 
 <p>{{ data.length > 0 && 'Meus dados' || 'Sem dados' }}</p>
 
@@ -774,7 +774,7 @@ O GMail manuseia muito destes dados iniciais escrevendo JSON dentro da página (
 
 Quando desenvolvo nosso aplicativos, as tags Java são colocadas no DOM e quando renderizadas, o dado é mandado para o backend. [Eu tenho experiência zero com Java, então se você for perguntar isso, sim você pode usar qualquer linguagem no seu servidor]. Aqui vamos ver como escrever JSON na sua página e então passar isso para um Controlador para uso de ligação imediata:
 
-```javascript
+```html
 
 <!-- inside index.html (bottom of page ofc) -->
 <script>
@@ -849,7 +849,7 @@ MVVM: encapsula ligações de dados declarativas que tecnicamente conversam entr
 
 Um rápido exemplo disto, você pode criar um ng-repeat sem um Controlador fornecendo dados:
 
-```javascript
+```html
 
 <li ng-repeat="number in [1,2,3,4,5,6,7,8,9]">
 	{{ number }}
@@ -866,7 +866,7 @@ Resultado: http://jsfiddle.net/toddmotto/C9GHF/light/
 
 Você vai provalmente ser apanhado nessa questão, mas o AngularJS permite que você crie elementos customizados:
 
-```javascript
+```html
 
 <myCustomElement></myCustomElement>
 
@@ -878,7 +878,7 @@ Isso realmente leva a web para o futuro do HTML5. O HTML5 intrduziu os Web Compo
 
 Eu penso que estes comentários são realmente uma bela adição ao nosso fluxo de trabalho, em vez de declarar pedaços de HTML com comentários deste tipo:
 
-```javascript
+```html
 
 <!-- header -->
 
@@ -892,7 +892,7 @@ Eu penso que estes comentários são realmente uma bela adição ao nosso fluxo 
 
 Quando introduzimos o Angular, comece a pensar sobre Views e Escopos, não o DOM! Escopos são de fato fechados, ou seja, a menos que você deliberadamente compartilhe os dados entre os controladores, seu dado está inacessível em outros lugares. Eu estabeleço minhas áreas de escopo e isso vem a ser uma real ajuda.
 
-```javascript
+```html
 
 <!-- scope: MainCtrl -->
 <div class="content" ng-controller="MainCtrl">
@@ -911,5 +911,3 @@ Code feliz =)
 <h2>Leitura Adicional</h2>
 
 Aprenda Como criar sua [própria Diretiva](http://toddmotto.com/creating-an-angularjs-directive-from-one-of-your-existing-plugins-scripts) a partir de um script customizado ou plugin.
-
-<iframe width="100%" height="300" src="http://jsfiddle.net/eo_op/yPcwt/5/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>

@@ -1,6 +1,7 @@
 # Use AngularJS para Potencializar suas Aplicações Web
 
 **Postado originalmente em [yearofmoo.com](http://www.yearofmoo.com/2012/08/use-angularjs-to-power-your-web-application.html)**
+
 **data de postagem da tradução:** 
 
 ### AngularJS é um verdadeiro e incrível método de desenvolver aplicações com JavaScript.

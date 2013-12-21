@@ -21,7 +21,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 ### Índice
 
 * [JavaScript](#javascript) (04)
-* [AngularJS](#angularjs) (03)
+* [AngularJS](#angularjs) (04)
 * [NodeJS](#node.js) (00)
 * [HTML5](#html5) (00)
 * [CSS3](#css3) (00)
@@ -49,6 +49,8 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 02 - [Ultimate guide to learning AngularJS in one day](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/) || [Guia Definitivo para Aprender AngularJS em Um Dia](http://javascriptbrasil.com/2013/10/18/guia-definitivo-para-aprender-angularjs-em-um-dia/) 
 
 03 - [Learn AngularJS With These 5 Practical Examples](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) || [Aprenda AngularJS com estes 5 exemplos práticos](https://github.com/eoop/traduz-ai/blob/master/angularjs/002-aprenda-angularjs-com-5-exemplos.md#aprenda-angularjs-com-estes-5-exemplos-pr%C3%A1ticos)
+
+04 - [Use AngularJS to Power Your Web Application](http://www.yearofmoo.com/2012/08/use-angularjs-to-power-your-web-application.html) || [Use AngularJS para Potencializar sua Aplicação Web](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 # NodeJS
 

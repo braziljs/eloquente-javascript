@@ -10,4 +10,4 @@ AngularJS, criado pela Google, é um *bem-organizado*, *bem-testado*, versátil,
 ## Última Atualização
 Esta página foi primariamente publicada em *15 de Agosto de 2012* e foi atualizada em *29 de Outubro de 2012*.
 
-### [⬆ para o topo]() 
+### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web) 

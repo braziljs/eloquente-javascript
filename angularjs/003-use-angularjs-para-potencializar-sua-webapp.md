@@ -52,3 +52,15 @@ Isto resulta em templates (HTML) e dados (que é buscado como JSON) vinculados p
 Portanto a marcação buscada no servidor é **sem sentido sem o Angular** analisar e você **precisa de ter um cliente que suporta JavaScript**. Deste modo, os mecanismos de busca precisam trabalhar mais para ter uma representação completa dos dados -- então por enquanto **não é uma boa ideia usar Angular se você estiver fazendo um website que depende de mecanismos de busca para funcionar.** Então se você for construir uma **aplicação web**, **admin website** ou **single-page** website você terá uma grande ferramenta para fazer este trabalho. 
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Então como isso funciona?
+
+O Angular trabalha **separando a lógica da aplicação a partir dos dados** no *client-side* e estruturando uma aplicação web client-side com o uso de **diretivas**, **filtros**, **bindings** (ligação) e **operações específicas de binding**. Controladores, Serviços e Modelos são usados para colar toda a lógica e as operações com dados. Como mencionado, dado e lógica são separados então isso significa que seus dados (**a parte dinâmica**), seu template HTML (**a parte estática**), e sua lógica (**os controladores e marcadores de ligação**) trabalham conjuntamente para fazer o trabalho da aplicação. A melhor coisa é que toda a parte não dinâmica pode ser cacheada por bastante tempo e suas respostas dinâmicas são pequenas. Isto é ótimo para cachear as respostas server-side e **reduz enormemente a quantidade de trabalho que o servidor terá que fazer para gerar as respostas HTML**. De fato se você pensar sobre isso, a maioria dos dados buscados para uma página HTML são redundantes... então por que não fazê-los 100% estáticos? O Angular faz isso e faz muito bem.
+
+Como qualquer outra arquitetura MVC, **os caminhos URL são roteados pelos controladores** e os parâmetros estão acessíveis com um método controlador. O Angular também **fornece suporte para recursos (modelos)** e isso faz um bom trabalho reduzindo a quantidade de código requerido para o modelo padronizado de código para consultar o servidor. Isto também **reduz a quantidade de código requerido para manipular DOM bindings com dados e elementos HTML**.
+
+**Uma vez que a página é lida**, Angular faz essa mágica construindo-a com **vários componentes**. Vamos olhar o que eles são.
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Começando

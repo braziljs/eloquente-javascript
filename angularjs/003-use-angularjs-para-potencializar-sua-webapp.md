@@ -16,8 +16,8 @@ Esta página foi primariamente publicada em *15 de Agosto de 2012* e foi atualiz
 
 01. [Sobre este artigo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#sobre-este-artigo)
 02. [Aplicações Web (não websites)](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#aplica%C3%A7%C3%B5es-web-n%C3%A3o-websites)
-03. [Então como isso funciona?]()
-04. [Começando]()
+03. [Então como isso funciona?](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#ent%C3%A3o-como-isso-funciona)
+04. [Começando](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#come%C3%A7ando)
 05. [Módulos]()
 06. [Bindings, Expressões e Mágica do Angular]()
 07. [Injeção de Dependências]()

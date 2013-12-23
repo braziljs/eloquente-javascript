@@ -64,3 +64,78 @@ Como qualquer outra arquitetura MVC, **os caminhos URL são roteados pelos contr
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Começando
+
+Configure seu site e inclua o Angular dentro do seu **código HTML com uma tag script JavaScript** para incluir a biblioteca no site. **É melhor que o Angular seja importado antes de todas outras bibliotecas e códigos**.
+
+```html
+
+<!-- Configure isso como uma tag HTML na sua aplicação -->
+<script type="text/javascript" src="/path/to/angular/angular.js"></script>
+<script type="text/javascript" src="/path/to/angular/angular-resource.js"></script>
+
+```
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Módulos
+
+Módulos são usados para **encapsular completamente todo o código angular de sua aplicação em um ponto de entrada**. As mais recentes construções do angular **incluem suporte a módulos** que são como namespacing misturados com **injeção de dependência (DI - direct injection)** e **error trapping**. Versões antigas do Angular não incluem isso. Temos vários artigos de blogs, videos e demos desatualizados que estão ensinando como usar uma versão antiga do Angular. Desta maneira confundirá quando configurarmos a aplicação com o download de uma versão mais recente do Angular.
+
+Módulos são usados então sua aplicação (como discretas partes de sua aplicação) podem ser separadas em partes distintas que podem ser carregadas e executadas em ordens diferentes. Então você pode ter um módulo de diretivas que pode estar configurado para rodar antes que o módulo UI o seja, assegurando assim que sua aplicação resultante DOM esteja na forma adequada para seu código UI seja executado.
+
+A primeira coisa que você precisa fazer quando configura sua aplicação Angular é seguir seu layout principal do arquivo (estou assumindo que você já inclui o angular no seu website como uma tag script JavaScript).
+
+```html
+
+<!-- Coloque isto como a tag HTML na sua aplicação -->
+<html ng-app="YOUR_APP_NAME">
+
+```
+
+Você pode também usar outras variantes no seu HTML para configurar o nome da sua app, mas eu sinto que os atributos dos dados HTML5 são o caminho a ser seguido.
+
+Depois, inclua um novo arquivo javascript no seu website e ponha este código:
+
+```javascript
+
+var App = angular.module('YOUR_APP_NAME', ['ngResource']);
+
+```
+
+Isto vai criar um módulo global para sua app onde você pode criar **rotas**, **modelos**, **filtros** e **diretivas**. A variável **App** é acessível através da sua aplicação e o array de definição **['ngResource']** define todos os outros módulos e dependências que deverão ser carregados previamente a este módulo recém ativado. Neste caso **ngResource** é um módulo adicional que define funcionalidade para criação de recursos (modelos) no Angular.
+
+Qualquer modelo adicional pode ser definido usando a mesma sintaxe, mas **você deve definir o nome do módulo de forma diferente de qualquer outro módulo que já tenha sido definido**. Se você criar outro módulo com o mesmo nome então não vai funcionar (ou o módulo anterior não vai funcionar ao invés). Se você deseja fazer um novo módulo ativo depois do módulo da aplicação principal, então apenas defina o novo módulo e configure o nome do módulo da aplicação como dependência. 
+
+Tenha em mente que um módulo **pode facilmente quebrar** (se há código errôneo nele), e módulos são projetados para conter seus próprios erros, então encontrar um error pode ser difícil já que você pode ficar com uma página vazia.
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Bindings, Expressões e Mágica do Angular
+
+Bindings são muio muito poderosos. Eles reduzem drasticamente a quantidade de código HTML requisitado e também separam completamente a lógica da aplicação dos dados. O Angular vem com expressões que são separadas de suas marcações gerais HTML e vinculam-se ao alcance de uma variável, que é onde ocorre a ligação dos dados. Isto envolve **data binding**, **two-way data binding**, **condicionais**, **for in e foreach loops**, **model binding** e por ai vai.
+
+Aqui temos um exemplo que lista todos os registros em uma lista ordenada e nós podemos fazer da seguinte forma (**isso é o que expressões angular são):
+
+```html
+
+<div class="records" ng-repeat="record in records | orderBy:orderProp">
+	<h5> {{ record.title }} </h5>
+</div>
+
+```
+
+O bloco interno (a tag h5) vai ser repetida para cada registro encontrado entre os registros do objeto (que está à parte da variável $scope). Finalmente o **orderBy:orderProp** especifíca que propriedade (neste caso o *title*) pode ser usado para ordenar os registros.
+
+E o JavaScript para configurar os dados é como o seguinte **(este é o data binding)**:
+
+```javascript
+
+$scope.records = [{ title : 'one' }, { title : 'two' }, { title : 'three' }];
+
+```
+
+Tudo o que falta é o controlador (**isto vai ser coberto mais tarde neste artigo**). A beleza sobre esta abordagem é que (como você pode ver) o dado (o Modelo) é **100% isolado da marcação** (o View) e os dados podem ser recuperados e armazenados em cache a partir de uma fonte externa, ao ser manipulado e ajustado por um controlador lógico.
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Injeção de Dependências

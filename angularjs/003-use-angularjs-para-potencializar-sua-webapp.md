@@ -139,3 +139,25 @@ Tudo o que falta é o controlador (**isto vai ser coberto mais tarde neste artig
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Injeção de Dependências
+
+**Injeção de Dependências (dependency injection - DI)** é, no Angular, o método de organizar quais componentes, módulos e variáveis serão carregados para várias partes da sua aplicação. É um pouco confuso no começo, mas realmente deixam as coisas mais organizadas e faz com que os testes sejam mais fáceis. Todos seus componentes dentro da aplicação são injetados dentro dos seus **controladores**, **configurações de módulo**, **diretivas**, **filtros**, **resources** e **rotas**. Aqui temos um exemplo de injeção de dependências para um controlador:
+
+```javascript
+
+var Ctrl = function ($scope, $http, $location) {
+	// agora você pode usar qualquer das variáveis injetadas
+
+	// para mudar a URL depois de algo acontecer então você pode usar $location
+	$location.path('/path/to/new/page');
+}
+
+// e agora a injeção das variáveis
+Ctrl.$inject = ['$scope', '$http', '$location'];
+
+```
+
+O **benefício da DI** é que você pode **isolar totalmente** todos os serviços, controladores, resources, diretivas e filtros dentro de seus próprios ambientes sem variáveis globais. Isto torna os **testes muito fáceis**. Também facilita a ordenação entre blocos de código, onde uma vez que uma dependência em particular tenha sido injetada, então é garantido que esteja lá para uso dentro do próximo bloco de código.
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Rotas

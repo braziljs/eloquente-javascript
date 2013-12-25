@@ -23,7 +23,7 @@ Esta página foi primariamente publicada em *15 de Agosto de 2012* e foi atualiz
 07. [Injeção de Dependências](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#inje%C3%A7%C3%A3o-de-depend%C3%AAncias)
 08. [Rotas](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#rotas)
 09. [Controladores e Escopo]()
-10. [Serviçõs]()
+10. [Serviços]()
 11. [Modelos]()
 12. [Diretivas]()
 13. [Filtros]()
@@ -180,9 +180,9 @@ App.config(['$routeProvider', function($routes) {
 			controller : RegisterCtrl
 		});
 
-		$routes.otherwise({
-				redirectTo : '/'
-			});
+	$routes.otherwise({
+			redirectTo : '/'
+		});
 }]);
 
 ```
@@ -191,3 +191,105 @@ Você deve ser capaz de **criar rotas em qualquer lugar no código da sua app** 
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
+### Controladores e Escopo
+
+Controladores são onde a lógica da aplicação acontece. Plugins, Widgets e código DOM específico **não deve ser incluso aqui pois isso é destinado as diretivas**. Primeiro, comece configurando o controlador (cada função controladora é basicamente a ação em si).
+
+```javascript
+
+var SomeCtrl = function ($scope, $http, $location) {
+	$scope.value = 'some value';
+};
+SomeCtrl.$inject = ['$scope', '$http', '$location'];
+
+```
+
+O **$scope** é especificamente onde o controlador é conectado na sua página web. E qualquer propriedade configurada para a variável $scope vai então ser disponibilizada na suá página. Aqui um exemplo colocando uma ligação (binding) no HTML e então configurando esta propriedade com *scope*.
+
+```html
+
+<div class="header"> {{ title }} </div>
+
+```
+
+Agora aqui o JavaScript:
+
+```javascript
+
+$scope.title = 'this is awesome';
+
+```
+
+Agora o DOM vai ser atualizado e seu código HTML vai parecer com isso:
+
+```html
+
+<div class="header">this is awesome</div>
+
+```
+
+Mais informações na parte das diretivas.
+
+#### Para quando os dados da sua variável $scope muda, mas o Angular não percebe isso.
+
+Algumas vezes o Angular não informa quando você muda uma propriedade em sua variável $scope, então neste caso você deve forçar o Angular a fazer esta mudança.
+
+Tente rodar estes métodos:
+
+```javascript
+
+// vamos dizer que você tenha <div> {{ someVar }} </div> dentro do HTML
+$scope.someVar = 'value';
+
+// se um 'scope digestion' já está acontecendo, então ele irá ser pego e você não terá 
+// que chamar o método $scope.$apply()
+if (!$scope.$$phase) { // isto é usado para prevenir uma sobreposição do scope digestion
+	$scope.$apply(); // isto vai iniciar o reconhecimento do Angular da mudança
+}
+
+```
+
+Assegure-se de ler mais sobre isto no artigo *More AngularJS Magic to Superchange your Webapp*, que entra em mais detalhes sobre como *digest* e *apply* ligam as mudanças corretamente.
+
+> [Click aqui para ler mais sobre $apply e $digest e veja o artigo](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html#apply-digest-and-phase)
+
+#### $rootScope
+
+Todo dado **$scope** é herdado da variável $rootScope, então se você quiser **compartilhar código reusável através de todos seus objetos $scope em todos seus controladores então você pode fazer isto configurando propriedades na variável $rootScope**.
+
+```javascript
+
+App.run(['$rootScope', function ($rootScope) {
+	$rootScope.sharedFunction = function () { ... };
+}]);
+
+```
+
+#### Controladores
+
+Finalmente, aqui temos duas maneiras de registrar um controlador para a aplicação:
+
+**Incluindo o Controlador dentro da aplicação HTML**
+Um controlador pode ser configurado usando uma diretiva Angular dentro de uma tag HTML.
+
+```html
+
+<div ng-controller="SomeCtrl"> ... </div>
+
+```
+
+**Atribua um Controlador para ser parte de uma rota**
+Você também pode definir uma rota e especificar o controlador que irá manipular a requisição:
+
+```javascript
+
+$routes.when('/some/path', {
+	controller : Ctrl,
+	templateUrl : '/templates/controller.html'
+});
+
+```
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Serviços

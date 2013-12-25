@@ -161,3 +161,33 @@ O **benefício da DI** é que você pode **isolar totalmente** todos os serviço
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Rotas
+
+Rotas são usadas para mapear qual caminho está ligado a qual controlador. Quando você acessa uma URL (clicando em um link ou colocando na URL), o Angular vai **primeiro checar e ver se isto está definido** e, se não, então vai **delegar o evendo para uma página padrão** (acessa uma página html normalmente) ou **não faz nada** (se for uma URL com #). Isso é bom pois você não tem que gerenciar qualquer mudança de URL nas rotas do Angular.
+
+Rotas são definidas diretamente do módulo da aplicação com a seguinte sintaxe. **NOTE:** Caminhos de rota não tem nada a ver com hashbangs (**você pode alternar hashbangs ligado ou desligado através do modo HTML5**).
+
+```javascript
+
+App.config(['$routeProvider', function($routes) {
+	
+	$route.when('/', {
+			templateUrl : '/templates/home.html',
+			controller : HomeCtrl
+		});
+
+	$route.when('/register', {
+			templateUrl : '/templates/register.html',
+			controller : RegisterCtrl
+		});
+
+		$routes.otherwise({
+				redirectTo : '/'
+			});
+}]);
+
+```
+
+Você deve ser capaz de **criar rotas em qualquer lugar no código da sua app** -- isto é bom quando você cria controladores em arquivos JavaScript separados que incluem suas próprias rotas. 
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+

@@ -293,3 +293,69 @@ $routes.when('/some/path', {
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Serviços
+
+Serviços no Angular é uma abordagem incrível para abstrair código e funcionalidades compartilhadas pela sua aplicação. Ele liga diretamente para o recurso de injeção de dependência que o Angular fornece e pode ser usado diretamente à parte do objeto módulo.
+
+```javascript
+
+App.factory('myService', ['myOtherService', '$location', function (myOtherService, $location) {
+	return function (input) {
+		// faã algo com o input usando os objetos myOtherService ou $location
+		return input;
+	};
+}]);
+
+// use o serviço dentro do controlador
+var HomeCtrl = function ($scope, myService) {
+	var input = '123';
+	input = myService(input);
+};
+HomeCtrl.$inject = ['$scope', 'myService'];
+
+// use o serviço de uma diretiva
+App.directive('myDirective', ['myService', function (myService) {
+	return {
+		link: function ($scope, element, attrs) {
+			var input = '123';
+			input = myService(input);
+		}
+	}
+}]);
+
+``` 
+
+O **myService** é fornecido dentro do controlador como uma função (ou objeto dependendo de como a declaração do serviço retorna) e pode ser usado diretamente. A coisa legal é que há um ponto de entrada para o serviço e isso significa que pode ser testado facilmente.
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Modelos
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Diretivas
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Filtros
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Modo HTML5
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Usando Angular com outro framework JavaScript/bibliotecas
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Usando .json como um sufixo URL para operações de modelo
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Daqui para frente
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+
+### Segundo artigo sobre AngularJS
+
+##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)

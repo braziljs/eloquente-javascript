@@ -330,6 +330,68 @@ O **myService** é fornecido dentro do controlador como uma função (ou objeto 
 
 ### Modelos
 
+Modelos são usados da mesma forma que são usados em **Rails** ou em qualquer outro **MVC framework**. Eles são também definidos da mesma maneira que os **serviços** angular são bem como são injetados na aplicação. Todas operações regulares *getter* e *setter* para propriedades de modelo existem e todas **operações RESTful** são definidas e acessam o servidor backend para fazer operações de armazenamento. Sua aplicação no lado do servidor precisa ser codificada para manusear cada operação REST para cada modelo (**POST create, GET show, GET index, PUT/PATCH update, DELETE destroy**).
+
+Aqui temos como você define um modelo em Angular:
+
+```javascript
+
+App.factory('ModelName', ['$resource', function ($resource) {
+	$resource.url('/path/to/model/controller/:id', {
+		id: '@id', // isto liga o ID do modelo com o parâmetro da URL
+	}, {
+		query : { method : 'GET', isArray : true }, // isto também pode ser chamado index 
+		save : { method : 'PUT' }, // este é o método update
+		create : { method : 'POST' },
+		destroy : { method : 'DELETE' }
+	}
+}]);
+
+```
+
+Isto vai criar um modelo chamado **ModelName** com as ações REST **query, show, save, create e destroy**, todas voltadas para **/path/to/model/controller/:id**. O parâmetro **:id** é somente usado para **get, save e destroy** as chamadas REST. Quando um valor :id não está presente então isso não vai ser usado na URL e o Angular vai tirar as barras e espaços em branco da URL, então efetivamente você vai ter uma URL como **/path/to/model/controller** para as chamadas REST como as **query** e **create** (que é como REST espera que seja). Todas as ações definidas podem ser chamadas diretamente a partid do modelo, mas em ordem de ter acesso ao modelo como uma variável você deve incluir isso como uma injeção de dependência:
+
+```javascript
+
+var SomeCtrl = function ($scope, $http, $location, ModelName) {
+	// agora você pode usar ModelName para fazer suas coisas	
+};
+SomeCtrl.$inject = ['$scope', '$http', '$location', 'ModelName'];
+
+``` 
+
+Uma vez que você tenha acesso ao modelo, você pode chamar todas as ações que você definiu bem como algumas outras. Aqui alguns exemplos:
+
+```javascript
+
+// lista todos os registros na página
+var results = ModelName.query({ search : 'all' }, onSucessFn, onFailureFn);
+
+// pegando um registro específico
+var record = ModelName.get({ id : 123 }, onSucessFn, onFailureFn); // onSucessFn and onFailureFn são callbacks opcionais onde você pode adicionar uma resposta personalizada
+
+// cria um novo registro ModelName
+var record = new ModelName();
+
+// atualiza o registro
+record.someAttr = 'someValue';
+record.$save();
+
+// ou se você preferir enviar seus dados de uma forma diferente
+ModelName.save({
+	id : record.id
+}, {
+	somePostObject : {
+		attr1 : 'value',
+		attr2 : 'value2'
+	}
+});
+
+// destroi o registro (e inclui um token)
+record.destroy({ token : record.token });
+
+```
+
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Diretivas

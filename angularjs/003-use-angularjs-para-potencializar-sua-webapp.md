@@ -398,21 +398,109 @@ record.destroy({ token : record.token });
 
 ### Diretivas
 
+Diretivas Angular são minúsculos ganchos comportamentais que **ligam seu HTML com seus plugins e com qualquer bloco de código isolado dentro da sua aplicação.** Elas são projetadas não para mudar a lógico dos controladores ou modelos, mas **para ajudar na construção da página web**. Portanto, são perfeitas para **plugins, validadores, propriedades dinâmicas do texto** (tais como ajustes de intercionalização e localização). Aqui vemos como usá-las.
+
+Primeiro defina a diretiva dentro da sua aplicação JavaScript:
+
+```javascript
+
+angular.directive('myDirective', function ($compile) {
+	return {
+		templateUrl : '/path/to/some/template.html', // (opcional) os conteúdos deste template podem ser baixados e dentro do elemento
+		replace : true, // se querem ou não substituir os dados internos dentro do elemento
+		link : function ($scope, $element, attributes) { // aqui é onde acontece a mágica
+			$scope.title = '...';
+		}
+	};
+});
+
+```
+
+Agora quando o Angular vê uma tag HTML que contém **my-directive** como um atributo (com ou sem um valor), então isto vai baixar um template e executar a função link. Você pode também definir o **template html** diretamente e pode criar sua própria função de compilação que faz todo o trabalho de uma vez. A variável **$scope** dentro da função link é a variável de escopo do controlador que contém a diretiva. Esta á uma poderosa maneira de compartilhar dados entre os controladores e a diretiva como também para comunicar-se entre cada um deles. 
+
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Filtros
+
+Filtros são operações reutilizáveis que podem estar inseridas diretamente dentro de *binding operations* (operações de ligação) para ajustar dados de uma forma. Alguns exemplos incluem **paginação, ajuste de idioma, papel e filtragem de dados específicos da sessão**.
+
+```javascript
+
+App.filter('myUppercase', function (data) {
+	for (var i = 0; i < data.length; i += 1) {
+		data[i].title = data[i].title.toUpperCase();
+	}
+	return data;
+});
+
+```
+
+Este filtro então pode ser usado dentro de uma expressão Angular:
+
+```html
+
+<div ng-repeat="for record in records | filter:myUppercase">...</div>
+
+```
+
+Ou pode ser usado diretamente dentro de seu código JavaScript com a função **$filter**.
+
+```javascript
+
+// assegure-se de injetar o objeto $filter
+var values = ['one', 'two', 'three'];
+values = $filter('myUppercase')(values);
+
+```
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Modo HTML5
 
+O modo HTML5 permite para sua app Angular usar histórico HTML5 dentro do sistema de roteamento e então graciosamente degradar a sua funcionalidade para suporte de hash se o navegador não suportar histórico HTML5. O fragmente seguinte de código permite o histórico HTML5 dentro da sua aplicação Angular (ela é desativada por padrão).
+
+```javascript
+
+App.config(['$locationProvider', function ($location) {
+	$location.html5mode(true); // agora não haverá uma hashbang dentro de URLs para browsers que suportam histórico HTML5
+}]);
+
+```
+
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Usando Angular com outro framework JavaScript/bibliotecas
 
+Angular usa JQLite para fazer a manipulação básica DOM e não depende de jQuery.
+
+#### Usando Angular com jQuery
+
+jQuery trabalha bem com Angular. Somente **inclua-o antes de incluir o Angular dentro de sua aplicação web** e o Angular vai usar seu jQuery incluso ao invés do JQLite.
+
+#### Usando Angular com MooTools
+
+MooTools também trabalha bem, mas há alguns problemas quando acessamos elementos. Você vai precisar criar seu próprio seletor *dollar-style* (ou sobrescrever o existente). Também, certifique-se de **incluir o MooTools dentro da sua aplicação depois do Angular ter sido incluso**.
+
+```javascript
+
+var $moo = function (element) {
+	if (typeOf(element) != 'element' && element.length >= 1) {
+		element = element[0];
+	}
+	if (element) {
+		return document.id(element);
+	}
+};
+
+```
+
+Isto faz o Angular funcionar com MooTools; esteja certo de usar o método **$moo** cada vez antes de acessar um elemento que fora fornecido por um controlador ou diretiva do Angular. A função dolar duplo (**$$**) não é afetada, mas chama o método **$moo** antes de você usar o **$$** para acessar um elemento diretamente (desde que um elemento fornecido do Angular possa ser um array e que possa bagunçar as coisas).
+
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Usando .json como um sufixo URL para operações de modelo
+
+
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 

@@ -500,14 +500,22 @@ Isto faz o Angular funcionar com MooTools; esteja certo de usar o método **$moo
 
 ### Usando .json como um sufixo URL para operações de modelo
 
+Angular, no tempo que escrevo este artigo, não suporta personalização de sufixos de recursos (formatos URL ou extensões) diretamente via API. Para configurar isso você mesmo você vai precisar hackear o código dentro do arquivo **angular-resource.js** e isto não é realmente a melhor abordagem para consertar isto. Por agora isso não é suportado pelo Angular, entretanto, existe um fork do Angular no yearofmoo que inclui suporte para dilema.
 
+[Link não funcionando mais!!!](https://github.com/yearofmoo/angular.js-json-suffix)
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Daqui para frente
 
+Angular é **enorme**. Muita coisa não foi abordada aqui. Agora você deve estar bem preparado para construir uma aplicação angular funcional. Visite o site do Angular para encontrar mais informações sobre o que foi dito aqui e outras propriedades que o angular fornece.
+
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 ### Segundo artigo sobre AngularJS
+
+Tem um 2º artigo que cobre **ainda mais sobre AngularJS**. Porfavor, veja o artigo depois que você tiver absorvido este.
+
+[Clique aqui para ver o segundo artigo sobre AngularJS](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html)
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)

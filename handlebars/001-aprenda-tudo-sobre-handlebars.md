@@ -18,7 +18,7 @@ Acrescentando, quase todos os frameworks JavaScript front-end usam um motor de t
 
 > ## Tópicos neste post
 > 
-> * [Quando usar templates JS e por que Handlebars.js?]()
+> * [Quando usar templates JS e por que Handlebars.js?](https://github.com/eoop/traduz-ai/blob/master/handlebars/001-aprenda-tudo-sobre-handlebars.md#quando-usar-templates-js-e-por-que-handlebarsjs)
 > * [Visão geral sobre Handlebars.js]()
 > * [Comparando um projeto não handlebars com um projeto handlebars.js]()
 > * [Aprenda a sintaxe Handlebars.js]()
@@ -28,3 +28,17 @@ Acrescentando, quase todos os frameworks JavaScript front-end usam um motor de t
 > * [Handlebars.js com Backbone.js, jQuery, Ember.js e Meteor.js]()
 
 ## Quando usar templates JS e por que Handlebars.js?
+
+## Visão geral sobre Handlebars.js
+
+## Comparando um projeto não handlebars com um projeto handlebars.js
+
+## Aprenda a sintaxe Handlebars.js
+
+## Auxiliares Handlebars.js embutidos (condicionais e loops)
+
+## Auxiliares Personalizados Handlebars.js
+
+## 4 maneiras de carregar/adicionar templates
+
+## Handlebars.js com Backbone.js, jQuery, Ember.js e Meteor.js

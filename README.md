@@ -56,7 +56,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 # NodeJS
 
 # Handlebars.js
-01 - [Handlebars.js Tutorial: Learn Everything About Handlebars.js JavaScript Templating](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/#Handlebarsjs_with_Backbonejs_jQuery_Emberjs_and_Meteorjs) || [Aprenda Tudo sobre Handlebars.js Templating JavaScript]()
+01 - [Handlebars.js Tutorial: Learn Everything About Handlebars.js JavaScript Templating](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/#Handlebarsjs_with_Backbonejs_jQuery_Emberjs_and_Meteorjs) || [Aprenda Tudo sobre Handlebars.js Templating JavaScript](https://github.com/eoop/traduz-ai/blob/master/handlebars/001-aprenda-tudo-sobre-handlebars.md#aprenda-tudo-sobre-handlebarsjs-templating-javascript)
 
 # HTML5
 

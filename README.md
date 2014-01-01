@@ -23,6 +23,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 * [JavaScript](#javascript) (04)
 * [AngularJS](#angularjs) (04)
 * [NodeJS](#node.js) (00)
+* [Handlebars](01)
 * [HTML5](#html5) (00)
 * [CSS3](#css3) (00)
 * [MongoDB](#mongodb) (01)
@@ -53,6 +54,9 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 04 - [Use AngularJS to Power Your Web Application](http://www.yearofmoo.com/2012/08/use-angularjs-to-power-your-web-application.html) || [Use AngularJS para Potencializar sua Aplicação Web](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
 # NodeJS
+
+# Handlebars.js
+01 - [Handlebars.js Tutorial: Learn Everything About Handlebars.js JavaScript Templating](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/#Handlebarsjs_with_Backbonejs_jQuery_Emberjs_and_Meteorjs) || [Aprenda Tudo sobre Handlebars.js Templating JavaScript]()
 
 # HTML5
 

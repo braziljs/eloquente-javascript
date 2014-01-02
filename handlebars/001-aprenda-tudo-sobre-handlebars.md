@@ -29,6 +29,39 @@ Acrescentando, quase todos os frameworks JavaScript front-end usam um motor de t
 
 ## Quando usar templates JS e por que Handlebars.js?
 
+Temos alguns casos específicos de uso para motores de template JavaScript.
+
+#### Quando usar um motor de template JavaScript?
+
+Você deve usar um motor de template JavaScript como Handlebars.js quando:
+
+* Sempre que você usar um framework front-end JavaScript como Backbone.js, Ember.js, e similares. a maioria dos frameworks JavaScript front-end dependem de motores de template.
+* A View da aplicação (a página HTML ou porções desta) vão ser atualizadas frequentemente, especilamente como um resultado de mudanças dos dados ou do servidor por meio de uma API REST ou a partir de dados do cliente.
+* Você tem múltiplas tecnologias que dependem de seus dados a partir do servidor e você quer que todas elas processem os mesmos dados.
+* Sua aplicação tem muita interatividade e é muito responsiva.
+* Você está desenvolvendo uma aplicação web single page com múltiplas views.
+* Você deseja gerenciar facilmente seu conteúdo HTML; você não quer que seu código JavaScript contenha importantes marcações HTML:
+	```javascript
+	shoesData.forEach (function (eachShoe) {
+		// note a confusão entre HTML e JavaScript; é tedioso para acompanhar:
+		theHTMLListOfShoes += '<li class="shoes">' + '<a href="/' + eachShow.name.toLowerCase() + '">' + eachShow.name + ' -- Price: ' + eachShoe.price + '</a></li>';
+	});
+	return theHTMLListOfShoes;
+
+	```
+
+#### Por que Handlebars.js (dos 8 ou mais motores template)?
+
+Previsivelmente, temos muitos motores client-side (no lado do cliente) de templates JavaScript, mas nós vamos focar somente no Handlebars.js neste tutorial, visto que este é o melhor de todos. Alguns outros motores de template dignos são Underscore.js, Mustache.js, EJS e Dust.js.
+
+Handlebars.js é uma extensão da linguagem de templates JavaScript Mustache; ele susbstitiu o Mustache.js.
+
+Por que usar Handlebars.js? Aqui alguns motivos:
+
+* Handlebars é um dos mais avançados (pré-compiladores e similares), rico de recurso e popular entre todos os motores de templates JavaScript, e tem a comunidade mais ativa.
+* Handlebars é um motor de templates *logic-less*, que significa que há pouca ou nenhuma lógica em seus modelos que estão na página HTML. O mais importante uso de Handlebars, e qualquer motor de templates, é manter suas páginas HTML simples e limpas e desacopla-las de arquivos JavaScript lógicos, e o Handlebars cumpre esta proposta bem. Em adição, Dust.js é também um motor de templates *logic-less* e uma [digna alternativa](http://engineering.linkedin.com/frontend/client-side-templating-throwdown-mustache-handlebars-dustjs-and-more) para o Handlebars.js.
+*
+
 ## Visão geral sobre Handlebars.js
 
 ## Comparando um projeto não handlebars com um projeto handlebars.js

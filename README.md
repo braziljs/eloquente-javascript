@@ -23,7 +23,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 * [JavaScript](#javascript) (04)
 * [AngularJS](#angularjs) (04)
 * [NodeJS](#node.js) (00)
-* [Handlebars](https://github.com/eoop/traduz-ai/tree/master/handlebars) (01)
+* [Handlebars](#handlebarsjs) (01)
 * [HTML5](#html5) (00)
 * [CSS3](#css3) (00)
 * [MongoDB](#mongodb) (01)

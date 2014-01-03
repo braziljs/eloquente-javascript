@@ -22,10 +22,10 @@ O nome das propriedades podem ser uma string ou um número, mas se for um númer
 ```javascript
 var grupoDeIdade = { 30: "criança", 100: "muito velho"};
 
-console.log(grupoDeIdade.30)	// Isso vai lançar um erro
+console.log(grupoDeIdade.30) // Isso vai lançar um erro
 
 // Assim é como você vai acessar o valor da propriedade 30, para que retorne o valor "criança"
-console.log(grupoDeIdade["30"]);	//criança 
+console.log(grupoDeIdade["30"]); //criança 
 
 // É melhor evitar usar números como nomes de propriedades.
 ```
@@ -39,11 +39,11 @@ Uma das principais diferenças entre os tipos de dados por referência e os tipo
 ```javascript
 // O tipo primitivo de dado é armazenado como um valor
 var pessoa = "Kobe";
-var outraPessoa = pessoa;	//outraPessoa = valor de pessoa
-pessoa = "Bryant";	// valor de pessoa agora mudado
+var outraPessoa = pessoa; //outraPessoa = valor de pessoa
+pessoa = "Bryant"; // valor de pessoa agora mudado
 
-console.log(outraPessoa);		// Kobe
-console.log(pessoa);			// Bryant
+console.log(outraPessoa); // Kobe
+console.log(pessoa); // Bryant
 ```
 
 É interessante notarmos que mesmo que pessoa agora tenha como valor "Bryant", a variável outraPessoa continua retendo o antigo valor que pessoa tinha.
@@ -63,18 +63,18 @@ Neste exemplo, nós copiamos o objeto pessoa para outraPessoa, mas por causa do 
 
 
 ### **Propriedades de Dados têm atributos**
-Cada propriedade dos dados (propriedades dos objetos que armazenam dados) não tem somente os pares nome-valor, mas também 3 tributos (os 3 atributos são definidos como true por padrão):
+Cada propriedade dos dados (propriedades dos objetos que armazenam dados) não tem somente os pares nome-valor, mas também 3 atributos (os 3 atributos são definidos como true por padrão):
 
-- Atributo configurável: especifica se a propriedade pode ser deletada ou mudada.
-- Enumerável: especifica se a propriedade pode ser retornada em um loop for/in. 
-- Editável: especifica se a propriedade pode ser alterada.
+- **Atributo configurável**: especifica se a propriedade pode ser deletada ou mudada.
+- **Enumerável**: especifica se a propriedade pode ser retornada em um loop for/in. 
+- **Editável**: especifica se a propriedade pode ser alterada.
 
 
 ### **Criando Objetos**
-Estes são os dois meios comuns de criar objetos:
+Estes são os dois meios comuns de se criar objetos:
 
 ### 1. **Objetos Literais**
-O mais comum e, de fato, mais fácil modo de criar objetos é com através dos objetos literais como descrito aqui:
+O mais comum e, de fato, mais fácil modo de criar objetos é através dos objetos literais como descrito aqui:
 
 ```javascript
 // Este é um objeto vazio inicializado usando a notação de objeto literal
@@ -92,7 +92,7 @@ var manga = {
 ```
 
 ### 2. **Objeto Construtor**
-O segundo meio mais comum de criar objetos é com o construtor "Object". Um construtor é uma função usada para inicializar novos objetos, e você usa a nova palavra-chave para chamar o construtor.
+O segundo meio mais comum de criar objetos é com o construtor "Object". Um construtor é uma função usada para inicializar novos objetos, e você usa a palavra-chave `new` para chamar o construtor.
 
 ```javascript
 var manga = new Object();
@@ -104,7 +104,7 @@ manga.quantoDoceEuSou = function () {
 }
 ```
 
-Mesmo você podendo usar algumas palavras reservadas como "for" para nomear propriedades em seus objetos, é totalmente aconselhável que você NÃO faça isso.
+Mesmo você podendo usar algumas palavras reservadas como `for` para nomear propriedades em seus objetos, é totalmente aconselhável que você **NÃO** faça isso.
 
 Objetos podem conter qualquer outro tipo de dados, incluindo Numbers, Arrays e também outros objetos.
 
@@ -112,7 +112,7 @@ Objetos podem conter qualquer outro tipo de dados, incluindo Numbers, Arrays e t
 ### **Padrões Práticos para Criação de Objetos**
 Para simples objetos que podem ser usados somente uma vez na sua aplicação para guardar dados, os dois métodos apresentados acima podem ser suficientes para a criação de objetos.
 
-Imagine que você tenha uma aplicação que mostre frutas e os detalhes sobre cada uma delas. Todas as frutas na sua aplicação tem estas propriedades: cor, forma, doçura, custo e uma função mostrarNome (mostrarNome). Isso seria muito tedioso e improdutivo de escrever todo o tempo que você quisesse criar um novo objeto fruta.
+Imagine que você tenha uma aplicação que mostre frutas e os detalhes sobre cada uma delas. Todas as frutas na sua aplicação tem estas propriedades: cor, forma, doçura, custo e uma função mostrarNome. Isso seria muito tedioso e improdutivo de escrever todo o tempo que você quisesse criar um novo objeto fruta.
 
 ```javascript
 var frutaManga = {
@@ -178,11 +178,13 @@ frutaAbacaxi.mostrarNome();		//Isso é um(a) Abacaxi
 Se você tiver que alterar a função mostrarNome, você somente precisa fazer isso em um local. O padrão encapsula todas as funcionalidades e características das frutas apenas fazendo uma simples função Fruta com herança.
 
 Notas: 
-- Uma propriedade herdada é definida na propriedade *prototype* do objeto. Por exemplo: algumObjeto.prototype.primeiroNome = "John";
+- Uma propriedade herdada é definida na propriedade *prototype* do objeto. Por exemplo: `algumObjeto.prototype.primeiroNome = "John";`
 
 
 - Uma propriedade própria é definida diretamente no objeto, por exemplo:
+
 ```javascript
+
 // Vamos criar um objeto primeiro
 var umaManga = new Fruta();
 

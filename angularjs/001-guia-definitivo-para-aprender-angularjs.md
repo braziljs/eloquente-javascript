@@ -342,7 +342,7 @@ Vindo dos Services os Factories se tornam mais simples, nós podemos criar Objet
 
 ```javascript
 
-myApp.factory('Server', function () {
+myApp.factory('Server', ['$http', function($http) {
 	return {
 		get: function (url) {
 			return $http.get(url);
@@ -351,7 +351,7 @@ myApp.factory('Server', function () {
 			return $http.post(url);
 		}
 	};
-});
+}]);
 
 ```
 

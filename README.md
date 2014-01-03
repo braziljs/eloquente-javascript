@@ -8,7 +8,7 @@ Uma moderna introdução ao JavaScript, programação e maravilhas digitais.
 
 ### Escrito por **Marijn Haverbeke**
 
-Traduzido por **Eric Oliveira**
+Traduzido por **[Eric Oliveira](https://github.com/eoop/eo_op)**
 
 Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/) Todo código neste livro também pode ser considerado sobre [licença MIT](http://opensource.org/licenses/MIT).
 
@@ -16,7 +16,7 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 
 ## Conteúdo
 
-* [Introdução]()
+* [Introdução](https://github.com/eoop/eloquente-javascript#introdu%C3%A7%C3%A3o)
 1. [Valores, Tipos e Operadores]()
 2. [Estrutura do Programa]()
 3. [Funções]()

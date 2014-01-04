@@ -188,7 +188,9 @@ Notas:
 // Vamos criar um objeto primeiro
 var umaManga = new Fruta();
 
-// Agora nós vamos definir a propriedade mangaSabor diretamente no objeto umaManga, sendo essa uma propriedade de particular de umaManga, não uma propriedade herdada.
+// Agora nós vamos definir a propriedade mangaSabor 
+// diretamente no objeto umaManga, sendo essa uma 
+// propriedade particular de umaManga, não uma propriedade herdada.
 
 umaManga.mangaSabor = "algum valor";
 ```
@@ -310,7 +312,8 @@ var escola = { nomeEscola: "MIT" };
 // Imprimi true porque nomeEscola é um método próprio do objeto escola
 console.log(escola.hasOwnProperty("nomeEscola"));	// true
 
-// Imprimi false porque o objeto escola herda o método toString de Object.prototype, portanto toString não é uma propriedade própria do objeto escola
+// Imprimi false porque o objeto escola herda o método toString de 
+// Object.prototype, portanto toString não é uma propriedade própria do objeto escola
 console.log(escola.hasOwnProperty("toString"));
 ```
 

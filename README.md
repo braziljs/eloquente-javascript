@@ -8,7 +8,7 @@ Uma moderna introdução ao JavaScript, programação e maravilhas digitais.
 
 ### Escrito por **Marijn Haverbeke**
 
-Traduzido por **[Eric Oliveira](https://github.com/eoop/eo_op)**
+#### Traduzido por **[Eric Oliveira](https://github.com/eoop/eo_op)**
 
 Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/) Todo código neste livro também pode ser considerado sobre [licença MIT](http://opensource.org/licenses/MIT).
 
@@ -59,4 +59,46 @@ Para tirar algum proveito deste livro, mais do que apenas uma leitura passiva é
 
 > O programador de computadores é um criador de universos no qual ele é o único responsável. Universos de complexidade virtualmente ilimitada podem ser criados sob a forma de programas de computador. **Joseph Weizenbaum, Computer Power and Human Reason**
 
-marcador: http://eloquentjavascript.net/2nd_edition/preview/00_intro.html#p_mDbd/yWUsd
+Um programa é muitas coisas. É um pedaço de texto digitado por um programador, que é a força direta que faz que o computador faça o que faz, são dados na memória do computador, mas ele controla as ações realizadas nesta mesma memória. Analogias que tentam comparar programas com objetos que somos familiares tendem a ser insuficientes. Uma conexão superficial é a com uma máquina - muitas partes separadas tendem a ser envolvidas, e para fazer o conjunto todo precisamos considerar as maneiras que estas partes se interconectam e contribuam para a operação do todo.
+
+Um computador é uma máquina feita para atuar como um hospedeiro para estas máquinas imateriais. Computadores por si próprios podem somente fazer coisas estúpidas e simples. A razão deles serem tão úteis que eles fazem coisas em uma velocidade incrível. Um programa pode ingenuamente combinar enormes números de simples ações ao invés de fazer coisas complicadas.
+
+Para muitos de nós, escrever programas de computador é um fascinante jogo. Um programa é uma construção do pensamento. Não tem custos de construção, é leve e cresce facilmente ante nossas digitações.
+
+Se não formos cuidadosos, seu tamanho e complexidade vão aumentar fora de controle, confundindo até a pessoa que o criou. Este é o principal problema da programação: manter os programas sobre controle. Quando um programa funciona, ele é lindo. A arte de programar é a habilidade de controlar a complexidade. Um grande programa é suave, é simples em sua complexidade.
+
+Alguns programadores acreditam que esta complexidade é melhor gerenciada usando somente um pequeno conjunto de técnicas bem entendidas em seus programas. Eles compõe regras rígidas (*"boas práticas"*) prescrevendo a forma que programas devem ter, e os mais zelosos sobre isso vão considerar aqueles que saem desta pequena zona de segurança *maus programadores*.
+
+Quanta hostilidade perante a riqueza da programação - tentar reduzir a algo simples e previsível, colocando um tabu em todos os lindos e misteriosos programas! A paisagem das técnicas de programação é enorme, fascinante em sua diversidade, e permanece largamente inexplorada. É sem dúvida perigoso ir neste caminho, atraindo o programador inexperiente em todo tipo de confusão, mas isso só significa que você deve proceder com cautela e manter o juízo. Conforme você aprende, sempre haverá novos desafios e novos territórios a ser explorados. Programadores que recusam de manter-se explorando vão estagnar, esquecer sua alegria, e ficar entediado com seu trabalho.
+
+# Porque linguagens importam?
+
+No começo, no nascimento da programação, não havia linguagens de programação. Programas pareciam algo desta forma:
+
+00110001 00000000 00000000
+00110001 00000001 00000001
+00110011 00000001 00000010
+01010001 00001011 00000010
+00100010 00000010 00001000
+01000011 00000001 00000000
+01000001 00000001 00000001
+00010000 00000010 00000000
+01100010 00000000 00000000
+
+Este é um programa que soma os números do 1 ao 10 e imprimi o resultado (1 + 2 + ... 10 = 55). Isso pode rodar em uma muito simples, uma máquina hipotética. Para programar os primeiros computadores, era necessário configurar grandes arrays de chaves na posição certa, ou fazer furos em cartões e alimentá-los no computador. Você pode imaginar como isso era tedioso, e um procedimento propenso ao erro. Mesmo escrever simples programas requeriam muita habilidade e disciplina. Os complexos eram quase inconcebíveis.
+
+Claro, inserindo manualmente estes padrões misteriosos de bits (1 e 0) fez que o programador tivesse uma profunda sensação de ser um poderoso feiticeiro. E isto tem que valer alguma coisa em termos de satisfação no trabalho.
+
+Cada linha do programa contém uma simples instrução. Isto pode ser escrito assim:
+
+1. Guarde o número 0 na posição da memória 0.
+2. Guarde o número 1 na posição da memória 1.
+3. Guarde o valor da posição da memória 1 na posição da memória 2.
+4. Subtraia o número 11 do valor na posição da memória 2.
+5. Se o valor na posição da memória 2 é o número 0, continue com a instrução 9.
+6. Adicione o valor da posição da memória 1 para posição de memória 0.
+7. Adicione o número 1 ao valor da posição de memória 1.
+8. Continue com a instrução 3.
+9. Retorne o valor da posição da memória 0.
+
+marcador : http://eloquentjavascript.net/2nd_edition/preview/00_intro.html#p_M+oRlzgd8m

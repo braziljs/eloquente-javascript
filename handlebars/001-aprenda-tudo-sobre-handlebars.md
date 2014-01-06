@@ -129,7 +129,80 @@ Para usar Handlebars, primeiro você liga o arquivo Handlebars.js no bloco *head
 	<script id="header" type="text/x-handlebars-template">
 		<div> Name: {{ headerTitle }}</div>
 	</script>
+	
 	```
+
+2. **Dados (ou Contexto)**
+
+	A segunda parte do código no template Handlebars é o dado que você quer mostrar na página. Você passa seus dados como um objeto (um objeto regular JavaScript) para a função Handlebars. O *dado-objeto* é chamado de contexto. E este objeto pode ser composto de arrays, strings, números, outros objetos, ou uma combinação de todos eles.
+
+	Se o dado-objeto tem um array de objetos, você pode usar a função auxiliar Handlebars `each` (mais sobre auxiliares depois) para iterar o array, e o contexto atual é configurado para cada item dentro do array.
+
+	Aqui temos exemplos de configuração de objetos e como iterá-los com um template Handlebars.
+
+	- Objeto com array de objetos.
+
+	```javascript
+
+	// O objeto customers tem um array de objetos que vamos passar para o Handlebars:
+	var theData = {
+		customers: [
+			{
+				firstName: "Michael", 
+				lastName: "Alexander", 
+				age: 20
+			},
+			{
+				firstName: "John",
+				lastName: "Allen",
+				age: 29
+			}
+		]
+	};
+
+	```
+
+	Você pode usar o *auxiliar each* para iterar o objeto customer assim:
+
+	```html
+
+	<script id="header" type="text/x-handlebars-template">
+		{{#each customers}} // note a referência ao objeto customers
+			<li> {{ firstName }} {{ lastName }} </li>
+		{{/each}}
+	</script>
+
+	```
+
+	Ou, uma vez que passamos o objeto customers como um array de objetos, nós podemos usar uma declaração de bloco auxiliar (mais sobre blocos auxiliares depois) como esta e referenciar o *customers* diretamente:
+
+	```html
+
+	<script id="header" type="text/x-handlebars-template">
+		{{#customers}}
+			<li> {{ firstName }}  {{ lastName }} </li>
+		{{/customers}}
+	</script>
+
+	```
+
+	- Objeto com Strings
+
+	```javascript
+
+	var theData = {
+		headerTitle: "Shop Page",
+		weekDay: "Wednesday"
+	};
+
+	<script id="header" type="text/x-handlebars-template">
+		<div> {{ headerTitle }} </div>
+		Today is {{ weekDay }}
+	</script>
+
+	```
+
+3. **Função de Compilação do Handlebars**
 
 ## Comparando um projeto não handlebars com um projeto handlebars.js
 

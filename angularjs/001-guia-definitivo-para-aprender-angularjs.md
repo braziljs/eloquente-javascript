@@ -494,7 +494,7 @@ Digite 'dollar http'. Seu melhor amigo a partir de agora. O método $http é um 
 
 ```javascript
 
-myApp.controller('MainCtrl', ['$scope', function ($scope) {
+myApp.controller('MainCtrl', ['$scope', '$http' function ($scope, $http) {
 	$http({
 		method: 'GET',
 		url: '//localhost:9000/someurl'
@@ -507,12 +507,12 @@ O Angular então retorna algo chamado <i>promise</i>, que é uma maneira muito m
 
 ```javascript
 
-myApp.controller('MainCtrl', ['$scope', function ($scope) {
+myApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
 	$http ({
 		method: 'GET',
 		url: '//localhost:9000/someUrl'
 	})
-	.sucess (function (data, status, headers, config) {
+	.success (function (data, status, headers, config) {
 		//recuperação de dados bem sucedida
 	})
 	.error (function (data, status, headers, config) {
@@ -543,13 +543,13 @@ O JavaScript (cheque as notações para saber o que está acontecendo aqui):
 
 ```javascript
 
-myApp.controller ('UserCtrl', ['$scope', function ($scope) {
+myApp.controller ('UserCtrl', ['$scope', '$http', function ($scope, $http) {
 		
 		//crie um Objeto user
 		$scope.user = {};
 
 		//Inicialize um modelo como uma string vazia
-		$scope.user.name = '';
+		$scope.user.username = '';
 
 		//Nós precisamos fazer uma chamada e um get
 		//o nome do usuário
@@ -557,7 +557,7 @@ myApp.controller ('UserCtrl', ['$scope', function ($scope) {
 			method: 'GET',
 			url: '//localhost:9000/someUrlForGettingUsername'
 		})
-		.sucess (function (data, status, headers, config) {
+		.success (function (data, status, headers, config) {
 			//Veja aqui, nós estamos agora atribuindo este username
 			//ao nosso Model existente!
 			$scope.user.username = data.user.name;
@@ -598,7 +598,7 @@ myApp.controller ('EmailCtrl', ['$scope', function ($scope) {
 	// este é um ARRAY de OBJETOS
 	$scope.emails.messages = [{
 		"from": "Steve Jobs",
-		"subject": "I think I'm holding my phone wrong :/,
+		"subject": "I think I'm holding my phone wrong :/",
 		"sent": "2013-10-01T08:05:59Z"
 	},{
 		"from": "Ellie Goulding",
@@ -617,7 +617,7 @@ myApp.controller ('EmailCtrl', ['$scope', function ($scope) {
 
 ```
 
-Agora precisamos conectar isso dentro do nosso HTML. Aqui é onde nós vamos usar as ligações declarativas (declarative binding) para declarar o que a aplicação irá fazer para criar nosso primeiro pedaço de HTML dinâmico. Vamos usar a diretiva do Angular <i>ng-repeat</i> embutida, que vai iterar sobre os dados e renderizar uma saída sem absolutamente nenhum callback ou mudanã de estado, é tudo de graça:
+Agora precisamos conectar isso dentro do nosso HTML. Aqui é onde nós vamos usar as ligações declarativas (declarative binding) para declarar o que a aplicação irá fazer para criar nosso primeiro pedaço de HTML dinâmico. Vamos usar a diretiva do Angular <i>ng-repeat</i> embutida, que vai iterar sobre os dados e renderizar uma saída sem absolutamente nenhum callback ou mudança de estado, é tudo de graça:
 
 ```html
 
@@ -772,7 +772,7 @@ Há muito mais sobre o serviço $routeProvider que é muito valioso de se conhec
 
 O GMail manuseia muito destes dados iniciais escrevendo JSON dentro da página (click com o botão direito - Ver Código Fonte). Se você quiser colocar dados instantaneamentes na sua página, isto irá acelerar o tempo de renderizãção e o Angular vai iniciar rapidamente.
 
-Quando desenvolvo nosso aplicativos, as tags Java são colocadas no DOM e quando renderizadas, o dado é mandado para o backend. [Eu tenho experiência zero com Java, então se você for perguntar isso, sim você pode usar qualquer linguagem no seu servidor]. Aqui vamos ver como escrever JSON na sua página e então passar isso para um Controlador para uso de ligação imediata:
+Quando desenvolvo nossos aplicativos, as tags Java são colocadas no DOM e quando renderizadas, o dado é mandado para o backend. [Eu tenho experiência zero com Java, então se você for perguntar isso, sim você pode usar qualquer linguagem no seu servidor]. Aqui vamos ver como escrever JSON na sua página e então passar isso para um Controlador para uso de ligação imediata:
 
 ```html
 
@@ -872,7 +872,7 @@ Você vai provalmente ser apanhado nessa questão, mas o AngularJS permite que v
 
 ``` 
 
-Isso realmente leva a web para o futuro do HTML5. O HTML5 intrduziu os Web Components e o elemento <template>, que o Angular usa hoje em dia. Web Components compreendem elementos customizáveis completamente com injeção dinâmica de JavaScript para população do View e isto é incrivelmente empolgante.
+Isso realmente leva a web para o futuro do HTML5. O HTML5 introduziu os Web Components e o elemento <template>, que o Angular usa hoje em dia. Web Components compreendem elementos customizáveis completamente com injeção dinâmica de JavaScript para população do View e isto é incrivelmente empolgante.
 
 <h2>Comentários de Escopo</h2>
 

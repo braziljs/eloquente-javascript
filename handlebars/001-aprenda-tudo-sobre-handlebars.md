@@ -202,9 +202,82 @@ Para usar Handlebars, primeiro você liga o arquivo Handlebars.js no bloco *head
 
 	```
 
-3. **Função de Compilação do Handlebars**
+	3. **Função de Compilação do Handlebars**
+
+	A última parte de código que precisamos para templates Handlebars é realmente uma execução em dois passos:
+
+		1. Compilar o template com a função Handlebars.compile.
+		2. Então usar esta função compilada para invocar o objeto passado a ela (é preciso um objeto de dados como seu único parâmetro). E isto vai retornar uma string HTML com os valores do objeto interpolado inseridos dentro do HTML.
+
+	**Em resumo:** O a função Handlebars.compile pega o template como um parâmetro e retorna uma função JavaScript. Nós então usamos essa função compilada para executar o objeto de dados e retornar uma string com HTML e os valores do objeto interpolados. Então nós podemos inserir a string dentro da página HTML.
+
+**Aqui temos as 3 partes juntas:**
+
+1. Na página HTML: Configuramos o template para usar expressões Handlebars, e adicionamos templates em uma tag script (se usar tags script: templates em um arquivo individual HTML não necessita de tags script):
+
+```html
+
+<script id="header" type="text/x-handlebars-template">
+	<div> {{ headerTitle }} </div>
+	Today is {{ weekDay }}
+</script>
+
+```
+
+2. No arquivo JavaScript: Inicialize o objeto de dados
+
+```javascript
+
+var theData = {
+	headerTitle: "Shop Page",
+	weekDay: "Wednesday"
+};
+
+// Recupere o HTML a partir da tag script que configuramos no passo 1
+// Vamos usar o id (header) da tag script como alvo na página
+var theTemplateScript = $("#header").html();
+
+```
+
+3. Ainda no arquivo JavaScript: Quando nós usamos a função de compilação do Handlebars para compilar os templates.
+
+Compilar o modelo recuperado pela tag script:
+
+```javascript
+
+// A função Handlebars.compile retorna uma função para a variável theTemplate
+var theTemplate = Handlebars.compile(theTemplateScript);
+
+```
+
+Usando a função `theTemplate()` retornada pela função compiladora para gerar a string final com o objeto de dados interpolados. Nós passamos o objeto de dados como um parâmetro. Então anexamos a string gerada com HTML para a página:
+
+```javascript
+
+$(document.body).append( theTemplate( theData ) );
+
+```
+
+Isto vai retornar nosso HTML com os valores vindos do objeto, inseridos no lugar, e o resultado vai ser como este:
+
+```html
+
+Shop Page
+Today is Wednesday
+
+```
+
 
 ## Comparando um projeto não handlebars com um projeto handlebars.js
+
+Para obter uma visão geral de alto nível do que o desenvolvimento com Handlebars implica, quando comparado com templates não JavaScript, vamos construir um rápido e pequeno projeto JavaScript.
+
+Antes de usarmos Handlebars, vamos fazer uso do jQuery e JavaScript sem Handlebars, para termos uma noção de o quê estamos fazendo e como o Handlebars vai fazer alguma diferença.
+
+Sem Handlebars, será como um típico projeto JavaScript/jQuery vai parecer quando você tiver conteúdo para adicionar a página com alguns dados. Vamos simplismente mostrar uma lista de sapatos e preços.
+
+### Um pequeno projeto sem Handlebars
+
 
 ## Aprenda a sintaxe Handlebars.js
 

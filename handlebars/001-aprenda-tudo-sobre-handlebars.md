@@ -213,7 +213,7 @@ A última parte de código que precisamos para templates Handlebars é realmente
 
 **Aqui temos as 3 partes juntas:**
 
-1 . Na página HTML: Configuramos o template para usar expressões Handlebars, e adicionamos templates em uma tag script (se usar tags script: templates em um arquivo individual HTML não necessita de tags script):
+**1 . Na página HTML:** Configuramos o template para usar expressões Handlebars, e adicionamos templates em uma tag script (se usar tags script: templates em um arquivo individual HTML não necessita de tags script):
 
 ```html
 
@@ -224,7 +224,7 @@ A última parte de código que precisamos para templates Handlebars é realmente
 
 ```
 
-2 . No arquivo JavaScript: Inicialize o objeto de dados
+**2 . No arquivo JavaScript:** Inicialize o objeto de dados
 
 ```javascript
 
@@ -239,7 +239,7 @@ var theTemplateScript = $("#header").html();
 
 ```
 
-3 . Ainda no arquivo JavaScript: Quando nós usamos a função de compilação do Handlebars para compilar os templates.
+**3 . Ainda no arquivo JavaScript:** Quando nós usamos a função de compilação do Handlebars para compilar os templates.
 
 Compilar o modelo recuperado pela tag script:
 

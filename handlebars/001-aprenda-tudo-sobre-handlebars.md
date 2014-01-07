@@ -202,7 +202,7 @@ Para usar Handlebars, primeiro você liga o arquivo Handlebars.js no bloco *head
 
 	```
 
-	3. **Função de Compilação do Handlebars**
+3. **Função de Compilação do Handlebars**
 
 	A última parte de código que precisamos para templates Handlebars é realmente uma execução em dois passos:
 
@@ -278,6 +278,7 @@ Sem Handlebars, será como um típico projeto JavaScript/jQuery vai parecer quan
 
 ### Um pequeno projeto sem Handlebars
 
+1. 
 
 ## Aprenda a sintaxe Handlebars.js
 

@@ -75,15 +75,15 @@ Quanta hostilidade perante a riqueza da programação - tentar reduzir a algo si
 
 No começo, no nascimento da programação, não havia linguagens de programação. Programas pareciam algo desta forma:
 
-00110001 00000000 00000000
-00110001 00000001 00000001
-00110011 00000001 00000010
-01010001 00001011 00000010
-00100010 00000010 00001000
-01000011 00000001 00000000
-01000001 00000001 00000001
-00010000 00000010 00000000
-01100010 00000000 00000000
+	00110001 00000000 00000000
+	00110001 00000001 00000001
+	00110011 00000001 00000010
+	01010001 00001011 00000010
+	00100010 00000010 00001000
+	01000011 00000001 00000000
+	01000001 00000001 00000001
+	00010000 00000010 00000000
+	01100010 00000000 00000000
 
 Este é um programa que soma os números do 1 ao 10 e imprimi o resultado (1 + 2 + ... 10 = 55). Isso pode rodar em uma muito simples, uma máquina hipotética. Para programar os primeiros computadores, era necessário configurar grandes arrays de chaves na posição certa, ou fazer furos em cartões e alimentá-los no computador. Você pode imaginar como isso era tedioso, e um procedimento propenso ao erro. Mesmo escrever simples programas requeriam muita habilidade e disciplina. Os complexos eram quase inconcebíveis.
 

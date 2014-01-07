@@ -101,4 +101,52 @@ Cada linha do programa contém uma simples instrução. Isto pode ser escrito as
 8. Continue com a instrução 3.
 9. Retorne o valor da posição da memória 0.
 
-marcador : http://eloquentjavascript.net/2nd_edition/preview/00_intro.html#p_M+oRlzgd8m
+Embora isto seja mais legível que a sopa de bits, ainda continua bastante desagradável. Pode ser de auxílio usar nomes ao invés de números para as instruções e locações de memória:
+
+	Configure "total" para 0
+	Configure "count" para 1
+	[loop]
+	Configure "compare" para "count"
+	Subtraia 11 de "compare"
+	Se "compare" é zero, continue até [fim]
+	Adicione "count" em "total"
+	Adicione 1 em "count"
+	Continue até [loop]
+	[fim]
+	Saída "total"
+
+Neste ponto não é tão difícil ver como os programas trabalham. Você consegue? As primeiras duas linhas fornece duas locações de memória que iniciam os valores: `total` vai ser usado para construir o resultado da computação, e `count` mantém registrado o número que nós atualmente estamos olhando. As linhas usando `compare` são provavelmente as mais estranhas. O que o programa quer fazer é ver se já pode parar. Por causa da nossa máquina hipotética ser bastante primitiva, ela somente pode testar se um número é zero e fazer a decisão (salto) baseado nisto. Então, ela usa a locação de memória rotulada `compare` para computar o valor de `count` - 11 e fazer a decisão baseada neste valor. As próximas duas linhas adicionam o valor de `count` ao resultado e incrementam `count` por 1 cada vez que o programa decide que não é 11 ainda.
+
+Aqui temos o mesmo programa em JavaScript:
+
+<pre>
+<code>
+var total = 0, count = 1;
+while (count <= 10) {
+	total += count;
+	count += 1;
+}
+console.log(total);
+</code>
+</pre>
+
+Isso nos dá muitas melhorias. Mais importante, não é preciso mais especificar o caminho que nós queremos que o programa salte anteriormente ou adiante. Ele continua executando o bloco (envolvido nas chaves) até que a condição que foi dada seja: `count <= 10`, que significa "count é menor que ou igual a 10". Não temos mais que criar um valor temporário e compará-lo a zero. Isso é um detalhe desinteressante, e o poder das linguagens de programação é que elas tomam conta de detalhes desinteressantes para nós.
+
+No final do programa, depois de `while` ser definido, a operação `console.log` é aplicada ao resultado na ordem que escrevemos isso como *output* (saída).
+
+Finalmente, aqui temos o que o programa pode parecer se nós tivermos as operações convenientes `range` (alcance) e `sum` (soma) disponíveis, que respectivamente criam uma coleção de números com um alcance e computam a soma de uma coleção de números:
+
+<pre>
+<code>
+console.log(sum(range(1,10)));
+// 55
+</code>
+</pre>
+
+A moral da história, então, é que o mesmo programa pode ser expresso de forma longa e curta, de forma legível ou não. A primeira versão do programa foi extremamente obscura, enquanto esta última é praticamente "Inglês": `log` (registre) a `sum` (soma) da `range` (extensão) dos números de 1 a 10. (Nós vamos ver nos próximos capítulos como criar coisas do tipo `sum` e `range`).
+
+Uma boa linguagem de programação ajuda o programador permitindo-o conversr sobre ações que o computador vai realizar em *alto nível*. Isto ajuda a deixar detalhes desinteressantes implícitos, e fornece construções convenientes de blocos (como o `while` e `console.log`), permitindo a você definir seus próprios blocos (como `sum` e `range`), e tornando simples a construção destes blocos.
+
+# O que é JavaScript?
+
+marcador http://eloquentjavascript.net/2nd_edition/preview/00_intro.html#p_NnFf9SYflZ

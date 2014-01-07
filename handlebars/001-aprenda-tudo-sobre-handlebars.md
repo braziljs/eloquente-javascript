@@ -83,133 +83,133 @@ Isto soa mais complicado do que é, vamos olhar mais de perto.
 
 Para usar Handlebars, primeiro você liga o arquivo Handlebars.js no bloco *head* da sua página HTML, como se faz com jQuery ou qualquer arquivo .js... Então temos 3 partes do código que você usa para templates Handlebars:
 
-1. **Expressões Handlebars.js**
-	Expressões Handlebars são compostas de expressões Handlebars e qualquer conteúdo HTML ou expressões Handlebars dentro dentro da expressão (se a expressão é um bloco).
+1 . **Expressões Handlebars.js**
+Expressões Handlebars são compostas de expressões Handlebars e qualquer conteúdo HTML ou expressões Handlebars dentro dentro da expressão (se a expressão é um bloco).
 
-	Uma simples expressão Handlebars é escrita dessa forma (onde "conteudo" pode ser uma variável ou uma função *helper* com - ou sem - parâmetros:
+Uma simples expressão Handlebars é escrita dessa forma (onde "conteudo" pode ser uma variável ou uma função *helper* com - ou sem - parâmetros:
 
-	```html
+```html
 
-	{{ conteudo }}
+{{ conteudo }}
 
-	```
+```
 
-	Ou assim, no caso de bloco de expressões Handlebars (que nós vamos discutir em detalhe depois):
+Ou assim, no caso de bloco de expressões Handlebars (que nós vamos discutir em detalhe depois):
 
-	```html
+```html
 
-	{{#each}}
-		Conteúdo HTML e outras expressões Handlebars vão aqui.
+{{#each}}
+	Conteúdo HTML e outras expressões Handlebars vão aqui.
+{{/each}}
+
+```
+
+Abaixo é uma expressão Handlebars com HTML. A variável *nomeCliente* é a propriedade que vai ser interpolada (seu valor vai ser inserido no lugar) pela função Handlebars.compile:
+
+```html
+
+<div> Name: {{ nomeCliente }} </div>
+
+```
+
+A saída vai ser a seguinte (se a variável nomeCliente tiver o valor "Richard"):
+
+Richard
+
+Desque que você tenha que passar a expressão Handlebars (com qualquer HTML contido) para a função Handlebars.compile, uma tag `script` é usada para anexar cada template Handlebars quando eles estão na página HTML. Na verdade, a tag `script` não é necessária quando um template está no próprio arquivo HTML, mas é necessário quando o template Handlebars está junto com outro template Handlebars e outro conteúdo HTML.
+
+**- Script Tag**
+
+Templates Handlebars são embutidos nas tags `script` (onde as propriedades `type` das tags scripts são configuradas como `text/x-handlebars-template`). A tag script é similara tag script que você usa normalmente para incluir JavaScript na página HTML, exceto pelo atributo `type` que é diferente. Você recupera o conteúdo do HTML a partir da tag script e o passa para o compilador Handlebars.
+
+Aqui temos um exemplo da tag `script` do Handlebars:
+
+```html
+
+<script id="header" type="text/x-handlebars-template">
+	<div> Name: {{ headerTitle }}</div>
+</script>
+
+```
+
+2 . **Dados (ou Contexto)**
+
+A segunda parte do código no template Handlebars é o dado que você quer mostrar na página. Você passa seus dados como um objeto (um objeto regular JavaScript) para a função Handlebars. O *dado-objeto* é chamado de contexto. E este objeto pode ser composto de arrays, strings, números, outros objetos, ou uma combinação de todos eles.
+
+Se o dado-objeto tem um array de objetos, você pode usar a função auxiliar Handlebars `each` (mais sobre auxiliares depois) para iterar o array, e o contexto atual é configurado para cada item dentro do array.
+
+Aqui temos exemplos de configuração de objetos e como iterá-los com um template Handlebars.
+
+- Objeto com array de objetos.
+
+```javascript
+
+// O objeto customers tem um array de objetos que vamos passar para o Handlebars:
+var theData = {
+	customers: [
+		{
+			firstName: "Michael", 
+			lastName: "Alexander", 
+			age: 20
+		},
+		{
+			firstName: "John",
+			lastName: "Allen",
+			age: 29
+		}
+	]
+};
+
+```
+
+Você pode usar o *auxiliar each* para iterar o objeto customer assim:
+
+```html
+
+<script id="header" type="text/x-handlebars-template">
+	{{#each customers}} // note a referência ao objeto customers
+		<li> {{ firstName }} {{ lastName }} </li>
 	{{/each}}
+</script>
 
-	```
+```
 
-	Abaixo é uma expressão Handlebars com HTML. A variável *nomeCliente* é a propriedade que vai ser interpolada (seu valor vai ser inserido no lugar) pela função Handlebars.compile:
+Ou, uma vez que passamos o objeto customers como um array de objetos, nós podemos usar uma declaração de bloco auxiliar (mais sobre blocos auxiliares depois) como esta e referenciar o *customers* diretamente:
 
-	```html
+```html
 
-	<div> Name: {{ nomeCliente }} </div>
-	
-	```
+<script id="header" type="text/x-handlebars-template">
+	{{#customers}}
+		<li> {{ firstName }}  {{ lastName }} </li>
+	{{/customers}}
+</script>
 
-	A saída vai ser a seguinte (se a variável nomeCliente tiver o valor "Richard"):
+```
 
-	Richard
+- Objeto com Strings
 
-	Desque que você tenha que passar a expressão Handlebars (com qualquer HTML contido) para a função Handlebars.compile, uma tag `script` é usada para anexar cada template Handlebars quando eles estão na página HTML. Na verdade, a tag `script` não é necessária quando um template está no próprio arquivo HTML, mas é necessário quando o template Handlebars está junto com outro template Handlebars e outro conteúdo HTML.
+```javascript
 
-	**- Script Tag**
+var theData = {
+	headerTitle: "Shop Page",
+	weekDay: "Wednesday"
+};
 
-	Templates Handlebars são embutidos nas tags `script` (onde as propriedades `type` das tags scripts são configuradas como `text/x-handlebars-template`). A tag script é similara tag script que você usa normalmente para incluir JavaScript na página HTML, exceto pelo atributo `type` que é diferente. Você recupera o conteúdo do HTML a partir da tag script e o passa para o compilador Handlebars.
+<script id="header" type="text/x-handlebars-template">
+	<div> {{ headerTitle }} </div>
+	Today is {{ weekDay }}
+</script>
 
-	Aqui temos um exemplo da tag `script` do Handlebars:
+```
 
-	```html
+3 . **Função de Compilação do Handlebars**
 
-	<script id="header" type="text/x-handlebars-template">
-		<div> Name: {{ headerTitle }}</div>
-	</script>
-	
-	```
+A última parte de código que precisamos para templates Handlebars é realmente uma execução em dois passos:
 
-2. **Dados (ou Contexto)**
+	1. Compilar o template com a função Handlebars.compile.
+	2. Então usar esta função compilada para invocar o objeto passado a ela (é preciso um objeto de dados como seu único parâmetro). E isto vai retornar uma string HTML com os valores do objeto interpolado inseridos dentro do HTML.
 
-	A segunda parte do código no template Handlebars é o dado que você quer mostrar na página. Você passa seus dados como um objeto (um objeto regular JavaScript) para a função Handlebars. O *dado-objeto* é chamado de contexto. E este objeto pode ser composto de arrays, strings, números, outros objetos, ou uma combinação de todos eles.
-
-	Se o dado-objeto tem um array de objetos, você pode usar a função auxiliar Handlebars `each` (mais sobre auxiliares depois) para iterar o array, e o contexto atual é configurado para cada item dentro do array.
-
-	Aqui temos exemplos de configuração de objetos e como iterá-los com um template Handlebars.
-
-	- Objeto com array de objetos.
-
-	```javascript
-
-	// O objeto customers tem um array de objetos que vamos passar para o Handlebars:
-	var theData = {
-		customers: [
-			{
-				firstName: "Michael", 
-				lastName: "Alexander", 
-				age: 20
-			},
-			{
-				firstName: "John",
-				lastName: "Allen",
-				age: 29
-			}
-		]
-	};
-
-	```
-
-	Você pode usar o *auxiliar each* para iterar o objeto customer assim:
-
-	```html
-
-	<script id="header" type="text/x-handlebars-template">
-		{{#each customers}} // note a referência ao objeto customers
-			<li> {{ firstName }} {{ lastName }} </li>
-		{{/each}}
-	</script>
-
-	```
-
-	Ou, uma vez que passamos o objeto customers como um array de objetos, nós podemos usar uma declaração de bloco auxiliar (mais sobre blocos auxiliares depois) como esta e referenciar o *customers* diretamente:
-
-	```html
-
-	<script id="header" type="text/x-handlebars-template">
-		{{#customers}}
-			<li> {{ firstName }}  {{ lastName }} </li>
-		{{/customers}}
-	</script>
-
-	```
-
-	- Objeto com Strings
-
-	```javascript
-
-	var theData = {
-		headerTitle: "Shop Page",
-		weekDay: "Wednesday"
-	};
-
-	<script id="header" type="text/x-handlebars-template">
-		<div> {{ headerTitle }} </div>
-		Today is {{ weekDay }}
-	</script>
-
-	```
-
-3. **Função de Compilação do Handlebars**
-
-	A última parte de código que precisamos para templates Handlebars é realmente uma execução em dois passos:
-
-		1. Compilar o template com a função Handlebars.compile.
-		2. Então usar esta função compilada para invocar o objeto passado a ela (é preciso um objeto de dados como seu único parâmetro). E isto vai retornar uma string HTML com os valores do objeto interpolado inseridos dentro do HTML.
-
-	**Em resumo:** O a função Handlebars.compile pega o template como um parâmetro e retorna uma função JavaScript. Nós então usamos essa função compilada para executar o objeto de dados e retornar uma string com HTML e os valores do objeto interpolados. Então nós podemos inserir a string dentro da página HTML.
+**Em resumo:** O a função Handlebars.compile pega o template como um parâmetro e retorna uma função JavaScript. Nós então usamos essa função compilada para executar o objeto de dados e retornar uma string com HTML e os valores do objeto interpolados. Então nós podemos inserir a string dentro da página HTML.
 
 **Aqui temos as 3 partes juntas:**
 

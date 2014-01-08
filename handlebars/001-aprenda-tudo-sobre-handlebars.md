@@ -334,7 +334,7 @@ $(function () {
 	}
 
 	$(".shoeNav").append( updateAllShoes( shoesData ) );
-	});
+});
 
 ```
 

@@ -278,7 +278,67 @@ Sem Handlebars, será como um típico projeto JavaScript/jQuery vai parecer quan
 
 ### Um pequeno projeto sem Handlebars
 
+**1** . Download Handlebars.js e jQuery:
+Faça o download da última versão do Handlebars através do GitHub (nós não vamos usá-la ainda, mas inclua na sua página). Pegue a versão completa, não a versão "runtime only" (mais sobre a versão runtime depois): https://github.com/wycats/handlebars.js/downloads
 
+Também faça o download da última versão do jQuery aqui (nós vamos usá-lo ao longo deste tutorial): http://code.jquery.com/jquery-1.9.1.min.js
+
+**2** . Crie um novo diretório em seu computador chamado "Handlebars_tuts" e coloque os arquivos jQuery e o Handlebars.js nele.
+
+Ou você pode abrir o terminal (no MAC) e mudar para o diretório "Handlebars_tuts". Então digitar os comandos seguintes para fazer o download de ambos os arquivos diretamente no diretório com o comando curl:
+
+```
+curl http://code.jquery.com/jquery-1.9.1.min.js > jquery-1.9.1.min.js 
+curl https://github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.min.js > Handlebars.js
+
+```
+
+**3** . Faça um arquivo `index.html` e adicione o seguinte:
+
+```html
+
+<html>
+	<head>
+		<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+	</head>
+	<body>
+		The List of Shoes:
+		<ul class="shoesNav"></ul>
+	</body>
+</html>
+
+```
+
+**4** . Crie um arquivo main.js e adicione o seguinte:
+
+Note que este arquivo JS tem ambos HTML e JavaScript misturados em uma sopa insalubre:
+
+```javascript
+
+$(function () {
+	var shoesData = [
+		{ name: "Nike", price: 199.00 },
+		{ name: "Loafers", price: 59.00 },
+		{ name: "Wing Tip", price: 259.00 }
+	];
+
+	function updateAllShoes ( shoes ) {
+		var theHTMLListOfShoes = "";
+
+		shoesData.forEach (function ( eachShoe ) {
+			// Note o HTML e JavaScript misturado - é tedioso de acompanhar
+			theHTMLListOfShoes += '<li class="shoes">' + '<a href="/' + eachShoe.name.toLowerCase() + '">' + eachShoe.name + ' -- Price: ' + eachShoe.price + '</a></li>';
+	    });
+
+	    return theHTMLListOfShoes;
+	}
+
+	$(".shoeNav").append( updateAllShoes( shoesData ) );
+	});
+
+```
+
+Se você abrir este arquivo index.html em seu navegador, você deve ver uma simples lista com 3 itens. Isto é como normalmente nós desenvolvemos no front end sem um motor de templates JavaScript.
 
 ## Aprenda a sintaxe Handlebars.js
 

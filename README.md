@@ -50,7 +50,7 @@ Isto foi perdido pela mudança para as interfaces gráficas de usuário. Mas as 
 
 Este livro pretende torná-lo familiar com esta linguagem o suficiente para que você seja capaz de fazer com o computador o que você quiser.
 
-# Na Programação
+## Na Programação
 
 > Eu não esclareço os que não estão prontos para aprender, nem desperto aqueles que não estão ansiosos para dar uma explicação a si próprios. Se eu apresentei um canto da praça, e eles não podem voltar para mim com os outros três, eu não deveria passar por estes pontos novamentes. **Confúcio**
 
@@ -72,19 +72,23 @@ Alguns programadores acreditam que esta complexidade é melhor gerenciada usando
 
 Quanta hostilidade perante a riqueza da programação - tentar reduzir a algo simples e previsível, colocando um tabu em todos os lindos e misteriosos programas! A paisagem das técnicas de programação é enorme, fascinante em sua diversidade, e permanece largamente inexplorada. É sem dúvida perigoso ir neste caminho, atraindo o programador inexperiente em todo tipo de confusão, mas isso só significa que você deve proceder com cautela e manter o juízo. Conforme você aprende, sempre haverá novos desafios e novos territórios a ser explorados. Programadores que recusam de manter-se explorando vão estagnar, esquecer sua alegria, e ficar entediado com seu trabalho.
 
-# Porque linguagens importam?
+## Porque linguagens importam?
 
 No começo, no nascimento da programação, não havia linguagens de programação. Programas pareciam algo desta forma:
 
-	00110001 00000000 00000000
-	00110001 00000001 00000001
-	00110011 00000001 00000010
-	01010001 00001011 00000010
-	00100010 00000010 00001000
-	01000011 00000001 00000000
-	01000001 00000001 00000001
-	00010000 00000010 00000000
-	01100010 00000000 00000000
+<pre>
+<code>
+00110001 00000000 00000000
+00110001 00000001 00000001
+00110011 00000001 00000010
+01010001 00001011 00000010
+00100010 00000010 00001000
+01000011 00000001 00000000
+01000001 00000001 00000001
+00010000 00000010 00000000
+01100010 00000000 00000000
+</code>
+</pre>
 
 Este é um programa que soma os números do 1 ao 10 e imprimi o resultado (1 + 2 + ... 10 = 55). Isso pode rodar em uma muito simples, uma máquina hipotética. Para programar os primeiros computadores, era necessário configurar grandes arrays de chaves na posição certa, ou fazer furos em cartões e alimentá-los no computador. Você pode imaginar como isso era tedioso, e um procedimento propenso ao erro. Mesmo escrever simples programas requeriam muita habilidade e disciplina. Os complexos eram quase inconcebíveis.
 
@@ -92,6 +96,8 @@ Claro, inserindo manualmente estes padrões misteriosos de bits (1 e 0) fez que 
 
 Cada linha do programa contém uma simples instrução. Isto pode ser escrito assim:
 
+<pre>
+<code>
 1. Guarde o número 0 na posição da memória 0.
 2. Guarde o número 1 na posição da memória 1.
 3. Guarde o valor da posição da memória 1 na posição da memória 2.
@@ -101,20 +107,26 @@ Cada linha do programa contém uma simples instrução. Isto pode ser escrito as
 7. Adicione o número 1 ao valor da posição de memória 1.
 8. Continue com a instrução 3.
 9. Retorne o valor da posição da memória 0.
+</code>
+</pre>
 
 Embora isto seja mais legível que a sopa de bits, ainda continua bastante desagradável. Pode ser de auxílio usar nomes ao invés de números para as instruções e locações de memória:
 
-	Configure "total" para 0
-	Configure "count" para 1
-	[loop]
-	Configure "compare" para "count"
-	Subtraia 11 de "compare"
-	Se "compare" é zero, continue até [fim]
-	Adicione "count" em "total"
-	Adicione 1 em "count"
-	Continue até [loop]
-	[fim]
-	Saída "total"
+<pre>
+<code>
+Configure "total" para 0
+Configure "count" para 1
+[loop]
+Configure "compare" para "count"
+Subtraia 11 de "compare"
+Se "compare" é zero, continue até [fim]
+Adicione "count" em "total"
+Adicione 1 em "count"
+Continue até [loop]
+[fim]
+Saída "total"
+</code>
+</pre>
 
 Neste ponto não é tão difícil ver como os programas trabalham. Você consegue? As primeiras duas linhas fornece duas locações de memória que iniciam os valores: `total` vai ser usado para construir o resultado da computação, e `count` mantém registrado o número que nós atualmente estamos olhando. As linhas usando `compare` são provavelmente as mais estranhas. O que o programa quer fazer é ver se já pode parar. Por causa da nossa máquina hipotética ser bastante primitiva, ela somente pode testar se um número é zero e fazer a decisão (salto) baseado nisto. Então, ela usa a locação de memória rotulada `compare` para computar o valor de `count` - 11 e fazer a decisão baseada neste valor. As próximas duas linhas adicionam o valor de `count` ao resultado e incrementam `count` por 1 cada vez que o programa decide que não é 11 ainda.
 
@@ -148,7 +160,7 @@ A moral da história, então, é que o mesmo programa pode ser expresso de forma
 
 Uma boa linguagem de programação ajuda o programador permitindo-o conversr sobre ações que o computador vai realizar em *alto nível*. Isto ajuda a deixar detalhes desinteressantes implícitos, e fornece construções convenientes de blocos (como o `while` e `console.log`), permitindo a você definir seus próprios blocos (como `sum` e `range`), e tornando simples a construção destes blocos.
 
-# O que é JavaScript?
+## O que é JavaScript?
 
 O JavaScript foi introduzido em 1995, como uma forma de adicionar programas a páginas da web no navegador Netscape. A linguagem foi adaptada pela maioria dos navegadores gráficos da web. Ele fez a atual geração de aplicações web possível - clientes de email baseado no navegador, mapas e redes sociais - e também é usado em sites mais tradicionais para fornecer várias formas de interatividade e inteligência.
 
@@ -164,6 +176,38 @@ Tivemos várias *versões* do JavaScript. Versão 3 do ECMAScript foi a dominant
 
 Navegadores web não são as únicas plataformas que o JavaScript é usado. Alguns banco de dados, como MongoDB e CouchDB, usam JavaScript como sua linguagem de consulta e script. Muitas plataformas para desktop e de programação no servidor, mais notável o projeto *Node.JS*, sujeito do capítulo (AINDA NÃO ESCRITO), fornecem um poderoso ambiente de programação JavaScript fora do navegador.
 
-# Código, e o que fazer com ele
+## Código, e o que fazer com ele
 
-marcador http://eloquentjavascript.net/2nd_edition/preview/00_intro.html#p_vaDhHr+EAd
+Código é o texto que compõe os programas. Muitos capítulos deste livro contém muito código. Em minha experiência, escrever e ler códigos é uma importante parte do aprendizado da programação. Tenta não apenas olhar sobre os códigos, leia-os atenciosamente e os entenda. Isto pode ser lento e consufo no início, mas eu prometo que você vai rapidamente pegar o jeito. O mesmo acontece para os exercícios. Não assuma que você os entendeu até que você realmente tenha escrito uma solução que funcione.
+
+Eu recomendo que você teste suas soluções dos exercícios em um interpretador JavaScript real, para obter um feedback se o que você fez está funcionando ou não, e, esperançosamente, ser incentivado a experimentar e ir além dos exercícios.
+
+Quando ler este livro no seu navegador, você pode editar (e rodar) os programas exemplo clicando neles.
+
+Rodando programas JavaScript fora do contexto deste livro é possível também. Você pode optar por instalar o node.js, e ler a documentação para conhecer como usá-lo para avaliar arquivos de texto que contém programas. Ou você pode usar o console de desenvolvedores no navegador (tipicamente encontrado no menu "tools" ou "developer") e divertir-se nele. No capítulo (CORRIGIR!), o jeito que os programas são embutidos em paǵinas web (arquivos HTML) é explicado. Entretanto, você pode verificar em http://jsbin.com por outra interface amigável para rodar código JavaScript no navegador.
+
+## Conveções Tipográficas
+
+Neste livro, texto escrito em fonte `monoespaçada` deve ser entendido por representações de elementos dos programas - algumas vezes são fragmentos auto-suficientes, e algumas vezes eles somente referenciam para alguma parte de um programa próximo. Programas (que você já viu um pouco), são escritos assim:
+
+<pre>
+<code>
+function fac(n) {
+	if (n == 0)
+		return 1;
+	else
+		return fac(n - 1) * n;
+}
+</code>
+</pre>
+
+Algumas vezes, para mostrar a saída que o programa produz, a mesma será escrita abaixo dele, com duas barras e uma seta na frente:
+
+<pre>
+<code>
+console.log(fac(8));
+// → 40320
+</code>
+</pre>
+
+<a class="jsbin-embed" href="http://jsbin.com/upUXEbaJ/1/embed?js">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script>

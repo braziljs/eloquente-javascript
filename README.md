@@ -38,7 +38,7 @@ Há uma lacuna entre nós, organismos biológicos models com um talento para o r
 
 A história da interação humano-computador tem se afastado da ideia fria e reducionista do mundo sobre o computador, apresentando camadas mais amigáveis em cima disso. As duas ideias mais importantes neste processo tem sido o uso de linguagens de computador, que mapeiam bem para o nosso cérebro por se parecer com as linguagens que usamos para conversas uns com os outros, e interfaces gráficas apontar e clicar (ou toque), que nós facilmente por causa de imitar o mundo tangível fora da máquina.
 
-![Mysterios Computar](http://eloquentjavascript.net/2nd_edition/preview/img/mysterious-computer.jpg)
+![Mysterios Computer](img/mysterious-computer.jpg)
 
 Interfaces gráficas tendem a ser mais fáceis descobrir que linguagens - detectar um botão é mais rápido do que aprender uma gramática. Por essa razão, eles se tornaram a forma dominante de interagir com sistemas orientados ao consumidor. Compare com os telefones atuais, onde você pode realizar todo tipo de tarefa tocando e passando os elementos que aparecem na tela, com o *Commodore 64* de 1982, o aparelho que me introduziu a computação, onde tudo que você recebia era um cursor piscando, e você conseguia isto digitando comandos.
 
@@ -210,4 +210,40 @@ console.log(fac(8));
 </code>
 </pre>
 
-<a class="jsbin-embed" href="http://jsbin.com/upUXEbaJ/1/embed?js">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script>
+Boa Sorte!
+
+#### Capítulo 1
+# Valores, Tipos e Operadores
+
+Dentro do mundo do computador, há somente dados. Nós podemos ler dados, modificar dados, criar dados - mas coisas que não são representadas por dados simplesmente não existem. Todos estes dados são armazenados em longas sequências de bits, e isso portanto é fundamentalmente parecido.
+
+Bits podem ser qualquer tipo de coisa com 2 valores, usualmente descrito como 0 e 1. Dentro do computador, eles tomam formas como uma carga elétrica alta ou baixa, um forte ou fraco sinal, ou um ponto brilhante ou sem brilho na superfície de um CD. Qualquer pedaço de uma discreta informação, pode ser reduzida para uma sequência de 0 e 1, e então representanda por bits.
+
+Como um exemplo, pense sobre a maneira que o número 13 pode ser armazenado em bits. A forma usual de se fazer esta analogia é a forma de escrevermos números decimais, mas ao invés de 10 dígitos, temos apenas 2. E, ao invés de o valor de um dígito aumentar dez vezes sobre o dígito após ele, o valor aumenta por um fator 2. Estes são os bits que compõem o número treze, com o valor dos dígitos mostrados abaixo deles:
+
+<pre>
+<code>
+  0   0   0   0   1   1   0   1
+128  64  32  16   8   4   2   1
+</code>
+</pre>
+
+Então este é o 00001101, ou 8 + 4 + 1, que equivale a 13.
+
+## Valores
+
+Imagine um mar de bits. Um oceano deles. Um típico computador moderno vai ter em torno de trinta bilhões de bits reservados em seu armazenamento de dados volátil (em oposição ao armazenamento não volátil - o disco rígido ou não equivalente - que tende a ter algumas ordens de magnitude mais).
+
+![Bit Sea](img/bit-sea.png)
+
+Para trabalhar com estes sem se perder, nós temos que estruturá-los de alguma forma. Uma forma de fazer é agrupá-los dentro de pedaços que representam uma simples parte de informação. Em um ambiente JavaScript, todo os dados são separados em coisas chamadas *valores*, grupos de bits que representam um pedaço de dado coerente.
+
+Embora todos os valores sejam feitos da mesma coisa uniforme, eles desempenham papéis diferentes. Todo valor tem um tipo, que determina o tipo de papel que desempenha. Temos seis tipos básicos de valores no JavaScript: números, strings, booleans, objetos, funções e valores indefinidos. 
+
+> Em inglês: [number, string, boolean, object, function, undefined]
+
+Para criar um valor, deve-se simplesmente invocar seu nome. Isto é muito conveniente. Você não tem que recolher material para construir seus valores ou pagar por eles; você só chama por um, e pronto, você o tem. Eles não são criados com ar, obviamente. Todo valor tem que ser armazenado em algum lugar, e se você quer usar uma quantidade gigante deles, ao mesmo tempo você deve rodar sobre os bits. Felizmente, este é um problema somente se você os quiser simultaneamente. Assim que você não usar mais um valor, ele será dissipado, deixando para trás os bits para serem reciclados e se tornarem materiais para a próxima geração de valores.
+
+Este capítulo introduz os elementos atômicos dos programas JavaScript: Simples tipos de valores, e operadores que podem atuar em cada valor.
+
+## Números

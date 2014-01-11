@@ -247,3 +247,39 @@ Para criar um valor, deve-se simplesmente invocar seu nome. Isto é muito conven
 Este capítulo introduz os elementos atômicos dos programas JavaScript: Simples tipos de valores, e operadores que podem atuar em cada valor.
 
 ## Números
+
+Valores do tipo *numbers* são, previsivelmente, valor numéricos. Em um programa JavaScript, eles são escritos usualmente assim:
+
+```javascript
+
+13
+
+```
+
+Coloque isto em um programa, e isto vai gerar o bir padrão para o número 13 começar a existir dentro do computador.
+
+O JavaScript usa um número fixo de bits, 64 deles, para armazenar um único valor numérico. Isto significa que existe uma quantidade limite de tipos diferentes de números que podem ser representados - há muitos padrões diferentes que você pode criar com 64 bits. O conjunto de números podem ser representados por N dígitos decimais é 10^N. Similarmente, o conjunto de números que podem ser representados por 64 dígitos binários é 2⁶⁴, que é mais ou menos 18 quintilhões (um 18 com 18 zeros após ele).
+
+Isto é muito. Números exponenciais tem o hábito de ficarem grandes. Já foi o tempo que as memórias eram pequenas e as pessoas tendiam a usar grupos de 8 ou 16 bits para representar estes números. Era fácil de acidentalmente "transbordarem" estes pequenos números. Hoje, temos o luxo de somente preocupar quando realmente lidamos com números astronômicos.
+
+Todos os números abaixo de 18 quintilhões cabem no JavaScript *number*. Estes bits também armazenam números negativos, onde um destes sinais é usado para guardar o sinal do número. Uma grande questão é que números não inteiros podem ser representados. Para fazer isso, alguns bits são usados para guardar a posição do ponto decimal do número. O maior número não inteiro que pode ser armazenado está na faixa de 9 quadrilhões (15 zeros) - que continua muito grande.
+
+Números fracionados são escritos usando o ponto:
+
+```javascript
+
+9.81
+
+```
+
+Para grandes números ou números pequenos, podemos usar a notação científica adicionando um 'e', seguido do expoente:
+
+```javascript
+
+2.998e8
+
+```
+
+Isto é 2.998 x 10⁸ = 299800000.
+
+marcador : http://eloquentjavascript.net/2nd_edition/preview/01_values.html#p_8KgYC0F1fX

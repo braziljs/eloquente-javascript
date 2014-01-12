@@ -15,7 +15,7 @@ Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://c
 
 Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel* (capítulo 4) por Margarita Martínez e José Menor. Mysterious computer (introdução) por Philip Tyrer.
 
-## Conteúdo
+# Conteúdo
 
 * [Introdução](https://github.com/eoop/eloquente-javascript#introdu%C3%A7%C3%A3o)
 1. [Valores, Tipos e Operadores]()
@@ -76,8 +76,7 @@ Quanta hostilidade perante a riqueza da programação - tentar reduzir a algo si
 
 No começo, no nascimento da programação, não havia linguagens de programação. Programas pareciam algo desta forma:
 
-<pre>
-<code>
+```
 00110001 00000000 00000000
 00110001 00000001 00000001
 00110011 00000001 00000010
@@ -87,8 +86,7 @@ No começo, no nascimento da programação, não havia linguagens de programaç�
 01000001 00000001 00000001
 00010000 00000010 00000000
 01100010 00000000 00000000
-</code>
-</pre>
+```
 
 Este é um programa que soma os números do 1 ao 10 e imprimi o resultado (1 + 2 + ... 10 = 55). Isso pode rodar em uma muito simples, uma máquina hipotética. Para programar os primeiros computadores, era necessário configurar grandes arrays de chaves na posição certa, ou fazer furos em cartões e alimentá-los no computador. Você pode imaginar como isso era tedioso, e um procedimento propenso ao erro. Mesmo escrever simples programas requeriam muita habilidade e disciplina. Os complexos eram quase inconcebíveis.
 
@@ -96,8 +94,7 @@ Claro, inserindo manualmente estes padrões misteriosos de bits (1 e 0) fez que 
 
 Cada linha do programa contém uma simples instrução. Isto pode ser escrito assim:
 
-<pre>
-<code>
+```
 1. Guarde o número 0 na posição da memória 0.
 2. Guarde o número 1 na posição da memória 1.
 3. Guarde o valor da posição da memória 1 na posição da memória 2.
@@ -107,13 +104,11 @@ Cada linha do programa contém uma simples instrução. Isto pode ser escrito as
 7. Adicione o número 1 ao valor da posição de memória 1.
 8. Continue com a instrução 3.
 9. Retorne o valor da posição da memória 0.
-</code>
-</pre>
+```
 
 Embora isto seja mais legível que a sopa de bits, ainda continua bastante desagradável. Pode ser de auxílio usar nomes ao invés de números para as instruções e locações de memória:
 
-<pre>
-<code>
+```
 Configure "total" para 0
 Configure "count" para 1
 [loop]
@@ -125,23 +120,20 @@ Adicione 1 em "count"
 Continue até [loop]
 [fim]
 Saída "total"
-</code>
-</pre>
+```
 
 Neste ponto não é tão difícil ver como os programas trabalham. Você consegue? As primeiras duas linhas fornece duas locações de memória que iniciam os valores: `total` vai ser usado para construir o resultado da computação, e `count` mantém registrado o número que nós atualmente estamos olhando. As linhas usando `compare` são provavelmente as mais estranhas. O que o programa quer fazer é ver se já pode parar. Por causa da nossa máquina hipotética ser bastante primitiva, ela somente pode testar se um número é zero e fazer a decisão (salto) baseado nisto. Então, ela usa a locação de memória rotulada `compare` para computar o valor de `count` - 11 e fazer a decisão baseada neste valor. As próximas duas linhas adicionam o valor de `count` ao resultado e incrementam `count` por 1 cada vez que o programa decide que não é 11 ainda.
 
 Aqui temos o mesmo programa em JavaScript:
 
-<pre>
-<code>
+```javascript
 var total = 0, count = 1;
 while (count <= 10) {
 	total += count;
 	count += 1;
 }
 console.log(total);
-</code>
-</pre>
+```
 
 Isso nos dá muitas melhorias. Mais importante, não é preciso mais especificar o caminho que nós queremos que o programa salte anteriormente ou adiante. Ele continua executando o bloco (envolvido nas chaves) até que a condição que foi dada seja: `count <= 10`, que significa "count é menor que ou igual a 10". Não temos mais que criar um valor temporário e compará-lo a zero. Isso é um detalhe desinteressante, e o poder das linguagens de programação é que elas tomam conta de detalhes desinteressantes para nós.
 
@@ -149,12 +141,10 @@ No final do programa, depois de `while` ser definido, a operação `console.log`
 
 Finalmente, aqui temos o que o programa pode parecer se nós tivermos as operações convenientes `range` (alcance) e `sum` (soma) disponíveis, que respectivamente criam uma coleção de números com um alcance e computam a soma de uma coleção de números:
 
-<pre>
-<code>
+```javascript
 console.log(sum(range(1,10)));
 // 55
-</code>
-</pre>
+```
 
 A moral da história, então, é que o mesmo programa pode ser expresso de forma longa e curta, de forma legível ou não. A primeira versão do programa foi extremamente obscura, enquanto esta última é praticamente "Inglês": `log` (registre) a `sum` (soma) da `range` (extensão) dos números de 1 a 10. (Nós vamos ver nos próximos capítulos como criar coisas do tipo `sum` e `range`).
 
@@ -190,25 +180,21 @@ Rodando programas JavaScript fora do contexto deste livro é possível também. 
 
 Neste livro, texto escrito em fonte `monoespaçada` deve ser entendido por representações de elementos dos programas - algumas vezes são fragmentos auto-suficientes, e algumas vezes eles somente referenciam para alguma parte de um programa próximo. Programas (que você já viu um pouco), são escritos assim:
 
-<pre>
-<code>
+```javascript
 function fac(n) {
 	if (n == 0)
 		return 1;
 	else
 		return fac(n - 1) * n;
 }
-</code>
-</pre>
+```
 
 Algumas vezes, para mostrar a saída que o programa produz, a mesma será escrita abaixo dele, com duas barras e uma seta na frente:
 
-<pre>
-<code>
+```javascript
 console.log(fac(8));
 // → 40320
-</code>
-</pre>
+```
 
 Boa Sorte!
 
@@ -221,12 +207,10 @@ Bits podem ser qualquer tipo de coisa com 2 valores, usualmente descrito como 0 
 
 Como um exemplo, pense sobre a maneira que o número 13 pode ser armazenado em bits. A forma usual de se fazer esta analogia é a forma de escrevermos números decimais, mas ao invés de 10 dígitos, temos apenas 2. E, ao invés de o valor de um dígito aumentar dez vezes sobre o dígito após ele, o valor aumenta por um fator 2. Estes são os bits que compõem o número treze, com o valor dos dígitos mostrados abaixo deles:
 
-<pre>
-<code>
+```
   0   0   0   0   1   1   0   1
 128  64  32  16   8   4   2   1
-</code>
-</pre>
+```
 
 Então este é o 00001101, ou 8 + 4 + 1, que equivale a 13.
 
@@ -282,4 +266,57 @@ Para grandes números ou números pequenos, podemos usar a notação científica
 
 Isto é 2.998 x 10⁸ = 299800000.
 
-marcador : http://eloquentjavascript.net/2nd_edition/preview/01_values.html#p_8KgYC0F1fX
+Cálculos com números inteiros (também chamados *integers*) menores que os mencionados 9 quadrilhões são garantidos de sempre serem precisos. Infelizmente cálculos com números fracionários não são, geralmente. Como π (pi) não pode ser precisamente expresso por uma quantidade finita de dígitos decimais, vários números perdem a precisão quando somente 64 bits estão disponíveis para armazená-los. Isto é uma vergonha, porém causa problemas somente em situações muito específicas. A coisa importante é estar ciente disto e tratar números fracionários digitais como aproximações, não como valores precisos.
+
+## Aritmética
+
+A principal coisa a se fazer com números é aritmética. Operações aritméticas como adição e multiplicação pegam 2 valor de números e produzem um novo número a partir deles. Aqui vemos como eles são no JavaScript:
+
+```javascript
+
+100 + 4 * 11
+
+```
+
+Os símbolos `+` e `*` são chamados *operadores*. O primeiro representa adição, e o segundo representa multiplicação. Colocando um operador entre 2 valores faz com que se aplique o mesmo, produzindo um novo valor.
+
+O próximo exemplo significa "adicione 4 e 100, e multiplique o resultado por 11", ou é a multiplicação feita antes da adição? Como você deve ter pensado, a multiplicação acontece primeiro. Mas, como na matemática, isto pode ser mudado envolvendo a adição com os parênteses:
+
+```javascript
+
+(100 + 4) * 11
+
+```
+
+Para subtração, este é o operador `-`, e para a divisão usamos este operador `/`.
+
+Quando operadores aparecem juntos sem parênteses, a ordem que eles vão ser aplicados é determinada pela *precedência* dos operadores. O exemplo mostra que a multiplicação vem antes da adição. `/` tem a mesma precedência de `*`. Igualmente para `+` e `-`. Quando múltiplos operadores com a mesma precedência estão próximos uns aos outros (como em `1 - 2 + 1`), eles são aplicados da esquerda para a direita.
+
+Estas regras de precedência não é algo que você deva se preocupar. Quando em dúvida, somente adicione parênteses.
+
+Há mais um operador aritmético, que possivelmente é menos familiar. O símbolo `%` é usado para representar o *restante* da operação. `X % Y` é o restante da divisão de `X por Y`. Por exemplo, `314 % 100` produz `14`, e `144 % 12` nos dá `0`. A precedência deste operador é igual a da multiplicação e divisão. Você também pode ver este operador sendo referido como "modulo" (porém tecnicamente "restante" é mais preciso).
+
+## Números Especiais
+
+Existem 3 valores especiais no JavaScript que são considerados números, mas não comportam-se como números normais.
+
+Os dois primeiros são `Infinity` e `-Infinity`, que são usados para representar os infinitos positivo e negativo. `Infinity - 1` continua sendo `Infinity`, e assim por diante. Mas não ponha muita confiança neste tipo de computação *baseada em infinito*, pois é uma matemática pesada, e vai rapidamente levar para nosso próximo número especial: `NaN`.
+
+`NaN` significa "not a number" (não é um número). Você obtém isso quando declara `0 / 0` (zero dividido por zero), `Infinity - Infinity`, ou qualquer número de outra operação numérica que não produz um preciso e significante valor.
+
+## Strings
+
+O próximo tipo básico de dado é a *string*. Strings são usadas para representar texto. Elas são escritas delimitando seu conteúdo entre aspas:
+
+```javascript
+
+"Patch my boat with chewing gum"
+'Monkeys wave goodbye'
+
+```
+
+Ambas as aspas simples e duplas podem ser usadas para marcar strings - contato que as aspas no início e no fim da string combinem.
+
+Quase tudo pode ser colocado entre aspas, e o JavaScript vai fazer um valor de string com isso. Mas alguns caracteres são difíceis. Você pode imaginar como colocar aspas entre aspas deve ser difícil. Novas linhas, as coisas que você obtém quando pressiona `enter`, também não podem ser colocadas entre aspas - a string tem que estar em uma linha única.
+
+marcador http://eloquentjavascript.net/2nd_edition/preview/01_values.html#p_ZwX8TU4PhC

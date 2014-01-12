@@ -71,6 +71,7 @@ O melhor sobre isso tudo é que o Angular não é ganancioso e somente roda quan
 Você deve estar pensando que qualquer aplicação que é <strike>constantemente</strike> **periodicamente** checada sobre o mesmo dado de novo e de novo deverá tornar-se lenta muito facilmente, mas não. O AngularJS executa **extraordinariamente bem em comparação a outros frameworks JavaScript MVC** e esta mesma **abordagem "suja" de verificação** é muito comum com outros tipos de programas como os **video games**.
 
 > [Clique aqui para encontrar mais sobre isto no **StackOverflow.com**](http://stackoverflow.com/questions/9682092/databinding-in-angularjs/9693933#9693933)
+>
 > [Click aqui para encontrar mais na documentação.](http://docs.angularjs.org/guide/concepts#runtime)
 
 # Escope Raiz e Extendendo Membros do Escopo

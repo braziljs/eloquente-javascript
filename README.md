@@ -20,7 +20,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 ### Índice
 
-* [JavaScript](#javascript) (04)
+* [JavaScript](#javascript) (05)
 * [AngularJS](#angularjs) (05)
 * [NodeJS](#node.js) (00)
 * [Handlebars](#handlebarsjs) (01)
@@ -42,6 +42,8 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 03 - [JavaScript Variable Scope and Hoisting Explained](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) || [Escopo de Variável e Hoisting no JavaScript Explicado](https://github.com/eoop/traduz-ai/blob/master/javascript/003-escopo-de-variavel-js-e-hoisting-explicado.md#escopo-de-vari%C3%A1vel-javascript-e-hoisting-explicado)
 
 04 - [Understand JavaScript Closures With Ease](http://javascriptissexy.com/understand-javascript-closures-with-ease/) || [Entenda Closures no JavaScript com Facilidade](https://github.com/eoop/traduz-ai/blob/master/javascript/004-entenda-closures-no-javaScript-com-facilidade.md#entenda-closures-no-javascript-com-facilidade)
+
+05 - [Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/) || [Aprendendo Padrões de Projeto JavaScript](https://leanpub.com/aprendendo-padroes-de-projeto-javascript)
 
 # AngularJS
 

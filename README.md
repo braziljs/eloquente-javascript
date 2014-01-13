@@ -319,4 +319,108 @@ Ambas as aspas simples e duplas podem ser usadas para marcar strings - contato q
 
 Quase tudo pode ser colocado entre aspas, e o JavaScript vai fazer um valor de string com isso. Mas alguns caracteres são difíceis. Você pode imaginar como colocar aspas entre aspas deve ser difícil. Novas linhas, as coisas que você obtém quando pressiona `enter`, também não podem ser colocadas entre aspas - a string tem que estar em uma linha única.
 
-marcador http://eloquentjavascript.net/2nd_edition/preview/01_values.html#p_ZwX8TU4PhC
+Para ser capaz de ter estes caracteres em uma string, a convenção seguinte é usada: Sempre que um barra invertida `\` é encontrada dentro do texto entre aspas, isto indica que o caracter depois desta tem um significado especial. Uma aspa precedida de uma barra invertida não vai findar a string, mas ser parte dela. Quando um caracter 'n' correr depois de uma barra invertida, será interpretado como uma nova linha. Similarmente, um 't' depois da barra invertida significa o caracter tab. Veja a string seguinte:
+
+```
+"This is the first line\nAnd this is the second"
+
+```
+
+O verdadeiro texto contido é:
+
+```
+This is the first line
+And this is the second
+
+```
+
+Existe, obviamente, situações onde você quer uma barra invertida em uma string apenas como uma barra invertida. não um código especial. Se duas barras invertidas estiverem seguidas uma da outra, elas se anulam, e somente uma vai ser deixada no valor da string resultante. Assim é como a string `A newline character is written like "\n" can be written`:
+
+```
+"A newline character is written like \"\\n\"."
+
+```
+
+Strings não podem ser divididas, multiplicadas ou subtraídas, mas o operador `+` pode ser usado nelas. Ele não adiciona, mas concatena - ele cola duas strings juntas. A linha seguinte vai produzir a string `concatenate`:
+
+```
+"con" + "cat" + "e" + "nate"
+
+```
+
+Existem outras maneiras de manipular strings, que nós vamos discutir quando entrarmos nós métodos no capítulo 4.
+
+## Operadores Unários
+
+Nem todos operadores são símbolos. Alguns são palavras escritas. Um exemplo é o operador `typeof`, que produz uma string com o valor do tipo dado para fornecido para avaliação.
+
+```javascript
+
+console.log(typeof 4.5)
+// → number
+console.log(typeof "x")
+// → string
+
+```
+
+Nós vamos usar `console.log` nos códigos exemplo para indicar que nós queremos ver o resultado da avaliação de algo. Quando você roda algum código, o valor produzido vai ser mostrado na tela - de alguma forma, dependendo do ambiente JavaScript que você usa para rodá-lo.
+
+Os outros operadores que vimos sempre operam com 2 valores; `typeof` pega somente um. Operadores que usam 2 valores são chamados operadores *binários*, enquanto aqueles que pegam um são chamados operadores *unários*. O operador menos `-` pode ser usado como operador binário e unário.
+
+```javascript
+
+console.log(- (10 - 2))
+// → -8
+
+```
+
+## Valores Booleanos
+
+As vezes, você vai precisar de um valor que simplesmente distingue entre 2 possibilidades, "sim" ou "não", ou "ligado" e "desligado". Para isso o JavaScript tem um tipo *booleano*, que tem apenas dois valores, `true` e `false` (que são escritos com estas palavras mesmo).
+
+### Comparações
+
+Aqui temos uma maneira de produzir valores booleanos:
+
+```javascript
+
+console.log(3 > 2)
+// → true
+console.log(3 < 2)
+// → false
+
+```
+Os sinais `>` e `<` são tradicionalmente símbolos para "é maior que" e "é menor que". Eles são operadores binários, e o resultado da aplicação deles é um valor booleano que indica se eles são verdadeiros neste caso.
+
+Strings podem ser comparadas da mesma forma:
+
+```javascript
+
+console.log("Aardvark" < "Zoroaster")
+// → true
+
+```
+
+A maneira que as strings são ordenadas é mais ou menos alfabética: Letras maiúsculas são sempre "menores" que as minúsculas, então ` "Z" < "a" ` é `true`, e caracteres não alfabéticos ('!', '-', e assim por diante) são também incluídos na ordenação. A maneira real da comparação é feita baseada no padrão *Unicode*. Este padrão atribui um número a todo caracter virtual que pode ser usado, incluindo caracteres da Grécia, Arábia, Japão, Tamil e por ai vai. Ter estes números é prático para guardar strings dentro do computador - você pode representá-los como uma sequência de números. Quando se compara strings, o JavaScript vai sobre elas da esquerda para a direita, comparando os códigos numéricos dos caracteres um por um.
+
+Outros operadores similares são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a) e `!==` (não igual a).
+
+```javascript
+
+console.log("Itchy" != "Scratchy")
+// → true
+
+```
+
+Há somente um valor no JavaScript que não é igual a ele mesmo, que é o `NaN` (not a number). Pois ele denota o resultado de uma computação sem sentido, e nunca igual a nenhum de resultado de nenhuma *outra* computação absurda.
+
+```javascript
+
+console.log(NaN == NaN)
+// → false
+
+```
+
+## Operadores Lógicos
+
+marcador http://eloquentjavascript.net/2nd_edition/preview/01_values.html#p_YQF2TG9TuV

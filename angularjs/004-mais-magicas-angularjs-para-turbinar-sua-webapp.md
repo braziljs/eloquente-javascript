@@ -74,5 +74,102 @@ Você deve estar pensando que qualquer aplicação que é <strike>constantemente
 >
 > [Click aqui para encontrar mais na documentação.](http://docs.angularjs.org/guide/concepts#runtime)
 
-# Escope Raiz e Extendendo Membros do Escopo
+# Escopo Raiz e Extendendo Membros do Escopo
 
+O `$rootScope` atua como o escopo do objeto pai de todos outros objetos `$scope`. Isso significa que quando um controlador é executado então a variável `$scope` que é fornecida para ele vai ter seu conteúdo **linkado/clonado a partir do objeto `$rootScope`**. É melhor apenas pensar a variável `$scope` como uma classe filha de `$rootScope` (**`$scope` extende de `$rootScope`**). Entender isso é **útil quando você quer ter métodos especiais atribuídos a sua variável scope** para uso entre toda a sua aplicação (como as informações de sessão, flags, estados, etc...).
+
+O exemplo seguinte é um exemplo de como você pode atribuir direntes bibliotecas ou objetos de código a sua instância `$scope`.
+
+```javascript
+
+App.run(['$rootScope', function ($rootScope) {
+	
+	// isto vai estar disponível para todas as variáveis scope
+	$rootScope.includeLibraries = true;
+
+	// este método vai estar disponível para todas as varáveis scope também
+	$rootScope.include = function (libraries) {
+		var scope = this;
+		// atribui cada uma das bibliotecas diretamente a variável scope
+		for ( var i = 0; i < libraries.length; i++ ) {
+			var key = libraries[i];
+			scope[key] = getLibrary( key );
+		}
+		return scope;
+	}
+}]);
+
+```
+
+E então dentro do seu controlador ou diretiva você pode fazer o seguinte:
+
+```javascript
+
+var Ctrl = function ( $scope ) {
+	if ( $scope.includeLibraries ) { // uma sinalização foi configurada no objeto $rootScope
+		$scope = $scope.include( ['puglin1', 'library1'] );
+	}
+};
+
+Ctrl.$inject = ['$scope'];
+
+```
+
+Tente não configurar muitos dados dentro das variáveis `$scope` e `$rootScope`. Afinal, o AngularJS negocia com os dados do `$scope` muito muito frequentemente e você não quer sobrecarregá-lo.
+
+# $apply, $digest e $$phase
+
+Isso é a coisa mais importante de se saber sobre o AngularJS. Vai chegar uma hora e um local quando você vai precisar integrar uma aplicação de terceiros dentro do seu website e você vai achar que não funciona ou que estes não são vistos pelo Angular. Para fazer isto funcionar você vai precisar entender como os métodos `$digest` e `$apply` funcionam.
+
+Toda vez que um **evento maior ocorre** em uma aplicação web que está rodando o Angular (quando uma página é carregada pela primeira vez, quando uma nova requisição AJAX é recebida, quando a URL muda, etc...) o **Angular pega a alteração e então prepara uma digestão** (que é um loop interno que é rodado sobre o membro `$scope`). Isto leva apenas poucos milisegundos, mas o Angular somente roda um processo a cada vez. Você pode manualmente iniciar este processo rodando o método `$scope.$apply()` (isso é útil para disparar atualizações quando uma aplicação de terceiros faz algo com sua página que o Angular precisa de saber). Se você configurar suas próprias *bindings* e rodar o método `$scope.$apply()` então uma exceção pode ser lançada e parar seu código (que acontece quando uma digestão está acontecendo em segundo plano). Então você precisa de estar ciente quando uma digestão estiver acontecendo checando a variável `$$phase` (isto é explicado abaixo). O método $apply roda o método `$digest` que é um método interno que dispara o Angular para consultar todos os seus métodos `$watch`.
+
+Para pegar a **exceção $apply** você precisa ter atenção a sinalização de `$scope.$$phase` para ver se uma fase da digestão está ocorrendo em segundo plano. Se estiver ocorrendo, então você pode somente configurar os valores `$scope` diretamente e eles devem ser pegos pela digestão atual. Aqui temos um método combinado que eu uso para contornar esta situação:
+
+```javascript
+
+// Quando você adiciona isto a variável $rootScope,
+// então se torna acessível para todas as variáveis $scope
+$rootScope.$safeApply = function ( $scope, fn ) {
+	fn = fn || function () {};
+	if ( $scope.$$phase ) {
+		// não se preocupe, o valor é definido
+		// e o Angular o pega...
+		fn();
+	}
+	else {
+		// isto vai disparar e dizer ao AngularJS que
+		// uma mudança ocorreu se isso estiver
+		// fora de seu próprio comportamento
+		$scope.$apply( fn );
+	}
+};
+
+// e você pode rodar isso assim
+$scope.some_value = 'value...';
+$scope.$safeApply($scope, function () {
+	// esta função é rodada quando o processo apply
+	// está rodando ou estiver terminado
+});
+
+```
+
+Se o evento que você deseja, mudar a URL da página, então você deve ter atenção a variável `$$phase` para ver se é **permitido** fazer esta mudança. Se uma fase da digestão estiver acontecendo, então você pode somente usar mudar a URL pela velha maneira usando `window.location`.
+
+```javascript
+
+// assegure-se de injetar o $scope e $location em algum lugar antes disto
+var changeLocation = function ( url, force ) {
+	// isso vai marcar a mudança da URL
+	// use $location.path(url).replace() se você quer trocar o local ao invés
+	$location.path( url );
+
+	$scope = $scope || angular.element( document ).scope();
+	if ( force || $scope.$$phase ) {
+		// isto vai iniciar o Angular se for noticiada a mudança
+		$scope.$apply();
+	}
+};
+
+```
+
+Isso deve garantir que a sua URL vai ser trocada, não importa o quê.

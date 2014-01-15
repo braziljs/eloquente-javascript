@@ -423,4 +423,65 @@ console.log(NaN == NaN)
 
 ## Operadores Lógicos
 
-marcador http://eloquentjavascript.net/2nd_edition/preview/01_values.html#p_YQF2TG9TuV
+Temos também algumas operações que podem ser aplicadas aos valores booleanos. O JavaScript suporta 3 operadores lógicos: *e*, *ou* ou *não*.
+
+O operador `&&` representa o **e** lógico. É um operador binário, e seu resultado é `true` (verdadeiro) somente se ambos os valores dados a ele forem `true`.
+
+```javascript
+
+console.log(true && false);
+// → false
+
+console.log(true && true);
+// → true
+
+```
+
+O operador `||` denota ao **ou** lógico. Ele produz `true` se algum dos valores fornecidos for `true`:
+
+console.log(false || true);
+// → true
+
+console.log(false || false);
+// → false
+
+```
+
+**Não** é escrito com uma exclamação `!`. É um operador unário que inverte o valor dado a ele - `!true` produz `false` e `!false` produz `true`.
+
+Quando misturamos estes operadores booleanos com operadores aritméticos e outros operadores, não é sempre óbvio quando o parênteses é necessário. Na prática, você precisa conhecer sobre os operadores que vimos antes, e que `||` tem o mais baixo nível de precedência, seguido do `&&`, e então os operadores de comparação (`>`, `==`, e outros), e depois o resto. Sendo assim, como vemos na expressão abaixo, os parênteses poucas vezes são necessários.
+
+```javascript
+
+1 + 1 == 2 || 10 * 10 <= 100
+
+```
+
+## Valores Indefinidos
+
+Temos dois valores especiais, `null` e `undefined`, que são usados para denotar a ausência de valores significativos. Eles são por si próprios valores, porém valores que não levam informação.
+
+Muitas operações na linguagem que não produzem valores significativos (vamos ver algumas no próximo capítulo) vão produzir `undefined`, simplesmente porque elas tem que retornar *algum* valor.
+
+A diferença de significado entre `undefined` e `null` é em grande parte desinteressante e um acidente no projeto do JavaScript. Nos casos que você realmente tiver que se preocupar com estes valores, eu recomendo tratá-los como substituíveis (mais sobre isso em um momento).
+
+## Conversão Automática de Tipo
+
+Na introdução, eu mencionei que o JavaScript não iria atrapalhá-lo e aceitaria quase qualquer coisa que você o fornecesse, mesmo quando isso é confuso e errado. Isto é muito bem demonstrado por esta expressão:
+
+```javascript
+
+console.log(8 * null)
+// → 0
+console.log("5" - 1)
+// → 4
+console.log("5" + 1)
+// → 51
+console.log("five" * 2)
+// → NaN
+console.log(false == 0)
+// → true
+
+```
+
+marcador http://eloquentjavascript.net/2nd_edition/preview/01_values.html#p_kjH0rNN5jK

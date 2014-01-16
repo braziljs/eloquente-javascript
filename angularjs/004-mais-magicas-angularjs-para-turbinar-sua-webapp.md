@@ -173,3 +173,74 @@ var changeLocation = function ( url, force ) {
 ```
 
 Isso deve garantir que a sua URL vai ser trocada, não importa o quê.
+
+# Comunicação entre Serviços e Controladores
+
+Sempre que você tiver um evento ocorrendo em sua aplicação que afeta todos os controladores e diretivas, é melhor usar os métodos `$emit`, `$on` e `$broadcast` fornecidos pelo AngularJS. Exemplos disso incluem permissões e mudanças de sessão (como quando um usuário desloga ou uma flag - *bandeira* - é levantada).
+
+Quando você precisa de ter um controlador ou escopo pai, instruindo todos os controladores filhos sobre a mudança, então você pode usar o método `$broadcast`.
+
+```javascript
+
+// pega o escopo mais elevado
+var $scope = angular.element(document).scope();
+
+// evento logout
+var logoutEvent = 'logout';
+var logouArgs = ['arg'];
+$scope.broadcast(logoutEvent, logoutArgs);
+
+// evento login
+var logoutEvent = 'logout';
+var logouArgs = ['arg'];
+$scope.$broadcast(logoutEvent, logoutArgs);
+
+```
+
+Então dentro do seu controlador ou diretiva faça isso:
+
+```javascript
+
+// no seu controlador
+var Ctrl = function ($scope) {
+	$scope.$on('logout', function(args) {
+		alert('bye bye');
+	});
+	$scope.$on('login', function (args) {
+		alert('hello there');
+	});
+};
+
+Ctrl.$inject = ['$scope'];
+
+// Em sua diretiva
+App.directive('sessionStatus', function () {
+	return function($scope, element, attrs){
+		$scope.$on('login', function () {
+			element('html', 'You are logged in!');
+		});
+		$scope.on('logout', function () {
+			element('html', 'You are logged out!');
+		});
+	};
+});
+
+```
+
+Você pode também disparar eventos de retorno usando o `$scope.$emit`.
+
+```javascript
+
+var Ctrl = function ($scope) {
+	$scope.onLogoutClick = function () {
+		$scope.$emit('logout');
+	}
+};
+Ctrl.$inject = ['$scope'];
+
+```
+
+Usando estes métodos de comunicação entre controladores, não haverá necessidade de criar code compartilhado entre os mesmos.
+
+# Funcionalidades Adicionais dos Controladores e Rotas
+

@@ -244,3 +244,42 @@ Usando estes métodos de comunicação entre controladores, não haverá necessi
 
 # Funcionalidades Adicionais dos Controladores e Rotas
 
+O AngularJS também vem com outros métodos menos conhecidos de manipular requisições entre controladores. Mas, antes de entrar neste assunto eu gostaria de ressaltar uma forma diferente de se criar controladores.
+
+```javascript
+
+App.controller('Ctrl', ['$scope', function ($scope) {
+	// exatamente o mesmo resultado de se criar um controlador com uma função explícita
+}]);
+
+```
+
+Ok então vamos aos negócios. Quando uma requisição ocorre você pode criar um ação independente da rota, que é basicamente uma função que é disparada logo antes da requisição ser enviada pra fora do controlador. Aqui um exemplo disso:
+
+```javascript
+
+// confira o código da rota abaixo antes de ler esta parte
+var Ctrl = function ($scope, $http, argument1, argument2, argument3) {
+	alert(argument1); // valor someDependency ou método toString
+	alert(argument2); // "algum valor" 
+	alert(argument3); // o valor response.data retornado de GET /path/to/some/url
+};
+
+Ctrl.$inject = ['$scope', '$http', 'argument1', 'argument2', 'argument3'];
+
+// aqui é onde a mágica acontece
+App.config(['$routeProvider', function ($routeProvider) {
+	templateUrl: '/path/to/some/template.html',
+	controller: Ctrl,
+	resolve: {
+		argument1: 'someDependency', // esta é uma dependência registrada e trabalha da mesma forma que a injeção de dependências faria dentro de um controlador
+		argument2: function () { return 'some value'; }, // esse é resolvido instantaneamente porque não há nada acontecendo
+		argument3: function () {
+			return $http.get('/path/to/some/url', function (response) {
+				return response.data; // isto é o que retorna como o valor do argument3
+			});
+		}
+	}
+}]);
+
+```

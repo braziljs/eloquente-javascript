@@ -15,7 +15,7 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 
 ## Como Colaborar?
 
-* Caso deseje colaborar, primeiramente faça a atualização na seção [Conteúdo](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) logo abaixo com o seu nome na frente do capítulo que irá traduzir.
+* Caso deseje colaborar, primeiramente faça a atualização na seção [Conteúdo](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) logo abaixo, com o seu nome na frente do capítulo que irá traduzir, linkando para o profile do Github.
 
 * Cada pessoa poderá escolher apenas 1 capítulo por vez, e somente após o término deste, poderá "adquirir" outro capítulo para tradução.
 
@@ -33,15 +33,15 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 
 # Conteúdo
 
-* Introdução - **Eric Oliveira ✓**
-* Valores, Tipos e Operadores - **Eric Oliveira ✓**
-* Estrutura do Programa - **Eric Oliveira**
-* Funções - **Pietro Coelho**
-* Estrutura de Dados: Objeto e Array - **Fernando Daciuk**
+* Introdução - **[Eric Oliveira](https://github.com/eoop) ✓**
+* Valores, Tipos e Operadores - **[Eric Oliveira](https://github.com/eoop) ✓**
+* Estrutura do Programa - **[Eric Oliveira](https://github.com/eoop)**
+* Funções - **[Pietro Coelho]()**
+* Estrutura de Dados: Objeto e Array - **[Fernando Daciuk](https://github.com/fdaciuk)**
 * Funções de Ordem Superior
 * A Vida Secreta dos Objetos
-* Prática: Vida Eletrônica - **Endel Dreyer**
-* A Vida Secreta dos Objetos - **Joselito Júnior**
+* Prática: Vida Eletrônica - **[Endel Dreyer](https://github.com/endel)**
+* A Vida Secreta dos Objetos - **[Joselito Júnior](https://github.com/joselitojunior)**
 * Prática: Vida Eletrônica
 * Erros e Manipulação de Erros
 * Expressões Regulares

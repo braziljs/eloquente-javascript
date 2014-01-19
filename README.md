@@ -18,7 +18,6 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 
 ---
 
-
 ## Como Colaborar?
 
 * Caso deseje colaborar, primeiramente faça a atualização deste README [aqui](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) com o seu nome na frente do capítulo que irá traduzir.

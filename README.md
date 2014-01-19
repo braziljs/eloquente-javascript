@@ -4,28 +4,6 @@
 
 ### Versão pdf, mobi, epub e html [AQUI](https://leanpub.com/eloquentejavascript).
 
----
-
-## Como Colaborar?
-
-Caso deseje colaborar, primeiramente faça a atualização deste README com o seu nome na frente do capítulo que irá traduzir.
-
-Cada pessoa poderá escolher apenas 1 capítulo por vez, e somente após o término deste, poderá "adquirir" outro capítulo para tradução.
-
-Siga [esta convenção](https://gist.github.com/eoop/8507748) para escrever em markdown.
-
-Após concluída a tradução, atualize o README "tickando" na frente do seu nome e [aqui](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) para termos noção de quanto do trabalho foi concluído. Utilize este tick para isso ~> ✓
-
-E por fim, também no README, adicione sua parte da tradução, posicionando-a devidamente de acordo com a sequência do livro.
-
-ps: Se sua parte é a 10 e a última traduzida é a 5, sem problemas, coloque sua parte no final desta e tudo vai ficar bem =)
-
-**Aos que desejarem ajudar, toda a comunidade JavaScript nacional agradece ;)**
-
-
----
-
-
 Uma moderna introdução ao JavaScript, programação e maravilhas digitais.
 
 [[nova capa aqui]]
@@ -38,12 +16,34 @@ Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://c
 
 Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel* (capítulo 4) por Margarita Martínez e José Menor. Mysterious computer (introdução) por Philip Tyrer.
 
+---
+
+
+## Como Colaborar?
+
+* Caso deseje colaborar, primeiramente faça a atualização deste README [aqui](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) com o seu nome na frente do capítulo que irá traduzir.
+
+* Cada pessoa poderá escolher apenas 1 capítulo por vez, e somente após o término deste, poderá "adquirir" outro capítulo para tradução.
+
+* Siga [esta convenção](https://gist.github.com/eoop/8507748) para escrever em markdown.
+
+* Após concluída a tradução, atualize o README "tickando" na frente do seu nome [aqui](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) para termos noção de quanto do trabalho foi concluído. Utilize este tick para isso ~> **✓**
+
+* E por fim, também no README, adicione sua parte da tradução, posicionando-a devidamente de acordo com a sequência do livro. Após isso, irei atualizar o livro no Leanpub.
+
+**ps:** Se sua parte é a 10 e a última traduzida é a 5, sem problemas, coloque sua parte no final desta e tudo vai ficar bem =)
+
+**Aos que desejarem ajudar, toda a comunidade JavaScript nacional agradece ;)**
+
+
+---
+
 # Conteúdo
 
-* Introdução **✓**
-* Valores, Tipos e Operadores **✓**
-* Estrutura do Programa
-* Funções
+* Introdução - Eric Oliveira **✓**
+* Valores, Tipos e Operadores - Eric Oliveira **✓**
+* Estrutura do Programa - Eric Oliveira
+* Funções - Pietro Coelho
 * Estrutura de Dados: Objeto e Array
 * Funções de Ordem Superior
 * A Vida Secreta dos Objetos

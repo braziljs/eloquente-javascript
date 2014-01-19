@@ -41,6 +41,8 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 * Funções de Ordem Superior
 * A Vida Secreta dos Objetos
 * Prática: Vida Eletrônica - **Endel Dreyer**
+* A Vida Secreta dos Objetos - **Joselito Júnior**
+* Prática: Vida Eletrônica
 * Erros e Manipulação de Erros
 * Expressões Regulares
 * Módulos

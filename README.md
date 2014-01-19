@@ -43,7 +43,7 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 * Valores, Tipos e Operadores - **Eric Oliveira ✓**
 * Estrutura do Programa - **Eric Oliveira**
 * Funções - **Pietro Coelho**
-* Estrutura de Dados: Objeto e Array
+* Estrutura de Dados: Objeto e Array - **Fernando Daciuk**
 * Funções de Ordem Superior
 * A Vida Secreta dos Objetos
 * Prática: Vida Eletrônica
@@ -247,7 +247,7 @@ Imagine um mar de bits. Um oceano deles. Um típico computador moderno vai ter e
 
 Para trabalhar com estes sem se perder, nós temos que estruturá-los de alguma forma. Uma forma de fazer é agrupá-los dentro de pedaços que representam uma simples parte de informação. Em um ambiente JavaScript, todo os dados são separados em coisas chamadas *valores*, grupos de bits que representam um pedaço de dado coerente.
 
-Embora todos os valores sejam feitos da mesma coisa uniforme, eles desempenham papéis diferentes. Todo valor tem um tipo, que determina o tipo de papel que desempenha. Temos seis tipos básicos de valores no JavaScript: números, strings, booleans, objetos, funções e valores indefinidos. 
+Embora todos os valores sejam feitos da mesma coisa uniforme, eles desempenham papéis diferentes. Todo valor tem um tipo, que determina o tipo de papel que desempenha. Temos seis tipos básicos de valores no JavaScript: números, strings, booleans, objetos, funções e valores indefinidos.
 
 > Em inglês: [number, string, boolean, object, function, undefined]
 

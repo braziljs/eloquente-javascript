@@ -40,10 +40,10 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 
 # Conteúdo
 
-* Introdução - Eric Oliveira **✓**
-* Valores, Tipos e Operadores - Eric Oliveira **✓**
-* Estrutura do Programa - Eric Oliveira
-* Funções - Pietro Coelho
+* Introdução - **Eric Oliveira ✓**
+* Valores, Tipos e Operadores - **Eric Oliveira ✓**
+* Estrutura do Programa - **Eric Oliveira**
+* Funções - **Pietro Coelho**
 * Estrutura de Dados: Objeto e Array
 * Funções de Ordem Superior
 * A Vida Secreta dos Objetos

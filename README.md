@@ -2,6 +2,29 @@
 
 ### 2ª edição
 
+### Versão pdf, mobi, epub e html [AQUI](https://leanpub.com/eloquentejavascript).
+
+---
+
+## Como Colaborar?
+
+Caso deseje colaborar, primeiramente faça a atualização deste README com o seu nome na frente do capítulo que irá traduzir.
+
+Cada pessoa poderá escolher apenas 1 capítulo por vez, e somente após o término deste, poderá "adquirir" outro capítulo para tradução.
+
+Siga [esta convenção](https://gist.github.com/eoop/8507748) para escrever em markdown.
+
+Após concluída a tradução, atualize o README "tickando" na frente do seu nome e [aqui](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) para termos noção de quanto do trabalho foi concluído. Utilize este tick para isso ~> ✓
+
+E por fim, também no README, adicione sua parte da tradução, posicionando-a devidamente de acordo com a sequência do livro.
+
+ps: Se sua parte é a 10 e a última traduzida é a 5, sem problemas, coloque sua parte no final desta e tudo vai ficar bem =)
+
+**Aos que desejarem ajudar, toda a comunidade JavaScript nacional agradece ;)**
+
+
+---
+
 
 Uma moderna introdução ao JavaScript, programação e maravilhas digitais.
 
@@ -17,15 +40,18 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 
 # Conteúdo
 
-* [Introdução](https://github.com/eoop/eloquente-javascript#introdu%C3%A7%C3%A3o)
-1. [Valores, Tipos e Operadores]()
-2. [Estrutura do Programa]()
-3. [Funções]()
-4. [Estrutura de Dados: Objeto e Array]()
-5. [Funções de Ordem Superior]()
-6. [A Vida Secreta dos Objetos]()
-7. [Prática: Vida Eletrônica]()
-8. [Erros e Manipulação de Erros]()
+* Introdução **✓**
+* Valores, Tipos e Operadores **✓**
+* Estrutura do Programa
+* Funções
+* Estrutura de Dados: Objeto e Array
+* Funções de Ordem Superior
+* A Vida Secreta dos Objetos
+* Prática: Vida Eletrônica
+* Erros e Manipulação de Erros
+* Expressões Regulares
+* Módulos
+* Prática: A Linguagem de Programação
 
 
 ---

@@ -40,7 +40,7 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 * Estrutura de Dados: Objeto e Array - **Fernando Daciuk**
 * Funções de Ordem Superior
 * A Vida Secreta dos Objetos
-* Prática: Vida Eletrônica
+* Prática: Vida Eletrônica - **Endel Dreyer**
 * Erros e Manipulação de Erros
 * Expressões Regulares
 * Módulos

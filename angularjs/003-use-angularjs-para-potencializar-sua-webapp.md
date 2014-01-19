@@ -302,7 +302,7 @@ Serviços no Angular é uma abordagem incrível para abstrair código e funciona
 
 App.factory('myService', ['myOtherService', '$location', function (myOtherService, $location) {
 	return function (input) {
-		// faã algo com o input usando os objetos myOtherService ou $location
+		// faça algo com o input usando os objetos myOtherService ou $location
 		return input;
 	};
 }]);

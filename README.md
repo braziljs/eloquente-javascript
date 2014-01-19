@@ -39,7 +39,7 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 * Funções - **Pietro Coelho**
 * Estrutura de Dados: Objeto e Array - **Fernando Daciuk**
 * Funções de Ordem Superior
-* A Vida Secreta dos Objetos
+* A Vida Secreta dos Objetos - **Joselito Júnior**
 * Prática: Vida Eletrônica
 * Erros e Manipulação de Erros
 * Expressões Regulares

@@ -46,3 +46,11 @@ Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://c
 * **traduzido**: sinaliza que um arquivo foi traduzido, e está aguardando revisão.
 * **em revisão**: sinaliza que um arquivo traduzido está sendo revisado.
 * **questões**: dúvidas, sugestões e outros.
+
+## Fluxo do Trabalho - Issues
+
+O andamento das issues está divido em 4 etapas, na ordem apresentada abaixo:
+
+> ### em tradução > traduzido > em revisão > fechamento da issue
+
+Após essas etapas, irei compilar o livro no [Leanpub](https://leanpub.com/eloquentejavascript) para a versão final do mesmo.

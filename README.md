@@ -1,47 +1,51 @@
 # JavaScript Eloquente - 2ª edição
 
-Uma moderna introdução ao JavaScript, programação e maravilhas digitais.
+### Uma moderna introdução ao JavaScript, programação e maravilhas digitais.
 
-### Escrito por **Marijn Haverbeke**
+Escrito por **Marijn Haverbeke**
 
-## Obtenha a versão pdf, mobi, epub e html [AQUI](https://leanpub.com/eloquentejavascript).
+---
+
+### Download do livro **[AQUI](https://leanpub.com/eloquentejavascript).**
+
+![JavaScript Eloquente](img/eloq-js.jpg)
 
 
 Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/) Todo código neste livro também pode ser considerado sobre [licença MIT](http://opensource.org/licenses/MIT).
 
 Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel* (capítulo 4) por Margarita Martínez e José Menor. Mysterious computer (introdução) por Philip Tyrer.
 
----
+
+# Conteúdo do Livro
+
+* [Introdução](https://github.com/eoop/eloquente-javascript/blob/master/chapters/01-introducao.md)
+* [Valores, Tipos e Operadores](https://github.com/eoop/eloquente-javascript/blob/master/chapters/02-valores-tipos-operadores.md)
+* [Estrutura do Programa](https://github.com/eoop/eloquente-javascript/blob/master/chapters/03-estrutura-do-programa.md)
+* [Funções](https://github.com/eoop/eloquente-javascript/blob/master/chapters/04-funcoes.md)
+* [Estrutura de Dados: Objeto e Array](https://github.com/eoop/eloquente-javascript/blob/master/chapters/05-estruturas-de-dados.md)
+* [Funções de Ordem Superior](https://github.com/eoop/eloquente-javascript/blob/master/chapters/06-funcoes-de-ordem-superior.md)
+* [A Vida Secreta dos Objetos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/07-a-vida-secreta-dos-objetos.md)
+* [Prática: Vida Eletrônica](https://github.com/eoop/eloquente-javascript/blob/master/chapters/08-pratica-vida-eletronica.md)
+* [Erros e Manipulação de Erros](https://github.com/eoop/eloquente-javascript/blob/master/chapters/09-erros-e-manipulacao-de-erros.md)
+* [Expressões Regulares](https://github.com/eoop/eloquente-javascript/blob/master/chapters/10-expressoes-regulares.md)
+* [Módulos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/11-modulos.md)
+* [Prática: A Linguagem de Programação](https://github.com/eoop/eloquente-javascript/blob/master/chapters/12-pratica-linguagem-de-programacao.md)
+
+
+# Contribuições
 
 ## Como Colaborar?
 
-* Caso deseje colaborar, primeiramente faça a atualização na seção [Conteúdo](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) logo abaixo, com o seu nome na frente do capítulo que irá traduzir, linkando para o profile do Github.
+1. Fork o projeto.
+2. Veja nas [issues](https://github.com/eoop/eloquente-javascript/issues?state=open) o status, através das *labels*, do capítulo que você deseja traduzir e/ou revisar.
+3. Caso o capítulo ainda não esteja em tradução e/ou revisão, comenta na issue corresponde que você irá iniciar tal tarefa, para que assim possamos adicionar a label correspondente.
+4. Faça o *Pull Request* para o repositório original.
 
-* Cada pessoa poderá escolher apenas 1 capítulo por vez, e somente após o término deste, poderá "adquirir" outro capítulo para tradução.
+**IMPORTANTE:** "Adquira" a concessão para tradução de outro capítulo somente **após** terminar o anteriormente solicitado.
 
-* Siga [esta convenção](https://gist.github.com/eoop/8507748) para escrever em markdown.
+## Entendendo as labels
 
-* Após concluída a tradução, atualize o README "tickando" na frente do seu nome [aqui](https://github.com/eoop/eloquente-javascript#conte%C3%BAdo) para termos noção de quanto do trabalho foi concluído. Utilize este tick para isso ~> **✓**
-
-* Use o arquivo `.md` (markdown) dentro da pasta *chapters* para inserir a tradução referente ao capítulo escolhido.
-
-
-**Aos que desejarem ajudar, toda a comunidade JavaScript nacional agradece ;)**
-
-
----
-
-# Conteúdo
-
-* Introdução - **[Eric Oliveira](https://github.com/eoop) ✓**
-* Valores, Tipos e Operadores - **[Eric Oliveira](https://github.com/eoop) ✓**
-* Estrutura do Programa - **[Eric Oliveira](https://github.com/eoop)**
-* Funções - **[Pietro Coelho](https://github.com/pietrofxq) ✓** 
-* Estrutura de Dados: Objeto e Array - **[Fernando Daciuk](https://github.com/fdaciuk)**
-* Funções de Ordem Superior
-* A Vida Secreta dos Objetos - **[Joselito Júnior](https://github.com/joselitojunior)**
-* Prática: Vida Eletrônica - **[Endel Dreyer](https://github.com/endel)**
-* Erros e Manipulação de Erros
-* Expressões Regulares
-* Módulos
-* Prática: A Linguagem de Programação
+* **em tradução**: sinaliza que um arquivo está em tradução.
+* **traduzido**: sinaliza que um arquivo foi traduzido, e está aguardando revisão.
+* **em revisão**: sinaliza que um arquivo traduzido está sendo revisado.
+* **questões**: dúvidas, sugestões e outros.

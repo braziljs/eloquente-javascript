@@ -38,7 +38,7 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 
 1. Fork o projeto.
 2. Veja nas [issues](https://github.com/eoop/eloquente-javascript/issues?state=open) o status, através das *labels*, do capítulo que você deseja traduzir e/ou revisar.
-3. Caso o capítulo ainda não esteja em tradução e/ou revisão, comente na issue corresponde que você irá iniciar tal tarefa, para que assim possamos adicionar a label correspondente.
+3. Caso o capítulo ainda não esteja em tradução e/ou revisão, comente na issue correspondente que você irá iniciar tal tarefa, para que assim possamos adicionar a label de status nela.
 4. Faça o *Pull Request* para o repositório original.
 
 **IMPORTANTE:** "Adquira" a concessão para tradução de outro capítulo somente **após** terminar o anteriormente solicitado.

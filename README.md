@@ -8,7 +8,7 @@ Escrito por **Marijn Haverbeke**
 
 ### Download do livro **[AQUI](https://leanpub.com/eloquentejavascript).**
 
-<center>![JavaScript Eloquente](img/eloq-js.jpg)</center>
+![JavaScript Eloquente](img/eloq-js.jpg)
 
 
 Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/) Todo código neste livro também pode ser considerado sobre [licença MIT](http://opensource.org/licenses/MIT).

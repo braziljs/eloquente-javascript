@@ -39,9 +39,8 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 * Funções - **[Pietro Coelho]()**
 * Estrutura de Dados: Objeto e Array - **[Fernando Daciuk](https://github.com/fdaciuk)**
 * Funções de Ordem Superior
-* A Vida Secreta dos Objetos
-* Prática: Vida Eletrônica - **[Endel Dreyer](https://github.com/endel)**
 * A Vida Secreta dos Objetos - **[Joselito Júnior](https://github.com/joselitojunior)**
+* Prática: Vida Eletrônica - **[Endel Dreyer](https://github.com/endel)**
 * Prática: Vida Eletrônica
 * Erros e Manipulação de Erros
 * Expressões Regulares

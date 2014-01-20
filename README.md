@@ -8,13 +8,10 @@ Escrito por **Marijn Haverbeke**
 
 ### Download do livro **[AQUI](https://leanpub.com/eloquentejavascript).**
 
-![JavaScript Eloquente](img/eloq-js.jpg)
+<center>![JavaScript Eloquente](img/eloq-js.jpg)</center>
 
 
 Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/) Todo código neste livro também pode ser considerado sobre [licença MIT](http://opensource.org/licenses/MIT).
-
-Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel* (capítulo 4) por Margarita Martínez e José Menor. Mysterious computer (introdução) por Philip Tyrer.
-
 
 # Conteúdo do Livro
 

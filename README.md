@@ -36,7 +36,7 @@ Ilustrações por vários artistas: *Sea of bits* (capítulo 1) e *weresquirrel*
 * Introdução - **[Eric Oliveira](https://github.com/eoop) ✓**
 * Valores, Tipos e Operadores - **[Eric Oliveira](https://github.com/eoop) ✓**
 * Estrutura do Programa - **[Eric Oliveira](https://github.com/eoop)**
-* Funções - **[Pietro Coelho]()**
+* Funções - **[Pietro Coelho](https://github.com/pietrofxq) ✓** 
 * Estrutura de Dados: Objeto e Array - **[Fernando Daciuk](https://github.com/fdaciuk)**
 * Funções de Ordem Superior
 * A Vida Secreta dos Objetos

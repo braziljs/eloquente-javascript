@@ -124,3 +124,5 @@ console.log("o valro de x é ", x);
 Embora eu tenha afirmado que nomes de variáveis não podem conter pontos, `console.log` claramente contém um ponto. Eu não tinha mentido para você. Esta não é uma simples variável, mas na verdade uma expressão que retorna o campo `log` do valor contido na variável `console`. Nós vamos entender o que isso significa no capítulo 4.
 
 ## Retornando Valores
+
+http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_atviOOHkIP

@@ -43,7 +43,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 04 - [Understand JavaScript Closures With Ease](http://javascriptissexy.com/understand-javascript-closures-with-ease/) || [Entenda Closures no JavaScript com Facilidade](https://github.com/eoop/traduz-ai/blob/master/javascript/004-entenda-closures-no-javaScript-com-facilidade.md#entenda-closures-no-javascript-com-facilidade)
 
-05 - [Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/) || [Aprendendo Padrões de Projeto JavaScript](https://leanpub.com/aprendendo-padroes-de-projeto-javascript)
+05 - [Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/) || [Aprendendo Padrões de Projeto JavaScript](https://github.com/eoop/aprendendo-padroes-de-projeto-javascript)
 
 06 - [Eloquent JavaScript](http://eloquentjavascript.net/2nd_edition/preview/) || [JavaScript Eloquente](https://github.com/eoop/eloquente-javascript)
 

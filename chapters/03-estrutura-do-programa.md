@@ -182,4 +182,56 @@ A função `Number` converte o valor para um número, que nós usamos porque o r
 
 ## Execução Condicional
 
-http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_z8ZMVdPIrQ
+Executando declarações em ordem linear não é a única opção que temos. Uma requisição comum é a execução condicional, onde nós escolhemos entre duas rotas diferentes baseado em um valor booleano.
+
+A execução condicional é escrita em JavaScript com a palavra-chave `if`. De forma simplificada, nós somente queremos que algum código seja executado se (`if`), e somente se, uma certa condição existir. Por exemplo, no programa anterior, nós poderíamos querer mostrar o quadrado da entrada somente se a entrada for realmente um número.
+
+```javascript
+
+var theNumber = Number(prompt("Digite um número", ""));
+if (!isNaN(theNumber))
+	alert("Seu número é a raiz quadrada de " + 
+			theNumber * theNumber);
+
+```
+
+Com essa modificação, se você entrar com "queijo" - ou não digitar nada - nenhuma saída será retornada.
+
+A palavra chave `if` é usada para executar ou pular uma declaração dependendo do valor da expressão booleana. Ela é sempre seguida por uma expressão entre parênteses, e então uma declaração.
+
+A função `isNaN` é uma função padrão que retorna `true` se o argumento dado a ela é `NaN`. A função `Number` retorna `NaN` quando você fornece a ela uma string que não representa um número válido. Então, a condição expressa "salvo que `theNumber` não seja um número, faça isso".
+
+Frequentemente você tem não apenas código que deve ser executado quando uma certa condição é verificada, mas também código que manipula outros casos, quando a condição não confere. A palavra-chave `else` pode ser usada, juntamente com `if`, para criar dois caminhos separados e paralelos que executam de acordo com suas condições:
+
+```javascript
+
+var theNumber = Number(prompt("Digite um número", ""));
+if (!isNaN(theNumber))
+	alert("Seu número é a raiz quadrada de " + 
+			theNumber * theNumber);
+else
+	alert("Ei! Por que você não me deu um número?");
+	
+
+```
+
+Se nós tivermos mais que dois caminhos que queremos escolher, múltiplos pares de `if`/`else` podem ser "encadeados" conjuntamente. Aqui temos um exemplo:
+
+```javascript
+
+var num = Number(prompt("Digite um número", "0"));
+
+if (num < 0)
+	alert("Pequeno");
+else if (num < 100)
+	alert("Médio");
+else
+	alert("Grande");
+
+```
+
+Este programa vai primeiramente checar se `num` é menor que 10. Se ele for, ele escolhe essa ramificação, e mostra "Pequeno", e pronto. Se não for, ele pega a ramificação `else`, que contém o segundo `if`. Se a segunda condição (`< 100`) for verdadeira, isso significa que o número está entre 10 e 100, e `Médio` será mostrado. Se não, o segundo e último `else` será escolhido.
+
+## Loops While e Do
+
+http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_FIHE6k56BA 

@@ -31,19 +31,19 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 # JavaScript
 
-01. Como Aprender JavaScript Corretamente
+01. **Como Aprender JavaScript Corretamente**
 	* [Original](http://javascriptissexy.com/how-to-learn-javascript-properly/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/001-como-aprender-js-corretamente.md#como-aprender-javascript-corretamente--javascriptis-sexy)
 
-02. Objetos JavaScript em Detalhe
+02. **Objetos JavaScript em Detalhe**
 	* [Original](http://javascriptissexy.com/javascript-objects-in-detail/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/002-objetos-js-em-detalhe.md#objetos-javascript-em-detalhe)
 
-03. Escopo de Variável e Hoisting no JavaScript Explicado
+03. **Escopo de Variável e Hoisting no JavaScript Explicado**
 	* [Original](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/003-escopo-de-variavel-js-e-hoisting-explicado.md#escopo-de-vari%C3%A1vel-javascript-e-hoisting-explicado)
 
-04. Entenda Closures no JavaScript com Facilidade
+04. **Entenda Closures no JavaScript com Facilidade**
 	* [Original](http://javascriptissexy.com/understand-javascript-closures-with-ease/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/004-entenda-closures-no-javaScript-com-facilidade.md#entenda-closures-no-javascript-com-facilidade)
 
-05. JavaScript Eloquente
+05. **JavaScript Eloquente - 2ª edição**
 	* [Original](http://eloquentjavascript.net/2nd_edition/preview/), [Tradução](https://github.com/eoop/eloquente-javascript) e [versão pdf, mobi e epub](https://leanpub.com/eloquentejavascript)
 
 # AngularJS

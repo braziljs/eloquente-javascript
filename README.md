@@ -26,9 +26,6 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 ---
 
-0. 
-	* [Original]() e [Tradução]()
-
 # JavaScript
 
 01. **Como Aprender JavaScript Corretamente**
@@ -48,19 +45,29 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 # AngularJS
 
-01 - [anguarjs-style-guide](https://github.com/mgechev/angularjs-style-guide) || [guia de estilo angularjs](https://github.com/eoop/traduz-ai/blob/master/angularjs/001-guia-definitivo-para-aprender-angularjs.md#guia-definitivo-para-aprender-angularjs-em-um-dia)
+01. **Guia de Estilos AngularJS**
+	* [Original](https://github.com/mgechev/angularjs-style-guide) e [Tradução](https://github.com/eoop/angularjs-style-guide/blob/master/README-pt-br.md)
 
-02 - [Ultimate guide to learning AngularJS in one day](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/) || [Guia Definitivo para Aprender AngularJS em Um Dia](http://javascriptbrasil.com/2013/10/18/guia-definitivo-para-aprender-angularjs-em-um-dia/) 
+02. **Guia Definitivo para Aprender AngularJS em Um Dia**
+	* [Original](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/001-guia-definitivo-para-aprender-angularjs.md#guia-definitivo-para-aprender-angularjs-em-um-dia)
 
-03 - [Learn AngularJS With These 5 Practical Examples](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) || [Aprenda AngularJS com estes 5 exemplos práticos](https://github.com/eoop/traduz-ai/blob/master/angularjs/002-aprenda-angularjs-com-5-exemplos.md#aprenda-angularjs-com-estes-5-exemplos-pr%C3%A1ticos)
+03. **Aprenda AngularJS com estes 5 exemplos práticos**
+	* [Original](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/002-aprenda-angularjs-com-5-exemplos.md#aprenda-angularjs-com-estes-5-exemplos-pr%C3%A1ticos)
 
-04 - [Use AngularJS to Power Your Web Application](http://www.yearofmoo.com/2012/08/use-angularjs-to-power-your-web-application.html) || [Use AngularJS para Potencializar sua Aplicação Web](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
+04. **Use AngularJS para Potencializar sua Aplicação Web**
+	* [Original](http://www.yearofmoo.com/2012/08/use-angularjs-to-power-your-web-application.html) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-05 - [More AngularJS Magic to Supercharge your Webapp](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html) || [Mais mágicas do AngularJS para turbinar sua Webapp](https://github.com/eoop/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md#mais-m%C3%A1gicas-do-angularjs-para-turbinar-sua-webapp)
+05. **Mais mágicas do AngularJS para turbinar sua Webapp**
+	* [Original](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md#mais-m%C3%A1gicas-do-angularjs-para-turbinar-sua-webapp)
 
 # Handlebars.js
-01 - [Handlebars.js Tutorial: Learn Everything About Handlebars.js JavaScript Templating](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/#Handlebarsjs_with_Backbonejs_jQuery_Emberjs_and_Meteorjs) || [Aprenda Tudo sobre Handlebars.js Templating JavaScript](https://github.com/eoop/traduz-ai/blob/master/handlebars/001-aprenda-tudo-sobre-handlebars.md#aprenda-tudo-sobre-handlebarsjs-templating-javascript)
+
+01. **Aprenda Tudo sobre Handlebars.js Templating JavaScript**
+	* [Original](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/handlebars/001-aprenda-tudo-sobre-handlebars.md#aprenda-tudo-sobre-handlebarsjs-templating-javascript)
 
 # MongoDB
 
-01 - [MongoDB University Brasil](https://github.com/eoop/mongodb-university-brasil) - legendas para os cursos em português-br
+01. **MongoDB University Brasil** - legendas para os cursos em português-br
+	* [Original](https://education.mongodb.com) e [Tradução](https://github.com/eoop/mongodb-university-brasil)
+
+

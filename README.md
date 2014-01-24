@@ -1,9 +1,8 @@
-# Traduz ai!
+![traduz ai](img/traduz-ai.png)
 
-### Seja muito bem vindo!
 Com este projeto, tenho como objetivo **traduzir o máximo de artigos** para que os mesmos fiquem disponíveis para todos os desenvolvedores, principalmente os iniciantes que são os que mais sofrem com o problema da falta de conteúdo em português, encontrando uma dupla barreira em relação as linguagens, tanto a escrita/falada, quanto a que quer realmente ser aprendida (linguagem de programação/marcação/etc).
 
-Além dos materiais que vou separar para tradução, aceito e ficarei muito agradecido se você puder contribuir através da indicação de novos artigos para as traduções. Sendo assim, irei deixar um espaço para sugestões!
+Além dos materiais que vou separar para tradução, aceito e ficarei muito agradecido se você puder contribuir através da indicação de novos artigos para as traduções. Caso queira sugerir ou indicar alguma errata, faã isso [aqui](https://github.com/eoop/traduz-ai/issues).
 
 Os artigos ficarão separados por categoria para facilitar para todos nós a pesquisa sobre um determinado assunto (mais categorias podem e serão inclusas com o tempo). No índice, terá a frente do nome do assunto o número de artigos já traduzidos sobre o mesmo. Na seção propriamente dita, primeiro colocarei o link original e depois o link da tradução.
 
@@ -22,14 +21,8 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 * [JavaScript](#javascript) (06)
 * [AngularJS](#angularjs) (05)
-* [NodeJS](#node.js) (00)
 * [Handlebars](#handlebarsjs) (01)
-* [HTML5](#html5) (00)
-* [CSS3](#css3) (00)
 * [MongoDB](#mongodb) (01)
-* [NoSQL](#nosql) (00)
-* [Outros](#outros) (00)
-* [Sugestões](#sugestões) 
 
 ---
 
@@ -59,28 +52,9 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 05 - [More AngularJS Magic to Supercharge your Webapp](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html) || [Mais mágicas do AngularJS para turbinar sua Webapp](https://github.com/eoop/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md#mais-m%C3%A1gicas-do-angularjs-para-turbinar-sua-webapp)
 
-# NodeJS
-
 # Handlebars.js
 01 - [Handlebars.js Tutorial: Learn Everything About Handlebars.js JavaScript Templating](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/#Handlebarsjs_with_Backbonejs_jQuery_Emberjs_and_Meteorjs) || [Aprenda Tudo sobre Handlebars.js Templating JavaScript](https://github.com/eoop/traduz-ai/blob/master/handlebars/001-aprenda-tudo-sobre-handlebars.md#aprenda-tudo-sobre-handlebarsjs-templating-javascript)
-
-# HTML5
-
-# CSS3
 
 # MongoDB
 
 01 - [MongoDB University Brasil](https://github.com/eoop/mongodb-university-brasil) - legendas para os cursos em português-br
-
-# NoSQL
-
-# Outros
-
-# Sugestões
-Deixe aqui suas sugestões! 
-
-01 - RailsGuides - http://guides.rubyonrails.org <br>
-02 - <br>
-03 - <br>
-04 - <br>
-05 - <br>

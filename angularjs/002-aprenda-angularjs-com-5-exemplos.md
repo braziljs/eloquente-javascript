@@ -1,5 +1,7 @@
 # Aprenda AngularJS com Estes 5 Exemplos Práticos
 
+![Aprenda Angular 5 exemplos](angularJs-5-exemplos.png)
+
 Você provavalemente ouviu sobre AngularJS http://angularjs.org/ - o empolgante framework open source desenvolvido pela Google, que muda a maneira que pensamos sobre as aplicações web. Temos muita coisa escrita sobre isso, mas eu ainda não encontrei algo que fosse escrito para desenvolvedores que preferem exemplos rápidos e práticos. Isto muda hoje. Abaixo você irá encontrar o básico da construção de blocos de aplicativos Angular - Models (Modelos), Views (Vistas), Controllers (Controladores), Services (Serviços) e Filters (Filtros) - explicados em 5 exemplos práticos que você pode <strong>editar diretamente no navegador*</strong>. Se você preferir abri-los no seu editor de códigos favorito, pegue o arquivo zip.
 
 <strong>Notas do tradutor:</strong> Caso deseje fazer as alterações no navegador (junto onde se apresenta o artigo), vá para o artigo original. Irei deixar também disponíveis no CodePen os códigos com os comentários traduzidos.

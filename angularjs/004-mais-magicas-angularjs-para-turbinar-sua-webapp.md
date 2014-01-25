@@ -384,33 +384,33 @@ O atributo data-ng-init é util para valores pré-definidos. A sintaxe funciona 
 
 Capturar erros é algo importante para a produção de aplicações. Abaixo estão várias maneiras de se fazer isso:
 
-<strong>Capturar outras rotas (otherwise)</strong>
+<strong>Capturar outras rotas (otherwise)</strong><br>
 Apesar de ser um método util como uma pagina padrão para uma rota, é melhor reservar essa rota como seu manipulador de página 404, caso uma rota não seja reconhecida dentro de sua aplicação.
 
-´´´
+```
 $routeProvider.when('/404',{
   controller : ErrorCtrl
 });
 $routeProvider.otherwise({
   redirectTo : '/404'
 });
-´´´
-<strong>Quando sua rota falhar!</strong>
+```
+<strong>Quando sua rota falhar!</strong><br>
 No caso de uma mudança de rota falhar(devido a um templateUrl faltar ou algo assim), então você pode capturar o evento dentro de seu alcance, fazendo o seguinte:
 
-´´´
+```
 App.run(['$rootScope','$location',function($rootScope, $location) {
   $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
     //Alterar o código para manipular o erro de alguma forma
     $location.path('/404').replace();
   });
 }]);
-´´´
+```
 Envolva serviços em torno de suas solicitações HTTP
 No início do artigo, Eu expliquei a importancia de personalizar serviços para reutilização de código.
 Quando você definir um serviço personalizado para envolver todas suas chamadas AJAX, então você poderá pegar os erros antes de serem transferidos para outras da sua aplicação.
 
-´´´
+```
 App.factory('myHttp',['$http','$location',function($http, $location) {
 
   var onEmpty = function() {
@@ -430,5 +430,5 @@ App.factory('myHttp',['$http','$location',function($http, $location) {
     }
   };
 }]);
-´´´
+```
 Certifique-se de usar somente esse método quando você acessar recursos e dados que são necessários dentro da sua aplicação (como dados JSON para uma view).

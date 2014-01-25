@@ -8,7 +8,7 @@ Para entender o `prototype` em JavaScript você deve entender os objetos JavaScr
 
 Existem dois conceitos inter-relacionados com `prototype` no JavaScript:
 
-**01** . Primeiro, existe uma **propriedade `prototype`** em toda função JavaScript (ela é vazia por padrão), e você anexa propriedades e métodos a essa propriedade `prototype` quando você quer implementar herança. Note que esta propriedade `prototype` não é enumerável: ela não está acessível em um loop for/in. Mas o Firefox, e a maioria das versões do Safari e Chrome, tem uma "pseudo" propriedade `_proto_` (de forma alternativa) que lhe permite acessar uma propriedade `prototype` de um objeto. Você provavelmente nunca vai usar esta pseudo propriedade `_proto_`, mas sabe que ela existe e é simplesmente uma forma de acessar uma propriedade `prototype` de um objeto em alguns navegadores.
+**01** . Primeiro, existe uma **propriedade `prototype`** em toda função JavaScript (ela é vazia por padrão), e você anexa propriedades e métodos a essa propriedade `prototype` quando você quer implementar herança. Note que esta propriedade `prototype` não é enumerável: ela não está acessível em um loop for/in. Mas o Firefox, e a maioria das versões do Safari e Chrome, tem uma "pseudo" propriedade `__proto__` (de forma alternativa) que lhe permite acessar uma propriedade `prototype` de um objeto. Você provavelmente nunca vai usar esta pseudo propriedade `__proto__`, mas sabe que ela existe e é simplesmente uma forma de acessar uma propriedade `prototype` de um objeto em alguns navegadores.
 
 A propriedade `prototype` é usada primariamente para herança: você adiciona métodos e propriedades dentro de uma propriedade `prototype` de uma função para tornar estes métodos e propriedades disponíveis para instâncias desta função.
 
@@ -34,5 +34,49 @@ var newObj = new PrintStuff("Eu sou um novo Objeto e eu posso imprimir.");
 // da função PrintStuff. Agora newObj pode chamar print diretamente, mesmo
 // nunca tendo criado um método print() nele.
 newObj.print(); // Eu sou um novo Objeto e eu posso imprimir.
+
+```
+
+**02** . O segundo conceito com `prototype` no JavaScript é o **atributo `prototype`**. Pense no atributo `prototype` como uma característica do objeto; esta característica nos informa o objeto "pai". Em simples palavras: um atributo `prototype` de um objeto aponta para o objeto "pai" - o objeto do qual foram herdadas as propriedades. O atributo `prototype` é normalmente referenciado como *objeto prototype*, e ele é configurado automaticamente quando você cria um novo objeto. Esclarecendo sobre isso: todo objeto herda propriedades de algum outro objeto, e este outro objeto é a propriedade prototype ou "pai". (Você pode pensar sobre o **atributo prototype** como uma linhagem ou o "pai"). No código acima, o `prototype` de `newObj` é `PrintStuff.prototype`
+
+Nota: Todos os objetos têm atributos como propriedades de objetos têm atributos. E os atributos do objeto são: `prototype`, `class` e `extensible`. É este atributo `prototype` que vamos discutir neste segundo exemplo.
+
+Note também que a "pseudo" propriedade `__proto__` contém um objeto prototype (o objeto pai que ela herda seus métodos e propriedades).
+
+## Uma nota importante
+
+**Construtor**
+
+Antes de continuarmos, vamos rapidamente examinar o construtor. Um **construtor** é uma função usada para inicializar novos objetos, e você usa a palavra `new` para chamar o construtor.
+
+Por exemplo:
+
+```javascript
+
+function Account () {
+	
+}
+
+// Este é o uso do construtor Account para criar
+// um objeto userAccount
+var userAccount = new Account();
+
+```
+
+Além disso, todos objetos que herdam de outro objeto também herdam uma propriedade `constructor`. E esta propriedade `constructor` é simplismente uma propriedade (como qualquer variável) que detém nossa indicação ao construtor do objeto.
+
+```javascript
+
+// O construtor neste exemplo é Object()
+var myObj = new Object();
+
+// e se depois você quiser encontrar o construtor de myObj
+console.log(myObj.constructor); // Object()
+
+// Outro exemplo: Account() é o construtor
+var userAccount = new Account();
+
+// Encontra o construtor do objeto userAccount
+console.log(userAccount.constructor); // Account()
 
 ```

@@ -19,7 +19,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 ### Índice
 
-* [JavaScript](#javascript) (05)
+* [JavaScript](#javascript) (06)
 * [AngularJS](#angularjs) (05)
 * [Handlebars](#handlebarsjs) (01)
 * [MongoDB](#mongodb) (01)
@@ -42,6 +42,9 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 05. **JavaScript Eloquente - 2ª edição**
 	* [Original](http://eloquentjavascript.net/2nd_edition/preview/), [Tradução](https://github.com/eoop/eloquente-javascript) e [versão pdf, mobi e epub](https://leanpub.com/eloquentejavascript)
+
+06. **Protótipos JavaScript em uma Linguagem Simples**
+	* [Original](http://javascriptissexy.com/javascript-prototype-in-plain-detailed-language/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/006-prototipos-javascript-em-uma-linguagem-simples.md#prot%C3%B3tipos-javascript-em-uma-linguagem-simples)
 
 # AngularJS
 

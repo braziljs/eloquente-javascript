@@ -180,9 +180,15 @@ alert("Your number is the square root de " + theNumber * theNumber);
 
 A função `Number` converte o valor para um número, que nós usamos porque o resultado de `prompt` é um valor `string`, e nós queremos um número. Existem funções similares chamadas `String` e `Boolean` que convertem valores para estes tipos.
 
+Aqui podemos ver uma representação bem trivial do fluxo de controle em linha reta:
+
+![Linha de Fluxo de Controle](../img/controlflow_straight.png)
+
 ## Execução Condicional
 
 Executando declarações em ordem linear não é a única opção que temos. Uma requisição comum é a execução condicional, onde nós escolhemos entre duas rotas diferentes baseado em um valor booleano.
+
+![Fluxo de Controle If](../img/controlflow_if.png)
 
 A execução condicional é escrita em JavaScript com a palavra-chave `if`. De forma simplificada, nós somente queremos que algum código seja executado se (`if`), e somente se, uma certa condição existir. Por exemplo, no programa anterior, nós poderíamos querer mostrar o quadrado da entrada somente se a entrada for realmente um número.
 

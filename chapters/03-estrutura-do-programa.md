@@ -261,3 +261,5 @@ console.log(12);
 Isto funciona, mas a ideia de escrever um programa é a de fazer algo ser *menos* trabalhoso, e não mais. Se nós precisarmos de todos os números pares menores que 1.000, o programa anterior se torna impraticável. O que nós precisamos é de uma forma de repetir código - um *loop*.
 
 ![Fluxo de Controle do Loop](../img/controlflow_loop.png)
+
+http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_qO8d4y4eqz

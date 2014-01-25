@@ -288,7 +288,7 @@ App.config(['$routeProvider', function ($routeProvider) {
 Serviços personalizados são o que fazem o angular ser muito manejável e facilmente testável.
 Ao usar recurso de injeção de dependência do angular, você pode criar um serviço personalizado em qualquer lugar dentro de sua aplicação e inclui-lo em outro lugar com muita facilidade. Um exemplo comum de um serviço compartilhado, é usa-lo como um serviço `$http` especial que está adaptado para atender o seu pedido.
 
-```
+```javascript
 App.factory('myHttp',['$http',function($http) {
   return function() {
     get : function(url, success, fail) {
@@ -304,7 +304,7 @@ $myHttp.get('/path', function(data) {
   alert(data);
 });
 
-```
+
 A seguir uma demonstração de como os dados são compartilhados entre os serviços dentro do mesmo model.
 
 App.factory('myFoo',['$http',function($http) {
@@ -315,7 +315,7 @@ App.factory('myFoo',['$http',function($http) {
 //Certifique-se de manter isso em mente, uma vez que é difícil de debugar.
   return foo;
 }]);
-
+```
 App.factory('myBar',['$http',function($http) {
   var bar = 'bar2';
   return foo.toString() + bar; /// esse deve retornar bar2 ou barbar2

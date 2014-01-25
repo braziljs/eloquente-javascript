@@ -19,9 +19,9 @@ Este artigo vai cobrir mais sobre as **jóias escondidas do AngularJS e introduz
 05. [$apply, $digest e $$phase]()
 06. [Comunicação entre Serviços e Controladores]()
 07. [Funcionalidades Adicionais dos Controladores e Rotas]()
-08. [Você deve usar Serviços Personalizados]()
-09. [Show, Hide, Cloak e Init]()
-10. [Capturando Erros]()
+08. [Você deve usar Serviços Personalizados](https://github.com/nicholasess/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md#voc%C3%AA-deve-usar-servi%C3%A7os-personalizados)
+09. [Show, Hide, Cloak e Init](https://github.com/nicholasess/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md#show-hide-cloak-and-init)
+10. [Capturando Erros](https://github.com/nicholasess/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md#capturando-erros)
 11. [Mais sobre Loops]()
 12. [Mantendo Controle sobre Path/URL]()
 13. [Filtros e Filtros Personalizados]()
@@ -281,8 +281,8 @@ App.config(['$routeProvider', function ($routeProvider) {
 		}
 	}
 }]);
-
 ```
+
 # Você deve usar Serviços Personalizados
 
 Serviços personalizados são o que fazem o angular ser muito manejável e facilmente testável.

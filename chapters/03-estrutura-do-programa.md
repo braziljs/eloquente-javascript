@@ -232,6 +232,26 @@ else
 
 Este programa vai primeiramente checar se `num` é menor que 10. Se ele for, ele escolhe essa ramificação, e mostra "Pequeno", e pronto. Se não for, ele pega a ramificação `else`, que contém o segundo `if`. Se a segunda condição (`< 100`) for verdadeira, isso significa que o número está entre 10 e 100, e `Médio` será mostrado. Se não, o segundo e último `else` será escolhido.
 
+O esquema de setas para este programa parece com algo assim:
+
+![Fluxo de Controle do Aninhamento if](../img/controlflow_nested_if.png)
+
 ## Loops While e Do
 
-http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_FIHE6k56BA 
+Considere um programa que imprimi todos os numéros pares de 0 a 12. Uma forma de se escrever isto é a seguinte:
+
+```javascript
+
+console.log(0);
+console.log(2);
+console.log(4);
+console.log(6);
+console.log(8);
+console.log(10);
+console.log(12);
+
+```
+
+Isto funciona, mas a ideia de escrever um programa é a de fazer algo ser *menos* trabalhoso, e não mais. Se nós precisarmos de todos os números pares menores que 1.000, o programa anterior se torna impraticável. O que nós precisamos é de uma forma de repetir código - um *loop*.
+
+![Fluxo de Controle do Loop](../img/controlflow_loop.png)

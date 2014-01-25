@@ -51,10 +51,10 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 	* [Original](https://github.com/mgechev/angularjs-style-guide) e [Tradução](https://github.com/eoop/angularjs-style-guide/blob/master/README-pt-br.md)
 
 02. **Guia Definitivo para Aprender AngularJS em Um Dia**
-	* [Original](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/001-guia-definitivo-para-aprender-angularjs.md#guia-definitivo-para-aprender-angularjs-em-um-dia)
+	* [Original](http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/001-guia-definitivo-para-aprender-angularjs.md)
 
 03. **Aprenda AngularJS com estes 5 exemplos práticos**
-	* [Original](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/002-aprenda-angularjs-com-5-exemplos.md#aprenda-angularjs-com-estes-5-exemplos-pr%C3%A1ticos)
+	* [Original](http://tutorialzine.com/2013/08/learn-angularjs-5-examples/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/002-aprenda-angularjs-com-5-exemplos.md)
 
 04. **Use AngularJS para Potencializar sua Aplicação Web**
 	* [Original](http://www.yearofmoo.com/2012/08/use-angularjs-to-power-your-web-application.html) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)

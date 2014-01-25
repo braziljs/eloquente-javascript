@@ -1,7 +1,3 @@
-# Guia Definitivo para Aprender AngularJS em Um Dia
-
-#### Tradução do artigo "Ultimate Guide to Learning AngularJS in One Day", originalmente postado em [toddmotto.com](http://toddmotto.com) em 02 de Outubro de 2013</strong> 
-
 ![AngularJS](../img/guia-definitivo-angular.png)
 
 ##O que é AngularJS?

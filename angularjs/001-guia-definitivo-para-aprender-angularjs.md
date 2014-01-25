@@ -261,7 +261,7 @@ myApp.directive('customButton', function () {
 
 ```
 
-E dentro do seu arquivo(nome do arquivo não é sensitivo a todos):
+E dentro do seu arquivo (nome do arquivo não é sensitivo a todos):
 
 ```html
 
@@ -272,7 +272,7 @@ E dentro do seu arquivo(nome do arquivo não é sensitivo a todos):
 
 ```
 
-O que é realmente bom em se fazer isso. é que o navegador irá efetivamente <i>cachear</i> o arquivo HTML, bravo! A outra alternativa que não utiliza o cache é declarar o template dentro da tag script:
+O que é realmente bom em se fazer isso, é que o navegador irá efetivamente <i>cachear</i> o arquivo HTML, bravo! A outra alternativa que não utiliza o cache é declarar o template dentro da tag `<script>`:
 
 ```html
 
@@ -284,7 +284,7 @@ O que é realmente bom em se fazer isso. é que o navegador irá efetivamente <i
 
 ```
 
-Você irá dizer ao Angular que há um <i>ng-template</i> e irá dar a ele um ID. O Angular irá então buscar pelo <i>ng-template</i> ou o arquivo <i>*.html</i>, então seja qual for sua preferência. Eu prefiro criar arquivos <i>*.html</i> por serem fáceis de lidar, melhorarem o desempenho e manter o DOM muito limpo, pois você pode acabar com 1 ou 100 diretivas, e irá querer ser capaz de navegar entre elas facilmente.
+Você irá dizer ao Angular que há um `ng-template` e irá dar a ele um ID. O Angular irá então buscar pelo `ng-template` ou o arquivo `.html`. Eu prefiro criar arquivos `.html` por serem fáceis de lidar, melhorarem o desempenho e manter o DOM muito limpo, pois você pode acabar com 1 ou 100 diretivas, e irá querer ser capaz de navegar entre elas facilmente.
 
 
 <h3>Serviços (Services)</h3> 

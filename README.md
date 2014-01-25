@@ -22,7 +22,6 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 * [JavaScript](#javascript) (06)
 * [AngularJS](#angularjs) (05)
 * [Handlebars](#handlebarsjs) (01)
-* [MongoDB](#mongodb) (01)
 
 ---
 
@@ -67,10 +66,5 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 01. **Aprenda Tudo sobre Handlebars.js Templating JavaScript**
 	* [Original](http://javascriptissexy.com/handlebars-js-tutorial-learn-everything-about-handlebars-js-javascript-templating/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/handlebars/001-aprenda-tudo-sobre-handlebars.md#aprenda-tudo-sobre-handlebarsjs-templating-javascript)
-
-# MongoDB
-
-01. **MongoDB University Brasil** - legendas para os cursos em português-br
-	* [Original](https://education.mongodb.com) e [Tradução](https://github.com/eoop/mongodb-university-brasil)
 
 

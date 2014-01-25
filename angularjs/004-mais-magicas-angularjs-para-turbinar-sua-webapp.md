@@ -303,10 +303,10 @@ App.factory('myHttp',['$http',function($http) {
 $myHttp.get('/path', function(data) {
   alert(data);
 });
-
+```
 
 A seguir uma demonstração de como os dados são compartilhados entre os serviços dentro do mesmo model.
-
+```
 App.factory('myFoo',['$http',function($http) {
 //todas as variaveis definidas nessa area serão acessivel
 //dentro de outros serviços que são definidos dentro de um mesmo módulo.
@@ -315,7 +315,7 @@ App.factory('myFoo',['$http',function($http) {
 //Certifique-se de manter isso em mente, uma vez que é difícil de debugar.
   return foo;
 }]);
-```
+
 App.factory('myBar',['$http',function($http) {
   var bar = 'bar2';
   return foo.toString() + bar; /// esse deve retornar bar2 ou barbar2

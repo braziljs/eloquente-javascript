@@ -2,7 +2,7 @@
 
 ##O que é AngularJS?
 
-Angular é um framework client-side MVC/MVVM feito em JavaScript, essencial para modernas 'single page web applications - SPA' (aplicações em uma página) e até mesmo sites. É um grande salto para o futuro do HTML e para o que o HTML5 traz, e é um sopro de ar fresco quando se está lidando com a web moderna. Este post é um curso completo 'do início ao fim', feito a partir de minhas experiências, conselhos e melhores práticas, aprendidas usando-o.
+Angular é um framework client-side MVC/MVVM feito em JavaScript, essencial para modernas *single page web applications - SPA* (aplicações em uma página) e até mesmo sites. É um grande salto para o futuro do HTML e para o que o HTML5 traz, e é um sopro de ar fresco quando se está lidando com a web moderna. Este post é um curso completo *do início ao fim*, feito a partir de minhas experiências, conselhos e melhores práticas, aprendidas usando-o.
 
 ## Terminologia
 
@@ -29,7 +29,7 @@ Você provavelmente ouviu sobre MVC, usado em várias linguagens de programaçã
 
 ```
 
-Você vai então pegar esta informação ou do servidor via XHR (XMLHttpRequest), com jQuery você conhece isto como o método $.ajax e com os envólucros (wraps) do Angular como $http, ou isto vai ser escrito no seu código enquanto a página é parseada (de um banco de dados). Você pode então enviar atualizações para seu modelo e pegá-las de volta.
+Você vai então pegar esta informação ou do servidor via XHR (XMLHttpRequest), com jQuery você conhece isto como o método `$.ajax` e com os envólucros (wraps) do Angular como `$http`, ou isto vai ser escrito no seu código enquanto a página é parseada (de um banco de dados). Você pode então enviar atualizações para seu modelo e pegá-las de volta.
 
 <strong>View (Visão):</strong> O 'view' é simples, ele é seu HTML e/ou saída renderizada. Usando um framework MVC, você irá pegar os dados do 'Model' que atualiza seu 'View' e mostrar as informações relevantes em seu HTML.
 
@@ -38,9 +38,9 @@ Você vai então pegar esta informação ou do servidor via XHR (XMLHttpRequest)
 
 <h3>Criação de Um Projeto AngularJS (mínimo essencial)</h3>
 
-Primeiro, nós precisamos de fato configurar o essencial para um projeto Angular. Há certas coisas para se observar antes de começarmos, que geralmente consiste em uma declaração *ng-app* para definir sua aplicação, um *Controller* para conversar com sua 'View', e alguma ligação DOM e inclusão do Angular. Aqui temos o mínimo essencial:
+Primeiro, nós precisamos de fato configurar o essencial para um projeto Angular. Há certas coisas para se observar antes de começarmos, que geralmente consiste em uma declaração `ng-app` para definir sua aplicação, um *Controller* para conversar com sua 'View', e alguma ligação DOM e inclusão do Angular. Aqui temos o mínimo essencial:
 
-Um pouco de HTML com declarações ng-*:
+Um pouco de HTML com declarações `ng-*`:
 
 ```html
 
@@ -52,19 +52,19 @@ Um pouco de HTML com declarações ng-*:
 
 ```
 
-Um módulo Angular e 'Controller':
+Um módulo Angular e um controlador:
 
 ```javascript
 
 var myApp = angular.module('myApp', []);
 
 myApp.controller('MainCtrl', ['$scope', function ($scope) {
-	// Controller mágico 
+	// Controlador mágico 
 }]);
 
 ```
 
-Antes de aprofundarmos, nós precisamos criar um *módulo Angular* o qual toda nossa lógica será acoplada. Há várias formas de declarar módulos, e você pode encadear toda sua lógica assim (Eu não gosto deste método):
+Antes de aprofundarmos, nós precisamos criar um *módulo Angular* na qual toda nossa lógica será acoplada. Há várias formas de declarar módulos, e você pode encadear toda sua lógica assim (Eu não gosto deste método):
 
 ```javascript
 
@@ -86,14 +86,14 @@ myApp.controller('UserCtrl', ['$scope', function ($scope) {...}]);
 
 ```
 
-Cada novo arquivo que eu criar simplemente pego o namespace e automaticamente estamos conectados com a aplicação. Sim, eu estou criando novos arquivos para cada Controller, Diretiva, *Factory* e tudo mais (você vai me agradecer por isto). Concatene-os e envie o script único no DOM dinamicamente usando algo como Grunt.
+Para cada novo arquivo que eu criar, eu simplemente pego o namespace e automaticamente estamos conectados com a aplicação. Sim, eu estou criando novos arquivos para cada Controller, Diretiva, *Factory* e tudo mais (você vai me agradecer por isto). Concatene-os e envie o script único no DOM dinamicamente usando algo como Grunt.
 
 
 <h3>Controladores</h3>
 
 Agora que você compreendeu o conceito do MVC e a configuração básica, vamos verificar a implementação do Angular e como você pode trabalhar com Controladores.
 
-Pegando o exemplo acima, nós podemos fazer um 'baby-step' (passo de bebê) em como inserir alguns dados no DOM a partir de um controlador. O Angular usa estilo de template com sintaxe <i>{{ handlebars }}</i> para conversar com o seu HTML. O HTML (preferencialmente) não deve conter textos físicos ou pesados códigos, para que se faça o melhor do Angular. Aqui temos um exemplo de inserção de uma simples String no DOM.
+Pegando o exemplo acima, nós podemos fazer um 'baby-step' (passo de bebê) em como inserir alguns dados no DOM a partir de um controlador. O Angular usa um estilo de template com sintaxe <i>{{ handlebars }}</i> para conversar com o seu HTML. O HTML (preferencialmente) não deve conter textos físicos ou códigos pesados, para que se faça o melhor do Angular. Aqui temos um exemplo de inserção de uma simples String no DOM.
 
 ```html
 
@@ -117,11 +117,11 @@ myApp.controller('MainCtrl', ['$scope', function ($scope) {
 
 E o resultado ao vivo: [http://jsfiddle.net/toddmotto/mN7QB/light/](http://jsfiddle.net/toddmotto/mN7QB/light/)
 
-O regra chave aqui é o conceito de $scope, que você irá ligar com todas as suas funções dentro dos controladores específicos. O $scope se refere ao atual elemento/área do DOM (não, não é o mesmo que <i>this</i>), e encapsular um escopo inteligente e capaz de manter os dados e a lógica completamente situados dentro dos elementos. Isso traz ao JavaScript escopos públicos/privados para o DOM, o que é fantástico.
+A regra chave aqui é o conceito de `$scope`, que você irá ligar com todas as suas funções dentro dos controladores específicos. O `$scope` se refere ao atual elemento/área do DOM (não, não é o mesmo que `this`), e encapsula um escopo inteligente e capaz de manter os dados e a lógica completamente situados dentro dos elementos. Isso traz ao JavaScript escopos públicos/privados para o DOM, o que é fantástico.
 
-O conceito de $scope pode ser assustador no começo, mas é a sua conexão com o DOM com o servidor (e dados estáticos se você também os tiver)! A demonstração lhe deu a ideia básica de como você pode inserir dados no DOM.
+O conceito de `$scope` pode ser assustador no começo, mas é a sua conexão com o DOM e com o servidor (e dados estáticos se você também os tiver)! A demonstração lhe deu a ideia básica de como você pode inserir dados no DOM.
 
-Vamos conferir uma estrutura mais representativas em que teremos hipotéticamente dados recuperados do servidor para mostrar detalhes do login de usuários. Por agora vou usar dados estáticos, mais a frente irei lhe mostrar como buscar dados JSON dinâmicos.
+Vamos conferir uma estrutura mais representativa em que teremos hipoteticamente dados recuperados do servidor para mostrar detalhes do login de usuários. Por agora vou usar dados estáticos, mais a frente irei lhe mostrar como buscar dados JSON dinâmicos.
 
 Primeiro vamos configurar o JavaScript:
 
@@ -158,7 +158,7 @@ Agora portando isso para o DOM para mostrarmos estes dados:
 
 Resultado: http://jsfiddle.net/eo_op/xJdWk/
 
-É importante lembrar que os Controladores são para <i>dados</i> somente, e funções (funções de evento também) que conversem com o servidor e insiram/busquem dados JSON. Manipulação DOM <strong>não</strong> deve ser feita aqui, então deixe seu kit jQuery de fora. Diretivas são para manipulação do DOM, e será o próximo tópico.
+É importante lembrar que os Controladores são somente para <i>dados</i>, e funções (funções de evento também) que conversem com o servidor e insiram/busquem dados JSON. Manipulação DOM <strong>não</strong> deve ser feita aqui, então deixe seu kit jQuery de fora. Diretivas são para manipulação do DOM, e será o próximo tópico.
 
 <strong>Dica profissional:</strong> por toda a documentação do Angular (até o momento que escrevo isso), seus exemplos mostram essa forma de se criar Controladores:
 
@@ -176,11 +176,11 @@ Resultado: http://jsfiddle.net/eo_op/xJdWk/
 
 <h3>Diretivas</h3>
 
-Uma diretiva (confira meu post em Diretivas a partir de scripts/plugins existentes http://toddmotto.com/creating-an-angularjs-directive-from-one-of-your-existing-plugins-scripts/) em sua forma mais simples é um pequeno pedaço de HTML modelado, preferencialemente usado múltiplas vezes durante a aplicação onde é necessária. É uma maneira simples de inetar o DOM na sua aplicação sem nenhum esforço, realizando interações DOM personalizadas. Diretivas não são simples no entando, há uma incrível curva de aprendizado para conquistá-las totalmente, porém a próxima etapa irá deixá-lo pronto para começar.
+Uma diretiva (confira meu post em [Diretivas a partir de scripts/plugins existentes](http://toddmotto.com/creating-an-angularjs-directive-from-one-of-your-existing-plugins-scripts/)) em sua forma mais simples é um pequeno pedaço de HTML modelado, preferencialemente usado múltiplas vezes durante a aplicação onde é necessária. É uma maneira simples de injetar o DOM na sua aplicação sem nenhum esforço, realizando interações DOM personalizadas. Diretivas, no entanto, não são simples, há uma incrível curva de aprendizado para conquistá-las totalmente, porém a próxima etapa irá deixá-lo pronto para começar.
 
-Então para o quê as diretivas são usadas? Vários coisas, incluir componentes DOM, por exemplo abas ou elementos de navegação - realmente depende do que sua aplicação faz uso da interface do usuário (UI - User Interface). Se você já brincou com <i>ng-show</i> ou <i>ng-hide</i>, elas são diretivas (embora não injetem no DOM).
+Então para o quê as diretivas são usadas? Várias coisas. Incluir componentes DOM, por exemplo, abas ou elementos de navegação - realmente depende do uso que sua aplicação faz da interface do usuário (UI - User Interface). Se você já brincou com `ng-show` ou `ng-hide`, elas são diretivas (embora não injetem no DOM).
 
-Para este exercício, irei deixar isso realmente simples e criar um tipo de botão customizado (chamado customButton) que injeta alguma marcação que eu odeio do ter que ficar escrevendo. Há várias maneiras de definir Diretivas no DOM, elas podem se parecer com isso:
+Para este exercício, irei deixar isso realmente simples e criar um tipo de botão customizado (chamado customButton) que injeta alguma marcação que eu odeio ter que ficar escrevendo. Há várias maneiras de definir Diretivas no DOM, elas podem se parecer com isso:
 
 ```html
 
@@ -200,7 +200,7 @@ Para este exercício, irei deixar isso realmente simples e criar um tipo de bot�
 
 Eu prefiro usá-las como um atributo, elementos customizados estão vindo no futuro do HTML5 junto com Web Components, mas os relatórios do Angular com eles mostram vários erros em navegadores antigos.
 
-Agora que você sabe como declarar e onde as Diretivas são usadas/injetadas, vamos criar o botão personalizado. Novamente, eu vou ligar o namespace global da minha aplicação como <i>myApp</i>, sendo esta a diretiva na sua forma mais simples:
+Agora que você sabe como declarar e onde as Diretivas são usadas/injetadas, vamos criar o botão personalizado. Novamente, eu vou ligar o namespace global da minha aplicação como `myApp`, sendo esta a diretiva na sua forma mais simples:
 
 ```javascript
 
@@ -214,7 +214,7 @@ myApp.directive('customButton', function () {
 
 ```
 
-Eu defini minha diretiva usando o método<i>.directive()</i>, e a chamei 'customButton'. Quando você capitaliza uma letra no nome da diretiva, ela deve ser separada com hífen no DOM (como mostrado acima).
+Eu defini minha diretiva usando o método `.directive()`, e a chamei 'customButton'. **Quando você capitaliza uma letra no nome da diretiva, ela deve ser separada com hífen no DOM (como mostrado acima)**.
 
 Uma diretiva simplesmente retorna a si mesma como um objeto (Object) e assume um número de parâmetros. O mais importante para mim, de se dominar primeiro é, <i>restrict, replace, transclude, template e templateUrl</i>, e para nós a propriedade <i>link</i>. Vamos adicionar as outras propriedades: 
 
@@ -240,15 +240,15 @@ myApp.directive('customButton', function () {
 
 Inspecione o elemento e veja as marcações adicionais que foram injetadas. Sim, eu sei, não há icone incluso por que eu não inclui o 'Font Awesome', mas você viu como funciona. Agora vamos para as explicações das propriedades das Diretivas:
 
-* <i>restrict:</i> isso remonta a utilização, como iremos restringir o uso dos elementos? Se você estiver usando um projeto que necessite dar suporte ao IE legado, você provavelmente precisará de declarações de atributos/classes. Restringindo com 'A' significa que você restringiu isso como atributo. 'E' para elemento, 'C' para classe e 'M' para comment. Como padrão temos 'EA'. Sim, você pode restringir para múltiplos casos de uso.
+* **restrict:** isso remonta a utilização. Como iremos restringir o uso dos elementos? Se você estiver usando um projeto que necessite dar suporte ao IE legado, você provavelmente precisará de declarações de atributos/classes. Restringindo com 'A' significa que você restringiu isso como atributo. 'E' para elemento, 'C' para classe e 'M' para comment. Como padrão temos 'EA'. Sim, você pode restringir para múltiplos casos de uso.
 
-* <i>replace</i>: Isto substitui a marcação no DOM que define a diretiva, como usado no exemplo, você irá notar como o DOM inicial é substituido com o 'template' (modelo) da Diretiva.
+* **replace**: Isto substitui a marcação no DOM que define a diretiva, como usado no exemplo, você irá notar como o DOM inicial é substituído com o 'template' (modelo) da Diretiva.
 
-* <i>transclude</i>: Simplificando, usando transclude você permite que conteúdo existente no DOM seja copiado dentro da diretiva. Você verá as palavras '"Click me" have "moved"' dentro da Diretiva quando ela for renderizada.
+* **transclude**: Simplificando, usando *transclude* você permite que conteúdo existente no DOM seja copiado dentro da diretiva.
 
-* <i>template</i>: Um template (como acima) permite que você declare uma marcação a ser injetada. É uma boa ideia usar isto para minúsculo pedaços de HTML somente. Templates injetados são todos compilados pelo Angular, isto significa que você pode declarar as 'handlebar template tags' {{ }} dentro deles também para ligação.
+* **template**: Um template (como acima) permite que você declare uma marcação a ser injetada. É uma boa ideia usar isto para minúsculo pedaços de HTML somente. Templates injetados são todos compilados pelo Angular, isto significa que você pode declarar as tags de template *handlebars* `{{ }}` dentro deles também para ligação.
 
-* <i>templateUrl</i>Similar ao template, mas mantido em seu próprio arquivo ou tag script. Você pode fazer isso para especificar um modelo de URL, que você vai querer usar para manipular pedaços de HTML que requerem manter-se em seu próprio arquivo, somente especificando o caminho e nome do arquivo, preferencialmente mantidos dentro dos próprios diretórios<i>templates</i>:
+* **templateUrl**: Similar ao template, mas mantido em seu próprio arquivo ou tag script. Você pode fazer isso para especificar um modelo de URL, que você vai querer usar para manipular pedaços de HTML que requerem manter-se em seu próprio arquivo, somente especificando o caminho e nome do arquivo, preferencialmente mantidos dentro dos próprios diretórios <i>templates</i>:
 
 ```javascript
 

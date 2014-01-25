@@ -1,4 +1,5 @@
 # Objetos JavaScript em Detalhe
+
 ### Artigo traduzido. Postado originalmente em JavaScript.is(Sexy) http://javascriptissexy.com/javascript-objects-in-detail/ - 27/01/2013
 
 O núcleo mais utilizado e mais básico do JavaScript é o Object. O JavaScript tem um tipo complexo de dado, o tipo Object, e tem cinco tipos de dados simples: Number, String, Boolean, Undefined e Null. Note que estes tipos simples (primitivos) de dados são imutáveis, eles não podem ser alterados, enquanto os objetos podem.

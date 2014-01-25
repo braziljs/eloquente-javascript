@@ -283,3 +283,152 @@ App.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 ```
+# Você deve usar Serviços Personalizados
+
+Serviços personalizados são o que fazem o angular ser muito manejável e facilmente testável.
+Ao usar recurso de injeção de dependência do angular, você pode criar um serviço personalizado em qualquer lugar dentro de sua aplicação e inclui-lo em outro lugar com muita facilidade. Um exemplo comum de um serviço compartilhado, é usa-lo como um serviço `$http` especial que está adaptado para atender o seu pedido.
+
+```
+App.factory('myHttp',['$http',function($http) {
+  return function() {
+    get : function(url, success, fail) {
+      $http.get(url).success(function(response) {
+        return response.data;
+      }).error(fail);
+    }
+  };
+}]);
+
+//O serviço agora pode ser chamado 
+$myHttp.get('/path', function(data) {
+  alert(data);
+});
+
+```
+A seguir uma demonstração de como os dados são compartilhados entre os serviços dentro do mesmo model.
+
+App.factory('myFoo',['$http',function($http) {
+//todas as variaveis definidas nessa area serão acessivel
+//dentro de outros serviços que são definidos dentro de um mesmo módulo.
+//Assim, se uma variável chamada foo, var foo = 'bar'
+//então foo pode ser acessado em outro serviço. 
+//Certifique-se de manter isso em mente, uma vez que é difícil de debugar.
+  return foo;
+}]);
+
+App.factory('myBar',['$http',function($http) {
+  var bar = 'bar2';
+  return foo.toString() + bar; /// esse deve retornar bar2 ou barbar2
+}]);
+
+```
+Você também pode injetar qualquer um dos seus próprios serviços em outros serviços quando criados, isso é muito util para a reutilização de código e testes.
+
+# Show, Hide, Cloak and Init
+
+Você irá descobrir que mostrar (show) e ocultar (hide) valores em seus templates angular pode ser dificil, pois você não pode contar com a linguagem de programação do lado do servidor para construir seu template (templates são estaticos). Aqui está um exemplo de como algo iria funcionar normalmente quando se utiliza algo como PHP.
+
+```
+<div class="session">
+  <?php if($isAdmin) { ?>
+    <span class="admin">Hello Admin</span>
+  <?php } else { ?>
+    <span class="user">Hello User</span>
+  <?php } ?>
+</div>
+
+```
+
+O mesmo efeito pode ser criando ao usar angular
+
+```
+<div class="session">
+  <span class="admin" data-ng-show="isAdmin">Hello Admin</span>
+  <span class="admin" data-ng-hide="isAdmin">Hello User</span>
+</div>
+```
+Só não se esqueça de definir o valor de ligação.
+
+```
+$scope.isAdmin = true; //ou false ou seja o que for
+
+```
+Isso funciona, mas quando a página ainda está carregando (quando carregada pela primeira vez), você pode ver os dois valores ao mesmo tempo, para contornar isso, basta usar ng-clock.
+
+```
+<div class="session ng-cloak">...</div>
+
+```
+E defina o css para também:
+
+```
+.ng-cloak {
+  /* Isso vai mudar para bloquear quando scope and angular estiver prontos*/  
+  display:none;
+}
+
+```
+Oh! E mais uma coisa. Se você deseja definir o valor isAdmin direto em seu HTML, em seguida, faça o seguinte usando o data-ng-init
+
+```
+<div class="session ng-cloak" data-ng-init="isAdmin=false;">
+  <span class="admin" data-ng-show="isAdmin">Hello Admin</span>
+  <span class="admin" data-ng-hide="isAdmin">Hello User</span>
+</div>
+```
+O atributo data-ng-init é util para valores pré-definidos. A sintaxe funciona como você estivesse definindo valores diretamente em JavaScript (uma vez que usar `eval` para avaliar o texto dentro do valor do atributo).
+
+É simplesmente fantatisco!
+
+# Capturando Erros
+
+Capturar erros é algo importante para a produção de aplicações. Abaixo estão várias maneiras de se fazer isso:
+
+<strong>Capturar outras rotas (otherwise)</strong>
+Apesar de ser um método util como uma pagina padrão para uma rota, é melhor reservar essa rota como seu manipulador de página 404, caso uma rota não seja reconhecida dentro de sua aplicação.
+
+´´´
+$routeProvider.when('/404',{
+  controller : ErrorCtrl
+});
+$routeProvider.otherwise({
+  redirectTo : '/404'
+});
+´´´
+<strong>Quando sua rota falhar!</strong>
+No caso de uma mudança de rota falhar(devido a um templateUrl faltar ou algo assim), então você pode capturar o evento dentro de seu alcance, fazendo o seguinte:
+
+´´´
+App.run(['$rootScope','$location',function($rootScope, $location) {
+  $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
+    //Alterar o código para manipular o erro de alguma forma
+    $location.path('/404').replace();
+  });
+}]);
+´´´
+Envolva serviços em torno de suas solicitações HTTP
+No início do artigo, Eu expliquei a importancia de personalizar serviços para reutilização de código.
+Quando você definir um serviço personalizado para envolver todas suas chamadas AJAX, então você poderá pegar os erros antes de serem transferidos para outras da sua aplicação.
+
+´´´
+App.factory('myHttp',['$http','$location',function($http, $location) {
+
+  var onEmpty = function() {
+    window.location = '/404';
+  };
+
+  return function() {
+    get : function(url, success, fail) {
+      $http.get(url).success(function(response) {
+        var data = response.data;
+        if(!data) {
+          onEmpty();
+          return;
+        }
+        success();
+      }).error(onEmpty);
+    }
+  };
+}]);
+´´´
+Certifique-se de usar somente esse método quando você acessar recursos e dados que são necessários dentro da sua aplicação (como dados JSON para uma view).

@@ -99,7 +99,7 @@ Note que para este código funcionar, teremos que incluir um arquivo adicional A
 
 ```
 
-Isso inclui o módulo ngResource http://docs.angularjs.org/api/ngResource.$resource para um simples trabalho com API's AJAX (o módulo é exposto como a variável $resource no código). Este arquivo é automaticamente incluso no editor abaixo.
+Isso inclui o módulo [ngResource](http://docs.angularjs.org/api/ngResource.$resource) para um simples trabalho com API's AJAX (o módulo é exposto como a variável `$resource` no código). Este arquivo é automaticamente incluso no editor abaixo.
 
 * para testar no browser, vá para o artigo original *
 
@@ -111,12 +111,11 @@ Services são totalmente auto-suficientes, tornando possível escrever diferente
 
 Se você tiver alcançado este ponto, você já compreendeu o básico do desenvolvimento com AngularJS. Entretanto, há muito mais a se aprender se você quiser se tornar um profissional. Aqui temos uma lista de recursos que vão ajudá-lo nesta questão:
 
-<ul>
-	<li>[AngularJS Home Page](http://angularjs.org/) </li>
-	<li>[AngularJS Guide](http://docs.angularjs.org/guide/overview) </li>
-	<li>[Tutorial Oficial do AngularJS](http://docs.angularjs.org/tutorial)</li>
-	<li>[Lista de muitos e muitos recursos, vídeos e tutoriais](https://github.com/jmcunningham/AngularJS-Learning)</li>
-</ul>
+[AngularJS Home Page](http://angularjs.org/)
+[AngularJS Guide](http://docs.angularjs.org/guide/overview)
+[Tutorial Oficial do AngularJS](http://docs.angularjs.org/tutorial)
+[Lista de muitos e muitos recursos, vídeos e tutoriais](https://github.com/jmcunningham/AngularJS-Learning)
+
 
 
 

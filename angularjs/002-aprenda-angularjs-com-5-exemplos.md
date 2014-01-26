@@ -45,7 +45,7 @@ Para o primeiro exemplo, nós vamos construir um menu de navegação que destaca
 
 No código acima, nós estamos usando as Diretivas Angular para definir e ler a variável <strong>ativa</strong>. Quando isso muda, causa no HTML uma atualização automática. Na terminologia Angular, esta variável é chamada um modelo. Está disponível para todas as diretivas no escopo atual, e pode ser acessada nos seus controladores (mais sobre estes no próximo exemplo).
 
-Se você já utilizou templates JavaScript antes, você é familiar com a sintaxe {{var}}. Quando o framework ve esta string, ele a substitui com o conteúdo da variável. Essa operação é repetida toda hora que a variável for modificada.
+Se você já utilizou templates JavaScript antes, você é familiar com a sintaxe {{var}}. Quando o framework vê esta string, ele a substitui com o conteúdo da variável. Essa operação é repetida toda hora que a variável for modificada.
 
 <h2>Editor Inline</h2>
 
@@ -59,13 +59,13 @@ Quando a função controladora é executada, ela pega o objeto especial $scope c
 
 <h2>3. Formulário de Pedido</h2>
 
-Neste exemplo, nós vamos criar um formulário com um preço total atualizado em tempo real, usando outra das úteis propriedades do Angular - os Filtros. http://docs.angularjs.org/guide/dev_guide.templates.filters Filtros permitem que você modifique os modelos e possa os encadear juntos usando o caracter barra vertical | . No exemplo ebaixo, eu estou usando o currency filter, http://docs.angularjs.org/api/ng.filter:currency para tornar um número em um preço corretamente formatado, completo com um símbolo dólar e centavos. Você pode facilmente criar seus próprios filtros, como você verá no exemplo #4.
+Neste exemplo, nós vamos criar um formulário com um preço total atualizado em tempo real, usando outra das úteis propriedades do Angular - os [Filtros](http://docs.angularjs.org/guide/dev_guide.templates.filters). Filtros permitem que você modifique os modelos e possa os encadear juntos usando o caracter barra vertical `|`. No exemplo ebaixo, eu estou usando o [currency filter](http://docs.angularjs.org/api/ng.filter:currency), para tornar um número em um preço corretamente formatado, completo com um símbolo dólar e centavos. Você pode facilmente criar seus próprios filtros, como você verá no exemplo #4.
 
 * para testar no browser, vá para o artigo original *
 
 * Link para codepen com comentários traduzidos > [aqui](http://codepen.io/eoop/pen/Jnbjf) 
 
-A ligação ng-repeat (docs http://docs.angularjs.org/api/ng.directive:ngRepeat) é outra propriedade útil do framework. Ela permite que você faça um loop em um array de item e gere um marcador para eles. Quando um item é deletado, isso é atualizado de forma inteligente.
+A ligação [`ng-repeat`](docs http://docs.angularjs.org/api/ng.directive:ngRepeat) é outra propriedade útil do framework. Ela permite que você faça um loop em um array de item e gere um marcador para eles. Quando um item é deletado, isso é atualizado de forma inteligente.
 
 <strong>Nota:</strong> Para uma versão completa, veja este tutorial http://tutorialzine.com/2013/05/quick-tip-convert-backbone-to-angularjs/, que foi baseado neste [outro](http://tutorialzine.com/2013/04/services-chooser-backbone-js/), escrito com Backbone.js. 
 
@@ -75,13 +75,13 @@ Este exemplo vai permitir aos usuários filtrarem uma lista de itens digitando d
 
 Módulos são uma forma de se organizar aplicações JavaScript dentro de componentes auto-suficientes que podem ser combinados de formas novas e interessantes. O Angular depende desta técnica para o isolamento do código e requer que sua aplicação siga isso antes de criar um filtro. Há apenas duas coisas que você precisa fazer para tornar sua aplicação um módulo:
 
-1. Usar a função angular.module ("name", []) chamada em seu JS. Isso irá instanciar e retornar um novo módulo;
+1. Usar a função `angular.module("name", [])` chamada em seu JS. Isso irá instanciar e retornar um novo módulo;
 
-2. Passar o nome do módulo como valor da diretiva ng-app.
+2. Passar o nome do módulo como valor da diretiva `ng-app`.
 
-Criando um filtro que é tão simples com chamar o método filter () no objeto retornado pelo módulo angular.module ("name", [])
+Criando um filtro que é tão simples com chamar o método `filter()` no objeto retornado pelo módulo `angular.module ("name", [])`
 
-* para testar no browser, vá para o artigo original *
+* Para testar no browser, vá para o artigo original *
 
 * Link para codepen com comentários traduzidos > [aqui](http://codepen.io/eoop/pen/sBkte) 
 

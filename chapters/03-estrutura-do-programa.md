@@ -262,4 +262,59 @@ Isto funciona, mas a ideia de escrever um programa é a de fazer algo ser *menos
 
 ![Fluxo de Controle do Loop](../img/controlflow_loop.png)
 
-http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_qO8d4y4eqz
+O fluxo de controle do loop nos permite voltar a um mesmo ponto do programa onde estávamos anteriormente, e repetí-lo no contexto da nossa declaração atual do programa. Se nós combinarmos isso com uma variável que conta, nós podemos fazer isso:
+
+```javascript
+
+var number = 0;
+while (number <= 12) {
+	console.log(number);
+	number = number + 2;
+}
+// 0
+// 2 
+// etc...
+
+```
+
+Uma declaração iniciando com a palavra `while` cria um loop. A palavra `while` é seguida por uma expressão em parênteses e então uma declaração, como um `if`. O loop age continuando a executar a declaração enquanto a expressão produzir um valor que é `true`, quando convertido para o tipo booleano.
+
+
+Por causa de querermos fazer duas coisas dentro do loop, imprimir o número atual e adicionar 2 a nossa variável, nós envolvemos as duas declarações com chaves `{}`. Chaves, para declarações, são similares aos parênteses para expressões, elas as agrupam, fazendo que sejam vistas como uma simples declaração.
+
+Então, a variável `number` demonstra o caminho que a variável pode tomar no progresso do programa. Toda hora que o loop se repete, ele é incrementado por 2. Então, no início de toda repetição, ele é comparado com o número 12 para decidir se o programa terminou todo o trabalho que era pretendido a se fazer.
+
+Como exemplo de algo realmente útil, podemos agora escrever um programa que calcula e mostra o valor de 2¹⁰ (2 elevado a décima potência). Nós usamos duas variáveis: uma para manter o registro do nosso resultado e uma para contar quantas vezes multiplicamos este resultado por 2. O loop teste se a segunda variável já atingiu 10 e então atualiza ambas variáveis.
+
+```javascript
+
+var result = 1;
+var counter = 0;
+while (counter < 10) {
+	result = result * 2;
+	counter = counter + 1;
+}
+console.log(result);
+// 1024
+
+```
+
+O contador pode também iniciar com 1 e checar por `<= 10`, mas, por razões que vamos ver mais a frente, é uma boa ideia usar a contagem iniciando com 0.
+
+Uma estrutura muito similar é o loop `do`. Ele difere somente em um ponto do loop `while`: ele sempre vai executar este a declaração uma vez, e somente então vai iniciar o teste e verificar se precisa pausar. Para demonstrar, o teste é escrito abaixo do corpo do loop:
+
+```javascript
+
+do {
+	var name = prompt("Who are you?");
+} while (!name) {
+	console.log(name);
+}
+
+```
+
+Isto vai forçar você a entrar com um nome, perguntando de novo e de novo até que pegue algo que não é uma string vazia. (Aplicando o operador `!` vamos converter o valor para o tipo booleano negando o mesmo, e todas as strings exceto `""` convertem em `true`).
+
+## Indentando Código
+
+http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_LX4sTXird3

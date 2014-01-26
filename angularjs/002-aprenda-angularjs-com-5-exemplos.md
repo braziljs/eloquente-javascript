@@ -1,12 +1,12 @@
 ![Aprenda Angular 5 exemplos](../img/angularJS-5-exemplos.png)
 
-Você provavalemente ouviu sobre AngularJS http://angularjs.org/ - o empolgante framework open source desenvolvido pela Google, que muda a maneira que pensamos sobre as aplicações web. Temos muita coisa escrita sobre isso, mas eu ainda não encontrei algo que fosse escrito para desenvolvedores que preferem exemplos rápidos e práticos. Isto muda hoje. Abaixo você irá encontrar o básico da construção de blocos de aplicativos Angular - Models (Modelos), Views (Vistas), Controllers (Controladores), Services (Serviços) e Filters (Filtros) - explicados em 5 exemplos práticos que você pode <strong>editar diretamente no navegador*</strong>. Se você preferir abri-los no seu editor de códigos favorito, pegue o arquivo zip.
+Você provavalemente ouviu sobre [AngularJS](http://angularjs.org/) - o empolgante framework open source desenvolvido pela Google, que muda a maneira que pensamos sobre as aplicações web. Temos muita coisa escrita sobre isso, mas eu ainda não encontrei algo que fosse escrito para desenvolvedores que preferem exemplos rápidos e práticos. Isto muda hoje. Abaixo você irá encontrar o básico da construção de blocos de aplicativos Angular - Models (Modelos), Views (Vistas), Controllers (Controladores), Services (Serviços) e Filters (Filtros) - explicados em 5 exemplos práticos que você pode <strong>editar diretamente no navegador*</strong>. Se você preferir abri-los no seu editor de códigos favorito, pegue o arquivo zip.
 
 <strong>Notas do tradutor:</strong> Caso deseje fazer as alterações no navegador (junto onde se apresenta o artigo), vá para o artigo original. Irei deixar também disponíveis no CodePen os códigos com os comentários traduzidos.
 
 Faça o download do código fonte dos exemplos com os comentários em português [aqui](https://doc-0g-1g-docs.googleusercontent.com/docs/securesc/f8bvcjen03911q1dff7brgoos9hvboh6/0i1jlajnp9aicdcbtk1pj9jqfm7aka3f/1382529600000/18036872927410112600/18036872927410112600/0B-ok-PijFYOPRDA4UXM4eWdmY2s?e=download&h=16653014193614665626&nonce=f19cr1b0jlu9m&user=18036872927410112600&hash=6ddugak9eqqiijugnojj0e7569jp74ef) 
 
-Complementar a este artigo, leia o [Guia Definitivo de como aprender AngularJS](https://github.com/eoop/traduz-ai/blob/master/angularjs/001-guia-definitivo-para-aprender-angularjs.md#guia-definitivo-para-aprender-angularjs-em-um-dia) , pois nele encontramos melhores práticas para o desenvolvimento das aplicações Angular. Se você iniciar por este tutorial mais direto, recomendo que você os veja e depois refaça todos os exemplos embasados nas melhores práticas mostradas no Guia Definitivo. Ex: criar um namespace para aplicação, evitando as variáveis globais. 
+Complementar a este artigo, leia o [Guia Definitivo de como aprender AngularJS](https://github.com/eoop/traduz-ai/blob/master/angularjs/001-guia-definitivo-para-aprender-angularjs.md#guia-definitivo-para-aprender-angularjs-em-um-dia) , pois nele encontramos melhores práticas para o desenvolvimento das aplicações Angular. Se você iniciar por este tutorial mais direto, recomendo que você o veja e depois refaça todos os exemplos embasados nas melhores práticas mostradas no Guia Definitivo. Ex: criar um namespace para aplicação, evitando as variáveis globais. 
 
 <strong>Link para arquivo zip:</strong> [link](http://demo.tutorialzine.com/2013/08/learn-angularjs-5-examples/angularjs-examples.zip)
 
@@ -14,7 +14,7 @@ Complementar a este artigo, leia o [Guia Definitivo de como aprender AngularJS](
 
 De forma básica, AngularJS é um framework que liga seu HTML (views) com objetos JavaScript (models). Quando seus modelos mudam, a página é atualizada automaticamente. O contrário também é válido - um modelo, associado com um campo de texto, é atualizado quando o conteúdo do campo é alterado. O Angular manuseia toda essa 'cola' do código, então você não precisa atualizar manualmente o HTML ou escutadores (listeners) para os eventos, como você faz com jQuery. Como aliás, nenhum destes exemplos incluem jQuery!
 
-Para usar o AngularJS, você tem que incluí-lo na sua página antes do fechamento da tag body. Google's CDN https://developers.google.com/speed/libraries/devguide#angularjs é recomendado para um carregamento mais rápido:
+Para usar o AngularJS, você tem que incluí-lo na sua página antes do fechamento da tag body. [Google's CDN](https://developers.google.com/speed/libraries/devguide#angularjs) é recomendado para um carregamento mais rápido:
 
 
 ```html
@@ -49,7 +49,7 @@ Se você já utilizou templates JavaScript antes, você é familiar com a sintax
 
 <h2>Editor Inline</h2>
 
-Para nosso segundo exemplo, nós vamos criar um simples editor inline - clicando no parágrafo vamos mostrar um tooltip (dica) com um campo de texto. Nós vamos usar um controlador que vai inicializar os modelos e declarar 2 métodos para alternar a visibilidade do tooltip. Controladores são funções regulares do JavaScript que são executadas automaticamente pelo Angular, e que são associadas com sua página usando a diretiva ng-controller:
+Para nosso segundo exemplo, nós vamos criar um simples editor inline - clicando no parágrafo vamos mostrar um tooltip (dica) com um campo de texto. Nós vamos usar um controlador que vai inicializar os modelos e declarar 2 métodos para alternar a visibilidade do tooltip. Controladores são funções regulares do JavaScript que são executadas automaticamente pelo Angular, e que são associadas com sua página usando a diretiva `ng-controller`:
 
 * para testar no browser, vá para o artigo original *
 

@@ -111,10 +111,10 @@ Services são totalmente auto-suficientes, tornando possível escrever diferente
 
 Se você tiver alcançado este ponto, você já compreendeu o básico do desenvolvimento com AngularJS. Entretanto, há muito mais a se aprender se você quiser se tornar um profissional. Aqui temos uma lista de recursos que vão ajudá-lo nesta questão:
 
-[AngularJS Home Page](http://angularjs.org/)
-[AngularJS Guide](http://docs.angularjs.org/guide/overview)
-[Tutorial Oficial do AngularJS](http://docs.angularjs.org/tutorial)
-[Lista de muitos e muitos recursos, vídeos e tutoriais](https://github.com/jmcunningham/AngularJS-Learning)
+* [AngularJS Home Page](http://angularjs.org/)
+* [AngularJS Guide](http://docs.angularjs.org/guide/overview)
+* [Tutorial Oficial do AngularJS](http://docs.angularjs.org/tutorial)
+* [Lista de muitos e muitos recursos, vídeos e tutoriais](https://github.com/jmcunningham/AngularJS-Learning)
 
 
 

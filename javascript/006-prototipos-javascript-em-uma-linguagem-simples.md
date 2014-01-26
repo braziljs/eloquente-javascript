@@ -80,3 +80,55 @@ var userAccount = new Account();
 console.log(userAccount.constructor); // Account()
 
 ```
+
+## Atributo prototype de Objetos Criados com new Object() ou Objetos Literais
+
+Todos os objetos criados com objetos literais e com o construtor `Object` herdam de `Object.prototype`. Portanto, `Object.prototype` é o atributo `prototype` (ou o objeto prototype) de todos objetos criados com `new Object` ou com `{}`. `Object.prototype` não herda nenhum método ou propriedade de outro objeto.
+
+```javascript
+
+// O objeto userAccount herda de Object e, como tal,
+// seu atributo prototype é Object.prototype
+var userAccount = new Object();
+
+// Este exemplo demonstra o uso de um objeto literal para criar o objeto userAccount;
+// O objeto userAccount herda de Object; entretanto, seu atributo prototype é
+// o Object.prototype como o objeto userAccount acima.
+var userAccount = { name: "Mike" };
+
+```
+
+**Atributo Prototype de Objetos Criados com uma Função Construtora**
+
+Objetos criados com a palavra-chave `new` e qualquer outro construtor além do construtor `Object()`, pegam seu prototype da função construtora.
+
+Por exemplo:
+
+```javascript
+
+function Account () {
+	
+}
+
+var userAccount = new Account()
+// userAccount inicializa com o construtor Account()
+// e portanto seu atributo prototype (ou objeto prototype)
+// é Account.prototype
+
+```
+
+Similarmente, qualquer array como `var myArray = new Array()`, pege seu prototype de `Array.prototype` e ele herda as propriedades de `Array.prototype`.
+
+Então, temos duas formas gerais que um atributo prototype de um objeto é configurado quando um objeto é criado:
+
+**1** . Se um objeto é criado com um objeto literal (`var newObj = {}`), ele herda as propriedades do `Object.prototype` e nós dizemos que seu objeto prototype (ou atributo prototype) é `Object.prototype`.
+
+**2** . Se um objeto é criado a partir de uma função construtora como `new Object()`, `new Fruit()` ou `new QualquerCoisa()`, ele herda do construtor `Object()`, `Fruit()`, `QualquerCoisa()`. Por exemplo, com uma função como `Fruit()`, cada vez que criarmos uma nova instância de Fruit (`var aFruit = new Fruit()`), o novo prototype da instância será atribuído ao prototype vindo do construtor Fruit, que é `Fruit.prototype`. Qualquer objeto que for criado com `new Array()` vai ter `Array.prototype` como seu prototype. Qualquer objeto criado com o construtor Object (`como var anObj = new Object()`) herda de `Object.prototype`.
+
+É importante conhecer que na ECMAScript 5, você pode criar objetos com um método `Object.create()` que permite que você configure novos `object.prototype` para os objetos. Nós vamos cobrir sobre ECMAScript em outro post.
+
+## Por que Prototype é Importante e Quando ele é Usado?
+
+Estas são duas importantes maneiras em que o `prototype` é usado no JavaScript, como vimos acima:
+
+**1** . **Propriedade Prototype: Herança baseada em protótipos**

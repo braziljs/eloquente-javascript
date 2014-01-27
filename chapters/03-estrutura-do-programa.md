@@ -317,4 +317,22 @@ Isto vai forçar você a entrar com um nome, perguntando de novo e de novo até 
 
 ## Indentando Código
 
-http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_LX4sTXird3
+Você deve ter notado os espaços que coloco na frente das declarações. Eles não são necessários - o computador vai aceitar o programa muito bem sem eles. De fato, as quebras de linhas nos programas também são opcionais. Você pode escrevê-las como uma linha simples se quiser. O papel da indentação dentro dos blocos é fazer com que se destaque a estrutura do código. Por causa de novos blocos poderem ser abertos dentro de outros blocos, em códigos complexos isto pode se tornar difícil de se ver onde um bloco terminar e outro inicia. Com uma indentação correta, o formato visual de um programa corresponde a forma do bloco dentro dele. Eu gosto de usar 2 espaços para cada bloco aberto, mas gostos são diferentes - algumas pessoas usam quatro espaços, e algumas usam caracteres tab.
+
+## Loops For
+
+Loops sempre seguem o mesmo padrão, como visto nos exemplos acima do `while`. Primeiro, uma variável "contadora" é criada. Esta variável registra o progresso do loop. Então, vem o loop `while`, que testa a expressão geralmente checando se o contador alcançou algum limite. No fim do corpo do loop, o contador é atualizado para o registro do progresso.
+
+Por este padrão ser muito comum, o JavaScript e linguagens similares oferecem uma forma ligeiramente mais curta e compreensiva:
+
+```javascript
+
+for (var number = 0; number <= 12; number = number + 2)
+	console.log(number);
+// 0
+// 2
+// etc
+
+```
+
+http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_D5cGXlnxHn

@@ -306,7 +306,7 @@ $myHttp.get('/path', function(data) {
 ```
 
 A seguir uma demonstração de como os dados são compartilhados entre os serviços dentro do mesmo model.
-```
+```javascript
 App.factory('myFoo',['$http',function($http) {
 //todas as variaveis definidas nessa area serão acessivel
 //dentro de outros serviços que são definidos dentro de um mesmo módulo.
@@ -328,7 +328,7 @@ Você também pode injetar qualquer um dos seus próprios serviços em outros se
 
 Você irá descobrir que mostrar (show) e ocultar (hide) valores em seus templates angular pode ser dificil, pois você não pode contar com a linguagem de programação do lado do servidor para construir seu template (templates são estaticos). Aqui está um exemplo de como algo iria funcionar normalmente quando se utiliza algo como PHP.
 
-```
+```html
 <div class="session">
   <?php if($isAdmin) { ?>
     <span class="admin">Hello Admin</span>
@@ -341,7 +341,7 @@ Você irá descobrir que mostrar (show) e ocultar (hide) valores em seus templat
 
 O mesmo efeito pode ser criando ao usar angular
 
-```
+```html
 <div class="session">
   <span class="admin" data-ng-show="isAdmin">Hello Admin</span>
   <span class="admin" data-ng-hide="isAdmin">Hello User</span>
@@ -355,13 +355,13 @@ $scope.isAdmin = true; //ou false ou seja o que for
 ```
 Isso funciona, mas quando a página ainda está carregando (quando carregada pela primeira vez), você pode ver os dois valores ao mesmo tempo, para contornar isso, basta usar ng-clock.
 
-```
+```html
 <div class="session ng-cloak">...</div>
 
 ```
 E defina o css para também:
 
-```
+```javascript
 .ng-cloak {
   /* Isso vai mudar para bloquear quando scope and angular estiver prontos*/  
   display:none;
@@ -370,7 +370,7 @@ E defina o css para também:
 ```
 Oh! E mais uma coisa. Se você deseja definir o valor isAdmin direto em seu HTML, em seguida, faça o seguinte usando o data-ng-init
 
-```
+```html
 <div class="session ng-cloak" data-ng-init="isAdmin=false;">
   <span class="admin" data-ng-show="isAdmin">Hello Admin</span>
   <span class="admin" data-ng-hide="isAdmin">Hello User</span>
@@ -387,7 +387,7 @@ Capturar erros é algo importante para a produção de aplicações. Abaixo est�
 <strong>Capturar outras rotas (otherwise)</strong><br>
 Apesar de ser um método util como uma pagina padrão para uma rota, é melhor reservar essa rota como seu manipulador de página 404, caso uma rota não seja reconhecida dentro de sua aplicação.
 
-```
+```javascript
 $routeProvider.when('/404',{
   controller : ErrorCtrl
 });
@@ -398,7 +398,7 @@ $routeProvider.otherwise({
 <strong>Quando sua rota falhar!</strong><br>
 No caso de uma mudança de rota falhar(devido a um templateUrl faltar ou algo assim), então você pode capturar o evento dentro de seu alcance, fazendo o seguinte:
 
-```
+```javascript
 App.run(['$rootScope','$location',function($rootScope, $location) {
   $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
     //Alterar o código para manipular o erro de alguma forma
@@ -410,7 +410,7 @@ Envolva serviços em torno de suas solicitações HTTP
 No início do artigo, Eu expliquei a importancia de personalizar serviços para reutilização de código.
 Quando você definir um serviço personalizado para envolver todas suas chamadas AJAX, então você poderá pegar os erros antes de serem transferidos para outras da sua aplicação.
 
-```
+```javascript
 App.factory('myHttp',['$http','$location',function($http, $location) {
 
   var onEmpty = function() {

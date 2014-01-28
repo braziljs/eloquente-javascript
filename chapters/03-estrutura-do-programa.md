@@ -335,4 +335,91 @@ for (var number = 0; number <= 12; number = number + 2)
 
 ```
 
-http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_D5cGXlnxHn
+Este programa é exatamente o equivalente ao exemplo anterior de *número-sempre-impresso*. A única alteração é que todas as declarações que estão relacionadas ao "estado" do loop estão agora em somente uma linha.
+
+O parênteses após a palavra-chave `for` é obrigado a conter dois "ponto e vírgula" (`;`). A parte antes do primeiro ponto e vírgula *inicializa* o loop, normalmente definindo uma variável. A segunda parte é a expressão que *checa* se o loop vai continuar. A parte final *atualiza* o estado do loop após cada interação. Na maioria dos casos, isto é mais enxuto e limpo que uma construção `while`.
+
+Aqui temos o código que computa 2¹⁰, usando `for` ao invés de `while`:
+
+```javascript
+
+var result = 1;
+for (var counter = 0; counter < 10; counter = counter + 1)
+  result = result * 2;
+console.log(result);
+//1024
+
+```
+
+Note que mesmo se não abrirmos um bloco com `{`, a declaraão no loop continua indentada com dois espaços para deixar claro que ela "pertence" a linha anterior a ela.
+
+## Saindo de um Loop
+
+Ter uma condição que produza `false` não é a única maneira que um loop pode parar. Existe uma declaração especial, `break`, que tem o efeito de pular imediatamente fora do loop em questão.
+
+Este programa encontra o primeiro número que é maior ou igual a 20, e divisível por 7:
+
+```javascript
+
+for (var current = 20; ; current++) {
+	if (current % 7 == 0)
+		break;
+}
+console.log(current);
+// 21
+
+```
+
+O truque com o operador de resto `%` é uma maneira fácil de testar se um número é divisível por outro número. Se for, o resto da divisão é zero.
+
+A construção `for` neste exemplo não tem uma parte que checa pelo fim do loop. Isso significa que essa tarefa depende da declaração `break` dentro dela para a fazer parar.
+
+Se a declaração `break` faltar, ou acidentalmente tivermos uma condição que sempre produz `true`, você terá o chamado *loop infinito*. Um programa rodando um loop infinito nunca vai parar de rodar, que é normalmente uma coisa ruim.
+
+Se você criar um loop infinito em algum dos exemplos desta página, você vai ser perguntando se quer parar o script após alguns segundos. Se isso falhar, você terá que fechar a aba que você está trabalhando, ou em alguns navegadores você terá que fechar todo ele, a fim de recuperá-lo.
+
+## Atualizando variáveis Suscintamente
+
+Um programa, especialmente quando em loop, frequentemente precisa de "atualizar" uma variável com um valor que é baseado no valor anterior.
+
+```javascript
+
+counter = counter + 1;
+
+```
+
+O JavaScript fornece um atalho para isso:
+
+```javascript
+
+counter += 1;
+
+```
+
+Isto também funciona para várias outras operações, como `result *= 2` para dobrar `result`, ou `counter -= 1` para contar abaixo.
+
+Isto nos permite encurtar nosso exemplo de contagem um pouco mais:
+
+```javascript
+
+for (var number = 0; number <= 12; number += 2)
+	console.log(number);
+
+```
+
+Para `counter += 1` e `counter -= 1`, sempre temos um equivalente mais curto: `counter++` e `counter--`
+
+## Enviando um Valor com `switch`
+
+É comum para um código se parecer com algo assim:
+
+```javascript
+
+if (variable == "value1") action1();
+else if (variable == "value2") action2();
+else if (variable == "value3") action3();
+else defaultAction();
+
+```
+
+http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_NAtglzdIez

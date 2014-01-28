@@ -132,3 +132,57 @@ Então, temos duas formas gerais que um atributo prototype de um objeto é confi
 Estas são duas importantes maneiras em que o `prototype` é usado no JavaScript, como vimos acima:
 
 **1** . **Propriedade Prototype: Herança baseada em protótipos**
+
+O protótipo é importante no JavaScript porque o JavaScript não tem herança clássica baseada em Classes (como a maioria das linguagens orientadas a objeto têm), e portanto toda herança no JavaScript é possivelmente feita a partir da propriedade `prototype. O JavaScript tem um mecanismo de herança baseado em protótipos. Herança é um paradigma de programação onde objetos (ou Classes em algumas linguagens) podem herdar propriedades e métodos de outros objetos (ou Classes). No JavaScript, você implementa herança com a propriedade `prototype`. Por exemplo, você pode criar uma função Fruit (um objeto, pois todas as funções no JavaScript são objetos) e adicionar propriedades e métodos na propriedade `prototype de Fruit, e todas as instâncias da função Fruit vão herdar todas as propriedades e métodos de Fruit.
+
+Demonstração de herança no JavaScript:
+
+```javascript
+
+function Plant() {
+	this.country = "Mexico";
+	this.isOrganic = true;
+}
+
+// Adicionando o método shoeNameAndColor a propriedade prototype de Plant
+Plant.prototype.showNameAndColor = function () {
+	console.log("I am a " + this.name + " and my color is " + this.color);
+}
+
+// Adicionando o método amIOrganic a propriedade prototype de Plant
+Plant.prototype.amIOrganic = function () {
+	if (this.isOrganic)
+		console.log("I am organic, baby!");
+}
+
+function Fruit (fruitName, fruitColor) {
+	this.name = fruitName;
+	this.color = fruitColor;
+}
+
+// Configura o protótipo de Fruit para o construtor de Plant,
+// então herdando todos os métodos e propriedades de Plant.prototype
+Fruit.prototype = new Plant();
+
+// Cria um novo objeto, aBanana, com o construtor Fruit
+var aBanana = new Fruit("Banana", "Yellow");
+
+// Aqui, aBanana usa a propriedade name do objeto prototype aBanana,
+// que é Fruit.prototype:
+console.log(aBanana.name); // Banana
+
+// Usa o método showNameAndColor do objeto prototype Fruit,
+// que é Plant.prototype. O objeto aBanana herda todas as 
+// propriedades e métodos de ambas funções Plant e Fruit.
+console.log(aBanana.showNameAndColor()); 
+// I am a Banana and my color is yellow
+
+```
+
+Note que o método `showNameAndColor` foi herdado pelo objeto `aBanana` apesar de ter sido definido todo o caminho até a cadeia de protótipos do objeto Plant.prototype.
+
+De fato, qualquer objeto que usar o construtor `Fruit()` vai herdar todos os métodos e propriedades de `Fruit.prototype` e todos os métodos e propriedades do protótipo de Fruit, que é `Plant.prototype`. Esta é **a principal maneira que herança é implementada no JavaScript** e o papel essencial da cadeia de protótipos neste processo.
+
+Para uma cobertura mais aprofundada sobre Programação Orientada a Objetos no JavaScript, obtenha o livro de Nicholas Zakas [Principles of Object-Oriented Programming in JavaScript ](https://leanpub.com/oopinjavascript).
+
+**2** . **Atributo `prototype`: Acessando Propriedades nos Objetos**

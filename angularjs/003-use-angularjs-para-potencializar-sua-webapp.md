@@ -83,7 +83,7 @@ Configure seu site e inclua o Angular dentro do seu **código HTML com uma tag s
 
 Módulos são usados para **encapsular completamente todo o código angular de sua aplicação em um ponto de entrada**. As mais recentes construções do angular **incluem suporte a módulos** que são como namespacing misturados com **injeção de dependência (DI - direct injection)** e **error trapping**. Versões antigas do Angular não incluem isso. Temos vários artigos de blogs, videos e demos desatualizados que estão ensinando como usar uma versão antiga do Angular. Desta maneira confundirá quando configurarmos a aplicação com o download de uma versão mais recente do Angular.
 
-Módulos são usados então sua aplicação (como discretas partes de sua aplicação) podem ser separadas em partes distintas que podem ser carregadas e executadas em ordens diferentes. Então você pode ter um módulo de diretivas que pode estar configurado para rodar antes que o módulo UI o seja, assegurando assim que sua aplicação resultante DOM esteja na forma adequada para seu código UI seja executado.
+Os módulos são usados como partes discretas da sua aplicação, e podem ser separados em partes distintas que podem ser carregadas e executadas em ordens diferentes. Então você pode ter um módulo de diretivas que pode estar configurado para rodar antes que o módulo UI o seja, assegurando assim que sua aplicação resultante DOM esteja na forma adequada para seu código UI ser executado.
 
 A primeira coisa que você precisa fazer quando configura sua aplicação Angular é seguir seu layout principal do arquivo (estou assumindo que você já inclui o angular no seu website como uma tag script JavaScript).
 
@@ -116,7 +116,7 @@ Tenha em mente que um módulo **pode facilmente quebrar** (se há código errôn
 
 Bindings são muio muito poderosos. Eles reduzem drasticamente a quantidade de código HTML requisitado e também separam completamente a lógica da aplicação dos dados. O Angular vem com expressões que são separadas de suas marcações gerais HTML e vinculam-se ao alcance de uma variável, que é onde ocorre a ligação dos dados. Isto envolve **data binding**, **two-way data binding**, **condicionais**, **for in e foreach loops**, **model binding** e por ai vai.
 
-Aqui temos um exemplo que lista todos os registros em uma lista ordenada e nós podemos fazer da seguinte forma (**isso é o que expressões angular são):
+Aqui temos um exemplo que lista todos os registros em uma lista ordenada e nós podemos fazer da seguinte forma (**isso é o que expressões angular são**):
 
 ```html
 
@@ -126,9 +126,9 @@ Aqui temos um exemplo que lista todos os registros em uma lista ordenada e nós 
 
 ```
 
-O bloco interno (a tag h5) vai ser repetida para cada registro encontrado entre os registros do objeto (que está à parte da variável $scope). Finalmente o **orderBy:orderProp** especifíca que propriedade (neste caso o *title*) pode ser usado para ordenar os registros.
+O bloco interno (a tag h5) vai ser repetida para cada registro encontrado entre os registros do objeto (que está à parte da variável `$scope`). Finalmente o **orderBy:orderProp** especifíca qual propriedade (neste caso o *title*) pode ser usado para ordenar os registros.
 
-E o JavaScript para configurar os dados é como o seguinte **(este é o data binding)**:
+E o JavaScript para configurar os dados como o seguinte **(este é o data binding)**:
 
 ```javascript
 
@@ -164,9 +164,11 @@ O **benefício da DI** é que você pode **isolar totalmente** todos os serviço
 
 ### Rotas
 
-Rotas são usadas para mapear qual caminho está ligado a qual controlador. Quando você acessa uma URL (clicando em um link ou colocando na URL), o Angular vai **primeiro checar e ver se isto está definido** e, se não, então vai **delegar o evendo para uma página padrão** (acessa uma página html normalmente) ou **não faz nada** (se for uma URL com #). Isso é bom pois você não tem que gerenciar qualquer mudança de URL nas rotas do Angular.
+Rotas são usadas para mapear qual caminho está ligado a qual controlador. Quando você acessa uma URL (clicando em um link ou colocando na URL), o Angular vai **primeiro checar e ver se isto está definido** e, se não, então vai **delegar o evento para uma página padrão** (acessa uma página html normalmente) ou **não faz nada** (se for uma URL com #). Isso é bom pois você não tem que gerenciar qualquer mudança de URL nas rotas do Angular.
 
-Rotas são definidas diretamente do módulo da aplicação com a seguinte sintaxe. **NOTE:** Caminhos de rota não tem nada a ver com hashbangs (**você pode alternar hashbangs ligado ou desligado através do modo HTML5**).
+Rotas são definidas diretamente do módulo da aplicação com a seguinte sintaxe. 
+
+**NOTA:** Caminhos de rota não tem nada a ver com hashbangs (**você pode alternar hashbangs ligado ou desligado através do modo HTML5**).
 
 ```javascript
 

@@ -37,7 +37,7 @@ Esta página foi primariamente publicada em *15 de Agosto de 2012* e foi atualiz
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Sobre este artigo
+## Sobre este artigo
 
 Este artigo descreve brevemente para que o Angular pode ser usado e o básico de como funciona. O artigo cobre **controladores e escopo**, **serviços**, **modelos**, **templates**, **diretivas**, **filtros**, **módulos**, e **configurações**.
 
@@ -45,7 +45,7 @@ Este artigo também explica como o Angular pode ser usado com **MooTools** e **j
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Aplicações Web (não websites)
+## Aplicações Web (não websites)
 
 Quando você decide construir um website usando angular **a maior questão para se perguntar** é que este é um site que requer HTML válido ou é uma aplicação web que concentra mais na funcionalidade do que na marcação. Angular trabalha com **código HTML modelado** e **dados JSON**. O maior impacto da abordagem de como o Angular, e todos outros frameworks client-side MVC, lidam com sua lógica é que a estrutura e os dados são projetados para serem separados um do outro.
 
@@ -55,7 +55,7 @@ Portanto a marcação buscada no servidor é **sem sentido sem o Angular** anali
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Então como isso funciona?
+## Então como isso funciona?
 
 O Angular trabalha **separando a lógica da aplicação a partir dos dados** no *client-side* e estruturando uma aplicação web client-side com o uso de **diretivas**, **filtros**, **bindings** (ligação) e **operações específicas de binding**. Controladores, Serviços e Modelos são usados para colar toda a lógica e as operações com dados. Como mencionado, dado e lógica são separados então isso significa que seus dados (**a parte dinâmica**), seu template HTML (**a parte estática**), e sua lógica (**os controladores e marcadores de ligação**) trabalham conjuntamente para fazer o trabalho da aplicação. A melhor coisa é que toda a parte não dinâmica pode ser cacheada por bastante tempo e suas respostas dinâmicas são pequenas. Isto é ótimo para cachear as respostas server-side e **reduz enormemente a quantidade de trabalho que o servidor terá que fazer para gerar as respostas HTML**. De fato se você pensar sobre isso, a maioria dos dados buscados para uma página HTML são redundantes... então por que não fazê-los 100% estáticos? O Angular faz isso e faz muito bem.
 
@@ -65,7 +65,7 @@ Como qualquer outra arquitetura MVC, **os caminhos URL são roteados pelos contr
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Começando
+## Começando
 
 Configure seu site e inclua o Angular dentro do seu **código HTML com uma tag script JavaScript** para incluir a biblioteca no site. **É melhor que o Angular seja importado antes de todas outras bibliotecas e códigos**.
 
@@ -79,7 +79,7 @@ Configure seu site e inclua o Angular dentro do seu **código HTML com uma tag s
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Módulos
+## Módulos
 
 Módulos são usados para **encapsular completamente todo o código angular de sua aplicação em um ponto de entrada**. As mais recentes construções do angular **incluem suporte a módulos** que são como namespacing misturados com **injeção de dependência (DI - direct injection)** e **error trapping**. Versões antigas do Angular não incluem isso. Temos vários artigos de blogs, videos e demos desatualizados que estão ensinando como usar uma versão antiga do Angular. Desta maneira confundirá quando configurarmos a aplicação com o download de uma versão mais recente do Angular.
 
@@ -112,7 +112,7 @@ Tenha em mente que um módulo **pode facilmente quebrar** (se há código errôn
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Bindings, Expressões e Mágica do Angular
+## Bindings, Expressões e Mágica do Angular
 
 Bindings são muio muito poderosos. Eles reduzem drasticamente a quantidade de código HTML requisitado e também separam completamente a lógica da aplicação dos dados. O Angular vem com expressões que são separadas de suas marcações gerais HTML e vinculam-se ao alcance de uma variável, que é onde ocorre a ligação dos dados. Isto envolve **data binding**, **two-way data binding**, **condicionais**, **for in e foreach loops**, **model binding** e por ai vai.
 
@@ -140,7 +140,7 @@ Tudo o que falta é o controlador (**isto vai ser coberto mais tarde neste artig
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Injeção de Dependências
+## Injeção de Dependências
 
 **Injeção de Dependências (dependency injection - DI)** é, no Angular, o método de organizar quais componentes, módulos e variáveis serão carregados para várias partes da sua aplicação. É um pouco confuso no começo, mas realmente deixam as coisas mais organizadas e faz com que os testes sejam mais fáceis. Todos seus componentes dentro da aplicação são injetados dentro dos seus **controladores**, **configurações de módulo**, **diretivas**, **filtros**, **resources** e **rotas**. Aqui temos um exemplo de injeção de dependências para um controlador:
 
@@ -162,7 +162,7 @@ O **benefício da DI** é que você pode **isolar totalmente** todos os serviço
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Rotas
+## Rotas
 
 Rotas são usadas para mapear qual caminho está ligado a qual controlador. Quando você acessa uma URL (clicando em um link ou colocando na URL), o Angular vai **primeiro checar e ver se isto está definido** e, se não, então vai **delegar o evento para uma página padrão** (acessa uma página html normalmente) ou **não faz nada** (se for uma URL com #). Isso é bom pois você não tem que gerenciar qualquer mudança de URL nas rotas do Angular.
 
@@ -195,7 +195,7 @@ Você deve ser capaz de **criar rotas em qualquer lugar no código da sua app** 
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Controladores e Escopo
+## Controladores e Escopo
 
 Controladores são onde a lógica da aplicação acontece. Plugins, Widgets e código DOM específico **não deve ser incluso aqui pois isso é destinado as diretivas**. Primeiro, comece configurando o controlador (cada função controladora é basicamente a ação em si).
 
@@ -208,7 +208,7 @@ SomeCtrl.$inject = ['$scope', '$http', '$location'];
 
 ```
 
-O **$scope** é especificamente onde o controlador é conectado na sua página web. E qualquer propriedade configurada para a variável $scope vai então ser disponibilizada na suá página. Aqui um exemplo colocando uma ligação (binding) no HTML e então configurando esta propriedade com *scope*.
+O `$scope` é especificamente onde o controlador é conectado na sua página web. E qualquer propriedade configurada para a variável `$scope` vai então ser disponibilizada na suá página. Aqui um exemplo colocando uma ligação (binding) no HTML e então configurando esta propriedade com `$scope`.
 
 ```html
 
@@ -234,9 +234,9 @@ Agora o DOM vai ser atualizado e seu código HTML vai parecer com isso:
 
 Mais informações na parte das diretivas.
 
-#### Para quando os dados da sua variável $scope muda, mas o Angular não percebe isso.
+### Para quando os dados da sua variável `$scope` muda, mas o Angular não percebe isso.
 
-Algumas vezes o Angular não informa quando você muda uma propriedade em sua variável $scope, então neste caso você deve forçar o Angular a fazer esta mudança.
+Algumas vezes o Angular não informa quando você muda uma propriedade em sua variável `$scope`, então neste caso você deve forçar o Angular a fazer esta mudança.
 
 Tente rodar estes métodos:
 
@@ -253,13 +253,13 @@ if (!$scope.$$phase) { // isto é usado para prevenir uma sobreposição do scop
 
 ```
 
-Assegure-se de ler mais sobre isto no artigo *More AngularJS Magic to Superchange your Webapp*, que entra em mais detalhes sobre como *digest* e *apply* ligam as mudanças corretamente.
+Assegure-se de ler mais sobre isto no artigo *More AngularJS Magic to Superchange your Webapp*, que entra em mais detalhes sobre como `$digest` e `$apply` ligam as mudanças corretamente.
 
-> [Click aqui para ler mais sobre $apply e $digest e veja o artigo](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html#apply-digest-and-phase)
+> [Click aqui para ler mais sobre `$apply` e `$digest` e veja o artigo](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html#apply-digest-and-phase)
 
-#### $rootScope
+### $rootScope
 
-Todo dado **$scope** é herdado da variável $rootScope, então se você quiser **compartilhar código reusável através de todos seus objetos $scope em todos seus controladores então você pode fazer isto configurando propriedades na variável $rootScope**.
+Todo dado `$scope` é herdado da variável `$rootScop`e, então se você quiser **compartilhar código reusável através de todos seus objetos $scope em todos seus controladores então você pode fazer isto configurando propriedades na variável `$rootScope`**.
 
 ```javascript
 
@@ -269,11 +269,12 @@ App.run(['$rootScope', function ($rootScope) {
 
 ```
 
-#### Controladores
+### Controladores
 
 Finalmente, aqui temos duas maneiras de registrar um controlador para a aplicação:
 
 **Incluindo o Controlador dentro da aplicação HTML**
+
 Um controlador pode ser configurado usando uma diretiva Angular dentro de uma tag HTML.
 
 ```html
@@ -283,6 +284,7 @@ Um controlador pode ser configurado usando uma diretiva Angular dentro de uma ta
 ```
 
 **Atribua um Controlador para ser parte de uma rota**
+
 Você também pode definir uma rota e especificar o controlador que irá manipular a requisição:
 
 ```javascript
@@ -296,7 +298,7 @@ $routes.when('/some/path', {
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Serviços
+## Serviços
 
 Serviços no Angular é uma abordagem incrível para abstrair código e funcionalidades compartilhadas pela sua aplicação. Ele liga diretamente para o recurso de injeção de dependência que o Angular fornece e pode ser usado diretamente à parte do objeto módulo.
 
@@ -332,9 +334,9 @@ O **myService** é fornecido dentro do controlador como uma função (ou objeto 
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Modelos
+## Modelos
 
-Modelos são usados da mesma forma que são usados em **Rails** ou em qualquer outro **MVC framework**. Eles são também definidos da mesma maneira que os **serviços** angular são bem como são injetados na aplicação. Todas operações regulares *getter* e *setter* para propriedades de modelo existem e todas **operações RESTful** são definidas e acessam o servidor backend para fazer operações de armazenamento. Sua aplicação no lado do servidor precisa ser codificada para manusear cada operação REST para cada modelo (**POST create, GET show, GET index, PUT/PATCH update, DELETE destroy**).
+Modelos são usados da mesma forma que são usados em **Rails** ou em qualquer outro **framework MVC**. Eles são também definidos da mesma maneira que os **serviços** angular são, e também como são injetados na aplicação. Todas operações regulares *getter* e *setter* para propriedades de modelo existem e todas **operações RESTful** são definidas e acessam o servidor backend para fazer operações de armazenamento. Sua aplicação no lado do servidor precisa ser codificada para manusear cada operação REST para cada modelo (**POST create, GET show, GET index, PUT/PATCH update, DELETE destroy**).
 
 Aqui temos como você define um modelo em Angular:
 
@@ -353,7 +355,7 @@ App.factory('ModelName', ['$resource', function ($resource) {
 
 ```
 
-Isto vai criar um modelo chamado **ModelName** com as ações REST **query, show, save, create e destroy**, todas voltadas para **/path/to/model/controller/:id**. O parâmetro **:id** é somente usado para **get, save e destroy** as chamadas REST. Quando um valor :id não está presente então isso não vai ser usado na URL e o Angular vai tirar as barras e espaços em branco da URL, então efetivamente você vai ter uma URL como **/path/to/model/controller** para as chamadas REST como as **query** e **create** (que é como REST espera que seja). Todas as ações definidas podem ser chamadas diretamente a partid do modelo, mas em ordem de ter acesso ao modelo como uma variável você deve incluir isso como uma injeção de dependência:
+Isto vai criar um modelo chamado **ModelName** com as ações REST **query, show, save, create e destroy**, todas voltadas para **/path/to/model/controller/:id**. O parâmetro **:id** é somente usado para **get, save e destroy** as chamadas REST. Quando um valor :id não está presente então isso não vai ser usado na URL e o Angular vai tirar as barras e espaços em branco da URL, então efetivamente você vai ter uma URL como **/path/to/model/controller** para as chamadas REST como as **query** e **create** (que é como REST espera que seja). Todas as ações definidas podem ser chamadas diretamente a partir do modelo, mas em ordem de ter acesso ao modelo como uma variável você deve incluir isso como uma injeção de dependência:
 
 ```javascript
 
@@ -398,9 +400,9 @@ record.destroy({ token : record.token });
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Diretivas
+## Diretivas
 
-Diretivas Angular são minúsculos ganchos comportamentais que **ligam seu HTML com seus plugins e com qualquer bloco de código isolado dentro da sua aplicação.** Elas são projetadas não para mudar a lógico dos controladores ou modelos, mas **para ajudar na construção da página web**. Portanto, são perfeitas para **plugins, validadores, propriedades dinâmicas do texto** (tais como ajustes de intercionalização e localização). Aqui vemos como usá-las.
+Diretivas Angular são minúsculos ganchos comportamentais que **ligam seu HTML com seus plugins e com qualquer bloco de código isolado dentro da sua aplicação.** Elas são projetadas não para mudar a lógica dos controladores ou modelos, mas **para ajudar na construção da página web**. Portanto, são perfeitas para **plugins, validadores, propriedades dinâmicas do texto** (tais como ajustes de intercionalização e localização). Aqui vemos como usá-las.
 
 Primeiro defina a diretiva dentro da sua aplicação JavaScript:
 
@@ -418,11 +420,11 @@ angular.directive('myDirective', function ($compile) {
 
 ```
 
-Agora quando o Angular vê uma tag HTML que contém **my-directive** como um atributo (com ou sem um valor), então isto vai baixar um template e executar a função link. Você pode também definir o **template html** diretamente e pode criar sua própria função de compilação que faz todo o trabalho de uma vez. A variável **$scope** dentro da função link é a variável de escopo do controlador que contém a diretiva. Esta á uma poderosa maneira de compartilhar dados entre os controladores e a diretiva como também para comunicar-se entre cada um deles. 
+Agora quando o Angular vê uma tag HTML que contém **my-directive** como um atributo (com ou sem um valor), então isto vai baixar um template e executar a função link. Você pode também definir o **template html** diretamente e pode criar sua própria função de compilação que faz todo o trabalho de uma vez. A variável `$scope` dentro da função link é a variável de escopo do controlador que contém a diretiva. Esta á uma poderosa maneira de compartilhar dados entre os controladores e a diretiva como também para comunicar-se entre cada um deles. 
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Filtros
+## Filtros
 
 Filtros são operações reutilizáveis que podem estar inseridas diretamente dentro de *binding operations* (operações de ligação) para ajustar dados de uma forma. Alguns exemplos incluem **paginação, ajuste de idioma, papel e filtragem de dados específicos da sessão**.
 
@@ -457,9 +459,9 @@ values = $filter('myUppercase')(values);
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Modo HTML5
+## Modo HTML5
 
-O modo HTML5 permite para sua app Angular usar histórico HTML5 dentro do sistema de roteamento e então graciosamente degradar a sua funcionalidade para suporte de hash se o navegador não suportar histórico HTML5. O fragmente seguinte de código permite o histórico HTML5 dentro da sua aplicação Angular (ela é desativada por padrão).
+O modo HTML5 permite para sua app Angular usar histórico HTML5 dentro do sistema de roteamento e então graciosamente degradar a sua funcionalidade para suporte de hash se o navegador não suportar histórico HTML5. O fragmento seguinte de código permite o histórico HTML5 dentro da sua aplicação Angular (ela é desativada por padrão).
 
 ```javascript
 
@@ -471,15 +473,15 @@ App.config(['$locationProvider', function ($location) {
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Usando Angular com outro framework JavaScript/bibliotecas
+## Usando Angular com outro framework JavaScript/bibliotecas
 
 Angular usa JQLite para fazer a manipulação básica DOM e não depende de jQuery.
 
-#### Usando Angular com jQuery
+### Usando Angular com jQuery
 
 jQuery trabalha bem com Angular. Somente **inclua-o antes de incluir o Angular dentro de sua aplicação web** e o Angular vai usar seu jQuery incluso ao invés do JQLite.
 
-#### Usando Angular com MooTools
+### Usando Angular com MooTools
 
 MooTools também trabalha bem, mas há alguns problemas quando acessamos elementos. Você vai precisar criar seu próprio seletor *dollar-style* (ou sobrescrever o existente). Também, certifique-se de **incluir o MooTools dentro da sua aplicação depois do Angular ter sido incluso**.
 
@@ -500,7 +502,7 @@ Isto faz o Angular funcionar com MooTools; esteja certo de usar o método **$moo
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Usando .json como um sufixo URL para operações de modelo
+## Usando .json como um sufixo URL para operações de modelo
 
 Angular, no tempo que escrevo este artigo, não suporta personalização de sufixos de recursos (formatos URL ou extensões) diretamente via API. Para configurar isso você mesmo você vai precisar hackear o código dentro do arquivo **angular-resource.js** e isto não é realmente a melhor abordagem para consertar isto. Por agora isso não é suportado pelo Angular, entretanto, existe um fork do Angular no yearofmoo que inclui suporte para dilema.
 
@@ -508,7 +510,7 @@ Angular, no tempo que escrevo este artigo, não suporta personalização de sufi
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)
 
-### Daqui para frente
+## Daqui para frente
 
 Angular é **enorme**. Muita coisa não foi abordada aqui. Agora você deve estar bem preparado para construir uma aplicação angular funcional. Visite o site do Angular para encontrar mais informações sobre o que foi dito aqui e outras propriedades que o angular fornece.
 
@@ -518,6 +520,6 @@ Angular é **enorme**. Muita coisa não foi abordada aqui. Agora você deve esta
 
 Tem um 2º artigo que cobre **ainda mais sobre AngularJS**. Porfavor, veja o artigo depois que você tiver absorvido este.
 
-[Clique aqui para ver o segundo artigo sobre AngularJS](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html)
+[Clique aqui para ver o segundo artigo sobre AngularJS](https://github.com/eoop/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md)
 
 ##### [⬆ para o topo](https://github.com/eoop/traduz-ai/blob/master/angularjs/003-use-angularjs-para-potencializar-sua-webapp.md#use-angularjs-para-potencializar-suas-aplica%C3%A7%C3%B5es-web)

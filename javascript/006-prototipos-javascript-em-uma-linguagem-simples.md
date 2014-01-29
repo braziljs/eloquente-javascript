@@ -186,3 +186,54 @@ De fato, qualquer objeto que usar o construtor `Fruit()` vai herdar todos os mé
 Para uma cobertura mais aprofundada sobre Programação Orientada a Objetos no JavaScript, obtenha o livro de Nicholas Zakas [Principles of Object-Oriented Programming in JavaScript ](https://leanpub.com/oopinjavascript).
 
 **2** . **Atributo `prototype`: Acessando Propriedades nos Objetos**
+
+O protótipo também é importante para acessar propriedades e métodos de objetos. O **atributo `prototype`** (ou objeto prototype) de qualquer objeto é o objeto "pai" onde as propriedades herdadas foram originalmente definidas. Isto é vagamente análogo a forma que você pensa sobre o sobrenome de seu pai - ele é seu "protótipo pai". Se nós queremos encontrar de onde nosso sobrenome veio, nós devemos primeiro checar e ver se você o criou sozinho; se não, a busca será movida para o protótipo pai para ver se você herdou dele. Se não foi criado por ele, a busca continua pelo pai dele.
+
+Similarmente, se você quer acessar uma propriedade de um objeto, a busca pela propriedade começa diretamente no objeto. Se o *runtime* do JavaScript não conseguir encontrar a propriedade lá, ele então irá procurar pela propriedade no protótipo do objeto - o objeto que ele herdou suas propriedades.
+
+Se a propriedade não for encontrada no protótipo do objeto, a busca pela propriedade muda para o protótipo do protótipo do objeto (o pai do pai do objeto - o avô). E isto continua até que não tenha mais protótipos (sem mais bisavôs e sem mais linhagem a ser seguida). **Isso, em essência, é a cadeia de protótipos**: a cadeia de um protótipo de um objeto para seu protótipo do protótipo e por ai vai. O JavaScript usa esta cadeia de protótipos para verificar por propriedades e métodos de um objeto. Se a propriedade não existe em nenhum protótipo de objeto da sua cadeia prototípica, então a propriedade não existe e `undefined` é retornado.
+
+Esse mecanismo da cadeia de protótipos é essencialmente o mesmo conceito que discutimos acima com a herança baseada em protótipos, exceto que agora estamos focados especificamente em como o JavaScript acessa os métodos e propriedades dos objetos via o protótipo do objeto.
+
+Este exemplo demonstra a cadeia de protótipos de um objeto protótipo de um objeto:
+
+```javascript
+
+var myFriends = {name: "Pete"};
+
+// Para encontrar a propriedade name abaixo, a busca vai
+// iniciar diretamente no objeto myFriends e vai imediatamente
+// a propriedade name porque nós definimos a propriedade name
+// no objeto myFriends. Isto pode ser pensado como uma cadeia
+// de protótipos com um link
+console.log(myFriends.name);
+
+// Neste exemplo, a busca pelo método toString()
+// vai também começar no objeto myFriends, mas por
+// nós nunca termos criado um método toString() no
+// objeto myFriends, o compilador vai então buscar 
+// por isso no protótipo de myFriends (o objeto que
+// ele herdou suas propriedades)
+
+// E uma vez que todos objetos criados com o objeto
+// literal herdam de Object.prototype, o método toString()
+// vai ser encontrado em Object.prototype - veja a importante
+// nota abaixo para todas propriedades herdadas de Object.prototype
+
+myFriends.toString();
+
+```
+
+### Uma Nota Importante
+
+> **Propriedades herdadas de Object.prototype por todos os objetos**
+>
+> Todos objetos no JavaScript herdam propriedades e métodos de `Object.prototype`. Estas propriedades e métodos herdados são `constructor`, `hasOwnProperty()`, `isPrototypeOf()`, `propertyIsEnumerable()`, `toLocaleString()`, `toString()`, e `valueOf()`. O ECMAScript 5 também adiciona 4 métodos de acesso a `Object.prototype`.
+
+Aqui um outro exemplo de cadeia prototípica:
+
+```javascript
+
+
+
+```

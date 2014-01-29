@@ -474,7 +474,7 @@ var path  = $location.path();
 var url   = $location.absUrl();
 var hash  = $location.hash();
 ```
-Para acompanhar a URL quando ela muda, você precisará configurar um evento.
+Para acompanhar a URL quando ela mudar, você precisará configurar um evento.
 
 ```
 $scope.$watch('$location.path()', function(path) {
@@ -490,7 +490,7 @@ $scope.$on('$locationChangeStart', function(event, newUrl) {
 ```
 
 # Filtros e Filtros Personalizados
-Existem duas maneiras para definir o filter em AngularJS: Você pode defini-lo como um filter ou como um service.
+Existem duas maneiras para definir o filtros em AngularJS: Você pode defini-lo como um filtros ou como um serviços.
 ```
 App.filter('my', function() {
   return function(data) {
@@ -498,7 +498,7 @@ App.filter('my', function() {
   };
 });
 ```
-Ou você pode defini-lo como um service, são idênticos:
+Ou você pode defini-lo como um serviços, são idênticos:
 ```
 App.factory('myFilter', function() {
   return function(data) {
@@ -506,11 +506,11 @@ App.factory('myFilter', function() {
   };
 });
 ```
-Você pode usar destes filters diretamente em seu HTML
+Você pode usar destes filtros diretamente em seu HTML
 ```
 <span class="some-data">{{ value | my }}<span>
 ```
-Ou você pode também acessar destes filters diretamente nos seus services e controller via injeção de dependência.
+Ou você pode também acessar destes filtros diretamente nos seus serviços e controladores via injeção de dependência.
 ```
 App.factory('someService', ['$filter', function($filter) {
   return function(data) {

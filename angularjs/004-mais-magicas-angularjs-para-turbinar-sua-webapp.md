@@ -41,7 +41,7 @@ Este artigo é uma sequência do anterior entitulado [Use AngularJS para Potenci
 
 Para clarear um pouco as coisas, no artigo anterior o primeiro módulo carregado pelo AngularJS foi como o seguinte ( a variável **App** será muito usada neste artigo):
 
-```javascript
+```
 
 // você pode retirar o item do array ngResource se você quiser
 var App = angular.module('YOUR_APP_NAME', ['ngResource']);
@@ -50,7 +50,7 @@ var App = angular.module('YOUR_APP_NAME', ['ngResource']);
 
 AngularJS é grande e oferece muitas funcionalidades que ainda devem ser descobertas pela comunidade dos desenvolvedores. Não muito sobre funcionalidades escondidas, mas sobre a maneira de se usar estas funcionalidades que ainda não foram totalmente cobertas por ninguém na internet. Este artigo vai mais além. Vamos introduzir vários truques avançados e segredos que você pode usar para fazer sua aplicação AngularJS sempre mais insana que já é.
 
-# AngularJS e o Internet Explorer
+# AngularJS e o Internet Explorer 
 
 Antes de investigarmos mais sobre as mágicas do AngularJS, algumas informações sobre o Internet Explorer devem ser cobertas.
 
@@ -80,7 +80,7 @@ O `$rootScope` atua como o escopo do objeto pai de todos outros objetos `$scope`
 
 O exemplo seguinte é um exemplo de como você pode atribuir direntes bibliotecas ou objetos de código a sua instância `$scope`.
 
-```javascript
+```
 
 App.run(['$rootScope', function ($rootScope) {
 	
@@ -103,7 +103,7 @@ App.run(['$rootScope', function ($rootScope) {
 
 E então dentro do seu controlador ou diretiva você pode fazer o seguinte:
 
-```javascript
+```
 
 var Ctrl = function ( $scope ) {
 	if ( $scope.includeLibraries ) { // uma sinalização foi configurada no objeto $rootScope
@@ -125,7 +125,7 @@ Toda vez que um **evento maior ocorre** em uma aplicação web que está rodando
 
 Para pegar a **exceção $apply** você precisa ter atenção a sinalização de `$scope.$$phase` para ver se uma fase da digestão está ocorrendo em segundo plano. Se estiver ocorrendo, então você pode somente configurar os valores `$scope` diretamente e eles devem ser pegos pela digestão atual. Aqui temos um método combinado que eu uso para contornar esta situação:
 
-```javascript
+```
 
 // Quando você adiciona isto a variável $rootScope,
 // então se torna acessível para todas as variáveis $scope
@@ -155,7 +155,7 @@ $scope.$safeApply($scope, function () {
 
 Se o evento que você deseja, mudar a URL da página, então você deve ter atenção a variável `$$phase` para ver se é **permitido** fazer esta mudança. Se uma fase da digestão estiver acontecendo, então você pode somente usar mudar a URL pela velha maneira usando `window.location`.
 
-```javascript
+```
 
 // assegure-se de injetar o $scope e $location em algum lugar antes disto
 var changeLocation = function ( url, force ) {
@@ -180,7 +180,7 @@ Sempre que você tiver um evento ocorrendo em sua aplicação que afeta todos os
 
 Quando você precisa de ter um controlador ou escopo pai, instruindo todos os controladores filhos sobre a mudança, então você pode usar o método `$broadcast`.
 
-```javascript
+```
 
 // pega o escopo mais elevado
 var $scope = angular.element(document).scope();
@@ -199,7 +199,7 @@ $scope.$broadcast(logoutEvent, logoutArgs);
 
 Então dentro do seu controlador ou diretiva faça isso:
 
-```javascript
+```
 
 // no seu controlador
 var Ctrl = function ($scope) {
@@ -229,7 +229,7 @@ App.directive('sessionStatus', function () {
 
 Você pode também disparar eventos de retorno usando o `$scope.$emit`.
 
-```javascript
+```
 
 var Ctrl = function ($scope) {
 	$scope.onLogoutClick = function () {
@@ -246,7 +246,7 @@ Usando estes métodos de comunicação entre controladores, não haverá necessi
 
 O AngularJS também vem com outros métodos menos conhecidos de manipular requisições entre controladores. Mas, antes de entrar neste assunto eu gostaria de ressaltar uma forma diferente de se criar controladores.
 
-```javascript
+```
 
 App.controller('Ctrl', ['$scope', function ($scope) {
 	// exatamente o mesmo resultado de se criar um controlador com uma função explícita
@@ -256,7 +256,7 @@ App.controller('Ctrl', ['$scope', function ($scope) {
 
 Ok então vamos aos negócios. Quando uma requisição ocorre você pode criar um ação independente da rota, que é basicamente uma função que é disparada logo antes da requisição ser enviada pra fora do controlador. Aqui um exemplo disso:
 
-```javascript
+```
 
 // confira o código da rota abaixo antes de ler esta parte
 var Ctrl = function ($scope, $http, argument1, argument2, argument3) {
@@ -288,7 +288,7 @@ App.config(['$routeProvider', function ($routeProvider) {
 Serviços personalizados são o que fazem o angular ser muito manejável e facilmente testável.
 Ao usar recurso de injeção de dependência do angular, você pode criar um serviço personalizado em qualquer lugar dentro de sua aplicação e inclui-lo em outro lugar com muita facilidade. Um exemplo comum de um serviço compartilhado, é usa-lo como um serviço `$http` especial que está adaptado para atender o seu pedido.
 
-```javascript
+```
 App.factory('myHttp',['$http',function($http) {
   return function() {
     get : function(url, success, fail) {
@@ -306,8 +306,9 @@ $myHttp.get('/path', function(data) {
 ```
 
 A seguir uma demonstração de como os dados são compartilhados entre os serviços dentro do mesmo model.
-```javascript
+```
 App.factory('myFoo',['$http',function($http) {
+	
 //todas as variaveis definidas nessa area serão acessivel
 //dentro de outros serviços que são definidos dentro de um mesmo módulo.
 //Assim, se uma variável chamada foo, var foo = 'bar'
@@ -320,7 +321,6 @@ App.factory('myBar',['$http',function($http) {
   var bar = 'bar2';
   return foo.toString() + bar; /// esse deve retornar bar2 ou barbar2
 }]);
-
 ```
 Você também pode injetar qualquer um dos seus próprios serviços em outros serviços quando criados, isso é muito util para a reutilização de código e testes.
 
@@ -328,7 +328,7 @@ Você também pode injetar qualquer um dos seus próprios serviços em outros se
 
 Você irá descobrir que mostrar (show) e ocultar (hide) valores em seus templates angular pode ser dificil, pois você não pode contar com a linguagem de programação do lado do servidor para construir seu template (templates são estaticos). Aqui está um exemplo de como algo iria funcionar normalmente quando se utiliza algo como PHP.
 
-```html
+```
 <div class="session">
   <?php if($isAdmin) { ?>
     <span class="admin">Hello Admin</span>
@@ -336,12 +336,11 @@ Você irá descobrir que mostrar (show) e ocultar (hide) valores em seus templat
     <span class="user">Hello User</span>
   <?php } ?>
 </div>
-
 ```
 
 O mesmo efeito pode ser criando ao usar angular
 
-```html
+```
 <div class="session">
   <span class="admin" data-ng-show="isAdmin">Hello Admin</span>
   <span class="admin" data-ng-hide="isAdmin">Hello User</span>
@@ -351,26 +350,22 @@ Só não se esqueça de definir o valor de ligação.
 
 ```
 $scope.isAdmin = true; //ou false ou seja o que for
-
 ```
 Isso funciona, mas quando a página ainda está carregando (quando carregada pela primeira vez), você pode ver os dois valores ao mesmo tempo, para contornar isso, basta usar ng-clock.
 
-```html
+```
 <div class="session ng-cloak">...</div>
-
 ```
 E defina o css para também:
 
-```javascript
+```
 .ng-cloak {
-  /* Isso vai mudar para bloquear quando scope and angular estiver prontos*/  
+  /* Isso vai mudar para bloquear quando scope e angular estiverem prontos*/  
   display:none;
 }
-
 ```
 Oh! E mais uma coisa. Se você deseja definir o valor isAdmin direto em seu HTML, em seguida, faça o seguinte usando o data-ng-init
-
-```html
+```
 <div class="session ng-cloak" data-ng-init="isAdmin=false;">
   <span class="admin" data-ng-show="isAdmin">Hello Admin</span>
   <span class="admin" data-ng-hide="isAdmin">Hello User</span>
@@ -384,10 +379,10 @@ O atributo data-ng-init é util para valores pré-definidos. A sintaxe funciona 
 
 Capturar erros é algo importante para a produção de aplicações. Abaixo estão várias maneiras de se fazer isso:
 
-<strong>Capturar outras rotas (otherwise)</strong><br>
+**Capturar outras rotas (otherwise)**<br>
 Apesar de ser um método util como uma pagina padrão para uma rota, é melhor reservar essa rota como seu manipulador de página 404, caso uma rota não seja reconhecida dentro de sua aplicação.
 
-```javascript
+```
 $routeProvider.when('/404',{
   controller : ErrorCtrl
 });
@@ -395,10 +390,10 @@ $routeProvider.otherwise({
   redirectTo : '/404'
 });
 ```
-<strong>Quando sua rota falhar!</strong><br>
+**Quando sua rota falhar!**<br>
 No caso de uma mudança de rota falhar(devido a um templateUrl faltar ou algo assim), então você pode capturar o evento dentro de seu alcance, fazendo o seguinte:
 
-```javascript
+```
 App.run(['$rootScope','$location',function($rootScope, $location) {
   $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
     //Alterar o código para manipular o erro de alguma forma
@@ -410,7 +405,7 @@ Envolva serviços em torno de suas solicitações HTTP
 No início do artigo, Eu expliquei a importancia de personalizar serviços para reutilização de código.
 Quando você definir um serviço personalizado para envolver todas suas chamadas AJAX, então você poderá pegar os erros antes de serem transferidos para outras da sua aplicação.
 
-```javascript
+```
 App.factory('myHttp',['$http','$location',function($http, $location) {
 
   var onEmpty = function() {
@@ -432,3 +427,94 @@ App.factory('myHttp',['$http','$location',function($http, $location) {
 }]);
 ```
 Certifique-se de usar somente esse método quando você acessar recursos e dados que são necessários dentro da sua aplicação (como dados JSON para uma view).
+
+# Mais sobre Loops
+Lopps são complicados e fodas em angularJs. Grande parte de seus detalhes foram abordados no <a href="#">artigo anterior<a>, no entanto, algumas coisas não foram totalmente esclarecidas.
+
+Para ter acesso ao indice de um loop em angular você pode acessá-lo a partir do valor $index diretamente
+
+```
+<ol>
+  <li data-ng-repeat="option in options">
+    <h2>Option #{{ $index + 1 }}: </h2>
+  </li>
+</ol>
+```
+
+O ´ $index + 1´ é usado para que o indice comece sempre a partir do 1.
+
+A sintaxe padrão se baseia em array que sendo está definido dentro do seu escopo. Mas o que acontece quando você não tem um array definido e você simplesmente quer contruir um grid simples com valores mínimos e máximos?
+Você precisará configurar um filtro que prepara o array para você. Aqui está um exemplo de como fazer isso:
+
+```
+App.filter('range', function() {
+  return function(input, total) {
+    total = parseInt(total);
+    for (var i=0; i<total; i++) {
+      input.push(i);
+    }
+    return input;
+  };
+});
+```
+E então acessa-lo dentro de seu loop como um filtro( isso irá criar 100 divs de 0 até 99).
+```
+<div ng-repeat="n in [] | range:100">
+  {{ $index }} - do something
+</div>
+```
+Tenha em mente que existem outras opções disponíveis, tais como $first, $middle e $last. Tudo isso e muito mais são abordados dentro da <a href="#">documentação do AngularJs</a>
+
+# Mantendo Controle sobre Path/URL
+
+Para pegar o path atual da página, independente de ser um hashbang (#!) ou direct path (seja pelo HTML history ou não), você pode obtê-lo acessando as propriedades do `$location`.
+
+```
+var path  = $location.path();
+var url   = $location.absUrl();
+var hash  = $location.hash();
+```
+Para acompanhar a URL quando ela mudar, você precisará configurar um evento.
+
+```
+$scope.$watch('$location.path()', function(path) {
+  //novo path!
+  alert(path);
+});
+```
+Além disso, você pode definir esses eventos explicitamente dentro da sua variavel $scope
+```
+$scope.$on('$locationChangeStart', function(event, newUrl) {
+  alert('novo location');
+});
+```
+
+# Filtros e Filtros Personalizados
+Existem duas maneiras para definir o filtros em AngularJS: Você pode defini-lo como um filtros ou como um serviços.
+```
+App.filter('my', function() {
+  return function(data) {
+    return data;
+  };
+});
+```
+Ou você pode defini-lo como um serviços, são idênticos:
+```
+App.factory('myFilter', function() {
+  return function(data) {
+    return data;
+  };
+});
+```
+Você pode usar destes filtros diretamente em seu HTML
+```
+<span class="some-data">{{ value | my }}<span>
+```
+Ou você pode também acessar destes filtros diretamente nos seus serviços e controladores via injeção de dependência.
+```
+App.factory('someService', ['$filter', function($filter) {
+  return function(data) {
+    return $filter('my')(data);
+  };
+}]);
+```

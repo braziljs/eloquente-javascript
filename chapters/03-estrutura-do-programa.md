@@ -422,4 +422,45 @@ else defaultAction();
 
 ```
 
-http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_NAtglzdIez
+Há um construtor chamado `switch` que visa resolver o "envio" de valores de forma mais direta. Infelizmente, a sintaxe JavaScript usada para isso (que é herdada da linha de linguagens de programação C e Java) é um pouco estranha - frequentemente uma cadeia de declarações `if` continua parecendo melhor. Aqui um exemplo:
+
+```javascript
+
+switch (prompt("Como está o tempo?")) {
+	case "rainy":
+		console.log("Lembre-se de trazer um guarda-chuva.");
+		break;
+	case "ensolarado":
+		console.log("Vista roupas leves");
+	case "nublado":
+		console.log("Vá lá fora.");
+		break
+	default:
+		console.log("Tempo desconhecido");
+		break;
+}
+
+```
+
+Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulos `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações aqui, e continuar a passar pelos rótulos, até que encontra uma declaração `break`. Em alguns casos, como o caso `"ensolarado"` do exemplo, podemos usá-lo para compartilhar algum código entre casos (ele recomenda *ir lá fora* para ambos os tempos "ensolarado" e "numblado"). Mas cuidado, é muito fácil se esquecer de um `break`, que vai causar ao programa a execução de código que você não gostaria de executar.
+
+## Capitalização
+
+Nomes de variáveis não podem conter espaços, no entanto é muito útil usar múltiplas palavras para descrever claramente o quê a variável representa. Suas escolhas para escrever nomes de variáveis com muitas palavras são como estas:
+
+```
+
+fuzzylittleturtle
+fuzzy_little_turtle
+FuzzyLittleTurtle
+fuzzyLittleTurtle
+
+```
+
+O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar underscores `_`, embora seja um pouco doloroso de escrever. Entretanto, o padrão das funções JavaScript, e da maioria dos programadores JavaScript, é o de seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Isso não é difícil se acostumar com pequenas coisas assim, e o código com os estilos de nomes mistos pode se tornar desagrádavel para leitura, então vamos seguir esta convenção.
+
+Em poucos casos, como a função `Number`, a primeira letra da variável é também capitalizada. Isso é feito para marcar a função como um construtor. O que um construtor é vai ser esclarecido no capítulo 6. Por agora, o importante é não ser incomodado com esta aparente falta de consistência.
+
+## Comentários
+
+http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_8CaYLvyvpT

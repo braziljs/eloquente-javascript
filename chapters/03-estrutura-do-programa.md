@@ -463,4 +463,63 @@ Em poucos casos, como a função `Number`, a primeira letra da variável é tamb
 
 ## Comentários
 
-http://eloquentjavascript.net/2nd_edition/preview/02_program_structure.html#p_8CaYLvyvpT
+Frequentemente, código puro não transmite todas as informações necessárias que você gostaria que tivessem para leitura de humanos, ou transmitem de forma oculta de maneira que você se preocupa se as pessoas realmente vão entendê-lo. Em outros momentos, você está apenas se sentindo poético ou quer anotar alguns pensamentos como parte de seu programa. Isto é o quê eles são e para quê os comentários existem.
+
+Um comentário é um pedaço de texto que é parte de um programa, mas completamente ignorado pelo computador. No JavaScript temos duas maneiras de escrever comentários. Para escrever uma linha única de comentário, você pode usar dois caracteres barra ( `//` ) e então o comentário após isso.
+
+```javascript
+
+var accountBalance = calculateBalance(account);
+// It's a green hollow where a river sings
+accountBalance.adjust();
+// Madly catching white tatters in the grass.
+var report = new Report();
+// Where the sun on the proud mountain rings:
+addToReport(accountBalance, report);
+// It's a little valley, foaming like light in a glass.
+
+```
+
+Um `// comentário` vai até o fim da linha. Uma seção de texto entre `/*` e `*/` vai ser ignorada, independentemente se ela contém quebras de linha. Isto é útil para adicionar blocos de informação sobre um arquivo ou um pedaço do programa.
+
+```javascript
+
+/*
+ I first found this number scrawled on the back of one of
+ my notebooks a few years ago. Since then, it has
+ occasionally dropped by, showing up in phone numbers and
+ the serial numbers of products that I bought. It
+ obviously likes me, so I've decided to keep it.
+*/
+
+var theNumber = 11213;
+
+```
+
+## Resumo
+
+Você agora sabe que um programa é construído de declarações, que as vezes contém mais declarações. Declarações tendem a conter expressões, que podem também ser feitas de pequenas expressões.
+
+Colocar declarações uma embaixo da outra nos dá um programa que é executado de cima para baixo. Você pode introduzir distúrbios no fluxo de controle usando declarações condicionais (`ìf`, `else` e `swtich`) e loops (`while`, `do` e `for`).
+
+Variáveis podem ser usadas para arquivar pedaços de dados sob um nome, e são úteis para rastrear o estado de um programa. O ambiente é o conjunto de variáveis que são definidas em um programa. O sistema JavaScript sempre coloca um número padrão de variáveis úteis dentro de seu ambiente.
+
+Funções são valores especiais que encapsulam um pedaço de programa. Você pode invocá-las escrevendo `function Name (argument1, argument2) {}`, que é uma expressão que vai pode produzir um valor.
+
+## Exercícios
+
+Cada exercício começa com uma descrição de um problema. Tente lê-lo e resolvê-lo. Se você dificuldades, você pode considerar ler as dicas abaixo do exercício. As soluções completas para os exercícios não estarão inclusas neste livro, mas podem ser encontradas online [AQUI](). Se você quiser aprender algo, eu recomendo que veja as soluções somente depois que você tiver resolvido o exercício, ou pelo menos tentado resolvê-lo por um longo tempo, até que o mesmo tenha lhe provocado uma pequena dor de cabeça.
+
+### Criando um Triângulo com Loop
+
+Escreva um programa que faça 7 chamadas a `console.log()` para retornar o seguinte triângulo.
+
+#
+##
+###
+####
+#####
+######
+#######
+
+**Dica**: 

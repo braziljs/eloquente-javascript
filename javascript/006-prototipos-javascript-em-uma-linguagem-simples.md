@@ -234,6 +234,45 @@ Aqui um outro exemplo de cadeia prototípica:
 
 ```javascript
 
+function People () {
+	this.superstar = "Michael Jackson";
+}
 
+// Define a propriedade "athlete" no protótipo de People 
+// então este "athlete" é acessível por todos os bjetos
+// que usam o construtor People()
+People.prototype.athlete = "Tiger Woods";
+
+var famousPerson = new People();
+famousPerson.superstar = "Steve Jobs";
+
+// A busca a superstar vai primeiramente verificar pela
+// propriedade superstar no objeto famousPerson, e uma vez
+// definido lá, esta é a propriedade que vai ser usada.
+// Por causa que nós sobrescrevemos a propriedade
+// superstar de famousPerson diretamente, a busca NÃO
+// vai prosseguir acima na cadeia de protótipos.
+console.log(famousPerson.superstar); // Steve Jobs
+
+// Note que no ECMAScript 5 você pode definir uma propriedade
+// para ser somente lida, e neste caso você não pode 
+// sobrescrevê-la como fizemos anteriormente
+
+// Isto vai mostrar a propriedade do protótipo de famousPerson 
+// (People.prototype) desde que a propriedade athlete não 
+// tenha sido definida no objeto famousPerson
+console.log(famousPerson.athlete); // Tiger Woods
+
+// Neste exemplo, a busca prossegue na cadeia prototípica
+// e encontra o método toString do Object.prototype, o mesmo
+// que o objeto Fruit herdou - todos os objetos herdam de 
+// Object.prototype como mencionamos acima.
+console.log(famousPerson.toString()); // [object Object]
 
 ```
+
+Todos os construtores embutidos (`Array()`, `Number()`, `String()`, etc) foram criados a partir do construtor Object, e então `Object.prototype` é seus protótipos.
+
+**Informação Adicional**
+
+Para mais sobre Objetos JavaScript, leia o Capítulo 6 de JavaScript - O Guia Definitivo de David Flanagan.

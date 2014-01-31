@@ -508,7 +508,7 @@ Funções são valores especiais que encapsulam um pedaço de programa. Você po
 
 ## Exercícios
 
-Cada exercício começa com uma descrição de um problema. Tente lê-lo e resolvê-lo. Se você dificuldades, você pode considerar ler as dicas abaixo do exercício. As soluções completas para os exercícios não estarão inclusas neste livro, mas podem ser encontradas online [AQUI](). Se você quiser aprender algo, eu recomendo que veja as soluções somente depois que você tiver resolvido o exercício, ou pelo menos tentado resolvê-lo por um longo tempo, até que o mesmo tenha lhe provocado uma pequena dor de cabeça.
+Cada exercício começa com uma descrição de um problema. Tente lê-lo e resolvê-lo. Se você dificuldades, você pode considerar ler as dicas abaixo do exercício. As soluções completas e as dicas para os exercícios não estarão inclusas neste livro, mas serão indicadas após a apresentação dos mesmos. Se você quiser aprender algo, eu recomendo que veja as soluções somente depois que você tiver resolvido o exercício, ou pelo menos tentado resolvê-lo por um longo tempo, até que o mesmo tenha lhe provocado uma pequena dor de cabeça.
 
 ### Criando um Triângulo com Loop
 

@@ -514,12 +514,14 @@ Cada exercício começa com uma descrição de um problema. Tente lê-lo e resol
 
 Escreva um programa que faça 7 chamadas a `console.log()` para retornar o seguinte triângulo.
 
-#
-##
-###
-####
-#####
-######
-#######
+	#
+	##
+	###
+	####
+	#####
+	######
+	#######
 
-**Dica**: 
+Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8730846) e a resolução [aqui](https://gist.github.com/eoop/8730768).
+
+### FizzBuzz

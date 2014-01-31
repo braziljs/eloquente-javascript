@@ -6,7 +6,7 @@ Escrito por **Marijn Haverbeke**
 
 ---
 
-### Download do livro **[AQUI](https://leanpub.com/eloquentejavascript).**
+### Download do livro **[AQUI](https://leanpub.com/eloquentejavascript).** Original [aqui](http://eloquentjavascript.net/2nd_edition/preview/).
 
 ![JavaScript Eloquente](img/eloq-js.jpg)
 

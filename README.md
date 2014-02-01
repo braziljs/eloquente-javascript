@@ -45,6 +45,9 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 06. **Protótipos JavaScript em uma Linguagem Simples**
 	* [Original](http://javascriptissexy.com/javascript-prototype-in-plain-detailed-language/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/006-prototipos-javascript-em-uma-linguagem-simples.md#prot%C3%B3tipos-javascript-em-uma-linguagem-simples)
 
+07. **Entenda Funções Callback no JavaScript e Use-as**
+	* [Original](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/), [Tradução]()
+
 # AngularJS
 
 01. **Guia de Estilos AngularJS**

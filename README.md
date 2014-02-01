@@ -25,7 +25,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 ---
 
-# JavaScript ❤
+# JavaScript
 
 01. **Como Aprender JavaScript Corretamente**
 	* [Original](http://javascriptissexy.com/how-to-learn-javascript-properly/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/001-como-aprender-js-corretamente.md#como-aprender-javascript-corretamente--javascriptis-sexy)
@@ -46,9 +46,9 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 	* [Original](http://javascriptissexy.com/javascript-prototype-in-plain-detailed-language/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/006-prototipos-javascript-em-uma-linguagem-simples.md#prot%C3%B3tipos-javascript-em-uma-linguagem-simples)
 
 07. **Entenda Funções Callback no JavaScript e Use-as**
-	* [Original](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/), [Tradução]()
+	* [Original](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/), [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/007-entenda-callbacks-js.md)
 
-# AngularJS ❤
+# AngularJS
 
 01. **Guia de Estilos AngularJS**
 	* [Original](https://github.com/mgechev/angularjs-style-guide) e [Tradução](https://github.com/eoop/angularjs-style-guide/blob/master/README-pt-br.md)

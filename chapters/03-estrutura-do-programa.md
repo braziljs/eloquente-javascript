@@ -522,7 +522,7 @@ Escreva um programa que faça 7 chamadas a `console.log()` para retornar o segui
 	######
 	#######
 
-Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8730846) e a resolução [aqui](https://gist.github.com/eoop/8730768).
+> Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8730846) e a resolução [aqui](https://gist.github.com/eoop/8730768).
 
 ### FizzBuzz
 
@@ -532,4 +532,4 @@ Quando você tiver o programa funcionando, modifique-o para imprimir `FizzBuzz` 
 
 (Isto é na verdade uma pergunta de entrevista usada para eliminar uma porcentagem significativa de candidatos programadores. Então, se você resolvê-la, você está autorizado de se sentir bem consigo mesmo).
 
-Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8750252) e a resolução [aqui](https://gist.github.com/eoop/8750259).
+> Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8750252) e a resolução [aqui](https://gist.github.com/eoop/8750259).

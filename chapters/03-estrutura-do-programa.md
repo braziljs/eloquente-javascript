@@ -525,3 +525,11 @@ Escreva um programa que faça 7 chamadas a `console.log()` para retornar o segui
 Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8730846) e a resolução [aqui](https://gist.github.com/eoop/8730768).
 
 ### FizzBuzz
+
+Escreva um programa que imprima (usando `console.log()`) todos os números de 1 a 100, exceto que, para números divisíveis por 3, ele imprima `Fizz` ao invés do número, e para números divisíveis por 5 (e não 3), ele imprima `Buzz`.
+
+Quando você tiver o programa funcionando, modifique-o para imprimir `FizzBuzz` para números que são divisíveis por ambos os números 3 e 5.
+
+(Isto é na verdade uma pergunta de entrevista usada para eliminar uma porcentagem significativa de candidatos programadores. Então, se você resolvê-la, você está autorizado de se sentir bem consigo mesmo).
+
+Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8750252) e a resolução [aqui](https://gist.github.com/eoop/8750259).

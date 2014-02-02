@@ -533,3 +533,20 @@ Quando você tiver o programa funcionando, modifique-o para imprimir `FizzBuzz` 
 (Isto é na verdade uma pergunta de entrevista usada para eliminar uma porcentagem significativa de candidatos programadores. Então, se você resolvê-la, você está autorizado de se sentir bem consigo mesmo).
 
 > Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8750252) e a resolução [aqui](https://gist.github.com/eoop/8750259).
+
+### Tabuleiro de Xadrez
+
+Escreva um programa que cria uma string que representa uma grade 8x8, usando novas linhas para separar os caracteres. A cada posição da grade existe ou um espaço ou um caracter "#", de forma que estes caracteres forem um tabuleiro de xadrez.
+
+Passando esta string para `console.log`, ela deverá se parecer com isso:
+
+	# # # #
+	 # # # #
+	# # # #
+	 # # # #
+	# # # #
+	 # # # #
+	# # # #
+	 # # # #
+
+Quando isso funcionar, defina uma variável `tamanho = 8`, e mude o programa para que o mesmo funciona para qualquer `tamanho`, retornando uma grade com a largura e altura fornecida.

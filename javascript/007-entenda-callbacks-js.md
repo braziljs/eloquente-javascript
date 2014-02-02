@@ -22,8 +22,8 @@ Aqui um simples e comum uso de uma função callback no jQuery:
 
 // Note que o item no paramêtro do método click é uma função,
 // não uma variável. Este item é uma função callback
-$("#btn_1").click(function () {
-	alert("Btn 1 Clicked");
+$( "#btn_1" ).click(function () {
+	alert( "Btn 1 Clicked" );
 });
 
 ```
@@ -34,10 +34,10 @@ Aqui outro exemplo clássico de funções callback em JavaScript básico:
 
 ```javascript
 
-var friends = ['Mike', 'Stacy', 'Andy', 'Rick'];
+var friends = [ 'Mike', 'Stacy', 'Andy', 'Rick' ];
 
-friends.forEach(function (eachName, index) {
-	console.log(index + 1 + ". " + eachName);
+friends.forEach(function ( eachName, index ) {
+	console.log( index + 1 + ". " + eachName );
 	// 1. Mike, 2. Stacy, 3. Andy, 4. Rick
 });
 
@@ -48,4 +48,70 @@ Novamente, note a maneira que nós passamos uma função anônima (uma função 
 Até agora, nós passamos funções anônimas como parâmetros para outras funções ou métodos. Vamos entender agora como callbacks trabalham antes de olharmos para exemplos mais concretos e começar a fazer nossas próprias funções callback.
 
 ## Como Funções Callback Trabalham?
+
+Pelo de funções serem objetos de primeira classe no JavaScript, nós podemos tratar as funções como objetos, podendo então passar funções como variáveis e retorná-las nas funções e as usar em outras funções. Quando nós passamos uma função callback como um argumento para outra função, estamos passando somente a definição da função. Não estamos executando a função no parâmetro. Nós não estamos passando a função com o par de parênteses de execução como fazemos quando executamos uma função.
+
+E uma vez que uma função contenha um callback em seu parâmetro como uma definição de função, ela pode executar este callback a qualquer hora. Isso permite que executemos funções callback em qualquer ponto da função que as contém.
+
+É importante notar que a função callback não é executada imediatamente. Ela "called back" (chama de volta, por isso o nome) em algum ponto específico do corpo da função que a contém. Por isso o nosso primeiro exemplo com jQuery ficou assim:
+
+```javascript
+
+// A função anônima não é executada no parâmetro
+// O item é um função callback
+$( "#btn_1" ).click(function () {
+	alert( "Btn 1 Clicked" );
+});
+
+```
+
+A função anônima vai ser chamada posteriormente dentro da função body. Mesmo sem um nome, ela pode ser acessada depois pelo objeto *arguments* pela função que a contém.
+
+### Funções Callback são Closures
+
+Quando nós passamos uma função callback como um argumento para outra função, o callback é executado em algum lugar dentro do corpo da função que a contém somente se o callback tiver sido definido nesta função. Isto significa que o callback é essencialmente um closure. Leia este post mais detalhado, [Entenda Closures no JavaScript com Facilidade](https://github.com/eoop/traduz-ai/blob/master/javascript/004-entenda-closures-no-javaScript-com-facilidade.md) para conhecer mais sobre Closures.
+
+Como sabemos, closures tem acesso ao escopo da função que o contém, então a função callback pode acessar as variáveis da função que a contém, e até mesmo variáveis do escopo global.
+
+## Princípios Básicos Quando Implementamos Funções Callback
+
+Funções callback são simples, mas existem alguns príncipios básicos quando as implementamos e devemos estar familiarizados com eles antes de construirmos e usar nossas próprias funções callback.
+
+### Use Funções Nomeadas OU Funções Anônimas como Callbacks
+
+No exemplo anterior de jQuery e no exemplo acima "forEach" de funções callback, nós usamos funções anônimas que foram definidas no parâmetro da função que as contém. Este é um padrão comum de uso de funções callback. Outro padrão popular de uso das funções callback é o de declarar uma função nomeada e passar o nome deta função como o parâmetro. Então:
+
+```javascript
+
+// variável global
+var allUserData = [];
+
+// função genérica logStuff que imprimi no console
+function logStuff ( userData ) {
+	if ( typeof userData === "string" ) {
+		console.log( userData );
+	} else if ( typeof userData === "object" ) {
+		for ( var item in userData ) {
+			console.log( item + ": " + userData[ item ] );
+		}
+	}
+}
+
+// Uma função que pega 2 parâmetros, o último uma função callback
+function getInput ( options, callback ) {
+	allUserData.push( options );
+	callback( options );
+}
+
+// Quando nós chamamos a função getInput, nós passamos
+// logStuff como um parâmetro. Então logStuff vai ser 
+// a função que será chamada de volta (ou executada)
+// dentro da função getInput
+getInput( { name: "Rich", speciality: "JavaScript" }, logStuff );
+// name: Rich
+// speciality: JavaScript
+
+```
+
+### Passando Parâmetros para Funções Callback
 

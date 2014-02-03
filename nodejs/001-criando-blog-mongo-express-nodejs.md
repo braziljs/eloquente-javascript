@@ -1,7 +1,7 @@
 # Criando um Blog com MongoDB, Express e Node.js
 
-#### Artigo original em [How to Node](http://howtonode.org/express-mongodb).
-#### [Repositório com códigos atualizados e rodando deste tutorial.](https://github.com/newbreedofgeek/tmp-nodejs-express-mongoDB-blog)
+* #### Artigo original em [How to Node](http://howtonode.org/express-mongodb).
+* #### [Repositório com códigos atualizados e rodando deste tutorial.](https://github.com/newbreedofgeek/tmp-nodejs-express-mongoDB-blog)
 
 Neste artigo, espero conduzí-lo com os passos necessários para obter um sistema persistente de blogs totalmente funcional rodando em cima do Node.
 

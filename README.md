@@ -21,6 +21,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 * [JavaScript](#javascript) (06)
 * [AngularJS](#angularjs) (05)
+* [Node.js](@node.js) (01)
 * [Handlebars](#handlebarsjs) (01)
 
 ---
@@ -64,6 +65,11 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 05. **Mais mágicas do AngularJS para turbinar sua Webapp**
 	* [Original](http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/angularjs/004-mais-magicas-angularjs-para-turbinar-sua-webapp.md#mais-m%C3%A1gicas-do-angularjs-para-turbinar-sua-webapp)
+
+# Node.js
+
+01. Criando um Blog com MongoDB, Express e Node.js
+	* [Original](http://howtonode.org/express-mongodb), [Código atualizado](https://github.com/newbreedofgeek/tmp-nodejs-express-mongoDB-blog) e [Tradução]()
 
 # Handlebars.js
 

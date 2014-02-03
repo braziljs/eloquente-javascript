@@ -19,7 +19,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 ### Índice
 
-* [JavaScript](#javascript) (06)
+* [JavaScript](#javascript) (08)
 * [AngularJS](#angularjs) (05)
 * [Node.js](@node.js) (01)
 * [Handlebars](#handlebarsjs) (01)
@@ -48,6 +48,9 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 07. **Entenda Funções Callback no JavaScript e Use-as**
 	* [Original](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/javascript/007-entenda-callbacks-js.md)
+
+08. **Introdução sobre o conceito de Promises em Javascript.**
+	* [Original](http://www.promisejs.org/) e [Tradução](http://eoop.github.io/promiseJS.br/)
 
 # AngularJS
 

@@ -115,3 +115,123 @@ getInput( { name: "Rich", speciality: "JavaScript" }, logStuff );
 
 ### Passando Parâmetros para Funções Callback
 
+Sendo a função callback uma função normal quando é executada, nós podemos passar parâmetros para ela. Nós podemos passar qualquer propriedade da função que a contém (ou propriedades globais) como parâmetros para as funções callback. No exemplo seguinte, vamos passar *options* como um parâmetro  para a função callback. Vamos passar uma variável e uma variável local:
+
+```javascript
+
+// Variável global
+var generalLastName = "Clinton";
+
+function getInput ( options, callback ) {
+	allUserData.push( options );
+
+	// Passando a variável global generalLastName 
+	// para a função callback
+	callback( generalLastName, options );
+}
+
+```
+
+### Assegure-se que o Callback é uma Função Antes de Executá-lo
+
+Sempre é prudente verificar se a função callback passada no parâmetro é de fato uma função, antes de chamá-la. Tmabém é uma boa prática criar uma função callback opcional.
+
+Vamos refatorar a função `getInput` do exemplo anterior para assegurarmos que estas verificações estão sendo feitas.
+
+```javascript
+
+function getInput ( options, callback ) {
+	allUserData.push( options );
+
+	// Verificando que a função é um callback
+	if ( typeof callback === "function" ) {
+		// Chame-a, desde que seja confirmado que é uma função
+		callback( options );
+	}
+}
+
+```
+
+Sem essa verificação, se a função `getInput` for chamada sem a função callback como um parâmetro ou ao invés da função uma *não função* for passada, nosso código vai resultar em um erro de execução.
+
+### Problema Quando Usado Método com o Objeto `this` como Callback
+
+Quando a função callback é um método que usa o objeto `this`, nós temos que modificar como nós executamos a função callback para preservar o contexto do objeto `this`. Ou então, o objeto `this` vai apontar para o objeto global `window`, se o callback for passado como uma função global. Ou também pode apontar para o objeto do método que o contém.
+
+Vamos explorar isso no código:
+
+```javascript
+
+// Define um objeto com algumas propriedades e um método
+// Vamos depois passar o método como uma função callback para outra função
+var clientData = {
+	id: 094545,
+	fullName: "Not Set",
+	// setUserName é um método do objeto clientData
+	setUserName: function ( firstName, lastName ) {
+		// isto se ferete a propriedade fullName do objeto clientData
+		this.fullName = firstName + " " + lastName;
+	}
+}
+
+function getUserInput ( firstName, lastName, callback ) {
+	// Faz outras coisas para validar firstName/lastName aqui
+
+	// Agora salvando os nomes
+	callback( firstName, lastName );
+}
+
+```
+
+No código seguinte, quando `clientData.setUserName` é executado, `this.fullName` não vai configurar a propriedade `fullName` no objeto `clientData`. Ao invés disso, irá configurar `fullName` no objeto `window`, sendo getUserInput uma função global. Isto acontece porque o objeto `this` na função global aponta para o objeto `window`.
+
+```javascript
+
+getUserInput( "Barack", "Obama", clientData.setUserName );
+
+console.log( clientData.fullName ); // Not set
+
+// A propriedade fullName foi inicializada no objeto window
+console.log( window.fullName ); // Barack Obama
+
+```
+
+Use a Função `call` ou `apply` para Preservar o `this`
+
+Nós podemos consertar este problema anterior usando as funções `call` ou `apply` (nós vamos discutir sobre isto em um post completo posteriormente). Por agora, saiba que toda função no JavaScript tem dois métodos: `call` e `apply`. E estes métodos são usados para configurar o objeto `this` dentro da função e passar argumentos as funções.
+
+`call` pega o valor a ser usado como o objeto `this` dentro da função como o primeiro parâmetro, e os argumentos remanescentes a serem passados para a função são passados individualmente (separados por vírgulas, é claro). O primeiro parâmetro da função `apply` é também o valor a ser usado como o objeto `this` dentro da função, enquanto o último parâmetro é um array de valores (ou o objeto *arguments*) para se passar para a função.
+
+Isto soa complexo, mas vamos ver o quão fácil é de se usar `call` e `apply`. Para eliminar o prolbmea do exemplo prévio, vamos usar a função apply:
+
+```javascript
+
+// Note que nós adicionamos um parâmetro extra para
+// o objeto callback, chamado "callbackObj"
+function getUserInput ( firstName, lastName, callback, callbackObj ) {
+	// Faz outras coisas para validar o nome aqui
+
+	// O uso da função apply abaixo vai configurar
+	// o objeto this para ser callbackObj
+	callback.apply( callbackObj, [firstName, lastName] );
+}
+
+```
+
+Com a função  `apply` configurada corretamente para o objeto `this`, nós podemos agora executar corretamente o callback e ter a propriedade `fullName` corretamente atualizada no objeto clientData:
+
+```javascript
+
+// Nós passamos o método clientData.setUserName e o objeto
+// clientData como parâmetros. O objeto clientData vai ser
+// usado pela função apply para configurar o objeto this
+getUserInput( "Barack", "Obama", clientData.setUserName, clientData );
+
+// a propriedade fullName em clientData foi corretamente configurada
+console.log( clientData.fullName ); // Barack Obama
+
+```
+
+Nós também poderíamos ter usado a função `call`, mas neste caso a função apply que foi a escolhida.
+
+### Chamadas a Múltiplas Funções Callback

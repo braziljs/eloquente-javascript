@@ -31,7 +31,7 @@ No exemplo acima eu digitei `console.log('Hello World')` dentro do shell e apert
 
 A outra forma de rodar o Node é fornecendo a ele um arquivo JavaScript para execução. Isto será na maioria das vezes a maneira como você irá utilizá-lo.
 
-hello.js
+`hello.js`
 ```js
 
 console.log('Hello World');
@@ -51,7 +51,7 @@ Neste exemplo, eu movi o comando `console.log()` para dentro de um arquivo e ent
 
 Rodar código JavaScript é divertido e tal, mas não é muito útil. Ai é onde o Node.js também inclui um poderoso conjunto de [bibliotecas](http://nodejs.org/api/) (módulos) para se fazer coisas reais. No primeiro exemplo eu vou abrir um arquivo de registros e analisá-lo.
 
-example-log.txt
+`example-log.txt`
 ```
 
 2013-08-09T13:50:33.166Z A 2
@@ -66,7 +66,7 @@ O que esses dados registrados significam não importa, mas basicamente cada mens
 
 A primeira coisa que nós precisamos fazer é ler o conteúdo do arquivo.
 
-my_parser.js
+`my-parser.js`
 ```js
 
 // Carregando o módulo fs (filesystem)
@@ -89,7 +89,7 @@ Felizmente o Node.js faz a entrada e saída (I/O) do arquivo facilmente com o m�
 
 Agora vamos adicionar o *parsing* (analisador).
 
-my-parser.js
+`my-parser.js`
 ```js
 
 

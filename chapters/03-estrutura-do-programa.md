@@ -536,7 +536,7 @@ Quando você tiver o programa funcionando, modifique-o para imprimir `FizzBuzz` 
 
 ### Tabuleiro de Xadrez
 
-Escreva um programa que cria uma string que representa uma grade 8x8, usando novas linhas para separar os caracteres. A cada posição da grade existe ou um espaço ou um caracter "#", de forma que estes caracteres forem um tabuleiro de xadrez.
+Escreva um programa que cria uma string que representa uma grade 8x8, usando novas linhas para separar os caracteres. A cada posição da grade existe ou um espaço ou um caracter "#", de forma que estes caracteres formem um tabuleiro de xadrez.
 
 Passando esta string para `console.log`, ela deverá se parecer com isso:
 
@@ -550,3 +550,5 @@ Passando esta string para `console.log`, ela deverá se parecer com isso:
 	 # # # #
 
 Quando isso funcionar, defina uma variável `tamanho = 8`, e mude o programa para que o mesmo funciona para qualquer `tamanho`, retornando uma grade com a largura e altura fornecida.
+
+> Confira uma dica de como resolver [aqui](https://gist.github.com/eoop/8805647) e a resolução [aqui](https://gist.github.com/eoop/8781354).

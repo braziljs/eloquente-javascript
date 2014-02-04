@@ -21,7 +21,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 * [JavaScript](#javascript) (08)
 * [AngularJS](#angularjs) (05)
-* [Node.js](@node.js) (01)
+* [Node.js](#nodejs) (01)
 * [Handlebars](#handlebarsjs) (01)
 
 ---

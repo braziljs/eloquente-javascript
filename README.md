@@ -21,7 +21,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 * [JavaScript](#javascript) (08)
 * [AngularJS](#angularjs) (05)
-* [Node.js](@node.js) (01)
+* [Node.js](#nodejs) (01)
 * [Handlebars](#handlebarsjs) (01)
 
 ---
@@ -71,8 +71,8 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 # Node.js
 
-01. **Criando um Blog com MongoDB, Express e Node.js**
-	* [Original](http://howtonode.org/express-mongodb), [Código atualizado](https://github.com/newbreedofgeek/tmp-nodejs-express-mongoDB-blog) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/nodejs/001-criando-blog-mongo-express-nodejs.md)
+01. **Guia Para Iniciantes Absolutos em Node.js**
+	* [Original](http://blog.modulus.io/absolute-beginners-guide-to-nodejs) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/nodejs/001-guia-para-iniciantes-absolutos-em-nodejs.md)
 
 # Handlebars.js
 

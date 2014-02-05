@@ -235,3 +235,77 @@ console.log( clientData.fullName ); // Barack Obama
 Nós também poderíamos ter usado a função `call`, mas neste caso a função apply que foi a escolhida.
 
 ### Chamadas a Múltiplas Funções Callback
+
+Nós podemos passar mais que uma função callback dentro do parâmetro de uma função, da mesma forma que podemos passar mais que uma variável. Aqui temos um exemplo clássico com a função AJAX do jQuery:
+
+```js
+
+function successCallback () {
+	// Faz algo antes de enviar
+}
+
+function successCallback () {
+	// Faz algo se receber uma mensagem de sucesso
+}
+
+function completeCallback () {
+	// Faz algo após a conclusão
+}
+
+function errorCallback () {
+	// Faz algo se receber um erro
+}
+
+$.ajax({
+	url      : "http://fiddle.jshell.net/favicon.png",
+	success  : successCallback,
+	complete : completeCallback,
+	error    : errorCallback
+});
+
+```
+
+## "Callback Hell" (Inferno de Callback): Problema e Solução
+
+Na execução de código assíncrono, que é uma simples execução de código em qualquer ordem, algumas vezes é comum termos várias camadas de funções callback assim como o código seguinte. O código confuso abaixo é chamado de *callback hell* por causa da dificuldade de seguirmos o código pelos múltiplos callbacks. Eu peguei este exemplo do node-mongodb-native, um controlador de MongoDB para Node.js. **O exemplo deste código abaixo é somente para demonstração:**
+
+```js
+
+var p_client = new Db('integration_tests_20', new Server("127.0.0.1", 27017, {}), {'pk':CustomPKFactory});
+p_client.open(function(err, p_client) {
+    p_client.dropDatabase(function(err, done) {
+        p_client.createCollection('test_custom_key', function(err, collection) {
+            collection.insert({'a':1}, function(err, docs) {
+                collection.find({'_id':new ObjectID("aaaaaaaaaaaa")}, function(err, cursor) {
+                    cursor.toArray(function(err, items) {
+                        test.assertEquals(1, items.length);
+
+                        // Vamos fechar o db =P
+                        p_client.close();
+                    });
+                });
+            });
+        });
+    });
+});
+
+```
+
+Você não gostaria de encontrar este problema frequentemente em seu código, mas quando você encontrar - e você vai, algumas vezes - aqui temos duas soluções para este problema.
+
+**1** . Nomeie suas funções e declare-as passando somente o nome da função como um callback, ao invés de definir uma função anônima no parâmetro da função principal.
+
+**2** . Modularidade: Separe seu código em módulos, assim você pode exportar uma seção do código que faz um trabalho em particular. Então você poderá importar o módulo dentro de toda sua aplicação.
+
+## Construindo Suas Próprias Funções Callback
+
+Agora que você entendeu completamente (eu penso que sim, se não isto é uma pequena releitura) tudo sobre **funções callback** no JavaScript e viu que o uso de funções callback é simples porém muito poderoso, você deve olhar para seu próprio código para verificar oportunidades de usar as funções callback, pois elas vão permitir que você:
+
+* Não repita código (DRY - Don't Repeat Yourself - Não se repita)
+* Implemente melhores abstrações onde você pode ter funções mais genéricas que são versáteis (podem lidar com todos os tipos de funcionalidades)
+* Tenha uma melhor mantenabilidade
+* Tenha um código mais legível
+* Tenha mais funções especializadas
+
+É bastante fácil criar nossas próprias funções callback. No exemplo seguinte, você pode criar uma função para fazer todo o trabalho: recupera o dado do usuário, cria um poema genérico com o dado e comprimenta o usuário. Isto seria uma função confusa usando declarações if/else e, mesmo assim, seria muito limitada e incapaz de realizar outras funcionalidades que o aplicativo pode precisar fazer com os dados do usuário.
+

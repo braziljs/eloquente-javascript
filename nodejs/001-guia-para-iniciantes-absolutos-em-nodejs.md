@@ -72,7 +72,7 @@ A primeira coisa que nós precisamos fazer é ler o conteúdo do arquivo.
 // Carregando o módulo fs (filesystem)
 var fs = require('fs');
 
-// Lendo o conteúdo do arquivo para a memória
+// Leia o conteúdo do arquivo para a memória
 fs.readFile('example-log.txt', function ( err, loData ) {
 	
 	// Se um erro ocorrer, será lançada uma
@@ -92,6 +92,76 @@ Agora vamos adicionar o *parsing* (analisador).
 `my-parser.js`
 ```js
 
+// Carregando o módulo fs (filesystem)
+var fs = require('fs');
 
+// Leia o conteúdo do arquivo para a memória
+fs.readFile('example-log.txt', function ( err, logData ) {
+	
+	// Se um erro ocorrer, será lançada uma
+	// exceção, e a aplicação irá ser encerrada
+	if ( err ) throw err;
+
+	// logData é um Buffer, converta para string
+	var text = logData.toString();
+
+	var results = {};
+
+	// Quebrando o arquivo em linhas
+	var lines = text.split( '\n' );
+
+	lines.forEach(function ( line ) {
+		var parts = line.split( ' ' );
+		var letter = parts[ 1 ];
+		var count = parseInt( parts[ 2 ] );
+
+		if ( !results[ letter ] ) {
+			results[ letter ] = 0;
+		}
+
+		results[ letter ] += parseInt( count );
+	});
+
+	console.log( results );
+	// { A: 2, B: 14, C: 6 }
+});
 
 ```
+
+Agora vamos passar este arquivo como um argumento para o comando `node` e ele vai imprimir o resultado e sair.
+
+```sh
+
+$ node my-parser.js
+{ A: 2, B: 14, C: 6 }
+
+```
+
+Eu uso muito o Node.js para scripts como este. É uma alternativa muito mais simples e poderosa que os scripts bash.
+
+## Callbacks Assíncronos
+
+Como você viu no exemplo anterior, o padrão típico do Node.js é o uso de callbacks assíncronos. Basicamente você está dizendo a ele para fazer algo e quando isso estiver terminado ele irá chamar sua função (callback). Isto porque o Node é de *thread* única. Enquanto você está esperando pelo disparo do callback, o Node pode fazer outras coisas ao invés de bloquear até que a requisição esteja terminada.
+
+Isso é especialmente importante para servidores web. Isto é muito comum em aplicações web modernas para acessar banco de dados. Enquanto você espera pelo retorno do banco de dados, o Node pode processar mais requisições. Isso permite que você manipule milhares de conexões conjuntas com pequenos acréscimos, comparado a criar uma thread separada para cada conexão.
+
+## Fazendo Algo Útil - Servidor HTTP
+
+Como disse anteriormente, o Node não faz nada por si só. Um dos módulos embutidos tornam a criação de [servidores HTTP](http://nodejs.org/api/http.html#http_http_createserver_requestlistener) simples muito fácil, que é o [exemplo na página inicial do Node.js](http://nodejs.org/).
+
+`my-web-server.js`
+```js
+
+var http = require('http');
+
+http.createServer(function ( req. res ) { // req = requisição, res = resposta
+	
+	res.writeHead( 200, { 'Content-Type': 'text,plain' } );
+	res.send( 'Hello World\n' );
+}).listen( 8080 );
+
+console.log( 'Servidor rodando na porta 8080' );
+
+```
+
+

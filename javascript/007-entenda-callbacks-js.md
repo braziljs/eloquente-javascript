@@ -1,4 +1,4 @@
-![callbacks](img/callback-js.png)
+![callbacks](../img/callback-js.png)
 
 #### Artigo traduzido. Postado originalmente em [JavaScript.is(Sexy)](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them) em 04/03/2013
 

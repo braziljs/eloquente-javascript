@@ -154,14 +154,54 @@ Como disse anteriormente, o Node não faz nada por si só. Um dos módulos embut
 
 var http = require('http');
 
-http.createServer(function ( req. res ) { // req = requisição, res = resposta
+http.createServer(function ( req, res ) { // req = requisição, res = resposta
 	
-	res.writeHead( 200, { 'Content-Type': 'text,plain' } );
-	res.send( 'Hello World\n' );
+	res.writeHead( 200, { 'Content-Type': 'text/plain' } );
+	res.end( 'Hello World\n' );
 }).listen( 8080 );
 
 console.log( 'Servidor rodando na porta 8080' );
 
 ```
 
+Quando eu digo básico, quero dizer básico mesmo. Este não é um servidor HTTP completo. Ele não pode servir qualquer arquivo HTML ou de imagem. De fato, não importa sua requisição, ela vai retornar 'Hello World'. No entanto, você pode rodar isto e verá em seu navegador no endereço `http://localhost:8080` o texto "Hello World".
 
+```sh
+
+$ node my-web-server.js
+
+```
+
+Você pode ter percebido uma coisa diferente agora. Sua aplicação node.js não fechou. Isto acontece pois você criou um servidor e sua aplicação node vai continuar rodando e respondendo as requisições até que você mesmo mate o processo.
+
+Se você quiser ter um servidor web completo, você terá que fazer este trabalho. Você deve checar o que foi requisitado, ler os arquivos apropriados e enviar o conteúdo de volta. Pessoas já fizeram estr trabalho duro para você.
+
+## Fazendo Algo Útil - Express
+
+[Express](http://expressjs.com/) é um framework que torna a criação de sites normais muito simples. A primeira coisa que você tem que fazer é instalá-lo. Juntamente com o comando `node`, você também tem acesso a um comando chamado `npm`. Esta ferramenta permite que você acesse uma enorme coleção de módulos criados pela comunidade, e um deles é o Express.
+
+```sh
+
+$ cd /my/app/location
+$ npm install express
+
+```
+
+Quando você instala um módulo, ele vai ser colado em uma pasta chamada *node_modules* dentro do diretório da sua aplicação. Você pode agora "require" (requisitar) este módulo como um módulo embutido. Vamos criar um arquivo estático básico usando o Express.
+
+`my-static-file-server.js`
+```js
+
+var express = require('express');
+	app = express();
+
+app.use(express.static(__dirname + '/public'));
+
+app.listen(8080);
+
+```
+```sh
+
+$ node my-static-file-server.js
+
+```

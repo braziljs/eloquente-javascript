@@ -1,4 +1,4 @@
-# Entenda Funções Callback no JavaScript e Use-as
+![callbacks](img/callback-js.png)
 
 #### Artigo traduzido. Postado originalmente em [JavaScript.is(Sexy)](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them) em 04/03/2013
 
@@ -307,5 +307,88 @@ Agora que você entendeu completamente (eu penso que sim, se não isto é uma pe
 * Tenha um código mais legível
 * Tenha mais funções especializadas
 
-É bastante fácil criar nossas próprias funções callback. No exemplo seguinte, você pode criar uma função para fazer todo o trabalho: recupera o dado do usuário, cria um poema genérico com o dado e comprimenta o usuário. Isto seria uma função confusa usando declarações if/else e, mesmo assim, seria muito limitada e incapaz de realizar outras funcionalidades que o aplicativo pode precisar fazer com os dados do usuário.
+É bastante fácil criar nossas próprias funções callback. No exemplo seguinte, você pode criar uma função para fazer todo o trabalho: recupera o dado do usuário, cria um poema genérico com o dado e cumprimenta o usuário. Isto seria uma função confusa usando declarações if/else e, mesmo assim, seria muito limitada e incapaz de realizar outras funcionalidades que o aplicativo pode precisar fazer com os dados do usuário.
 
+Ao invés disso, eu deixei a implementação de adição de funcionalidades para as funções callback, então a função principal que retorna os dados do usuário pode realizar qualquer tarefa com o dado do usuário simplesmente passando o nome completo do usuário e sexo como parâmetros para a função callback e então executando a função callback.
+
+Em resumo, a função `getUserInput` é versátil: ela pode executar todos os tipos de funções callback com inúmeras funcionalidades.
+
+```js
+
+// Primeiro, configure a função criadora do poema genérico,
+// ela vai ser a função callback na função getUserInput abaixo
+function genericPoemMaker ( name, gender ) {
+	console.log( name + " is finer than fine wine." );
+	console.log( "Altruistic and noble for the modern time." );
+	console.log( "Always admirably adorned with the latest style." );
+	console.log( "A " + gender + " of unfortunate tragedies who still manages a perpetual smile" );
+}
+
+// O callback, que é o último item no parâmetro, vai ser  
+// nossa função genericPoemMaker, que foi definida acima
+function getUserInput( firstName, lastName, gender, callback ) {
+	var fullName = firstName + " " + lastName;
+
+	// Verificando se a função é um callback
+	if ( typeof callback === "function" ) {
+		// Executa a função callback e passa os parâmetros a ela
+		callback ( fulName, gender );
+	}
+}
+
+```
+
+Chame a função `getUserInput` e passa a função `genericPoemMaker` como um callback:
+
+```js
+
+getUserInput( "Michael", "Fassbender", "Man", genericPoemMaker);
+// Saída
+/* Michael Fassbender is finer than fine wine.
+Altruistic and noble for the modern time.
+Always admirably adorned with the latest style.
+A Man of unfortunate tragedies who still manages a perpetual smile.
+*/
+
+```
+
+Por causa da função `getUserInput` estar somente manipulando os dados recebidos, nós podemos passar qualquer callback para ela. Por exemplo, podemos passar uma função `greetUser` como esta:
+
+```js
+
+function greetUser ( customerName, sex ) {
+	var salutation = sex && sex === "Man" ? "Mr." : "Ms.";
+	console.log( "Hello, " + salutation + " " + customerName );
+}
+
+// Passe a função greetUser como um callback para getUserInput
+getUserInput( "Bill", "Gates", "Man", greetUser );
+
+// E essa será a saída
+// Hello, Mr. Bill Gates 
+
+```
+
+Nós chamamos a mesma função `getUserInput` como anteriormente, mas agora ela realizou uma tarefa completamente diferente.
+
+Como você pode ver, funções callback são fantásticas. E mesmo o exemplo anterior sendo relativamente simples, pense quanto trabalho você pode evitar e como bem abstraído seu código vai ficar, se você começar a usar as funções callback. Vá em frente!
+
+Aqui temos caminhos comuns de funções callback que são frequentemente usadas na programação JavaScript, especialmente no desenvolvimento de aplicações modernas e em bibliotecas e frameworks:
+
+* Para execução assíncrona (como ler arquivos, e fazer requisições HTTP);
+* Em escuta e manipulação de eventos
+* Em métodos `setTimeout` e `setInterval`
+* Para generalização: código mais conciso.
+
+## Palavras Finais
+
+Funções callback no JavaScript são maravilhosas e poderosas para se usar e as mesmas fornecem grandes benefícios para sua aplicação web e para seu código. Você deve usá-las quando surgir a necessidade; olhe as formas de se refatorar seu código para obter abstratação, mantenabilidade e legibilidade com as funções callback.
+
+Nos vemos na próxima, e lembre-se de pois o JavaScriptisSexy.com tem muito a lhe ensinar e você tem muito a aprender!
+
+## Referências
+
+1. http://c2.com/cgi/wiki?FirstClass
+2. https://github.com/mongodb/node-mongodb-native
+3. http://callbackhell.com/
+4. [JavaScript Patterns](http://www.amazon.com/gp/product/0596806752/ref=as_li_tf_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=0596806752&linkCode=as2&tag=interhaptic-20) by Stoyan Stefanov (Sep 28, 2010) 

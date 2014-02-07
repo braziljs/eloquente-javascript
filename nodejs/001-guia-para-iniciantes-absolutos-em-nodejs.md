@@ -205,3 +205,7 @@ app.listen(8080);
 $ node my-static-file-server.js
 
 ```
+
+Agora você tem um servidor de arquivos estáticos bastante eficiente. Tudo que você colocar dentro da pasta `/public` vai ser requisitado pode agora ser requisitado pelo seu navegador e será mostrado. HTML, imagens, enfim, tudo. Por exemplo, se você colocar uma imagem chamada `my-image.png` dentro da pasta `public`, você pode acessá-la usando seu navegador no endereço `http://localhost:8080/my-image.png`. Claro que o Express tem muito muito outros recursos, mas você pode olhá-los a medida que continua desenvolvendo.
+
+## NPM 

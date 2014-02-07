@@ -208,4 +208,36 @@ $ node my-static-file-server.js
 
 Agora você tem um servidor de arquivos estáticos bastante eficiente. Tudo que você colocar dentro da pasta `/public` vai ser requisitado pode agora ser requisitado pelo seu navegador e será mostrado. HTML, imagens, enfim, tudo. Por exemplo, se você colocar uma imagem chamada `my-image.png` dentro da pasta `public`, você pode acessá-la usando seu navegador no endereço `http://localhost:8080/my-image.png`. Claro que o Express tem muito muito outros recursos, mas você pode olhá-los a medida que continua desenvolvendo.
 
-## NPM 
+## NPM
+
+Nós usamos um pouco o [NPM](https://npmjs.org/) nas seções anteriores, mas eu quero enfatizar o quão importante esta ferramenta se faz no desenvolvimento para Node.js. Existem milhares de módulos disponíveis que resolvem quase todos os problemas típicos que você encontra. Lembre-se de checar o NPM antes de re-inventar a roda. Não é inédito para uma aplicação Node ter dezenas de dependências.
+
+No exemplo anterior nós instalamos o Express manualmente. Se você tiver muitas dependências, essa não será uma forma muito interessante de instalá-las. É por isso que o NPM faz uso do arquivo `package.json`.
+
+`package.json`.
+```js
+
+{
+	"name" : "MyStaticServer",
+	"version" : "0.0.1",
+	"dependencies" : {
+		"express" : "3.3.x"
+	}
+}
+
+```
+
+Um arquivo [`package.json`](https://npmjs.org/doc/files/package.json.html) contém um resumo da sua aplicação. Existem vários campos disponíveis, sendo este apenas o mínimo. A seção *dependencies* (dependências) descreve o nome e a versão dos módulos que você gostaria de instalar. Neste caso eu vou aceitar qualquer versão do Express 3.3. Você pode listar quantas dependências quiser nesta seção. 
+
+Agora, ao invés de instalar cada dependência em separado, nós podemos rodar um simples comando e instalar todas elas.
+
+```sh
+
+$ npm install
+
+```
+
+Quando você roda este comando, o npm vai verificar na pasta atual pelo arquivo `package.json`. Se ele encontrar um, então irá instalar cada dependência listada.
+
+## Organização do Código
+

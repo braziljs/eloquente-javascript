@@ -55,4 +55,39 @@ Algumas funções produzem um valor, como as funções `power` e `square` vistas
 
 ## Parâmetros e Escopos
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_N7xZ5k5OET
+Os parâmetros de uma função comportam-se como variáveis - mas aquelas que são utilizadas para declarar um valor inicial pelo chamador da função, não o código da função em si.
+
+Uma propriedade muito importante das funções é que variáveis criadas dentro das funções, incluindo seus parâmetros, são *locais* à função. Isso significa, por exemplo, que a variável `result` no exemplo `power` vai ser novamente criada toda vez que a função for chamada, e suas encarnações separadas não interferem umas com as outras.
+
+Essa "senso de localidade" das variáveis se aplica somente aos parâmetros e as variáveis declaradas com a palavra-chave `var` dentro do corpo da função. É possível acessar variáveis *globais* (não-locais) dentro de uma função, contanto que você não tenha declarado uma variável local com o mesmo nome.
+
+O código seguinte demonstra isto. Ele define (e chama) duas funções que ambas atribuem um valor à variável `x`. No primeiro declaramos a variável como local e depois mudamos somente a variável local. No segundo não declaramos `x` localmente, e portanto, as referências ao `x` dentro dele irão se referir a variável global `x` definida no início do exemplo.
+
+```js
+
+var x = "outside";
+
+var f1 = function () {
+	var x = "inside f1";
+};
+f1();
+console.log(x);
+// outside
+
+var f2 = function () {
+	x = "inside f2";
+};
+f2();
+console.log(x);
+// inside f2
+
+```
+
+Este comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis estiverem compartilhadas por todo o programa, teria que haver um enorme esforço, em todos os programas, até mesmo os mais ínfimos, para garantir que nenhum nome estivesse sendo usado duas vezes. E se você reusasse o nome de uma variável, iria perceber estranhos efeitos, com código confuso e não relacionado ao valor de sua variável. Tratando as variáveis como existentes apenas na localidade dentro da função, a linguagem torna muito mais fácil de ler e entender as funções como pequenos universos, sem muitas ações a distância para complicar as coisas.
+
+## Escopo Aninhado
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_ihIXHRpm/s
+
+
+

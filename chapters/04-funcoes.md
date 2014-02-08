@@ -87,7 +87,40 @@ Este comportamento ajuda a prevenir interferências acidentais entre funções. 
 
 ## Escopo Aninhado
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_ihIXHRpm/s
+No JavaScript, a distinção não é somente entre variáveis *globais* e *locais*. Na realidade, existem graus de localidade. Funções podem ser criadas em qualquer lugar dentro do programa, incluindo dentro de outras funções.
 
+Por exemplo, esta função sem sentido tem duas funções dentro dela:
 
+```js
+
+var landscape = function () {
+	var result = "";
+	var flat = function (size) {
+		for (var count = 0; count < size; count++)
+			result += "_";
+	};
+	var moutain = function (size) {
+		result += "/";
+		for (var count = 0; count < size; count++)
+			result += "/";
+			for (var count = 0; count < size; count++)
+				result += "'";
+			result += "\\";
+	};
+
+	flat(3);
+	moutain(4);
+	flat(6);
+	moutain(1);
+	flat(1);
+	return result
+};
+
+console.log(landscape());
+// ___/''''\______/'\_
+
+```
+As funções `flat` e `moutain` podem "ver" a variável chamada `result`, desde que elas estejam dentro da função que define `result`. Mas elas não podem ver as variáveis `count` uma da outra, somente a sua própria, pois estão exteriores a cada uma. O ambiente fora da função não vê qualquer de suas variáveis definidas dentro de `landscape`.
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_EGgZKAIsV1
 

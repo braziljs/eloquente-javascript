@@ -241,3 +241,88 @@ Quando você roda este comando, o npm vai verificar na pasta atual pelo arquivo 
 
 ## Organização do Código
 
+Até agora só usamos um único arquivo, que não é muito sustentável. Na maioria das aplicações, seu código vai ser dividido em vários arquivos. Não nenhuma norma ou organização imposta dizendo para onde os arquivos vão. Isto não é Rails. Não há conceitos de views e controllers acontecendo aqui. Você pode fazer o que quiser.
+
+Vamos refatorar o script de análise de registros (log parsing). Ele será muito mais testável e manutenível se nós separarmos a lógica de análise (parsing) dentro de um arquivo próprio.
+
+`parser.js`
+```js
+
+// Construtor Parser
+var Parser = function () {
+
+};
+
+// Analisa o texto especificado
+Parser.prototype.parse = function ( text ) {
+	
+	var results = {};
+
+	// Quebra o arquivo em linhas
+	var lines = text.split('\n');
+
+	lines.forEach(function ( line ) {
+		var parts = line.split( ' ' );
+		var letter = parts[ 1 ];
+		var count = parseInt( parts[2] );
+
+		if ( !results[ letter ] ) {
+			results[ letter ] = 0;
+		}
+
+		results[ letter ] += parseInt( count );
+	});
+
+	return results;
+};
+
+// Exportando o construtor Parser neste módulo
+module.exports = Parser;
+
+```
+
+O que eu fiz foi criar um novo arquivo para conter a lógica da análise dos registros. Isto é apenas JavaScript puro e existe várias formas de se encapsular este código. Eu escolhi por definir um novo objeto JavaScript pois assim é mais fácil de se fazer testes unitários.
+
+A parte importante para isso é a linha `module.exports`. Isso diz ao Node que você está exportando deste arquivo. Neste caso exportei um construtor, então os usuários podem criar instâncias do meu objeto `Parser`. Você pode exportar qualquer coisa que quiser.
+
+Agora vamos olhar como é importante este arquivo e fazer uso do novo objeto `Parser`.
+
+`my-parser.js`
+```js
+
+// Requisitando o arquivo parser.js
+var Parser = require('./parser');
+
+// Carregandoo módulo fs (filesystem)
+var fs = require('fs');
+
+// Lendo o conteúdo do arquivo para a memória
+fs.readFile('example-log.txt', function ( err, logData ) {
+	
+	// Se um erro ocorrer, irá ser lançada
+	// a exceção e a app será encerrada
+	if ( err ) throw err;
+
+	// logData é um Buffer, converta-o para string
+	var text = logData.toString();
+
+	// Criando uma instância do objeto Parser
+	var parser = new Parser();
+
+	// Chame a função parse
+	console.log( parser.parse( text ) );
+	// { A: 2, B: 14, C: 6 }
+});
+
+```
+
+Arquivos foram incluídos exatamente como módulos, exceto que você inclui um caminho ao invés de um nome. A extensão `.js` é implícita, então você pode omití-la se quiser.
+
+Tendo sido exportado um construtor, é isso que vai ser retornado da declaração `require`. Eu posso agora criar instâncias do meu objeto `Parser` e usá-las.
+
+## Resumo
+
+Esperamos que este tutorial tenha feito a ponte entre a parte de fazer o download do Node.js e construir sua primeira ferramenta. O Node.js é uma tecnologia extremamenta poderosa e flexível que pode resolver uma vastidão de tipos de problemas.
+
+Eu quero que cada um de vocês se lembre que o Node.js é somente limitado pela sua imaginação. As bibliotecas de seu núcleo foram cuidadosamente projetadas para fornecer as peças do quebra-cabeça necessárias para se construir qualquer fotografia. Combine-as com módulos disponíveis no NPM e será incrível o quão rápido você poderá começar a construir aplicações muito complexas e atraentes.
+

@@ -21,7 +21,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 * [JavaScript](#javascript) (08)
 * [AngularJS](#angularjs) (05)
-* [Node.js](#nodejs) (01)
+* [Node.js](#nodejs) (02)
 * [Handlebars](#handlebarsjs) (01)
 
 ---
@@ -73,6 +73,9 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 01. **Guia Para Absolutos Iniciantes em Node.js**
 	* [Original](http://blog.modulus.io/absolute-beginners-guide-to-nodejs) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/nodejs/001-guia-para-iniciantes-absolutos-em-nodejs.md)
+
+02. **Simples Guia Passo-a-Passo Para Desenvolvedores Front-End Iniciarem Com Node.js, Express, Jade e MongoDB**
+	* [Original](http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/) e [Tradução]()
 
 # Handlebars.js
 

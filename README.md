@@ -75,7 +75,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 	* [Original](http://blog.modulus.io/absolute-beginners-guide-to-nodejs) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/nodejs/001-guia-para-iniciantes-absolutos-em-nodejs.md)
 
 02. **Simples Guia Passo-a-Passo Para Desenvolvedores Front-End Iniciarem Com Node.js, Express, Jade e MongoDB**
-	* [Original](http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/) e [Tradução]()
+	* [Original](http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/) e [Tradução](https://github.com/cerebrobr/traduz-ai/blob/master/nodejs/002-simples-guia-nodejs-jade-express-mongodb.md)
 
 # Handlebars.js
 

@@ -1,5 +1,7 @@
 # Guia Para Iniciantes Absolutos em Node.js
 
+![node-baby](../img/node-absolute-begginer.png)
+
 #### Artigo traduzido de *blog.modulus.io*. Confira o texto original [aqui](http://blog.modulus.io/absolute-beginners-guide-to-nodejs).
 
 Não existe uma escassez de tutoriais para Node.js, mas a maioria deles cobrem usos e casos específicos, ou tópicos que somente aplicáveis se você já tiver um conhecimento prático do Node. Eu vejo vários comentários que se parecem com coisas do tipo: "Eu fiz o download do node, agora o que fazer?" Este tutorial responde esta questão e explica como iniciar bem do princípio.

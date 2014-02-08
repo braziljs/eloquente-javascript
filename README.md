@@ -71,7 +71,7 @@ Espero que seja de bom proveito este material, para que juntos possamos aprender
 
 # Node.js
 
-01. **Guia Para Iniciantes Absolutos em Node.js**
+01. **Guia Para Absolutos Iniciantes em Node.js**
 	* [Original](http://blog.modulus.io/absolute-beginners-guide-to-nodejs) e [Tradução](https://github.com/eoop/traduz-ai/blob/master/nodejs/001-guia-para-iniciantes-absolutos-em-nodejs.md)
 
 # Handlebars.js

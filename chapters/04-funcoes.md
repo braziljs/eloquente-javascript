@@ -122,5 +122,25 @@ console.log(landscape());
 ```
 As funções `flat` e `moutain` podem "ver" a variável chamada `result`, desde que elas estejam dentro da função que define `result`. Mas elas não podem ver as variáveis `count` uma da outra, somente a sua própria, pois estão exteriores a cada uma. O ambiente fora da função não vê qualquer de suas variáveis definidas dentro de `landscape`.
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_EGgZKAIsV1
+Em resumo, cada escopo local pode também ver o escopo local em que estiver dentro. O conjunto de variáveis dentro de uma função é determinado pelo lugar que essa função está no texto do programa. Todas as variáveis de blocos "em volta" de uma definição de função estão visíveis, que significa ambas as variáveis de corpos de funções ao seu redor e em níveis mais altos do programa. Essa abordagem para variáveis visíveis é chamado escopo lexical.
 
+Pessoas com experiência com outras linguagens de programação devem experar que qualquer bloco de código (entre chaves) produzem um novo ambiente local. Mas no JavaScript, funções são as únicas coisas que criam um novo escopo. Você está autorizado a usar blocos de instalação livre:
+
+```js
+
+var something = 1;
+{
+	var something = 2;
+	// Faça algo com a variável something
+}
+// Fora do bloco novamente
+
+```
+
+Mas a `something` dentro do bloco se refere a mesma variável que a fora do bloco. Na realidade, embora blocos como este sejam permitidos, eles são úteis somente para agrupar o corpo de uma declaração `if` ou um loop. 
+
+Se você acha isso estranho, você não está sozinho. A próxima versão do JavaScript vai introduzir a palavra-chave `let`, que funciona como `var`, mas cria uma variável que é local ao bloco que a contém, não a *função* que a contém.
+
+## Funções Como Valores
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_UmX4V1h+AV

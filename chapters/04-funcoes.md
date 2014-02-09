@@ -144,4 +144,3 @@ Se você acha isso estranho, você não está sozinho. A próxima versão do Jav
 ## Funções Como Valores
 
 http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_UmX4V1h+AV
-

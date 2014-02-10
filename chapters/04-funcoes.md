@@ -143,4 +143,59 @@ Se você acha isso estranho, você não está sozinho. A próxima versão do Jav
 
 ## Funções Como Valores
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_UmX4V1h+AV
+Normalmente, variáveis de função simplismente atuam como nomes para um específico pedaço do programa. Elas são definidas uma vez, e nunca mudam. Isso torna fácil a confusão entre a função e seu nome.
+
+Mas os dois são diferentes. Um valor de função pode fazer todas as coisas que outros valores podem fazer - você pode usá-lo em todo tipo de expressão, não somente chamá-lo. É possível armazenar um valor em um novo local, ou passá-lo como um argumento para uma função, e por ai vai. Similarmente, uma variável que contém uma função continua sendo uma variável regular, e pode ser atribuída com um novo valor.
+
+```js
+
+var launchMissiles = function (value) {
+	missileSystem.launch("now");
+};
+if (safeMode)
+	launchMissiles = function (value) {/* não faz nada */};
+
+```
+
+No capítulo 5, nós vamos discutir as maravilhosas coisas que podem ser feitas passando valores de função para outras funções.
+
+## Notação Por Declaração
+
+Existe uma forma ligeiramente mais curta para dizer "`var x = function...`". A palavra-chave `function` também pode ser usada no início da declaração, para produzir uma instrução de declaração da função.
+
+```js
+
+function square (x) {
+	return x * x;
+}
+
+```
+
+Isso define a variável `square` e a aponta para a determinada função. Até ai tudo bem. Há uma sutileza com esta forma de definição de função:
+
+```js
+
+console.log("The future says: ", future());
+
+function future() {
+	return "Nós CONTINUAMOS não tendo carros voadores."
+}
+
+```
+
+Estas definições não fazem parte do fluxo de controle de cima para baixo. Elas são conceitualmente movidas para o topo, e podem ser usadas por todo o código no mesmo escopo. Isso algumas vezes é útil, pois permite que você coloque o código interessante no topo, e continue usando as definições de funções abaixo.
+
+O que acontece quando você coloca uma definição de função dentro de um bloco condicional `if`, ou um loop? Bom, não faça isso. Direfentes plataformas JavaScript (nos navegadores) tem tradicionalmente feito coisas diferentes nesta situação, e o último padrão realmente proibe isto. Então, se você quiser que seus programas sejam consistentes, somente use essa forma de instruções por definição de função no bloco externo de uma função ou programa.
+
+```js
+
+function example () {
+	function a () {} // Okay
+	if (something) {
+		function b () {} // Danger!
+	}
+}
+
+```
+
+## A Pilha de Chamadas

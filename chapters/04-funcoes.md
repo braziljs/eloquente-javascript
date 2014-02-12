@@ -199,3 +199,51 @@ function example () {
 ```
 
 ## A Pilha de Chamadas
+
+Acredito que vai ser útil dar uma olhada mais de perto na maneira como o controle flui através das funções. Aqui temos um simples programa fazendo algumas chamadas de funções:
+
+```js
+
+function greet (who) {
+	console.log("Hello" + who);
+}
+greet("Harry");
+console.log("Bye");
+
+```
+
+Uma *corrida* neste programa vai ser mais ou menos assim: A chamada a `greet` faz com que o controle pule para o início desta função (linha 2), que chama `console.log` (uma função embutida do navegador), permitindo que ele assuma o controle. Isso eventualmente termina, e o controle retorna para a linha 2. Nós chegamos no fim da função `greet`, então retornamos de volta ao lugar em que a chamamos, na linha 4. A linha após a chamada de `console.log()` novamente. Nós podemos mostrar o fluxo de controle esquematicamente assim:
+
+```
+
+top
+   greet
+        console.log
+   greet
+top
+   console.log
+top
+
+```
+
+Tendo função, quando retorna, voltar ao local da chamada, o computador deve lembrar-se do contexto que a função foi chamada. Em um caso, `console.log` pulou para a função `greet`. Em outro caso, ele pularia para o fim do programa.
+
+O lugar onde este contexto é armazenado é o *call stack* (pilha de chamada). Toda vez que uma função é chamada, o contexto atual é colocado no topo desta "pilha" de contextos. Quando a função retorna, ela pega o topo do contexto desta pilha, e o usa para continuar a execução.
+
+Essa pilha requer espaço da memória para ser armazenada. Quando ela aumenta demais, o computador vai enviar uma mensagem como "out of stack space" (fora do espaço da pilha) ou "too much recursion" (muitas recursões). O código seguinte ilustra isso - ele pergunta ao computador uma questão realmente difícil, que causa um infinito vai e vem entre duas funções. Ou melhor, isso vai ser infinito, se nós temos uma pilha infinita. Como é finita, ela vai ficar sem espaço e "explodir a pilha".
+
+```js
+
+function chicken () {
+	return egg();
+}
+function egg () {
+	return chicken();
+}
+console.log(chicken() + " came first.");
+
+```
+
+## Argumentos Opcionais
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_DBlUpIUwg8

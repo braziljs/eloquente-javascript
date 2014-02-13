@@ -246,4 +246,51 @@ console.log(chicken() + " came first.");
 
 ## Argumentos Opcionais
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_DBlUpIUwg8
+O código seguinte é permitido e executa sem problemas:
+
+```js
+
+alert("Hello", "Good Evening", "How do you do?");
+
+```
+
+A função `alert` oficialmente aceita somente um argumento. No entanto, quando você a chama assim, ela não reclama. Ela simplesmente ignora os outros argumentos e lhe mostra "Hello".
+
+O JavaScript é extremamente tolerante sobre a quantidade de argumentos que você passa a uma função. Se você passa muitos, os extras são ignorados. Se você passar poucos, as variáveis para os parâmetros faltantes simplesmente receberão o valor `undefined`.
+
+A desvantagem disso é que possivelmente - e provavelmente - você vai passar um número errado de argumentos de forma acidental para as funções... e ninguém vai alertá-lo sobre isso.
+
+A vantagem é que este comportamento pode ser usado para uma função que pega estes argumentos "opcionais". Por exemplo, esta versão de `power` pode ser chamada ou com 2 argumentos ou com um simples argumento, em que neste caso o expoente é dois, e a função se comporta como `square`.
+
+```js
+
+function power (base, expoent) {
+	if (expoent == undefined)
+		expoent = 2;
+
+	var result = 1;
+	for (var count = 0; count < expoent; count++)
+		result *= base;
+
+	return result;
+}
+
+console.log(power(4));
+// 16
+console.log(power(4, 3));
+// 64
+
+```
+
+No próximo capítulo, nós vamos ver uma forma em que o corpo de uma função pode pegar a lista exata de argumentos que foi passado. Isso é útil pois torna possível para a função aceitar qualquer número de argumentos. `console.log` faz uso disso - ela retorna todos os valores dados.
+
+```js
+
+console.log("R", 2, "D", 2);
+// R 2 D 2
+
+```
+
+## Closure
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_5cW8CvhjrX

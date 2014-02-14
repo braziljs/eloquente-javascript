@@ -31,8 +31,8 @@ Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://c
 	* [Módulos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/11-modulos.md)
 	* [Prática: A Linguagem de Programação](https://github.com/eoop/eloquente-javascript/blob/master/chapters/12-pratica-linguagem-de-programacao.md)
 * **Parte 2: Navegador**
-	* [JavaScript e o Navegador]()
-	* [O *Document Object Model*]()
+	* [JavaScript e o Navegador](https://github.com/eoop/eloquente-javascript/blob/master/chapters/13-javascript-e-o-navegador.md)
+	* [O *Document Object Model*](https://github.com/eoop/eloquente-javascript/blob/master/chapters/14-document-object-model.md)
 
 
 # Contribuições

@@ -293,4 +293,46 @@ console.log("R", 2, "D", 2);
 
 ## Closure
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_5cW8CvhjrX
+A habilidade de tratar funções como valores, combinado com o fato que variáveis locais são "recriadas" todas as vezes que a função é chamada, traz à tona uma questão interessante. O que acontece com as variáveis locais quando a chamada de função que as criou não está mais ativa? O código seguinte ilustra isso:
+
+```js
+
+function wrapValue (n) {
+	var localVariable = n;
+	return function () { return localVariable };
+}
+
+var wrap1 = wrapValue(1);
+var wrap2 = wrapValue(2);
+console.log(wrap1());
+// 1
+console.log(wrap2());
+// 2
+
+```
+
+Quando `wrapValue` é chamada, ela cria uma variável local que armazena este parâmetro, e então retorna uma função que retorna essa variável local. Isso é permitido, e funciona como você esperaria - a variável sobrevive. De fato, instâncias múltiplas da variável podem estar vivas ao mesmo tempo, que é outra boa ilustração do conceito de que variáveis locais realmente são recriadas para toda chamada - chamadas diferentes não podem sobrepor outras variáveis locais.
+
+Essa característica, nos torna capazes de referenciar uma instância específica de variáveis locais em uma função que as engloba, isso é chamado *closure*. Uma função que "fecha sobre" variáveis locais é chamada uma *closure*. Este comportamento não somente o liberta da preocupação sobre a vida das variáveis, como também permite usos criativos de valores da função.
+
+Com uma pequena mudança, podemos tornar a função exemplo em uma forma de criar funções que multiplicam por uma quantidade arbitrária:
+
+```js
+
+function multiplier (factor) {
+	return function (number) {
+		return number * factor;
+	};
+}
+
+var twice = multiplier(2);
+console.log(twice(5));
+// 10
+
+```
+
+A variável local explícita do exemplo `wrapNumber` não é necessária, pois um parâmetro é ele mesmo uma variável local.
+
+Pensar sobre programas dessa forma requer um certo exercício. Um bom modelo mental é pensar a palavra-chave `function` como "congelando" o código em seu corpo, e envolvendo-o dentro de um pacote (valor). Então quando você lê `return function (...) {...}`, há um pedaço de computação sendo congelada para uso posterior, e um manipulador para esta computação será retornado.
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_PopNhzZnDV

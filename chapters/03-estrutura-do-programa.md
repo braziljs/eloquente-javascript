@@ -4,9 +4,9 @@ Este é o ponto onde nós começamos a fazer coisas que podem realmente ser cham
 
 ## Expressões e Afirmações
 
-No capítulo anterior, nós criamos alguns valores e então aplicamos operadores para então obter novos valores. Criar valores desta forma é uma parte essencial de todo programa JavaScript, mas isso é somente uma parte. Um fragmento de código que produz um valor é chamado de *expressão*. Todo valor que é escrito literalmente (como `22` ou `"psychoanalysis"`) é uma expressão. Uma expressão entre parênteses é também uma expressão, e também um operador binário aplicado a duas expressões, ou um unário aplicado a uma.
+No capítulo anterior, nós criamos alguns valores e então aplicamos operadores para então obter novos valores. Criar valores desta forma é uma parte essencial de todo programa JavaScript, mas isso é somente uma parte. Um fragmento de código que produz um valor é chamado de *expressão*. Todo valor que é escrito literalmente ( como `22` ou `"psychoanalysis"` ) é uma expressão. Uma expressão entre parênteses é também uma expressão, e também um operador binário aplicado a duas expressões, ou um unário aplicado a uma.
 
-Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma muito semelhante das sub-frases usadas na liguagem humana - uma sub-frase pode conter sua própria sub-frase, e assim por diante. Isto nos permite combinar expressções para expressar arbitrariamente computações complexas.
+Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma muito semelhante das sub-frases usadas na liguagem humana - uma sub-frase pode conter sua própria sub-frase, e assim por diante. Isto nos permite combinar expressões para expressar arbitrariamente computações complexas.
 
 Se uma expressão corresponde a um fragmento de sentença, uma *afirmação*, no JavaScript, corresponde a uma frase completa em linguagem humana. Um programa é simplesmente uma lista de afirmações.
 
@@ -19,7 +19,7 @@ O tipo mais simples de afirmação é uma expressão com um ponto e vírgula dep
 
 ```
 
-É um programa inútil, entretanto. Uma expressão pode ser apenas para produzir um valor, que pode então ser usado para fechar a expressão. Uma declaração vale por si só, e só equivale a alguma coisa, se ela afeta em algo. Ela pode mostrar algo na tela - que conta como mudar algo - ou pode mudar internamente o stato da máquina de uma forma que vai afetar outras declarações que irão vir. Estas mudanças são chamadas *efeitos colaterais*. As afirmações nos exemplos anterios somente produzem o valor `1` e `true` e então imediatamente os jogam fora novamente. Não deixam nenhuma impressão no mundo. Quando executamos o programa, nada acontece.
+É um programa inútil, entretanto. Uma expressão pode ser apenas para produzir um valor, que pode então ser usado para fechar a expressão. Uma declaração vale por si só, e só equivale a alguma coisa, se ela afeta em algo. Ela pode mostrar algo na tela - que conta como mudar algo - ou pode mudar internamente o estado da máquina de uma forma que vai afetar outras declarações que irão vir. Estas mudanças são chamadas *efeitos colaterais*. As afirmações nos exemplos anterios somente produzem o valor `1` e `true` e então imediatamente os jogam fora novamente. Não deixam nenhuma impressão no mundo. Quando executamos o programa, nada acontece.
 
 ## Ponto e vírgula
 
@@ -116,7 +116,7 @@ Quando rodamos os exemplos, ou seu próprio código, nas páginas deste livro, o
 ```javascript
 
 var x = 30;
-console.log("o valro de x é ", x);
+console.log("o valor de x é ", x);
 // o valor de x é 30
 
 ```
@@ -351,11 +351,11 @@ console.log(result);
 
 ```
 
-Note que mesmo se não abrirmos um bloco com `{`, a declaraão no loop continua indentada com dois espaços para deixar claro que ela "pertence" a linha anterior a ela.
+Note que mesmo se não abrirmos um bloco com `{`, a declaração no loop continua indentada com dois espaços para deixar claro que ela "pertence" a linha anterior a ela.
 
 ## Saindo de um Loop
 
-Ter uma condição que produza `false` não é a única maneira que um loop pode parar. Existe uma declaração especial, `break`, que tem o efeito de pular imediatamente fora do loop em questão.
+Ter uma condição que produzaa `false` não é a única maneira que um loop pode parar. Existe uma declaração especial, `break`, que tem o efeito de pular imediatamente fora do loop em questão.
 
 Este programa encontra o primeiro número que é maior ou igual a 20, e divisível por 7:
 
@@ -374,7 +374,7 @@ O truque com o operador de resto `%` é uma maneira fácil de testar se um núme
 
 A construção `for` neste exemplo não tem uma parte que checa pelo fim do loop. Isso significa que essa tarefa depende da declaração `break` dentro dela para a fazer parar.
 
-Se a declaração `break` faltar, ou acidentalmente tivermos uma condição que sempre produz `true`, você terá o chamado *loop infinito*. Um programa rodando um loop infinito nunca vai parar de rodar, que é normalmente uma coisa ruim.
+Se a declaração `break` faltar, ou acidentalmente tivermos uma condição que sempre produza `true`, você terá o chamado *loop infinito*. Um programa rodando um loop infinito nunca vai parar de rodar, que é normalmente uma coisa ruim.
 
 Se você criar um loop infinito em algum dos exemplos desta página, você vai ser perguntando se quer parar o script após alguns segundos. Se isso falhar, você terá que fechar a aba que você está trabalhando, ou em alguns navegadores você terá que fechar todo ele, a fim de recuperá-lo.
 
@@ -428,21 +428,21 @@ Há um construtor chamado `switch` que visa resolver o "envio" de valores de for
 
 switch (prompt("Como está o tempo?")) {
 	case "rainy":
-		console.log("Lembre-se de trazer um guarda-chuva.");
+		console.log("Lembre-se de trazer um guarda-chuva!");
 		break;
 	case "ensolarado":
-		console.log("Vista roupas leves");
+		console.log("Vista roupas leves!");
 	case "nublado":
-		console.log("Vá lá fora.");
-		break
+		console.log("Vá lá fora!");
+		break;
 	default:
-		console.log("Tempo desconhecido");
+		console.log("Tempo desconhecido.");
 		break;
 }
 
 ```
 
-Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulos `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações aqui, e continuar a passar pelos rótulos, até que encontra uma declaração `break`. Em alguns casos, como o caso `"ensolarado"` do exemplo, podemos usá-lo para compartilhar algum código entre casos (ele recomenda *ir lá fora* para ambos os tempos "ensolarado" e "numblado"). Mas cuidado, é muito fácil se esquecer de um `break`, que vai causar ao programa a execução de código que você não gostaria de executar.
+Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulos `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações aqui, e continuar a passar pelos rótulos, até que encontra uma declaração `break`. Em alguns casos, como o caso `"ensolarado"` do exemplo, podemos usá-lo para compartilhar algum código entre casos (ele recomenda *ir lá fora* para ambos os tempos "ensolarado" e "nublado"). Mas cuidado, é muito fácil se esquecer de um `break`, que vai causar ao programa a execução de código que você não gostaria de executar.
 
 ## Capitalização
 
@@ -500,7 +500,7 @@ var theNumber = 11213;
 
 Você agora sabe que um programa é construído de declarações, que as vezes contém mais declarações. Declarações tendem a conter expressões, que podem também ser feitas de pequenas expressões.
 
-Colocar declarações uma embaixo da outra nos dá um programa que é executado de cima para baixo. Você pode introduzir distúrbios no fluxo de controle usando declarações condicionais (`ìf`, `else` e `swtich`) e loops (`while`, `do` e `for`).
+Colocar declarações uma embaixo da outra nos dá um programa que é executado de cima para baixo. Você pode introduzir distúrbios no fluxo de controle usando declarações condicionais (`ìf`, `else` e `switch`) e loops (`while`, `do` e `for`).
 
 Variáveis podem ser usadas para arquivar pedaços de dados sob um nome, e são úteis para rastrear o estado de um programa. O ambiente é o conjunto de variáveis que são definidas em um programa. O sistema JavaScript sempre coloca um número padrão de variáveis úteis dentro de seu ambiente.
 

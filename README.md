@@ -18,17 +18,21 @@ Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://c
 # Conteúdo do Livro
 
 * [Introdução](https://github.com/eoop/eloquente-javascript/blob/master/chapters/01-introducao.md)
-* [Valores, Tipos e Operadores](https://github.com/eoop/eloquente-javascript/blob/master/chapters/02-valores-tipos-operadores.md)
-* [Estrutura do Programa](https://github.com/eoop/eloquente-javascript/blob/master/chapters/03-estrutura-do-programa.md)
-* [Funções](https://github.com/eoop/eloquente-javascript/blob/master/chapters/04-funcoes.md)
-* [Estrutura de Dados: Objeto e Array](https://github.com/eoop/eloquente-javascript/blob/master/chapters/05-estruturas-de-dados.md)
-* [Funções de Ordem Superior](https://github.com/eoop/eloquente-javascript/blob/master/chapters/06-funcoes-de-ordem-superior.md)
-* [A Vida Secreta dos Objetos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/07-a-vida-secreta-dos-objetos.md)
-* [Prática: Vida Eletrônica](https://github.com/eoop/eloquente-javascript/blob/master/chapters/08-pratica-vida-eletronica.md)
-* [Erros e Manipulação de Erros](https://github.com/eoop/eloquente-javascript/blob/master/chapters/09-erros-e-manipulacao-de-erros.md)
-* [Expressões Regulares](https://github.com/eoop/eloquente-javascript/blob/master/chapters/10-expressoes-regulares.md)
-* [Módulos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/11-modulos.md)
-* [Prática: A Linguagem de Programação](https://github.com/eoop/eloquente-javascript/blob/master/chapters/12-pratica-linguagem-de-programacao.md)
+* **Parte 1: Linguagem**
+	* [Valores, Tipos e Operadores](https://github.com/eoop/eloquente-javascript/blob/master/chapters/02-valores-tipos-operadores.md)
+	* [Estrutura do Programa](https://github.com/eoop/eloquente-javascript/blob/master/chapters/03-estrutura-do-programa.md)
+	* [Funções](https://github.com/eoop/eloquente-javascript/blob/master/chapters/04-funcoes.md)
+	* [Estrutura de Dados: Objeto e Array](https://github.com/eoop/eloquente-javascript/blob/master/chapters/05-estruturas-de-dados.md)
+	* [Funções de Ordem Superior](https://github.com/eoop/eloquente-javascript/blob/master/chapters/06-funcoes-de-ordem-superior.md)
+	* [A Vida Secreta dos Objetos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/07-a-vida-secreta-dos-objetos.md)
+	* [Prática: Vida Eletrônica](https://github.com/eoop/eloquente-javascript/blob/master/chapters/08-pratica-vida-eletronica.md)
+	* [Erros e Manipulação de Erros](https://github.com/eoop/eloquente-javascript/blob/master/chapters/09-erros-e-manipulacao-de-erros.md)
+	* [Expressões Regulares](https://github.com/eoop/eloquente-javascript/blob/master/chapters/10-expressoes-regulares.md)
+	* [Módulos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/11-modulos.md)
+	* [Prática: A Linguagem de Programação](https://github.com/eoop/eloquente-javascript/blob/master/chapters/12-pratica-linguagem-de-programacao.md)
+* **Parte 2: Navegador**
+	* [JavaScript e o Navegador]()
+	* [O *Document Object Model*]()
 
 
 # Contribuições

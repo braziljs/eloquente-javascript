@@ -20,33 +20,36 @@ Por um lado, Jaques está bastante contente que ele não tem licantropia clássi
 
 ![The weresquirrel](../img/weresquirrel.svg)
 
-=====================
+Isto cuida dos problemas do gato e do carvalho. Mas Jaques ainda sofre com sua condição. As ocorrências irregulares da transformação fazem-no suspeitar de que pode haver algum gatilho que faz com que elas aconteçam. Por um tempo, ele acreditava que isso só acontecia nos dias em que ele havia tocado em árvores. Então ele parou de fazer isso por completo, e evitando até mesmo passar perto delas. Mas o problema persistiu.
 
+Mudando para uma abordagem mais científica, Jaques quer começar a manter um registo diário das coisas que ele fez naquele dia, e se ele acabou mudando de forma. Usando esses dados em sua própria vida, ele espera ser capaz de diminuir as condições que desencadeiam as transformações.
 
-That takes care of the cat and oak problems. But Jaques still suffers from his condition. The irregular occurrences of the transformation make him suspect that there might be some trigger that causes them to happen. For a while, he believed that it only happened on days when he had touched trees. So he stopped touching trees entirely, and even avoided going near them. But the problem persisted anyway.
+A primeira coisa que ele fará será criar uma estrutura de dados para armazenar essas informações.
 
-Switching to a more scientific approach, Jaques intends to start keeping a daily log of the things he did that day, and whether he ended up changing form. Using such data on his own life, he hopes to be able to narrow down the conditions that trigger the transformations.
+## Conjuntos de dados
 
-The first thing he does is to design a data structure to store this information.
+Para trabalhar com um trecho de dados digitais, primeiro teremos que encontrar uma maneira de representá-los na memória de nossa máquina. Dizer, como um exemplo muito simples, que queremos para representar uma coleção de números.
 
-Data sets
+Poderíamos ser criativos com *strings* - strings podem ter qualquer comprimento, assim você pode usar muitos dados em uma - e usar o "2 3 5 7 11" como a nossa representação. Mas isso é estranho. Você teria que, de alguma forma, extrair os dígitos e convertê-los de volta para número para acessá-los.
 
-In order to work with a chunk of digital data, we’ll first have to find a way to represent it in our machine’s memory. Say, as a very simple example, that we want to represent a collection of numbers.
+Felizmente, JavaScript fornece um tipo de dados especificamente para armazenar sequências de valores. Ele é chamado de *array*, e está escrito como uma lista de valores entre colchetes, separados por vírgulas.
 
-We could get creative with strings—strings can have any length, so you can put a lot of data into them—and use "2 3 5 7 11" as our representation. But that is awkward. You’d have to somehow extract the digits and convert them back to a number to access them.
-
-Fortunately, JavaScript provides a data type specifically for storing sequences of values. It is called array, and it is written as a list of values between square brackets, separated by commas.
-
+```javascript
 var listOfNumbers = [2, 3, 5, 7, 11];
 console.log(listOfNumbers[1]);
 // → 3
 console.log(listOfNumbers[1 - 1]);
 // → 2
-The notation for getting at the elements inside an array also uses square brackets. A pair of square brackets immediately after an expression, with an expression inside of them, will look up the element in the left-hand expression that corresponds to the index given by the expression in the brackets.
+```
 
-These indices start at zero, not one. So the first element can be read with listOfNumbers[0]. If you don’t have a programming background this might take some getting used to. Zero-based counting has a long tradition in technology, and as long as that convention is consistently followed (which it is, in JavaScript), it works very well.
+A notação para a obtenção de elementos dentro de uma matriz também usa colchetes. Um par de colchetes, imediatamente após uma expressão, com uma expressão dentro deles, vai procurar o elemento da expressão à esquerda que corresponde ao índice determinado pela expressão entre parênteses.
 
-Properties
+Estes índices começam em zero, não um. Assim, o primeiro elemento pode ser lido com `ListOfNumbers[0]`. Se você não tem um *background* de programação, isso pode levar algum tempo para se acostumar. Contagem baseada em zero tem uma longa tradição em tecnologia, e desde que essa convenção é constantemente seguida (o que ela é, em JavaScript), ela funciona muito bem.
+
+## Propriedades
+
+=====================
+
 
 We’ve seen a few suspicious-looking expressions like myString.length (to get the length of a string) and Math.max (the maximum function) in past examples. These access properties of another value. In the first case, the length property of the value in myString. In the second, the property named max in the Math object (which is a collection of mathematics-related values and functions).
 

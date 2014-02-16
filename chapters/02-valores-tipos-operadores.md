@@ -15,7 +15,7 @@ Então este é o 00001101, ou 8 + 4 + 1, que equivale a 13.
 
 ## Valores
 
-Imagine um mar de bits. Um oceano deles. Um típico computador moderno vai ter em torno de trinta bilhões de bits reservados em seu armazenamento de dados volátil (em oposição ao armazenamento não volátil - o disco rígido ou não equivalente - que tende a ter algumas ordens de magnitude mais).
+Imagine um mar de bits. Um oceano deles. Um computador moderno tem mais de trinta bilhões de bits em seu armazenamento volátil (memória RAM). De armazenamento não-volátil (o disco rígido ou equivalente) tende a ter uma ordem de magnitude ainda maior.
 
 ![Bit Sea](../img/bit-sea.png)
 
@@ -39,11 +39,11 @@ Valores do tipo *numbers* são, previsivelmente, valor numéricos. Em um program
 
 ```
 
-Coloque isto em um programa, e isto vai gerar o bir padrão para o número 13 começar a existir dentro do computador.
+Coloque isto em um programa, e isto vai gerar o padrão de bits para que o número 13 comece a existir dentro do computador.
 
 O JavaScript usa um número fixo de bits, 64 deles, para armazenar um único valor numérico. Isto significa que existe uma quantidade limite de tipos diferentes de números que podem ser representados - há muitos padrões diferentes que você pode criar com 64 bits. O conjunto de números podem ser representados por N dígitos decimais é 10^N. Similarmente, o conjunto de números que podem ser representados por 64 dígitos binários é 2⁶⁴, que é mais ou menos 18 quintilhões (um 18 com 18 zeros após ele).
 
-Isto é muito. Números exponenciais tem o hábito de ficarem grandes. Já foi o tempo que as memórias eram pequenas e as pessoas tendiam a usar grupos de 8 ou 16 bits para representar estes números. Era fácil de acidentalmente "transbordarem" estes pequenos números. Hoje, temos o luxo de somente preocupar quando realmente lidamos com números astronômicos.
+Isto é muito. Números exponenciais tem o hábito de ficarem grandes. Já foi o tempo que as memórias eram pequenas e as pessoas tendiam a usar grupos de 8 ou 16 bits para representar estes números. Era fácil de acidentalmente "transbordarem" estes pequenos números. Hoje, temos o luxo de somente se preocupar quando realmente lidamos com números astronômicos.
 
 Todos os números abaixo de 18 quintilhões cabem no JavaScript *number*. Estes bits também armazenam números negativos, onde um destes sinais é usado para guardar o sinal do número. Uma grande questão é que números não inteiros podem ser representados. Para fazer isso, alguns bits são usados para guardar a posição do ponto decimal do número. O maior número não inteiro que pode ser armazenado está na faixa de 9 quadrilhões (15 zeros) - que continua muito grande.
 
@@ -69,7 +69,7 @@ Cálculos com números inteiros (também chamados *integers*) menores que os men
 
 ## Aritmética
 
-A principal coisa a se fazer com números é aritmética. Operações aritméticas como adição e multiplicação pegam 2 valor de números e produzem um novo número a partir deles. Aqui vemos como eles são no JavaScript:
+A principal coisa a se fazer com números é aritmética. Operações aritméticas como adição e multiplicação pegam o valor de dois números e produzem um novo número a partir deles. Aqui vemos como eles são no JavaScript:
 
 ```javascript
 
@@ -140,7 +140,7 @@ Existe, obviamente, situações onde você quer uma barra invertida em uma strin
 
 ```
 
-Strings não podem ser divididas, multiplicadas ou subtraídas, mas o operador `+` pode ser usado nelas. Ele não adiciona, mas concatena - ele cola duas strings juntas. A linha seguinte vai produzir a string `concatenate`:
+Strings não podem ser divididas, multiplicadas ou subtraídas, mas o operador `+` pode ser usado nelas. Ele não adiciona, mas concatena - ele cola duas strings unindo-as. A linha seguinte vai produzir a string `concatenate`:
 
 ```
 "con" + "cat" + "e" + "nate"
@@ -211,7 +211,7 @@ console.log("Itchy" != "Scratchy")
 
 ```
 
-Há somente um valor no JavaScript que não é igual a ele mesmo, que é o `NaN` (not a number). Pois ele denota o resultado de uma computação sem sentido, e nunca igual a nenhum de resultado de nenhuma *outra* computação absurda.
+Há somente um valor no JavaScript que não é igual a ele mesmo, que é o `NaN` (not a number).
 
 ```javascript
 
@@ -219,6 +219,8 @@ console.log(NaN == NaN)
 // → false
 
 ```
+
+`NaN` (not a number) supostamente define o resultado de *uma operação* sem sentido, e como tal, não será igual ao resultado de *outra operação* sem sentido.
 
 ## Operadores Lógicos
 
@@ -282,15 +284,15 @@ console.log(false == 0)
 // → true
 
 ```
-Quando um operador é aplicado a um tipo de valor "errado", ele vai silenciosamente converter este valor para o tipo que quiser, usando um conjunto de regras que frequentemente não são as que você expera. O `null`na primeira expressão torna-se 0, o `"5"` na segunda expressão se torna `5` (de string para número), ainda na terceira expressão, o `+` tenta a concatenação de strings antes de tentar a adição numérica, o `1`é convertido em `"1"` (de número para string).
+Quando um operador é aplicado a um tipo de valor "errado", ele vai silenciosamente converter este valor para o tipo que quiser, usando um conjunto de regras que frequentemente não são as que você expera. O `null` na primeira expressão torna-se 0, o `"5"` na segunda expressão se torna `5` (de string para número), ainda na terceira expressão, o `+` tenta a concatenação de strings antes de tentar a adição numérica, o `1` é convertido em `"1"` (de número para string).
 
 Quando algo que não pode ser mapeado como um número de forma óbvia, do tipo `"five"` ou `undefined` é convertido para um número, o valor `NaN` é produzido. Operações aritméticas com `NaN` continuam produzindo `NaN`, então se você encontrar alguns destes resultados em algum local inesperado, procure por conversões acidentais de tipo.
 
-Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de converção de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined`ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
+Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de conversão de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined`ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
 
 A última parte do comportamento é frequentemente muito útil. Quando você quer testar se um valor tem um valor real, em vez de ser `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
 
-Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de converção de strings e números para valores booleanos afirmam que `0`, `NaN` e empty strings contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro teste se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como experado.
+Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de conversão de strings e números para valores booleanos afirmam que `0`, `NaN` e empty strings contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro teste se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como experado.
 
 Usar os operadores de comparação de três caracteres defensivamente, para prevenir inesperadas conversões de tipo que o farão tropeçar, é algo que eu recomendo. Mas quando você tem certeza de que os tipos de ambos os lados serão iguais, ou que eles vão ser ambos `null`/`undefined`, não há problemas em usar os operadores curtos.
 

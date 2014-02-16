@@ -335,4 +335,29 @@ A variável local explícita do exemplo `wrapNumber` não é necessária, pois u
 
 Pensar sobre programas dessa forma requer um certo exercício. Um bom modelo mental é pensar a palavra-chave `function` como "congelando" o código em seu corpo, e envolvendo-o dentro de um pacote (valor). Então quando você lê `return function (...) {...}`, há um pedaço de computação sendo congelada para uso posterior, e um manipulador para esta computação será retornado.
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_PopNhzZnDV
+Esta computação congelada é retornada de `multiplier` e armazenada na variável `twice`. A última linha do exemplo então chama o valor nesta variável, fazendo com que o código envolto (`return number * factor;`) finalmente seja ativado. Ele continua tendo acesso à variável `factor` da chamada `multiplier` que o criou, e em adição ele tem acesso ao argumento que nós passamos a ele, 5, através do parâmetro `number`.
+
+## Recursão
+
+É perfeitamente possível para uma função chamar a si própria. Uma função que chama a si mesma é denominada *recursiva*. Recursão permite a algumas funções serem escritas de uma forma divertida. Por exemplo, esta implementação alternativa de `power`:
+
+```js
+
+function power (base, exponent) {
+	if (exponent == 0)
+		return 1;
+	else
+		return base * power(base, exponent - 1);
+}
+
+console.log(power(2, 3));
+
+```
+
+Essa é uma forma muito próxima que os matemáticos definem a exponenciação, e indiscutivelmente define o conceito de uma forma mais elegante que uma variação de loop faz. A função chama a si mesma múltiplas vezes com diferentes argumentos para alcançar a múltiplicação repetida.
+
+Temos um problema importante: Em implementações típicas no JavaScript, esta segunda versão é aproximadamente dez vezes mais lenta que a primeira. Rodar sobre um simples loop é muito mais barato que chamar uma função inúmeras vezes. Em cima disso, usando um expoente suficientemente grande para esta função pode fazer com que a pilha transborde.
+
+O dilema da velocidade versus a elegância é interessante. Quase todo programa pode ser feito mais rápido, tornando-o maior e mais complicado. Você pode ver isso como um tipo de disputa entre amigabilidade para homens ou máquinas.
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_3VspvG7sBY

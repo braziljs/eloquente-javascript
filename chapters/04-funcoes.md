@@ -360,4 +360,16 @@ Temos um problema importante: Em implementações típicas no JavaScript, esta s
 
 O dilema da velocidade versus a elegância é interessante. Quase todo programa pode ser feito mais rápido, tornando-o maior e mais complicado. Você pode ver isso como um tipo de disputa entre amigabilidade para homens ou máquinas.
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_3VspvG7sBY
+No caso da função `power` anterior, o não elegante versão (loop) é ainda sim simples e fácil de ser lida. Não tem muito sentido trocá-lo pela versão recursiva. Muitas vezes, porém, os conceitos que um programa está lidando são tão complexos que dar mais eficiência ao invés de fazer programas mais simples se torna uma escolha atrativa.
+
+A regra básica, que tem sido repetida por muitos programadores e com a qual eu concordo plenamente, é não se preocupar com eficiência até que você saiba com certeza que o programa está muito lento. Quando isso acontecer, encontre quais partes estão gastando maior tempo, e comece a trocar elegância por eficiência nestas partes.
+
+Claro, a regra anterior não significa que vamos ignorar performance completamente. Em muitos casos, como na função `power`, não ganhamos muita simplicidade pela abordagem "elegante". Em outros casos, um programador experiente pode ver imediatamente que uma abordagem simples nunca vai ser rápida o suficiente.
+
+A razão por eu estar salientando isso é que surpreendentemente muitos programadores iniciantes focam inicialmente em eficiência, mesmo nos mais pequenos detalhes. O resultado são programas maiores, mais complicados e as vezes menos corretos, que demoram mais para serem escritos do que equivalentes mais simples e que rodam somente um pouco mais rápidos.
+
+Porém, recursão não é sempre uma alternativa menos eficiente para fazer loops. Alguns problemas são muito mais fáceis de resolver com recursão do que com loops. A maioria destes problemas requerem exploração ou processamento de vários "branches" (ramificações), cada um dos quais pode ramificar-se de novo em mais ramos.
+
+Considere este quebra-cabeça: Iniciando com o número 1 e repetidamente adicionando 5 ou multiplicando por 3, uma infinita quantidade de números pode ser produzida. Como você pode escrever uma função que, dado um número, tente achar a sequência de adições e multiplicações que produzem este número?
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_ETbkvY6bdU

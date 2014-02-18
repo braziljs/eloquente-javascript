@@ -293,4 +293,107 @@ console.log("R", 2, "D", 2);
 
 ## Closure
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_5cW8CvhjrX
+A habilidade de tratar funções como valores, combinado com o fato que variáveis locais são "recriadas" todas as vezes que a função é chamada, traz à tona uma questão interessante. O que acontece com as variáveis locais quando a chamada de função que as criou não está mais ativa? O código seguinte ilustra isso:
+
+```js
+
+function wrapValue (n) {
+	var localVariable = n;
+	return function () { return localVariable };
+}
+
+var wrap1 = wrapValue(1);
+var wrap2 = wrapValue(2);
+console.log(wrap1());
+// 1
+console.log(wrap2());
+// 2
+
+```
+
+Quando `wrapValue` é chamada, ela cria uma variável local que armazena este parâmetro, e então retorna uma função que retorna essa variável local. Isso é permitido, e funciona como você esperaria - a variável sobrevive. De fato, instâncias múltiplas da variável podem estar vivas ao mesmo tempo, que é outra boa ilustração do conceito de que variáveis locais realmente são recriadas para toda chamada - chamadas diferentes não podem sobrepor outras variáveis locais.
+
+Essa característica, nos torna capazes de referenciar uma instância específica de variáveis locais em uma função que as engloba, isso é chamado *closure*. Uma função que "fecha sobre" variáveis locais é chamada uma *closure*. Este comportamento não somente o liberta da preocupação sobre a vida das variáveis, como também permite usos criativos de valores da função.
+
+Com uma pequena mudança, podemos tornar a função exemplo em uma forma de criar funções que multiplicam por uma quantidade arbitrária:
+
+```js
+
+function multiplier (factor) {
+	return function (number) {
+		return number * factor;
+	};
+}
+
+var twice = multiplier(2);
+console.log(twice(5));
+// 10
+
+```
+
+A variável local explícita do exemplo `wrapNumber` não é necessária, pois um parâmetro é ele mesmo uma variável local.
+
+Pensar sobre programas dessa forma requer um certo exercício. Um bom modelo mental é pensar a palavra-chave `function` como "congelando" o código em seu corpo, e envolvendo-o dentro de um pacote (valor). Então quando você lê `return function (...) {...}`, há um pedaço de computação sendo congelada para uso posterior, e um manipulador para esta computação será retornado.
+
+Esta computação congelada é retornada de `multiplier` e armazenada na variável `twice`. A última linha do exemplo então chama o valor nesta variável, fazendo com que o código envolto (`return number * factor;`) finalmente seja ativado. Ele continua tendo acesso à variável `factor` da chamada `multiplier` que o criou, e em adição ele tem acesso ao argumento que nós passamos a ele, 5, através do parâmetro `number`.
+
+## Recursão
+
+É perfeitamente possível para uma função chamar a si própria. Uma função que chama a si mesma é denominada *recursiva*. Recursão permite a algumas funções serem escritas de uma forma divertida. Por exemplo, esta implementação alternativa de `power`:
+
+```js
+
+function power (base, exponent) {
+	if (exponent == 0)
+		return 1;
+	else
+		return base * power(base, exponent - 1);
+}
+
+console.log(power(2, 3));
+
+```
+
+Essa é uma forma muito próxima que os matemáticos definem a exponenciação, e indiscutivelmente define o conceito de uma forma mais elegante que uma variação de loop faz. A função chama a si mesma múltiplas vezes com diferentes argumentos para alcançar a múltiplicação repetida.
+
+Temos um problema importante: Em implementações típicas no JavaScript, esta segunda versão é aproximadamente dez vezes mais lenta que a primeira. Rodar sobre um simples loop é muito mais barato que chamar uma função inúmeras vezes. Em cima disso, usando um expoente suficientemente grande para esta função pode fazer com que a pilha transborde.
+
+O dilema da velocidade versus a elegância é interessante. Quase todo programa pode ser feito mais rápido, tornando-o maior e mais complicado. Você pode ver isso como um tipo de disputa entre amigabilidade para homens ou máquinas.
+
+No caso da função `power` anterior, o não elegante versão (loop) é ainda sim simples e fácil de ser lida. Não tem muito sentido trocá-lo pela versão recursiva. Muitas vezes, porém, os conceitos que um programa está lidando são tão complexos que dar mais eficiência ao invés de fazer programas mais simples se torna uma escolha atrativa.
+
+A regra básica, que tem sido repetida por muitos programadores e com a qual eu concordo plenamente, é não se preocupar com eficiência até que você saiba com certeza que o programa está muito lento. Quando isso acontecer, encontre quais partes estão gastando maior tempo, e comece a trocar elegância por eficiência nestas partes.
+
+Claro, a regra anterior não significa que vamos ignorar performance completamente. Em muitos casos, como na função `power`, não ganhamos muita simplicidade pela abordagem "elegante". Em outros casos, um programador experiente pode ver imediatamente que uma abordagem simples nunca vai ser rápida o suficiente.
+
+A razão por eu estar salientando isso é que surpreendentemente muitos programadores iniciantes focam inicialmente em eficiência, mesmo nos mais pequenos detalhes. O resultado são programas maiores, mais complicados e as vezes menos corretos, que demoram mais para serem escritos do que equivalentes mais simples e que rodam somente um pouco mais rápidos.
+
+Porém, recursão não é sempre uma alternativa menos eficiente para fazer loops. Alguns problemas são muito mais fáceis de resolver com recursão do que com loops. A maioria destes problemas requerem exploração ou processamento de vários "branches" (ramificações), cada um dos quais pode ramificar-se de novo em mais ramos.
+
+Considere este quebra-cabeça: Iniciando com o número 1 e repetidamente adicionando 5 ou multiplicando por 3, uma infinita quantidade de números pode ser produzida. Como você pode escrever uma função que, dado um número, tente achar a sequência de adições e multiplicações que produzem este número?
+
+Por exemplo, o número 13 pode ser alcançado primeiramente multiplicando por 3 e depois adicionando 5 duas vezes. O número 15 não pode ser alcançado de nenhuma forma.
+
+Aqui uma solução recursiva:
+
+```js
+
+function findSolution (goal) {
+	function find (start, history) {
+		if (start == goal)
+			return history;
+		else if (start > goal)
+			return null;
+		else
+			return find(start + 5, "(" + history + " + 5)") ||
+				   find(start * 3. "(" + history + " * 3");
+	}
+	return find(1, "1");
+}
+
+console.log(findSolution(24));
+// (((1 * 3) + 5) * 3)
+
+```
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_930meu0qrw

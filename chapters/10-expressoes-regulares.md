@@ -38,16 +38,16 @@ Saber exatamente quais caracteres devem ser escapados com uma barra invertida em
 
 ## Testando por correspondências
 
-Regular expression objects have a number of methods. The simplest one is test, which you give a string, and will return a boolean that tells you whether the pattern contained in the expression matches the string.
+Expressões regulares possuem vários métodos. O mais simples é test, onde dado um determinado texto, ele retorna um booleano que informa se o padrão fornecido na expressão foi encontrado nesse texto.
 
 ```
-console.log(/abc/.test("abcde"));
+console.log( /abc/.test("abcde") );
 // → true
-console.log(/abc/.test("12345"));
+console.log( /abc/.test("12345") );
 // → false
 ```
 
-A regular expression consisting of only normal characters simply represents that sequence of characters. If “abc” occurs anywhere (not just at the start) in the string we are testing against, the result will be true.
+Uma expressão regular que contenha apenas caracteres simples, representa essa mesma sequência de caracteres. Se "abc" existe em qualquer lugar (não apenas no início) do texto testado, o resultado será verdadeiro.
 
 ## Matching a set of characters
 

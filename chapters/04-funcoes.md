@@ -372,4 +372,28 @@ Porém, recursão não é sempre uma alternativa menos eficiente para fazer loop
 
 Considere este quebra-cabeça: Iniciando com o número 1 e repetidamente adicionando 5 ou multiplicando por 3, uma infinita quantidade de números pode ser produzida. Como você pode escrever uma função que, dado um número, tente achar a sequência de adições e multiplicações que produzem este número?
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_ETbkvY6bdU
+Por exemplo, o número 13 pode ser alcançado primeiramente multiplicando por 3 e depois adicionando 5 duas vezes. O número 15 não pode ser alcançado de nenhuma forma.
+
+Aqui uma solução recursiva:
+
+```js
+
+function findSolution (goal) {
+	function find (start, history) {
+		if (start == goal)
+			return history;
+		else if (start > goal)
+			return null;
+		else
+			return find(start + 5, "(" + history + " + 5)") ||
+				   find(start * 3. "(" + history + " * 3");
+	}
+	return find(1, "1");
+}
+
+console.log(findSolution(24));
+// (((1 * 3) + 5) * 3)
+
+```
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_930meu0qrw

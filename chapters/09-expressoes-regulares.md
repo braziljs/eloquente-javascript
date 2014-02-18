@@ -49,55 +49,55 @@ Uma expressão regular que contenha apenas caracteres simples, representa essa m
 
 ## Encontrando um conjunto de caracteres
 
-Finding out whether a string contains “abc” could just as well be done with a call to indexOf. The point of regular expressions is that they allow more complicated patterns to be expressed.
+Saber quando uma string contém "abc" pode muito bem ser feito usando a função indexOf. A diferença das expressões regulares é que elas permitem padrões mais complexos de busca.
 
-Say we want to match any number. In a regular expression, putting a set of characters between square brackets makes that part of the expression match any of the characters between the brackets.
+Digamos que queremos achar qualquer número. Em uma expressão egular, colocar um conjunto de caracteres entre colchetes ("[]") faz com que a expressão ache qualquer dos caracteres dentro dos colchetes.
 
-The first expression below matches all strings that contains a digit.
-
-```
-console.log(/[0123456789]/.test("in 1992"));
-// → true
-console.log(/[0-9]/.test("in 1992"));
-// → true
-```
-
-Between square brackets, a dash (“-”) between two characters can be used to indicate a range of characters. Since the Unicode character codes for “0” to “9” sit right next to each other (codes 48 to 57), [0-9] matches any digit.
-
-There are a number of commonly use character groups that have their own built-in shortcuts. Digits are in fact one of them—you can write backslash-d (\d) to mean the same thing as [0-9].
-
-\d	Digit characters
-\w	Alphanumeric characters (“word characters”)
-\s	Whitespace characters (space, tab, newline, and similar)
-\D	Characters that are not digits
-\W	Non-alphanumeric characters
-\S	Non-whitespace characters
-. (dot)	All characters except newlines
-
-
-For each of the backslash-prefixed categories, there is an uppercase variant that means the exact opposite.
-
-So you could express a date and time format like “30/01/2003 15:20” with the following expression:
+A expressão abaixo, acha todas as strings que contem um dígito numérico.
 
 ```
-var dateTime = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
-console.log(dateTime.test("30/01/2003 15:20"));
+console.log( /[0123456789]/.test("ano 1992") );
 // → true
-console.log(dateTime.test("30/jan/2003 15:20"));
+console.log( /[0-9]/.test("ano 1992") );
+// → true
+```
+
+Dentro de colchetes, um hífen ("-") entre dois caracteres pode ser usado para indicar um conjunto entre dois caracteres. Uma vez que os códigos de caracteres Unicode de "0" a "9" contém todos os dígitos (códigos 48 a 57), [0-9] encontrará qualquer dígito.
+
+Existem alguns grupos de caracetes de uso comum, que já possuem atalhos incluídos na sintaxe de expressões regulares. Dígitos são um dos conjuntos que você pode escrever usando um atalho, barra invertida seguida de um "d" minúsculo (\d), com o mesmo significado que [0-9].
+
+	- \d	caracteres numéricos
+	- \w	caracteres alfanuméricos ("letras”)
+	- \s	espaços em branco (espaço, tabs, quebras de linha e similares)
+	- \D	caracteres que não são dígitos
+	- \W	caracteres não alfanuméricos
+	- \S	caracteres que não representam espaços
+	- . (ponto)	todos os caracteres, exceto espaços
+
+
+Para cada um dos atalhos de conjuntos de caracteres, existe uma variação em letra maiúscula que significa o exato oposto.
+
+Então você pode registrar um formato de data e hora como “30/01/2003 15:20” com a seguinte expressão:
+
+```
+var dataHora = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
+console.log( dataHora.test("30/01/2003 15:20") );
+// → true
+console.log( dataHora.test("30/jan/2003 15:20") );
 // → false
 ```
 
-Looks completely awful, doesn’t it? Way too many backslashes, producing a background noise that makes it hard to spot the actual pattern expressed. Such is life with regular expressions.
+Parece confuso, certo? Muitas barras invertidas, sujando a expressão, que dificultam compreender qual o padrão procurado. Mas é assim mesmo o  trabalho com expressões regulares.
 
-These category markers can also be used inside of square brackets, so [\d\.] means any digit or a dot.
+Estes marcadores d ecategoria também podem ser usados dentro de colchetes, então [\d\i] significa qualquer dígito ou ponto.
 
-To “invert” a set of characters, to express that you want to match any character except the ones in the set, a caret (‘^’) character is written after the opening bracket.
+Para "inverter" um conjunto de caracteres, buscar tudo menos o que você escreveu no padrão, um cento circunflexo ("^") é colocado no início do colchete de abertura.
 
 ```
-var notBinary = /[^01]/;
-console.log(notBinary.test("01101"));
+var naoBinario = /[^01]/;
+console.log( naoBinario.test("01101") );
 // → false
-console.log(notBinary.test("01201"));
+console.log( naoBinario.test("01201") );
 // → true
 ```
 

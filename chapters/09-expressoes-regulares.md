@@ -101,26 +101,26 @@ console.log( naoBinario.test("01201") );
 // → true
 ```
 
-## Repeating parts of a pattern
+## Partes repetidas em um pattern
 
-We found out how to match a single digit. But what we really wanted to do is to match a number, a sequence of one or more digits.
+Já aprendemos a encontrar um dígito, mas o que realmente queremos é encontrar um número, uma sequencia de um ou mais dígitos.
 
-When you put a plus sign (‘+’) after something in a regular expression, that indicates that it may be repeated more than once. So /\d+/ matches one or more digit characters.
+Quando se coloca um sinal de mais ("+") depois de algo em uma expressão regular, indicamos que pode existir mais de um. Então /\d+/ encontra um ou mais dígitos.
 
 ```
-console.log(/'\d+'/.test("'123'"));
+console.log( /'\d+'/.test("'123'") );
 // → true
-console.log(/'\d+'/.test("''"));
+console.log( /'\d+'/.test("''") );
 // → false
-console.log(/'\d*'/.test("'123'"));
+console.log( /'\d*'/.test("'123'") );
 // → true
-console.log(/'\d*'/.test("''"));
+console.log( /'\d*'/.test("''") );
 // → true
 ```
 
-The star (‘*’) has a similar meaning, but also allows the pattern to match zero times. So something with a star after it never prevents a pattern from matching—it’ll just match zero instances if it can’t find any suitable text to match.
+O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Entao, algo com um asterisco depois nao impede um padrão de ser achado, penas retornando zero resultados.
 
-A question mark makes a part of a pattern “optional”, meaning it may occur zero or one times. In this example, the “u” character is allowed to occur, but the pattern also matches when it is missing.
+Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou mais vezes. Neste exemplo, é permitido  que ocorra o caracter "u", mas o padrão também é encontrado quando ele está ausente. 
 
 ```
 var neighbor = /neighbou?r/;
@@ -130,17 +130,17 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-To allow a pattern to occur a precisely defined number of times, curly braces are used. Putting {4} after an element requires it to occur exactly four times. Similarly, {2,4} is used when the element must occur at least twice, and at most four times.
+Para permitir que um padrão ocorra um número defido de vezes, chaves ("{}") são usadas. Colocando {4} depois de um elemento do padrão, mostra que ele deve ocorrer 4 vezes, exatamente. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
 
-Here is another version of the date and time pattern. It allows single-digit day, month, and hour numbers, and is slightly more readable:
+Segue outro versão do padrão mostrado acima, de data e hora. Ele permite, dias com um dígito, mês e hora como números e mais legível:
 
 ```
-var dateTime = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
-console.log(dateTime.test("30/1/2003 8:45"));
+var dataHora = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
+console.log( dataHora.test("30/1/2003 8:45") );
 // → true
 ```
 
-It is also possible to leave either the minimum or the maximum amount of occurrences open-ended, by omitting the number on one side of the comma. So {,5} means zero to five times, and {5,} means five or more times.
+Também é possível deixar em aberto o número mínimo ou máximo de ocorrencias, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
 
 ## Grouping sub-expressions
 

@@ -26,8 +26,6 @@ var expReg2 = /abc/;
 ```
 Este objeto representa um padrão, que no caso é uma letra "a" seguida de uma letra "b" e depois um "c".
 
-When using the RegExp constructor, the pattern is written as a normal string, so the usual rules apply for backslashes. In the second notation, we are using slashes to delimit the pattern, so we’d have to backslash-escape slash characters that are part of the pattern. Some other characters, such as question marks and plus signs, are used as special markers in regular expressions, and must to be preceded by a backslash if they are meant to represent the character itself.
-
 Ao usar o construtor RegExp, o padrão é escrito como um texto normal, de modo que as regras normais se aplicam para barras invertidas. Na segunda notação, usamos barras para delimitar o padrão. Alguns outros caracteres, como sinais de interrogação (?) e sinais de soma (+), são usados como marcadores especias em expressões regulares, e precisam ser precedidos por uma barra invertida, para representarem o caractere original e não o comando de expressão regular.
 
 ```
@@ -49,7 +47,7 @@ console.log( /abc/.test("12345") );
 
 Uma expressão regular que contenha apenas caracteres simples, representa essa mesma sequência de caracteres. Se "abc" existe em qualquer lugar (não apenas no início) do texto testado, o resultado será verdadeiro.
 
-## Matching a set of characters
+## Encontrando um conjunto de caracteres
 
 Finding out whether a string contains “abc” could just as well be done with a call to indexOf. The point of regular expressions is that they allow more complicated patterns to be expressed.
 

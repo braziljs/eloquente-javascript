@@ -1,6 +1,6 @@
 Capítulo 10
 
-Expressões Regulares
+# Expressões Regulares
 
 Algumas pessoas, quando confrontadas com um problema, pensam "Eu sei, terei que usar expressões regulares." Agora elas têm dois problemas
 Jamie Zawinski
@@ -8,11 +8,13 @@ Jamie Zawinski
 Yuan-Ma disse, "Quando você serra contra o sentido da madeira, muita força será necessária. Quando você programa contra o sentido do problema, muito código será necessário"
 Mestre Yuan-Ma, The Book of Programming
 
-The way programming conventions and techniques survive and spread happens in a chaotic, evolutionary way. It’s not usually the pretty or brilliant ones that win, but rather the ones that combine working passably well with sitting in the right niche—for example by being integrated with another successful piece of technology.
+A maneira como técnicas e convenções de programação sobrevivem e se disseminam, ocorrem de um modo caótico, evolucionário. Não é comum que o mais agradável e brilhante vença, mas sim aquelas que combinam bem com o trabalho e o nicho, por exemplo, sendo integradas com outra tecnologia de sucesso.
 
-In this chapter I will discuss one such technology, regular expressions. Regular expressions are a way to describe patterns in string data. They form a small, separate language that is part of JavaScript (as well as various other programming languages and tools).
+Neste capítulo, discutiremos uma dessas tecnologias, expressões regulares. Expressões regulares são um modo de descrever padrões em um conjunto de caracteres. Eles formam uma pequena linguagem à parte, que é incluída no Javascript (assim como em várias outras linguagens de programação e ferramentas) .
 
-Regular expressions are both extremely useful and terribly awkward. Learning them properly will make it much easier to do various kinds of string processing. But the syntax used to express them is ridiculously cryptic. In addition to that, the programming interface JavaScript provides for them is quite clumsy.
+Expressões regulares são ao mesmo tempo, extremamente úteis e estranhas. Conhecê-las apropiadamente irá facilitar muito vários tipos de processamento de textos. Mas a sintaxe utilizada para descreve-las é ridiculamente enigmática. Alem disso, a interface do Javascript para elas é um tanto quanto desajeitada.
+
+----
 
 ## Notação
 

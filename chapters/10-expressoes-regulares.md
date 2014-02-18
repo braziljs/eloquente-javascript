@@ -18,22 +18,23 @@ Expressões regulares são ao mesmo tempo, extremamente úteis e estranhas. Conh
 
 ## Notação
 
-A regular expression is an object. It can either be constructed with the RegExp constructor or written as a literal value by enclosing the pattern in slash (‘/’) characters.
+Uma expressão regular é um objeto. Ele pode ser construído com o construtor RegExp ou escrito como um valor literal, encapsulando o padrão em com o caracter barra ('/') .
 
 ```
-var re1 = new RegExp("abc");
-var re2 = /abc/;
+var expReg1 = new RegExp("abc");
+var expReg2 = /abc/;
 ```
-
-Such an object represents a pattern. In this case, the pattern is an “a” character followed by a “b”, followed by a “c”.
+Este objeto representa um padrão, que no caso é uma letra "a" seguida de uma letra "b" e depois um "c".
 
 When using the RegExp constructor, the pattern is written as a normal string, so the usual rules apply for backslashes. In the second notation, we are using slashes to delimit the pattern, so we’d have to backslash-escape slash characters that are part of the pattern. Some other characters, such as question marks and plus signs, are used as special markers in regular expressions, and must to be preceded by a backslash if they are meant to represent the character itself.
 
+Ao usar o construtor RegExp, o padrão é escrito como um texto normal, de modo que as regras normais se aplicam para barras invertidas. Na segunda notação, usamos barras para delimitar o padrão. Alguns outros caracteres, como sinais de interrogação (?) e sinais de soma (+), são usados como marcadores especias em expressões regulares, e precisam ser precedidos por uma barra invertida, para representarem o caractere original e não o comando de expressão regular.
+
 ```
-var onePlusOne = /1 \+ 1/;
+var umMaisum = /1 \+ 1/;
 ```
 
-Knowing precisely what characters to backslash-escape when writing regular expressions requires you to know about all the special meaning assigned to characters by this syntax. For now, this may not be realistic. So as an alternative, when in doubt, just put a backslash before any character that is not alphanumeric or whitespace.
+Saber exatamente quais caracteres devem ser escapados com uma barra invertida em uma expressão reguar exige que você saiba todos os caracteres especiais e seus significados na sintaxe de expressões regulares. Por enquando, pode não parecer fácil saber todos, então, se tiver dúvidas, escape todos os caracteres que não sejam letras e números ou um espaço em branco.
 
 ## Testando por correspondências
 

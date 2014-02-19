@@ -142,19 +142,19 @@ console.log( dataHora.test("30/1/2003 8:45") );
 
 Também é possível deixar em aberto o número mínimo ou máximo de ocorrencias, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
 
-## Grouping sub-expressions
+## Agrupando sub-expressões
 
-To use an operator like ‘*’ or ‘+’ on more than one character at a time, need to use parentheses. A piece of a regular expression that is surrounded in parentheses counts as a single unit as far as the operators following it are concerned.
+Para usar um operador como "*" ou "+" em mais de um caracter de de uma vez, é necessário o uso de parenteses. Um pedaço de uma expressão regular que é delimitado por parenteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
 
 ```
 var cartoonCrying = /boo+(hoo+)+/i;
-console.log(cartoonCrying.test("Boohoooohoohooo"));
+console.log( cartoonCrying.test("Boohoooohoohooo") );
 // → true
 ```
 
-The third ‘+’ applies to the whole group (hoo+), matching one or more sequences like that.
+O terceiro "+" se aplica a todo grupo (hoo+), encontrando uma ou mais sequências como essa.
 
-The “i” at the end of the expression in the example above makes this regular expression case-insensitive, allowing it to match the uppercase “B” in the input string, even though the pattern is itself all lowercase.
+O "i" no final da expressãodo exemplo acima maz com que a expressão regular seja  case-insensitive, permitindo-a encontrar a letra maiúscula "B" na string dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
 
 ## Matches and groups
 

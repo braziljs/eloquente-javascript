@@ -2,18 +2,8 @@
 
 **Uma moderna introdução ao JavaScript, programação e maravilhas digitais.**
 
-Escrito por **Marijn Haverbeke**
-
-
-
-### Original [aqui](http://eloquentjavascript.net/2nd_edition/preview/).
-
-### Download do livro traduzido no formato `.pdf`, `.mobi` e `.epub`  **[AQUI](https://leanpub.com/eloquentejavascript).** 
-
 ![JavaScript Eloquente](img/eloq-js.jpg)
 
-
-Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/) Todo código neste livro também pode ser considerado sobre [licença MIT](http://opensource.org/licenses/MIT).
 
 # Conteúdo do Livro
 
@@ -57,3 +47,13 @@ Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://c
 O andamento das issues está divido em 2 etapas, na ordem apresentada abaixo:
 
 **`em tradução` > `em revisão` > `fechamento da issue`**
+
+
+# Informações Importantes
+
+- Autor: **Marijn Haverbeke**
+- [Versão original](http://eloquentjavascript.net/2nd_edition/preview/) deste livro.
+- [Download](https://leanpub.com/eloquentejavascript) do livro traduzido no formato `.pdf`, `.mobi` e `.epub`. 
+
+Licenciado sob a licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/) 
+Todo código neste livro também pode ser considerado sob a [licença MIT](http://opensource.org/licenses/MIT).

@@ -37,27 +37,23 @@ Licensiado sobre licença [Creative Commons attribution-noncommercial.](http://c
 
 # Contribuições
 
-## Como Colaborar?
+## Guia para contribuir
 
-1. Fork o projeto.
+1. Faça o _fork_ do projeto.
 2. Veja nas [issues](https://github.com/eoop/eloquente-javascript/issues?state=open) o status, através das *labels*, do capítulo que você deseja traduzir e/ou revisar.
-3. Caso o capítulo ainda não esteja em tradução e/ou revisão, comente na issue correspondente que você irá iniciar tal tarefa, para que assim possamos adicionar a label de status nela.
-4. Faça o *Pull Request* para o repositório original.
+3. Caso o capítulo ainda não esteja em tradução e/ou revisão, comente na _issue_ correspondente que você irá iniciar tal tarefa, para que assim possamos adicionar a label de status nela.
+4. Faça o _Pull Request_ para o repositório original.
 
 **IMPORTANTE:** "Adquira" a concessão para tradução de outro capítulo somente **após** terminar o anteriormente solicitado.
 
 ## Entendendo as labels
 
 * **em tradução**: sinaliza que um arquivo está em tradução.
-* **traduzido**: sinaliza que um arquivo foi traduzido, e está aguardando revisão.
-* **aguardando revisão**: capítulo para ser revisado (preferencialmente, por outro colaborador sem ser o próprio tradutor).
 * **em revisão**: sinaliza que um arquivo traduzido está sendo revisado.
-* **questões**: dúvidas, sugestões e outros.
+* **dúvidas**: dúvidas, sugestões e outros.
 
 ## Fluxo do Trabalho - Issues
 
-O andamento das issues está divido em 5 etapas, na ordem apresentada abaixo:
+O andamento das issues está divido em 2 etapas, na ordem apresentada abaixo:
 
-**`em tradução` > `traduzido` > `aguardando revisão` > `em revisão` > `fechamento da issue`**
-
-Após essas etapas, irei compilar o livro no [Leanpub](https://leanpub.com/eloquentejavascript) para a versão final do mesmo.
+**`em tradução` > `em revisão` > `fechamento da issue`**

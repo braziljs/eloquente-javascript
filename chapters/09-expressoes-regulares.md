@@ -49,78 +49,78 @@ Uma expressão regular que contenha apenas caracteres simples, representa essa m
 
 ## Encontrando um conjunto de caracteres
 
-Finding out whether a string contains “abc” could just as well be done with a call to indexOf. The point of regular expressions is that they allow more complicated patterns to be expressed.
+Saber quando uma string contém "abc" pode muito bem ser feito usando a função indexOf. A diferença das expressões regulares é que elas permitem padrões mais complexos de busca.
 
-Say we want to match any number. In a regular expression, putting a set of characters between square brackets makes that part of the expression match any of the characters between the brackets.
+Digamos que queremos achar qualquer número. Em uma expressão egular, colocar um conjunto de caracteres entre colchetes ("[]") faz com que a expressão ache qualquer dos caracteres dentro dos colchetes.
 
-The first expression below matches all strings that contains a digit.
-
-```
-console.log(/[0123456789]/.test("in 1992"));
-// → true
-console.log(/[0-9]/.test("in 1992"));
-// → true
-```
-
-Between square brackets, a dash (“-”) between two characters can be used to indicate a range of characters. Since the Unicode character codes for “0” to “9” sit right next to each other (codes 48 to 57), [0-9] matches any digit.
-
-There are a number of commonly use character groups that have their own built-in shortcuts. Digits are in fact one of them—you can write backslash-d (\d) to mean the same thing as [0-9].
-
-\d	Digit characters
-\w	Alphanumeric characters (“word characters”)
-\s	Whitespace characters (space, tab, newline, and similar)
-\D	Characters that are not digits
-\W	Non-alphanumeric characters
-\S	Non-whitespace characters
-. (dot)	All characters except newlines
-
-
-For each of the backslash-prefixed categories, there is an uppercase variant that means the exact opposite.
-
-So you could express a date and time format like “30/01/2003 15:20” with the following expression:
+A expressão abaixo, acha todas as strings que contem um dígito numérico.
 
 ```
-var dateTime = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
-console.log(dateTime.test("30/01/2003 15:20"));
+console.log( /[0123456789]/.test("ano 1992") );
 // → true
-console.log(dateTime.test("30/jan/2003 15:20"));
+console.log( /[0-9]/.test("ano 1992") );
+// → true
+```
+
+Dentro de colchetes, um hífen ("-") entre dois caracteres pode ser usado para indicar um conjunto entre dois caracteres. Uma vez que os códigos de caracteres Unicode de "0" a "9" contém todos os dígitos (códigos 48 a 57), [0-9] encontrará qualquer dígito.
+
+Existem alguns grupos de caracetes de uso comum, que já possuem atalhos incluídos na sintaxe de expressões regulares. Dígitos são um dos conjuntos que você pode escrever usando um atalho, barra invertida seguida de um "d" minúsculo (\d), com o mesmo significado que [0-9].
+
+	- \d	caracteres numéricos
+	- \w	caracteres alfanuméricos ("letras”)
+	- \s	espaços em branco (espaço, tabs, quebras de linha e similares)
+	- \D	caracteres que não são dígitos
+	- \W	caracteres não alfanuméricos
+	- \S	caracteres que não representam espaços
+	- . (ponto)	todos os caracteres, exceto espaços
+
+
+Para cada um dos atalhos de conjuntos de caracteres, existe uma variação em letra maiúscula que significa o exato oposto.
+
+Então você pode registrar um formato de data e hora como “30/01/2003 15:20” com a seguinte expressão:
+
+```
+var dataHora = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
+console.log( dataHora.test("30/01/2003 15:20") );
+// → true
+console.log( dataHora.test("30/jan/2003 15:20") );
 // → false
 ```
 
-Looks completely awful, doesn’t it? Way too many backslashes, producing a background noise that makes it hard to spot the actual pattern expressed. Such is life with regular expressions.
+Parece confuso, certo? Muitas barras invertidas, sujando a expressão, que dificultam compreender qual o padrão procurado. Mas é assim mesmo o  trabalho com expressões regulares.
 
-These category markers can also be used inside of square brackets, so [\d\.] means any digit or a dot.
+Estes marcadores d ecategoria também podem ser usados dentro de colchetes, então [\d\i] significa qualquer dígito ou ponto.
 
-To “invert” a set of characters, to express that you want to match any character except the ones in the set, a caret (‘^’) character is written after the opening bracket.
+Para "inverter" um conjunto de caracteres, buscar tudo menos o que você escreveu no padrão, um cento circunflexo ("^") é colocado no início do colchete de abertura.
 
 ```
-var notBinary = /[^01]/;
-console.log(notBinary.test("01101"));
+var naoBinario = /[^01]/;
+console.log( naoBinario.test("01101") );
 // → false
-console.log(notBinary.test("01201"));
+console.log( naoBinario.test("01201") );
 // → true
 ```
 
-## Repeating parts of a pattern
+## Partes repetidas em um pattern
 
-We found out how to match a single digit. But what we really wanted to do is to match a number, a sequence of one or more digits.
+Já aprendemos a encontrar um dígito, mas o que realmente queremos é encontrar um número, uma sequencia de um ou mais dígitos.
 
-When you put a plus sign (‘+’) after something in a regular expression, that indicates that it may be repeated more than once. So /\d+/ matches one or more digit characters.
+Quando se coloca um sinal de mais ("+") depois de algo em uma expressão regular, indicamos que pode existir mais de um. Então /\d+/ encontra um ou mais dígitos.
 
 ```
-console.log(/'\d+'/.test("'123'"));
+console.log( /'\d+'/.test("'123'") );
 // → true
-console.log(/'\d+'/.test("''"));
+console.log( /'\d+'/.test("''") );
 // → false
-console.log(/'\d*'/.test("'123'"));
+console.log( /'\d*'/.test("'123'") );
 // → true
-console.log(/'\d*'/.test("''"));
+console.log( /'\d*'/.test("''") );
 // → true
 ```
 
-The star (‘*’) has a similar meaning, but also allows the pattern to match zero times. So something with a star after it never prevents a pattern from matching—it’ll just match zero instances if it can’t find any suitable text to match.
+O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Entao, algo com um asterisco depois nao impede um padrão de ser achado, penas retornando zero resultados.
 
-A question mark makes a part of a pattern “optional”, meaning it may occur zero or one times. In this example, the “u” character is allowed to occur, but the pattern also matches when it is missing.
+Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou mais vezes. Neste exemplo, é permitido  que ocorra o caracter "u", mas o padrão também é encontrado quando ele está ausente. 
 
 ```
 var neighbor = /neighbou?r/;
@@ -130,35 +130,35 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-To allow a pattern to occur a precisely defined number of times, curly braces are used. Putting {4} after an element requires it to occur exactly four times. Similarly, {2,4} is used when the element must occur at least twice, and at most four times.
+Para permitir que um padrão ocorra um número defido de vezes, chaves ("{}") são usadas. Colocando {4} depois de um elemento do padrão, mostra que ele deve ocorrer 4 vezes, exatamente. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
 
-Here is another version of the date and time pattern. It allows single-digit day, month, and hour numbers, and is slightly more readable:
+Segue outro versão do padrão mostrado acima, de data e hora. Ele permite, dias com um dígito, mês e hora como números e mais legível:
 
 ```
-var dateTime = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
-console.log(dateTime.test("30/1/2003 8:45"));
+var dataHora = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
+console.log( dataHora.test("30/1/2003 8:45") );
 // → true
 ```
 
-It is also possible to leave either the minimum or the maximum amount of occurrences open-ended, by omitting the number on one side of the comma. So {,5} means zero to five times, and {5,} means five or more times.
+Também é possível deixar em aberto o número mínimo ou máximo de ocorrencias, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
 
-## Grouping sub-expressions
+## Agrupando sub-expressões
 
-To use an operator like ‘*’ or ‘+’ on more than one character at a time, need to use parentheses. A piece of a regular expression that is surrounded in parentheses counts as a single unit as far as the operators following it are concerned.
+Para usar um operador como "*" ou "+" em mais de um caracter de de uma vez, é necessário o uso de parenteses. Um pedaço de uma expressão regular que é delimitado por parenteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
 
 ```
 var cartoonCrying = /boo+(hoo+)+/i;
-console.log(cartoonCrying.test("Boohoooohoohooo"));
+console.log( cartoonCrying.test("Boohoooohoohooo") );
 // → true
 ```
 
-The third ‘+’ applies to the whole group (hoo+), matching one or more sequences like that.
+O terceiro "+" se aplica a todo grupo (hoo+), encontrando uma ou mais sequências como essa.
 
-The “i” at the end of the expression in the example above makes this regular expression case-insensitive, allowing it to match the uppercase “B” in the input string, even though the pattern is itself all lowercase.
+O "i" no final da expressãodo exemplo acima maz com que a expressão regular seja  case-insensitive, permitindo-a encontrar a letra maiúscula "B" na string dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
 
-## Matches and groups
+## Resultados e grupos
 
-The test method is the absolute simplest way to match a regular expression. It only tells you whether it matched, and nothing else. Regular expressions also have an exec (execute) method, that will return null when no match was found, and an object with information about the match otherwise.
+O método test é a maneira mais simples de encontrar correspondencias de uma expressão regular. Ela apenas informa se foi encontrado algo, e mais nada. Expressões regulares também possuem o método exec (executar), que irá retornar null quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
 
 ```
 var match = /\d+/.exec("one two 100");
@@ -168,7 +168,7 @@ console.log(match.index);
 // → 8
 ```
 
-String values have a match method that behaves very similarly.
+Valores string possuem um método que se comporta de maneira semelhante.
 
 ```
 console.log("one two 100".match(/\d+/));

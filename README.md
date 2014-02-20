@@ -30,7 +30,7 @@
 ## Guia para contribuir
 
 1. Faça o _fork_ do projeto.
-2. Veja nas [issues](https://github.com/eoop/eloquente-javascript/issues?state=open) o status, através das *labels*, do capítulo que você deseja traduzir e/ou revisar.
+2. Veja nas [issues](https://github.com/cerebrobr/eloquente-javascript/issues) o status, através das *labels*, do capítulo que você deseja traduzir e/ou revisar.
 3. Caso o capítulo ainda não esteja em tradução e/ou revisão, comente na _issue_ correspondente que você irá iniciar tal tarefa, para que assim possamos adicionar a label de status nela.
 4. Faça o _Pull Request_ para o repositório original.
 

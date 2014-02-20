@@ -156,9 +156,9 @@ O terceiro "+" se aplica a todo grupo (hoo+), encontrando uma ou mais sequência
 
 O "i" no final da expressãodo exemplo acima maz com que a expressão regular seja  case-insensitive, permitindo-a encontrar a letra maiúscula "B" na string dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
 
-## Matches and groups
+## Resultados e grupos
 
-The test method is the absolute simplest way to match a regular expression. It only tells you whether it matched, and nothing else. Regular expressions also have an exec (execute) method, that will return null when no match was found, and an object with information about the match otherwise.
+O método test é a maneira mais simples de encontrar correspondencias de uma expressão regular. Ela apenas informa se foi encontrado algo, e mais nada. Expressões regulares também possuem o método exec (executar), que irá retornar null quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
 
 ```
 var match = /\d+/.exec("one two 100");
@@ -168,7 +168,7 @@ console.log(match.index);
 // → 8
 ```
 
-String values have a match method that behaves very similarly.
+Valores string possuem um método que se comporta de maneira semelhante.
 
 ```
 console.log("one two 100".match(/\d+/));

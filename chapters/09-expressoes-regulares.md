@@ -175,8 +175,6 @@ console.log("one two 100".match(/\d+/));
 // → ["100", index: 8, input: "one two 100"] 
 ```
 
-An object returned from exec or match has an index property that tells us where in the string the successful match started. Otherwise, the object looks like (and in fact is) an array of strings, whose first element is the string that was matched—in the example above, that is the sequence of digits that we were looking for.
-
 Um objeto retornado pelo método exec ou match possui um index de propriedades que informa aonde na string o resultado encontrado se inicia. Além disso, o objeto se parece (e de fato é) um array de strings, onde o primeiro elemento é a string que foi achada, no exemplo acima, a sequência de dígitos numéricos.
 
 Quando uma expressão regular contém expressões agrupadas entre parenteses, o texto que corresponde a esses grupos também aparece no array. O primeiro elemento sempre é todo o resultado, seguido pelo resultado do primeiro grupo entre parenteses, depois o segundo grupo e assim em diante.

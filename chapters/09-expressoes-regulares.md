@@ -218,10 +218,8 @@ console.log( new Date(1981, 6, 29, 18, 30, 50) );
 
 O Javascript utiliza uma conenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias inciam em um. É bem confuso, então, tenha cuidado.
 
-The last four arguments (hours, minutes, seconds, and milliseconds) are optional, and taken to be zero when not given.
 Os últimos quatro argumentos (horas, minutos, segundos e milisegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
 
-Internally, times are stored as the number of milliseconds since the start of 1970. The getTime method on a date returns this number. It is quite big, as you can imagine.
 Internamente, objetos do tipo data são armazenados como o número de milisegundos desde o início de 1970. Usar o método _getTime_ em uma data retorna esse número, e ele é bem grande, como deve imaginar.
 
 ```
@@ -231,13 +229,10 @@ console.log( new Date( 1395370800000 ) );
 // → Fri Mar 21 2014 00:00:00 GMT-0300 (BRT) 
 ```
 
-When giving the Date constructor a single argument, that argument is treated as such a millisecond number.
 Quando fornecemos apenas um arfumento ao construtor do _Date_, ele é tratado como se fosse um número de milisegundos.
 
-Date objects provide methods like getFullYear (getYear gets you the useless two-digit version), getMonth, getDate, getHours, getMinutes, and getSeconds to extract their components.
 Objetos _Date_ possuem métodos como _getFullYear_ (_getYear_ retorna apenas os inúteis dois últimos dígitos do ano), _getMonth_, _getDate_, _getHours_, _getMinutes_ e _getSeconds_  para extrair os componentes da data.
 
-So now, by putting parentheses around the parts that we are interested in, we can easily extract a date from a string.
 Então agora, ao colocar parenteses em volta das partes que nos interessam, podemos facilmente extrair uma data de uma _string_.
 
 ```

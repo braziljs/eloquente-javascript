@@ -198,50 +198,56 @@ Grupos podem ser muito úteis para extrair partes de uma string. Po exemplo, pod
 
 Mas antes, um pequeno desvio.
 
-## The date type
+## O tipo _data_
 
-JavaScript has a standard object type for representing dates—or rather, points in time. It is called Date. If you simply create a date object using new, you get the current date and time.
-
-```
-console.log(new Date());
-// → Wed Dec 04 2013 14:24:57 GMT+0100 (CET)
-```
-
-You can also create an object for a specific time.
+O Javascript possui um objeto padrão para representar datas, ou melhor, pontos no tempo. Ele é chamado _Date_. Se você simplesmente criar uma data usando _new_, terá a data e hora atual.
 
 ```
-console.log(new Date(2009, 11, 9));
-// → Wed Dec 09 2009 00:00:00 GMT+0100 (CET)
-console.log(new Date(2009, 11, 9, 12, 59, 59, 999));
-// → Wed Dec 09 2009 12:59:59 GMT+0100 (CET)
+console.log( new Date() );
+// → Fri Feb 21 2014 09:39:31 GMT-0300 (BRT)
 ```
-JavaScript uses a convention where month numbers start at zero (so December is 11), yet day numbers start at one. This is extremely confusing and silly, so be careful.
+
+Também é possível criar um obeto para uma hora específica
+
+```
+console.log( new Date(2014, 6, 29) );
+// → Tue Jul 29 2014 00:00:00 GMT-0300 (BRT) 
+console.log( new Date(1981, 6, 29, 18, 30, 50) );
+// → Wed Jul 29 1981 18:30:50 GMT-0300 (BRT) 
+```
+
+O Javascript utiliza uma conenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias inciam em um. É bem confuso, então, tenha cuidado.
 
 The last four arguments (hours, minutes, seconds, and milliseconds) are optional, and taken to be zero when not given.
+Os últimos quatro argumentos (horas, minutos, segundos e milisegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
 
 Internally, times are stored as the number of milliseconds since the start of 1970. The getTime method on a date returns this number. It is quite big, as you can imagine.
+Internamente, objetos do tipo data são armazenados como o número de milisegundos desde o início de 1970. Usar o método _getTime_ em uma data retorna esse número, e ele é bem grande, como deve imaginar.
 
 ```
-console.log(new Date(2013, 11, 19).getTime());
-// → 1387407600000
-console.log(new Date(1387407600000));
-// → Thu Dec 19 2013 00:00:00 GMT+0100 (CET)
+console.log( new Date(2014, 2, 21).getTime() );
+// → 1395370800000 
+console.log( new Date( 1395370800000 ) );
+// → Fri Mar 21 2014 00:00:00 GMT-0300 (BRT) 
 ```
+
 When giving the Date constructor a single argument, that argument is treated as such a millisecond number.
+Quando fornecemos apenas um arfumento ao construtor do _Date_, ele é tratado como se fosse um número de milisegundos.
 
 Date objects provide methods like getFullYear (getYear gets you the useless two-digit version), getMonth, getDate, getHours, getMinutes, and getSeconds to extract their components.
+Objetos _Date_ possuem métodos como _getFullYear_ (_getYear_ retorna apenas os inúteis dois últimos dígitos do ano), _getMonth_, _getDate_, _getHours_, _getMinutes_ e _getSeconds_  para extrair os componentes da data.
 
 So now, by putting parentheses around the parts that we are interested in, we can easily extract a date from a string.
+Então agora, ao colocar parenteses em volta das partes que nos interessam, podemos facilmente extrair uma data de uma _string_.
 
 ```
-function findDate(string) {
+function buscaData(string) {
   var dateTime = /(\d{1,2})\/(\d{1,2})\/(\d{4})/;
   var match = dateTime.exec(string);
-  return new Date(Number(match[3]), Number(match[2]),
-                  Number(match[1]));
+  return new Date( Number(match[3]), Number(match[2] ), Number(match[1]) );
 }
-console.log(findDate("30/1/2003"));
-// → Sun Mar 02 2003 00:00:00 GMT+0100 (CET)
+console.log( buscaData("21/1/2014") );
+// → Fri Feb 21 2014 00:00:00 GMT-0300 (BRT) 
 ```
 
 ## Word and string boundaries

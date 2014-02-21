@@ -260,7 +260,7 @@ console.log( /\bcat\b/.test("concatenate") );
 // → false
 ```
 
-Note que esses marcadores de limite não cobrem nenhum caractere real, eles apenas asseguram que o padrão de busca irá achar algo na posição desejada, informada nos marcadoes.
+Note que esses marcadores de limite não cobrem nenhum caractere real, eles apenas asseguram que o padrão de busca irá achar algo na posição desejada, informada nos marcadores.
 
 ## Alternatives
 

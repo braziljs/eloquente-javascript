@@ -216,7 +216,7 @@ console.log( new Date(1981, 6, 29, 18, 30, 50) );
 // → Wed Jul 29 1981 18:30:50 GMT-0300 (BRT) 
 ```
 
-O Javascript utiliza uma conenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias inciam em um. É bem confuso, então, tenha cuidado.
+O Javascript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias inciam em um. É bem confuso, então, tenha cuidado.
 
 Os últimos quatro argumentos (horas, minutos, segundos e milisegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
 

@@ -172,20 +172,20 @@ Valores string possuem um método que se comporta de maneira semelhante.
 
 ```
 console.log("one two 100".match(/\d+/));
-// → ["100"]
+// → ["100", index: 8, input: "one two 100"] 
 ```
 
-An object returned from exec or match has an index property that tells us where in the string the successful match started. Otherwise, the object looks like (and in fact is) an array of strings, whose first element is the string that was matched—in the example above, that is the sequence of digits that we were looking for.
+Um objeto retornado pelo método exec ou match possui um index de propriedades que informa aonde na string o resultado encontrado se inicia. Além disso, o objeto se parece (e de fato é) um array de strings, onde o primeiro elemento é a string que foi achada, no exemplo acima, a sequência de dígitos numéricos.
 
-When the regular expression contains expressions grouped with parentheses, the text that matched those groups will also show up in the array. The first element is always the whole match, after that follows the part matched by the first group (the one whose opening parenthesis comes first in the expression), then the second, and so on.
+Quando uma expressão regular contém expressões agrupadas entre parenteses, o texto que corresponde a esses grupos também aparece no array. O primeiro elemento sempre é todo o resultado, seguido pelo resultado do primeiro grupo entre parenteses, depois o segundo grupo e assim em diante.
 
 ```
-var quotedText = /'([^']*)'/;
-console.log(quotedText.exec("she said 'hello'"));
-// → ["'hello'", "hello"]
+var textoCitado = /'([^']*)'/;
+console.log( textoCitado.exec("'ela disse adeus'") );
+// → ["'ela disse adeus'", "ela disse adeus", index: 0, input: "'ela disse adeus'"] 
 ```
 
-When a group does not end up being matched at all (if it, for example, has a question mark after it), its position in the output array will hold undefined. Similarly, when a group is matched multiple times, only the last match ends up in the array.
+Quando um grupo não termina sendo achado (se por exemplo, possui um sinal de interrogação depois dele), seu valor no array de resultado será undefined. Do mesmo modo, quando um grupo é achado várias vezes, apenas o último resultado encontrado estará no array.
 
 ```
 console.log(/bad(ly)?/.exec("bad"));
@@ -194,9 +194,9 @@ console.log(/(\d)+/.exec("123"));
 // → ["123", "3"]
 ```
 
-Groups can be very useful for extracting parts of a string. For example, we may not just want to verify whether a string contains a date, but also extract it, and construct an object that represents it. If we wrap parentheses around the digit patterns, we’ll be able to directly pick them out of the result of exec.
+Grupos podem ser muito úteis para extrair partes de uma string. Po exemplo, podemos não querer apenas verificar quando uma stringo contém uma data, mas também extraí-la, e contruir um obejeto que a representa. Se adicionarmos parenteses em volta do padrão de dígitos, poderemos selecionar a data no resultado da função exec.
 
-But first, a short detour.
+Mas antes, um pequeno desvio.
 
 ## The date type
 

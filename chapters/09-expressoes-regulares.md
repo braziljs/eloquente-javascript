@@ -245,16 +245,12 @@ console.log( buscaData("21/1/2014") );
 // → Fri Feb 21 2014 00:00:00 GMT-0300 (BRT) 
 ```
 
-## Word and string boundaries
 ## Limites de palavra e _string_
 
-The findDate function above will also happily extract a date from a string like "100/1/30000"—a match may happen anywhere in the string, so in this case it’ll just start at the second character and end at the one-but-last.
 A função _buscaData_ acima irá extrair facilmente a data de um etxto como "100/1/30000", um resultado pode acontecer em qualquer lugar da _string_ fornecida, então, nesse caso , vai encontrar no segundo caractere e terminar no último
 
-If we want to enforce that the match must span the whole string, we can add the markers ‘^’ and ‘$’. The first matches the start of the input string, and the second the end. So /^\d+$/ matches a string consisting only of one or more digits, /^!/ matches any string that starts with an exclamation sign, and /x^/ does not match anything (the start of a string can not be after a character).
 Se quisermos nos assegurar que a busca seja em todo o texto, podemos adicionar os marcadores  "^" e "$". O primeiro acha o início da _string_ fornecida e o segundo o final dela. Então /^\d+$/ encontra apenas em uma string feita de um ou mais dígitos, /^!/ encontra qualquer _string_ que começa com sinal de exclamação e /x^/ não acha nada (o início de uma string não pode ser depois de um caractere).
 
-If, on the other hand, we just want to make sure the date starts and ends on a word boundary, we can use the marker \b. A word boundary is a point that has a word character on one side, and a non-word character on the other.
 SE, por outro lado, queremos ter certeza que a data inicia e termina no limite da palavra, usamos o marcador \b. Um limite de palavra é um ponto onde existe um caracter de um lado e um caracter que não seja de palavra de outro.
 
 ```
@@ -264,7 +260,6 @@ console.log( /\bcat\b/.test("concatenate") );
 // → false
 ```
 
-Note that these boundary markers don’t “cover” any actual characters, they just enforce that the pattern only matches when a certain condition holds at the place where they appear.
 Note que esses marcadores de limite não cobrem nenhum caractere real, eles apenas asseguram que o padrão de busca irá achar algo na posição desejada, informada nos marcadoes.
 
 ## Alternatives

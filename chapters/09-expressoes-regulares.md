@@ -264,10 +264,8 @@ Note que esses marcadores de limite não cobrem nenhum caractere real, eles apen
 
 ## Alternativas
 
-Next, we want to know whether a piece of text contains not only a number, but a number followed by one of the words “pig”, “cow”, or “chicken”, or their plural forms.
 Agora, queremos saber se um pedaço do texto contém não apenas um número, mas um número seguido por uma das palavras "porco", "vaca", "galinha" ou seus plurais também.
 
-We could write three regular expressions, and test them in turn, but there is a nicer way. The pipe character (|) denotes a choice between the pattern to its left and the pattern to its right. So I can say this:
 Podemos escrever três expressões regulares, e testar cada uma, mas existe uma maneira mais simples. O caracter pipe ("|") indica uma opção entre o padrão à esqueda ou a direita. Entao podemos fazer:
 
 ```
@@ -278,7 +276,6 @@ console.log( contagemAnimal.test("15 porcosgalinhas") );
 // → false
 ```
 
-Parentheses can be used to limit the part of the pattern that the pipe operator applies to, and you can put multiple such operators next to each other to express a choice between more than two patterns.
 Parênteses podem ser usados para limitar a que parte do padrão que o pipe ("|") se aplica, e você pode colocar vários desses operadores ao lado a lado para expressar uma escolha entre mais de dois padrões.
 
 ## The mechanics of matching

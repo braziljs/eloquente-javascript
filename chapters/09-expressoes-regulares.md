@@ -278,35 +278,22 @@ console.log( contagemAnimal.test("15 porcosgalinhas") );
 
 Parênteses podem ser usados para limitar a que parte do padrão que o pipe ("|") se aplica, e você pode colocar vários desses operadores ao lado a lado para expressar uma escolha entre mais de dois padrões.
 
-## The mechanics of matching
 ## O mecanismo de procura
 
-http://eloquentjavascript.net/2nd_edition/preview/img/re_pigchickens.svg
 ![O mecanismo de procura](../img/re_porcogalinhas.svg)
 
-A string matches the expression if a path from the start (left) to the end (right) of the diagram can be found, with a corresponding start and end position in the string, such that every time we go through a box, we verify that our current position in the string corresponds to the element described by the box and, for elements that match actual characters (which the word boundaries do not), move our position forward.
 Uma _string_ coresponde à expressão se uma caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na seqüência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais ( menos os limites de palavra), continue no fluxo das caoxas.
 
-So if we match "the 3 pigs" there is a match between positions 4 (the digit “3”) and 10 (the end of the string).
 Então se encontrarmos "the 3 pigs" existe uma corespondência entre as pocições 4 (o dígito "3") e 10 (o final da string).
 
-  - At position 4, there is a word boundary, so we can move past the first box.
   - Na posição 4, existe um limite de palavra, entao passamos a primeira caixa
-  - Still at position 4, we find a digit, so we can also move past the second box.
   - Ainda na posição 4, encontramos um dígito, então ainda odemos passar a primeira caixa.
-  - At position 5, we could go back to before the second (digit) box, or move forward through the box that holds a single space character. There is a space here, not a digit, so we choose the second path.
   - Na posição 5, poderíamos voltar para antes da segunda caixa (dígitos), ou avançar através da caixa que contém um único caractere de espaço. Há um espaço aqui, não um dígito, por isso escolhemos o segundo caminho.
-  - We are now at position 6 (the start of “pigs”) and at the three-way branch in the diagram. We don’t see “cow” or “chicken” here, but we do see “pig”, so we take that branch.
   - Estamos agora na posição 6 (o início de "porcos") e na divisão entre três caminhos do diagrama. Nós não temos "vaca" ou "galinha" aqui, mas nós temos "porco", por isso tomamos esse caminho.
-  - At position 9, after the three-way branching, we could either skip the “s” box and go straight to the final word boundary, or first match an “s”. There is an “s” character here, not a word boundary, so we go through the “s” box.
   - Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa de "s".
-  - We’re at position 10 (end of the string) and can only match a word boundary. The end of a string counts as a word boundary, so we go through the last box and have successfully matched this string.
   - Estamos na posição 10 (final da string) e só podemos achar um limite de palavra. O fim de uma _string_ conta como um limite de palavra, de modo que passamos a última caixa e achamos com sucesso a busca.
 
-The way the regular expression engine present in a JavaScript system will conceptually look for a match in a string is simple. It starts at the start of the string and tries a match there. In this case, there is a word boundary there, so it’d get past the first box, but there is no digit, so it’d fail at the second box. Then it moves on to the second character in the string, and tries there. And so on, until it finds a match, or reaches the end of the string and decides that there really is no match.
 A modo como o mecanismo de expressões regulares do Javascript trata uma busca em uma _string_ é simples. Começa no início da _string_ e tenta achar um resultado nele. Nesse casso, existe um limite de palavra aqui, então passamos pela primeira caixa, mas nao existe um dígito, então ele falha na segunda caixa. Continua no segundo caracter da _string_ e tenta novamente. E assim continua, até encontrar um resultado ou alcança o fim da _string_ e conclui que não encontrou nenhum resultado
-
-A forma como o mecanismo de expressão regular presente em um sistema de JavaScript vai conceitualmente olhar para um jogo em uma string é simples. Ele começa no início da string e tenta um jogo lá. Neste caso, há um limite de palavra lá, então ele iria passar a primeira caixa, mas não há nenhum dígito, por isso iria falhar a segunda caixa. Em seguida, ele passa para o segundo personagem na seqüência, e tenta lá. E assim por diante, até que ele encontra uma correspondência, ou chega ao fim da cadeia e decide que não há realmente nenhum jogo.
 
 ## Backtracking
 

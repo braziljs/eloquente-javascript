@@ -316,8 +316,10 @@ http://eloquentjavascript.net/2nd_edition/preview/img/re_slow.svg
 If that tries to match some long series of zeroes and ones without a “b” character after them, it will first go through the inner loop until it runs out of digits. Then it notices there is no “b”, so it backtracks one position, goes through the outer loop once, and give up again, backtracking out of the inner loop once more. It will continue to try every possible route through these two loops, which means the amount of work it needs to do doubles with each additional character. For a few dozen characters, the resulting match will already take practically forever.
 
 ## The replace method
+## O método _replace_
 
 String values have a replace method, which can be used to replace parts of the string with another string.
+_Strings_ possuem o método de _replace_, que pode ser usado para substituir partes da _string_ com outra _string_
 
 ```
 console.log("papa".replace("p", "m"));
@@ -325,6 +327,7 @@ console.log("papa".replace("p", "m"));
 ```
 
 The first argument can also be a regular expression, in which case the first match of the regular expression is replaced.
+O Primeiro Argumento também pode ser uma expressão regular, que na primeira ocorrência de correspondência será substituída.
 
 ```
 console.log("Borobudur".replace(/[ou]/, "a"));
@@ -334,10 +337,13 @@ console.log("Borobudur".replace(/[ou]/g, "a"));
 ```
 
 When a “g” option (for “global”) is added to the regular expression, all matches in the string will be replaced, not just the first.
+Quando a opção "g" ("global") é adicionada à expressão, todas as ocorrências serão substituídas, não só a primeira.
 
 It would have been more sensible if this choice was made through an addition argument to replace, rather than through a property of the regular expression we pass it. (This is one of the poor interface choices that surround JavaScript regular expressions.)
+Seria melhor se essa opção fosse feita através de outro argumento, em vez de usar a opção própria de uma expressão regular. (Este é um exemplo de falha na sintaxe do Javascript)
 
 The real power of using regular expressions with replace comes from the fact that we can refer back to the matched groups in the expression. For example, say we have a big string containing the names of people, one name per line, in the format Lastname, Firstname. If we want to swap these names and remove the comma to get a simple Firstname Lastname format, we can use the following code:
+A verdadeira utilidade do uso de expressões regulares com o método _replace_ é a opção de fazer refrências aos grupos achados através da expressão. Por exemplo, se temos uma _string_ longa com nomes de pessoas, uma por linha, no formato "Sobrenome, Nome" e queremos trocar essa ordem e remover a vírgula, para obter o formato "Nome Sobrenome", podemos usar o seguinte código:
 
 ```
 console.log(
@@ -349,10 +355,13 @@ console.log(
 ```
 
 The $1 and $2 in the replacement string refer to the parenthesized parts in the pattern. $1 is replaced by the text that matched against the first pair of parentheses, $2 by the second, and so on, up to $9.
+O "$1" e "$2" na _string_ de substituição referen-se as partes entre parenteses no padrão. "$1" será substitído  pelo texto achado no primeiro grupo entre parênteses e "$2" pelo segundo, e assim em diante, até "$9".
 
 It is also possible to pass a function, rather than a string, as the second argument to replace. For each replacement, the function will be called with the matched groups (as well as the whole match) as arguments, and the value it returns will be inserted into the new string.
+Também é possível passar uma função, em vez de uma _string_ no segunto argumento do método _replace_. Para cada substituição, a função será chamada com os grupos achados (assim como o padrão) como argumentos, e o valor retornado pela função será inserido na nova _string_.
 
 Here’s a simple example:
+Segue um exemplo simples:
 
 ```
 var s = "the cia and fbi";
@@ -363,6 +372,7 @@ console.log(s.replace(/\b(fbi|cia)\b/g, function(str) {
 ```
 
 And here’s another one:
+E outro exemplo:
 
 ```
 var stock = "1 lemon, 2 cabbages, and 101 eggs";
@@ -379,8 +389,10 @@ console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 ```
 
 This takes a string, finds all occurrences of a number followed by an alphanumeric word, and returns a string wherein every such occurrence is decremented by one.
+Ele pega a _string_, acha todas as ocorrências de um número seguido por uma palavra alfanumérica e retorna uma nova _string_ onde cada achado é diminuído em um.
 
 The (\d+) group ends up as the amount argument to the function, and the (\w+) group gets bound to unit. The function converts the amount to a number—which always works, since it matched \d+—and makes some adjustments in case there is only one or zero left.
+O Grupo (\d+) finaliza o argumento da função e o (\w+) limita a unidade. A função converte o valor em um número, desde que achado, \d+— faz ajustes caso exista apenas um ou zero esquerda.
 
 ## Greed
 

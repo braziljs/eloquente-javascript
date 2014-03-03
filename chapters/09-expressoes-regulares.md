@@ -49,78 +49,78 @@ Uma expressão regular que contenha apenas caracteres simples, representa essa m
 
 ## Encontrando um conjunto de caracteres
 
-Finding out whether a string contains “abc” could just as well be done with a call to indexOf. The point of regular expressions is that they allow more complicated patterns to be expressed.
+Saber quando uma string contém "abc" pode muito bem ser feito usando a função indexOf. A diferença das expressões regulares é que elas permitem padrões mais complexos de busca.
 
-Say we want to match any number. In a regular expression, putting a set of characters between square brackets makes that part of the expression match any of the characters between the brackets.
+Digamos que queremos achar qualquer número. Em uma expressão egular, colocar um conjunto de caracteres entre colchetes ("[]") faz com que a expressão ache qualquer dos caracteres dentro dos colchetes.
 
-The first expression below matches all strings that contains a digit.
-
-```
-console.log(/[0123456789]/.test("in 1992"));
-// → true
-console.log(/[0-9]/.test("in 1992"));
-// → true
-```
-
-Between square brackets, a dash (“-”) between two characters can be used to indicate a range of characters. Since the Unicode character codes for “0” to “9” sit right next to each other (codes 48 to 57), [0-9] matches any digit.
-
-There are a number of commonly use character groups that have their own built-in shortcuts. Digits are in fact one of them—you can write backslash-d (\d) to mean the same thing as [0-9].
-
-\d	Digit characters
-\w	Alphanumeric characters (“word characters”)
-\s	Whitespace characters (space, tab, newline, and similar)
-\D	Characters that are not digits
-\W	Non-alphanumeric characters
-\S	Non-whitespace characters
-. (dot)	All characters except newlines
-
-
-For each of the backslash-prefixed categories, there is an uppercase variant that means the exact opposite.
-
-So you could express a date and time format like “30/01/2003 15:20” with the following expression:
+A expressão abaixo, acha todas as strings que contem um dígito numérico.
 
 ```
-var dateTime = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
-console.log(dateTime.test("30/01/2003 15:20"));
+console.log( /[0123456789]/.test("ano 1992") );
 // → true
-console.log(dateTime.test("30/jan/2003 15:20"));
+console.log( /[0-9]/.test("ano 1992") );
+// → true
+```
+
+Dentro de colchetes, um hífen ("-") entre dois caracteres pode ser usado para indicar um conjunto entre dois caracteres. Uma vez que os códigos de caracteres Unicode de "0" a "9" contém todos os dígitos (códigos 48 a 57), [0-9] encontrará qualquer dígito.
+
+Existem alguns grupos de caracetes de uso comum, que já possuem atalhos incluídos na sintaxe de expressões regulares. Dígitos são um dos conjuntos que você pode escrever usando um atalho, barra invertida seguida de um "d" minúsculo (\d), com o mesmo significado que [0-9].
+
+	- \d	caracteres numéricos
+	- \w	caracteres alfanuméricos ("letras”)
+	- \s	espaços em branco (espaço, tabs, quebras de linha e similares)
+	- \D	caracteres que não são dígitos
+	- \W	caracteres não alfanuméricos
+	- \S	caracteres que não representam espaços
+	- . (ponto)	todos os caracteres, exceto espaços
+
+
+Para cada um dos atalhos de conjuntos de caracteres, existe uma variação em letra maiúscula que significa o exato oposto.
+
+Então você pode registrar um formato de data e hora como “30/01/2003 15:20” com a seguinte expressão:
+
+```
+var dataHora = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
+console.log( dataHora.test("30/01/2003 15:20") );
+// → true
+console.log( dataHora.test("30/jan/2003 15:20") );
 // → false
 ```
 
-Looks completely awful, doesn’t it? Way too many backslashes, producing a background noise that makes it hard to spot the actual pattern expressed. Such is life with regular expressions.
+Parece confuso, certo? Muitas barras invertidas, sujando a expressão, que dificultam compreender qual o padrão procurado. Mas é assim mesmo o  trabalho com expressões regulares.
 
-These category markers can also be used inside of square brackets, so [\d\.] means any digit or a dot.
+Estes marcadores d ecategoria também podem ser usados dentro de colchetes, então [\d\i] significa qualquer dígito ou ponto.
 
-To “invert” a set of characters, to express that you want to match any character except the ones in the set, a caret (‘^’) character is written after the opening bracket.
+Para "inverter" um conjunto de caracteres, buscar tudo menos o que você escreveu no padrão, um cento circunflexo ("^") é colocado no início do colchete de abertura.
 
 ```
-var notBinary = /[^01]/;
-console.log(notBinary.test("01101"));
+var naoBinario = /[^01]/;
+console.log( naoBinario.test("01101") );
 // → false
-console.log(notBinary.test("01201"));
+console.log( naoBinario.test("01201") );
 // → true
 ```
 
-## Repeating parts of a pattern
+## Partes repetidas em um pattern
 
-We found out how to match a single digit. But what we really wanted to do is to match a number, a sequence of one or more digits.
+Já aprendemos a encontrar um dígito, mas o que realmente queremos é encontrar um número, uma sequencia de um ou mais dígitos.
 
-When you put a plus sign (‘+’) after something in a regular expression, that indicates that it may be repeated more than once. So /\d+/ matches one or more digit characters.
+Quando se coloca um sinal de mais ("+") depois de algo em uma expressão regular, indicamos que pode existir mais de um. Então /\d+/ encontra um ou mais dígitos.
 
 ```
-console.log(/'\d+'/.test("'123'"));
+console.log( /'\d+'/.test("'123'") );
 // → true
-console.log(/'\d+'/.test("''"));
+console.log( /'\d+'/.test("''") );
 // → false
-console.log(/'\d*'/.test("'123'"));
+console.log( /'\d*'/.test("'123'") );
 // → true
-console.log(/'\d*'/.test("''"));
+console.log( /'\d*'/.test("''") );
 // → true
 ```
 
-The star (‘*’) has a similar meaning, but also allows the pattern to match zero times. So something with a star after it never prevents a pattern from matching—it’ll just match zero instances if it can’t find any suitable text to match.
+O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Entao, algo com um asterisco depois nao impede um padrão de ser achado, penas retornando zero resultados.
 
-A question mark makes a part of a pattern “optional”, meaning it may occur zero or one times. In this example, the “u” character is allowed to occur, but the pattern also matches when it is missing.
+Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou mais vezes. Neste exemplo, é permitido  que ocorra o caracter "u", mas o padrão também é encontrado quando ele está ausente. 
 
 ```
 var neighbor = /neighbou?r/;
@@ -130,35 +130,35 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-To allow a pattern to occur a precisely defined number of times, curly braces are used. Putting {4} after an element requires it to occur exactly four times. Similarly, {2,4} is used when the element must occur at least twice, and at most four times.
+Para permitir que um padrão ocorra um número defido de vezes, chaves ("{}") são usadas. Colocando {4} depois de um elemento do padrão, mostra que ele deve ocorrer 4 vezes, exatamente. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
 
-Here is another version of the date and time pattern. It allows single-digit day, month, and hour numbers, and is slightly more readable:
+Segue outro versão do padrão mostrado acima, de data e hora. Ele permite, dias com um dígito, mês e hora como números e mais legível:
 
 ```
-var dateTime = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
-console.log(dateTime.test("30/1/2003 8:45"));
+var dataHora = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
+console.log( dataHora.test("30/1/2003 8:45") );
 // → true
 ```
 
-It is also possible to leave either the minimum or the maximum amount of occurrences open-ended, by omitting the number on one side of the comma. So {,5} means zero to five times, and {5,} means five or more times.
+Também é possível deixar em aberto o número mínimo ou máximo de ocorrencias, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
 
-## Grouping sub-expressions
+## Agrupando sub-expressões
 
-To use an operator like ‘*’ or ‘+’ on more than one character at a time, need to use parentheses. A piece of a regular expression that is surrounded in parentheses counts as a single unit as far as the operators following it are concerned.
+Para usar um operador como "*" ou "+" em mais de um caracter de de uma vez, é necessário o uso de parenteses. Um pedaço de uma expressão regular que é delimitado por parenteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
 
 ```
 var cartoonCrying = /boo+(hoo+)+/i;
-console.log(cartoonCrying.test("Boohoooohoohooo"));
+console.log( cartoonCrying.test("Boohoooohoohooo") );
 // → true
 ```
 
-The third ‘+’ applies to the whole group (hoo+), matching one or more sequences like that.
+O terceiro "+" se aplica a todo grupo (hoo+), encontrando uma ou mais sequências como essa.
 
-The “i” at the end of the expression in the example above makes this regular expression case-insensitive, allowing it to match the uppercase “B” in the input string, even though the pattern is itself all lowercase.
+O "i" no final da expressãodo exemplo acima maz com que a expressão regular seja  case-insensitive, permitindo-a encontrar a letra maiúscula "B" na string dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
 
-## Matches and groups
+## Resultados e grupos
 
-The test method is the absolute simplest way to match a regular expression. It only tells you whether it matched, and nothing else. Regular expressions also have an exec (execute) method, that will return null when no match was found, and an object with information about the match otherwise.
+O método test é a maneira mais simples de encontrar correspondencias de uma expressão regular. Ela apenas informa se foi encontrado algo, e mais nada. Expressões regulares também possuem o método exec (executar), que irá retornar null quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
 
 ```
 var match = /\d+/.exec("one two 100");
@@ -168,24 +168,24 @@ console.log(match.index);
 // → 8
 ```
 
-String values have a match method that behaves very similarly.
+Valores string possuem um método que se comporta de maneira semelhante.
 
 ```
 console.log("one two 100".match(/\d+/));
-// → ["100"]
+// → ["100", index: 8, input: "one two 100"] 
 ```
 
-An object returned from exec or match has an index property that tells us where in the string the successful match started. Otherwise, the object looks like (and in fact is) an array of strings, whose first element is the string that was matched—in the example above, that is the sequence of digits that we were looking for.
+Um objeto retornado pelo método exec ou match possui um index de propriedades que informa aonde na string o resultado encontrado se inicia. Além disso, o objeto se parece (e de fato é) um array de strings, onde o primeiro elemento é a string que foi achada, no exemplo acima, a sequência de dígitos numéricos.
 
-When the regular expression contains expressions grouped with parentheses, the text that matched those groups will also show up in the array. The first element is always the whole match, after that follows the part matched by the first group (the one whose opening parenthesis comes first in the expression), then the second, and so on.
+Quando uma expressão regular contém expressões agrupadas entre parenteses, o texto que corresponde a esses grupos também aparece no array. O primeiro elemento sempre é todo o resultado, seguido pelo resultado do primeiro grupo entre parenteses, depois o segundo grupo e assim em diante.
 
 ```
-var quotedText = /'([^']*)'/;
-console.log(quotedText.exec("she said 'hello'"));
-// → ["'hello'", "hello"]
+var textoCitado = /'([^']*)'/;
+console.log( textoCitado.exec("'ela disse adeus'") );
+// → ["'ela disse adeus'", "ela disse adeus", index: 0, input: "'ela disse adeus'"] 
 ```
 
-When a group does not end up being matched at all (if it, for example, has a question mark after it), its position in the output array will hold undefined. Similarly, when a group is matched multiple times, only the last match ends up in the array.
+Quando um grupo não termina sendo achado (se por exemplo, possui um sinal de interrogação depois dele), seu valor no array de resultado será undefined. Do mesmo modo, quando um grupo é achado várias vezes, apenas o último resultado encontrado estará no array.
 
 ```
 console.log(/bad(ly)?/.exec("bad"));
@@ -194,110 +194,106 @@ console.log(/(\d)+/.exec("123"));
 // → ["123", "3"]
 ```
 
-Groups can be very useful for extracting parts of a string. For example, we may not just want to verify whether a string contains a date, but also extract it, and construct an object that represents it. If we wrap parentheses around the digit patterns, we’ll be able to directly pick them out of the result of exec.
+Grupos podem ser muito úteis para extrair partes de uma string. Po exemplo, podemos não querer apenas verificar quando uma stringo contém uma data, mas também extraí-la, e contruir um obejeto que a representa. Se adicionarmos parenteses em volta do padrão de dígitos, poderemos selecionar a data no resultado da função exec.
 
-But first, a short detour.
+Mas antes, um pequeno desvio.
 
-## The date type
+## O tipo _data_
 
-JavaScript has a standard object type for representing dates—or rather, points in time. It is called Date. If you simply create a date object using new, you get the current date and time.
-
-```
-console.log(new Date());
-// → Wed Dec 04 2013 14:24:57 GMT+0100 (CET)
-```
-
-You can also create an object for a specific time.
+O Javascript possui um objeto padrão para representar datas, ou melhor, pontos no tempo. Ele é chamado _Date_. Se você simplesmente criar uma data usando _new_, terá a data e hora atual.
 
 ```
-console.log(new Date(2009, 11, 9));
-// → Wed Dec 09 2009 00:00:00 GMT+0100 (CET)
-console.log(new Date(2009, 11, 9, 12, 59, 59, 999));
-// → Wed Dec 09 2009 12:59:59 GMT+0100 (CET)
+console.log( new Date() );
+// → Fri Feb 21 2014 09:39:31 GMT-0300 (BRT)
 ```
-JavaScript uses a convention where month numbers start at zero (so December is 11), yet day numbers start at one. This is extremely confusing and silly, so be careful.
 
-The last four arguments (hours, minutes, seconds, and milliseconds) are optional, and taken to be zero when not given.
-
-Internally, times are stored as the number of milliseconds since the start of 1970. The getTime method on a date returns this number. It is quite big, as you can imagine.
+Também é possível criar um obeto para uma hora específica
 
 ```
-console.log(new Date(2013, 11, 19).getTime());
-// → 1387407600000
-console.log(new Date(1387407600000));
-// → Thu Dec 19 2013 00:00:00 GMT+0100 (CET)
+console.log( new Date(2014, 6, 29) );
+// → Tue Jul 29 2014 00:00:00 GMT-0300 (BRT) 
+console.log( new Date(1981, 6, 29, 18, 30, 50) );
+// → Wed Jul 29 1981 18:30:50 GMT-0300 (BRT) 
 ```
-When giving the Date constructor a single argument, that argument is treated as such a millisecond number.
 
-Date objects provide methods like getFullYear (getYear gets you the useless two-digit version), getMonth, getDate, getHours, getMinutes, and getSeconds to extract their components.
+O Javascript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias inciam em um. É bem confuso, então, tenha cuidado.
 
-So now, by putting parentheses around the parts that we are interested in, we can easily extract a date from a string.
+Os últimos quatro argumentos (horas, minutos, segundos e milisegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
+
+Internamente, objetos do tipo data são armazenados como o número de milisegundos desde o início de 1970. Usar o método _getTime_ em uma data retorna esse número, e ele é bem grande, como deve imaginar.
 
 ```
-function findDate(string) {
+console.log( new Date(2014, 2, 21).getTime() );
+// → 1395370800000 
+console.log( new Date( 1395370800000 ) );
+// → Fri Mar 21 2014 00:00:00 GMT-0300 (BRT) 
+```
+
+Quando fornecemos apenas um arfumento ao construtor do _Date_, ele é tratado como se fosse um número de milisegundos.
+
+Objetos _Date_ possuem métodos como _getFullYear_ (_getYear_ retorna apenas os inúteis dois últimos dígitos do ano), _getMonth_, _getDate_, _getHours_, _getMinutes_ e _getSeconds_  para extrair os componentes da data.
+
+Então agora, ao colocar parenteses em volta das partes que nos interessam, podemos facilmente extrair uma data de uma _string_.
+
+```
+function buscaData(string) {
   var dateTime = /(\d{1,2})\/(\d{1,2})\/(\d{4})/;
   var match = dateTime.exec(string);
-  return new Date(Number(match[3]), Number(match[2]),
-                  Number(match[1]));
+  return new Date( Number(match[3]), Number(match[2] ), Number(match[1]) );
 }
-console.log(findDate("30/1/2003"));
-// → Sun Mar 02 2003 00:00:00 GMT+0100 (CET)
+console.log( buscaData("21/1/2014") );
+// → Fri Feb 21 2014 00:00:00 GMT-0300 (BRT) 
 ```
 
-## Word and string boundaries
+## Limites de palavra e _string_
 
-The findDate function above will also happily extract a date from a string like "100/1/30000"—a match may happen anywhere in the string, so in this case it’ll just start at the second character and end at the one-but-last.
+A função _buscaData_ acima irá extrair facilmente a data de um etxto como "100/1/30000", um resultado pode acontecer em qualquer lugar da _string_ fornecida, então, nesse caso , vai encontrar no segundo caractere e terminar no último
 
-If we want to enforce that the match must span the whole string, we can add the markers ‘^’ and ‘$’. The first matches the start of the input string, and the second the end. So /^\d+$/ matches a string consisting only of one or more digits, /^!/ matches any string that starts with an exclamation sign, and /x^/ does not match anything (the start of a string can not be after a character).
+Se quisermos nos assegurar que a busca seja em todo o texto, podemos adicionar os marcadores  "^" e "$". O primeiro acha o início da _string_ fornecida e o segundo o final dela. Então /^\d+$/ encontra apenas em uma string feita de um ou mais dígitos, /^!/ encontra qualquer _string_ que começa com sinal de exclamação e /x^/ não acha nada (o início de uma string não pode ser depois de um caractere).
 
-If, on the other hand, we just want to make sure the date starts and ends on a word boundary, we can use the marker \b. A word boundary is a point that has a word character on one side, and a non-word character on the other.
+SE, por outro lado, queremos ter certeza que a data inicia e termina no limite da palavra, usamos o marcador \b. Um limite de palavra é um ponto onde existe um caracter de um lado e um caracter que não seja de palavra de outro.
 
 ```
-console.log(/cat/.test("concatenate"));
+console.log( /cat/.test("concatenate") );
 // → true
-console.log(/\bcat\b/.test("concatenate"));
+console.log( /\bcat\b/.test("concatenate") );
 // → false
 ```
 
-Note that these boundary markers don’t “cover” any actual characters, they just enforce that the pattern only matches when a certain condition holds at the place where they appear.
+Note que esses marcadores de limite não cobrem nenhum caractere real, eles apenas asseguram que o padrão de busca irá achar algo na posição desejada, informada nos marcadores.
 
-## Alternatives
+## Alternativas
 
-Next, we want to know whether a piece of text contains not only a number, but a number followed by one of the words “pig”, “cow”, or “chicken”, or their plural forms.
+Agora, queremos saber se um pedaço do texto contém não apenas um número, mas um número seguido por uma das palavras "porco", "vaca", "galinha" ou seus plurais também.
 
-We could write three regular expressions, and test them in turn, but there is a nicer way. The pipe character (|) denotes a choice between the pattern to its left and the pattern to its right. So I can say this:
+Podemos escrever três expressões regulares, e testar cada uma, mas existe uma maneira mais simples. O caracter pipe ("|") indica uma opção entre o padrão à esqueda ou a direita. Entao podemos fazer:
 
 ```
-var animalCount = /\b\d+ (pig|cow|chicken)s?\b/;
-console.log(animalCount.test("15 pigs"));
+var contagemAnimal = /\b\d+ (porco|vaca|galinha)s?\b/;
+console.log( contagemAnimal.test("15 porcos") );
 // → true
-console.log(animalCount.test("15 pigchickens"));
+console.log( contagemAnimal.test("15 porcosgalinhas") );
 // → false
 ```
 
-Parentheses can be used to limit the part of the pattern that the pipe operator applies to, and you can put multiple such operators next to each other to express a choice between more than two patterns.
+Parênteses podem ser usados para limitar a que parte do padrão que o pipe ("|") se aplica, e você pode colocar vários desses operadores ao lado a lado para expressar uma escolha entre mais de dois padrões.
 
-## The mechanics of matching
+## O mecanismo de procura
 
-http://eloquentjavascript.net/2nd_edition/preview/img/re_pigchickens.svg
+![O mecanismo de procura](../img/re_porcogalinhas.svg)
 
-A string matches the expression if a path from the start (left) to the end (right) of the diagram can be found, with a corresponding start and end position in the string, such that every time we go through a box, we verify that our current position in the string corresponds to the element described by the box and, for elements that match actual characters (which the word boundaries do not), move our position forward.
+Uma _string_ coresponde à expressão se uma caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na seqüência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais ( menos os limites de palavra), continue no fluxo das caoxas.
 
-So if we match "the 3 pigs" there is a match between positions 4 (the digit “3”) and 10 (the end of the string).
+Então se encontrarmos "the 3 pigs" existe uma corespondência entre as pocições 4 (o dígito "3") e 10 (o final da string).
 
-	At position 4, there is a word boundary, so we can move past the first box.
+  - Na posição 4, existe um limite de palavra, entao passamos a primeira caixa
+  - Ainda na posição 4, encontramos um dígito, então ainda odemos passar a primeira caixa.
+  - Na posição 5, poderíamos voltar para antes da segunda caixa (dígitos), ou avançar através da caixa que contém um único caractere de espaço. Há um espaço aqui, não um dígito, por isso escolhemos o segundo caminho.
+  - Estamos agora na posição 6 (o início de "porcos") e na divisão entre três caminhos do diagrama. Nós não temos "vaca" ou "galinha" aqui, mas nós temos "porco", por isso tomamos esse caminho.
+  - Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa de "s".
+  - Estamos na posição 10 (final da string) e só podemos achar um limite de palavra. O fim de uma _string_ conta como um limite de palavra, de modo que passamos a última caixa e achamos com sucesso a busca.
 
-	Still at position 4, we find a digit, so we can also move past the second box.
-
-	At position 5, we could go back to before the second (digit) box, or move forward through the box that holds a single space character. There is a space here, not a digit, so we choose the second path.
-
-	We are now at position 6 (the start of “pigs”) and at the three-way branch in the diagram. We don’t see “cow” or “chicken” here, but we do see “pig”, so we take that branch.
-
-	At position 9, after the three-way branching, we could either skip the “s” box and go straight to the final word boundary, or first match an “s”. There is an “s” character here, not a word boundary, so we go through the “s” box.
-
-	We’re at position 10 (end of the string) and can only match a word boundary. The end of a string counts as a word boundary, so we go through the last box and have successfully matched this string.
-
-The way the regular expression engine present in a JavaScript system will conceptually look for a match in a string is simple. It starts at the start of the string and tries a match there. In this case, there is a word boundary there, so it’d get past the first box, but there is no digit, so it’d fail at the second box. Then it moves on to the second character in the string, and tries there. And so on, until it finds a match, or reaches the end of the string and decides that there really is no match.
+A modo como o mecanismo de expressões regulares do Javascript trata uma busca em uma _string_ é simples. Começa no início da _string_ e tenta achar um resultado nele. Nesse casso, existe um limite de palavra aqui, então passamos pela primeira caixa, mas nao existe um dígito, então ele falha na segunda caixa. Continua no segundo caracter da _string_ e tenta novamente. E assim continua, até encontrar um resultado ou alcança o fim da _string_ e conclui que não encontrou nenhum resultado
 
 ## Backtracking
 
@@ -319,16 +315,16 @@ http://eloquentjavascript.net/2nd_edition/preview/img/re_slow.svg
 
 If that tries to match some long series of zeroes and ones without a “b” character after them, it will first go through the inner loop until it runs out of digits. Then it notices there is no “b”, so it backtracks one position, goes through the outer loop once, and give up again, backtracking out of the inner loop once more. It will continue to try every possible route through these two loops, which means the amount of work it needs to do doubles with each additional character. For a few dozen characters, the resulting match will already take practically forever.
 
-## The replace method
+## O método _replace_
 
-String values have a replace method, which can be used to replace parts of the string with another string.
+_Strings_ possuem o método de _replace_, que pode ser usado para substituir partes da _string_ com outra _string_
 
 ```
 console.log("papa".replace("p", "m"));
 // → mapa
 ```
 
-The first argument can also be a regular expression, in which case the first match of the regular expression is replaced.
+O Primeiro Argumento também pode ser uma expressão regular, que na primeira ocorrência de correspondência será substituída.
 
 ```
 console.log("Borobudur".replace(/[ou]/, "a"));
@@ -337,11 +333,11 @@ console.log("Borobudur".replace(/[ou]/g, "a"));
 // → Barabadar
 ```
 
-When a “g” option (for “global”) is added to the regular expression, all matches in the string will be replaced, not just the first.
+Quando a opção "g" ("global") é adicionada à expressão, todas as ocorrências serão substituídas, não só a primeira.
 
-It would have been more sensible if this choice was made through an addition argument to replace, rather than through a property of the regular expression we pass it. (This is one of the poor interface choices that surround JavaScript regular expressions.)
+Seria melhor se essa opção fosse feita através de outro argumento, em vez de usar a opção própria de uma expressão regular. (Este é um exemplo de falha na sintaxe do Javascript)
 
-The real power of using regular expressions with replace comes from the fact that we can refer back to the matched groups in the expression. For example, say we have a big string containing the names of people, one name per line, in the format Lastname, Firstname. If we want to swap these names and remove the comma to get a simple Firstname Lastname format, we can use the following code:
+A verdadeira utilidade do uso de expressões regulares com o método _replace_ é a opção de fazer refrências aos grupos achados através da expressão. Por exemplo, se temos uma _string_ longa com nomes de pessoas, uma por linha, no formato "Sobrenome, Nome" e queremos trocar essa ordem e remover a vírgula, para obter o formato "Nome Sobrenome", podemos usar o seguinte código:
 
 ```
 console.log(
@@ -352,11 +348,11 @@ console.log(
 //   Dennis Ritchie
 ```
 
-The $1 and $2 in the replacement string refer to the parenthesized parts in the pattern. $1 is replaced by the text that matched against the first pair of parentheses, $2 by the second, and so on, up to $9.
+O "$1" e "$2" na _string_ de substituição referen-se as partes entre parenteses no padrão. "$1" será substitído  pelo texto achado no primeiro grupo entre parênteses e "$2" pelo segundo, e assim em diante, até "$9".
 
-It is also possible to pass a function, rather than a string, as the second argument to replace. For each replacement, the function will be called with the matched groups (as well as the whole match) as arguments, and the value it returns will be inserted into the new string.
+Também é possível passar uma função, em vez de uma _string_ no segunto argumento do método _replace_. Para cada substituição, a função será chamada com os grupos achados (assim como o padrão) como argumentos, e o valor retornado pela função será inserido na nova _string_.
 
-Here’s a simple example:
+Segue um exemplo simples:
 
 ```
 var s = "the cia and fbi";
@@ -366,7 +362,7 @@ console.log(s.replace(/\b(fbi|cia)\b/g, function(str) {
 // → the CIA and FBI
 ```
 
-And here’s another one:
+E outro exemplo:
 
 ```
 var stock = "1 lemon, 2 cabbages, and 101 eggs";
@@ -382,9 +378,9 @@ console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 // → no lemon, 1 cabbage, and 100 eggs
 ```
 
-This takes a string, finds all occurrences of a number followed by an alphanumeric word, and returns a string wherein every such occurrence is decremented by one.
+Ele pega a _string_, acha todas as ocorrências de um número seguido por uma palavra alfanumérica e retorna uma nova _string_ onde cada achado é diminuído em um.
 
-The (\d+) group ends up as the amount argument to the function, and the (\w+) group gets bound to unit. The function converts the amount to a number—which always works, since it matched \d+—and makes some adjustments in case there is only one or zero left.
+O Grupo (\d+) finaliza o argumento da função e o (\w+) limita a unidade. A função converte o valor em um número, desde que achado, \d+— faz ajustes caso exista apenas um ou zero esquerda.
 
 ## Greed
 

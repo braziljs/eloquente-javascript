@@ -428,4 +428,64 @@ A indentação sugere a profundidade da pilha de chamadas. A primeira chamada a 
 
 ## Funções Crescentes
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_FDJnaYNBaa
+Existem duas formas mais ou menos naturais para as funções serem introduzidas nos programas.
+
+A primeira é que você se encontra escrevendo código muito parecido muitas vezes. Nós queremos evitar isso - ter mais código significa mais espaço para erros acontecerem, e mais material para ser lido por pessoas tentando entender o programa. Então pegamos a funcionalidade repetida, encontramos um bom nome para isso, e a colocamos dentro de uma função.
+
+A segunda forma é que você precisa de alguma funcionalidade que você ainda não escreveu, e isso soa como necessidade de uma função própria. Você vai começar nomeando a função, e então escrever seu corpo. Você pode até escrever primeiro outro pedaço de código que já usa a função, antes de criar a função em si.
+
+A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro está um conceito o qual você tenta envolver. Vamos ver um exemplo.
+
+Nós queremos escrever um programa que imprime dois números, a quantidade de vacas e galinhas em uma fazenda, com as palavras `Cows` e `Chickens` depois deles, e zeros inseridos antes de ambos os números para que estes sempre sejam números de três digitos.
+
+```
+
+007 Cows
+011 Chickens
+
+```
+
+Bom, isso claramente é uma função com dois argumentos. Vamos codar.
+
+```js
+
+function printFarmInventory(cows, chickens) {
+  var cowString = String(cows);
+  while (cowString.length < 3)
+    cowString = "0" + cowString;
+  console.log(cowString + " Cows");
+  var chickenString = String(chickens);
+  while (chickenString.length < 3)
+    chickenString = "0" + chickenString;
+  console.log(chickenString + " Chickens");
+}
+printFarmInventory(7, 11);
+
+```
+
+Adicionando `.length` depois do valor de uma string vai nos fornecer o comprimento desta string. Então, o loop `while` continua colocando zeros na frente do número de strings até que tenha no mínimo 3 caracteres de comprimento.
+
+Missão cumprida! Mas quando iriamos enviar o código a ele (juntamente com uma fatura pesada é claro), o fazendeiro ligou e disse que começou a criar porcos (pigs), e se poderíamos extender o software para também imprimir `pigs`.
+
+Nós podemos claro. Mas antes de entrar no processo de copiar e colar estas quatro linhas mais uma vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui a primeira tentativa:
+
+```js
+
+function printZeroPaddedWithLabel(number, label) {
+  var numberString = String(number);
+  while (numberString.length < 3)
+    numberString = "0" + numberString;
+  console.log(numberString + " " + label);
+}
+
+function printFarmInventory(cows, chickens, pigs) {
+  printZeroPaddedWithLabel(cows, "Cows");
+  printZeroPaddedWithLabel(chickens, "Chickens");
+  printZeroPaddedWithLabel(pigs, "Pigs");
+}
+
+printFarmInventory(7, 11, 3);
+
+```
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_6/4BxnwWvK

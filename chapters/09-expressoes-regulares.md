@@ -386,7 +386,6 @@ O Grupo (\d+) finaliza o argumento da função e o (\w+) limita a unidade. A fun
 ## Greed
 ## Quantificador / Greed
 
-It isn’t hard to use replace to write a function that removes all comments from a piece of JavaScript code. Here is the first attempt:
 É simples usar o método _replace_ para escrever uma função que remove todos os comentários de um pedaço de código Javascriot. Veja uma primeira tentativa
 
 ```
@@ -401,19 +400,14 @@ console.log(stripComments("1 /* a */+/* b */ 1"));
 // → 1  1
 ```
 
-The [\w\W] part is an (ugly) way to match any character. Remember that a dot will not match a newline character. Block comments can continue on a new line, so we can’t use a dot here. Matching something that is either a word character or not a word character will match all possible characters.
 A parte [\w\W] é uma maneira (feia) de encontrar qualquer caractere. Lembre-se que um ponto não encontra um caracter de quebra de linha / linha nova. Comentários podem conter mais de uma linha, então não podemos usar um ponto aqui. Achar algo que seja ou não um caracter de palavra, irá encontrar todos os caracteres possíveis.
 
-But the output of the last example appears to have gone wrong. Why?
 Mas o resultado do último exemplo parece errado. Porque?
 
-The .* part of the expression, as I described in the section on backtracking, will first match as much as it can, and then, if that causes the part of the pattern after it to fail, move back one match at a time and try from there. In this case, we are first matching the whole rest of the string, and then moving back from there. It will find an occurrence of */ after going back four characters, and match that. This is not what we wanted—the intention was to match a single comment, not to go all the way to the end of the code and find the end of the last block comment.
 A parte ".*" da expressão, comod escita na seção "Retrocedendo", acima, irá primeiro encontrar tudo que puder e depois, se falhar, voltar atrás e tentar mais uma vez a partir daí. nesse caso, primeiro procuramos no resto da _string_ e depois continuamos a partir daí. Irá encontrar uma ocorrencia de "*/" depois voltar quatro caracteres e achar um resultado. Isto não era o que desejávamos, queríamos um comentário de uma linha, para não ir até o final do código e encontrar o final do último comentário
 
-There are two variants of the repetition operators in regular expressions (‘+’, ‘*’, and ‘{}’). By default, they are greedy, meaning they match as much as they can and backtrack back from there. If you put a question mark after them, they become non-greedy, and start by matching as little as possible, and only matching more then the remaining pattern does not fit with the smaller match.
 Existem duas variaçãoes de operadores de repetição em expressões regulares (‘+’, ‘*’, e ‘{}’). Por padrão, eles eles quantificam, significa que eles encontram o que podem e retrocedem a partir daí. Se você colocar uma interrogação depois deles, eles se tornam _non_greedy_, e começam encontrando o menor grupo possível e o resto que não contenha o grupo menor.
 
-And that is exactly what we want in this case. By having the star match the smallest stretch of characters that brings us to a */ closing marker, we consume one block comment, and nothing more.
 E é exatamente o que queremos nesse caso. Com o asterisco encontramos os grupos menores que tenham "*/" no fechamento, encontarmos um bloco de comentários e nada mais.
 
 ```

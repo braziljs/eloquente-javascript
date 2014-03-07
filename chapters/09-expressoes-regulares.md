@@ -450,10 +450,8 @@ console.log(text.replace(regexp, "_$1_"));
 
 O marcador "$&" na _string_ de substituição age como se fosse "$1", mas será substitído em dodos os resultados ao invés do grupo encontrado.
 
-## The search method
 ## O método _search_
 
-The indexOf method on strings can not be called with a regular expression. But there is another method, search, which does expect a regular expression, and, like indexOf returns the first index on which the expression was found, or -1 when it wasn’t found.
 O método _indexOf_ em _strings_ não pode ser invocado com uma expressão regular. Mas existe um outro método, _search_, que espera como argumento uma expressão regular, e como o _indexOf_, retorna o índice do primeiro resultado encontrado ou -1 se não encontra.
 
 ```
@@ -463,7 +461,6 @@ console.log("    ".search(/\S/));
 // → -1
 ```
 
-Unfortunately, there is no way to indicate that the match should start at a given offset (as with the second argument to indexOf), which would often be very useful.
 Infelizmente, não existe um modo de indicar onde a busca deve começar, com um índice (como o segundo argumento de _indexOf_), o que seria muito útil.
 
 ## The lastIndex property

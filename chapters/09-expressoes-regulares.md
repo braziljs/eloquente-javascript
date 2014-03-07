@@ -295,25 +295,26 @@ Então se encontrarmos "the 3 pigs" existe uma corespondência entre as pociçõ
 
 A modo como o mecanismo de expressões regulares do Javascript trata uma busca em uma _string_ é simples. Começa no início da _string_ e tenta achar um resultado nele. Nesse casso, existe um limite de palavra aqui, então passamos pela primeira caixa, mas nao existe um dígito, então ele falha na segunda caixa. Continua no segundo caracter da _string_ e tenta novamente. E assim continua, até encontrar um resultado ou alcança o fim da _string_ e conclui que não encontrou nenhum resultado
 
-## Backtracking
+## Retrocedendo
 
-The regular expression /\b([01]+b|\d+|[\da-f]h)\b/ matches either a binary number followed by a “b”, a regular decimal number without suffix character, or a hexadecimal number (base 16, with the letters “a” to “f” standing for the digits 10 to 15) followed by an “h”. This is the corresponding diagram:
+A expressão regular /\b([01]+b|\d+|[\da-f]h)\b/ encontra um  um número binário seguido por um "b", um número decimal, sem um caractere de sufixo, ou um número hexadecimal (de base 16, com as letras "a" a "f" para os algarismos de 10 a 15), seguido por um "h". Este é o diagrama equivalente:
 
 http://eloquentjavascript.net/2nd_edition/preview/img/re_number.svg
 
-When matching this expression, it will often happen that the top (binary) branch is entered although the input does not actually contain a binary number. When matching the string "103", it is only at the “3” that it becomes clear that we are in the wrong branch. The string does match the expression, just not the branch we are currently in.
+Ao buscar esta expressão, muitas vezes o ramo superior será percorrido, mesmo que a entrada não contenha realmente um número binário. Quando busca a _string_ "103", é apenas no "3" que torna-se claro que estamos no local errado. A expressão é buscada não apenas no ramo que se está execuntando.
 
-What happens then is that the matcher backtracks. When entering a branch, it remembers where it was when it entered the current branch (in this case, at the start of the string, just past the first boundary box in the diagram), so that it can go back and try another branch if the current one does not work out. So for the string "103", after encountering the “3” character, it will start trying the decimal (second) branch. This one matches, so a match is reported after all.
+É o que acontece se a expressão retroce. Quando entra em um ramo, ela guarda em que ponto aconteceu (nesse caso, no início da _string_, na primeira caixa do diagrama), então ela retrocede e tenta outro ramo do diagrama se o atual não encontra nenhum resultado. Então para a _string_ "103", após encontrar o caracter "3", eta irá tentar o segundo ramo, teste de número decimal. E este, encontra um resultado.
 
-When more than one branch matches, the first one (in the order in which the branches appear in the expression) will be taken.
+Quando mais de um ramo encontra um resultado, o primeiro (na ordem em que foi escrito na expressão regular) será considerado.
 
-Backtracking also happens, in slightly different forms, when matching repeat operators. If you match /^.*x/ against "abcxe", the .* part will first try to match the whole string. It’ll then realize that it can only match when it is followed by an “x”, and there is no “x” past the end of the string. So it tries to match one character less. And then another character less. And now it finds an “x” where it needs it, and reports a successful match from position 0 to 4.
+Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se busrcar-mos /^.*x/  em "abcxe", a parte ".*" irá tentar achar toda a _ string. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da _string_. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
 
-It is possible to write regular expressions that will do a lot of backtracking. The problem occurs when a pattern can match a piece of input in a lot of ways. For example, if we get confused while writing our binary-number regexp and accidentally write something like /([01]+)+b/.
+É possível escrever expressões expressões regulares que fazem muitos retrocessos. O Problema ocorre quando um paddrão encontra um pedaço da _string_ de entrada de muitas maneiras. Por exemplo, se confundimos e escrevemos nossa expre˜ão regular para achar binários e números assim /([01]+)+b/.
 
 http://eloquentjavascript.net/2nd_edition/preview/img/re_slow.svg
 
-If that tries to match some long series of zeroes and ones without a “b” character after them, it will first go through the inner loop until it runs out of digits. Then it notices there is no “b”, so it backtracks one position, goes through the outer loop once, and give up again, backtracking out of the inner loop once more. It will continue to try every possible route through these two loops, which means the amount of work it needs to do doubles with each additional character. For a few dozen characters, the resulting match will already take practically forever.
+Ela tentará achar series de zeros sem um "b" após elas, depois irá percorrer o circuito interno até passar por todos os dígitos. Quando perceber que não existe nenhum "b", retorna uma posição e passa pelo caminho de fora mais uma vez, e de novo, retrocedendo até o circuito interno amis uma vez. Irá continuar a tentar todas as rotas possíveis através destes dois loops, em todos os caracteres. Para strings mais longas o resultado demorará  praticamente para sempre.
+
 
 ## O método _replace_
 

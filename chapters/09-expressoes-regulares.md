@@ -419,10 +419,14 @@ console.log(stripComments("1 /* a */+/* b */ 1"));
 ```
 
 ## Dynamically creating RegExp objects
+## Criando objetos RegExp dinamicamente
+
 
 There are cases where you might not know the exact pattern you need to match against when you are writing your code. Say you want to look for the user’s name in a piece of text, and enclose it in underscore characters to make it stand out. The name is only known when the program is actually running, so we can not use the slash-based notation.
+Existem casos onde você pode não saber o padrão exato que você precisa quando escreve seu código. Digamos que você queira buscar o nome de um suário em um pedaço de texto e colocá-lo entre caracteres "_" para destacá-lo. O nome será fornecido apenas quando o programa estiver sendo executado, então não podemos usar a notação de barras para criar nosso padrão.
 
 But we can build up a string and use the RegExp constructor on that. For example:
+Mas podemos construit uma string e usar o construtor _RegExp_ para isso. Por exemplo:
 
 ```
 var name = "harry";
@@ -433,10 +437,13 @@ console.log(text.replace(regexp, "_$1_"));
 ```
 
 When creating the \b boundary markers, we have to use two backslashes, because we are writing them in a normal string, not a slash-enclosed regular expression. The options (global and case-insensitive) for the regular expression can be given as a second argument to the RegExp constructor.
+Ao criar os marcos de limite "\b, usamos duas barras invertidas, porque estamos escrevendo-os em uma _string_ normal, não uma expressão regular com barras. As opções (global e case-insensitive) para a expressão regular podem ser inseridas como segundo argumento para o construtor RegExp.
 
-But what if the name is "dea+hl[]rd" because our user is a nerdy teenager? That would cause us to produce a bogus regular expression, which will cause unexpected results.
+But what if the name is "dea+hl[]rd" because our user is a nerdy teenager? That would cause us to produce a bogus regular expression, which will cause unexpected results. 
+Mas e se o nome for "dea+hl[]rd" porque o usuário é um adolescente nerd? Isso irá gerar uma falsa expressão regular, por conter caracteres comando, que irá gerar um resultado estranho
 
 To work around this, we can add backslashes before any character that we don’t trust. Adding backslashes before alphabetic characters is a bad idea, because things like \b and \n have a special meaning. But escaping everything that’s not alphanumeric or whitespace is safe.
+Para cortornar isso, adicionamos contrabarras antes de qualquer caractere que não confiamos. Adicionar contrabarras antes de qualquer caractere alfabético é uma má idéia, porque coisas como "\b" ou "\n" possuem significado para uma expressão regular. Mas escapar tudo tudo que não for alfanumérico ou espaço é seguro.
 
 ```
 var name = "dea+hl[]rd";
@@ -448,6 +455,7 @@ console.log(text.replace(regexp, "_$1_"));
 ```
 
 The $& placeholder in the replacement string acts similar to $1, but will be replaced by the whole match, rather than a matched group.
+O marcador "$&" na _string_ de substituição age como se fosse "$1", mas será substitído em dodos os resultados ao invés do grupo encontrado.
 
 ## The search method
 

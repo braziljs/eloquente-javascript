@@ -295,25 +295,26 @@ Então se encontrarmos "the 3 pigs" existe uma corespondência entre as pociçõ
 
 A modo como o mecanismo de expressões regulares do Javascript trata uma busca em uma _string_ é simples. Começa no início da _string_ e tenta achar um resultado nele. Nesse casso, existe um limite de palavra aqui, então passamos pela primeira caixa, mas nao existe um dígito, então ele falha na segunda caixa. Continua no segundo caracter da _string_ e tenta novamente. E assim continua, até encontrar um resultado ou alcança o fim da _string_ e conclui que não encontrou nenhum resultado
 
-## Backtracking
+## Retrocedendo
 
-The regular expression /\b([01]+b|\d+|[\da-f]h)\b/ matches either a binary number followed by a “b”, a regular decimal number without suffix character, or a hexadecimal number (base 16, with the letters “a” to “f” standing for the digits 10 to 15) followed by an “h”. This is the corresponding diagram:
+A expressão regular /\b([01]+b|\d+|[\da-f]h)\b/ encontra um  um número binário seguido por um "b", um número decimal, sem um caractere de sufixo, ou um número hexadecimal (de base 16, com as letras "a" a "f" para os algarismos de 10 a 15), seguido por um "h". Este é o diagrama equivalente:
 
 http://eloquentjavascript.net/2nd_edition/preview/img/re_number.svg
 
-When matching this expression, it will often happen that the top (binary) branch is entered although the input does not actually contain a binary number. When matching the string "103", it is only at the “3” that it becomes clear that we are in the wrong branch. The string does match the expression, just not the branch we are currently in.
+Ao buscar esta expressão, muitas vezes o ramo superior será percorrido, mesmo que a entrada não contenha realmente um número binário. Quando busca a _string_ "103", é apenas no "3" que torna-se claro que estamos no local errado. A expressão é buscada não apenas no ramo que se está execuntando.
 
-What happens then is that the matcher backtracks. When entering a branch, it remembers where it was when it entered the current branch (in this case, at the start of the string, just past the first boundary box in the diagram), so that it can go back and try another branch if the current one does not work out. So for the string "103", after encountering the “3” character, it will start trying the decimal (second) branch. This one matches, so a match is reported after all.
+É o que acontece se a expressão retroce. Quando entra em um ramo, ela guarda em que ponto aconteceu (nesse caso, no início da _string_, na primeira caixa do diagrama), então ela retrocede e tenta outro ramo do diagrama se o atual não encontra nenhum resultado. Então para a _string_ "103", após encontrar o caracter "3", eta irá tentar o segundo ramo, teste de número decimal. E este, encontra um resultado.
 
-When more than one branch matches, the first one (in the order in which the branches appear in the expression) will be taken.
+Quando mais de um ramo encontra um resultado, o primeiro (na ordem em que foi escrito na expressão regular) será considerado.
 
-Backtracking also happens, in slightly different forms, when matching repeat operators. If you match /^.*x/ against "abcxe", the .* part will first try to match the whole string. It’ll then realize that it can only match when it is followed by an “x”, and there is no “x” past the end of the string. So it tries to match one character less. And then another character less. And now it finds an “x” where it needs it, and reports a successful match from position 0 to 4.
+Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se busrcar-mos /^.*x/  em "abcxe", a parte ".*" irá tentar achar toda a _ string. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da _string_. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
 
-It is possible to write regular expressions that will do a lot of backtracking. The problem occurs when a pattern can match a piece of input in a lot of ways. For example, if we get confused while writing our binary-number regexp and accidentally write something like /([01]+)+b/.
+É possível escrever expressões expressões regulares que fazem muitos retrocessos. O Problema ocorre quando um paddrão encontra um pedaço da _string_ de entrada de muitas maneiras. Por exemplo, se confundimos e escrevemos nossa expre˜ão regular para achar binários e números assim /([01]+)+b/.
 
 http://eloquentjavascript.net/2nd_edition/preview/img/re_slow.svg
 
-If that tries to match some long series of zeroes and ones without a “b” character after them, it will first go through the inner loop until it runs out of digits. Then it notices there is no “b”, so it backtracks one position, goes through the outer loop once, and give up again, backtracking out of the inner loop once more. It will continue to try every possible route through these two loops, which means the amount of work it needs to do doubles with each additional character. For a few dozen characters, the resulting match will already take practically forever.
+Ela tentará achar series de zeros sem um "b" após elas, depois irá percorrer o circuito interno até passar por todos os dígitos. Quando perceber que não existe nenhum "b", retorna uma posição e passa pelo caminho de fora mais uma vez, e de novo, retrocedendo até o circuito interno amis uma vez. Irá continuar a tentar todas as rotas possíveis através destes dois loops, em todos os caracteres. Para strings mais longas o resultado demorará  praticamente para sempre.
+
 
 ## O método _replace_
 
@@ -383,8 +384,9 @@ Ele pega a _string_, acha todas as ocorrências de um número seguido por uma pa
 O Grupo (\d+) finaliza o argumento da função e o (\w+) limita a unidade. A função converte o valor em um número, desde que achado, \d+— faz ajustes caso exista apenas um ou zero esquerda.
 
 ## Greed
+## Quantificador / Greed
 
-It isn’t hard to use replace to write a function that removes all comments from a piece of JavaScript code. Here is the first attempt:
+É simples usar o método _replace_ para escrever uma função que remove todos os comentários de um pedaço de código Javascriot. Veja uma primeira tentativa
 
 ```
 function stripComments(code) {
@@ -398,15 +400,15 @@ console.log(stripComments("1 /* a */+/* b */ 1"));
 // → 1  1
 ```
 
-The [\w\W] part is an (ugly) way to match any character. Remember that a dot will not match a newline character. Block comments can continue on a new line, so we can’t use a dot here. Matching something that is either a word character or not a word character will match all possible characters.
+A parte [\w\W] é uma maneira (feia) de encontrar qualquer caractere. Lembre-se que um ponto não encontra um caracter de quebra de linha / linha nova. Comentários podem conter mais de uma linha, então não podemos usar um ponto aqui. Achar algo que seja ou não um caracter de palavra, irá encontrar todos os caracteres possíveis.
 
-But the output of the last example appears to have gone wrong. Why?
+Mas o resultado do último exemplo parece errado. Porque?
 
-The .* part of the expression, as I described in the section on backtracking, will first match as much as it can, and then, if that causes the part of the pattern after it to fail, move back one match at a time and try from there. In this case, we are first matching the whole rest of the string, and then moving back from there. It will find an occurrence of */ after going back four characters, and match that. This is not what we wanted—the intention was to match a single comment, not to go all the way to the end of the code and find the end of the last block comment.
+A parte ".*" da expressão, comod escita na seção "Retrocedendo", acima, irá primeiro encontrar tudo que puder e depois, se falhar, voltar atrás e tentar mais uma vez a partir daí. nesse caso, primeiro procuramos no resto da _string_ e depois continuamos a partir daí. Irá encontrar uma ocorrencia de "*/" depois voltar quatro caracteres e achar um resultado. Isto não era o que desejávamos, queríamos um comentário de uma linha, para não ir até o final do código e encontrar o final do último comentário
 
-There are two variants of the repetition operators in regular expressions (‘+’, ‘*’, and ‘{}’). By default, they are greedy, meaning they match as much as they can and backtrack back from there. If you put a question mark after them, they become non-greedy, and start by matching as little as possible, and only matching more then the remaining pattern does not fit with the smaller match.
+Existem duas variaçãoes de operadores de repetição em expressões regulares (‘+’, ‘*’, e ‘{}’). Por padrão, eles eles quantificam, significa que eles encontram o que podem e retrocedem a partir daí. Se você colocar uma interrogação depois deles, eles se tornam _non_greedy_, e começam encontrando o menor grupo possível e o resto que não contenha o grupo menor.
 
-And that is exactly what we want in this case. By having the star match the smallest stretch of characters that brings us to a */ closing marker, we consume one block comment, and nothing more.
+E é exatamente o que queremos nesse caso. Com o asterisco encontramos os grupos menores que tenham "*/" no fechamento, encontarmos um bloco de comentários e nada mais.
 
 ```
 function stripComments(code) {
@@ -416,11 +418,12 @@ console.log(stripComments("1 /* a */+/* b */ 1"));
 // → 1 + 1
 ```
 
-## Dynamically creating RegExp objects
+## Criando objetos RegExp dinamicamente
 
-There are cases where you might not know the exact pattern you need to match against when you are writing your code. Say you want to look for the user’s name in a piece of text, and enclose it in underscore characters to make it stand out. The name is only known when the program is actually running, so we can not use the slash-based notation.
 
-But we can build up a string and use the RegExp constructor on that. For example:
+Existem casos onde você pode não saber o padrão exato que você precisa quando escreve seu código. Digamos que você queira buscar o nome de um suário em um pedaço de texto e colocá-lo entre caracteres "_" para destacá-lo. O nome será fornecido apenas quando o programa estiver sendo executado, então não podemos usar a notação de barras para criar nosso padrão.
+
+Mas podemos construit uma string e usar o construtor _RegExp_ para isso. Por exemplo:
 
 ```
 var name = "harry";
@@ -430,11 +433,11 @@ console.log(text.replace(regexp, "_$1_"));
 // → _Harry_ is a suspicious character.
 ```
 
-When creating the \b boundary markers, we have to use two backslashes, because we are writing them in a normal string, not a slash-enclosed regular expression. The options (global and case-insensitive) for the regular expression can be given as a second argument to the RegExp constructor.
+Ao criar os marcos de limite "\b, usamos duas barras invertidas, porque estamos escrevendo-os em uma _string_ normal, não uma expressão regular com barras. As opções (global e case-insensitive) para a expressão regular podem ser inseridas como segundo argumento para o construtor RegExp.
 
-But what if the name is "dea+hl[]rd" because our user is a nerdy teenager? That would cause us to produce a bogus regular expression, which will cause unexpected results.
+Mas e se o nome for "dea+hl[]rd" porque o usuário é um adolescente nerd? Isso irá gerar uma falsa expressão regular, por conter caracteres comando, que irá gerar um resultado estranho
 
-To work around this, we can add backslashes before any character that we don’t trust. Adding backslashes before alphabetic characters is a bad idea, because things like \b and \n have a special meaning. But escaping everything that’s not alphanumeric or whitespace is safe.
+Para cortornar isso, adicionamos contrabarras antes de qualquer caractere que não confiamos. Adicionar contrabarras antes de qualquer caractere alfabético é uma má idéia, porque coisas como "\b" ou "\n" possuem significado para uma expressão regular. Mas escapar tudo tudo que não for alfanumérico ou espaço é seguro.
 
 ```
 var name = "dea+hl[]rd";
@@ -445,11 +448,11 @@ console.log(text.replace(regexp, "_$1_"));
 // → This _dea+hl[]rd_ guy is quite annoying.
 ```
 
-The $& placeholder in the replacement string acts similar to $1, but will be replaced by the whole match, rather than a matched group.
+O marcador "$&" na _string_ de substituição age como se fosse "$1", mas será substitído em dodos os resultados ao invés do grupo encontrado.
 
-## The search method
+## O método _search_
 
-The indexOf method on strings can not be called with a regular expression. But there is another method, search, which does expect a regular expression, and, like indexOf returns the first index on which the expression was found, or -1 when it wasn’t found.
+O método _indexOf_ em _strings_ não pode ser invocado com uma expressão regular. Mas existe um outro método, _search_, que espera como argumento uma expressão regular, e como o _indexOf_, retorna o índice do primeiro resultado encontrado ou -1 se não encontra.
 
 ```
 console.log("  word".search(/\S/));
@@ -458,7 +461,7 @@ console.log("    ".search(/\S/));
 // → -1
 ```
 
-Unfortunately, there is no way to indicate that the match should start at a given offset (as with the second argument to indexOf), which would often be very useful.
+Infelizmente, não existe um modo de indicar onde a busca deve começar, com um índice (como o segundo argumento de _indexOf_), o que seria muito útil.
 
 ## The lastIndex property
 

@@ -488,4 +488,35 @@ printFarmInventory(7, 11, 3);
 
 ```
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_6/4BxnwWvK
+Funcionou! Mas este nome, `printZeroPaddedWithLabel` é um pouco estranho. Ele funde três coisas - printing, zero-padding e adding a label - em uma simples função.
+
+Ao invés de ressaltar a parte repetida do programa destacado, vamos tentar escolher outro conceito. Podemos fazer melhor:
+
+```js
+
+function zeroPad(number, width) {
+  var string = String(number);
+  while (string.length < width)
+    string = "0" + string;
+  return string;
+}
+
+function printFarmInventory(cows, chickens, pigs) {
+  console.log(zeroPad(cows, 3) + " Cows");
+  console.log(zeroPad(chickens, 3) + " Chickens");
+  console.log(zeroPad(pigs, 3) + " Pigs");
+}
+
+printFarmInventory(7, 16, 3);
+
+```
+
+`zeroPad` tem um belo e óbvio nome, que torna fácil para qualquer um ler o código e saber o que ele faz. E ele é útil em mais situações do que somente neste programa específico. Por exemplo, você pode usá-lo para imprimir belas tabelas alinhadas com números.
+
+Quão esperta e versátil nossa função é? Nós podemos escrever qualquer coisa desde uma função extremamente simples que apenas formata um número para ter três caracteres de largura, até um complicado sistema de formatação de números fracionários, números negativos, alinhamento de pontos, formatação com diferentes caracteres e por ai vai...
+
+Um princípio útil é não adicionar inteligência a menos que você tenha certeza absoluta que irá precisar. Pode ser tentador escrever "estruturas" gerais para cada pouco de funcionalidade que você se deparar. Resista a isso. Você não terá nenhum trabalho feito, e você vai acabar escrevendo um monte de código que ninguém nunca vai usar.
+
+## Funções e Efeitos Colaterais
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_RmwmCRCVb8

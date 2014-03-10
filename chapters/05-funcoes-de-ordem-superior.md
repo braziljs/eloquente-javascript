@@ -8,8 +8,8 @@ O primeiro é auto contido e num total de 6 linhas.
 ```
 var total = 0, count = 1;
 while (count <= 10) {
-  total += count;
-  count += 1;
+	total += count;
+	count += 1;
 }
 console.log(total);
 ```
@@ -56,8 +56,8 @@ No capítulo anterior, esse tipo de `loop` apareceu várias vezes:
 ```
 var array = [1, 2, 3];
 for (var i = 0; i < array.length; i++) {
-  var current = array[i];
-  // faça alguma coisa com current
+	var current = array[i];
+	// faça alguma coisa com current
 }
 ```
 
@@ -69,7 +69,7 @@ O problema é que, onde muitas funções apenas pegam alguns valores, combina-os
 
 ```
 function logEach(array) {
-  for (var i = 0; i < array.length; i++)
+	for (var i = 0; i < array.length; i++)
 	console.log(array[i]);
 }
 ```
@@ -80,7 +80,7 @@ Mas e se quisermos fazer algo diferente de escrever os elementos? Desde que "faz
 
 ```
 function forEach(array, action) {
-  for (var i = 0; i < array.length; i++)
+	for (var i = 0; i < array.length; i++)
 	action(array[i]);
 }
 
@@ -95,7 +95,7 @@ Normalmente você não passa uma função pré-definida para o `forEach`, mas cr
 ```
 var numbers = [1, 2, 3, 4, 5], sum = 0;
 forEach(numbers, function(number) {
-  sum += number;
+	sum += number;
 });
 console.log(sum);
 // → 15
@@ -113,16 +113,16 @@ Para ilustrar o quão útil isso é, lembre-se dessa função do capítulo anter
 
 ```
 function gatherCorrelations(journal) {
-  var phis = {};
-  for (var entry = 0; entry < journal.length; ++entry) {
+	var phis = {};
+	for (var entry = 0; entry < journal.length; ++entry) {
 	var events = journal[entry].events;
 	for (var i = 0; i < events.length; i++) {
-	  var event = events[i];
-	  if (!(event in phis))
+		var event = events[i];
+		if (!(event in phis))
 		phis[event] = phi(tableFor(event, journal));
 	}
-  }
-  return phis;
+	}
+	return phis;
 }
 ```
 
@@ -130,14 +130,14 @@ Trabalhando com `forEach` faz parecer levemente menor e bem menos confuso.
 
 ```
 function gatherCorrelations(journal) {
-  var phis = {};
-  journal.forEach(function(entry) {
+	var phis = {};
+	journal.forEach(function(entry) {
 	entry.events.forEach(function(event) {
-	  if (!(event in phis))
+		if (!(event in phis))
 		phis[event] = phi(tableFor(event, journal));
 	});
-  });
-  return phis;
+	});
+	return phis;
 }
 ```
 
@@ -149,7 +149,7 @@ Funções de ordem superior permite-nos abstrair sobre ações, não apenas valo
 
 ```
 function greaterThan(n) {
-  return function(m) { return m > n; };
+	return function(m) { return m > n; };
 }
 var greaterThan10 = greaterThan(10);
 console.log(greaterThan10(11));
@@ -160,12 +160,12 @@ Ou funções que mudam outra função.
 
 ```
 function noisy(f) {
-  return function(arg) {
+	return function(arg) {
 	console.log("calling with", arg);
 	var val = f(arg);
 	console.log("called with", arg, "- got", val);
 	return val;
-  };
+	};
 }
 noisy(Boolean)(0);
 // → calling with 0
@@ -176,16 +176,16 @@ Ou ainda criar funções que implementão seus próprios tipos de fluxo de contr
 
 ```
 function unless(test, then) {
-  if (!test) then();
+	if (!test) then();
 }
 function repeat(times, body) {
-  for (var i = 0; i < times; i++) body(i);
+	for (var i = 0; i < times; i++) body(i);
 }
 
 repeat(3, function(n) {
-  unless(n % 2, function() {
+	unless(n % 2, function() {
 	console.log(n, "is even");
-  });
+	});
 });
 // → 0 is even
 // → 2 is even
@@ -199,12 +199,12 @@ A função `noisy` acima, que circula seu argumento em outra função, tem uma s
 
 ```
 function noisy(f) {
-  return function(arg) {
+	return function(arg) {
 	console.log("calling with", arg);
 	var val = f(arg);
 	console.log("called with", arg, "- got", val);
 	return val;
-  };
+	};
 }
 ```
 
@@ -216,9 +216,9 @@ Para esse tipo de situação, funções Javascript possuem um método `apply`. O
 
 ```
 function transparentWrapping(f) {
-  return function() {
+	return function() {
 	return f.apply(null, arguments);
-  };
+	};
 }
 ``` 
 
@@ -236,15 +236,15 @@ O arquivo que eu criei parece mais ou menos assim:
 
 ```
 [
-  {"name": "Emma de Milliano", "sex": "f",
-   "born": 1876, "died": 1956,
-   "father": "Petrus de Milliano",
-   "mother": "Sophia van Damme"},
-  {"name": "Carolus Haverbeke", "sex": "m",
-   "born": 1832, "died": 1905,
-   "father": "Carel Haverbeke",
-   "mother": "Maria van Brussel"},
-  … and so on
+	{"name": "Emma de Milliano", "sex": "f",
+	 "born": 1876, "died": 1956,
+	 "father": "Petrus de Milliano",
+	 "mother": "Sophia van Damme"},
+	{"name": "Carolus Haverbeke", "sex": "m",
+	 "born": 1832, "died": 1905,
+	 "father": "Carel Haverbeke",
+	 "mother": "Maria van Brussel"},
+	… and so on
 ]
 ```
 
@@ -278,16 +278,16 @@ Para encontrar as pessoas nos dados dos ancestrais que eram jovens em 1924, a fu
 
 ```
 function filter(array, test) {
-  var passed = [];
-  for (var i = 0; i < array.length; i++) {
+	var passed = [];
+	for (var i = 0; i < array.length; i++) {
 	if (test(array[i]))
-	  passed.push(array[i]);
-  }
-  return passed;
+		passed.push(array[i]);
+	}
+	return passed;
 }
 
 console.log(filter(ancestry, function(person) {
-  return person.born > 1900 && person.born < 1925;
+	return person.born > 1900 && person.born < 1925;
 }));
 // → [{name: "Philibert Haverbeke", …}, …]
 ```
@@ -305,17 +305,17 @@ através dos valores retornados. O novo array vai ter o mesmo tamanho array envi
 
 ```
 function map(array, transform) {
-  var mapped = [];
-  for (var i = 0; i < array.length; i++)
+	var mapped = [];
+	for (var i = 0; i < array.length; i++)
 	mapped.push(transform(array[i]));
-  return mapped;
+	return mapped;
 }
 
 var overNinety = ancestry.filter(function(person) {
-  return person.died - person.born > 90;
+	return person.died - person.born > 90;
 });
 console.log(map(overNinety, function(person) {
-  return person.name;
+	return person.name;
 }));
 // → ["Clara Aernoudts", "Emile Haverbeke",
 //    "Maria Haverbeke"]
@@ -335,14 +335,14 @@ A operação de ordem superior que representa esse padrão é chamado de `reduce
 
 ```
 function reduce(array, combine, start) {
-  var current = start;
-  for (var i = 0; i < array.length; i++)
+	var current = start;
+	for (var i = 0; i < array.length; i++)
 	current = combine(current, array[i]);
-  return current;
+	return current;
 }
 
 console.log(reduce([1, 2, 3, 4], function(a, b) {
-  return a + b;
+	return a + b;
 }, 0));
 // → 10
 ```
@@ -353,8 +353,8 @@ Para usá-lo para encontrar meu ancestral mais velho, podemos escrever algo assi
 
 ```
 console.log(ancestry.reduce(function(min, cur) {
-  if (cur.born < min.born) return cur;
-  else return min;
+	if (cur.born < min.born) return cur;
+	else return min;
 }));
 // → {name: "Pauwels van Haverbeke", born: 1535, …}
 ```
@@ -366,8 +366,8 @@ Vamos voltar um momento e considerar como escreveríamos o exemplo anterior (enc
 ```
 var min = ancestry[0];
 for (var i = 1; i < ancestry.length; i++) {
-  var cur = ancestry[i];
-  if (cur.born < min.born)
+	var cur = ancestry[i];
+	if (cur.born < min.born)
 	min = cur;
 }
 console.log(min);
@@ -382,8 +382,8 @@ A abordagem através da função de ordem superior começa a brilhar quando nece
 
 ```
 function average(array) {
-  function plus(a, b) { return a + b; }
-  return array.reduce(plus) / array.length;
+	function plus(a, b) { return a + b; }
+	return array.reduce(plus) / array.length;
 }
 function age(p) { return p.died - p.born; }
 function male(p) { return p.sex == "m"; }
@@ -424,7 +424,7 @@ Primeiro, construí um objeto que faz que seja facil encontrar pessoas através 
 ```
 var byName = {};
 ancestry.forEach(function(person) {
-  byName[person.name] = person;
+	byName[person.name] = person;
 });
 
 console.log(byName["Philibert Haverbeke"]);
@@ -439,14 +439,32 @@ Dado uma pessoa, uma função que combina valores de dois pais de uma certa pess
 
 ```
 function reduceAncestors(person, f, zero) {
-  function reduce(person) {
+	function reduce(person) {
 	if (person == null) return zero;
 	var father = byName[person.father];
 	var mother = byName[person.mother];
 	return f(person, reduce(father), reduce(mother));
-  }
-  return reduce(person);
+	}
+	return reduce(person);
 }
 ```
 
-The inner function (reduce) handles a single person. Through the magic of recursion, it can simply call itself to handle the father and the mother of this person. The results, along with the person object itself, are passed to f.
+A função interna (`reduce`) lida com apenas uma pessoa. Através da magica da recursividade, ela pode chamar a si mesma para lidar com o pai e com a mãe dessa pessoa. Os resultados, junto com o objeto da pessoa em si, são passados para `f`.
+
+O pai e a mãe de algumas pessoas não estão no arquivo (obviamente, caso contrário incluiria um grande número de pessoas). Então ao procurar o pai ou a mãe e não encontrar um valor, `reduce` simplesmente retorna o valor zero que foi passado para `reduceAncestor`.
+
+Podemos usar isso para calcular o quanto de DNA meu avô compartilhava com Pauwels van Haverbeke e dividir por quatro.
+
+```js
+function sharedDNA(person, fromFather, fromMother) {
+  if (person.name == "Pauwels van Haverbeke")
+	return 1;
+  else
+	return (fromFather + fromMother) / 2;
+}
+var ph = byName["Philibert Haverbeke"];
+console.log(reduceAncestors(ph, sharedDNA, 0) / 4);
+// → 0.00049
+```
+
+A pessoa com o nome Pauwels van Haverbeke obviamente compartilhava 100% de seu DNA com Pauwels van Haverbeke (não existem pessoas com mesmo nome no arquivo). Todas as outras pessoas compartilham a média de que seus pais possuem.

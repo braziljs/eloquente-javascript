@@ -488,4 +488,67 @@ printFarmInventory(7, 11, 3);
 
 ```
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_6/4BxnwWvK
+Funcionou! Mas este nome, `printZeroPaddedWithLabel` é um pouco estranho. Ele funde três coisas - printing, zero-padding e adding a label - em uma simples função.
+
+Ao invés de ressaltar a parte repetida do programa destacado, vamos tentar escolher outro conceito. Podemos fazer melhor:
+
+```js
+
+function zeroPad(number, width) {
+  var string = String(number);
+  while (string.length < width)
+    string = "0" + string;
+  return string;
+}
+
+function printFarmInventory(cows, chickens, pigs) {
+  console.log(zeroPad(cows, 3) + " Cows");
+  console.log(zeroPad(chickens, 3) + " Chickens");
+  console.log(zeroPad(pigs, 3) + " Pigs");
+}
+
+printFarmInventory(7, 16, 3);
+
+```
+
+`zeroPad` tem um belo e óbvio nome, que torna fácil para qualquer um ler o código e saber o que ele faz. E ele é útil em mais situações do que somente neste programa específico. Por exemplo, você pode usá-lo para imprimir belas tabelas alinhadas com números.
+
+Quão esperta e versátil nossa função é? Nós podemos escrever qualquer coisa desde uma função extremamente simples que apenas formata um número para ter três caracteres de largura, até um complicado sistema de formatação de números fracionários, números negativos, alinhamento de pontos, formatação com diferentes caracteres e por ai vai...
+
+Um princípio útil é não adicionar inteligência a menos que você tenha certeza absoluta que irá precisar. Pode ser tentador escrever "estruturas" gerais para cada pouco de funcionalidade que você se deparar. Resista a isso. Você não terá nenhum trabalho feito, e você vai acabar escrevendo um monte de código que ninguém nunca vai usar.
+
+## Funções e Efeitos Colaterais
+
+Funções podem ser dividas em aquelas que são chamadas pelos seus efeitos colaterais e aquelas que são chamadas pelo seu valor de retorno. (Embora também seja definitivamente possível de ter ambos efeitos colaterais e retorno de um valor.)
+
+A primeira função auxiliar no exemplo da fazenda, `printZeroPaddedWithLabel`, é chamada pelo seu efeito colateral (ela imprimi uma linha). A segunda, `zeroPad`, é chamada pelo seu valor de retorno. Não é coincidência que a segunda é útil em mais situações que a primeira. Funções que criam valores são mais fáceis de ser combinadas em novas formas do que realizando diretamente um efeito colateral.
+
+Uma função *pura* é um tipo específico de *função de produção de valor* que não somente não tem efeitos colaterias, como também não depende de efeitos colaterais de outro código - por exemplo, ela não lê variáveis que são ocasionalmente mudadas por outro código. Uma função pura tem a agradável propriedade que, quando chamada com os mesmos argumentos, ela sempre produz os mesmos valores (e não faz nada mais). Isso a torna fácil de ser pensada - uma chamada a ela pode ser mentalmente substituída por seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função está funcionando corretamente, você pode testá-la simplesmente chamando-a e sabendo que se ela funciona neste contexto, ela vai funcionar em qualquer contexto. Função impuras devem retornar valores diferentes baseado em vários tipos de valores e têm efeitos colaterais que podem ser difíceis de testar e pensar sobre.
+
+Não há necessidade de se sentir mal ao escrever função impuras, nem começar uma guerra santa e limpar todos os códigos impuros. Efeitos colaterais são úteis também. Não existe uma forma pura de escrever um `console.log`, por exemplo, e o `console.log` é certamente útil. Algumas operações também podem ser mais caras quando feitas sem efeitos colaterais, quando todo os dados envolvidos precisam ser copiados, ao invés de modificados.
+
+## Resumo
+
+Este capítulo ensinou a você como escrever suas próprias funções. A `function keyword`, quando usada como uma expressão, pode criar um valor de função. Quando usada como uma declaração, pode ser usada para declarar uma variável e dar a ela uma função como valor.
+
+```js
+
+// Create a function and immediately call it
+(function (a) { console.log(a + 2); })(4);
+// → 6
+
+// Declare f to be a function
+function f(a, b) {
+  return a * b * 3.5;
+}
+
+```
+Um aspecto chave no entendimento das funções é entender os escopos locais. Parâmetros e variáveis declaradas dentro de uma função são locais a função, recriados todas as vezes que a função é chamada, e não visíveis do lado de fora. Funções declaradas dentro de outras funções têm acesso ao escopo das funções exteriores.
+
+Separando as tarefas diferentes seu programa executa diferentes funções e isso é útil. Você não precisa de repetir a si mesmo várias vezes, e quando alguém tentar ler seu programa, ele poderá ter o mesmo papel que capítulos e seções de um texto normal.
+
+## Exercícios
+
+### Mínimo
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_aW/Uoj4mDd

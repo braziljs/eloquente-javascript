@@ -396,4 +396,159 @@ console.log(findSolution(24));
 
 ```
 
-http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_930meu0qrw
+Note que não é necessário encontrar uma sequência mais curta de operações - ela é satisfeita quando encontra qualquer sequência.
+
+Eu não espero necessariamente que você veja como isso funcione imediatamente. Mas vamos trabalho nisso, pois é um grande exercício para o pensamento recursivo.
+
+A função interior `find` faz a recursão real. Ela pega dois argumentos, o número atual e a string que registra como chegamos neste número, e retorna ou uma string que mostra como chegar no número esperado, ou `null`.
+
+Em razão de fazer isso, é realizado 3 ações. Se o número atual é o número esperado, o histórico atual é uma forma de encontrar o objetivo, então ele é simplesmente retornado. Se o número atual é maior que o esperado, não há sentido em continuar explorando o histórico, desde que ambas as possibilidades farão o número ainda maior. E finalmente, se nós estamos abaixo do objetivo, a função tenta todos os caminhos possíveis que iniciam do número atual, chamando-o duas vezes, uma para ambos os próximos passos permitidos. Se a primeira chamada retorna algo que não é `null`, ela é retornada. De outra forma, a segunda chamada é retornada (independetemente se ela produz uma string ou null).
+
+Como essa simples função produz o efeito que estamos procurando? Vamos ver as chamadas à `find` que são feitas quando buscamos por uma solução para o número 13:
+
+```
+
+find(1, "1")
+  find(6, "(1 + 5)")
+    find(11, "((1 + 5) + 5)")
+      find(16, "(((1 + 5) + 5) + 5)")
+        too big
+      find(33, "(((1 + 5) + 5) * 3)")
+        too big
+    find(18, "((1 + 5) * 3)")
+      too big
+  find(3, "(1 * 3)")
+    find(8, "((1 * 3) + 5)")
+      find(13, "(((1 * 3) + 5) + 5)")
+        found!
+
+```
+
+A indentação sugere a profundidade da pilha de chamadas. A primeira chamada a `find` chama `find` duas vezes, para explorar as soluções que começam com `(1 + 5)` e `(1 * 3)`. A primeira chamada falha para encontrar a solução que começa com `(1 + 5)` - usando recursão, ela explora todas as soluções que produzem um número menor que o número esperado. Então, ela retorna `null`, e o operador `||` causa a chamada que explora `(1 * 3)` e a faz acontecer. Esta teve mais sorte, sua primeira chamada recursiva, através de *outra* chamada recursiva, encontrou o número procurado 13. Então, uma string é retornada, e cada um dos operadores `||` no intermédio da chamada nos mostram a sequência, que é a nossa solução.
+
+## Funções Crescentes
+
+Existem duas formas mais ou menos naturais para as funções serem introduzidas nos programas.
+
+A primeira é que você se encontra escrevendo código muito parecido muitas vezes. Nós queremos evitar isso - ter mais código significa mais espaço para erros acontecerem, e mais material para ser lido por pessoas tentando entender o programa. Então pegamos a funcionalidade repetida, encontramos um bom nome para isso, e a colocamos dentro de uma função.
+
+A segunda forma é que você precisa de alguma funcionalidade que você ainda não escreveu, e isso soa como necessidade de uma função própria. Você vai começar nomeando a função, e então escrever seu corpo. Você pode até escrever primeiro outro pedaço de código que já usa a função, antes de criar a função em si.
+
+A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro está um conceito o qual você tenta envolver. Vamos ver um exemplo.
+
+Nós queremos escrever um programa que imprime dois números, a quantidade de vacas e galinhas em uma fazenda, com as palavras `Cows` e `Chickens` depois deles, e zeros inseridos antes de ambos os números para que estes sempre sejam números de três digitos.
+
+```
+
+007 Cows
+011 Chickens
+
+```
+
+Bom, isso claramente é uma função com dois argumentos. Vamos codar.
+
+```js
+
+function printFarmInventory(cows, chickens) {
+  var cowString = String(cows);
+  while (cowString.length < 3)
+    cowString = "0" + cowString;
+  console.log(cowString + " Cows");
+  var chickenString = String(chickens);
+  while (chickenString.length < 3)
+    chickenString = "0" + chickenString;
+  console.log(chickenString + " Chickens");
+}
+printFarmInventory(7, 11);
+
+```
+
+Adicionando `.length` depois do valor de uma string vai nos fornecer o comprimento desta string. Então, o loop `while` continua colocando zeros na frente do número de strings até que tenha no mínimo 3 caracteres de comprimento.
+
+Missão cumprida! Mas quando iriamos enviar o código a ele (juntamente com uma fatura pesada é claro), o fazendeiro ligou e disse que começou a criar porcos (pigs), e se poderíamos extender o software para também imprimir `pigs`.
+
+Nós podemos claro. Mas antes de entrar no processo de copiar e colar estas quatro linhas mais uma vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui a primeira tentativa:
+
+```js
+
+function printZeroPaddedWithLabel(number, label) {
+  var numberString = String(number);
+  while (numberString.length < 3)
+    numberString = "0" + numberString;
+  console.log(numberString + " " + label);
+}
+
+function printFarmInventory(cows, chickens, pigs) {
+  printZeroPaddedWithLabel(cows, "Cows");
+  printZeroPaddedWithLabel(chickens, "Chickens");
+  printZeroPaddedWithLabel(pigs, "Pigs");
+}
+
+printFarmInventory(7, 11, 3);
+
+```
+
+Funcionou! Mas este nome, `printZeroPaddedWithLabel` é um pouco estranho. Ele funde três coisas - printing, zero-padding e adding a label - em uma simples função.
+
+Ao invés de ressaltar a parte repetida do programa destacado, vamos tentar escolher outro conceito. Podemos fazer melhor:
+
+```js
+
+function zeroPad(number, width) {
+  var string = String(number);
+  while (string.length < width)
+    string = "0" + string;
+  return string;
+}
+
+function printFarmInventory(cows, chickens, pigs) {
+  console.log(zeroPad(cows, 3) + " Cows");
+  console.log(zeroPad(chickens, 3) + " Chickens");
+  console.log(zeroPad(pigs, 3) + " Pigs");
+}
+
+printFarmInventory(7, 16, 3);
+
+```
+
+`zeroPad` tem um belo e óbvio nome, que torna fácil para qualquer um ler o código e saber o que ele faz. E ele é útil em mais situações do que somente neste programa específico. Por exemplo, você pode usá-lo para imprimir belas tabelas alinhadas com números.
+
+Quão esperta e versátil nossa função é? Nós podemos escrever qualquer coisa desde uma função extremamente simples que apenas formata um número para ter três caracteres de largura, até um complicado sistema de formatação de números fracionários, números negativos, alinhamento de pontos, formatação com diferentes caracteres e por ai vai...
+
+Um princípio útil é não adicionar inteligência a menos que você tenha certeza absoluta que irá precisar. Pode ser tentador escrever "estruturas" gerais para cada pouco de funcionalidade que você se deparar. Resista a isso. Você não terá nenhum trabalho feito, e você vai acabar escrevendo um monte de código que ninguém nunca vai usar.
+
+## Funções e Efeitos Colaterais
+
+Funções podem ser dividas em aquelas que são chamadas pelos seus efeitos colaterais e aquelas que são chamadas pelo seu valor de retorno. (Embora também seja definitivamente possível de ter ambos efeitos colaterais e retorno de um valor.)
+
+A primeira função auxiliar no exemplo da fazenda, `printZeroPaddedWithLabel`, é chamada pelo seu efeito colateral (ela imprimi uma linha). A segunda, `zeroPad`, é chamada pelo seu valor de retorno. Não é coincidência que a segunda é útil em mais situações que a primeira. Funções que criam valores são mais fáceis de ser combinadas em novas formas do que realizando diretamente um efeito colateral.
+
+Uma função *pura* é um tipo específico de *função de produção de valor* que não somente não tem efeitos colaterias, como também não depende de efeitos colaterais de outro código - por exemplo, ela não lê variáveis que são ocasionalmente mudadas por outro código. Uma função pura tem a agradável propriedade que, quando chamada com os mesmos argumentos, ela sempre produz os mesmos valores (e não faz nada mais). Isso a torna fácil de ser pensada - uma chamada a ela pode ser mentalmente substituída por seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função está funcionando corretamente, você pode testá-la simplesmente chamando-a e sabendo que se ela funciona neste contexto, ela vai funcionar em qualquer contexto. Função impuras devem retornar valores diferentes baseado em vários tipos de valores e têm efeitos colaterais que podem ser difíceis de testar e pensar sobre.
+
+Não há necessidade de se sentir mal ao escrever função impuras, nem começar uma guerra santa e limpar todos os códigos impuros. Efeitos colaterais são úteis também. Não existe uma forma pura de escrever um `console.log`, por exemplo, e o `console.log` é certamente útil. Algumas operações também podem ser mais caras quando feitas sem efeitos colaterais, quando todo os dados envolvidos precisam ser copiados, ao invés de modificados.
+
+## Resumo
+
+Este capítulo ensinou a você como escrever suas próprias funções. A `function keyword`, quando usada como uma expressão, pode criar um valor de função. Quando usada como uma declaração, pode ser usada para declarar uma variável e dar a ela uma função como valor.
+
+```js
+
+// Create a function and immediately call it
+(function (a) { console.log(a + 2); })(4);
+// → 6
+
+// Declare f to be a function
+function f(a, b) {
+  return a * b * 3.5;
+}
+
+```
+Um aspecto chave no entendimento das funções é entender os escopos locais. Parâmetros e variáveis declaradas dentro de uma função são locais a função, recriados todas as vezes que a função é chamada, e não visíveis do lado de fora. Funções declaradas dentro de outras funções têm acesso ao escopo das funções exteriores.
+
+Separando as tarefas diferentes seu programa executa diferentes funções e isso é útil. Você não precisa de repetir a si mesmo várias vezes, e quando alguém tentar ler seu programa, ele poderá ter o mesmo papel que capítulos e seções de um texto normal.
+
+## Exercícios
+
+### Mínimo
+
+http://eloquentjavascript.net/2nd_edition/preview/03_functions.html#p_aW/Uoj4mDd

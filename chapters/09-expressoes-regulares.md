@@ -343,7 +343,7 @@ A verdadeira utilidade do uso de expressões regulares com o método _replace_ �
 ```
 console.log(
   "Hopper, Grace\nMcCarthy, John\nRitchie, Dennis"
-    .replace(/([\w ]+), ([\w ]+)/g, "$2 $1"));
+	.replace(/([\w ]+), ([\w ]+)/g, "$2 $1"));
 // → Grace Hopper
 //   John McCarthy
 //   Dennis Ritchie
@@ -370,9 +370,9 @@ var stock = "1 lemon, 2 cabbages, and 101 eggs";
 function minusOne(match, amount, unit) {
   amount = Number(amount) - 1;
   if (amount == 1) // only one left, remove the 's'
-    unit = unit.slice(0, unit.length - 1);
+	unit = unit.slice(0, unit.length - 1);
   else if (amount == 0)
-    amount = "no";
+	amount = "no";
   return amount + " " + unit;
 }
 console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
@@ -463,13 +463,13 @@ console.log("    ".search(/\S/));
 
 Infelizmente, não existe um modo de indicar onde a busca deve começar, com um índice (como o segundo argumento de _indexOf_), o que seria muito útil.
 
-## The lastIndex property
+## A propriedade lastIndex
 
-The exec method also does not provide a convenient way to start searching from a given position in the string. But it does provide an inconvenient way.
+O método _exec_ também não possui um modo conveniente de iniciar a busca a partir de uma determinada posição. Mas ele fornece um método não muito prático.
 
-Regular expression objects have properties (such as source, which contains the string that expression was created from). One such property, lastIndex, controls, in some limited circumstances, where the next match will start.
+Expressões regulares possuem propriedades (como _source_ que contém a _string_ que originou a expressão). Uma dessas propriedades, _lastIndex_, controla, em algumas circunstâncias, onde o busca irá começar.
 
-Those circumstances are that the regular expression must have the “global” (g) option enabled, and the match must happen through the exec method. Again, the same way would have been to just allow an extra argument to be passed to exec, but sanity is not a defining characteristic of JavaScript’s regular expression interface.
+Essas circunstâncias são que a expressão regular precisa ter a opção "global"(g) habilitada, e precisa ser no método _exec_. Novamente, deveria ser da mesma maneira que permitir um argumento extra para o método _exec_, mas coesão não é uma caracteristica que define a sintaze de expressões regulares em javascript
 
 ```
 var pattern = /y/g;
@@ -481,20 +481,20 @@ console.log(pattern.lastIndex);
 // → 5
 ```
 
-The lastIndex property is updated by the call to exec to point after the match, when the match was successful. When no match was found, lastIndex is set back to zero, which is also the value it has in a newly constructed regular expression object.
+A propriedade _lastIndex_ é atualizada ao ser executada após encontrar algo. Quando não encontra nada, _lastIndex_ é definida como zero, que também é o valor quando uma nova expressão é construída.
 
-When using a global regular expressions value for multiple exec calls, this changing of the lastIndex property can cause problems—your regular expression might be accidentally starting at an index that was left over from a previous call.
+Quando usando uma expressão regular global para multiplas chamadas ao método _exec_, esta mudança da propriedade _lastIndex_ pode causar problemas, sua expressão pode iniciar por acidente em um indice deixado na ultima vez que foi executada.
 
-Another interesting effect of the global option is that changes the way the match method on strings works. When called with a global expression, instead of returning an array similar to that returned by exec, match will find all matches of the pattern in the string, and return an array containing the matched strings.
+Outro efeito interessante da opção global é que ela muda a maneira como o método _match_ funciona em uma _string_. Quando chamada com uma expressão global, em vez de retornar um array semelhante ao retornado pelo _exec_, _match_ irá achar todos os resultados do padrão na string e retornar um array contendo dodas as _strings_ encontradas.
 
 ```
 console.log("Banana".match(/an/g));
 // → ["an", "an"]
 ```
 
-So be cautious with global regular expressions. The cases where they are necessary—calls to replace and places where you want to explicitly use lastIndex—are typically the only places where you want to use them.
+Então tenha cuidado com expressões regulares globais. Os casos em que são necessárias chamadas para substituir e lugares onde você deseja usar explicitamente _lastIndex_ - normalmente são os únicos lugares onde você deseja utilizá-los.
 
-A common pattern is to scan through all occurrences of a pattern in a string, with full access to matched groups and the index property, by using lastIndex and exec.
+Um padrão comum é buscar todas as ocorrências de um padrão em uma _string_, com acesso a todos os grupos encontrados e a o índice onde foram encontrados, usando _lastIndex_ e _exec_.
 
 ```
 var input = "A text with 3 numbers in it... 42 and 88.";
@@ -507,7 +507,7 @@ while (match = re.exec(input))
 //   Found 88 at 38
 ```
 
-This makes use of the fact that the value of an assignment (‘=’) expression is the assigned value. So by using match = re.exec(input) as the condition in the while statement, we both perform the match at the start of each iteration, save its result in a variable, and stop looping when no more matches are found.
+Usa-se o fato que o valor de uma expressão de definição ('=') é o valor assinalado. Então usando-se `match = re.exec(input)` como a condição no bloco `while`, podemos buscar no início de cada iteração.
 
 ## Parsing an ini file
 
@@ -550,23 +550,23 @@ Given that the split method of strings also allows a regular expression as its a
 function parseINI(string) {
   var categories = [];
   function newCategory(name) {
-    var cat = {name: name, fields: []};
-    categories.push(cat);
-    return cat;
+	var cat = {name: name, fields: []};
+	categories.push(cat);
+	return cat;
   }
   var currentCategory = newCategory("TOP");
 
   string.split(/\r?\n/).forEach(function(line) {
-    var match;
-    if (/^\s*(;.*)?$/.test(line))
-      return;
-    else if (match = line.match(/^\[(.*)\]$/))
-      currentCategory = newCategory(match[1]);
-    else if (match = line.match(/^(\w+)=(.*)$/))
-      currentCategory.fields.push({name: match[1],
-                                   value: match[2]});
-    else
-      throw new Error("Line '" + line + "' is invalid.");
+	var match;
+	if (/^\s*(;.*)?$/.test(line))
+	  return;
+	else if (match = line.match(/^\[(.*)\]$/))
+	  currentCategory = newCategory(match[1]);
+	else if (match = line.match(/^(\w+)=(.*)$/))
+	  currentCategory.fields.push({name: match[1],
+								   value: match[2]});
+	else
+	  throw new Error("Line '" + line + "' is invalid.");
   });
 
   return categories;
@@ -646,44 +646,44 @@ Refer back to the table in the chapter summary to quickly look something up. Tes
 // Fill in the regular expressions
 
 verify(/.../,
-       ["my car", "bad cats"],
-       ["camper", "high art"]);
+	   ["my car", "bad cats"],
+	   ["camper", "high art"]);
 
 verify(/.../,
-       ["pop culture", "mad props"],
-       ["plop"]);
+	   ["pop culture", "mad props"],
+	   ["plop"]);
 
 verify(/.../,
-       ["ferret", "ferry", "ferrari"],
-       ["ferrum", "transfer A"]);
+	   ["ferret", "ferry", "ferrari"],
+	   ["ferrum", "transfer A"]);
 
 verify(/.../,
-       ["how delicious", "spacious room"],
-       ["ruinous", "consciousness"]);
+	   ["how delicious", "spacious room"],
+	   ["ruinous", "consciousness"]);
 
 verify(/.../,
-       ["bad punctuation ."],
-       ["escape the dot"]);
+	   ["bad punctuation ."],
+	   ["escape the dot"]);
 
 verify(/.../,
-       ["hottentottententen"],
-       ["no", "hotten totten tenten"]);
+	   ["hottentottententen"],
+	   ["no", "hotten totten tenten"]);
 
 verify(/.../,
-       ["red platypus", "wobbling nest"],
-       ["earth bed", "learning ape"]);
+	   ["red platypus", "wobbling nest"],
+	   ["earth bed", "learning ape"]);
 
 
 function verify(regexp, yes, no) {
   // Ignore unfinished tests
   if (regexp.source == "...") return;
   yes.forEach(function(s) {
-    if (!regexp.test(s))
-      console.log("Failure to match '" + s + "'");
+	if (!regexp.test(s))
+	  console.log("Failure to match '" + s + "'");
   });
   no.forEach(function(s) {
-    if (regexp.test(s))
-      console.log("Unexpected match for '" + s + "'");
+	if (regexp.test(s))
+	  console.log("Unexpected match for '" + s + "'");
   });
 }
 ```
@@ -719,12 +719,12 @@ var number = /^...$/;
 ["1", "-1", "+15", "1.55", ".5", "5.", "1.3e2", "1E-4",
  "1e+12"].forEach(function(s) {
   if (!number.test(s))
-    console.log("Failed to match '" + s + "'");
+	console.log("Failed to match '" + s + "'");
 });
 ["1a", "+-1", "1.2.3", "1+1", "1e4.5", ".5.", "1f5",
  "."].forEach(function(s) {
   if (number.test(s))
-    console.log("Incorrectly accepted '" + s + "'");
+	console.log("Incorrectly accepted '" + s + "'");
 });
 ```
 

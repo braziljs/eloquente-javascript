@@ -1,14 +1,14 @@
 # Funções de ordem superior
 
-> "Tzu-li and Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. _Duzentas mil linhas_, disse Tzu-li, _sem contar os comentários!_ Tzu-ssu repondeu, _Pss, o meu já é quase um milhão de linhas_. Mestre Yuan-Ma disse, _Meu melhor programa tinha quinhentas linas_. Ouvindo isso os alunos estavam boquiabertos."
+> "Tzu-li e Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. _Duzentas mil linhas_, disse Tzu-li, _sem contar os comentários!_ Tzu-ssu repondeu, _Pss, o meu já é quase um milhão de linhas_. Mestre Yuan-Ma disse, _Meu melhor programa tinha quinhentas linas_. Ouvindo isso os alunos estavam boquiabertos."
 >
-> - Master Yuan-Ma, _The Book of Programming_
+> - Mestre Yuan-Ma, _The Book of Programming_
 
 >"Existem duas maneiras de construir um design de software: um jeito é deixá-lo tão simples que obviamente não há nenhuma deficiência e a outra maneira é tão complicada que obviamente não há deficiências óbvias."
 >
 > - C.A.R. Hoare, _1980 ACM Turing Award Lecture_
 
-Um programa grande é um programa dispendioso. Não necessariamente porcausa do tempo que leva para construir. Tamanho quase sempre involve complexidade e complexidade confude programadores. Programadores confusos tem um efeito negativo sobre um programa -- eles tendem a criar erros (bugs). Um programa grande também provê um grande espaço para que esses bugs se escondam, ficando dificil de encontrá-los.
+Um programa grande é um programa dispendioso. Não necessariamente devido ao tempo que o leva para construir. Tamanho quase sempre envolve complexidade e complexidade confunde programadores. Programadores confusos tem um efeito negativo sobre um programa -- eles tendem a criar erros (bugs). Um programa grande também provê um grande espaço para que esses bugs se escondam, ficando difícil de encontrá-los.
 
 Vamos rapidamente voltar para os dois exemplos finais da introdução.
 O primeiro é auto contido e num total de 6 linhas.
@@ -32,11 +32,11 @@ Qual é mais provável de conter um erro?
 
 Se contarmos as definições de `sum` e `range`, o segundo código é ainda maior que o primeiro, mas ainda sim, eu diria que é mais provável estar correto.
 
-A razão de ele provávelmente estar mais correto é que, primeiramente constrói um linguagem que expressa o problema, e então resolvendo o problema no seu próprio domínio, a solução ganha claridade. Somar uma sequência de números não se trata de laços e contadores, mas sim de somas e sequência de números.
+A razão de provavelmente estar mais correto é que, primeiramente constrói um linguagem que expressa o problema, e então resolvendo o problema no seu próprio domínio, a solução ganha claridade. Somar uma sequência de números não se trata de laços e contadores, mas sim de somas e sequência de números.
 
 A definição do vocabulário em si (as funções `sum` e `range`) ainda sim terão que lidar elas mesmos com laços, contadores e outros detalhes bobos. Mas devido a eles expressarem conceitos mais simples (a construção de blocos é mais simples do que construir), eles são mais fáceis de entender.
 
-É claro, conseguir uma soma de uma sequência de números é trivial, com ou sem vocabulário. Considere que é um exemplo miniatura de outro realmente dificil.
+É claro, conseguir uma soma de uma sequência de números é trivial, com ou sem vocabulário. Considere que é um exemplo miniatura de outro realmente difícil.
 
 ## Abstração ##
 
@@ -49,7 +49,7 @@ Uma analogia é a receita para sopa de lentilha:
 Comparada com essa aqui:
 
 > "Por pessoa: 1 copo de lentilhas, meia cebola, um naco de aipo e uma cenoura."
-Embeba por 12 horas, ferva por 2 horas em 4 copos de água (por pessoa). Pique e adicione os vegetais. Deixe cozinhar por mais 10 minutos.
+Embeba por 12 horas, ferva por 2 horas em 4 copos de água (por pessoa). Pique e adicione os vegetais. Deixe cozinhar por mais 10 minutos".
 
 A segunda é menor e mais fácil de interpretar. Ela confia no seu entendimento de algumas palavras mais relacionadas à cozinhar: "embeber", "ferva", "pique" e, acho, "vegetais".
 
@@ -73,7 +73,7 @@ for (var i = 0; i < array.length; i++) {
 
 ```
 
-O que ele tem dizer é "para cada elemento do array, faça isso". Mas utiliza um jeito redundante que involve uma váriavel contadora, um checagem do tamanho do array e a declaração de uma variável extra para pegar o elemento atual. Deixando de lado a monstruosidade que é, ele também nos dá espaço para possíveis erros: reuso da váriavel `i`, escrever errado `lenght`, confundir as variáveis `i` e `current`, por aí vai...
+O que ele tem a dizer é "para cada elemento do array, faça isso". Mas utiliza um jeito redundante que envolve uma variável contadora, um checagem do tamanho do array e a declaração de uma variável extra para pegar o elemento atual. Deixando de lado a monstruosidade que é, ele também nos dá espaço para possíveis erros: reúso da variável `i`, escrever errado `lenght`, confundir as variáveis `i` e `current`, por aí vai...
 
 Então, vamos abstrair isso numa função. Consegue pensar num jeito?
 
@@ -104,7 +104,7 @@ forEach(["Wampeter", "Foma", "Granfalloon"], console.log);
 
 ```
 
-Normalmente você não passa uma função pré-definida para o `forEach`, mas cria uma função no local.
+Normalmente você não passa uma função predefinida para o `forEach`, mas cria uma função no local.
 
 ```js
 
@@ -117,7 +117,7 @@ console.log(sum);
 
 ```
 
-Esse parece muito com um `loop` clássico, com o seu corpo escrito como no bloco acima. Exceto que agora o corpo está dentro da função, assim como dentro do parênteses da chamada `forEach`. É por isso que precisa ser fechado com chave, parêntese e ponto e vírgula.
+Esse parece muito com um `loop` clássico, com o seu corpo escrito como no bloco acima. Exceto que agora o corpo está dentro da função, assim como dentro dos parênteses da chamada `forEach`. É por isso que precisa ser fechado com chave, parêntese e ponto e vírgula.
 
 Nesse padrão, podemos simplificar o nome da variável (`number`) pelo elemento atual como argumento da função, ao invés de simplesmente pegar manualmente o array.
 
@@ -163,7 +163,7 @@ function gatherCorrelations(journal) {
 
 O termo para funções que operão sobre funçoes (pegando-os como argumentos, ou retornando-os) são _funções de ordem superior_. Para programadores Javascript, que estão acostumados com funções sendo valores normais, não existe nada de mais no fato de que tais funções existem. O termo vem da matemática, onde a distinção entre funções e outros valores é levado um pouco mais a sério.
 
-Funções de ordem superior permite-nos abstrair sobre ações, não apenas valores. Eles vem em várias formas. Você pode ter funções que criam uma nova função.
+Funções de ordem superior permite-nos abstrair sobre ações, não apenas valores. Eles vêm em várias formas. Você pode ter funções que criam uma nova função.
 
 ```js
 
@@ -252,7 +252,7 @@ Essa é particularmente uma função sem uso, mas mostra o padrão que estamos i
 
 ## Exemplo de dados ##
 
-Funções de ordem superior que de alguma forma aplicão uma para os elementos de um array são bastante usadas em JavaScript. O método `forEach` é o mais primitivo como função. Existe um número de outras variações disponíveis como métodos em arrays. Para nos familiarizarmos com eles, vamos brincar com outro conjunto de dados.
+Funções de ordem superior que de alguma forma aplicam para os elementos de um array são bastante usadas em JavaScript. O método `forEach` é o mais primitivo como função. Existe um número de outras variações disponíveis como métodos em arrays. Para nos familiarizarmos com eles, vamos brincar com outro conjunto de dados.
 
 Alguns anos atras, alguém pesquisou através de um monte de arquivos, procurando juntar um livro sobre a história do nome da minha família ("Haverbeke", literalmente "Riacho de aveia"). Eu esperava encontrar cavaleiros, piratas e alquimistas... Mas o livro acabou se tornando mais sobre fazendeiros belgas. Para o meu divertimento, eu extraí a informação dos meus ancestrais diretos e coloquei-os num formato para ser lido no computador. Vamos brincar com essa informação.
 
@@ -271,14 +271,15 @@ O arquivo que eu criei parece mais ou menos assim:
 	 "born": 1832, "died": 1905,
 	 "father": "Carel Haverbeke",
 	 "mother": "Maria van Brussel"},
-	… and so on
+	
+	//… por aí vai
 ]
 
 ```
 
 Essa notação é muito similar com o jeito JavaScript de escrever arrays e objetos, com algumas restrições. Todos os nomes de propriedades devem ser em aspas e apenas conjuntos simples de dados (sem chamadas de funções, ou variáveis, ou qualquer coisa que involva algum cálculo) são permitidos.
 
-Esse forma é chamado JSON, pronuncia-se "Diêisson", que significa JavaScript Object Notation (Notação de objetos JavaScript). É muito usado como forma de armazenamento de dados e formato comunicação na internet.
+Essa forma é chamado JSON, pronuncia-se "Diêisson", que significa JavaScript Object Notation (Notação de objetos JavaScript). É muito usado como forma de armazenamento de dados e formato comunicação na internet.
 
 JavaScript provê duas funções, `JSON.stringify` e `JSON.parse`, que converte de e para esse formato.
 
@@ -292,7 +293,7 @@ console.log(JSON.parse(string).born);
 
 ```
 
-A variável `ANCESTRY_FILE`, disponível no sandbox(caixa de areia) para esse capítulo assim como arquivo para download no site, contêm o valor do meu arquivo JSON como string. Vamos decodificar e ver quantas pessoas contêm:
+A variável `ANCESTRY_FILE`, disponível no sandbox(caixa de areia) para esse capítulo assim como arquivo para download no _site_, contêm o valor do meu arquivo JSON como string. Vamos decodificar e ver quantas pessoas contêm:
 
 ```js
 
@@ -306,7 +307,7 @@ console.log(ancestry.length);
 
 Uma função passada como um argumento para uma função de ordem superior não representa apenas uma ação que pode ser executada. Também retorna um valor, que podemos usar, como por exemplo, tomar uma decisão.
 
-Para encontrar as pessoas nos dados dos ancestrais que eram jovens em 1924, a função a seguir pode ser útil. Ele filtra os elementos em um array que não passa um teste.
+Para encontrar as pessoas nos dados dos ancestrais que eram jovens em 1924, a função a seguir pode ser útil. Ela filtra os elementos em um array que não passa um teste.
 
 ```js
 
@@ -326,7 +327,7 @@ console.log(filter(ancestry, function(person) {
 
 ```
 
-Três pessoas no arquivo estavam vivas e jovens em 1924: meu vô, minha vó e minha tia-avó.
+Três pessoas no arquivo estavam vivas e jovens em 1924: meu avô, minha avó e minha tia-avó.
 
 Como `forEach`, filtrar é um método padrão em arrays. O exemplo define a função apenas para mostrar o que ocorre internamente. De agora em diante, usaremos `ancestry.filter(...)`.
 
@@ -359,7 +360,7 @@ console.log(map(overNinety, function(person) {
 
 Interessantemente, as pessoas que viveram mais de 90 anos são as mesmas pessoas que vimos antes. Pessoas que eram jovens nos anos 20, que por acaso eram a geração mais nova nos meus dados. Acredito que a medicina realmente avançou um bocado.
 
-Como `forEach` e `filter`, `map`também um método padrão em arrays.
+Como `forEach` e `filter`, `map` também um método padrão em arrays.
 
 ## Resumindo com reduce ##
 
@@ -385,7 +386,7 @@ console.log(reduce([1, 2, 3, 4], function(a, b) {
 
 ```
 
-A maneira padrão do método `reduce`, que é claro corresponde à essa função, tem uma conveniência adicional. Se o array conter apenas um elemento, você está dispensado do argumento inicial e o método irá pegar o primeiro elemento do array como valor inicial e começará a redução a partir do segundo.
+A maneira padrão do método `reduce`, que é claro corresponde a essa função, tem uma conveniência adicional. Se o array conter apenas um elemento, você está dispensado do argumento inicial e o método irá pegar o primeiro elemento do array como valor inicial e começará a redução a partir do segundo.
 
 Para usá-lo para encontrar meu ancestral mais velho, podemos escrever algo assim:
 
@@ -418,7 +419,7 @@ console.log(min);
 
 Existem mais variáveis sendo criadas e atribuídas, e o fim do código é 2 linhas maior, mas assim bem fácil de entender.
 
-A abordagem através da função de ordem superior começa a brilhar quando necessita-se compôr vários conceitos. Por exemplo, vamos escrever um código que encontre a média de idade para homens e para mulheres array.
+A abordagem através da função de ordem superior começa a brilhar quando necessita-se compor vários conceitos. Por exemplo, vamos escrever um código que encontre a média de idade para homens e para mulheres array.
 
 ```js
 
@@ -439,9 +440,9 @@ console.log(average(ancestry.filter(female).map(age)));
 
 É um pouco bobo que temos que definir `plus`("mais" da matemática) como uma função. Operadores em JavaScript, diferente de funções, não são valores, então não podemos passar como argumento.
 
-Ao invés de juntar toda a lógica requerida num `loop` gigante, podemos decompor em conceitos que estamos interessados (decidindo pelo sexo, idade cálculada, média de números) e aplicar um por um para conseguir o resultado que estavámos procurando.
+Ao invés de juntar toda a lógica requerida num `loop` gigante, podemos decompor em conceitos que estamos interessados (decidindo pelo sexo, idade calculada, média de números) e aplicar um por um para conseguir o resultado que estávamos procurando.
 
-Isso é fabuloso para escrever código limpo. Mas existe um nuvem no horizonte.
+Isso é fabuloso para escrever código limpo. Mas existe uma nuvem no horizonte.
 
 ## O Custo ##
 
@@ -451,17 +452,17 @@ Reduzir o processamento de um array numa sequência de passos claramente separad
 
 Passar uma função para `forEach` e deixar que o método cuide da iteração para nós é conveniente e elegante. Porém chamadas de funções em JavaScript são custosas, comparadas com blocos simples de `loop`.
 
-Então entram um monte de técnicas que ajudam a esclarecer o código. Elas adicionam camadas entre as coisas cruas que o computador está fazendo com os conceitos que estamos trabalhando e faz com que a máquina faça mais trabalho. Isso não é uma lei inescapável -- existem linguagems de programação que possuem um melhor suporte para construir aplicações sem adicionar ineficiências, e ainda em JavaScript, um programador experiente pode encontrar jeitos de escrever códigos relativamente abstratos que ainda são rápidos, porém é um problema frequente.
+Então entram um monte de técnicas que ajudam a esclarecer o código. Elas adicionam camadas entre as coisas cruas que o computador está fazendo com os conceitos que estamos trabalhando e faz com que a máquina faça mais trabalho. Isso não é uma lei inescapável -- existem linguagens de programação que possuem um melhor suporte para construir aplicações sem adicionar ineficiências, e ainda em JavaScript, um programador experiente pode encontrar jeitos de escrever códigos relativamente abstratos que ainda são rápidos, porém é um problema frequente.
 
-Felizmente, muitos computadores são extremamente rápidos e se você estiver processando uma coleção de dados, ou fazendo alguma coisa que acontece no tempo de escala humano (digamos, apenas uma vez, ou toda vez que o usuário clica um botão), então não importa se você escreveu aquela linda solução que leva meio milisegundo, ou a solução super optimizada que leva um décido de um milisegundo.
+Felizmente, muitos computadores são extremamente rápidos e se você estiver processando uma coleção de dados, ou fazendo alguma coisa que acontece no tempo de escala humano (digamos, apenas uma vez, ou toda vez que o usuário clica um botão), então não importa se você escreveu aquela linda solução que leva meio milissegundo, ou a solução super optimizada que leva um décimo de um milissegundo.
 
-É útil saber de vez enquando quanto tempo leva um trecho de código leva para executar. Se vocês tem um `loop` dentro de um `loop` (diretamente, ou através de um `loop` externo chamando uma função que executa um `loop` interno), o código dentro do `loop` interno acabará rodando número x de vezes, onde N é o número de vezes que o `loop` de fora repete e M o número de vezes o `loop` interno repete. Se esse `loop` interno conter outro `loop` que realize P voltas, seu bloco rodará MxNxP vezes, e assim vai. Isso se soma. 
+É útil saber de vez em quando quanto tempo leva um trecho de código leva para executar. Se vocês têm um `loop` dentro de um `loop` (diretamente, ou através de um `loop` externo chamando uma função que executa um `loop` interno), o código dentro do `loop` interno acabará rodando número x de vezes, onde N é o número de vezes que o `loop` de fora repete e M o número de vezes o `loop` interno repete. Se esse `loop` interno conter outro `loop` que realize P voltas, seu bloco rodará MxNxP vezes, e assim vai. Isso se soma. 
 
 ## O pai do pai do pai do pai do pai... ##
 
 Meu avô, Philibert Haverbeke, está incluído nos dados do arquivo. Como exemplo final, eu quero saber quem é o meu mais antigo ancestral no arquivo (Pauwels van Haverbeke), e se possível, quanto DNA teoricamente compartilho com ele.
 
-Primeiro, construí um objeto que faz que seja facil encontrar pessoas através do nome.
+Primeiro, construí um objeto que faz que seja fácil encontrar pessoas através do nome.
 
 ```js
 
@@ -517,9 +518,9 @@ console.log(reduceAncestors(ph, sharedDNA, 0) / 4);
 
 A pessoa com o nome Pauwels van Haverbeke obviamente compartilhava 100% de seu DNA com Pauwels van Haverbeke (não existem pessoas com mesmo nome no arquivo). Todas as outras pessoas compartilham a média de que seus pais possuem.
 
-Então, estatisticamente falando, eu divido por volta de 0,05% do meu DNA com essa pessoa do século 16. As chances de um dos meus 44 cromossomos não-XY virem delem são bem pequenas. No entanto, considerando que não há nenhuma criança fora do casamento na história da familia, eu tenho seu cromossomo Y.
+Então, estatisticamente falando, eu divido por volta de 0,05% do meu DNA com essa pessoa do século 16. As chances de um dos meus 44 cromossomos não-XY virem dele são bem pequenas. No entanto, considerando que não há nenhuma criança fora do casamento na história da familia, eu tenho seu cromossomo Y.
 
-Estruturas de dados (como essa árvore genealógica) normalmente podem ser fáceis de usar procurando funções análogas a `forEach` (iterar), `map` (transformar) e `reduce` que se aplicão à elas. Uma função `forEachAncestor` simplementes iria chamar a função para cada ancestral. Um função que mapeie provávelmente não seria de muito uso para essa estrutura, mas seria, por exemplo, útil para os tipos de lista que foram mostradas nos exercícios do último capítulo.
+Estruturas de dados (como essa árvore genealógica) normalmente podem ser fáceis de usar procurando funções análogas a `forEach` (iterar), `map` (transformar) e `reduce` que se aplicam à elas. Uma função `forEachAncestor` simplesmente iria chamar a função para cada ancestral. Um função que mapeie provavelmente não seria de muito uso para essa estrutura, mas seria, por exemplo, útil para os tipos de lista que foram mostradas nos exercícios do último capítulo.
 
 ## Binding ##
 
@@ -544,7 +545,7 @@ console.log(ancestry.filter(isInSet.bind(null, theSet)));
 
 ```
 
-O método `bind`, que todas as funções possuem, cria uma nova função que vai chammar a função original, mas com alguns argumentos já colocados. Chamar a função acima com `bind` vai fazer com que chame `isInSet` com `theSet` como seu primeiro argumento, seguido de qualquer argumentos remanascentes dados a função.
+O método `bind`, que todas as funções possuem, cria uma nova função que vai chamar a função original, mas com alguns argumentos já colocados. Chamar a função acima com `bind` vai fazer com que chame `isInSet` com `theSet` como seu primeiro argumento, seguido de quaisquer argumentos remanescentes dados a função.
 
 O primeiro argumento, onde o exemplo passa `null`, é usado para chamadas de método, similar ao primeiro argumento de `apply`. Nós podemos anexar um método `push` de array para pegar uma função que adiciona um argumento para o array específico.
 
@@ -562,9 +563,9 @@ console.log(array);
 
 Sendo possível passar funções como argumento para outras funções não é um artifício aleatório, mas sim um aspecto muito útil do JavaScript. Nos permite descrever cálculos com "lacunas" nelas como funções e permite ao código que chame essas funções para preencher as lacunas, providenciando funções que descrevem as computações faltantes.
 
-Arrays provêem um grande número de funções de ordem superior como o método `forEach` para fazer algo com cada elemento em um array, `map` para construir um novo array onde cada elemento foi colocado através de uma função e `reduce` para combinar todos os elementos no array em um valor único.
+Arrays proveem grande número de funções de ordem superior como o método `forEach` para fazer algo com cada elemento em um array, `map` para construir um novo array onde cada elemento foi colocado através de uma função e `reduce` para combinar todos os elementos no array em um valor único.
 
-Funções tem um método `apply` que pode ser usado para chamá-los com um array especificando seus argumentos. Eles também possuem um método `bind`, que é usado para criar uma versão parcialmente aplicada da função.
+Funções têm um método `apply` que pode ser usado para chamá-los com um array especificando seus argumentos. Eles também possuem um método `bind`, que é usado para criar uma versão parcialmente aplicada da função.
 
 ## Exercícios ##
 
@@ -605,13 +606,13 @@ ancestry.forEach(function(person) {
 ```
 
 _Dica_:
-Nem todos elementos no array de ancestrais produzem informação útil (não podemos calcular a diferença de idade até que soubermos a data de nascimento da mãe), nós podemos aplicar (`apply`) `filter` de uma maneira antes de calcular a média. Você pode fazer isso como o primero passo, definindo uma função `hasKnownMother` (tradução: "tem mãe conhecida") e filtrando por isso primeiro. Alternativamente, você pode começar chamando `map` e no seu mapeamento retornar a idade de diferença, ou `null` se a mãe não for conhecida. Então você pode chamar `filter` para remover os elementos `null` antes de passar o array à média.
+Nem todos elementos no array de ancestrais produzem informação útil (não podemos calcular a diferença de idade até que soubermos a data de nascimento da mãe), nós podemos aplicar (`apply`) `filter` de uma maneira antes de calcular a média. Você pode fazer isso como o primeiro passo, definindo uma função `hasKnownMother` (tradução: "tem mãe conhecida") e filtrando por isso primeiro. Alternativamente, você pode começar chamando `map` e no seu mapeamento retornar a idade de diferença, ou `null` se a mãe não for conhecida. Então você pode chamar `filter` para remover os elementos `null` antes de passar o array à média.
 
 ### Histórico esperado de vida ###
 
 Quando olhamos para todas as pessoas no conjunto que vivera mais de 90 anos, apenas os últimos da geração apareceram. Vamos observar esse fenômeno.
 
-Calcule o resultado da média das pessoas no conjunto de ancestrais por século. Uma pessoa é atribuída a um século pegando o ano da sua morte, dividindo por 100 e arredondando pra cima, assim como em `Math.ceil(person.died / 100)`.
+Calcule o resultado da média das pessoas no conjunto de ancestrais por século. Uma pessoa é atribuída a um século pegando o ano da sua morte, dividindo por 100 e arredondando para cima, assim como em `Math.ceil(person.died / 100)`.
 
 ```js
 
@@ -638,7 +639,7 @@ Durante o processo de agrupamento, deixe um objeto que associa os nomes dos séc
 
 Finalmente, um loop `for/in` pode ser usado para escrever a média de idades para séculos individuais.
 
-Para um bonus, escreva uma função `groupBy` (tradução: "separe por") que abstrai os algorítmos de separação. Que aceita como argumento um array e uma função que cálcula o grupo para um elemento no array e retorna o objeto contento os grupos.
+Para um bonus, escreva uma função `groupBy` (tradução: "separe por") que abstrai os algoritmos de separação. Que aceita como argumento um array e uma função que calcula o grupo para um elemento no array e retorna o objeto contento os grupos.
 
 ### Todos e alguns ###
 
@@ -665,4 +666,3 @@ console.log(some([2, 3, 4], isNaN));
 
 _Dica:_
 As funções podem seguir um padrão similar a definição de `forEach` no começo do capítulo, exceto que eles devem retornar imediatamente (com o valor correto) quando a função predicada retornar `false` ou `true`. Não esqueça de colocar um `return` após o loop, para que a função também retorne o valor correto quando chega ao final do array.
-_fim_

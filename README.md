@@ -45,7 +45,7 @@
 
 ## Fluxo do Trabalho - Issues
 
-O andamento das issues está divido em 2 etapas, na ordem apresentada abaixo:
+O andamento das issues está divido em **3 etapas**, na ordem apresentada abaixo:
 
 **`em tradução` > `aguardando revisão` > `em revisão` > `fechamento da issue`**
 

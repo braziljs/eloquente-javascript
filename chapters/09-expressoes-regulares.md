@@ -510,9 +510,7 @@ while (match = re.exec(input))
 Usa-se o fato que o valor de uma expressão de definição ('=') é o valor assinalado. Então usando-se `match = re.exec(input)` como a condição no bloco `while`, podemos buscar no início de cada iteração.
 
 ## Parsing an ini file
-## Analisando um arquivo .ini
 
-Now let’s look at a real problem that calls for regular expressions. Imagine we are writing a program to automatically harvest information about our enemies from the Internet. (We will not actually write that program here, just the part that reads the configuration file. Sorry to disappoint.) This file looks like this:
 Agora vamos ver um problema real que pede por uma expressão regular. Imagine quue estamos escrevendo um programa que coleta informação automaticamente da internet dos nosos inimigos . (Não vamos escrever um programa aqui, apenas a parte que ;ê o arquivo de configuração, desculpe desapontá-los). Este arquivo tem a seguinte aparência:
 
 ```
@@ -532,28 +530,20 @@ type=evil sorcerer
 outputdir=/home/marijn/enemies/gargamel
 ```
 
-The exact rules for this format (which is actually a widely used format, usually called an .ini file) are as follows:
 As regras exatas desse formato (que é um formato muito usado, chamado arquivo .ini) são as seguintes:
 
-	Blank lines and lines starting with semicolons are ignored.
 	Linhas em branco e linhas iniciadas com ponto-e-vírgula são ignoradas
 
-	Lines wrapped in [ and ] start a new section.
 	Linhas entre colchetes "[ ]" iniciam uma nova seção
 
-	Lines containing an alphanumeric identifier followed by an = character add a setting to the current section.
 	Linhas contendo um identificador alfanumérico seguido por um caractere = adicionam uma configuração ã seção atual.
 
-	Anything else is invalid.
 	Qualquer outra coisa é inválida
 
-Our task is to convert a string like this into an array of objects, each with a name property and an array of name/value pairs. We’ll need one such object for each section and one for the section-less settings.
 Nossa Tarefa é converter uam _string_ como essa em um array de objetos, cada uma com um nome e um _array_ de pares nome/valor. Precisaremos de um objeto para cada seção e outro para as configurações de seção.
 
-Since the format has to be processed line by line, splitting it up into separate lines is a good start. We’ve used the split method once before for this, as string.split("\n"). Some operating systems, however, use not just a newline character to separate lines but a carriage return character followed by a newline ("\r\n").
 Já que o formato precisa ser processado linha a linha, dividir em linhas separadas é um bom começo. Usamos o método _split_ antes para isso, _string.split("\n")_. Entretanto em alguns sistemas operacionais não uam apenas um caracter de nova linha para separar linhas, mas um caracter de retorno seguido por um de nova linha ("_\r\n_").
 
-Given that the split method of strings also allows a regular expression as its argument, we can split on a regular expression like /\r?\n/ to split in a way that allows both "\n" and "\r\n" between lines.
 Desse modo o método _split_ ,em uma expressão regularm com _/\r?\n/_ permite separar os dois modos, com "_\n_"e "_\r\n_" enre linhas.
 
 ```
@@ -583,16 +573,12 @@ function parseINI(texto) {
 }
 ```
 
-The code goes over every line in the file. It keeps a “current category” object, and when it finds a normal directive, it adds it to this object. When it encounters a line that starts a new category, it replaces the current category with a new one, to which subsequent directives will get added. Finally, it returns an array containing all the categories it came across.
 O código percorre cada linha no arquivo. Ele mantem um objeto  "categoria atual", e quando encontra um directiva normal, adiciona ela ao objeto, Quando encontra uma linha que inicia uma nova categoria, ela troca a categoria atual pela nova, para adicionar as directivas seguintes. Finalmente, retorna um _array_ contendo todas as categorias que encontrou.
 
-Note the recurring use of ^ and $ to make sure the expression matches the whole line, not just part of it. Leaving these out is a common mistake, which results in code that mostly works but behaves strangely for some input.
 Observe o uso recorrente de _ˆ_ e _$_ para se certificar que a expressão busca em toda a linha, não apenas em parte dela. Esquecer isso é um erro comum, que resulta um códifo que funciona mas retorna resultados estranhos para algumas entradas.
 
-The expression /^\s*(;.*)?$/ can be used to test for lines that can be ignored. Do you see how it works? The part between the parentheses will match comments, and the ? after that will make sure it also matches lines with only whitespace.
 A expressão _/^\s*(;.*)?$/_ pode ser usada para testar linhas que podem ser ignoradas. Entende como funciona? A parte entre parênteses irá encontrar comentários e o _?_ depois ira se certificar que também encontrará linahs apenas com espaços em branco.
 
-The pattern if (match = string.match(...)) is similar to the trick where I used an assignment as the condition for while before. You usually aren’t sure that your expression will match. But you only want to do something with the resulting match array if it not null, so you need to test for that first. To not break the pleasant chain of if forms, we can assign this result to a variable as the test for if and do the matching and the testing in a single line.
 O padrão _if (encontrados = texto.match(...))_ é parecido com o truque que foi usado como definição do _while_ antes. Geralmente não temos certeza se a expressão encontrará algo. Mas você só deseja fazer algo com o resultado se ele nao for nulo, então você precisa testar ele antes. Para não quebrar a agradável sequencia de _ifs_ podemos definir o resultado a uma variável para o teste, e fazer a busca e testes em uma única linha.
 
 ## International characters

@@ -39,14 +39,15 @@
 ## Entendendo as labels
 
 * **em tradução**: sinaliza que um arquivo está em tradução.
+* **aguardando revisão**: sinaliza que um arquivo já traduzido está esperando para ser revisado.
 * **em revisão**: sinaliza que um arquivo traduzido está sendo revisado.
 * **dúvidas**: dúvidas, sugestões e outros.
 
 ## Fluxo do Trabalho - Issues
 
-O andamento das issues está divido em 2 etapas, na ordem apresentada abaixo:
+O andamento das issues está divido em **3 etapas**, na ordem apresentada abaixo:
 
-**`em tradução` > `em revisão` > `fechamento da issue`**
+**`em tradução` > `aguardando revisão` > `em revisão` > `fechamento da issue`**
 
 
 # Informações Importantes

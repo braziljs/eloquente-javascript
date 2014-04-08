@@ -582,12 +582,16 @@ A expressão _/^\s*(;.*)?$/_ pode ser usada para testar linhas que podem ser ign
 O padrão _if (encontrados = texto.match(...))_ é parecido com o truque que foi usado como definição do _while_ antes. Geralmente não temos certeza se a expressão encontrará algo. Mas você só deseja fazer algo com o resultado se ele nao for nulo, então você precisa testar ele antes. Para não quebrar a agradável sequencia de _ifs_ podemos definir o resultado a uma variável para o teste, e fazer a busca e testes em uma única linha.
 
 ## International characters
+## Caracteres internacionais
 
 Due to an initial simplistic implementation and the fact that this simplistic approach was later set in stone as standard behavior, JavaScript’s regular expressions are rather dumb about characters that do not appear in the English language. For example “word” characters, in this context, actually means the 26 characters in the Latin alphabet, their upper-case variants, and, for some reason, the underscore character. Things like “é” or “β”, which most definitely are word characters, will not match \w (and will match upper-case \W).
+Devido a uma implementação inicial simplista e o fato que esta abordagem simplista mais tarde foi gravada em pedra como comportamento padrão, expressões regulares do Javascript são um pouco estúpidas sobre caracteres que não parecem na língua inglesa. Por exemplo, "caracteres palavra", nesse contexto, atualmente significam apenas os 26 caracteres do alfabeto latino. Coisas como "é" ou "β", que definitvamente são caracteres de palavras, não encontrarão resultados com _\w_ (e serão encontradas com o marcador de letars maiúsculas _\W_).
 
 Through strange historical accident, \s (whitespace) is different, and will match all characters that the Unicode standard considers whitespace, such as a non-breaking space or a Mongolian vowel separator.
+Devido a um estranho acidente histórico, _\s_ (espaço em branco) é diferente, e irá encontrar todos os caracteres que o padrão Unicode considera como espaço em branco, como espaços sem quebra ou o separador de vogais do alfabeto Mongol.
 
 Some regular expression implementations in other programming languages have syntax to match specific Unicode character categories, such as all uppercase letters, all punctuation, control characters, or similar. There are plans to add support to this to JavaScript, but they unfortunately look like they won’t be realized in the near future.
+Algumas implementações de expressões regulares em outras linguagens de programação possuem uma sintaxe para buscar conjuntos especificos de caracteres Unicode, como todas as maiúsculas, todos de pontuação, carateres de controle ou semelhantes. Existem planos para adicionar esse suporte ao Javascript, mas infelizmenre parece que isso não acontecerá tão cedo.
 
 ## Summary
 

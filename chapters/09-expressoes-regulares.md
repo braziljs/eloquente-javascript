@@ -581,46 +581,46 @@ A expressão _/^\s*(;.*)?$/_ pode ser usada para testar linhas que podem ser ign
 
 O padrão _if (encontrados = texto.match(...))_ é parecido com o truque que foi usado como definição do _while_ antes. Geralmente não temos certeza se a expressão encontrará algo. Mas você só deseja fazer algo com o resultado se ele nao for nulo, então você precisa testar ele antes. Para não quebrar a agradável sequencia de _ifs_ podemos definir o resultado a uma variável para o teste, e fazer a busca e testes em uma única linha.
 
-## International characters
+## Caracteres internacionais
 
-Due to an initial simplistic implementation and the fact that this simplistic approach was later set in stone as standard behavior, JavaScript’s regular expressions are rather dumb about characters that do not appear in the English language. For example “word” characters, in this context, actually means the 26 characters in the Latin alphabet, their upper-case variants, and, for some reason, the underscore character. Things like “é” or “β”, which most definitely are word characters, will not match \w (and will match upper-case \W).
+Devido a uma implementação inicial simplista e o fato que esta abordagem simplista mais tarde foi gravada em pedra como comportamento padrão, expressões regulares do Javascript são um pouco estúpidas sobre caracteres que não parecem na língua inglesa. Por exemplo, "caracteres palavra", nesse contexto, atualmente significam apenas os 26 caracteres do alfabeto latino. Coisas como "é" ou "β", que definitvamente são caracteres de palavras, não encontrarão resultados com _\w_ (e serão encontradas com o marcador de letars maiúsculas _\W_).
 
-Through strange historical accident, \s (whitespace) is different, and will match all characters that the Unicode standard considers whitespace, such as a non-breaking space or a Mongolian vowel separator.
+Devido a um estranho acidente histórico, _\s_ (espaço em branco) é diferente, e irá encontrar todos os caracteres que o padrão Unicode considera como espaço em branco, como espaços sem quebra ou o separador de vogais do alfabeto Mongol.
 
-Some regular expression implementations in other programming languages have syntax to match specific Unicode character categories, such as all uppercase letters, all punctuation, control characters, or similar. There are plans to add support to this to JavaScript, but they unfortunately look like they won’t be realized in the near future.
+Algumas implementações de expressões regulares em outras linguagens de programação possuem uma sintaxe para buscar conjuntos especificos de caracteres Unicode, como todas as maiúsculas, todos de pontuação, carateres de controle ou semelhantes. Existem planos para adicionar esse suporte ao Javascript, mas infelizmenre parece que isso não acontecerá tão cedo.
 
-## Summary
+## Uma ou mais ocorrências do padrão
 
-Regular expressions are objects that represent patterns in strings. They use their own syntax for expressing these patterns.
+Expressões regulares são objetos que reprensentam padrões em _strings_. Eles usam sua própria sintaxe para expressar esses padrões.
 
-	/abc/	Sequence of characters
-	/[abc]/	Any character from a set of characters
-	/[^abc]/	Any character not in a set of characters
-	/[0-9]/	Any character in a range of characters
-	/x+/	One or more occurrences of a pattern
-	/x+?/	One or more occurrences, non-greedy
-	/x*/	Zero or more occurrences
-	/x?/	Zero or one occurrence
-	/x{2,4}/	Between two and four occurrences
-	/(abc)+/	Grouping
-	/a|b|c/	Alternative patterns
-	/\d/	Digit characters
-	/\w/	Alphanumeric characters (“word characters”)
-	/\s/	Whitespace characters
-	/./	All characters except newlines
-	/\b/	Word boundary
-	/^/	Start of input
-	/$/	End of input
+	/abc/	Sequencia de caracteres
+	/[abc]/	Qualquer caractere do conjunto
+	/[^abc]/	Qualquer caractere que não seja do conjunto
+	/[0-9]/	Qualquer caracter no intervalo de caracteres
+	/x+/	Uma ou mais ocorrências do padrão
+	/x+?/	Uma ou mais ocorrências do padrão, não obrigatório
+	/x*/	Zero ou mais ocorrências
+	/x?/	Zero ou uma ocorrência
+	/x{2,4}/	Entre duas e quatro ocorrências
+	/(abc)+/	Agrupamento
+	/a|b|c/	Padrões alternativos
+	/\d/	Caracteres dígitos
+	/\w/	Caracteres alfanuméricos ("caracteres palavra")
+	/\s/	caracteres espaço em branco
+	/./	Todos caracteres exceto quebras de linha
+	/\b/	Limite de palavra
+	/^/	Início da entrada
+	/$/	Final da Entrada
 
-A regular expression has a method test to test whether a given string matches it, and a method exec which, when a match is found, returns an array containing all matched groups and an index property that indicates where the match started.
+Uma expressão regular possui um método _test_ para testar quando um padrão é encontrado em uma _string_, um método _exec_ que quando encontra um resultado retorna um _array_ com todos os grupos encontrados e uma propriedade índice que indica onde o resultado inicia.
 
-Strings have a match method to match them against a regular expression, and a search method to search for one. Their replace method can replace matches of a pattern with a replacement string. Alternatively, a function can be passed that builds up a replacement based on the match text and matched groups.
+_Strings_ possuem um método _match_ para testá-las contra uma expressão regular e um método _search_ para buscar por um resultado. O método _replace_  pode substituir resultados encontrados por um padrão. Como alternativa, uma função pode ser passada para montar o texto que será substitído de acordo com que foi achado.
 
-Regular expressions can have options (flags), which are written after the closing slash. The ‘i’ option makes the match case-insensitive, and the ‘g’ flag makes the expression global which, among other things, causes the replace method to replace all instances instead of just the first.
+Expressões regulares podem ter opções configuradas (_flags_), que são escritas após o fechamento da barra. A opção "_i_" faz a busca sem se improtar se é maiúscula ou minúscula, a opção "_g_" faz a busca global, que, entre outras coisas, faz o método _replace_ substituir todas as ocorrências, em vez de só a primeira.
 
-The RegExp constructor can be used to create a regular expression value from a string.
+O construtor _RegExp_ pode ser usado para criar uam expressão regular dinâmica a partir de uma _string_.
 
-Regular expressions are a sharp tool with an awkward handle. They’ll simplify some simple tasks tremendously, but quickly become unmanageable when applied to more complex tasks. Knowing when to use them is useful. Part of knowing how to use them is knowing when to give up on them and switch to a more explicit approach.
+Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. Elas irão simplificar muito algumas tarefas simples, mas rapidamente se tornarão inusáveis quando aplicadas a tarefas mais complexas. Saber quandi usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
 
 ## Exercises
 

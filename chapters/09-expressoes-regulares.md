@@ -628,19 +628,20 @@ Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. 
 
 ## Regex golf
 
-“Code golf” is a term used for the game of trying to express a particular program in as few characters as possible. Similarly, regex golf is the practice of writing as tiny a regular expression as possible to match a given pattern (and only that pattern).
+"Golde de Código" é um termo usado para o jogo de tentar escrever um programa com o menor número de carateres possível. Parecido, o golfe regex é a prática de escrever pequenas expressões regulares para achar um determinado padrão (e apenas esse padrão).
 
-Write regular expressions that tests whether any of the sub-strings given occur in a string. The regular expression should match only strings containing one the sub-strings described. Do not worry about word boundaries unless explicitly mentioned. When your expression works, see if you can make it any smaller.
+Escreva uam expressão regular que testa quando qualquer das _sub-strings_ dadas ocorre em um texto. A expressão regular  deverá achar apenas _strings_ contendo uma das _sub-strings_ dadas. Não se preocupe com limites de palavras a não ser que seja explicitamente pedido. Quando a sua expressão funcionar, veja se consegue fazê-la menor.
 
-	“car” and “cat”
-	“pop” and “prop”
-	“ferret”, “ferry”, and “ferrari”
-	Any word ending in “ious”
-	A whitespace character followed by a dot, comma, colon, or semicolon
-	A word longer than 6 letters
-	A word without the letter “e”
+	“car” e “cat”
+	“pop” e “prop”
+	“ferret”, “ferry”, e “ferrari”
+	Qualquer palavra terminando em “ious”
+	Um espaço em branco seguido por um ponto, vírgula, dois-pontos, ou ponto-e-vírgula 
+	Uma palavra com mais de seis letras
+	Uma palavra sem a letra "e"
 
-Refer back to the table in the chapter summary to quickly look something up. Test each solution out with a few test strings.
+Consulte a tabela no capítulo Sumário para achar algo rapidamente.
+Teste cada solução encontrada com alguns testes com _strings_.
 
 ```
 // Fill in the regular expressions

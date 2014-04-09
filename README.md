@@ -7,22 +7,22 @@
 
 # Conteúdo do Livro
 
-* [Introdução](https://github.com/eoop/eloquente-javascript/blob/master/chapters/00-introducao.md)
+* [Introdução](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/00-introducao.md)
 * **Parte 1: Linguagem**
-	* [Valores, Tipos e Operadores](https://github.com/eoop/eloquente-javascript/blob/master/chapters/01-valores-tipos-operadores.md)
-	* [Estrutura do Programa](https://github.com/eoop/eloquente-javascript/blob/master/chapters/02-estrutura-do-programa.md)
-	* [Funções](https://github.com/eoop/eloquente-javascript/blob/master/chapters/03-funcoes.md)
-	* [Estrutura de Dados: Objeto e Array](https://github.com/eoop/eloquente-javascript/blob/master/chapters/04-estruturas-de-dados.md)
-	* [Funções de Ordem Superior](https://github.com/eoop/eloquente-javascript/blob/master/chapters/05-funcoes-de-ordem-superior.md)
-	* [A Vida Secreta dos Objetos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/06-a-vida-secreta-dos-objetos.md)
-	* [Prática: Vida Eletrônica](https://github.com/eoop/eloquente-javascript/blob/master/chapters/07-pratica-vida-eletronica.md)
-	* [Erros e Manipulação de Erros](https://github.com/eoop/eloquente-javascript/blob/master/chapters/08-erros-e-manipulacao-de-erros.md)
-	* [Expressões Regulares](https://github.com/eoop/eloquente-javascript/blob/master/chapters/09-expressoes-regulares.md)
-	* [Módulos](https://github.com/eoop/eloquente-javascript/blob/master/chapters/10-modulos.md)
-	* [Prática: A Linguagem de Programação](https://github.com/eoop/eloquente-javascript/blob/master/chapters/11-pratica-linguagem-de-programacao.md)
+	* [Valores, Tipos e Operadores](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/01-valores-tipos-operadores.md)
+	* [Estrutura do Programa](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/02-estrutura-do-programa.md)
+	* [Funções](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/03-funcoes.md)
+	* [Estrutura de Dados: Objeto e Array](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/04-estruturas-de-dados.md)
+	* [Funções de Ordem Superior](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/05-funcoes-de-ordem-superior.md)
+	* [A Vida Secreta dos Objetos](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/06-a-vida-secreta-dos-objetos.md)
+	* [Prática: Vida Eletrônica](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/07-pratica-vida-eletronica.md)
+	* [Erros e Manipulação de Erros](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/08-erros-e-manipulacao-de-erros.md)
+	* [Expressões Regulares](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/09-expressoes-regulares.md)
+	* [Módulos](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/10-modulos.md)
+	* [Prática: A Linguagem de Programação](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/11-pratica-linguagem-de-programacao.md)
 * **Parte 2: Navegador**
-	* [JavaScript e o Navegador](https://github.com/eoop/eloquente-javascript/blob/master/chapters/12-javascript-e-o-navegador.md)
-	* [O *Document Object Model*](https://github.com/eoop/eloquente-javascript/blob/master/chapters/13-document-object-model.md)
+	* [JavaScript e o Navegador](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/12-javascript-e-o-navegador.md)
+	* [O *Document Object Model*](https://github.com/cerebrobr/eloquente-javascript/blob/master/chapters/13-document-object-model.md)
 
 
 # Contribuições

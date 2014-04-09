@@ -1,20 +1,20 @@
-Chapter 10
+Capítulo 10
 
-#Modules
+#Módulos
 
-A beginning programmer writes his programs like an ant builds her hill, one piece at a time, without thought for the bigger structure. His programs will be like loose sand. They may stand for a while, but growing too big they fall apart.
+Um programador inicianre escreve seus programas como uma formiga constrói seu formigueiro, um pedaço de cada vez, sem pensar na estrutura maior. Seus programas irão parecer como areia solta. Eles podem durar um tempo, mas se crescem demais, desmoronam.
 
-Realizing this problem, the programmer will start to spend a lot of time thinking about structure. His programs will be rigidly structured, like rock sculptures. They are solid, but when they must change, violence must be done to them.
+Percebendo esse problema, o programador começrá a gastar muito tempo pensando sobre a estrutura. seus programas serão rígidamente estruturados, como esculturas em pedra. Eles são sólidos, mas quando precisam mudar, devem ser quebrados.
 
-The master programmer knows when to apply structure and when to leave things in their simple form. His programs are like clay, solid yet malleable.
+O programador experiente sabe quando aplicar uma estrutura equando deixar as coisas mais simples. Seus programas são como argila, solido mas ainda maleáveis.
 
-Master Yuan-Ma, The Book of Programming
+Mestre Yuan-Ma, O livro da Programação
 
-Every program has a shape. On a small scale, this shape is determined by the division into functions, and the blocks of code inside of them. Programmers have lots of freedom in the shape they give their programs. It is determined more by good (or bad) taste, than by the program’s intended functionality.
+Todo programa possui uma forma. Em menor scala, essa forma é determinada pela divisão em funções e os blocos são o código dentro delas. Programadores tem muita liberdade na forma que dão aos seus programas. é determinado mais pelo bom (ou mau) gosto, do que pela funcionalidade planejada.
 
-When looking at a larger program in its entirety, individual functions start to blend into the background, and it would be good to have a larger unit of organization.
+Quando olhamos um programa grande em seu todo, funções individuais começam a se misturar e seria bom possuir uma unidade maior de organização.
 
-Modules divide programs into clusters of code that, by some criterion, “belong” together. This chapter explores some of the benefits that such clustering provides, and shows techniques for building modules in JavaScript.
+Módulos dividem programas em blocos de código que, por algum critério, pertemcem a uma mesma unidade. este capítulo explora alguns dos benefícios que estes agrupamentos fornecem e mostra algumas técnicas para construção de módulos em Javascript.
 
 ## Organization
 

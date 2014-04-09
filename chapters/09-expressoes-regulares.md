@@ -689,22 +689,22 @@ function verify(regexp, yes, no) {
 }
 ```
 
-## Quoting style
+## Estilo de aspas
 
-Imagine you have written a text, and used single quotation marks throughout. Now you want to replace all those that actually quote a piece of text with double quotes, but not the ones used in contractions like “aren’t”.
+Imagine que você escreveu um texto e usou aspas simples por toda parte. Agora você deseja substituir todas que realmente possuem algum texto com aspas duplas, mas não as usadas em contrações de texto com _aren’t). 
 
-Think of a pattern that distinguishes these two kind of quote usage and craft a call to the replace method that does the proper replacement.
+Pense em um padrão que faça distinção entre esses dois usos de aspas e faça uma chamada que substitua apenas nos lugares apropriados.
 
 ```
 var text = "'I'm the cook,' he said, 'it's my job.'";
-// Change this call.
+// Altere esta chamada
 console.log(text.replace(/A/, "B"));
 // → "I'm the cook," he said, "it's my job."
 ```
 
-display hints
+Dicas
 
-The most obvious solution is to only replace quotes that are not surrounded by two word characters. The first expression that comes to mind is /\W'\W/, but you need to be careful to handle the start and end of the string correctly. This can be done by using the ‘^’ and ‘$’ markers, as in /(\W|^)'(\W|$)/.
+A solução mais óbvia é substituir apenas as aspas que não estão cercadas de caracteres de palavra. A primeira expressão vem à mente é _/\W'\W/_, mas é preciso cuidado para lidar com o ínicio da _string_ corretamente. Isso pode ser feito usando os marcadores "_ˆ_" e "_$_", como em _/(\W|^)'(\W|$)/_.
 
 ### Numbers again
 

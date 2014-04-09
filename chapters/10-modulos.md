@@ -16,19 +16,14 @@ Quando olhamos um programa grande em seu todo, funções individuais começam a 
 
 Módulos dividem programas em blocos de código que, por algum critério, pertemcem a uma mesma unidade. este capítulo explora alguns dos benefícios que estes agrupamentos fornecem e mostra algumas técnicas para construção de módulos em Javascript.
 
-## Organization
 ## Organização
 
-There are number of reasons why authors divide their books into chapters and sections. They make it easier for a reader to see how the book is built up, or to find a specific part that they are interested in. They also help the author by providing a clear focus for every section.
 Existem algumas razões porque autores dividem seus livros em capítulos e seções. Elas facilitam para o leitor entender como o livro foi feito ou achar uma parte específica em que está interessado. Elas também ajudam o autor, dando um foco claro para cada seção.
 
-The benefits of splitting a program into several files or modules are analogous—it helps people who aren’t yet familiar with the code find what they are looking for, and helps the programmer put things that are closely related close to each other.
 Os benefícios de dividir um programa em vários arquivos ou módulos são semelhantes, ajudam as pessoas que não estão familiarizadas com o código a achar o que elas buscam, e ajudam o programador a colocar coisas semelhantes juntas.
 
-Some programs are even organized along the model of a traditional text, with a well-defined order in which the reader is encouraged to go through the program, and lots of prose (comments) providing a coherent description of the code. This make reading the program a lot less intimidating (reading unknown code is usually intimidating). But is has the downside that it is more work to set up, and makes changing the program rather difficult, because prose tends to be more tightly interconnected than code.
 Alguns programas são organizados seguindo modelo de um texto tradicional, com uma ordem bem definida que encoraja o leitor a percorrer o programa, e muito falatório (comentários) fornecendo uma descrição coerente do código. Isso faz o programa muito menos intimidador (ler código desconhecido é intimidador, geralmente). Mas existe um lado ruim que é a maior quantidade de trabalho a fazer e dificulta um pouco as alteraçoes, porque os comentários tendem a ser mais interligados do que o código em si.
 
-As a more general rule, organization has a cost, and in the early stages of a project, when not quite sure yet what goes where or what kind of modules the program needs at all, I endorse a minimalist, structure-less attitude. Just put everything into a single flat file until the code stabilizes. That way, you won’t be over-thinking the organization with insufficient information, won’t be wasting time moving pieces of the program back and forth, and won’t accidentally lock yourself into a structure that does not actually fit your program.
 Como regra geral, organização tem um custo, e é nos estágios iniciais do projeto,q uando não sabemos com certeza aonde vamos e que tipo de módulos o programa precisará. Eu defendo uma estrutura minimalista, com pouca estrutura. Apenas coloque tudo em um simples arquivo até que o código estabiliza. Dessa maneira, você não não estará se sobreccaregando pensando em organização enquanto tem pouca informação, não perderá tempo fazendo e desfazendo coisas, e não irá acidentalmente travar-se em uma estrutura que não serve realmente para seu programa.
 
 ## Namespaces

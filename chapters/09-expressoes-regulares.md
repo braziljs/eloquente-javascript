@@ -707,13 +707,17 @@ Dicas
 A solução mais óbvia é substituir apenas as aspas que não estão cercadas de caracteres de palavra. A primeira expressão vem à mente é _/\W'\W/_, mas é preciso cuidado para lidar com o ínicio da _string_ corretamente. Isso pode ser feito usando os marcadores "_ˆ_" e "_$_", como em _/(\W|^)'(\W|$)/_.
 
 ### Numbers again
+### Novamente números
 
 Series of digits can be matched by the pleasantly simple regular expression /\d+/.
+Séries de dígitos podem ser usados pela agradável expressão regular _/\d+/_.
 
 Write an expression that matches (only) JavaScript-style numbers. That means it must support an optional minus or plus sign in front of the number, the decimal dot, and exponent notation—5e-3 or 1E10—with again an optional sign in front of the exponent.
+Escreva uma expressão que enconte (apenas) números no estilo Javascrip. Isso signica que precisa suportar um sinal de menor ou maior, opcional, na frente do número, um ponto decimal e a notação exponencial —5e-3 ou 1E10—, novamente com o sinal opcional na frente dele.
 
 ```
 // Fill in this regular expression.
+// Preencha esta expressão regular
 var number = /^...$/;
 
 // Tests:
@@ -721,19 +725,27 @@ var number = /^...$/;
  "1e+12"].forEach(function(s) {
   if (!number.test(s))
 	console.log("Failed to match '" + s + "'");
+	console.log("Falhou em achar '" + s + "'");
 });
 ["1a", "+-1", "1.2.3", "1+1", "1e4.5", ".5.", "1f5",
  "."].forEach(function(s) {
   if (number.test(s))
 	console.log("Incorrectly accepted '" + s + "'");
+	console.log("Aceitou errôneamente '" + s + "'");
 });
 ```
 
 display hints
+Dicas
+
 First, do not forget the backslash in front of the dot.
+primeiro, não esqueça da barra invertida em frente ao ponto.
 
 Matching the optional sign in front of the number, as well as in front of the exponent, can be done with [+\-]? or (+|-|) (plus, minus, or nothing).
+Achar o sinal opcional na frente do número, como na frente do expoencial, pode ser feito com _[+\-]?_ ou _(+|-|)_ (mais, menos ou nada).
 
 The more complicated part of the exercise is probably the problem of matching both "5." and ".5" without also matching ".". For this, I’ve found the best solution is to use the ‘|’ operator to separate the two cases out—either one or more digits optionally followed by a dot and zero or more digits, or a dot followed by one or more digits.
+A parte mais complicada deste exercício provavelmente é a dificuldade de achar "5." e ".5"  sem achar também o ".". Para isso, achamos que a melhor solução é usar o operador "|" para separar os dois casos, um ou mais dígitos opcionalmente seguidos por um ponto e zerou ou mais dígitos, ou um ponto seguido por um ou mais dígitos.
 
 Finally, to make the “e” case-insensitive, either add an “i” option to the regular expression, or use [eE].
+Finalmente, fazer o "e" _case-insensitive_, ou adicional a opção "i" à expressão regular ou usar "_[eE]_ ".

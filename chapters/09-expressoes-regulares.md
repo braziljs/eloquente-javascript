@@ -622,11 +622,9 @@ O construtor _RegExp_ pode ser usado para criar uam expressão regular dinâmica
 
 Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. Elas irão simplificar muito algumas tarefas simples, mas rapidamente se tornarão inusáveis quando aplicadas a tarefas mais complexas. Saber quandi usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
 
-## Exercises
 ## Exercícios
 
-It is almost unavoidable that, in the course of working on these, you will be confused and frustrated by some regular expression’s inexplicable behavior. What sometimes helps is entering your expression into an online tool like debuggex.com, to see whether its visualization corresponds to what you intended, and to quickly see how it responds to various input strings.
-ë quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expresão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como debuggex.com, para ver se a vizualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias _strings_ diferentes.
+É quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expresão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como debuggex.com, para ver se a vizualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias _strings_ diferentes.
 
 ## Regex golf
 

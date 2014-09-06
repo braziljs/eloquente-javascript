@@ -24,7 +24,7 @@ Você pode imaginar um documento HTML como um conjunto de caixas aninhadas. Tags
 
 Essa página tem a seguinte estrutura:
 
-![Caixas HTML](../img/html-boxes.svg)
+![Caixas HTML](../img/html-boxes.jpg)
 
 A estrutura de dados que o navegador usa para representar o documento segue este formato. Para cada caixa há um objeto, com o qual podemos interagir para descobrir coisas como: qual tag HTML ele representa e quais caixas e textos ele contém. Essa representação é chamada de Modelo de Objeto de Documentos, também apelidada de DOM  (do inglês *Document Object Model*).
 
@@ -46,7 +46,7 @@ Cada objeto que é um nó do DOM tem a propriedade nodeType, a qual contém um c
 
 Sendo assim, outra maneira de visualizar a árvore do nosso documento é:
 
-![Árvore HTML](../img/html-tree.svg)
+![Árvore HTML](../img/html-tree.jpg)
 
 Na imagem acima, as folhas são os nós de texto e as setas indicam a relação de pai e filho entre os nós.
 
@@ -66,7 +66,7 @@ Porém nenhuma dessas falhas é fatal, pois JavaScript nos permite criar nossas 
 
 Os nós DOM contêm uma variedade de ligações para outros nós próximos. O diagrama a seguir tenta ilustrá-los:
 
-![Ligações HTML](../img/html-links.svg)
+![Ligações HTML](../img/html-links.jpg)
 
 Ainda que o diagrama mostre apenas uma ligação de cada tipo, todo nó possui uma propriedade `parentNode` que aponta para o nó que o contém (seu nó pai). Dessa mesma maneira, todo nó de um elemento (nó do tipo 1) possui a propriedade `childNodes` que aponta para um objeto parecido com um array, o qual contém seus nós filhos.
 
@@ -494,7 +494,7 @@ Nossa função de animação recebe como argumento o tempo atual, o qual é comp
 
 `Math.cos` (cosseno) e `Math.sin` (seno) são úteis para achar pontos que se localizam em um círculo ao redor de um ponto (0,0) com o raio de uma unidade. Ambas as funções interpretam seu argumento como a posição nesse círculo, com 0 significando o ponto na extrema direita do círculo, indo em sentido horário até 2π (cerca de 6.28) nos levou ao redor de todo o círculo. `Math.cos` informa a coordenada x (no plano cartesiano) do ponto que corresponde à dada posição no círculo, enquanto `Math.sin` informa a coordenada y. Posições (ou ângulos) maiores que 2π ou abaixo de 0 são válidos—a rotação se repete, de modo que *a*+2π refere-se ao mesmo ângulo que *a*
 
-![Usando seno e cosseno para computador cordenadas](.../img/cos_sin.svg)
+![Usando seno e cosseno para computador cordenadas](.../img/cos_sin.jpg)
 
 A animação do gato mantém um contador, `angle`, para o ângulo atual da animação, e incrementa-o proporcionalmente ao tempo decorrido a cada vez que a função `animate` é chamada. Ela pode usar esse ângulo para computar a posição atual do elemento de imagem. A propriedade de estilo `top` é computada com `Math.sin` e multiplicada por 20, que é o raio vertical do nosso círculo. O estilo `left` é baseado em `Math.cos` e multiplicado por 200, de maneira que o círculo é muito mais largo do que alto, resultando em uma rotação elíptica.
 

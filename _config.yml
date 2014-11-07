@@ -15,3 +15,7 @@ paginate: 5
 paginate_path: "blog/page:num"
 
 permalink: /:title/
+
+sass:
+    sass_dir: ./assets/sass
+    style: :compressed

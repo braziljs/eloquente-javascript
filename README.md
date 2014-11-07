@@ -2,6 +2,10 @@
 
 A portuguese translation of Eloquent JavaScript 2 edition by Marijn Haverbeke
 
+## Como isso funciona?
+
+Nós usamos o [jekyll](http://jekyllrb.com/), um gerador de site estático em Ruby para criar este site.
+
 ## Colaborando
 
 1. Faça um fork!

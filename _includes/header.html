@@ -1,8 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
+
+    <title>{% if page.title %}{{ page.title }} &mdash; {% endif %} {{ site.title }}</title>
+
+    <!-- Meta -->
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <meta name="author" content="The community">
+    <meta name="application-name" content="{{ site.name }}">
+    <meta name="google-site-verification" content="">
+
+    <!-- for Facebook -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} &mdash;{% endif %} {{ site.title }}">
+    <meta property="og:site_name" content="{{ site.title }}">
+    <meta property="og:url" content="{{ site.url }}{% if page.url != '/index.html' %}{{ page.url }}{% endif %}">
+    <meta property="og:image" content="{{ site.url }}/assets/img/fb-share.png">
+    <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}blog{% endif %}">
+    <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+
+    <!-- for Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% if page.title %}{{ page.title }} &mdash; {% endif %} {{ site.title }}">
+    <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <meta name="twitter:image" content="{{ site.url }}/assets/img/favicon.png">
+    <meta name="twitter:site" content="{{ site.name }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ site.url }}/assets/img/favicon.png">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ site.url }}/assets/css/styles.css">
 </head>
 <body>
-    
+    <a href="https://github.com/randsonjs/eloquent-javascript/fork"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>

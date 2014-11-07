@@ -4,7 +4,6 @@ email: "randsonjs@gmail.com"
 description: "A portuguese translation of Eloquent JavaScript 2 edition by Marijn Haverbeke"
 baseurl: ""
 url: "http://0.0.0.0:4000"
-username: randsonjs
 
 # Build settings
 markdown: kramdown

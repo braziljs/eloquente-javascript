@@ -1,0 +1,18 @@
+# Site settings
+title: "Eloquent Javascript 2 Edition"
+email: "randsonjs@gmail.com"
+description: "A portuguese translation of Eloquent JavaScript 2 edition by Marijn Haverbeke"
+baseurl: ""
+url: "http://0.0.0.0:4000"
+username: randsonjs
+
+# Build settings
+markdown: kramdown
+
+source: .
+destination: ./_site
+plugins: ./_plugins
+paginate: 5
+paginate_path: "blog/page:num"
+
+permalink: /:title/

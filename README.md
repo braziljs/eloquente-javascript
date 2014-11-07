@@ -35,6 +35,8 @@ Agora você terá acesso ao website por `localhost:4000` :D
 
 ## Estrutura de arquivos
 
+A estrutura de arquivos do projetos é organizada da seguinte maneira:
+
 ```
 .
 |-- _includes

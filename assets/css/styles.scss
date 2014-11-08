@@ -91,6 +91,9 @@ h3 {
 }
 
 a {
+    text-decoration: none;
+    color: #467;
+
     &:visited, &:active {
         text-decoration: none;
         color: #467;

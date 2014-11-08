@@ -6,17 +6,24 @@
 @import "fonts.scss";
 
 body {
-  font-family: Georgia, 'Nimbus Roman No9 L', 'Century Schoolbook L', serif;
-  font-size: 18px;
-  line-height: 1.6em;
-  color: #000;
-  background: #fff;
+    font-family: Georgia, 'Nimbus Roman No9 L', 'Century Schoolbook L', serif;
+    font-size: 18px;
+    line-height: 1.6em;
+    color: #000;
+    background: #fff;
+}
+
+article {
+    margin: 0 auto;
+    max-width: 35em;
+    padding: 2em 0 5em 0;
+    position: relative;
 }
 
 p:hover a.p_ident:after, pre:hover a.c_ident:after {
-  content: "¶";
-  color: #888;
-  font-size: 80%;
-  position: absolute;
-  right: -25px;
+    content: "¶";
+    color: #888;
+    font-size: 80%;
+    position: absolute;
+    right: -25px;
 }

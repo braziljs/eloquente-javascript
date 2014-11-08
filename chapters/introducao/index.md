@@ -1,6 +1,7 @@
 ---
 layout: chapter
 title: Introdução
+next: /chapters/valores-tipos-operadores
 ---
 
 Este livro é sobre como conversar com computadores. Computadores se tornaram uma das ferramentas fundamentais do nosso tempo. Ser capaz de controlá-los efetivamente é uma habilidade extremamente útil. Com a mentalidade certa, também pode ser muito divertido!
@@ -9,7 +10,7 @@ Há uma lacuna entre nós, organismos biológicos com um talento para o raciocí
 
 A história da interação humano-computador tem se afastado da ideia fria e reducionista do mundo sobre o computador, apresentando camadas mais amigáveis em cima disso. As duas ideias mais importantes neste processo tem sido o uso de linguagens de computador, que mapeiam bem para o nosso cérebro por se parecer com as linguagens que usamos para conversar uns com os outros, e interfaces gráficas de apontar e clicar (ou toque), que nós facilmente entendemos por imitar o mundo tangível fora da máquina.
 
-![Mysterios Computer](../img/mysterious-computer.jpg)
+![Mysterios Computer](../../assets/images/computer.png)
 
 Interfaces gráficas tendem a ser mais fáceis de descobrir que linguagens - detectar um botão é mais rápido do que aprender uma gramática. Por essa razão, elas se tornaram a forma dominante de interagir com sistemas orientados ao consumidor. Compare com os telefones atuais, onde você pode realizar todo tipo de tarefa tocando e passando os elementos que aparecem na tela, com o *Commodore 64* de 1982, o aparelho que me introduziu a computação, onde tudo que você recebia era um cursor piscando, e você conseguia isto digitando comandos.
 

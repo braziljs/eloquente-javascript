@@ -1,0 +1,38 @@
+{% include header.html %}
+
+<article>
+    <nav>
+        {% if page.prev %}
+            <a href="{{ page.prev }}" title="Capítulo anterior">◀</a>
+        {% endif %}
+
+        <a href="/" title="Inicio">◆</a>
+
+        {% if page.next %}
+            <a href="{{ page.next }}" title="Próximo capítulo">▶</a>
+        {% endif %}
+    </nav>
+
+    <h1>
+        {% if page.chapter %}
+            <div class="chap_num">Capítulo {{ page.chapter }}</div>
+        {% endif %}
+        {{ page.title }}
+    </h1>
+
+    {{ content }}
+
+    <nav>
+        {% if page.prev %}
+            <a href="{{ page.prev }}" title="Capítulo anterior">◀</a>
+        {% endif %}
+
+        <a href="/" title="Inicio">◆</a>
+
+        {% if page.next %}
+            <a href="{{ page.next }}" title="Próximo capítulo">▶</a>
+        {% endif %}
+    </nav>
+</article>
+
+{% include footer.html %}

@@ -1,6 +1,8 @@
 # [Eloquent Javascript](http://eloquentjavascript.com.br) por Marijn Haverbeke
 
-Projeto que visou a tradução da segunda edição do livro Eloquent JavaScript por Marijn Haverbeke.
+Projeto que visa a tradução da segunda edição do livro Eloquent JavaScript por Marijn Haverbeke.
+
+* [Artigo falando como está sendo o inicio do projeto](http://randsonjs.com/uma-boa-referencia/)
 
 ## Como isso funciona?
 

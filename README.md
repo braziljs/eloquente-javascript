@@ -56,7 +56,6 @@ Aqui você encontrará os templates padrão usados pelo site.
 
 ### [_posts](https://github.com/randsonjs/eloquent-javascript/_posts)
 
-Here you'll find a list of files for each post.
 Aqui você encontrará as listas de posts. Não estamos usando esta pasta, já que não precisamos de posts para este projeto. Veja no [guia de contribuição](./CONTRIBUTING.md) como ajudar com traduções ou revisões.
 
 ### [_config.yml](https://github.com/randsonjs/eloquent-javascript/_config.yml)

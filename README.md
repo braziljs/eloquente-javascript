@@ -1,6 +1,6 @@
-# [Eloquent Javascript](http://eloquentjavascript.com.br)
+# [Eloquent Javascript](http://eloquentjavascript.com.br) por Marijn Haverbeke
 
-A portuguese translation of Eloquent JavaScript 2 edition by Marijn Haverbeke
+Projeto que visou a tradução da segunda edição do livro Eloquent JavaScript por Marijn Haverbeke.
 
 ## Como isso funciona?
 

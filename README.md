@@ -80,4 +80,4 @@ _Mais informações sobre a estrutura de arquivos do jekyll veja [aqui](https://
 Para colaborar em traduções ou revisões, acesse o [guia de colaboração](./CONTRIBUTING.md).
 
 ## Licença
-[MIT Licença](./LICENSE) © Randson Oliveira
+[Licença MIT](./LICENSE) © Randson Oliveira

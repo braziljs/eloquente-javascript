@@ -6,7 +6,7 @@ Projeto que visa a tradução da segunda edição do livro Eloquent JavaScript p
 
 ## Como isso funciona?
 
-Nós usamos o [jekyll](http://jekyllrb.com/), um gerador de site estático em Ruby para criar este site.
+Nós usamos o [Jekyll](http://jekyllrb.com/), um gerador de site estático em Ruby para criar este site.
 
 ## Primeiros passos
 

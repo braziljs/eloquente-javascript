@@ -1,0 +1,28 @@
+pre .str, code .str { color: #FFFF66; } /* string */
+pre .kwd, code .kwd { color: #A6E22E; } /* keyword */
+pre .com, code .com { color: #75715E; font-style: italic; } /* comment */
+pre .typ, code .typ { color: #89bdff; } /* type */
+pre .lit, code .lit { color: #AE81FF; } /* literal */
+pre .pun, code .pun { color: #FFFFFF; } /* punctuation */
+pre .pln, code .pln { color: #00FFFF; } /* plaintext */
+pre .tag, code .tag { color: #70FFE0; } /* html/xml tag */
+pre .atn, code .atn { color: #A6E22E; } /* html/xml attribute name */
+pre .atv, code .atv { color: #FFFF66; } /* html/xml attribute value */
+pre .dec, code .dec { color: #3387CC; } /* decimal */
+
+pre.prettyprint, code.prettyprint {
+	background-color: #232323;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-o-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
+}
+
+pre.prettyprint {
+	width: 95%;
+	margin: 1em auto;
+	padding: 1em;
+	white-space: pre-wrap;
+}

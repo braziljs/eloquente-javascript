@@ -41,7 +41,7 @@ nav {
 
 pre {
     padding: 5px 0 5px 15px;
-    line-height: 1.35;
+    line-height: 1.6em;
     margin: 1rem 0;
 
     // &:[data-language=javascript] {
@@ -63,7 +63,7 @@ p:hover a.p_ident:after, pre:hover a.c_ident:after {
 }
 
 code, pre, .CodeMirror {
-    font-size: 18px;
+    font-size: 14px;
     font-family: 'PT Mono', monospace;
 }
 

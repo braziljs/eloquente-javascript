@@ -19,16 +19,19 @@ $ gem install jekyll
 ```
 
 3 - Agora clone o projeto.
+
 ```sh
 $ git clone git@github.com:randsonjs/eloquent-javascript.git
 ```
 
 4 - Navegue até a pasta do projeto
+
 ```sh
 $ cd eloquent-javascript
 ```
 
 5 - E finalmente rode:
+
 ```sh
 $ jekyll server --watch
 ```

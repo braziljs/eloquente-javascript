@@ -48,7 +48,7 @@ Quanta hostilidade perante a riqueza da programação - tentar reduzir a algo si
 
 No começo, no nascimento da programação, não havia linguagens de programação. Programas pareciam algo desta forma:
 
-```
+<pre data-language="text/plain" class="snippet cm-s-default">
 00110001 00000000 00000000
 00110001 00000001 00000001
 00110011 00000001 00000010
@@ -58,7 +58,7 @@ No começo, no nascimento da programação, não havia linguagens de programaç�
 01000001 00000001 00000001
 00010000 00000010 00000000
 01100010 00000000 00000000
-```
+</pre>
 
 Este é um programa que soma os números do 1 ao 10 e imprimi o resultado (1 + 2 + ... 10 = 55). Isso pode rodar em uma máquina hipotética muito simples. Para programar os primeiros computadores, era necessário configurar grandes arrays de chaves na posição certa, ou fazer furos em cartões e alimentá-los no computador. Você pode imaginar como isso era tedioso, e um procedimento propenso ao erro. Mesmo escrever simples programas requeriam muita habilidade e disciplina. Os complexos eram quase inconcebíveis.
 
@@ -66,7 +66,7 @@ Claro, inserindo manualmente estes padrões misteriosos de bits (1 e 0) fez que 
 
 Cada linha do programa contém uma simples instrução. Isto pode ser escrito assim:
 
-```
+<pre data-language="text/plain" class="snippet cm-s-default">
 1. Guarde o número 0 na posição da memória 0.
 2. Guarde o número 1 na posição da memória 1.
 3. Guarde o valor da posição da memória 1 na posição da memória 2.
@@ -76,11 +76,11 @@ Cada linha do programa contém uma simples instrução. Isto pode ser escrito as
 7. Adicione o número 1 ao valor da posição de memória 1.
 8. Continue com a instrução 3.
 9. Retorne o valor da posição da memória 0.
-```
+</pre>
 
 Embora isto seja mais legível que a sopa de bits, ainda continua bastante desagradável. Pode ser de auxílio usar nomes ao invés de números para as instruções e locações de memória:
 
-```
+<pre data-language="text/plain" class="snippet cm-s-default">
 Configure "total" para 0
 Configure "count" para 1
 [loop]
@@ -92,20 +92,20 @@ Adicione 1 em "count"
 Continue até [loop]
 [fim]
 Saída "total"
-```
+</pre>
 
 Neste ponto não é tão difícil ver como os programas trabalham. Você consegue? As primeiras duas linhas fornece duas locações de memória que iniciam os valores: `total` vai ser usado para construir o resultado da computação, e `count` mantém registrado o número que nós atualmente estamos olhando. As linhas usando `compare` são provavelmente as mais estranhas. O que o programa quer fazer é ver se já pode parar. Por causa da nossa máquina hipotética ser bastante primitiva, ela somente pode testar se um número é zero e fazer a decisão (salto) baseado nisto. Então, ela usa a locação de memória rotulada `compare` para computar o valor de `count` - 11 e fazer a decisão baseada neste valor. As próximas duas linhas adicionam o valor de `count` ao resultado e incrementam `count` por 1 cada vez que o programa decide que não é 11 ainda.
 
 Aqui temos o mesmo programa em JavaScript:
 
-```javascript
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 var total = 0, count = 1;
 while (count <= 10) {
     total += count;
     count += 1;
 }
 console.log(total);
-```
+</pre>
 
 Isso nos dá muitas melhorias. E o mais importante, não é preciso mais especificar o caminho que nós queremos que o programa salte anteriormente ou adiante. Ele continua executando o bloco (envolvido nas chaves) até que a condição que foi dada seja: `count <= 10`, que significa "count é menor que ou igual a 10". Não temos mais que criar um valor temporário e compará-lo a zero. Isso é um detalhe desinteressante, e o poder das linguagens de programação é que elas tomam conta de detalhes desinteressantes para nós.
 
@@ -113,10 +113,9 @@ No final do programa, depois de `while` ser definido, a operação `console.log`
 
 Finalmente, aqui temos o que o programa pode parecer se nós tivermos as operações convenientes `range` (alcance) e `sum` (soma) disponíveis, que respectivamente criam uma coleção de números com um alcance e computam a soma de uma coleção de números:
 
-```javascript
-console.log(sum(range(1,10)));
-// 55
-```
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
+console.log(sum(range(1,10))); // 55
+</pre>
 
 A moral da história, então, é que o mesmo programa pode ser expresso de forma longa e curta, de forma legível ou não. A primeira versão do programa foi extremamente obscura, enquanto esta última é praticamente "Inglês": `log` (registre) a `sum` (soma) da `range` (extensão) dos números de 1 a 10. (Nós vamos ver nos próximos capítulos como criar coisas do tipo `sum` e `range`).
 
@@ -152,20 +151,20 @@ Rodando programas JavaScript fora do contexto deste livro é possível também. 
 
 Neste livro, texto escrito em fonte `monoespaçada` deve ser entendido por representações de elementos dos programas - algumas vezes são fragmentos auto-suficientes, e algumas vezes eles somente referenciam para alguma parte de um programa próximo. Programas (que você já viu um pouco), são escritos assim:
 
-```javascript
+
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 function fac(n) {
     if (n == 0)
         return 1;
     else
         return fac(n - 1) * n;
 }
-```
+</pre>
 
 Algumas vezes, para mostrar a saída que o programa produz, a mesma será escrita abaixo dele, com duas barras e uma seta na frente:
 
-```javascript
-console.log(fac(8));
-// → 40320
-```
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
+console.log(fac(8)); // 40320
+</pre>
 
 Boa Sorte!

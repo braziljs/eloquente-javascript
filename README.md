@@ -38,8 +38,6 @@ $ jekyll server --watch
 
 Agora você terá acesso ao website por `http://0.0.0.0:4000/` :D
 
-Nota: para que você possa editar os estilos locais, você terá que alterar a váriavel `url` no arquivo [_config.yml](https://github.com/randsonjs/eloquent-javascript/blob/gh-pages/_config.yml#L6). Alterando para `http://0.0.0.0:4000/` você poderá editar o CSS. Lembre-se de voltar ao estado anterior na hora de enviar para o github.
-
 ## Estrutura de arquivos
 
 A estrutura de arquivos do projetos é organizada da seguinte maneira:

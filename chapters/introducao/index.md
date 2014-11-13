@@ -104,7 +104,7 @@ while (count <= 10) {
     total += count;
     count += 1;
 }
-console.log(total);
+console.log(total); // 55
 </pre>
 
 Isso nos dá muitas melhorias. E o mais importante, não é preciso mais especificar o caminho que nós queremos que o programa salte anteriormente ou adiante. Ele continua executando o bloco (envolvido nas chaves) até que a condição que foi dada seja: `count <= 10`, que significa "count é menor que ou igual a 10". Não temos mais que criar um valor temporário e compará-lo a zero. Isso é um detalhe desinteressante, e o poder das linguagens de programação é que elas tomam conta de detalhes desinteressantes para nós.

@@ -18,12 +18,10 @@ Se uma expressão corresponde a um fragmento de sentença, uma *afirmação*, no
 
 O tipo mais simples de afirmação é uma expressão com um ponto e vírgula depois dela. Este é o programa:
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 1;
 !false;
-
-```
+</pre>
 
 É um programa inútil, entretanto. Uma expressão pode ser apenas para produzir um valor, que pode então ser usado para fechar a expressão. Uma declaração vale por si só, e só equivale a alguma coisa, se ela afeta em algo. Ela pode mostrar algo na tela - que conta como mudar algo - ou pode mudar internamente o estado da máquina de uma forma que vai afetar outras declarações que irão vir. Estas mudanças são chamadas *efeitos colaterais*. As afirmações nos exemplos anterios somente produzem o valor `1` e `true` e então imediatamente os jogam fora novamente. Não deixam nenhuma impressão no mundo. Quando executamos o programa, nada acontece.
 
@@ -35,11 +33,9 @@ Em alguns casos, o JavaScript permite que você omita o ponto e vírgula no fim 
 
 Como um programa mantém um estado interno? Como ele se lembra das coisas? Nós vimos como produzir novos valores com valores antigos, mas isso não altera os valores antigos, e o valor novo deve ser imediatamente usado ou vai ser dissipado. Para pegar e guardar valores, o JavaScript fornece um coisa chamada *variável*.
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 var caught = 5 * 5;
-
-```
+</pre>
 
 E isso nos dá um segundo tipo de declaração. A palavra especial (*palavra-chave*) `var` indica que esta sentença vai definir uma variável. Ela é seguida pelo nome da variável e, se nós queremos dá-la imediatamente um valor, por um operador `=` e uma expressão.
 
@@ -47,45 +43,39 @@ A declaração anterior criou uma variável chamada `caught` e usou-a para armaz
 
 Depois de uma variável ter sido definida, seu nome pode ser usado como uma expressão. O valor como uma expressão é o valor atual mantido pela variável. Aqui temos um exemplo:
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 var ten = 10;
-console.log(ten * ten);
-// 100
 
-```
+console.log(ten * ten); // 100
+</pre>
 
 Nomes de variáveis podem ser quase qualquer palavra, menos as reservadas para palavras-chave (como `var`). Não pode haver espaços incluídos. Dígitos podem também ser parte dos nomes de variáveis - `catch22` é um nome válido, por exemplo - mas um nome não pode iniciar com um dígito. O nome de uma variável não pode incluir pontuação, exceto pelos caracteres `$` e `_`.
 
 Quando uma variável aponta para um valor, isso não significa que estará ligada ao valor para sempre. O operador `=` pode ser usado a qualquer hora em variáveis existentes para desconectá-las de seu valor atual e então apontá-las para um novo:
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 var mood = "light";
-console.log(mood);
-// ligth
-mood = "dark";
-console.log(mood);
-// dark
+console.log(mood); // ligth
 
-```
+mood = "dark";
+console.log(mood); // dark
+</pre>
 
 Você deve imaginar variáveis como tentáculos, ao invés de caixas. Elas não *contém* valores; elas os *agarram* - duas variáveis podem referenciar o mesmo valor. Somente os valores que o programa mantém tem o poder de ser acessado por ele. Quando você precisa de lembrar de algo, você aumenta o tentáculo para segurar ou recoloca um de seus tentáculos existentes para fazer isso.
 
 Quando você define uma variável sem fornecer um valor a ela, o tentáculo fica conceitualmente no ar - ele não tem nada para segurar. Quando você pergunta por um valor em um lugar vazio, você recebe o valor `undefined`.
 
-![Polvo](../img/octopus.jpg)
+![Polvo](../../assets/images/octopus.jpg)
 
 Um exemplo. Para lembrar da quantidade de dólares que Luigi ainda lhe deve, você cria uma variável. E então quando ele lhe paga 35 dólares, você dá a essa variável um novo valor.
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 var luigisDebt = 140;
-luigisDebt = luigisDebt - 35;
-console.log(luigisDebt);
-// 105
 
-```
+luigisDebt = luigisDebt - 35;
+
+console.log(luigisDebt); // 105
+</pre>
 
 ## Palavras-chave e Palavras Reservadas
 
@@ -103,11 +93,11 @@ A coleção de variáveis e seus valores que existem em um determinado tempo é 
 
 Muitos dos valores fornecidos no ambiente padrão são do tipo *function* (função). Uma função é um pedaço de programa envolvido por um valor. Este valor pode ser aplicado, a fim de executar o programa envolvido. Por exemplo, no ambiente do navegador, a variável `alert` detém uma função que mostra uma pequena caixa de diálogo com uma mensagem. É usada assim:
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 alert("Bom dia!");
+</pre>
 
-```
+![Alert](../../assets/images/alert.png)
 
 [JSFiddle](http://jsfiddle.net/K3Fe3/)
 
@@ -119,13 +109,11 @@ A função `alert` pode ser útil como saída do dispositivo quando experimentad
 
 Quando rodamos os exemplos, ou seu próprio código, nas páginas deste livro, o `console.log` vai mostrar embaixo o exemplo, ao invés de ser no console JavaScript.
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 var x = 30;
-console.log("o valor de x é ", x);
-// o valor de x é 30
 
-```
+console.log("o valor de x é ", x); // o valor de x é 30
+</pre>
 
 Embora eu tenha afirmado que nomes de variáveis não podem conter pontos, `console.log` claramente contém um ponto. Eu não tinha mentido para você. Esta não é uma simples variável, mas na verdade uma expressão que retorna o campo `log` do valor contido na variável `console`. Nós vamos entender o que isso significa no capítulo 4.
 
@@ -133,19 +121,15 @@ Embora eu tenha afirmado que nomes de variáveis não podem conter pontos, `cons
 
 Mostrar uma caixa de diálogo ou escrever texto na tela é um efeito colateral. Muitas funções são úteis por causa dos efeitos que elas produzem. É também possível para uma função produzir um valor, no caso dela não ser necessário um efeito colateral. Por exemplo, temos a função `Math.max`, que pega dois números e retorna o maior entre eles:
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 console.log(Math.max(2, 4));
-
-```
+</pre>
 
 Quando uma função produz um valor, é dito que ela *retorna* (return) ele. Por coisas que produzem valores sempre serem expressões no JavaScript, funções chamadas podem ser usadas como parte de uma grande expressão:
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 console.log(Math.min(2, 4) + 100);
-
-```
+</pre>
 
 O próximo capítulo explica como nós podemos escrever nossas próprias funções.
 
@@ -153,21 +137,17 @@ O próximo capítulo explica como nós podemos escrever nossas próprias funçõ
 
 O ambiente fornecido pelos navegadores contém algumas outras funções para mostrar janelas. Você pode perguntar a um usuário uma questão "Ok/Cancel" usando `confirm`. Isto retorna um booleano: `true` se o usuário clica em OK e `false` se o usuário clica em Cancel.
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 confirm("");
-
-```
+</pre>
 
 [JSFiddle](http://jsfiddle.net/4gX5m/)
 
 `prompt` pode ser usado para criar uma questão "aberta". O primeiro argumento é a questão; o segundo é o texto que o usuário inicia. Uma linha do texto pode ser escrita dentro da janela de diálogo, e a função vai retornar isso como uma string.
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 prompt("Diga-me algo que você saiba.", "...");
-
-```
+</pre>
 
 [JSFiddle](http://jsfiddle.net/bsfxA/)
 
@@ -177,35 +157,32 @@ Estas duas funções não são muito usadas na programação moderna para web, p
 
 Quando seu programa contém mais que uma declaração, as declarações são executadas, previsivelmente, de cima para baixo. Como um exemplo básico, este programa tem duas declarações. A primeira pergunta ao usuário por um número, e a segunda, que é executada posteriormente, mostra o quadrado deste número:
 
-```javascript
-
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 var theNumber = Number(prompt("Pick a number", ""));
 alert("Your number is the square root de " + theNumber * theNumber);
-
-```
+</pre>
 
 A função `Number` converte o valor para um número, que nós usamos porque o resultado de `prompt` é um valor `string`, e nós queremos um número. Existem funções similares chamadas `String` e `Boolean` que convertem valores para estes tipos.
 
 Aqui podemos ver uma representação bem trivial do fluxo de controle em linha reta:
 
-![Linha de Fluxo de Controle](../img/controlflow_straight.png)
+![Linha de Fluxo de Controle](../../assets/images/controlflow_straight.png)
 
 ## Execução Condicional
 
 Executando declarações em ordem linear não é a única opção que temos. Uma requisição comum é a execução condicional, onde nós escolhemos entre duas rotas diferentes baseado em um valor booleano.
 
-![Fluxo de Controle If](../img/controlflow_if.png)
+![Fluxo de Controle If](../../assets/images/controlflow_if.png)
 
 A execução condicional é escrita em JavaScript com a palavra-chave `if`. De forma simplificada, nós somente queremos que algum código seja executado se (`if`), e somente se, uma certa condição existir. Por exemplo, no programa anterior, nós poderíamos querer mostrar o quadrado da entrada somente se a entrada for realmente um número.
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 var theNumber = Number(prompt("Digite um número", ""));
 if (!isNaN(theNumber))
     alert("Seu número é a raiz quadrada de " +
             theNumber * theNumber);
-
-```
+</pre>
 
 Com essa modificação, se você entrar com "queijo" - ou não digitar nada - nenhuma saída será retornada.
 
@@ -215,7 +192,7 @@ A função `isNaN` é uma função padrão que retorna `true` se o argumento dad
 
 Frequentemente você tem não apenas código que deve ser executado quando uma certa condição é verificada, mas também código que manipula outros casos, quando a condição não confere. A palavra-chave `else` pode ser usada, juntamente com `if`, para criar dois caminhos separados e paralelos que executam de acordo com suas condições:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 var theNumber = Number(prompt("Digite um número", ""));
 if (!isNaN(theNumber))
@@ -224,12 +201,11 @@ if (!isNaN(theNumber))
 else
     alert("Ei! Por que você não me deu um número?");
 
-
-```
+</pre>
 
 Se nós tivermos mais que dois caminhos que queremos escolher, múltiplos pares de `if`/`else` podem ser "encadeados" conjuntamente. Aqui temos um exemplo:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 var num = Number(prompt("Digite um número", "0"));
 
@@ -239,20 +215,19 @@ else if (num < 100)
     alert("Médio");
 else
     alert("Grande");
-
-```
+</pre>
 
 Este programa vai primeiramente checar se `num` é menor que 10. Se ele for, ele escolhe essa ramificação, e mostra "Pequeno", e pronto. Se não for, ele pega a ramificação `else`, que contém o segundo `if`. Se a segunda condição (`< 100`) for verdadeira, isso significa que o número está entre 10 e 100, e `Médio` será mostrado. Se não, o segundo e último `else` será escolhido.
 
 O esquema de setas para este programa parece com algo assim:
 
-![Fluxo de Controle do Aninhamento if](../img/controlflow_nested_if.png)
+![Fluxo de Controle do Aninhamento if](../../assets/images/controlflow_nested_if.png)
 
 ## Loops While e Do
 
 Considere um programa que imprimi todos os numéros pares de 0 a 12. Uma forma de se escrever isto é a seguinte:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 console.log(0);
 console.log(2);
@@ -261,16 +236,15 @@ console.log(6);
 console.log(8);
 console.log(10);
 console.log(12);
-
-```
+</pre>
 
 Isto funciona, mas a ideia de escrever um programa é a de fazer algo ser *menos* trabalhoso, e não mais. Se nós precisarmos de todos os números pares menores que 1.000, o programa anterior se torna impraticável. O que nós precisamos é de uma forma de repetir código - um *loop*.
 
-![Fluxo de Controle do Loop](../img/controlflow_loop.png)
+![Fluxo de Controle do Loop](../../assets/images/controlflow_loop.png)
 
 O fluxo de controle do loop nos permite voltar a um mesmo ponto do programa onde estávamos anteriormente, e repetí-lo no contexto da nossa declaração atual do programa. Se nós combinarmos isso com uma variável que conta, nós podemos fazer isso:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 var number = 0;
 while (number <= 12) {
@@ -280,8 +254,7 @@ while (number <= 12) {
 // 0
 // 2
 // etc...
-
-```
+</pre>
 
 Uma declaração iniciando com a palavra `while` cria um loop. A palavra `while` é seguida por uma expressão em parênteses e então uma declaração, como um `if`. O loop age continuando a executar a declaração enquanto a expressão produzir um valor que é `true`, quando convertido para o tipo booleano.
 
@@ -292,7 +265,7 @@ Então, a variável `number` demonstra o caminho que a variável pode tomar no p
 
 Como exemplo de algo realmente útil, podemos agora escrever um programa que calcula e mostra o valor de 2¹⁰ (2 elevado a décima potência). Nós usamos duas variáveis: uma para manter o registro do nosso resultado e uma para contar quantas vezes multiplicamos este resultado por 2. O loop teste se a segunda variável já atingiu 10 e então atualiza ambas variáveis.
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 var result = 1;
 var counter = 0;
@@ -302,22 +275,20 @@ while (counter < 10) {
 }
 console.log(result);
 // 1024
-
-```
+</pre>
 
 O contador pode também iniciar com 1 e checar por `<= 10`, mas, por razões que vamos ver mais a frente, é uma boa ideia usar a contagem iniciando com 0.
 
 Uma estrutura muito similar é o loop `do`. Ele difere somente em um ponto do loop `while`: ele sempre vai executar este a declaração uma vez, e somente então vai iniciar o teste e verificar se precisa pausar. Para demonstrar, o teste é escrito abaixo do corpo do loop:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 do {
     var name = prompt("Who are you?");
 } while (!name) {
     console.log(name);
 }
-
-```
+</pre>
 
 Isto vai forçar você a entrar com um nome, perguntando de novo e de novo até que pegue algo que não é uma string vazia. (Aplicando o operador `!` vamos converter o valor para o tipo booleano negando o mesmo, e todas as strings exceto `""` convertem em `true`).
 
@@ -331,15 +302,14 @@ Loops sempre seguem o mesmo padrão, como visto nos exemplos acima do `while`. P
 
 Por este padrão ser muito comum, o JavaScript e linguagens similares oferecem uma forma ligeiramente mais curta e compreensiva:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 for (var number = 0; number <= 12; number = number + 2)
     console.log(number);
 // 0
 // 2
 // etc
-
-```
+</pre>
 
 Este programa é exatamente o equivalente ao exemplo anterior de *número-sempre-impresso*. A única alteração é que todas as declarações que estão relacionadas ao "estado" do loop estão agora em somente uma linha.
 
@@ -347,15 +317,14 @@ O parênteses após a palavra-chave `for` é obrigado a conter dois "ponto e ví
 
 Aqui temos o código que computa 2¹⁰, usando `for` ao invés de `while`:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 var result = 1;
 for (var counter = 0; counter < 10; counter = counter + 1)
   result = result * 2;
 console.log(result);
 //1024
-
-```
+</pre>
 
 Note que mesmo se não abrirmos um bloco com `{`, a declaração no loop continua indentada com dois espaços para deixar claro que ela "pertence" a linha anterior a ela.
 
@@ -365,7 +334,7 @@ Ter uma condição que produzaa `false` não é a única maneira que um loop pod
 
 Este programa encontra o primeiro número que é maior ou igual a 20, e divisível por 7:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 for (var current = 20; ; current++) {
     if (current % 7 == 0)
@@ -373,8 +342,7 @@ for (var current = 20; ; current++) {
 }
 console.log(current);
 // 21
-
-```
+</pre>
 
 O truque com o operador de resto `%` é uma maneira fácil de testar se um número é divisível por outro número. Se for, o resto da divisão é zero.
 
@@ -388,30 +356,27 @@ Se você criar um loop infinito em algum dos exemplos desta página, você vai s
 
 Um programa, especialmente quando em loop, frequentemente precisa de "atualizar" uma variável com um valor que é baseado no valor anterior.
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 counter = counter + 1;
-
-```
+</pre>
 
 O JavaScript fornece um atalho para isso:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 counter += 1;
-
-```
+</pre>
 
 Isto também funciona para várias outras operações, como `result *= 2` para dobrar `result`, ou `counter -= 1` para contar abaixo.
 
 Isto nos permite encurtar nosso exemplo de contagem um pouco mais:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 for (var number = 0; number <= 12; number += 2)
     console.log(number);
-
-```
+</pre>
 
 Para `counter += 1` e `counter -= 1`, sempre temos um equivalente mais curto: `counter++` e `counter--`
 
@@ -419,18 +384,17 @@ Para `counter += 1` e `counter -= 1`, sempre temos um equivalente mais curto: `c
 
 É comum para um código se parecer com algo assim:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 if (variable == "value1") action1();
 else if (variable == "value2") action2();
 else if (variable == "value3") action3();
 else defaultAction();
-
-```
+</pre>
 
 Há um construtor chamado `switch` que visa resolver o "envio" de valores de forma mais direta. Infelizmente, a sintaxe JavaScript usada para isso (que é herdada da linha de linguagens de programação C e Java) é um pouco estranha - frequentemente uma cadeia de declarações `if` continua parecendo melhor. Aqui um exemplo:
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 switch (prompt("Como está o tempo?")) {
     case "rainy":
@@ -445,23 +409,20 @@ switch (prompt("Como está o tempo?")) {
         console.log("Tempo desconhecido.");
         break;
 }
-
-```
+</pre>
 
 Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulos `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações aqui, e continuar a passar pelos rótulos, até que encontra uma declaração `break`. Em alguns casos, como o caso `"ensolarado"` do exemplo, podemos usá-lo para compartilhar algum código entre casos (ele recomenda *ir lá fora* para ambos os tempos "ensolarado" e "nublado"). Mas cuidado, é muito fácil se esquecer de um `break`, que vai causar ao programa a execução de código que você não gostaria de executar.
 
 ## Capitalização
 
 Nomes de variáveis não podem conter espaços, no entanto é muito útil usar múltiplas palavras para descrever claramente o quê a variável representa. Suas escolhas para escrever nomes de variáveis com muitas palavras são como estas:
-
-```
+</pre>
 
 fuzzylittleturtle
 fuzzy_little_turtle
 FuzzyLittleTurtle
 fuzzyLittleTurtle
-
-```
+</pre>
 
 O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar underscores `_`, embora seja um pouco doloroso de escrever. Entretanto, o padrão das funções JavaScript, e da maioria dos programadores JavaScript, é o de seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Isso não é difícil se acostumar com pequenas coisas assim, e o código com os estilos de nomes mistos pode se tornar desagrádavel para leitura, então vamos seguir esta convenção.
 
@@ -473,7 +434,7 @@ Frequentemente, código puro não transmite todas as informações necessárias 
 
 Um comentário é um pedaço de texto que é parte de um programa, mas completamente ignorado pelo computador. No JavaScript temos duas maneiras de escrever comentários. Para escrever uma linha única de comentário, você pode usar dois caracteres barra ( `//` ) e então o comentário após isso.
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 var accountBalance = calculateBalance(account);
 // It's a green hollow where a river sings
@@ -483,12 +444,11 @@ var report = new Report();
 // Where the sun on the proud mountain rings:
 addToReport(accountBalance, report);
 // It's a little valley, foaming like light in a glass.
-
-```
+</pre>
 
 Um `// comentário` vai até o fim da linha. Uma seção de texto entre `/*` e `*/` vai ser ignorada, independentemente se ela contém quebras de linha. Isto é útil para adicionar blocos de informação sobre um arquivo ou um pedaço do programa.
 
-```javascript
+<pre class="prettyprint lang-javascript snippet cm-s-default">
 
 /*
  I first found this number scrawled on the back of one of
@@ -499,8 +459,7 @@ Um `// comentário` vai até o fim da linha. Uma seção de texto entre `/*` e `
 */
 
 var theNumber = 11213;
-
-```
+</pre>
 
 ## Resumo
 

@@ -6,6 +6,7 @@
 @import "fonts.scss";
 @import "paint.scss";
 @import "game.scss";
+@import "codemirror.scss";
 
 body {
     font-family: Georgia, 'Nimbus Roman No9 L', 'Century Schoolbook L', serif;
@@ -39,14 +40,14 @@ nav {
     }
 }
 
+pre[data-language=javascript] {
+    cursor: pointer;
+}
+
 pre {
     padding: 5px 0 5px 15px;
     line-height: 1.6em;
     margin: 1rem 0;
-
-    // &:[data-language=javascript] {
-    //     cursor: pointer;
-    // }
 
     &.cm-s-default, p {
         margin-right: -30px;

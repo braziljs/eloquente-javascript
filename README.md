@@ -65,7 +65,7 @@ Aqui você encontrará as listas de posts. Não estamos usando esta pasta, já q
 
 ### [_config.yml](https://github.com/randsonjs/eloquent-javascript/_config.yml)
 
-Aqui fica as configurações da site.
+Aqui fica as configurações do site.
 
 ### [index.html](https://github.com/randsonjs/eloquent-javascript/index.html)
 

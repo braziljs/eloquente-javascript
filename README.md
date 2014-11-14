@@ -73,15 +73,31 @@ Este arquivo é a página principal, responsável por todo o resto do conteúdo.
 
 _Mais informações sobre a estrutura de arquivos do jekyll veja [aqui](https://github.com/mojombo/jekyll/wiki/Usage)._
 
-## Colaborando
+## Como participar do projeto?
+
+### Seja um tradutor
+
+Primeiro verifique quem está **traduzindo** o que. [Para isso confira essa página](https://github.com/randsonjs/eloquent-javascript/wiki/Tradu%C3%A7%C3%A3o).
+
+Depois é só escolher um capitulo que não está sendo traduzido mandar bala!
+
+### Seja um revisor
+
+Primeiro verifique quem está **revisando** o que. [Para isso confira essa página](https://github.com/randsonjs/eloquent-javascript/wiki/Revis%C3%A3o).
+
+Depois é só escolher um capitulo que não está sendo revisado mandar bala!
+
+### Reporte um erro
+
+Caso encontre algum erro de tradução, por favor nos avise através das [issues](https://github.com/randsonjs/eloquent-javascript/issues).
+
+### Contribuindo com código-fonte
 
 1. Faça um fork!
 2. Crie sua branch: `git checkout -b meu-novo-recurso`
 3. Faça um commit de suas modificações: `git commit -am 'Adiciona mais recursos'`
 4. Realize um push na sua branch: `git push origin meu-novo-recurso`
 5. Realize um pull request :D
-
-Para colaborar em traduções ou revisões, acesse o [guia de colaboração](./CONTRIBUTING.md).
 
 ## Licença
 [Licença MIT](./LICENSE) © Randson Oliveira

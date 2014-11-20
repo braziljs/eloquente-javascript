@@ -135,7 +135,7 @@ Esta flexibilidade também tem suas vantagens. Isso dá espaço para muitas téc
 
 Tivemos várias *versões* do JavaScript. Versão 3 do ECMAScript foi a dominante, largamente suportado no tempo que o JavaScript ascendia para o domínio, aproximadamente entre 2000 e 2010. Durante este tempo, trabalho estava em andamento na versão 4 ambiciosa, que planeja um número de melhorias e extensões radicais para a linguagem. Porém, mudar de forma radical uma linguagem largamente usada pode ser politicamente difícil, e o trabalho na versão 4 foi abandonado em 2008, e conduzido para a 5ª edição que saiu em 2009. Estamos agora esperando que todos os maiores navegadores suportem a 5ª edição, que é a linguagem da versão que este livro vai focar. O trabalho na 6ª edição está em curso.
 
-Navegadores web não são as únicas plataformas que o JavaScript é usado. Alguns banco de dados, como MongoDB e CouchDB, usam JavaScript como sua linguagem de consulta e script. Muitas plataformas para desktop e de programação no servidor, mais notável o projeto *Node.JS*, sujeito do [capítulo 10](http://eloquentjavascript.com.br/node-js), fornecem um poderoso ambiente de programação JavaScript fora do navegador.
+Navegadores web não são as únicas plataformas que o JavaScript é usado. Alguns banco de dados, como MongoDB e CouchDB, usam JavaScript como sua linguagem de consulta e script. Muitas plataformas para desktop e de programação no servidor, mais notável o projeto *Node.JS*, sujeito do [capítulo 20](http://eloquentjavascript.com.br/node-js), fornecem um poderoso ambiente de programação JavaScript fora do navegador.
 
 ## Código, e o que fazer com ele
 

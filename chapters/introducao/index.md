@@ -161,7 +161,7 @@ function fac(n) {
 }
 </pre>
 
-Algumas vezes, para mostrar a saída que o programa produz, a mesma será escrita abaixo dele, com duas barras e uma seta na frente:
+Algumas vezes, para mostrar a saída que o programa produz, a mesma será escrita abaixo dele, com duas barras na frente:
 
 <pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(fac(8)); // 40320

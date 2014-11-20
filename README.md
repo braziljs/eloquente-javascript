@@ -77,13 +77,13 @@ _Mais informações sobre a estrutura de arquivos do jekyll veja [aqui](https://
 
 ### Seja um tradutor
 
-Primeiro verifique quem está **traduzindo** o que. [Para isso confira essa página](https://github.com/randsonjs/eloquent-javascript/wiki/Tradu%C3%A7%C3%A3o).
+Primeiro verifique quem está **traduzindo** o que. [Para isso confira essa página](https://github.com/ericdouglas/eloquente-javascript/issues).
 
 Depois é só escolher um capitulo que não está sendo traduzido mandar bala!
 
 ### Seja um revisor
 
-Primeiro verifique quem está **revisando** o que. [Para isso confira essa página](https://github.com/randsonjs/eloquent-javascript/wiki/Revis%C3%A3o).
+Primeiro verifique quem está **revisando** o que. [Para isso confira essa página](https://github.com/ericdouglas/eloquente-javascript/issues).
 
 Depois é só escolher um capitulo que não está sendo revisado mandar bala!
 

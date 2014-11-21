@@ -7,7 +7,7 @@
 
 ## Conteúdo do Livro
 
-* [Introdução](https://github.com/ericdouglas/eloquente-javascript/blob/master/chapters/00-introducao.md)
+- [Introdução](https://github.com/ericdouglas/eloquente-javascript/blob/master/chapters/00-introducao.md)
 1. [Valores, Tipos e Operadores](https://github.com/ericdouglas/eloquente-javascript/blob/master/chapters/01-valores-tipos-operadores.md) - (**Parte 1: Linguagem**)
 1. [Estrutura do Programa](https://github.com/ericdouglas/eloquente-javascript/blob/master/chapters/02-estrutura-do-programa.md)
 1. [Funções](https://github.com/ericdouglas/eloquente-javascript/blob/master/chapters/03-funcoes.md)

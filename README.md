@@ -1,5 +1,7 @@
 # [Eloquent Javascript](http://eloquentjavascript.com.br) por Marijn Haverbeke
 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/randsonjs/eloquent-javascript/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 Projeto que visa a tradução da segunda edição do livro Eloquent JavaScript por Marijn Haverbeke.
 
 * [Artigo falando como está sendo o inicio do projeto](http://randsonjs.com/uma-boa-referencia/)

@@ -108,3 +108,51 @@ function testVector() {
 console.log(testVector());
 // → everything ok
 ````
+
+Escrevendo testes como este tende a parecer um pouco repetitivo e um código estranho. Felizmente existem opções de software que ajudam a construir e executar coleções de testes(suites de teste), fornecendo uma linguagem(na forma de funções e métodos) adequados para expressar testes e emitindo informações informativo quando um teste falhar. Estes são chamados de estruturas de teste.
+
+## Depuração
+
+Quando você percebe que há algo errado com o seu programa porque ele se comporta mal ou produz erros o próximo passo é descobrir qual é o problema.
+
+Às vezes é óbvio. A mensagem de erro vai apontar para uma linha específica de seu programa, e se você olhar para a descrição do erro e para linha de código, muitas vezes você pode ver o problema.
+
+Mas nem sempre. Às vezes a linha que desencadeou o problema é simplesmente o primeiro lugar onde um valor falso foi produzido em outros lugares é usado de forma inválida. E às vezes não há nenhuma mensagem de erro em tudo-apenas um resultado inválido. Se você tentou resolver os exercícios nos capítulos anteriores, você provavelmente já experimentou tais situações.
+
+O exemplo de programa seguinte tenta converter um número inteiro para uma cadeia em qualquer base (decimal, binário, e assim por diante), escolhendo repetidamente o último dígito e em seguida, dividindo-se o número para se livrar deste dígito. Mas a insana saída que produz atualmente sugere que ele tem um bug.
+
+````js
+function numberToString(n, base) {
+  var result = "", sign = "";
+  if (n < 0) {
+    sign = "-";
+    n = -n;
+  }
+  do {
+    result = String(n % base) + result;
+    n /= base;
+  } while (n > 0);
+  return sign + result;
+}
+console.log(numberToString(13, 10));
+// → 1.5e-3231.3e-3221.3e-3211.3e-3201.3e-3191.3e-3181.3…
+````
+
+Mesmo se você já viu o problema e fingi por um momento que você não viu. Sabemos que o nosso programa não está funcionando corretamente, e queremos descobrir o porquê.
+
+Este é o lugar onde você deve resistir à tentação de começar a fazer mudanças aleatórias para o código. Em vez disso pense, analise o que está acontecendo e chegue a uma teoria de por que isso pode estar acontecendo. Então faça observações adicionais para testar esta teoria ou se você ainda não tem uma teoria, faça observações adicionais que podem ajudá-lo.
+
+Colocar algumas chamadas console.log estratégicas para o programa é uma boa maneira de obter informações adicionais sobre o que o programa está fazendo. Neste caso queremos tomar n os valores de 13, 1 e em seguida 0. Vamos escrever o seu valor no início do loop.
+
+````
+13
+1.3
+0.13
+0.013
+…
+1.5e-323
+````
+
+Right. Dividindo 13 por 10 não produz um número inteiro. Em vez de `n / = base`, o que nós realmente queremos é `n = Math.floor (n / base)`, de modo que o número está devidamente "deslocado" para a direita.
+
+Uma alternativa ao uso console.log é usar os recursos de depurador do seu browser. Navegadores modernos vêm com a capacidade de definir um ponto de interrupção em uma linha específica de seu código. Isso fará com que a execução do programa faz uma pausa a cada vez que a linha com o ponto de interrupção é atingido e permitem que você inspecione os valores das variáveis nesse ponto. Eu não vou entrar em detalhes aqui pois depuradores diferem de navegador para navegador, mas vale a pena olhar em ferramentas de desenvolvimento do seu navegador e pesquisar na web para obter mais informações. Outra maneira de definir um ponto de interrupção é incluir uma declaração depurador(que consiste em simplesmente a palavra-chave) em seu programa. Se as ferramentas de desenvolvedor do seu navegador estão ativos, o programa fará uma pausa sempre que ele atinge essa declaração, e você será capaz de inspecionar o seu estado.

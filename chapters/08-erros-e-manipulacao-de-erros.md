@@ -184,3 +184,98 @@ Isto é uma boa estratégia. Agora qualquer código que chamar a função `promp
 Em muitas situações, principalmente quando os erros são comuns e o chamador deve explicitamente tê-las em conta, retornar um valor especial é uma forma perfeita para indicar um erro. Mas essa maneira no entanto tem suas desvantagens. Em primeiro lugar, como a função pode retornar todos os tipos possíveis de valores? Para tal função, é difícil encontrar um valor especial que pode ser distinguido a partir de um resultado válido.
 
 O segundo problema com o retorno de valores especiais é que isso pode levar a um código muito confuso. Se um pedaço de código chamaa função `promptNumber` 10 vezes, tem que verificar 10 vezes se nulo foi devolvido. E se a sua resposta ao encontrar nulo é simplesmente retornar nulo, o chamador por sua vez tem que verificar e assim por diante.
+
+## Exceções
+
+Quando uma função não pode prosseguir normalmente, o que gostaríamos de fazer é simplesmente parar o que estamos fazendo e saltar imediatamente de volta para um lugar que saiba lidar com o problema. Isto é o que faz o tratamento de exceção.
+
+As exceções são um mecanismo que torna possível para o código que é executado com problema levantar(ou lançar) uma exceção, que nada mais é que um simples um valor. Levantando uma exceção lembra um pouco um retorno super-carregada a partir de uma função: ele salta para fora não apenas da função atual mas também fora de todo o caminho de seus interlocutores, para a primeira chamada que iniciou a execução atual. Isto é chamado de desenrolamento da pilha. Você pode se lembrar da pilha de chamadas de função que foi mencionado no Capítulo 3. Uma exceção zumbe abaixo desta pilha, jogando fora todos os contextos de chamadas que ele encontra.
+
+Se exceções fossem sempre ampliadas até ao fundo da pilha, não seria muito útil. Eles apenas fornecem uma nova maneira de explodir o seu programa. Seu poder reside no fato de que você pode definir "obstáculos" ao longo da pilha para capturar a exceção, como é o zoom para baixo. Depois você pode fazer alguma coisa com ele no qual após o ponto em que a exceção foi pego o programa continua em execução.
+
+Aqui está um exemplo:
+
+````js
+function promptDirection(question) {
+  var result = prompt(question, "");
+  if (result.toLowerCase() == "left") return "L";
+  if (result.toLowerCase() == "right") return "R";
+  throw new Error("Invalid direction: " + result);
+}
+
+function look() {
+  if (promptDirection("Which way?") == "L")
+    return "a house";
+  else
+    return "two angry bears";
+}
+
+try {
+  console.log("You see", look());
+} catch (error) {
+  console.log("Something went wrong: " + error);
+}
+````
+
+A palavra-chave `throw` é usada para gerar uma exceção. Para tratar uma excessão basta envolver um pedaço de código em um bloco try, seguido pela palavra-chave catch. Quando o código no bloco try causa uma exceção a ser lançada, o bloco catch é chamado. O nome da variável (entre parênteses) após captura será vinculado ao valor de exceção. Após o termino do bloco `catch` ou do bloco `try` o controle prossegue sob toda a instrução `try/catch`.
+
+Neste caso, usamos o construtor de erro para lançar o nosso valor de exceção. Este é um construtor JavaScript normal que cria um objeto com uma propriedade de mensagem. Em ambientes de JavaScript modernos instâncias deste construtor também coletam informações sobre a pilha de chamadas que existia quando a exceção foi criado, o chamado rastreamento de pilha. Esta informação é armazenada na propriedade da pilha e pode ser útil ao tentar depurar um problema: ela nos diz a função precisa de onde ocorreu o problema e que outras funções levou até a chamada que falhou.
+
+Note-se que se olharmos para função ignoramos completamente a possibilidade de que `promptDirection` pode conter erros. Esta é a grande vantagem de tratamento de erros - código de manipulação de erro é necessário apenas no ponto em que ocorre o erro e no ponto em que ela é tratada. As funções no meio pode perder tudo sobre ele.
+
+Bem, quase lá...
+
+## Limpeza após exceções
+
+Considere a seguinte situação: a função `withContext` quer ter certeza de que durante a sua execução, o contexto de nível superior da variável tem um valor de contexto específico. Depois que terminar ele restaura esta variável para o seu valor antigo.
+
+````js
+var context = null;
+
+function withContext(newContext, body) {
+  var oldContext = context;
+  context = newContext;
+  var result = body();
+  context = oldContext;
+  return result;
+}
+````
+
+Como que o `body` gera uma exceção? Nesse caso, a chamada para `withContext` será jogado fora da pilha pela exceção, e o contexto nunca será definido de volta para o seu valor antigo.
+
+
+O `try` tem mais uma declaração. Eles podem ser seguidos por um `finally`
+Eles podem ser seguidos por um bloco `finally` com ou sem o bloco `catch`.
+O bloco `finally` significa "não importa o que aconteça, executar este código depois de tentar executar o código no bloco try".
+Se uma função tem de limpar alguma coisa, o código de limpeza geralmente deve ser colocado em um bloco `finally`.
+
+ ````js
+ function withContext(newContext, body) {
+  var oldContext = context;
+  context = newContext;
+  try {
+    return body();
+  } finally {
+    context = oldContext;
+  }
+}
+````
+
+Note-se que não temos mais o resultado do `context` para armazenar(o que queremos voltar) em uma variável. Mesmo se sair diretamente do bloco try o último bloco será executado. Então podemos fazer isso de um jeito mais seguro:
+
+````js
+try {
+  withContext(5, function() {
+    if (context < 10)
+      throw new Error("Not enough context!");
+  });
+} catch (e) {
+  console.log("Ignoring: " + e);
+}
+// → Ignoring: Error: Not enough context!
+
+console.log(context);
+// → null
+````
+
+Mesmo que a função chamada de `withContext` explodiu,  `withContext` ainda limpo devidamente a variável `context`.

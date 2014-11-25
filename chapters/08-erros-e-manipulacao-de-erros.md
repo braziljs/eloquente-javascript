@@ -189,9 +189,9 @@ O segundo problema com o retorno de valores especiais é que isso pode levar a u
 
 Quando uma função não pode prosseguir normalmente, o que gostaríamos de fazer é simplesmente parar o que estamos fazendo e saltar imediatamente de volta para um lugar que saiba lidar com o problema. Isto é o que faz o tratamento de exceção.
 
-As exceções são um mecanismo que torna possível para o código que é executado com problema levantar(ou lançar) uma exceção, que nada mais é que um simples um valor. Levantando uma exceção lembra um pouco um retorno super-carregada a partir de uma função: ele salta para fora não apenas da função atual mas também fora de todo o caminho de seus interlocutores, para a primeira chamada que iniciou a execução atual. Isto é chamado de desenrolamento da pilha. Você pode se lembrar da pilha de chamadas de função que foi mencionado no Capítulo 3. Uma exceção zumbe abaixo desta pilha, jogando fora todos os contextos de chamadas que ele encontra.
+As exceções são um mecanismo que torna possível para o código que é executado com problema levantar(ou lançar) uma exceção, que nada mais é que um simples um valor. Levantando uma exceção lembra um pouco um retorno super-carregada a partir de uma função: ele salta para fora não apenas da função atual mas também fora de todo o caminho de seus interlocutores, para a primeira chamada que iniciou a execução atual. Isto é chamado de desenrolamento do `stack`. Você pode se lembrar da chamadas do `stack` de função que foi mencionado no Capítulo 3. Uma exceção é exibida no `stack`, exibindo todos os contextos de chamadas que ele encontra.
 
-Se exceções fossem sempre ampliadas até ao fundo da pilha, não seria muito útil. Eles apenas fornecem uma nova maneira de explodir o seu programa. Seu poder reside no fato de que você pode definir "obstáculos" ao longo da pilha para capturar a exceção, como é o zoom para baixo. Depois você pode fazer alguma coisa com ele no qual após o ponto em que a exceção foi pego o programa continua em execução.
+Se exceções fossem sempre ampliadas a fundo o seu `stack`, não seria muito útil. Eles apenas fornecem uma nova maneira de explodir o seu programa. Seu poder reside no fato de que você pode definir "obstáculos" ao longo do seu `stack` para capturar a exceção. Depois você pode fazer alguma coisa com ele no ponto em que a exceção foi pego para que o programa continua em execução.
 
 Aqui está um exemplo:
 
@@ -219,7 +219,7 @@ try {
 
 A palavra-chave `throw` é usada para gerar uma exceção. Para tratar uma excessão basta envolver um pedaço de código em um bloco try, seguido pela palavra-chave catch. Quando o código no bloco try causa uma exceção a ser lançada, o bloco catch é chamado. O nome da variável (entre parênteses) após captura será vinculado ao valor de exceção. Após o termino do bloco `catch` ou do bloco `try` o controle prossegue sob toda a instrução `try/catch`.
 
-Neste caso, usamos o construtor de erro para lançar o nosso valor de exceção. Este é um construtor JavaScript normal que cria um objeto com uma propriedade de mensagem. Em ambientes de JavaScript modernos instâncias deste construtor também coletam informações sobre a pilha de chamadas que existia quando a exceção foi criado, o chamado rastreamento de pilha. Esta informação é armazenada na propriedade da pilha e pode ser útil ao tentar depurar um problema: ela nos diz a função precisa de onde ocorreu o problema e que outras funções levou até a chamada que falhou.
+Neste caso, usamos o construtor de erro para lançar o nosso valor de exceção. Este é um construtor JavaScript normal que cria um objeto com uma propriedade de mensagem. Em ambientes de JavaScript modernos instâncias deste construtor também coletam informações para o `stack` sobre chamadas que existia quando a exceção foi criado, o chamado `stack` de rastreamento. Esta informação é armazenada na propriedade do `stack` e pode ser útil ao tentar depurar um problema: ela nos diz a função precisa de onde ocorreu o problema e que outras funções levou até a chamada que falhou.
 
 Note-se que se olharmos para função ignoramos completamente a possibilidade de que `promptDirection` pode conter erros. Esta é a grande vantagem de tratamento de erros - código de manipulação de erro é necessário apenas no ponto em que ocorre o erro e no ponto em que ela é tratada. As funções no meio pode perder tudo sobre ele.
 
@@ -241,7 +241,7 @@ function withContext(newContext, body) {
 }
 ````
 
-Como que o `body` gera uma exceção? Nesse caso, a chamada para `withContext` será jogado fora da pilha pela exceção, e o contexto nunca será definido de volta para o seu valor antigo.
+Como que o `body` gera uma exceção? Nesse caso, a chamada para `withContext` será exibido no `stack` pela exceção, e o contexto nunca será definido de volta para o seu valor antigo.
 
 
 O `try` tem mais uma declaração. Eles podem ser seguidos por um `finally`
@@ -278,4 +278,88 @@ console.log(context);
 // → null
 ````
 
-Mesmo que a função chamada de `withContext` explodiu,  `withContext` ainda limpo devidamente a variável `context`.
+Mesmo que a função chamada de `withContext` explodiu,  `withContext` limpou corretamente a variável `context`.
+
+## Captura seletiva
+
+Quando uma exceção percorre todo o caminho até o final da pilha sem ser pego,  ele é tratado pelo `environment`. Significa que isto é diferente entre os ambientes. Nos navegadores uma descrição do erro normalmente é escrita para o JavaScript console(alcançável através de "Ferramentas" do navegador ou menu "developer").
+
+For programmer mistakes or problems that the program cannot possibly handle, just letting the error go through is often okay. An unhandled exception is a reasonable way to signal a broken program, and the JavaScript console will, on modern browsers, provide you with some information about which function calls were on the stack when the problem occurred.
+
+Para erros do programador ou problemas que o programa não consegue  apenas manipular o erro passa por muitas vezes como algo normal. Uma exceção sem tratamento é uma forma razoável para indicar a um programa que ele esta quebrado, e o console JavaScript em navegadores modernos terá que fornecer-lhe algumas informações no `stack` sobre quais foram as chamadas de funções quando o problema ocorreu.
+
+Para problemas que se espera que aconteça durante o uso rotineiro, chegando como uma exceção e que não seja tratada, isso não é uma resposta muito simpática.
+
+Usos incorretos da linguagem como, a referência a uma variável inexistente, propriedade que tem null, ou chamar algo que não é uma função irá também resultar em lançamentos de exceções. Essas exceções podem ser capturados como outra qualquer.
+
+Quando um pedaço de código é inserido no bloco `catch`, todos nós sabemos que algo em nosso corpo `try` pode ou vai causar uma exceção. Mas nós não sabemos o que ou qual exceção que sera lançada.
+
+O JavaScript(em uma omissão gritante) não fornece suporte direto para a captura seletiva exceções: ou você manipula todos ou você trata alguma em específico. Isto torna muito fácil supor que a exceção que você recebe é o que você estava pensando quando escreveu o bloco `catch`.
+
+Mas talvez não seja nenhuma das opções citadas. Alguma outra hipótese pode ser violada ou você pode ter introduzido um erro em algum lugar que está causando uma exceção. Aqui está um exemplo que tenta manter a chamada a função `promptDirection` até que ele receba uma resposta válida:
+
+````js
+for (;;) {
+  try {
+    var dir = promtDirection("Where?"); // ← typo!
+    console.log("You chose ", dir);
+    break;
+  } catch (e) {
+    console.log("Not a valid direction. Try again.");
+  }
+}
+ ````
+
+O `for (;;)` construção de um loop infinito de forma intencionalmente que não para sozinho. Nós quebramos o circuito de fora somente quando uma direção válido é dado. Mas a mal escrita do `promptDirection` resultará em um erro de "variável indefinida". O bloco `catch` ignora completamente o seu valor de exceção, supondo que ele sabe qual é o problema ele trata equivocadamente o erro de variável como uma indicação de má entrada. Isso não só causa um loop infinito mas também exibi uma mensagem de erro incorretamente sobre a variável que seria útil.
+
+Como regra geral não capturamos exceções a menos que tenha a finalidade de monitora-las em algum lugar, por exemplo através de softwares externo conectados a nossa aplicação que indica quando nossa aplicação esta caida. E assim mesmo podemos pensar cuidadosamente sobre como você podemos estar escondendo alguma informação.
+
+E se quisermos pegar um tipo específico de exceção. Podemos fazer isso através da verificação no bloco catch para saber se a exceção que temos é a que queremos, dai então é so lançar a exceção novamente. Mas como que nós reconhecemos uma exceção?
+
+Naturalmente nós poderiamos fazer uma comparação de messagens de errors. Mas isso é uma forma instável de escrever código que estaria usando informações que são destinados ao consumo humano(a mensagem) para tomar uma decisão programática. Assim que alguém muda(ou traduz) a mensagem, o código irá parar de funcionar.
+
+Em vez disso, vamos definir um novo tipo de erro e usar instanceof para identificá-lo.
+
+````js
+function InputError(message) {
+  this.message = message;
+  this.stack = (new Error()).stack;
+}
+
+InputError.prototype = Object.create(Error.prototype);
+InputError.prototype.name = "InputError";
+````
+
+O `prototype` é feito para derivar de Error.prototype para que `instanceof Error` retornará true para objetos InputError. Nome a propriedade também é dada para tipos de erro padrão(Error, SyntaxError, ReferenceError, e assim por diante) para que também tenham essa propriedade.
+
+A atribuição da propriedade no `stack` tenta deixar o rastreamento do objeto pelo `stacktrace` um pouco mais útil, em plataformas que suportam a criação de um objeto de erro regular pode usar a propriedade de `stack` do objeto para si próprio.
+
+Agora `promptDirection` pode lançar um erro.
+
+````js
+function promptDirection(question) {
+  var result = prompt(question, "");
+  if (result.toLowerCase() == "left") return "L";
+  if (result.toLowerCase() == "right") return "R";
+  throw new InputError("Invalid direction: " + result);
+}
+````
+
+E o loop pode ser tratado com mais cuidado.
+
+````js
+for (;;) {
+  try {
+    var dir = promptDirection("Where?");
+    console.log("You chose ", dir);
+    break;
+  } catch (e) {
+    if (e instanceof InputError)
+      console.log("Not a valid direction. Try again.");
+    else
+      throw e;
+  }
+}
+````
+
+Isso vai pegar apenas os casos de InputError e atravéz disso deixa algumas exceções independentes. Se você introduzir um erro de digitação, ou erro variável indefinida a aplicação nos avisara.

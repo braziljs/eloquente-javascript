@@ -363,3 +363,112 @@ for (;;) {
 ````
 
 Isso vai pegar apenas os casos de InputError e atravéz disso deixa algumas exceções independentes. Se você introduzir um erro de digitação, ou erro variável indefinida a aplicação nos avisara.
+
+## Asserções
+
+As asserções são uma ferramenta para fazer a verificação de sanidade básica erros do programador. Considere essa função auxiliar, que afirma:
+
+````js
+function AssertionFailed(message) {
+  this.message = message;
+}
+AssertionFailed.prototype = Object.create(Error.prototype);
+
+function assert(test, message) {
+  if (!test)
+    throw new AssertionFailed(message);
+}
+
+function lastElement(array) {
+  assert(array.length > 0, "empty array in lastElement");
+  return array[array.length - 1];
+}
+````
+
+Isso fornece uma maneira compacta de fazer cumprir as expectativas solícitada para quebrar um programa se a condição descrita não se sustentar. Por exemplo se a função `lastElement` que busca o último elemento de uma matriz voltar indefinida para matrizes vazias se a declaração foi omitida. Buscar o último elemento de uma matriz vazia não faz muito sentido por isso é quase certeza de que um erro de programação pode acontecer.
+
+As afirmações são uma maneira de certificar-se de que erros pode causar falhas e qual o ponto deste erro ao invés de valores produzidos silenciosamente sem sentido que pode acarretar problemas em uma parte do programa a qual não se tem nenhuma relação de onde realmente ocorreu.
+
+## Resumo
+
+Erros e má entrada acontecem. Erros de programas precisam ser encontrados e corrigidos. Eles podem tornar-se mais fácil de perceber quando se tem uma suites de testes automatizados e asserções adicionas nos seu programa.
+
+Problemas causados por fatores fora do controle do programa deve geralmente ser tratadas normalmente. Às vezes quando o problema pode acontecer tratado localmente, valores de retorno especiais são um caminho sensato para monitorá-los. Caso contrário, as exceções são preferíveis.
+
+Lançar uma exceção faz com que `stack` de chamadas pode desencadear o bloco `try/catch` ou até a parte inferior da pilha. O valor de exceção será capturado pelo bloco `catch` onde podemos verificar se ele é realmente o tipo de exceção esperada e em seguida fazer algo com ele. Para lidar com o fluxo de controle imprevisível causado pelas exceções, o bloco `finally` pode ser utilizado para garantir que um pedaço de código seja sempre executado.
+
+## Exercícios
+
+1- Tentar outra vez...
+
+Digamos que você tenha uma função `primitiveMultiply` que em 50 por cento dos casos multiplica dois números e em outros 50 por cento levanta uma exceção do tipo `MultiplicatorUnitFailure`. Escreva uma função que envolve esta função `MultiplicatorUnitFailure` e simplesmente tente até que uma chamada seja bem-sucedido retornando o resultado.
+
+Certifique-se de lidar com apenas as exceções que você está tentando manipular.
+
+````js
+function MultiplicatorUnitFailure() {}
+
+function primitiveMultiply(a, b) {
+  if (Math.random() < 0.5)
+    return a * b;
+  else
+    throw new MultiplicatorUnitFailure();
+}
+
+function reliableMultiply(a, b) {
+  // Coloque seu código aqui.
+}
+
+console.log(reliableMultiply(8, 8));
+// → 64
+````
+[Veja a resolução](https://gist.github.com/SauloSilva/95c270deacfd4f306463)
+
+2- A caixa trancada
+
+Considere o seguinte objeto:
+
+````js
+var box = {
+  locked: true,
+  unlock: function() { this.locked = false; },
+
+  lock: function() { this.locked = true;  },
+
+  _content: [],
+
+  get content() {
+    if (this.locked) throw new Error("Locked!");
+    return this._content;
+  }
+};
+````
+
+Isto é uma caixa com um cadeado. Dentro dela tem um array mas você pode obtê-lo apenas quando a caixa for desbloqueada. Não é permitido acessar a propriedade `_content` diretamente.
+
+Escreva uma função chamada `withBoxUnlocked` que assume o valor da função que é passada por argumento para abrir esta caixa. Execute a função e em seguida garanta que a caixa está bloqueada antes de novamente voltar; não importa se o argumento da função retornou normalmente ou emitiu uma exceção.
+
+````js
+function withBoxUnlocked(body) {
+  // Your code here.
+}
+
+withBoxUnlocked(function() {
+  box.content.push("gold piece");
+});
+
+try {
+  withBoxUnlocked(function() {
+    throw new Error("Pirates on the horizon! Abort!");
+  });
+} catch (e) {
+  console.log("Error raised:", e);
+}
+
+console.log(box.locked);
+// → true
+````
+
+Para ganhar pontos extras, certifique-se de que se você chamou `withBoxUnlocked` quando a caixa já estava desbloqueada pois a caixa deve sempre permanecer desbloqueada.
+
+[Veja a resolução](https://gist.github.com/SauloSilva/74595b9220e4a21480c2)

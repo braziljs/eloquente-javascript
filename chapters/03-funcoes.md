@@ -553,12 +553,14 @@ Separando as tarefas diferentes seu programa executa diferentes funções e isso
 
 The previous chapter introduced the standard function Math.min that returns its smallest argument. We can do that ourselves now. Write a function min that takes two arguments and returns their minimum.
 
-  // Your code here.
+```js
+// Your code here.
 
-  console.log(min(0, 10));
-  // → 0
-  console.log(min(0, -10));
-  // → -10
+console.log(min(0, 10));
+// → 0
+console.log(min(0, -10));
+// → -10
+```
 
 T> If you have trouble putting braces and parentheses in the right place to get a valid function definition, start by copying one of the examples in this chapter and modifying it.
 T>
@@ -578,14 +580,16 @@ Define a recursive function isEven corresponding to this description. The functi
 
 Test it on 50 and 75. See how it behaves on -1. Why? Can you think of a way to fix this?
 
-  // Your code here.
+```js
+// Your code here.
 
-  console.log(isEven(50));
-  // → true
-  console.log(isEven(75));
-  // → false
-  console.log(isEven(-1));
-  // → ??
+console.log(isEven(50));
+// → true
+console.log(isEven(75));
+// → false
+console.log(isEven(-1));
+// → ??
+```
 
 T> Your function will likely look somewhat similar to the inner `find` function in the recursive `findSolution` example in this chapter, with an `if/else if/else` chain that tests which of the three cases applies. The final else, corresponding to the third case, makes the recursive call. Each of the branches should contain a return statement or in some other way arrange for a specific value to be returned.
 T>
@@ -599,12 +603,14 @@ Write a function countBs that takes a string as its only argument and returns a 
 
 Next, write a function called `countChar` that behaves like `countBs`, except it takes a second argument that indicates the character that is to be counted (rather than counting only uppercase "B" characters). Rewrite `countBs` to make use of this new function.
 
-  // Your code here.
+```js
+// Your code here.
 
-  console.log(countBs("BBC"));
-  // → 2
-  console.log(countChar("kakkerlak", "k"));
-  // → 4
+console.log(countBs("BBC"));
+// → 2
+console.log(countChar("kakkerlak", "k"));
+// → 4
+```
 
 T> A loop in your function will have to look at every character in the string by running an index from zero to one below its length (< string.length). If the character at the current position is the same as the one the function is looking for, it adds 1 to a counter variable. Once the loop has finished, the counter can be returned.
 T>

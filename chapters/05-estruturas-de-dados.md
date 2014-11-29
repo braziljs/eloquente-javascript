@@ -18,7 +18,7 @@ De vez em quando, geralmente entre oito e dez da noite, Jaques transforma-se em 
 
 Por um lado, Jaques está bastante contente que ele não tem licantropia clássica. Transformando-se em um esquilo tende a causar menos problemas do que se transformando em um lobo. Em vez de ter de se preocupar em comer acidentalmente o vizinho (que seria estranho), ele se preocupa com o que está sendo comido pelo gato do vizinho. Depois de duas ocasiões em que ele acordou em um galho fino precariamente na copa de um carvalho, nu e desorientado, ele tomou a trancar as portas e janelas de seu quarto à noite, e colocar algumas nozes no chão para manter-se ocupado.
 
-![The weresquirrel](../img/weresquirrel.svg)
+![The weresquirrel](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/weresquirrel.svg)
 
 Isto cuida dos problemas do gato e do carvalho. Mas Jaques ainda sofre com sua condição. As ocorrências irregulares da transformação fazem-no suspeitar de que pode haver algum gatilho que faz com que elas aconteçam. Por um tempo, ele acreditava que isso só acontecia nos dias em que ele havia tocado em árvores. Então ele parou de fazer isso por completo, e evitando até mesmo passar perto delas. Mas o problema persistiu.
 
@@ -48,36 +48,40 @@ Estes índices começam em zero, não um. Assim, o primeiro elemento pode ser li
 
 ## Propriedades
 
-=====================
+Nós vimos algumas expressões de aparência suspeita, como myString.length (para obter o comprimento de uma string) e Math.max (a função máxima) em exemplos passados. Estas acessam propriedades de outros valores. No primeiro caso, a propriedade length do valor em myString. Na segunda, a propriedade nomeada max no objeto Math (que é um conjunto de funções e valores relacionados com a matemática).
 
+Quase todos os valores de JavaScript têm propriedades. As exceções são null  e undefined. Se você tentar acessar uma propriedade em um desses _non-values_ (propriedades sem valor), você receberá um erro.
 
-We’ve seen a few suspicious-looking expressions like myString.length (to get the length of a string) and Math.max (the maximum function) in past examples. These access properties of another value. In the first case, the length property of the value in myString. In the second, the property named max in the Math object (which is a collection of mathematics-related values and functions).
-
-Almost all JavaScript values have properties. The exceptions are null and undefined. If you try to access a property on one of these non-values, you get an error.
-
+```javascript
 null.length;
 // → TypeError: Cannot read property 'length' of null
-Arrays also have a length property, holding the amount of elements in the array. In fact, the elements in the array are also accessed through properties. Both value.index and value[index] access a property on value. The difference is in how index is interpreted. When using a dot, the part after the dot (which must be a valid variable name) directly names the property. When using square brackets, the index is treated as an expression that is evaluated to get the property name. Whereas value.index fetches the property named “index”, value[index] tries to get the value of the variable named index, and uses that as the property name.
+```
 
-So if you know that the property you are interested in is called “length”, you say value.length. If you want to extract the property named by the value held in the variable i, you say value[i]. And finally, if you want to access a property named “0” or “John Doe” (property names can be any string), these are not valid variable names, so you are forced to use square brackets, as in value[0] or value["John Doe"], even though you know the precise name of the property in advance.
+Arrays também tem uma propriedade length, mantendo a quantidade de elementos no array. Na verdade, os elementos no array também são acessados por meio de propriedades. Ambos value.index e value[index] acessam uma propriedade em value. A diferença está em como _index_ é interpretada. Ao usar um ponto, a parte após o ponto (que deve ser um nome de variável válido) acessa diretamente o nome da propriedade. Ao usar colchetes, o índex é tratado como uma expressão que é avaliada para obter o nome da propriedade. Considerando que value.index busca a propriedade chamada "index", value[index] tenta obter o valor da variável chamada índex, e usa isso como o nome da propriedade.
 
-Methods
+Então, se você sabe que a propriedade que você está interessado se chama "length", você diz value.length. Se você deseja extrair a propriedade nomeada pelo valor mantido na variável i, você diz value[i]. E, finalmente, se você quiser acessar uma propriedade denominada "0" ou "John Doe" (nomes de propriedade pode ser qualquer string), estes não são os nomes de variáveis válidos, então você é forçado a usar colchetes, como em value[0] ou value["John Doe"], mesmo que você saiba o nome preciso da propriedade com antecedência.
 
-Both string and array objects contain, in addition to the length property, a number of properties that refer to function values.
+## Métodos
 
+Objetos dos tipos `String` ou `Array` contém, além da propriedade `length`, um número de propriedades que se referem à valores de função.
+
+```javascript
 var doh = "Doh";
 console.log(typeof doh.toUpperCase);
 // → function
 console.log(doh.toUpperCase());
 // → DOH
-Every string has a toUpperCase property. When called, it will return a copy of the string, in which all letters have been converted to uppercase. There is also toLowerCase. You can guess what that does.
+```
 
-Interestingly, even though the call to toUpperCase does not pass any arguments, the function does somehow have access to the string "Doh", the value of which it is a property. How this works precisely is described in Chapter 6.
+Toda string têm uma propriedade `toUpperCase`. Quando chamada, ela irá retornar uma cópia da string, onde todas as letras serão convertidas em maiúsculas. Existe também a `toLowerCase`. Você pode adivinhar o que ela faz.
 
-Properties that contain functions are generally called methods of the value they belong to. As in “toUpperCase is a method of a string”.
+Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma têm acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no [Capítulo 6 - @TODO - ADICIONAR LINK]().
 
-This example demonstrates some methods that array objects have:
+As propriedades que contêm funções são geralmente chamados _métodos_ do valor a que pertencem. Tal como em "toUpperCase é um método de uma string".
 
+Este exemplo demonstra alguns métodos que os objetos do tipo array contém:
+
+```javascript
 var mack = [];
 mack.push("Mack");
 mack.push("the", "Knife");
@@ -89,7 +93,14 @@ console.log(mack.pop());
 // → Knife
 console.log(mack);
 // → ["Mack", "the"]
-The push method can be used to add values to the end of an array. The pop method does the opposite. It removes the value at the end of the array and returns it. An array of strings can be flattened to a single string with the join method. The argument given to join determines the text that is glued between the array’s elements.
+```
+
+O método `push` pode ser usado para adicionar valores ao final de um array. O método `pop` faz o oposto. Ela remove o valor no final do array e retorna-o. Um array de strings pode ser _achatado_ para uma simples string com o método `join`. O argumento passado para `join` determina o texto que é usado para _colar_ os elementos do array.
+
+=====================
+
+
+
 
 Objects
 
@@ -208,7 +219,7 @@ For binary (boolean) variables, the phi coefficient provides a good measure of c
 Eating pizza versus turning into a squirrel
 From such a table (n), the phi coefficient (ϕ) can be computed by the following formula.
 
-ϕ = 	
+ϕ =
 n11n00 - n10n01
 √ n1•n0•n•1n•0
 Where n01 indicates the number of measurements where the first measurement (pizza) is false (0), and the second (squirrelness) is true (1), so 4 in this case. n1• refers to the sum of all measurements where the first variable is true, which is 10 in the above table.

@@ -12,7 +12,7 @@ Os programas que construímos até agora têm sido seriamente dificultados pelo 
 
 O capítulo vai funcionar mais ou menos como um exemplo realista de programação, introduzindo conceitos que se aplicam ao problema em questão. O código de exemplo, muitas vezes, será construído sobre as funções e variáveis ​​que foram introduzidas no início do texto.
 
-## O weresquirrel
+## O weresquirrel (O esquilo-lobo)
 
 De vez em quando, geralmente entre oito e dez da noite, Jaques transforma-se em um pequeno roedor peludo com uma cauda espessa.
 
@@ -24,7 +24,7 @@ Isto cuida dos problemas do gato e do carvalho. Mas Jaques ainda sofre com sua c
 
 Mudando para uma abordagem mais científica, Jaques quer começar a manter um registo diário das coisas que ele fez naquele dia, e se ele acabou mudando de forma. Usando esses dados em sua própria vida, ele espera ser capaz de diminuir as condições que desencadeiam as transformações.
 
-A primeira coisa que ele fará será criar uma estrutura de dados para armazenar essas informações.
+A primeira coisa que ele fará será criar um conjunto de dados para armazenar essas informações.
 
 ## Conjuntos de dados
 
@@ -34,7 +34,7 @@ Poderíamos ser criativos com *strings* - strings podem ter qualquer comprimento
 
 Felizmente, JavaScript fornece um tipo de dados especificamente para armazenar sequências de valores. Ele é chamado de *array*, e está escrito como uma lista de valores entre colchetes, separados por vírgulas.
 
-```javascript
+```js
 var listOfNumbers = [2, 3, 5, 7, 11];
 console.log(listOfNumbers[1]);
 // → 3
@@ -52,7 +52,7 @@ Nós vimos algumas expressões de aparência suspeita, como myString.length (par
 
 Quase todos os valores de JavaScript têm propriedades. As exceções são null  e undefined. Se você tentar acessar uma propriedade em um desses _non-values_ (propriedades sem valor), você receberá um erro.
 
-```javascript
+```js
 null.length;
 // → TypeError: Cannot read property 'length' of null
 ```
@@ -65,7 +65,7 @@ Então, se você sabe que a propriedade que você está interessado se chama "le
 
 Objetos dos tipos `String` ou `Array` contém, além da propriedade `length`, um número de propriedades que se referem à valores de função.
 
-```javascript
+```js
 var doh = "Doh";
 console.log(typeof doh.toUpperCase);
 // → function
@@ -81,7 +81,7 @@ As propriedades que contêm funções são geralmente chamados _métodos_ do val
 
 Este exemplo demonstra alguns métodos que os objetos do tipo array contém:
 
-```javascript
+```js
 var mack = [];
 mack.push("Mack");
 mack.push("the", "Knife");
@@ -97,21 +97,17 @@ console.log(mack);
 
 O método `push` pode ser usado para adicionar valores ao final de um array. O método `pop` faz o oposto. Ela remove o valor no final do array e retorna-o. Um array de strings pode ser _achatado_ para uma simples string com o método `join`. O argumento passado para `join` determina o texto que é usado para _colar_ os elementos do array.
 
-=====================
+## Objetos
 
+Voltamos ao _esquilo-lobo_. Um conjunto de entradas de log diários pode ser representado como um array. Mas as entradas não são compostas por apenas um número ou uma sequência de cada entrada precisa armazenar uma lista de atividades, e um valor booleano que indica se Jaques transformou-se em um esquilo. A representação prática precisa agrupar esses valores juntos em um único valor, e em seguida, colocar esses valores agrupados em um array de entradas.
 
+Valores do tipo _objeto_ são coleções arbitrárias de propriedades, que podem  adicionar propriedades a (e remover propriedades de) o que quisermos. Uma maneira de criar um objeto é usando uma notação com chaves:
 
-
-Objects
-
-Back to the weresquirrel. A set of daily log entries can be represented as an array. But the entries do not consist of just a number or a string—each entry needs to store a list of activities, and a boolean value that indicates whether Jaques turned into a squirrel. A practical representation needs to group these values together into a single value, and then put such grouped values into the array of entries.
-
-Values of the type object are arbitrary collections of properties, that we can add properties to (and remove properties from) as we please. One way to create an object is by using a curly brace notation:
-
+```js
 var day1 = {
-  squirrel: false,
-  events: ["work", "touched tree", "pizza", "running",
-           "television"]
+    squirrel: false,
+    events: ["work", "touched tree", "pizza", "running",
+    "television"]
 };
 console.log(day1.squirrel);
 // → false
@@ -120,21 +116,28 @@ console.log(day1.wolf);
 day1.wolf = false;
 console.log(day1.wolf);
 // → false
-Inside of the curly braces we can give a list of properties, written as a name followed by a colon and an expression that provides a value for the property. Spaces and line breaks are again not significant. When an object spans multiple lines, indenting it like we’ve been indenting blocks of code helps readability. Properties whose names are not valid variable names or valid numbers have to be quoted.
+```
 
+Dentro das chaves, podemos passar uma lista de propriedades, escrito como um nome seguido por dois pontos e uma expressão que fornece um valor para a propriedade. Os espaços e quebras de linha não são novamente significativos. Quando um objeto se estende por várias linhas, indentá-lo como temos vindo a indentar blocos de código ajuda na legibilidade. Propriedades cujos nomes não são válidos, nomes de variáveis ou números válidos têm de ser colocados entre aspas.
+
+```js
 var descriptions = {
   work: "Went to work",
   "touched tree": "Touched a tree"
 };
-It is possible to assign a value to a property expression with the ‘=’ operator. This will replace the property’s value if it already existed, or create a new property on the object if it didn’t.
+```
 
-Reading a property that doesn’t exist will produce the value undefined.
+É possível atribuir um valor a uma expressão de propriedade com o operador '='. Isso irá substituir o valor da propriedade, se ele já existia, ou criar uma nova propriedade sobre o objeto se ele não o fez.
 
-To briefly come back to our tentacle model of variable bindings—property bindings are similar. They grasp values, but other variables and properties might be holding on to the same values. So now you may start thinking of objects as octopuses with any number of tentacles, each of which has a name inscribed on it.
+Lendo uma propriedade que não existe irá produzir o valor undefined.
 
-Artist's representation of an object
-To cut off such a leg—removing a property from an object—the delete operator can be used. This is a unary operator that, when applied to a property access expression, will remove the named property from the object. (Which is not a very common thing to do in practice, but it is allowed.)
+Voltando brevemente ao nosso modelo "tentáculo" de associações de variáveis - associações de propriedades são semelhantes. Eles recebem valores, mas outras variáveis e propriedades podem estar recebendo os mesmos valores. Então, agora você pode começar a pensar em objetos como polvos com qualquer número de tentáculos, cada um dos quais tem um nome inscrito nele.
 
+![A representação artística de um objeto](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/octopus-object.jpg)
+
+Para cortar uma tal perna - removendo uma propriedade de um objeto - o operador `delete` pode ser usado. Este é um operador unário que, quando aplicado a uma expressão de acesso a propriedade, irá remover a propriedade nomeada a partir do objeto. (O que não é uma coisa muito comum de se fazer na prática, mas é permitido.)
+
+```js
 var anObject = {left: 1, right: 2};
 console.log(anObject.left);
 // → 1
@@ -145,13 +148,17 @@ console.log("left" in anObject);
 // → false
 console.log("right" in anObject);
 // → true
-The binary in operator, when applied to a string and an object, returns a boolean value that indicates whether that object has that property. The difference between setting a property to undefined and actually deleting it is that, in the first case, the object still has the property (it just doesn’t have a very interesting value), whereas in the second case the property is no longer present and in will return false.
+```
 
-Arrays, then, are just a kind of objects specialized for storing sequences of things. If you evaluate typeof [1, 2], this produces "object". I guess you can see them as long, flat octopuses with all their arms in a neat row, labeled with numbers.
+O binário no operador, quando aplicado à uma string e um objeto, return um valor booleano que indica se aquele objeto tem aquela propriedade. A diferença entre configurar uma propriedade para `undefined` e realmente excluí-la, é que, no primeiro caso, o objeto continua com a propriedade (ela simplesmente não tem um valor muito interessante), enquanto que, no segundo caso a propriedade não está mais presente e retornará `false`.
 
-Artist's representation of an array
-The desired representation of Jaques’ journal is thus an array of objects.
+Arrays, então, são apenas um tipo de objetos especializados para armazenar sequência de coisas. Se você avaliar `typeof [1, 2]`, isto retorna `object`.  Eu acho que você pode vê-los como tentáculos longos e planos, com todas as suas armas em linha, rotuladas com números.
 
+![A representação artística de um array](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/octopus-array.jpg)
+
+A representação desejada do jornal de Jaques é, portanto, um array de objetos.
+
+```js
 var journal = [
   {events: ["work", "touched tree", "pizza",
             "running", "television"],
@@ -164,6 +171,16 @@ var journal = [
    squirrel: true},
   /* and so on... */
 ];
+```
+
+## Mutabilidade
+
+----
+
+----
+
+
+
 Mutability
 
 We will get to actual programming real soon now, I promise. But first, a little more theory.
@@ -216,7 +233,7 @@ Correlation is a measure of dependence between variables (“variables” in the
 
 For binary (boolean) variables, the phi coefficient provides a good measure of correlation, and is relatively easy to compute. First we need a matrix n, which indicates the number of times the various combinations of the two variables were observed. For example, we could take the event of eating pizza, and put that in a table like this:
 
-Eating pizza versus turning into a squirrel
+![Eating pizza versus turning into a squirrel](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/pizza-squirrel.svg)
 From such a table (n), the phi coefficient (ϕ) can be computed by the following formula.
 
 ϕ =
@@ -288,7 +305,7 @@ console.log("Larry" in ages);
 // → true
 console.log(ages["Simon"]);
 // → 55
-There are a few potential problems with using objects like this, which we will discuss in Chapter 6, but for the time being, we won’t worry about those.
+There are a few potential problems with using objects like this, which we will discuss in [Chapter 6 - @TODO - ADICIONAR LINK](), but for the time being, we won’t worry about those.
 
 What if we want to find all the people whose ages we have stored? The properties don’t form a predictable series, like they would in an array. JavaScript provides a loop construct specifically for going over the properties of an object. It looks a little like a normal for loop, but distinguishes itself by the use of the word in.
 
@@ -505,11 +522,24 @@ console.log(sum(range(1, 10)));
 // → 55
 console.log(range(5, 2, -1));
 // → [5, 4, 3, 2]
+
+----
+> Building up an array is most easily done by first initializing a variable to [] (a fresh, empty array) and repeatedly calling its push method to add a value. Don’t forget to return the array at the end of the function.
+
+> Since the end boundary is inclusive, you’ll need to use the <= operator rather than simply < to check for the end of your loop.
+
+> To check whether the optional step argument was given, either check arguments.length or compare the value of the argument to undefined. If it wasn’t given, simply set it to its default value (1) at the top of the function.
+
+> Having range understand negative step values is probably best done by writing two separate loops—one for counting up and one for counting down—because the comparison that checks whether the loop is finished needs to be >= rather than <= when counting downward.
+
+> It might also be worthwhile to use a different default step, namely, -1, when the end of the range is smaller than the start. That way, range(5, 2) returns something meaningful, rather than getting stuck in an infinite loop.
+----
+
 Reversing an array
 
 Arrays have a method reverse, which will change the array by inverting the order in which its elements appear. For this exercise, write two functions, reverseArray and reverseArrayInPlace. The first, reverseArray, takes an array as argument and produces a new array that has the same elements in the inverse order. The second, reverseArrayInPlace does what the reverse method does—it modifies the array given as argument in order to reverse its elements.
 
-Thinking back to the notes about side effects and pure functions in the previous chapter, which variant do you expect to be useful in more situations? Which one is more efficient?
+Thinking back to the notes about side effects and pure functions in the [previous chapter @TODO - COLOCAR LINK](), which variant do you expect to be useful in more situations? Which one is more efficient?
 
 // Your code here.
 
@@ -519,6 +549,15 @@ var arrayValue = [1, 2, 3, 4, 5];
 reverseArrayInPlace(arrayValue);
 console.log(arrayValue);
 // → [5, 4, 3, 2, 1]
+
+----
+> There are two obvious ways to implement reverseArray. The first is to simply go over the input array from front to back and use the unshift method on the new array to insert each element at its start. The second is to loop over the input array backward and use the push method. Iterating over an array backward requires a (somewhat awkward) for specification like (var i = array.length - 1; i >= 0; i--).
+
+> Reversing the array in place is harder. You have to be careful not to overwrite elements that you will later need. Using reverseArray or otherwise copying the whole array (array.slice(0) is a good way to copy an array) works but is cheating.
+
+> The trick is to swap the first and last elements, then the second and second-to-last, and so on. You can do this by looping over half the length of the array (use Math.floor to round down—you don’t need to touch the middle element in an array with an odd length) and swapping the element at position i with the one at position array.length - 1 - i. You can use a local variable to briefly hold on to one of the elements, overwrite that one with its mirror image, and then put the value from the local variable in the place where the mirror image used to be.
+----
+
 A list
 
 Objects, by being generic blobs of values, can be used to build all sorts of data structures. An common data structure is the list (not to be confused with the array). A list is a set of objects, with the first object holding a reference (in a property) to the second, the second to the third, and so on.
@@ -533,6 +572,11 @@ var list = {
     }
   }
 };
+
+The resulting objects form a chain, like this:
+
+![A linked list](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/linked-list.svg)
+
 A nice thing about lists is that they can share parts of their structure. For example, if I create two new values {value: 0, rest: list} and {value: -1, rest: list} (with list referring to the variable defined above), they are both independant lists, but they share the structure that makes up their last three elements. In addition, the original list is also still a valid three-element list.
 
 Write a function arrayToList that builds up a data structure like the one above when given [1, 2, 3] as argument, and a listToArray function that produces an array from a list. Also write the helper functions prepend, which takes an element and a list, and creates a new list that adds the element to the front of the input list, and nth, which takes a list and a number, and returns the element at the given position in the list, or undefined when there is no such element.
@@ -549,6 +593,20 @@ console.log(prepend(1, prepend(2, null)));
 // → {value: 1, rest: {value: 2, rest: null}}
 console.log(nth(arrayToList([1, 2, 3]), 1));
 // → 2
+
+----
+> Building up a list is best done back to front. So arrayToList could iterate over the array backward (see previous exercise) and, for each element, add an object to the list. You can use a local variable to hold the part of the list that was built so far and use a pattern like list = {value: X, rest: list} to add an element.
+
+> To run over a list (in listToArray and nth), a for loop specification like this can be used:
+
+```js
+> for (var node = list; node; node = node.rest) {}
+```
+> Can you see how that works? Every iteration of the loop, node points to the current sublist, and the body can read its value property to get the current element. At the end of an iteration, node moves to the next sublist. When that is null, we have reached the end of the list and the loop is finished.
+
+> The recursive version of nth will, similarly, look at an ever smaller part of the “tail” of the list and at the same time count down the index until it reaches zero, at which point it can return the value property of the node it is looking at. To get the zeroeth element of a list, you simply take the value property of its head node. To get element N + 1, you take the Nth element of the list that’s in this list’s rest property.
+----
+
 Deep comparison
 
 The ‘==’ operator compares objects by identity. Sometimes, you would prefer to compare the values of their actual properties.
@@ -567,4 +625,11 @@ console.log(deepEqual(obj, {here: 1, object: 2}));
 console.log(
   deepEqual(obj, {here: {is: "an"}, object: 2}));
 // → true
-⬅ ⬆ ➡
+
+----
+> Your test for whether you are dealing with a real object will look something like typeof x == "object" && x != null. Be careful to compare properties only when both arguments are objects. In all other cases you can just immediately return the result of applying ===.
+
+> Use a for/in loop to go over the properties. You need to test whether both objects have the same set of property names and whether those properties have identical values. The first test can be done by counting the properties in both objects and returning false if the numbers of properties are different. If they’re the same, then go over the properties of one object, and for each of them, verify that the other object also has the property. The values of the properties are compared by a recursive call to deepEqual.
+
+> Returning the correct value from the function is best done by immediately returning false when a mismatch is noticed and returning true at the end of the function.
+----

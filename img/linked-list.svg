@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="393" height="76" viewBox="-2 -2 393 76"><style>
+    @font-face {
+      font-family: 'PT Mono';
+      font-style: normal;
+      font-weight: 400;
+      src: local('PT Mono'), local('PTMono-Regular'), url(http://themes.googleusercontent.com/static/fonts/ptmono/v1/jmle3kzCPnW8O7_gZGRDlQ.woff) format('woff');
+    }
+    .objtext { font-family: "PT Mono"; font-size: 14px; stroke: none; }
+    .objbox { border-radius: 2px; fill: white; stroke: black }
+    .sep { stroke: #666 }
+  </style>
+<g><g><rect x="0.5" y="0.5" width="104" height="51" class="objbox" rx="2" ry="2"></rect><text x="10" y="20" class="objtext">value: 1</text><text x="10" y="40" class="objtext">rest:</text></g><g><rect x="134.5" y="10.5" width="104" height="51" class="objbox" rx="2" ry="2"></rect><text x="144.5" y="30.5" class="objtext">value: 2</text><text x="144.5" y="50.5" class="objtext">rest:</text></g><path d="M 58.5 36.5 L 134.5 36.5" class="sep"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" stroke="none" fill="rgb(102, 102, 102)" transform="translate(134.5 36.5) rotate(90) scale(1)"></path><g><rect x="268.5" y="20.5" width="120" height="51" class="objbox" rx="2" ry="2"></rect><text x="278.5" y="40.5" class="objtext">value: 3</text><text x="278.5" y="60.5" class="objtext">rest: null</text></g><path d="M 192.5 47.5 L 268.5 47.5" class="sep"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" stroke="none" fill="rgb(102, 102, 102)" transform="translate(268.5 47.5) rotate(90) scale(1)"></path></g></svg>

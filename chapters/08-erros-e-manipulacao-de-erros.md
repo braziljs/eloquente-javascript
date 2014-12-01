@@ -49,7 +49,7 @@ canYouSpotTheProblem();
 
 Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no contador do exemplo, o JavaScript cria uma variável global para utiliza-la, no entando no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
 
-Outra mudança no modo estrito é que esta ligação tem o valor undefined para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referencia do objeto é do escopo global. Então, se você acidentalmente chama um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
+Outra mudança no modo estrito é que esta ligação tem o valor `undefined` para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referencia do objeto é do escopo global. Então, se você acidentalmente chama um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
 
 Por exemplo, considere o seguinte código que chama um construtor sem a nova palavra-chave na qual seu objeto não vai se referir a um objeto recém-construído:
 
@@ -60,7 +60,7 @@ console.log(name);
 // → Ferdinand
 ````
 
-Assim, a falsa chamada para Person foi bem sucessida, mas retornou um valor indefinido e criou uma variável global. No modo estrito, o resultado é diferente.
+Assim, a falsa chamada para `Person` foi bem sucessida, mas retornou um valor indefinido e criou uma variável global. No modo estrito, o resultado é diferente.
 
 ````js
 "use strict";
@@ -118,7 +118,7 @@ Escrevendo testes como este tende a parecer um pouco repetitivo e um código est
 
 ## Depuração
 
-Você consegue perceber que há algo errado com o seu programa quando ele esta se comporta mal ou produz erros; o próximo passo é descobrir o problema.
+Você consegue perceber que há algo errado com o seu programa quando ele esta se comportando mal ou produz erros; o próximo passo é descobrir o problema.
 
 Às vezes é óbvio. A mensagem de erro vai apontar para a linha específica, e se você olhar para a descrição do erro e para linha de código muitas vezes você vai entender o problema.
 
@@ -147,7 +147,7 @@ Mesmo se você já viu o problema e fingiu por um momento que você não viu. Sa
 
 Este é o lugar onde você deve resistir à tentação de começar a fazer mudanças aleatórias no código. Em vez disso pense, analise o que está acontecendo e chegue a uma teoria de por que isso pode estar acontecendo. Então faça observações adicionais para testar esta teoria ou se você ainda não tem uma teoria, faça observações adicionais que podem ajudá-lo.
 
-Colocar algumas chamadas console.log estratégicas para o programa é uma boa maneira de obter informações adicionais sobre o que o programa está fazendo. Neste caso queremos tomar `n` os valores de 13, 1 e em seguida 0. Vamos escrever o seu valor no início do loop.
+Colocar algumas chamadas `console.log` estratégicas para o programa é uma boa maneira de obter informações adicionais sobre o que o programa está fazendo. Neste caso queremos tomar `n` os valores de 13, 1 e em seguida 0. Vamos escrever o seu valor no início do loop.
 
 ````
 13
@@ -160,7 +160,7 @@ Colocar algumas chamadas console.log estratégicas para o programa é uma boa ma
 
 Certo. Dividindo 13 por 10 não produz um número inteiro. Em vez de `n / = base` o que nós realmente queremos é `n = Math.floor (n / base)` de modo que o número está devidamente deslocando-se para a direita.
 
-Uma alternativa ao uso console.log é usar os recursos de depurador do seu browser. Navegadores modernos vêm com a capacidade de definir um ponto de interrupção em uma linha específica de seu código. Isso fará com que a execução do programa faz uma pausa a cada vez que a linha com o ponto de interrupção é atingido. Isso permite que você inspecione os valores das variáveis nesse ponto. Eu não vou entrar em detalhes aqui pois depuradores diferem de navegador para navegador, mas vale a pena olhar as ferramentas de desenvolvimento do seu navegador e pesquisar na web para obter mais informações. Outra maneira de definir um ponto de interrupção é incluir uma declaração no depurador(que consiste em simplesmente em uma palavra-chave) em seu programa. Se as ferramentas de desenvolvedor do seu navegador estão ativos, o programa fará uma pausa sempre que ele atinge essa declaração, e você será capaz de inspecionar o seu estado.
+Uma alternativa ao uso `console.log` é usar os recursos de depurador do seu browser. Navegadores modernos vêm com a capacidade de definir um ponto de interrupção em uma linha específica de seu código. Isso fará com que a execução do programa faz uma pausa a cada vez que a linha com o ponto de interrupção é atingido. Isso permite que você inspecione os valores das variáveis nesse ponto. Eu não vou entrar em detalhes aqui pois depuradores diferem de navegador para navegador, mas vale a pena olhar as ferramentas de desenvolvimento do seu navegador e pesquisar na web para obter mais informações. Outra maneira de definir um ponto de interrupção é incluir uma declaração no depurador(que consiste em simplesmente em uma palavra-chave) em seu programa. Se as ferramentas de desenvolvedor do seu navegador estão ativos, o programa fará uma pausa sempre que ele atinge essa declaração, e você será capaz de inspecionar o seu estado.
 
 ## Propagação de erros
 

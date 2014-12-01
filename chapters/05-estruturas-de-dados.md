@@ -175,20 +175,13 @@ var journal = [
 
 ## Mutabilidade
 
-----
+Nós iremos chegar a programação real em breve, eu prometo. Mas, primeiro, um pouco mais de teoria.
 
-----
+Temos visto que os valores de objeto podem ser modificados. Os tipos de valores discutidos nos capítulos anteriores são todos imutáveis, é impossível alterar um valor existente desses tipos. Você pode combiná-los e obter novos valores a partir deles, mas quando você toma um valor específico de string, esse valor será sempre o mesmo. O texto dentro dele não pode ser alterado. Com objetos, por outro lado, o conteúdo de um valor pode ser modificado alterando as suas propriedades.
 
+Quando temos dois números, 120 e 120, que podem, se eles se referem aos mesmos bits físicos ou não, serem considerados os mesmos números precisos. Com objetos, existe uma diferença entre ter duas referências para o mesmo objeto e tendo dois objetos diferentes que contêm as mesmas propriedades. Considere o seguinte código:
 
-
-Mutability
-
-We will get to actual programming real soon now, I promise. But first, a little more theory.
-
-We’ve seen that object values can be modified. The types of values discussed in earlier chapters are all immutable—it is impossible to change an existing value of those types. You can combine them and derive new values from them, but when you take a specific string value, that value will always remain the same. The text inside it cannot be changed. With objects, on the other hand, the content of a value can be modified by changing its properties.
-
-When we have two numbers, 120 and 120, they can, whether they refer to the same physical bits or not, be considered the precise same number. With objects, there is a difference between having two references to the same object and having two different objects that contain the same properties. Consider the following code:
-
+```js
 var object1 = {value: 10};
 var object2 = object1;
 var object3 = {value: 10};
@@ -203,14 +196,17 @@ console.log(object2.value);
 // → 15
 console.log(object3.value);
 // → 10
-object1 and object2 are two variables grasping the same value. There is only one actual object, which is why changing object1 also changes the value of object2. The variable object3 points to another object, which initially contains the same properties as object1 but lives a separate life.
+```
 
-JavaScript’s == operator, when comparing objects, will return true only if both values given to it are the precise same value. Comparing different object with identical contents will give false. There is no “deep” comparison operation built into JavaScript, but it is possible to write it yourself.
+object1 e object2 são duas variáveis que recebem o mesmo valor. Há apenas um objeto real, por que mudar object1 também altera o valor de object2. A variável object3 aponta para um outro objeto, que inicialmente contém as mesmas propriedades que object1 mas vive uma vida separada.
 
-The lycanthrope’s log
+O operador `==` de JavaScript, quando se comparamos objetos, retornará verdadeiro somente se ambos os valores que lhe são atribuídas são o mesmo valor preciso. Comparando diferentes objetos com conteúdos idênticos retornará false. Não há nenhuma operação de comparação "profunda" construída em JavaScript, mas é possível você mesmo escrevê-la (que será um dos [exercícios - @TODO - ADICIONAR LINK]() no final deste capítulo).
 
-So Jaques starts up his JavaScript interpreter, and sets up the environment he needs to keep his journal.
+## O log do lobisomem
 
+Então Jaques inicia seu interpretador de JavaScript, e configura o ambiente que ele precisa para manter seu diário.
+
+```js
 var journal = [];
 
 function addEntry(events, didITurnIntoASquirrel) {
@@ -219,21 +215,42 @@ function addEntry(events, didITurnIntoASquirrel) {
     squirrel: didITurnIntoASquirrel
   });
 }
-And then, every evening at ten—or sometimes the next morning, after climbing down from the top shelf of his bookcase—the day is recorded.
+```
 
+E então, todas as noites às dez ou às vezes na manhã seguinte, - depois de descer da prateleira de cima de sua estante - o seu dia é gravado.
+
+```js
 addEntry(["work", "touched tree", "pizza", "running",
           "television"], false);
 addEntry(["work", "ice cream", "cauliflower", "lasagna",
           "touched tree", "brushed teeth"], false);
 addEntry(["weekend", "cycling", "break", "peanuts",
           "beer"], true);
-Once he has enough data points, he intends to compute the correlation between the squirrelification and each of the day events he recorded, and hopefully learn something useful from those correlations.
+```
 
-Correlation is a measure of dependence between variables (“variables” in the statistical sense, not the JavaScript sense). It is usually expressed in a coefficient that ranges from -1 to 1. Zero correlation means the variables are not related, whereas a correlation of one indicates that the two are perfectly related—if you know one, you also know the other. Minus one also means that the variables are perfectly related, but that they are opposite to each other—when one of them is true, the other is false.
+Uma vez que ele tem pontos de dados suficientes, ele pretende calcular a correlação entre a esquiloficação e cada um dos eventos do dia que ele gravou, e espera aprender algo útil a partir dessas correlações.
 
-For binary (boolean) variables, the phi coefficient provides a good measure of correlation, and is relatively easy to compute. First we need a matrix n, which indicates the number of times the various combinations of the two variables were observed. For example, we could take the event of eating pizza, and put that in a table like this:
+Correlação é uma medida de dependência entre variáveis ("variáveis", no sentido estatístico, e não o sentido JavaScript). É geralmente expressa em um coeficiente que varia de -1 a 1. Zero correlação significa que as variáveis não estão relacionadas, enquanto uma correlação de um indica que os dois são perfeitamente relacionados - se você conhece um, você também conhecer o outro. Menos um significa também que as variáveis são perfeitamente ligadas, mas que são opostas uma à outra, quando um deles é verdadeiro, o outro é falso.
 
-![Eating pizza versus turning into a squirrel](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/pizza-squirrel.svg)
+Para variáveis binárias (boolean), o coeficiente phi fornece uma boa medida de correlação, e é relativamente fácil de calcular. Primeiro temos uma matriz n, que indica o número de vezes que foram observadas as várias combinações das duas variáveis. Por exemplo, poderíamos tomar o evento de comer pizza, e colocar isso em uma tabela como esta:
+
+![Comendo Pizza x transformar-se em esquilo](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/pizza-squirrel.svg)
+
+A partir de uma tal tabela (n), o coeficiente de phi (φ) pode ser calculado pela seguinte fórmula.
+
+```math
+ϕ =
+n11n00 - n10n01
+√ n1•n0•n•1n•0
+```
+
+----
+
+----
+
+
+
+
 From such a table (n), the phi coefficient (ϕ) can be computed by the following formula.
 
 ϕ =

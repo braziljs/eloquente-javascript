@@ -551,10 +551,10 @@ Separando as tarefas diferentes seu programa executa diferentes funções e isso
 
 ### Mínimo
 
-The previous chapter introduced the standard function Math.min that returns its smallest argument. We can do that ourselves now. Write a function min that takes two arguments and returns their minimum.
+O capítulo anterior introduziu a função padrão `Math.min` que retorna seu menor argumento. Nós podemos fazer isso nós mesmos agora. Escreva uma função `min` que recebe dois argumentos e retorna o valor mínimo.
 
 ```js
-// Your code here.
+// Seu código aqui.
 
 console.log(min(0, 10));
 // → 0
@@ -562,26 +562,26 @@ console.log(min(0, -10));
 // → -10
 ```
 
-T> If you have trouble putting braces and parentheses in the right place to get a valid function definition, start by copying one of the examples in this chapter and modifying it.
+T> Se você tiver problemas para colocar as chaves e parênteses no lugar certo para ter uma definição de função válida, comece copiando um dos exemplos neste capítulo e modifique-o.
 T>
-T> A function may contain multiple return statements.
+T> Uma função pode conter múltiplas declarações `return`.
 
-### Recursion
+### Recursão
 
-We’ve seen that % (the remainder operator) can be used to test whether a number is even or odd by using % 2 to check whether it’s divisible by two. Here’s another way to define whether a positive whole number is even or odd:
+Vimos que o `%` (operador resto) pode ser usado para testar se um número é par ou ímpar usando `% 2` para verificar se o número é divisível por dois. Aqui uma outra maneira de verificar se um número inteiro positivo é par ou ímpar:
 
-* Zero is even.
+* Zero é par.
 
-* One is odd.
+* Um é ímpar.
 
-* For any other number N, its evenness is the same as N - 2.
+* Para qualquer outro número N, seu padrão é o mesmo que N - 2.
 
-Define a recursive function isEven corresponding to this description. The function should accept a number parameter and return a Boolean.
+Defina uma função recursiva `isEven` correspondente a essa descrição. A função deve aceitar um número como parâmetro e retornar um `Boolean`. 
 
-Test it on 50 and 75. See how it behaves on -1. Why? Can you think of a way to fix this?
+Teste isso com 50 e 75. Veja como se comporta com -1. Por que? Você pode pensar numa forma de consertar isso?
 
 ```js
-// Your code here.
+// Seu código aqui.
 
 console.log(isEven(50));
 // → true
@@ -591,9 +591,9 @@ console.log(isEven(-1));
 // → ??
 ```
 
-T> Your function will likely look somewhat similar to the inner `find` function in the recursive `findSolution` example in this chapter, with an `if/else if/else` chain that tests which of the three cases applies. The final else, corresponding to the third case, makes the recursive call. Each of the branches should contain a return statement or in some other way arrange for a specific value to be returned.
+T> Sua função vai parecer com a função `find` no exemplo recursivo `findSolution` neste capítulo, com uma cadeia `if/else if/else` que testa qual dos três casos será aplicado. Cada um dos *branches* (ramificações) deverá conter uma declaração `return` ou ser organizada de outra forma para um valor específica para ser retornado.
 T>
-T> When given a negative number, the function will recurse again and again, passing itself an ever more negative number, thus getting further and further away from returning a result. It will eventually run out of stack space and abort.
+T> Quando for passado um número negativo, a função vai ser chamada de novo e de novo, passando para si mesma um número cada vez mais negativo, indo sempre mais longe de retornar um resultado. Isso eventualmente vai sair do espaço da memória e abortar.
 
 ### Bean counting
 

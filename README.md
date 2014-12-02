@@ -1,7 +1,6 @@
 # [Eloquent Javascript](http://eloquentjavascript.com.br) por Marijn Haverbeke
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/randsonjs/eloquent-javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/randsonjs/eloquent-javascript/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/randsonjs/eloquent-javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/randsonjs/eloquent-javascript/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Projeto que visa a tradução da segunda edição do livro Eloquent JavaScript por Marijn Haverbeke.
 

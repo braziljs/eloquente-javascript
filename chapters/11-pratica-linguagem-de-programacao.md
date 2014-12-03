@@ -21,7 +21,7 @@ A parte imediatamente mais visível de uma linguagem de programação é sua sin
 
 Nossa língua terá uma sintaxe simples e uniforme. Tudo em **Egg** é uma expressão. Uma expressão pode ser uma variável, um número, uma corda, ou um aplicativo. Os aplicativos são usados para chamadas de função, mas também para construções como `if` ou `while`.
 
-Para manter o analisador simples `String` em Egg não suportam qualquer coisa como escapes. A seqüência é simplesmente uma seqüência de caracteres que não são aspas duplas embrulhados em aspas duplas. Um número é uma sequência de dígitos. Os nomes das variáveis podem consistir de qualquer caractere que não seja um espaço em branco e não tem um significado especial na sintaxe.
+Para manter o analisador simples `String` em **Egg** não suportam qualquer coisa como escapes. A seqüência é simplesmente uma seqüência de caracteres que não são aspas duplas embrulhados em aspas duplas. Um número é uma sequência de dígitos. Os nomes das variáveis podem consistir de qualquer caractere que não seja um espaço em branco e não tem um significado especial na sintaxe.
 
 Os aplicação será escrita da forma como é em JavaScript; colocando parênteses após uma expressão e com uma série de argumentos entre esses parênteses separados por vírgulas.
 
@@ -142,3 +142,170 @@ console.log(parse("+(a, 10)"));
 Funcionou! Ele não nos dá informação muito útil quando ele falhar e não armazena a linha e coluna na qual cada expressão começa, o que pode ser útil ao relatar erros mais tarde mas é bom o suficiente para nossos propósitos.
 
 ## O avaliador
+
+O que podemos fazer com a árvore de sintaxe de um programa? Executá-lo é claro! E é isso que o avaliador faz. Você entrega-lhe uma árvore de sintaxe e um objeto do environment que associa nomes com os valores, e ele irá avaliar a expressão que a árvore representa e retornar o valor que esta produz.
+
+````js
+function evaluate(expr, env) {
+  switch(expr.type) {
+    case "value":
+      return expr.value;
+
+    case "word":
+      if (expr.name in env)
+        return env[expr.name];
+      else
+        throw new ReferenceError("Undefined variable: " +
+                                 expr.name);
+    case "apply":
+      if (expr.operator.type == "word" &&
+          expr.operator.name in specialForms)
+        return specialForms[expr.operator.name](expr.args,
+                                                env);
+      var op = evaluate(expr.operator, env);
+      if (typeof op != "function")
+        throw new TypeError("Applying a non-function.");
+      return op.apply(null, expr.args.map(function(arg) {
+        return evaluate(arg, env);
+      }));
+  }
+}
+
+var specialForms = Object.create(null);
+````
+
+O avaliador possui código para cada um dos tipos de expressão. A expressão de valor literal simplesmente produz o seu valor(por exemplo, a expressão 100 apenas avalia para o número 100). Para uma variável é preciso verificar se ele está realmente definido no environment atual, se estiver, buscar o valor da variável.
+
+As aplicações são mais envolvidos. Se eles são de uma forma especial, nós não avaliamos nada e simplesmente passamos as expressões como argumento junto com o environment para a função que lida com essa forma. Se for uma chamada normal nós avaliamos o operador verificamos se ele é uma função e chamamos com o resultado da avaliação dos argumentos.
+
+Iremos usar os valores de uma função simples em JavaScript para representar os valores da função em **Egg**. Voltaremos a falar sobre isso mais tarde quando o formulário especial chamado `fun` estiver definido.
+
+A estrutura recursiva de um avaliador se assemelha à estrutura similar do analisador. Ambos espelham a estrutura da própria linguagem. Além disso, seria possível integrar o analisador com o avaliador e avaliar durante a análise, mas dividindo-se desta forma torna o programa mais legível.
+
+Isso é realmente tudo o que é necessário para interpretar **Egg**. É simples assim. Mas sem definir algumas formas especiais e adicionar alguns valores úteis para o environment você não pode fazer nada com essa linguagem ainda.
+
+## Formas especiais
+
+O objecto `specialForms` é utilizado para definir sintaxe especial em **Egg**. Ele associa palavras com funções que avaliam essas formas especiais. Atualmente ele está vazio. Vamos adicionar algumas formas.
+
+````javascript
+specialForms["if"] = function(args, env) {
+  if (args.length != 3)
+    throw new SyntaxError("Bad number of args to if");
+
+  if (evaluate(args[0], env) !== false)
+    return evaluate(args[1], env);
+  else
+    return evaluate(args[2], env);
+};
+````
+
+**Egg** - `if` espera exatamente três argumentos. Ele irá avaliar o primeiro, se o resultado não é o valor falso ele irá avaliar a segunda. Caso contrário a terceira fica avaliada. Esta é a forma mais semelhante ao ternário do JavaScript `?:` estes operadoradores tem o mesmo significado do `if/else` em JavaScript. Isso é uma expressão não uma indicação que produz um valor, ou seja, o resultado do segundo ou terceiro argumento.
+
+**Egg** difere de JavaScript na forma de como ele lida com o valor de condição com o valor do `if`. Ele não vai tratar as coisas como zero ou a cadeia vazia como falsa, somente valorores precisos falsos.
+
+A razão especial é que nós preciso representar o `if` como uma forma especial, ao invés de uma função regular onde todos os argumentos para funções são avaliadas antes que a função seja chamada, ao passo que se deve avaliar apenas seu segundo ou terceiro argumento, dependendo do valor do primeiro.
+
+A forma `while` é semelhante.
+
+````javascript
+specialForms["while"] = function(args, env) {
+  if (args.length != 2)
+    throw new SyntaxError("Bad number of args to while");
+
+  while (evaluate(args[0], env) !== false)
+    evaluate(args[1], env);
+
+  // Since undefined does not exist in Egg, we return false,
+  // for lack of a meaningful result.
+  return false;
+};
+````
+
+Outro bloco na construção básico é fazer que executa todos os seus argumentos de cima para baixo. O seu valor é o valor produzido pelo último argumento.
+
+````javascript
+specialForms["do"] = function(args, env) {
+  var value = false;
+  args.forEach(function(arg) {
+    value = evaluate(arg, env);
+  });
+  return value;
+};
+````
+
+Para ser capaz de criar variáveis e dar-lhes novos valores, vamos criar um formulário chamado `define`. Ele espera uma palavra como primeiro argumento de uma expressão que produz o valor a ser atribuído a essa palavra como seu segundo argumento. Vamos definir, sendo tudo uma expressão, ela deve retornar um valor. Vamos fazê-lo retornar o valor que foi atribuído(igual ao operador `=` de JavaScript).
+
+````javascript
+specialForms["define"] = function(args, env) {
+  if (args.length != 2 || args[0].type != "word")
+    throw new SyntaxError("Bad use of define");
+  var value = evaluate(args[1], env);
+  env[args[0].name] = value;
+  return value;
+};
+````
+
+## Ambiente
+
+O environment aceita avaliar um objeto com propriedades cujos nomes correspondem aos nomes de variáveis e cujos valores correspondem aos valores dessas variáveis. Vamos definir um objeto no environment para representar o escopo global.
+
+Para ser capaz de usar a construção if que acabamos de definir teremos de ter acesso aos valores booleanos. Uma vez que existem apenas dois valores booleanos nós não precisamos de sintaxe especial para eles. Nós simplesmente vamos ligar duas variáveis para os valores verdadeiros e falsos e usá-los.
+
+````javascript
+var topEnv = Object.create(null);
+
+topEnv["true"] = true;
+topEnv["false"] = false;
+````
+
+Agora podemos avaliar uma expressão simples que nega um valor booleano.
+
+````javascript
+var prog = parse("if(true, false, true)");
+console.log(evaluate(prog, topEnv));
+// → false
+````
+
+Para suprir os operadores aritméticos e comparações básicas vamos adicionar alguns valores para função de environment. No interesse de manter um código pequeno vamos utilizar uma nova função para sintetizar um monte de funções de operador em um loop, ao invéz de definir todos eles individualmente.
+
+````javascript
+["+", "-", "*", "/", "==", "<", ">"].forEach(function(op) {
+  topEnv[op] = new Function("a, b", "return a " + op + " b;");
+});
+````
+
+É muito útil fazer uma maneira para que valores de saída sejam vizualidos, por isso vamos colocar alguns `console.log` na função e executa-lo para imprimir.
+
+````javascript
+topEnv["print"] = function(value) {
+  console.log(value);
+  return value;
+};
+````
+
+Isso ja nos proporcionou uma ferramenta elementar e suficiente para escrever programas simples. A seguinte função `run` fornece uma maneira conveniente de escrever e executá-los. Ele cria um enviroment fresco, analisa e avalia as `String` que damos como um programa único.
+
+````javascript
+function run() {
+  var env = Object.create(topEnv);
+  var program = Array.prototype.slice
+    .call(arguments, 0).join("\n");
+  return evaluate(parse(program), env);
+}
+````
+
+O uso de `Array.prototype.slice.call` é um truque para transformar um objeto de matriz como argumentos em uma matriz real; de modo que podemos chamar e juntar cada pedaço. No exemplo abaixo iremos percorrer todos os argumentos dados e trata-los as linhas do programa.
+
+````javascript
+run("do(define(total, 0),",
+    "   define(count, 1),",
+    "   while(<(count, 11),",
+    "         do(define(total, +(total, count)),",
+    "            define(count, +(count, 1)))),",
+    "   print(total))");
+// → 55
+````
+
+Este é o programa que já vimos várias vezes antes que calcula a soma dos números de 1 a 10 escrito em **Egg**. É evidente que é mais feio do que um programa em JavaScript, mas não é ruim para uma linguagem implementada em menos de 150 linhas de código.
+

@@ -1,14 +1,23 @@
 # Chapter 12 - JavaScript and the Browser
+# Capítulo 12 - JavaScript e o Navegador
 
 > "The browser is a really hostile programming environment."
+> "O navegador é um ambiente realmente hostil de programação."
 >
 > - Douglas Crockford, The JavaScript Programming Language (video lecture)
+> - Douglas Crockford, The JavaScript Programming Language (palestra)
 
 The next part of this book will talk about web browsers. Without web browsers, there would be no JavaScript. And even if there were, no one would ever have paid any attention to it.
 
+A próxima parte deste livro vai falar sobre navegadores web. Sem os navegadores, não existiria JavaScript. E mesmo se existisse, ninguém daria atenção a ele.
+
 Web technology has, from the start, been decentralized, not just technically but also in the way it has evolved. Various browser vendors have added new functionality in ad-hoc and sometimes poorly thought out ways, which then sometimes ended up being adopted by others and finally set down as a standard.
 
+A tecnologia web, desde o início, é descentralizada, não apenas tecnicamente mas também na forma que evolui. Vários fornecedores de navegador tem adicionado funcionalidades *ad-hoc* e as vezes maneiras mal pensadas, que então são adotadas por outros e finalmente viram um padrão.  
+
 This is both a blessing and a curse. On the one hand, it is empowering to not have a central party control a system but have it be improved by various parties working in loose collaboration (or, occasionally, open hostility). On the other hand, the haphazard way in which the Web was developed means that the resulting system is not exactly a shining example of internal consistency. In fact, some parts of it are downright messy and confusing.
+
+Isso é igualmente uma benção e uma maldição. Por um lado, isso reforça a não existência de uma particição central controlando um sistema mas tendo este sendo melhorado por várias partes trabalhando com pouca colaboração (ou, ocasionalmente, franca hostilidade). Por outro lado, a forma casual que a Web foi desenvolvida significa que o sistema resultante não é exatamente um brilhante exemplo interno de consistência. De fato, algumas partes são completamente bagunçadas e confusas.
 
 ## Networks and the Internet
 

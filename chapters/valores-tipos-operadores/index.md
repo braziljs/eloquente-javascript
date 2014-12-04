@@ -165,7 +165,7 @@ As vezes, você vai precisar de um valor que simplesmente distingue entre 2 poss
 
 Aqui temos uma maneira de produzir valores booleanos:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(3 > 2) // true
 console.log(3 < 2) // false
 </pre>
@@ -174,7 +174,7 @@ Os sinais `>` e `<` são tradicionalmente símbolos para "é maior que" e "é me
 
 Strings podem ser comparadas da mesma forma:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log("Aardvark" < "Zoroaster") // true
 </pre>
 
@@ -182,13 +182,13 @@ A maneira que as strings são ordenadas é mais ou menos alfabética: Letras mai
 
 Outros operadores similares são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a) e `!==` (não igual a).
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log("Itchy" != "Scratchy") // true
 </pre>
 
 Há somente um valor no JavaScript que não é igual a ele mesmo, que é o `NaN` (not a number).
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(NaN == NaN) // false
 </pre>
 
@@ -200,7 +200,7 @@ Temos também algumas operações que podem ser aplicadas aos valores booleanos.
 
 O operador `&&` representa o **e** lógico. É um operador binário, e seu resultado é `true` (verdadeiro) somente se ambos os valores dados a ele forem `true`.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(true && false); // false
 console.log(true && true); // true
 
@@ -230,7 +230,7 @@ A diferença de significado entre `undefined` e `null` é em grande parte desint
 
 Na introdução, eu mencionei que o JavaScript não iria atrapalhá-lo e aceitaria quase qualquer coisa que você o fornecesse, mesmo quando isso é confuso e errado. Isto é muito bem demonstrado por esta expressão:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(8 * null) // 0
 console.log("5" - 1) // 4
 console.log("5" + 1) // 51
@@ -256,7 +256,7 @@ Os operadores lógicos `&&` e `||` tem uma maneira peculiar de lidar com valores
 
 O operador `||` vai retornar o valor à sua esquerda quando ele puder ser convertido em `true`, ou valor à sua direita caso contrário. Ele faz a coisa certa para valores booleanos, e vai fazer algo análogo para valores de outros tipos. Isso é muito útil, pois permite que o operador seja usado para voltar um determinado valor predefinido.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(null || "user") // user
 console.log("Karl" || "user") // Karl
 </pre>

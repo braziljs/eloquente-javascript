@@ -204,7 +204,7 @@ O operador `&&` representa o **e** lógico. É um operador binário, e seu resul
 console.log(true && false); // false
 console.log(true && true); // true
 
-// O operador `||` denota ao OU lógico. Ele produz `true` se algum dos valores fornecidos for `true`:
+// O operador `||` denota ao OU lógico. Ele produz true se algum dos valores fornecidos for true:
 
 console.log(false || true); // true
 console.log(false || false); // false
@@ -242,7 +242,7 @@ Quando um operador é aplicado a um tipo de valor "errado", ele vai silenciosame
 
 Quando algo que não pode ser mapeado como um número de forma óbvia, do tipo `"five"` ou `undefined` é convertido para um número, o valor `NaN` é produzido. Operações aritméticas com `NaN` continuam produzindo `NaN`, então se você encontrar alguns destes resultados em algum local inesperado, procure por conversões acidentais de tipo.
 
-Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de conversão de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined`ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
+Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de conversão de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined` ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
 
 A última parte do comportamento é frequentemente muito útil. Quando você quer testar se um valor tem um valor real, em vez de ser `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
 

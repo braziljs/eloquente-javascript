@@ -144,7 +144,7 @@ Existem outras maneiras de manipular strings, que nós vamos discutir quando ent
 
 Nem todos operadores são símbolos. Alguns são palavras escritas. Um exemplo é o operador `typeof`, que produz uma string com o valor do tipo dado para fornecido para avaliação.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(typeof 4.5) // number
 console.log(typeof "x") // string
 </pre>
@@ -153,7 +153,7 @@ Nós vamos usar `console.log` nos códigos exemplo para indicar que nós queremo
 
 Os outros operadores que vimos sempre operam com 2 valores; `typeof` pega somente um. Operadores que usam 2 valores são chamados operadores *binários*, enquanto aqueles que pegam um são chamados operadores *unários*. O operador menos `-` pode ser usado como operador binário e unário.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(- (10 - 2)) // -8
 </pre>
 

@@ -309,3 +309,175 @@ run("do(define(total, 0),",
 
 Este é o programa que já vimos várias vezes antes que calcula a soma dos números de 1 a 10 escrito em **Egg**. É evidente que é mais feio do que um programa em JavaScript, mas não é ruim para uma linguagem implementada em menos de 150 linhas de código.
 
+## Funções
+
+A linguagem de programação sem funções é uma linguagem de programação pobre.
+
+Felizmente, não é difícil para adicionar `fun` a construção, que trata todos os argumentos antes do último como nomes de argumentos da função e trata seu último argumento como corpo da função.
+
+````javascript
+specialForms["fun"] = function(args, env) {
+  if (!args.length)
+    throw new SyntaxError("Functions need a body");
+  function name(expr) {
+    if (expr.type != "word")
+      throw new SyntaxError("Arg names must be words");
+    return expr.name;
+  }
+  var argNames = args.slice(0, args.length - 1).map(name);
+  var body = args[args.length - 1];
+
+  return function() {
+    if (arguments.length != argNames.length)
+      throw new TypeError("Wrong number of arguments");
+    var localEnv = Object.create(env);
+    for (var i = 0; i < arguments.length; i++)
+      localEnv[argNames[i]] = arguments[i];
+    return evaluate(body, localEnv);
+  };
+};
+````
+
+Funções em **Egg** tem seu próprio ambiente local assim como em JavaScript. Usamos `Object.create` para fazer um novo objeto que tem acesso às variáveis do ambiente externo(o seu protótipo) mas que também pode conter novas variáveis sem modificar esse escopo exterior.
+
+A função criada pela forma `fun` cria esse ambiente local e adiciona as variáveis de argumento para isso. Em seguida ele avalia o corpo da função neste ambiente e retorna o resultado.
+
+````javascript
+run("do(define(plusOne, fun(a, +(a, 1))),",
+    "   print(plusOne(10)))");
+// → 11
+
+run("do(define(pow, fun(base, exp,",
+    "     if(==(exp, 0),",
+    "        1,",
+    "        *(base, pow(base, -(exp, 1)))))),",
+    "   print(pow(2, 10)))");
+// → 1024
+````
+
+## Compilação
+
+O que nós construímos é um intérprete. Durante a avaliação ele age diretamente sobre a representação do programa produzido pelo analisador.
+
+A compilação é o processo de adicionar mais um passo entre a análise e a execução de um programa; que transforma o programa em algo que possa ser avaliado de forma mais eficiente fazendo o trabalho tanto quanto possível com antecedência.
+Por exemplo, em línguas bem desenhadas, é óbvio para cada uso de uma variável ele verifica qual esta se referindo sem realmente executar o programa. Isso pode ser usado para evitar a procura de uma variável pelo nome sempre que é acessado ou buscado diretamente de algum local pré-determinado da memória.
+
+Tradicionalmente, compilação envolve a conversão do programa para código de máquina no formato `raw` que o processador de um computador pode executar. Mas qualquer processo que converte um programa de uma representação diferente pode ser encarado como compilação.
+
+Seria possível escrever uma estratégia de avaliação alternativa para **Egg**, aquele que primeiro converte o programa para um programa JavaScript, utiliza a nova função para chamar o compilador JavaScript, e em seguida executa o resultado. Sendo feito assim a **Egg** executaria muito rápido ainda continuando bastante simples de implementar.
+
+Se você está interessado neste assunto e disposto a gastar algum tempo com isso, encorajo-vos a tentar implementar um compilador nos exercícios.
+
+## Cheating
+
+Quando definido `if` e `while`, você provavelmente percebeu que eles eram invólucros triviais em torno do próprio JavaScript. Da mesma forma, os valores em **Egg** são antigos valores regulares em JavaScript.
+
+Se você comparar a execução de **Egg** que foi construída em alto nível utilizando a ajuda de JavaScript com a quantidade de trabalho e complexidade necessários para construir uma linguagem de programação utilizando diretamente a funcionalidade `raw` fornecido por uma máquina essa diferença é enorme. Independentemente disso este é apenas um exemplo; espero que ter lhe dado uma impressão de que forma as linguagens de programação trabalham.
+
+E quando se trata de conseguir fazer algo, o `cheating` é  o jeito mais eficaz do que fazer tudo sozinho. Embora a linguagem que brincamos neste capítulo não faz nada de melhor que o JavaScript possui, existem situações em que a escrever pequenas línguas ajuda no entendimento verdadeiro do trabalho.
+
+Essa língua não tem de se assemelhar a uma linguagem típica de programação. Se o JavaScript não vêm equipado com expressões regulares, você pode escrever seu próprio analisador e avaliador para tal sub linguagem.
+
+Ou imagine que você está construindo um dinossauro robótico gigante e precisa programar o seu comportamento. JavaScript pode não ser a forma mais eficaz de fazer isso. Você pode optar por uma linguagem que se parece com isso:
+
+````javascript
+behavior walk
+  perform when
+    destination ahead
+  actions
+    move left-foot
+    move right-foot
+
+behavior attack
+  perform when
+    Godzilla in-view
+  actions
+    fire laser-eyes
+    launch arm-rockets
+````
+
+Isto é o que geralmente é chamado de linguagem de domínio específica, uma linguagem adaptada para expressar estreito conhecimento de um domínio. Essa linguagem pode ser mais expressiva do que uma linguagem de um propósito geral. Isto porque ela é projetada para expressar exatamente as coisas que precisam serem expressadas no seu domínio e nada mais.
+
+---
+
+# Exercícios
+
+## Arrays
+
+Adicionar suporte para `array` em **Egg** construindo as três funções no topo do escopo: `array(...)` vai ser a construção de uma matriz contendo os argumentos como valores, `length(array)` para obter o comprimento de um `array` e `element(array, n)` buscar `n` elementos de uma matriz.
+
+
+````javascript
+// Modify these definitions...
+
+topEnv["array"] = "...";
+
+topEnv["length"] = "...";
+
+topEnv["element"] = "...";
+
+run("do(define(sum, fun(array,",
+    "     do(define(i, 0),",
+    "        define(sum, 0),",
+    "        while(<(i, length(array)),",
+    "          do(define(sum, +(sum, element(array, i))),",
+    "             define(i, +(i, 1)))),",
+    "        sum))),",
+    "   print(sum(array(1, 2, 3))))");
+// → 6
+````
+
+**Dica:**
+
+A maneira mais fácil de fazer isso é representar as matrizes de **Egg** atravéz de matrizes do JavaScript.
+
+Os valores adicionados ao enviroment no `topEnv` deve ser uma funções. `Array.prototype.slice` pode ser utilizado para converter um `array` em um `object` de argumentos numa matriz regular.
+
+## Closures
+
+A maneira que definimos o `fun` é permitido que as funções em **Egg** "chamar ela" o ambiente circundante, permitindo o corpo da função utilizar valores locais que eram visíveis no momento que a função foi definida, assim como as funções em JavaScript fazem.
+
+O programa a seguir ilustra isso: função `f` retorna uma função que adiciona o seu argumento ao argumento de f, o que significa que ele precisa de acesso ao escopo local dentro de `f` para ser capaz de utilizar a variável.
+
+````js
+run("do(define(f, fun(a, fun(b, +(a, b)))),",
+    "print(f(4)(5)))");
+// → 9
+````
+
+Volte para a definição da forma `fun` e explique qual o mecanismo feito para que isso funcione.
+
+**Dica:**
+
+Mais uma vez, estamos cavalgando sobre um mecanismo de JavaScript para obter a função equivalente em **Egg**. Formas especiais são passados para o ambiente local de modo que eles possam ser avaliados pelas suas sub-formas do `enviroment`. A função retornada por `fun` se fecha sobre o argumento `env` dada a sua função de inclusão e usa isso para criar ambiente local da função quando é chamado.
+
+Isto significa que o `prototype` do ambiente local será o ambiente em que a função foi criado, o que faz com que seja possível ter acesso as variáveis de ambiente da função. Isso é tudo o que há para implementar e finalizar(embora para compilá-lo de uma forma que é realmente eficiente você precisa de um pouco mais de trabalho).
+
+## Comentários
+
+Seria bom se pudéssemos escrever comentários no **Egg**. Por exemplo, sempre que encontrar um cardinal `("#")`, poderíamos tratar o resto da linha como um comentário e ignorá-lo, semelhante que Javascript faz com o `"//"`.
+
+Não temos de fazer quaisquer grandes mudanças para que o analisador suporte isto. Nós podemos simplesmente mudar o `skipSpace` para ignorar comentários assim como é feito com os espaços em branco; para que todos os pontos onde `skipSpace` é chamado agora também vão ignorar comentários. Fazer essa alteração:
+
+````javascript
+// This is the old skipSpace. Modify it...
+function skipSpace(string) {
+  var first = string.search(/\S/);
+  if (first == -1) return "";
+  return string.slice(first);
+}
+
+console.log(parse("# hello\nx"));
+// → {type: "word", name: "x"}
+
+console.log(parse("a # one\n   # two\n()"));
+// → {type: "apply",
+//    operator: {type: "word", name: "a"},
+//    args: []}
+````
+
+**Dica:**
+
+Certifique-se de que sua solução é válida com vários comentários em uma linha e principalmente com espaço em branco entre ou depois deles.
+
+Uma expressão regular é provavelmente a maneira mais fácil de resolver isso. Faça algo que corresponda "espaços em branco ou um comentário, zero ou mais vezes". Use o método  `exec` ou `match` para olhar para o comprimento do primeiro elemento na matriz retornada(toda a partida) para saber quantos caracteres são para cortar.

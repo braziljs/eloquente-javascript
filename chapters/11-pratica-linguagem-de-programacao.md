@@ -433,6 +433,8 @@ A maneira mais fácil de fazer isso é representar as matrizes de **Egg** atrav�
 
 Os valores adicionados ao enviroment no `topEnv` deve ser uma funções. `Array.prototype.slice` pode ser utilizado para converter um `array` em um `object` de argumentos numa matriz regular.
 
+[**Resolução deste exercício**](https://gist.github.com/SauloSilva/7bef8ec6e6f9abd9529a#file-egg-js-L170)
+
 ## Closures
 
 A maneira que definimos o `fun` é permitido que as funções em **Egg** "chamar ela" o ambiente circundante, permitindo o corpo da função utilizar valores locais que eram visíveis no momento que a função foi definida, assim como as funções em JavaScript fazem.
@@ -457,7 +459,7 @@ Isto significa que o `prototype` do ambiente local será o ambiente em que a fun
 
 Seria bom se pudéssemos escrever comentários no **Egg**. Por exemplo, sempre que encontrar um cardinal `("#")`, poderíamos tratar o resto da linha como um comentário e ignorá-lo, semelhante que Javascript faz com o `"//"`.
 
-Não temos de fazer quaisquer grandes mudanças para que o analisador suporte isto. Nós podemos simplesmente mudar o `skipSpace` para ignorar comentários assim como é feito com os espaços em branco; para que todos os pontos onde `skipSpace` é chamado agora também vão ignorar comentários. Fazer essa alteração:
+Não temos de fazer quaisquer grandes mudanças para que o analisador suporte isto. Nós podemos simplesmente mudar o `skipSpace` para ignorar comentários assim como é feito com os espaços em branco; para que todos os pontos onde `skipSpace` é chamado agora também vão ignorar comentários. Vamos fazer essa alteração:
 
 ````javascript
 // This is the old skipSpace. Modify it...
@@ -480,4 +482,44 @@ console.log(parse("a # one\n   # two\n()"));
 
 Certifique-se de que sua solução é válida com vários comentários em uma linha e principalmente com espaço em branco entre ou depois deles.
 
-Uma expressão regular é provavelmente a maneira mais fácil de resolver isso. Faça algo que corresponda "espaços em branco ou um comentário, zero ou mais vezes". Use o método  `exec` ou `match` para olhar para o comprimento do primeiro elemento na matriz retornada(toda a partida) para saber quantos caracteres são para cortar.
+Uma expressão regular é a maneira mais fácil de resolver isso. Faça algo que corresponda "espaços em branco ou um comentário, uma ou mais vezes". Use o método  `exec` ou `match` para olhar para o comprimento do primeiro elemento na matriz retornada(desde de o inicio) para saber quantos caracteres são para cortar.
+
+[**Resolução deste exercício**](https://gist.github.com/SauloSilva/7bef8ec6e6f9abd9529a#file-egg-js-L17)
+
+## Corrigindo o escopo
+
+Atualmente, a única maneira de atribuir uma variável um valor é utilizando o método `define`. Esta construção atua tanto como uma forma para definir novas variáveis e dar um novo valor para existentes.
+
+Isto causa um problema de ambiguidade. Quando você tenta dar uma variável um novo valor que não esta local, você vai acabar definindo uma variável local com o mesmo nome em seu lugar(Algumas línguas funcionam assim por design, mas eu sempre achei uma maneira estranha de lidar com escopo).
+
+Adicionar um `specialForm`, similar ao `define` o que dara a variável um novo valor ou a atualização da variável em um escopo exterior se ele ainda não existir no âmbito interno. Se a variável não é definida em tudo, jogar um `ReferenceError`(que é outro tipo de erro padrão).
+
+A técnica de representar escopos como simples objetos que tornou as coisas convenientes, até agora, vai ficar um pouco no seu caminho neste momento. Você pode querer usar a função `Object.getPrototypeOf` que retorna o protótipo de um objeto. Lembre-se também que os escopos não derivam de `Object.prototype`, por isso, se você quiser chamar `hasOwnProperty` sobre eles, você tera que usar esta expressão não muito elegante:
+
+````javascript
+Object.prototype.hasOwnProperty.call(scope, name);
+````
+
+Isto busca o método `hasOwnProperty` do protótipo objeto e depois chama-o em um objeto de escopo.
+
+````javascript
+specialForms["set"] = function(args, env) {
+  // Your code here.
+};
+
+run("do(define(x, 4),",
+    "   define(setx, fun(val, set(x, val))),",
+    "   setx(50),",
+    "   print(x))");
+// → 50
+run("set(quux, true)");
+// → Some kind of ReferenceError
+````
+
+**Dica:**
+
+Você vai ter que percorrer um escopo de cada vez usando `Object.getPrototypeOf` ate ir ao escopo externo. Para cada escopo use `hasOwnProperty` para descobrir se a variável indicado pela propriedade `name` do primeiro argumento definida existe nesse escopo. Se isso acontecer defina-o como o resultado da avaliação do segundo argumento para definir, e em seguida retorne esse valor.
+
+Se o escopo mais externo é atingido(`Object.getPrototypeOf` retornara null) e não encontramos a variável ainda, isto significa que não existe então um erro deve ser acionado.
+
+[**Resolução**](https://gist.github.com/SauloSilva/7bef8ec6e6f9abd9529a#file-egg-js-L156)

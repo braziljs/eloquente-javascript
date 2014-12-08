@@ -19,7 +19,7 @@ Iremos construir uma linguagem de programação chamada **Egg**. Vai ser uma peq
 
 A parte imediatamente mais visível de uma linguagem de programação é sua sintaxe ou notação. Um analisador é um programa que lê um pedaço de texto e produz uma estrutura de dados que refletem a estrutura do programa contida nesse texto. Se o texto não faz um programa válido o analisador deve reclamar e apontar o erro.
 
-Nossa linguagem terá uma sintaxe simples e uniforme. Tudo em **Egg** é uma expressão. Uma expressão pode ser uma variável, um `number`, uma `String`, ou uma aplicação. As aplicações são usados para chamadas de função, mas também para construções como `if` ou `while`.
+Nossa linguagem terá uma sintaxe simples e uniforme. Tudo em **Egg** é uma expressão. Uma expressão pode ser uma variável, um `Number`, uma `String`, ou uma aplicação. As aplicações são usados para chamadas de função, mas também para construções como `if` ou `while`.
 
 Para manter o analisador simples, `String` em **Egg** não suportam qualquer coisa como escapes e uma seqüência simplesmente de caracteres que não são aspas duplas envolvidas em aspas duplas. Um número é uma sequência de dígitos. Os nomes das variáveis podem consistir de qualquer caractere que não seja um espaço em branco e não tem um significado especial na sintaxe.
 
@@ -32,7 +32,7 @@ do(define(x, 10),
       print("small"))
 ````
 
-A uniformidade da línguagem **Egg** significa coisas que são operadores de JavaScript(como >) nesta línguagem sera apenas variáveis normais aplicado apenas como outras funções. E uma vez que a sintaxe também não tem o conceito de um bloco precisamos construir um representador fazendo várias coisas em seqüência.
+A uniformidade da línguagem **Egg** significa coisas que são operadores de JavaScript(como >) nesta línguagem será apenas variáveis normais aplicado apenas como outras funções. E uma vez que a sintaxe também não tem o conceito de um bloco precisamos construir um representador fazendo várias coisas em seqüência.
 
 A estrutura de dados que o analisador irá usar para descrever um programa será composto de objetos de expressões cada um dos quais tem uma propriedade de tipo que indica o tipo de expressão que é; e as outras propriedades para descreverem o seu conteúdo.
 
@@ -91,7 +91,7 @@ function skipSpace(string) {
 
 Temos que remover os espaços em brancos repetidos no início de qualquer seqüência do programa pois o **Egg** permite qualquer quantidade de espaço em branco entre os seus elementos inseridos. Quem tem essa funcionalidade é a da funcão `skipSpace`.
 
-Depois de pular qualquer espaço à esquerda `parseExpression` usa três expressões regulares para detectar os três elementos simples(atômicas) que **Egg** suporta: `String`, `Number` e `words`. O analisador constrói um tipo diferente de estrutura de dados dependendo de sua correspondencia. Se a entrada não coincide com uma destas três formas não sera considerado uma expressão válida e o analisador gerara um erro. `SyntaxError` é um tipo de erro padrão de objeto que é gerado quando é feita uma tentativa de executar um programa em JavaScript inválido.
+Depois de pular qualquer espaço à esquerda `parseExpression` usa três expressões regulares para detectar os três elementos simples(atômicas) que **Egg** suporta: `String`, `Number` e `words`. O analisador constrói um tipo diferente de estrutura de dados dependendo de sua correspondencia. Se a entrada não coincide com uma destas três formas não será considerado uma expressão válida e o analisador gerara um erro. `SyntaxError` é um tipo de erro padrão de objeto que é gerado quando é feita uma tentativa de executar um programa em JavaScript inválido.
 
 Podemos cortar algumas partes que nós comparamos a partir da seqüência e passar isso juntamente com o objeto para a expressão do `parseApply` que ira verificar se a expressão é uma aplicação. Se assim for ele analisa uma lista de argumentos entre parênteses.
 
@@ -182,7 +182,7 @@ Iremos usar os valores de uma função simples em JavaScript para representar os
 
 A estrutura recursiva de um avaliador se assemelha à estrutura de um analisador. Ambos espelham a estrutura da própria linguagem. Além disso, seria possível integrar o analisador com o avaliador e avaliar durante a análise, mas dividindo-se desta forma torna o programa mais legível.
 
-Isso é realmente tudo é necessário para interpretar **Egg**. É simples assim. Mas sem definir algumas formas especiais e adicionar alguns valores úteis para o `environment` você não pode fazer nada com essa linguagem ainda.
+Isso é tudo que precisamos para interpretar Egg. É simples assim. Mas sem definir algumas formas especiais e adicionar alguns valores úteis para o `environment` você não pode fazer nada com essa linguagem ainda.
 
 ## Formas especiais
 

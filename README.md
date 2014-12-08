@@ -4,6 +4,8 @@
 
 Projeto que visa a tradução da segunda edição do livro Eloquent JavaScript por Marijn Haverbeke.
 
+* [Artigo falando como está sendo o inicio do projeto](http://randsonjs.com/uma-boa-referencia/)
+
 ## Como isso funciona?
 
 Nós usamos o [Jekyll](http://jekyllrb.com/), um gerador de site estático em Ruby para criar este site.

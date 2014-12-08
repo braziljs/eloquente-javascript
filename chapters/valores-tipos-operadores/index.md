@@ -12,7 +12,7 @@ Bits podem ser qualquer tipo de coisa com 2 valores, usualmente descrito como 0 
 
 Como um exemplo, pense sobre a maneira que o número 13 pode ser armazenado em bits. A forma usual de se fazer esta analogia é a forma de escrevermos números decimais, mas ao invés de 10 dígitos, temos apenas 2. E, ao invés de o valor de um dígito aumentar dez vezes sobre o dígito após ele, o valor aumenta por um fator 2. Estes são os bits que compõem o número treze, com o valor dos dígitos mostrados abaixo deles:
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
   0   0   0   0   1   1   0   1
 128  64  32  16   8   4   2   1
 </pre>
@@ -39,7 +39,7 @@ Este capítulo introduz os elementos atômicos dos programas JavaScript: Simples
 
 Valores do tipo *numbers* são, previsivelmente, valor numéricos. Em um programa JavaScript, eles são escritos usualmente assim:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 13
 </pre>
 
@@ -53,13 +53,13 @@ Todos os números abaixo de 18 quintilhões cabem no JavaScript *number*. Estes 
 
 Números fracionados são escritos usando o ponto:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 9.81
 </pre>
 
 Para grandes números ou números pequenos, podemos usar a notação científica adicionando um 'e', seguido do expoente:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 2.998e8
 </pre>
 
@@ -71,7 +71,7 @@ Cálculos com números inteiros (também chamados *integers*) menores que os men
 
 A principal coisa a se fazer com números é aritmética. Operações aritméticas como adição e multiplicação pegam o valor de dois números e produzem um novo número a partir deles. Aqui vemos como eles são no JavaScript:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 100 + 4 * 11
 </pre>
 
@@ -80,7 +80,7 @@ Os símbolos `+` e `*` são chamados *operadores*. O primeiro representa adiçã
 
 O próximo exemplo significa "adicione 4 e 100, e multiplique o resultado por 11", ou é a multiplicação feita antes da adição? Como você deve ter pensado, a multiplicação acontece primeiro. Mas, como na matemática, isto pode ser mudado envolvendo a adição com os parênteses:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 (100 + 4) * 11
 </pre>
 
@@ -104,7 +104,7 @@ Os dois primeiros são `Infinity` e `-Infinity`, que são usados para representa
 
 O próximo tipo básico de dado é a *string*. Strings são usadas para representar texto. Elas são escritas delimitando seu conteúdo entre aspas:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 "Patch my boat with chewing gum"
 'Monkeys wave goodbye'
 </pre>
@@ -115,26 +115,26 @@ Quase tudo pode ser colocado entre aspas, e o JavaScript vai fazer um valor de s
 
 Para ser capaz de ter estes caracteres em uma string, a convenção seguinte é usada: Sempre que um barra invertida `\` é encontrada dentro do texto entre aspas, isto indica que o caracter depois desta tem um significado especial. Uma aspa precedida de uma barra invertida não vai findar a string, mas ser parte dela. Quando um caracter 'n' correr depois de uma barra invertida, será interpretado como uma nova linha. Similarmente, um 't' depois da barra invertida significa o caracter tab. Veja a string seguinte:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 "This is the first line\nAnd this is the second"
 </pre>
 
 O verdadeiro texto contido é:
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 This is the first line
 And this is the second
 </pre>
 
 Existe, obviamente, situações onde você quer uma barra invertida em uma string apenas como uma barra invertida. não um código especial. Se duas barras invertidas estiverem seguidas uma da outra, elas se anulam, e somente uma vai ser deixada no valor da string resultante. Assim é como a string `A newline character is written like "\n" can be written`:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 "A newline character is written like \"\\n\"."
 </pre>
 
 Strings não podem ser divididas, multiplicadas ou subtraídas, mas o operador `+` pode ser usado nelas. Ele não adiciona, mas concatena - ele cola duas strings unindo-as. A linha seguinte vai produzir a string `concatenate`:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 "con" + "cat" + "e" + "nate"
 </pre>
 
@@ -144,7 +144,7 @@ Existem outras maneiras de manipular strings, que nós vamos discutir quando ent
 
 Nem todos operadores são símbolos. Alguns são palavras escritas. Um exemplo é o operador `typeof`, que produz uma string com o valor do tipo dado para fornecido para avaliação.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(typeof 4.5) // number
 console.log(typeof "x") // string
 </pre>
@@ -153,7 +153,7 @@ Nós vamos usar `console.log` nos códigos exemplo para indicar que nós queremo
 
 Os outros operadores que vimos sempre operam com 2 valores; `typeof` pega somente um. Operadores que usam 2 valores são chamados operadores *binários*, enquanto aqueles que pegam um são chamados operadores *unários*. O operador menos `-` pode ser usado como operador binário e unário.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(- (10 - 2)) // -8
 </pre>
 
@@ -165,7 +165,7 @@ As vezes, você vai precisar de um valor que simplesmente distingue entre 2 poss
 
 Aqui temos uma maneira de produzir valores booleanos:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(3 > 2) // true
 console.log(3 < 2) // false
 </pre>
@@ -174,7 +174,7 @@ Os sinais `>` e `<` são tradicionalmente símbolos para "é maior que" e "é me
 
 Strings podem ser comparadas da mesma forma:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log("Aardvark" < "Zoroaster") // true
 </pre>
 
@@ -182,13 +182,13 @@ A maneira que as strings são ordenadas é mais ou menos alfabética: Letras mai
 
 Outros operadores similares são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a) e `!==` (não igual a).
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log("Itchy" != "Scratchy") // true
 </pre>
 
 Há somente um valor no JavaScript que não é igual a ele mesmo, que é o `NaN` (not a number).
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(NaN == NaN) // false
 </pre>
 
@@ -200,11 +200,11 @@ Temos também algumas operações que podem ser aplicadas aos valores booleanos.
 
 O operador `&&` representa o **e** lógico. É um operador binário, e seu resultado é `true` (verdadeiro) somente se ambos os valores dados a ele forem `true`.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(true && false); // false
 console.log(true && true); // true
 
-// O operador `||` denota ao OU lógico. Ele produz `true` se algum dos valores fornecidos for `true`:
+// O operador `||` denota ao OU lógico. Ele produz true se algum dos valores fornecidos for true:
 
 console.log(false || true); // true
 console.log(false || false); // false
@@ -214,7 +214,7 @@ console.log(false || false); // false
 
 Quando misturamos estes operadores booleanos com operadores aritméticos e outros operadores, não é sempre óbvio quando o parênteses é necessário. Na prática, você precisa conhecer sobre os operadores que vimos antes, e que `||` tem o mais baixo nível de precedência, seguido do `&&`, e então os operadores de comparação (`>`, `==`, e outros), e depois o resto. Sendo assim, como vemos na expressão abaixo, os parênteses poucas vezes são necessários.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 1 + 1 == 2 || 10 * 10 <= 100
 </pre>
 
@@ -230,7 +230,7 @@ A diferença de significado entre `undefined` e `null` é em grande parte desint
 
 Na introdução, eu mencionei que o JavaScript não iria atrapalhá-lo e aceitaria quase qualquer coisa que você o fornecesse, mesmo quando isso é confuso e errado. Isto é muito bem demonstrado por esta expressão:
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(8 * null) // 0
 console.log("5" - 1) // 4
 console.log("5" + 1) // 51
@@ -242,7 +242,7 @@ Quando um operador é aplicado a um tipo de valor "errado", ele vai silenciosame
 
 Quando algo que não pode ser mapeado como um número de forma óbvia, do tipo `"five"` ou `undefined` é convertido para um número, o valor `NaN` é produzido. Operações aritméticas com `NaN` continuam produzindo `NaN`, então se você encontrar alguns destes resultados em algum local inesperado, procure por conversões acidentais de tipo.
 
-Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de conversão de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined`ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
+Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de conversão de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined` ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
 
 A última parte do comportamento é frequentemente muito útil. Quando você quer testar se um valor tem um valor real, em vez de ser `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
 
@@ -256,7 +256,7 @@ Os operadores lógicos `&&` e `||` tem uma maneira peculiar de lidar com valores
 
 O operador `||` vai retornar o valor à sua esquerda quando ele puder ser convertido em `true`, ou valor à sua direita caso contrário. Ele faz a coisa certa para valores booleanos, e vai fazer algo análogo para valores de outros tipos. Isso é muito útil, pois permite que o operador seja usado para voltar um determinado valor predefinido.
 
-<pre data-language="text/plain" class="prettyprint lang-javascript snippet cm-s-default">
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 console.log(null || "user") // user
 console.log("Karl" || "user") // Karl
 </pre>

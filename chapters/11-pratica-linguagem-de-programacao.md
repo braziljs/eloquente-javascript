@@ -4,7 +4,9 @@
 >
 > `Hal Abelson e Gerald Sussman, Estrutura e Interpretação de Programas de Computador`
 
+
 ---
+
 
 > "Quando um estudante perguntou ao mestre sobre a natureza do ciclo de dados e controle, Yuan-Ma respondeu: 'Pense em um compilador compilando a si mesmo.'"
 >

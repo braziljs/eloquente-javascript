@@ -1,13 +1,16 @@
-## Linguagem de programação
+# Linguagem de programação
 
-> O avaliador que determina qual o significado da expressões em uma linguagem de programação é apenas mais um programa.
+> "O avaliador que determina qual o significado da expressões em uma linguagem de programação é apenas mais um programa."
 >
-> Hal Abelson e Gerald Sussman, Estrutura e Interpretação de Programas de Computador
->---
+> `Hal Abelson e Gerald Sussman, Estrutura e Interpretação de Programas de Computador`
 
-> Quando um estudante perguntou ao mestre sobre a natureza do ciclo de dados e controle, Yuan-Ma respondeu: "Pense em um compilador compilando a si mesmo."
+
+---
+
+
+> "Quando um estudante perguntou ao mestre sobre a natureza do ciclo de dados e controle, Yuan-Ma respondeu: 'Pense em um compilador compilando a si mesmo.'"
 >
-> Mestre Yuan-Ma, O Livro de Programação
+> `Mestre Yuan-Ma, O Livro de Programação`
 
 Construir sua própria linguagem de programação é surpreendentemente fácil(desde que você não seja ambicioso demais) e bastante esclarecedor.
 
@@ -434,7 +437,7 @@ A maneira mais fácil de fazer isso é representar as matrizes de **Egg** atrav�
 
 Os valores adicionados ao `enviroment` no `topEnv` deve ser uma funções. `Array.prototype.slice`; pode ser utilizado para converter um `array` em um `object` de argumentos numa matriz regular.
 
-[**Resolução deste exercício**](https://gist.github.com/SauloSilva/7bef8ec6e6f9abd9529a#file-egg-js-L170)
+[**Resolução**](https://gist.github.com/SauloSilva/7bef8ec6e6f9abd9529a#file-egg-js-L170)
 
 ## Closures
 
@@ -485,7 +488,7 @@ Certifique-se de que sua solução é válida com vários comentários em uma li
 
 Uma expressão regular é a maneira mais fácil de resolver isso. Faça algo que corresponda "espaços em branco ou um comentário, uma ou mais vezes". Use o método  `exec` ou `match` para olhar para o comprimento do primeiro elemento na matriz retornada(desde de o inicio) para saber quantos caracteres precisa para cortar.
 
-[**Resolução deste exercício**](https://gist.github.com/SauloSilva/7bef8ec6e6f9abd9529a#file-egg-js-L17)
+[**Resolução**](https://gist.github.com/SauloSilva/7bef8ec6e6f9abd9529a#file-egg-js-L17)
 
 ## Corrigindo o escopo
 

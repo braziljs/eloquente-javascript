@@ -1,13 +1,14 @@
-## Linguagem de programação
+# Linguagem de programação
 
-> O avaliador que determina qual o significado da expressões em uma linguagem de programação é apenas mais um programa.
+> "O avaliador que determina qual o significado da expressões em uma linguagem de programação é apenas mais um programa."
 >
-> Hal Abelson e Gerald Sussman, Estrutura e Interpretação de Programas de Computador
->---
+> `Hal Abelson e Gerald Sussman, Estrutura e Interpretação de Programas de Computador`
 
-> Quando um estudante perguntou ao mestre sobre a natureza do ciclo de dados e controle, Yuan-Ma respondeu: "Pense em um compilador compilando a si mesmo."
+> ---
+
+> "Quando um estudante perguntou ao mestre sobre a natureza do ciclo de dados e controle, Yuan-Ma respondeu: 'Pense em um compilador compilando a si mesmo.'"
 >
-> Mestre Yuan-Ma, O Livro de Programação
+> `Mestre Yuan-Ma, O Livro de Programação`
 
 Construir sua própria linguagem de programação é surpreendentemente fácil(desde que você não seja ambicioso demais) e bastante esclarecedor.
 

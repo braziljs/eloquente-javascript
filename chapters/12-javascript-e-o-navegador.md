@@ -44,13 +44,23 @@ Por exemplo, um simples protocolo de chat deve consistir em um computador envian
 
 Most protocols are built on top of other protocols. Our example chat protocol treats the network as a streamlike device into which you can put bits and have them arrive at the correct destination in the correct order. Ensuring those things is already a rather difficult technical problem.
 
+A maioria dos protocolos são feitas em cima de outros protocolos. Nosso exemplo de protocolo de chat considera a rede como um tipo de dispositivo de *stream*, no qual você pode mandar bits e enviá-los para o destino correto na ordem correta. Assegurar essas coisas atualmente é um problema técnico bastante difícil.
+
 The *Transmission Control Protocol* (TCP) is a protocol that solves this problem. All Internet-connected devices “speak” it, and most communication on the Internet is built on top of it.
+
+O TCP (Transmission Control Protocol) é um protocolo que resolve este problema. Todos os aparelhos conectados na Internet "falam" ele, e a maioria da comunicação na Internet é feita sobre ele.
 
 A TCP connection works as follows: one computer must be waiting, or *listening*, for other computers to start talking to it. To be able to listen for different kinds of communication at the same time on a single machine, each listener has a number (called a *port*) associated with it. Most protocols specify which port should be used by default. For example, when we want to send an email using the SMTP protocol, the machine through which we send it is expected to be listening on port 25.
 
+Uma conexão TCP funciona da seguinte maneira: um computador deve estar esperando, ou *ouvindo*, por outros computadores que irão começar a falar com ele. Para ser capaz de escutar por diferentes tipos de comunicação ao mesmo tempo em uma simples máquina, cada *ouvinte* tem um número associado a ele, chamado *port* ou *porta*. A maioria dos protocolos especificam qual porta deve ser usada por padrão. Por exemplo, quando nós queremos mandar um email usando o protocolo SMTP, a máquina que enviaremos isso deve estar escutando na porta 25.
+
 Another computer can then establish a connection by connecting to the target machine using the correct port number. If the target machine can be reached and is listening on that port, the connection is successfully created. The listening computer is called the *server*, and the connecting computer is called the *client*.
 
+Outro computador pode então estabelecer uma conexão se conectando a máquina alvo usando o número correto da porta. Se a máquina alvo pode ser encontrada e estiver escutando nessa porta, a conexão vai ser criada com sucesso. O computador ouvinte é chamado de *server*, ou servidor, e o computador que está se conectando é chamado *client*, ou cliente.
+
 Such a connection acts as a two-way pipe through which bits can flow—the machines on both ends can put data into it. Once the bits are successfully transmitted, they can be read out again by the machine on the other side. This is a convenient model. You could say that TCP provides an abstraction of the network.
+
+Uma conexão atua como um encanamento de via dupla pelo qual bits podem ser enviados às máquinas nas duas extremidades contendo dados. Uma vez que os bits tenham sido transmitidos com sucesso, eles podem ser lidos novamente pela máquina do outro lado. Isso é um modelo conveniente. Você pode dizer que o TCP fornece uma abstração de uma rede.
 
 ## The Web
 

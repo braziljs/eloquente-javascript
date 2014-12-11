@@ -63,18 +63,29 @@ Such a connection acts as a two-way pipe through which bits can flow—the machi
 Uma conexão atua como um encanamento de via dupla pelo qual bits podem ser enviados às máquinas nas duas extremidades contendo dados. Uma vez que os bits tenham sido transmitidos com sucesso, eles podem ser lidos novamente pela máquina do outro lado. Isso é um modelo conveniente. Você pode dizer que o TCP fornece uma abstração de uma rede.
 
 ## The Web
+## A Web
 
 The *World Wide Web* (not to be confused with the Internet as a whole) is a set of protocols and formats that allow us to visit web pages in a browser. The “Web” part in the name refers to the fact that such pages can easily link to each other, thus connecting into a huge mesh that users can move through.
 
+A *World Wide Web* (não ser confundida com a Internet como um todo) é um conjunto de protocolos e formatos que nos permite visitar páginas web em um navegador. A parte "Web" no nome se refere ao fato destas páginas serem facilmente ligadas umas nas outras, e então se ligarem em uma grande malha onde os usuários podem se mover através desta.
+
 To add content to the Web, all you need to do is connect a machine to the Internet, and have it listen on port 80, using the *Hypertext Transfer Protocol* (HTTP). This protocol allows other computers to request documents over the network.
+
+Para adicionar conteúdo na Web, tudo que você precisa fazer é conectar uma máquina a Internet, e deixá-la escutando na porta 80, usando o *Hypertext Transfer Protocol* (HTTP). Este protocolo permite outros computadores requisitarem documentos na rede.
 
 Each document on the Web is named by a Universal Resource Locator (URL), which looks something like this:
 
-  http://eloquentjavascript.net/12_browser.html
-   |      |                      |               |
-   protocol       server               path
+Cada documento na Web é nomeado por um *Universal Resource Locator* (URL), que se parece com algo assim:
+
+```
+http://eloquentjavascript.net/12_browser.html
+|     |                      |               |
+protocolo      servidor        caminho (path)
+```
 
 The first part tells us that this URL uses the HTTP protocol (as opposed to, for example, encrypted HTTP, which would be *https://*). Then comes the part that identifies which server we are requesting the document from. Last is a path string that identifies the specific document (or *resource*) we are interested in.
+
+A primeira parte nos diz que esta URL usa o protocolo HTTP (ao contrário, por exemplo, do HTTP encriptado, que deve ser `https://`). Então vem a parte que identifica de qual servidor nós estamos requisitando o documento. Por último temos a string de caminho que identifica o documento específico (ou *resource*) que estamos interessados.
 
 Each machine connected to the Internet gets a unique *IP address*, which looks something like `37.187.37.82`. You can use these directly as the server part of a URL. But lists of more or less random numbers are hard to remember and awkward to type, so you can instead register a *domain name* to point toward a specific machine or set of machines. I registered *eloquentjavascript.net* to point at the IP address of a machine I control and can thus use that domain name to serve web pages.
 

@@ -89,9 +89,15 @@ A primeira parte nos diz que esta URL usa o protocolo HTTP (ao contrário, por e
 
 Each machine connected to the Internet gets a unique *IP address*, which looks something like `37.187.37.82`. You can use these directly as the server part of a URL. But lists of more or less random numbers are hard to remember and awkward to type, so you can instead register a *domain name* to point toward a specific machine or set of machines. I registered *eloquentjavascript.net* to point at the IP address of a machine I control and can thus use that domain name to serve web pages.
 
+Cada máquina conectada com a Internet recebe um *endereço IP* único, que se parece com `37.187.37.82`. Você pode usar isso diretamente como parte da URL. Porém listas de números mais ou menos aleatórios são difíceis de lembrar e estranho de se digitar, então ao invés disso você pode registrar um *nome de domínio* para apontar para uma máquina específica ou conjunto de máquinas. Eu registrei *eloquentjavascript.net* para apontar para o endereço IP da máquina que eu controlo e posso então usar o nome do domínio para servir páginas da web.
+
 If you type the previous URL into your browser’s address bar, it will try to retrieve and display the document at that URL. First, your browser has to find out what address *eloquentjavascript.net* refers to. Then, using the HTTP protocol, it makes a connection to the server at that address and asks for the resource */12_browser.html*.
 
+Se você digitar a URL anterior na barra de endereços do seu navegador, ela vai tentar retornar e mostrar o documento dessa URL. Primeiro, seu navegador tem que encontrar qual endereço *eloquentjavascript.net* se refere. Então, usando o protocolo HTTP, ele faz a conexão ao servidor neste endereço e pergunta pelo documento */12_browser.html*.
+
 We will take a closer look at the HTTP protocol in Chapter 17.
+
+Vamos ver com mais detalhes sobre o protocolo HTTP no capítulo 17.
 
 ## HTML
 

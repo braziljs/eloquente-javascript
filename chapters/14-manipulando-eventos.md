@@ -26,3 +26,103 @@ A melhor mecanismo para o sistema subjacente é dar ao nosso código a chance de
 ````
 
 A função `addEventListener` registra seu segundo argumento a ser chamado sempre que o evento descrito por seu primeiro argumento ocorre.
+
+## Eventos e nós do DOM
+
+Cada navegador tem seu manipulador de eventos registrado em um contexto. Quando você chamar `addEventListener` como mostramos anteriormente você estara chamando um método em todo `window`, no navegador o escopo global é equivalente ao objeto `window`. Cada elemento DOM tem seu próprio método `addEventListener` que permite ouvir eventos especificamente para cada elemento.
+
+````javascript
+<button>Click me</button>
+<p>No handler here.</p>
+<script>
+  var button = document.querySelector("button");
+  button.addEventListener("click", function() {
+    console.log("Button clicked.");
+  });
+</script>
+````
+
+O exemplo atribuiu um manipulador para um nó de botão. Assim quando existir um clique no botão o manipulador sera executado, enquanto no resto do documento não.
+
+Dar um nó um atributo onclick tem um efeito similar. Mas um nó tem apenas um atributo onclick, para que você possa registrar apenas um manipulador por nó dessa forma. O método `addEventListener` permite que você adicione qualquer número de manipuladores, para que você não substitua acidentalmente um manipulador que já foi registrado.
+
+O método `removeEventListener` quando chamado com argumentos semelhantes assim como o `addEventListener` remove um manipulador.
+
+````javascript
+<button>Act-once button</button>
+<script>
+  var button = document.querySelector("button");
+  function once() {
+    console.log("Done.");
+    button.removeEventListener("click", once);
+  }
+  button.addEventListener("click", once);
+</script>
+````
+
+
+Para ser capaz de cancelar um registro manipulador de uma função, precisamos dar-lhe um nome para que possamos utilizar tanto para `addEventListener` quanto para `removeEventListener`.
+
+
+## Os objetos de evento
+
+Embora tenhamos ignodo os exemplos anteriores, as funções manipuladoras de eventos são passados ​​via argumento, chamamos de objeto de evento. Este objeto nos dá informações adicionais sobre o evento. Por exemplo, se queremos saber qual botão do mouse que foi pressionado podemos observar as propriedades do objeto de evento.
+
+````javascript
+<button>Click me any way you want</button>
+<script>
+  var button = document.querySelector("button");
+  button.addEventListener("mousedown", function(event) {
+    if (event.which == 1)
+      console.log("Left button");
+    else if (event.which == 2)
+      console.log("Middle button");
+    else if (event.which == 3)
+      console.log("Right button");
+  });
+</script>
+````
+
+As informações armazenadas em um objeto de evento são diferentes dependendo do tipo de evento. Vamos discutir vários tipos mais adiante neste capítulo. Propriedade de tipo do objeto sempre detém uma cadeia que identifica o evento(por exemplo, "clique" ou "mousedown").
+
+## Propagação
+
+Os manipuladores de eventos registrados em nós com seus filhos também receberão alguns eventos que ocorrem nos filhos. Se um botão dentro de um parágrafo é clicado, manipuladores de eventos no parágrafo também vai receber o evento clique.
+
+Mas se tanto o parágrafo e o botão tem um manipulador, o manipulador mais específico é o do botão e sera chamado primeiro. O evento foi feito para propagar para o exterior, a partir do nó onde aconteceu ate o nó pai do nó raiz do documento. Finalmente, depois de todos os manipuladores registrados em um nó específico tiveram sua vez, manipuladores registrados em toda a janela tem a chance de responder ao evento.
+
+A qualquer momento um manipulador de eventos pode chamar o método `stopPropagation` no objeto de evento para evitar que os manipuladores "mais acima" possam receberem o evento. Isso pode ser útil quando, por exemplo, se você tem um botão dentro de outro elemento clicável e você não quer o clique no botão aconteça se houver algum compartamento de clique no elemento exterior.
+
+O exemplo a seguir registra manipuladores "mousedown" em ambos um botão e do parágrafo em torno dele. Quando clicado com o botão direito do mouse , o manipulador do botão chama `stopPropagation`, o que impedirá o manipulador no parágrafo de execução. Quando o botão é clicado com outro botão do mouse os dois manipuladores seram executados.
+
+````javascript
+<p>A paragraph with a <button>button</button>.</p>
+<script>
+  var para = document.querySelector("p");
+  var button = document.querySelector("button");
+  para.addEventListener("mousedown", function() {
+    console.log("Handler for paragraph.");
+  });
+  button.addEventListener("mousedown", function(event) {
+    console.log("Handler for button.");
+    if (event.which == 3)
+      event.stopPropagation();
+  });
+</script>
+````
+
+A maioria dos objetos de evento tem uma propriedade de destino que se refere ao nó onde eles se originaram. Você pode usar essa propriedade para garantir que você não está lidando com algo que acidentalmente propagou a partir de um nó que você não queira lidar.
+
+Também é possível usar uma propriedade de destino para lançar uma ampla rede para um tipo específico de evento. Por exemplo, se você tem um nó que contém uma longa lista de botões, pode ser mais conveniente registrar um único manipulador de clique para o nó do exterior e que ele use a propriedade de destino para descobrir se um botão foi clicado, ao invés de se registrar manipuladores individuais sobre todos os botões.
+
+ ````javascript
+<button>A</button>
+<button>B</button>
+<button>C</button>
+<script>
+  document.body.addEventListener("click", function(event) {
+    if (event.target.nodeName == "BUTTON")
+      console.log("Clicked", event.target.textContent);
+  });
+</script>
+ ````

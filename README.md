@@ -4,7 +4,7 @@
 
 Projeto que visa a tradução da segunda edição do livro Eloquent JavaScript por Marijn Haverbeke.
 
-* [Artigo falando como foi o inicio do projeto](http://randsonjs.com/uma-boa-referencia/)
+* [Artigo falando como foi o inicio do projeto](http://randsonjs.com/blog/uma-boa-referencia/)
 
 ## Como isso funciona?
 

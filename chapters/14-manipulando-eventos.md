@@ -210,3 +210,113 @@ Em vez disso, existe um outro evento, `"keypress"`, que é acionado logo após `
 ````
 
 O nó `DOM`, onde um evento de tecla se origina depende do elemento que tem o foco quando a tecla for pressionada. Nós normais não podem ter o foco(a menos que você de um atributo `tabindex`), mas podem as coisas como links, botões e campos de formulário. Voltaremos para formar campos no Capítulo 18. Quando nada em particular tem foco, `document.body` é o um dos principais eventos dos destinos principais.
+
+## Evento de mouse
+
+Pressionar o botão do mouse também provoca uma série de eventos para ser emitido. O "mousedown" e "mouseup" são semelhantes aos "keydown" e "keyup" e são acionados quando o botão é pressionado e liberado. Estes irão acontecer no DOM que estão abaixo do ponteiro do mouse quando o evento ocorrer.
+
+Após o evento "mouseup", um evento "click" é acionado no nó mais específico que continha tanto ao pressionar e liberar o botão. Por exemplo, se eu pressionar o botão do mouse em um parágrafo e, em seguida, movo o ponteiro para outro parágrafo e solto o botão, o evento de "click" acontecerá no elemento que contém esses dois parágrafos.
+
+Se dois cliques acontecem juntos, um "dblclick"(clique duplo) evento é emitido também após o segundo evento de clique.
+
+Para obter informações precisas sobre o local onde aconteceu um evento do mouse, você pode olhar para as suas propriedades `pageX` e `pageY`, que contêm as coordenadas do evento(em pixels) em relação ao canto superior esquerdo do documento.
+
+A seguir veja a implementação de um programa de desenho primitivo. Toda vez que você clique no documento ele acrescenta um ponto sob o ponteiro do mouse. Veja o Capítulo 19 um programa de desenho menos primitivo.
+
+````javascript
+<style>
+  body {
+    height: 200px;
+    background: beige;
+  }
+  .dot {
+    height: 8px; width: 8px;
+    border-radius: 4px; /* rounds corners */
+    background: blue;
+    position: absolute;
+  }
+</style>
+<script>
+  addEventListener("click", function(event) {
+    var dot = document.createElement("div");
+    dot.className = "dot";
+    dot.style.left = (event.pageX - 4) + "px";
+    dot.style.top = (event.pageY - 4) + "px";
+    document.body.appendChild(dot);
+  });
+</script>
+````
+
+As propriedades `clientX` e `clientY` são semelhantes aos `pageX` e `pageY` mas em relação à parte do documento que está sendo rolado. Estes podem ser úteis quando se compara a coordena do mouse com as coordenadas retornados por `getBoundingClientRect` que também retorna coordenadas relativas da `viewport`.
+
+## Movimento do mouse
+
+Toda vez que o ponteiro do mouse se move, um eventos de "mousemove" é disparado. Este evento pode ser usado para controlar a posição do mouse. Uma situação comum em que isso é útil é ao implementar algum tipo de funcionalidade de arrastar o mouse.
+
+Como exemplo, o seguinte programa exibe uma barra e configura os manipuladores de eventos para que ao arrastar para a esquerda ou direita a barra se torna mais estreita ou mais ampla:
+
+````javascript
+<p>Drag the bar to change its width:</p>
+<div style="background: orange; width: 60px; height: 20px">
+</div>
+<script>
+  var lastX; // Tracks the last observed mouse X position
+  var rect = document.querySelector("div");
+  rect.addEventListener("mousedown", function(event) {
+    if (event.which == 1) {
+      lastX = event.pageX;
+      addEventListener("mousemove", moved);
+      event.preventDefault(); // Prevent selection
+    }
+  });
+
+  function moved(event) {
+    if (event.which != 1) {
+      removeEventListener("mousemove", moved);
+    } else {
+      var dist = event.pageX - lastX;
+      var newWidth = Math.max(10, rect.offsetWidth + dist);
+      rect.style.width = newWidth + "px";
+      lastX = event.pageX;
+    }
+  }
+</script>
+````
+
+Note que o controlador "mousemove" é registrado em toda a janela. Mesmo que o mouse vai para fora da barra durante o redimensionamento, nós ainda queremos atualizar seu tamanho e parar de arrastar quando o mouse é liberado.
+
+Sempre que o ponteiro do mouse entra ou sai de um nó, um "mouseover" ou "mouseout" evento é disparado. Esses dois eventos podem ser usados, entre outras coisas, para criar efeitos de foco, mostrando ou denominando algo quando o mouse está sobre um determinado elemento.
+
+Infelizmente, a criação de um tal efeito não é tão simples de ativar o efeito em "mouseover" e acabar com ela em "mouseout". Quando o mouse se move a partir de um nó em um dos seus filhos, "mouseout" é acionado no nó pai, embora o mouse não chegou a deixar extensão do nó. Para piorar as coisas, esses eventos se propagam assim como outros eventos, portanto você também receberá eventos "mouseout" quando o mouse deixa um dos nós filhos do nó em que o manipulador é registrado.
+
+Para contornar este problema, podemos usar a propriedade `relatedTarget` dos objetos de eventos criados para esses eventos. Diz-nos que, no caso de "mouseover", o elemento o ponteiro acabou antes e, no caso de "mouseout", o elemento que vai. Nós queremos mudar o nosso efeito `hover` apenas quando o `relatedTarget` está fora do nosso nó de destino. Só nesse caso é que este evento realmente representam um cruzamento de fora para dentro do nó(ou o contrário).
+
+````javascript
+<p>Hover over this <strong>paragraph</strong>.</p>
+<script>
+  var para = document.querySelector("p");
+  function isInside(node, target) {
+    for (; node != null; node = node.parentNode)
+      if (node == target) return true;
+  }
+  para.addEventListener("mouseover", function(event) {
+    if (!isInside(event.relatedTarget, para))
+      para.style.color = "red";
+  });
+  para.addEventListener("mouseout", function(event) {
+    if (!isInside(event.relatedTarget, para))
+      para.style.color = "";
+  });
+</script>
+````
+
+A função `isInside` percorre os links pai do nó dado até ele atingir o topo do documento(quando for nulo), ou encontrar o pai que está procurando.
+
+Devo acrescentar que um efeito hover como isso pode ser muito mais facilmente alcançado utilizando o pseudo selector em CSS `:hover`, como o exemplo a seguir mostra. Mas quando o seu efeito hover envolve fazer algo mais complicado do que mudar um estilo no nó de destino, você deve usar o truque com "mouseover" e eventos "mouseout".
+
+````html
+<style>
+  p:hover { color: red }
+</style>
+<p>Hover over this <strong>paragraph</strong>.</p>
+````

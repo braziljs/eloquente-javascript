@@ -126,3 +126,87 @@ Também é possível usar uma propriedade de destino para lançar uma ampla rede
   });
 </script>
  ````
+
+## Ações padrão
+
+Muitos eventos têm sua ação padrão que lhes estão associados. Se você clicar em um link, você será levado para outra página. Se você pressionar a seta para baixo, o navegador vai rolar a página para baixo. Se você clicar com o botão direito, você tera um menu. E assim por diante.
+
+Para a maioria dos tipos de eventos, os manipuladores de eventos de JavaScript são chamados antes do comportamento padrão. Se o condutor não quer que o comportamento normal aconteça, pode chamar o método `preventDefault` no objeto de evento.
+
+Isso pode ser usado para implementar seus próprios atalhos de teclado ou menus. Ele também pode ser utilizado para interferir com o comportamento desagradavelmente que os utilizadores esperaram. Por exemplo, aqui está um link que não podem ser clicável:
+
+````javascript
+<a href="https://developer.mozilla.org/">MDN</a>
+<script>
+  var link = document.querySelector("a");
+  link.addEventListener("click", function(event) {
+    console.log("Nope.");
+    event.preventDefault();
+  });
+</script>
+````
+
+Tente não fazer tais coisas, a menos que você tem uma boa razão para isso. Para as pessoas que usam sua página isso pode ser desagradável quando o comportamento que eles esperam são quebrados.
+
+Dependendo do navegador , alguns eventos não podem ser interceptados. No Chrome, por exemplo, os atalhos de teclado para fechar a aba atual (Ctrl- W ou Command-W) não pode ser manipulado por JavaScript.
+
+## Evento de tecla
+
+Quando uma tecla do teclado é pressionado, o seu browser dispara um evento `"keydown"`. Quando ele é liberado, um evento de `"keyup"` é emitido.
+
+````javascript
+<p>This page turns violet when you hold the V key.</p>
+<script>
+  addEventListener("keydown", function(event) {
+    if (event.keyCode == 86)
+      document.body.style.background = "violet";
+  });
+  addEventListener("keyup", function(event) {
+    if (event.keyCode == 86)
+      document.body.style.background = "";
+  });
+</script>
+````
+
+Apesar do nome `"keydown"` é acionado, não só quando a tecla é empurrada para baixo fisicamente.
+Quando uma tecla é pressionada e mantida, o evento é disparado novamente toda vez que se repete a tecla. Às vezes, por exemplo, se você quiser aumentar a aceleração de um personagem do jogo, quando uma tecla de seta é pressionado é diminuido somente quando a tecla é liberada, você tem que ter cuidado para não aumentá-lo novamente toda vez que se repete a tecla ou vai acabar com os valores involuntariamente enormes.
+
+O exemplo anterior nos atentou para a propriedade `keyCode` do objeto de evento. Isto é como você pode identificar qual tecla está sendo pressionada ou solta. Infelizmente, não é sempre óbvio traduzir o código numérico para uma tecla.
+
+Para as teclas de letras e números, o código da tecla associado será o código de caracteres Unicode associado as letras maiúsculas ou número impresso na tecla. O método `charCodeAt` em `String` nos dá uma maneira de encontrar este código.
+
+````javascript
+console.log("Violet".charCodeAt(0));
+// → 86
+console.log("1".charCodeAt(0));
+// → 49
+````
+
+Outras teclas têm códigos previsíveis. A melhor maneira de encontrar os códigos que você precisa é geralmente experimentar o registo de um manipulador de eventos de tecla que registra os códigos de chave que ela recebe quando pressionado a tecla que você está interessado.
+
+Teclas modificadoras como Shift, Ctrl, Alt e Command(no Mac) geram eventos de teclas apenas como teclas normais. Mas quando se olha para as combinações de teclas, você também pode descobrir se essas teclas são pressionadas por olhar para o `shiftKey`, propriedades `ctrlKey`, `altKey` e `metakey` de eventos de teclado e mouse.
+
+````javascript
+<p>Press Ctrl-Space to continue.</p>
+<script>
+  addEventListener("keydown", function(event) {
+    if (event.keyCode == 32 && event.ctrlKey)
+      console.log("Continuing!");
+  });
+</script>
+````
+
+Os `"KeyDown"` e eventos `"KeyUp"` dão informações sobre a tecla física que está sendo pressionado. Mas e se você está interessado no próprio texto que está sendo digitado?
+Conseguir o texto a partir de códigos de tecla é estranho.
+Em vez disso, existe um outro evento, `"keypress"`, que é acionado logo após `"keydown"`(repetido junto com `"keydown"` quando a tecla é solta), mas apenas para as teclas que produzem entrada de caracteres. A propriedade `charCode` no objeto do evento contém um código que pode ser interpretado como um código de caracteres `Unicode`. Podemos usar a função `String.fromCharCode` para transformar esse código em uma verdadeira cadeia de caracteres simples.
+
+````javascript
+<p>Focus this page and type something.</p>
+<script>
+  addEventListener("keypress", function(event) {
+    console.log(String.fromCharCode(event.charCode));
+  });
+</script>
+````
+
+O nó `DOM`, onde um evento de tecla se origina depende do elemento que tem o foco quando a tecla for pressionada. Nós normais não podem ter o foco(a menos que você de um atributo `tabindex`), mas podem as coisas como links, botões e campos de formulário. Voltaremos para formar campos no Capítulo 18. Quando nada em particular tem foco, `document.body` é o um dos principais eventos dos destinos principais.

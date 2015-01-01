@@ -320,3 +320,74 @@ Devo acrescentar que um efeito hover como isso pode ser muito mais facilmente al
 </style>
 <p>Hover over this <strong>paragraph</strong>.</p>
 ````
+
+## Evento de rolagem
+
+Sempre que um elemento é rolado, um evento de `scroll` é disparado sobre ele. Isto tem vários usos, como saber o que o usuário está olhando(para desativar animações fora da tela ou o envio de relatórios de espionagem para o seu quartel general) ou apresentar alguma indicação de progresso(por destacar parte de uma tabela de conteúdo ou que mostra um número de página).
+
+O exemplo a seguir desenha uma barra de progresso no canto superior direito do documento e atualiza a enchendo quando você rolar para baixo:
+
+````html
+<style>
+  .progress {
+    border: 1px solid blue;
+    width: 100px;
+    position: fixed;
+    top: 10px; right: 10px;
+  }
+  .progress > div {
+    height: 12px;
+    background: blue;
+    width: 0%;
+  }
+  body {
+    height: 2000px;
+  }
+</style>
+<div class="progress"><div></div></div>
+<p>Scroll me...</p>
+<script>
+  var bar = document.querySelector(".progress div");
+  addEventListener("scroll", function() {
+    var max = document.body.scrollHeight - innerHeight;
+    var percent = (pageYOffset / max) * 100;
+    bar.style.width = percent + "%";
+  });
+</script>
+````
+
+Um elemento com uma posição fixa é muito parecido com uma posição absoluta, mas também impede a rolagem junto com o resto do documento. O efeito é fazer com que nosso progresso bar pare no canto. Dentro dele existe outro elemento, que é redimensionada para indicar o progresso atual. Usamos `%`, em vez de `px` como unidade, definindo a largura de modo que quando o elemento é dimensionado em relação ao conjunto da barra.
+
+A variável `innerHeight` nos dá a altura da janela, devemos subtrair do total altura de sua rolagem para não manter a rolagem quando você chegar no final do documento.(Há também uma `innerWidth` que acompanha o  `innerHeight`.) Ao dividir `pageYOffset` a posição de rolagem atual menos posição de deslocamento máximo multiplicando por 100, obtemos o percentual da barra de progresso .
+
+Chamando `preventDefault` em um evento de rolagem não impede a rolagem de acontecer. Na verdade, o manipulador de eventos é chamado apenas após da rolagem ocorrer.
+
+## Evento de foco
+
+Quando um elemento entra em foco, o navegador dispara um evento de `"focus"` nele. Quando se perde o foco, um eventos de `"blur"` é disparado.
+
+Ao contrário dos eventos discutidos anteriormente, esses dois eventos não se propagam. Um manipulador em um elemento pai não é notificado quando um filho ganha ou perde o foco do elemento.
+
+O exemplo a seguir exibe um texto de ajuda para o campo de texto que possui o foco no momento:
+
+````html
+<p>Name: <input type="text" data-help="Your full name"></p>
+<p>Age: <input type="text" data-help="Age in years"></p>
+<p id="help"></p>
+
+<script>
+  var help = document.querySelector("#help");
+  var fields = document.querySelectorAll("input");
+  for (var i = 0; i < fields.length; i++) {
+    fields[i].addEventListener("focus", function(event) {
+      var text = event.target.getAttribute("data-help");
+      help.textContent = text;
+    });
+    fields[i].addEventListener("blur", function(event) {
+      help.textContent = "";
+    });
+  }
+</script>
+````
+
+O objeto `window` recebe o evento de `"focus"` e o evento de `"blur"` quando o usuário move-se para outra aba ou janela do navegador a qual o documento esta sendo mostrado.

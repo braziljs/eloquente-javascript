@@ -89,7 +89,7 @@ As informações armazenadas em um objeto de evento são diferentes dependendo d
 
 Os manipuladores de eventos registrados em nós com seus filhos também receberão alguns eventos que ocorrem nos filhos. Se um botão dentro de um parágrafo é clicado, manipuladores de eventos no parágrafo também vai receber o evento clique.
 
-Mas se tanto o parágrafo e o botão tem um manipulador, o manipulador mais específico é o do botão e sera chamado primeiro. O evento foi feito para propagar para o exterior, a partir do nó onde aconteceu ate o nó pai do nó raiz do documento. Finalmente, depois de todos os manipuladores registrados em um nó específico tiveram sua vez, manipuladores registrados em toda a janela tem a chance de responder ao evento.
+Mas se tanto o parágrafo e o botão tem um manipulador, o manipulador mais específico é o do botão e sera chamado primeiro. O evento foi feito para propagar para o exterior, a partir do nó onde aconteceu ate o nó pai do nó raiz do documento. Finalmente, depois de todos os manipuladores registrados em um nó específico tiveram sua vez, manipuladores registrados em todo `window` tem a chance de responder ao evento.
 
 A qualquer momento um manipulador de eventos pode chamar o método `stopPropagation` no objeto de evento para evitar que os manipuladores "mais acima" possam receberem o evento. Isso pode ser útil quando, por exemplo, se você tem um botão dentro de outro elemento clicável e você não quer o clique no botão aconteça se houver algum compartamento de clique no elemento exterior.
 
@@ -283,7 +283,7 @@ Como exemplo, o seguinte programa exibe uma barra e configura os manipuladores d
 </script>
 ````
 
-Note que o controlador "mousemove" é registrado em toda a janela. Mesmo que o mouse vai para fora da barra durante o redimensionamento, nós ainda queremos atualizar seu tamanho e parar de arrastar quando o mouse é liberado.
+Note que o controlador "mousemove" é registrado no `window`. Mesmo que o mouse vai para fora da barra durante o redimensionamento, nós ainda queremos atualizar seu tamanho e parar de arrastar quando o mouse é liberado.
 
 Sempre que o ponteiro do mouse entra ou sai de um nó, um "mouseover" ou "mouseout" evento é disparado. Esses dois eventos podem ser usados, entre outras coisas, para criar efeitos de foco, mostrando ou denominando algo quando o mouse está sobre um determinado elemento.
 
@@ -358,7 +358,7 @@ O exemplo a seguir desenha uma barra de progresso no canto superior direito do d
 
 Um elemento com uma posição fixa é muito parecido com uma posição absoluta, mas também impede a rolagem junto com o resto do documento. O efeito é fazer com que nosso progresso bar pare no canto. Dentro dele existe outro elemento, que é redimensionada para indicar o progresso atual. Usamos `%`, em vez de `px` como unidade, definindo a largura de modo que quando o elemento é dimensionado em relação ao conjunto da barra.
 
-A variável `innerHeight` nos dá a altura da janela, devemos subtrair do total altura de sua rolagem para não manter a rolagem quando você chegar no final do documento.(Há também uma `innerWidth` que acompanha o  `innerHeight`.) Ao dividir `pageYOffset` a posição de rolagem atual menos posição de deslocamento máximo multiplicando por 100, obtemos o percentual da barra de progresso .
+A variável `innerHeight` nos dá a altura de `window`, devemos subtrair do total altura de sua rolagem para não manter a rolagem quando você chegar no final do documento.(Há também uma `innerWidth` que acompanha o  `innerHeight`.) Ao dividir `pageYOffset` a posição de rolagem atual menos posição de deslocamento máximo multiplicando por 100, obtemos o percentual da barra de progresso .
 
 Chamando `preventDefault` em um evento de rolagem não impede a rolagem de acontecer. Na verdade, o manipulador de eventos é chamado apenas após da rolagem ocorrer.
 
@@ -370,7 +370,7 @@ Ao contrário dos eventos discutidos anteriormente, esses dois eventos não se p
 
 O exemplo a seguir exibe um texto de ajuda para o campo de texto que possui o foco no momento:
 
-````html
+````javascript
 <p>Name: <input type="text" data-help="Your full name"></p>
 <p>Age: <input type="text" data-help="Age in years"></p>
 <p id="help"></p>
@@ -388,6 +388,65 @@ O exemplo a seguir exibe um texto de ajuda para o campo de texto que possui o fo
     });
   }
 </script>
+</script>
 ````
 
-O objeto `window` recebe o evento de `"focus"` e o evento de `"blur"` quando o usuário move-se para outra aba ou janela do navegador a qual o documento esta sendo mostrado.
+O objeto `window` recebe o evento de "focus" e o evento de "blur" quando o usuário move-se para outra aba ou janela do navegador a qual o documento esta sendo mostrado.
+
+## Evento de load
+
+Quando uma página termina de carregar, o evento "load" é disparado no `window` e os objetos do corpo do `document`. Isso é muitas vezes usado para programar ações de inicialização que exigem que todo o documento deve ter sido construído.
+
+Lembre-se que o conteúdo de tags `<script>` é executado imediatamente
+quando o tag é encontrada. As vezes a tag é executado antes ou tal o conteúdo do
+`<script>` precisa fazer algo com algumas partes do `document` que ainda não
+apareceu após a tag.
+
+Elementos como imagens e tags de script que carregam arquivo externo tem um
+evento de "load" para indica que os arquivos que eles fazem referência foram
+carregados .
+Eles são como os eventos de `focus`, pois não se propagam.
+
+Quando uma página é fechada ou navegação é colocado em segundo plano um evento de
+"beforeunload" é acionado. O uso principal deste evento é para evitar que o
+usuário perca o trabalho acidentalmente por fechar um documento.
+Prevenir a página de descarga não é feito com o método `preventDefault`.
+Ele é feito através do envio de uma `string` a partir do manipulador . A
+seqüência será usado em uma caixa de diálogo que pergunta ao usuário se ele quer
+ficar na página ou deixá-la.
+Este mecanismo garante que um usuário seja capaz de deixar a página, mesmo se
+estiver sendo executado um script malicioso que prefere mantê-los para sempre, a
+fim de forçá-los a olhar para alguns anúncios que leva alguns segundos.
+
+## Cronograma do Script de execução
+
+Há várias coisas que podem causar a inicialização da execução de um script. A leitura de um tag `<script>` é um exemplo disto. Um disparo de eventos é outra. No capítulo 13 discutimos a função `requestAnimationFrame`, que agenda uma função a ser chamada antes de redesenhar a próxima página. Essa é mais uma forma em que um script pode começar a correr.
+
+É importante entender que, disparo de eventos podem ocorrer a qualquer momento, quando há dois scripts em um único documento eles nunca iram correr no mesmo tempo. Se um script já está em execução, os manipuladores de eventos e pedaços de código programados em outras formas tem que esperar pela sua vez. Esta é a razão pela qual um documento irá congelar quando um script é executado por um longo tempo. O navegador não pode reagir aos cliques e outros eventos dentro do documento, porque ele não pode executar manipuladores de eventos até que o script atual termine sua execução.
+
+Alguns ambientes de programação permitem que múltiplas `threads` de execução se propaguem ao mesmo tempo.
+
+Fazer várias coisas ao mesmo tempo torna um programa mais rápido. Mas quando você tem várias ações tocando nas mesmas partes do sistema, ao mesmo tempo, torna-se pelo menos uma ordem de magnitude mais difícil.
+
+O fato de que os programas de JavaScript fazem apenas uma coisa de cada vez torna a nossa vida mais fácil. Para os casos em que você realmente quer fazer alguma coisa de muito tempo em segundo plano, sem o congelamento da página, os navegadores fornecem algo chamado de `web workers`. Um `web workers` é um ambiente isolado do JavaScript que funciona ao lado do principal programa para um documento e pode se comunicar com ele apenas por envio e recebimento de mensagens.
+
+Suponha que temos o seguinte código em um arquivo chamado `code/squareworker.js`:
+
+````javascript
+addEventListener("message", function(event) {
+  postMessage(event.data * event.data);
+});
+````
+
+Imagine que a multiplicação com os número seja pesado com uma computação de longa duração e queremos performance então colocamos em uma `thread` em segundo plano. Este código gera um `worker`, envia algumas mensagens e produz as respostas.
+
+````javascript
+var squareWorker = new Worker("code/squareworker.js");
+squareWorker.addEventListener("message", function(event) {
+  console.log("The worker responded:", event.data);
+});
+squareWorker.postMessage(10);
+squareWorker.postMessage(24);
+````
+
+A função `postMessage` envia uma mensagem o que causa um evento de "message" disparado ao receptor. O roteiro que criou o `worker` envia e recebe mensagens através do objeto `Worker`, ao passo que as conversações de `worker` para o script que o criou é enviado e ouvido diretamente sobre o seu âmbito global não compartilhada com o roteiro original.

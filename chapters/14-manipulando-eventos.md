@@ -44,11 +44,9 @@ Cada navegador tem seu manipulador de eventos registrado em um contexto. Quando 
 
 O exemplo atribuiu um manipulador para um nó de botão. Assim quando existir um clique no botão o manipulador sera executado, enquanto no resto do documento não.
 
-<<<<<<<<<<
+Dar a um nó um atributo `onclick` tem um efeito similar. Mas um nó tem apenas um atributo `onclick` para que você possa registrar apenas um manipulador por nó para que você não substitua acidentalmente um manipulador que já foi registrado. O método `addEventListener` permite que você adicione vários manipuladores.
 
-Dar um nó um atributo `onclick` tem um efeito similar. Mas um nó tem apenas um atributo onclick, para que você possa registrar apenas um manipulador por nó dessa forma. O método `addEventListener` permite que você adicione qualquer número de manipuladores, para que você não substitua acidentalmente um manipulador que já foi registrado.
-
-O método `removeEventListener` quando chamado com argumentos semelhantes assim como o `addEventListener` remove um manipulador.
+O método `removeEventListener` quando chamado com argumentos é semelhante ao `addEventListener`, mas ele remove o manipulador que foi registrado.
 
 ````html
 <button>Act-once button</button>
@@ -62,13 +60,11 @@ O método `removeEventListener` quando chamado com argumentos semelhantes assim 
 </script>
 ````
 
-
-Para ser capaz de cancelar um registro manipulador de uma função, precisamos dar-lhe um nome para que possamos utilizar tanto para `addEventListener` quanto para `removeEventListener`.
-
+Ele é capaz de cancelar um registro de manipulador de uma função, precisamos dar-lhe um nome para que possamos utilizar tanto para `addEventListener` quanto para `removeEventListener`.
 
 ## Os objetos de evento
 
-Embora tenhamos ignodo os exemplos anteriores, as funções manipuladoras de eventos são passados ​​via argumento, chamamos de objeto de evento. Este objeto nos dá informações adicionais sobre o evento. Por exemplo, se queremos saber qual botão do mouse que foi pressionado podemos observar as propriedades do objeto de evento.
+Embora tenhamos ignorado os exemplos anteriores as funções manipuladoras de eventos são passados ​​via argumento e chamamos de objeto de evento. Este objeto nos dá informações adicionais sobre o evento. Por exemplo, se queremos saber qual botão do mouse que foi pressionado podemos observar as propriedades do objeto de evento.
 
 ````html
 <button>Click me any way you want</button>
@@ -85,17 +81,17 @@ Embora tenhamos ignodo os exemplos anteriores, as funções manipuladoras de eve
 </script>
 ````
 
-As informações armazenadas em um objeto de evento são diferentes dependendo do tipo de evento. Vamos discutir vários tipos mais adiante neste capítulo. Propriedade de tipo do objeto sempre detém uma cadeia que identifica o evento(por exemplo, "clique" ou "mousedown").
+As informações armazenadas em um objeto de evento são diferentes dependendo do tipo de evento. Vamos discutir vários tipos mais adiante neste capítulo. Propriedade de tipo do objeto sempre detém uma cadeia que identifica o evento(por exemplo, `"click"` ou `"mousedown"`).
 
 ## Propagação
 
-Os manipuladores de eventos registrados em nós com seus filhos também receberão alguns eventos que ocorrem nos filhos. Se um botão dentro de um parágrafo é clicado, manipuladores de eventos no parágrafo também vai receber o evento clique.
+Os manipuladores de eventos registrados em nós também receberão alguns eventos que ocorrem nos filhos. Se um botão dentro de um parágrafo é clicado manipuladores de eventos no parágrafo também vai receber o evento `click`.
 
-Mas se tanto o parágrafo e o botão tem um manipulador, o manipulador mais específico é o do botão e sera chamado primeiro. O evento foi feito para propagar para o exterior, a partir do nó onde aconteceu ate o nó pai do nó raiz do documento. Finalmente, depois de todos os manipuladores registrados em um nó específico tiveram sua vez, manipuladores registrados em todo `window` tem a chance de responder ao evento.
+Mas se tanto o parágrafo e o botão tem um manipulador o manipulador mais específico é o do botão e sera chamado primeiro. O evento foi feito para propagar para o exterior a partir do nó onde aconteceu ate o nó pai do nó raiz do documento. Finalmente depois de todos os manipuladores registrados em um nó específico tiveram sua vez manipuladores registrados em todo `window` tem a chance de responder ao evento.
 
-A qualquer momento um manipulador de eventos pode chamar o método `stopPropagation` no objeto de evento para evitar que os manipuladores "mais acima" possam receberem o evento. Isso pode ser útil quando, por exemplo, se você tem um botão dentro de outro elemento clicável e você não quer o clique no botão aconteça se houver algum compartamento de clique no elemento exterior.
+A qualquer momento um manipulador de eventos pode chamar o método `stopPropagation` para evitar que os manipuladores mais acima possam receberem o evento. Isso pode ser útil quando por exemplo, se você tem um botão dentro de outro elemento clicável e você não quer o clique no botão aconteça se houver algum compartamento de clique no elemento exterior.
 
-O exemplo a seguir registra manipuladores "mousedown" em ambos um botão e do parágrafo em torno dele. Quando clicado com o botão direito do mouse , o manipulador do botão chama `stopPropagation`, o que impedirá o manipulador no parágrafo de execução. Quando o botão é clicado com outro botão do mouse os dois manipuladores seram executados.
+O exemplo a seguir registra manipuladores `"mousedown"` em ambos no botão e no parágrafo e em torno dele. Quando clicado com o botão direito do mouse o manipulador do botão chama `stopPropagation`, o que impedirá o manipulador no parágrafo de executar. Quando o botão é clicado com outro botão do mouse os dois manipuladores são executados.
 
 ````html
 <p>A paragraph with a <button>button</button>.</p>
@@ -131,11 +127,11 @@ Também é possível usar uma propriedade de destino para lançar uma ampla rede
 
 ## Ações padrão
 
-Muitos eventos têm sua ação padrão que lhes estão associados. Se você clicar em um link, você será levado para outra página. Se você pressionar a seta para baixo, o navegador vai rolar a página para baixo. Se você clicar com o botão direito, você tera um menu. E assim por diante.
+Muitos eventos têm sua ação padrão que lhes estão associados. Se você clicar em um link você será levado para outra página. Se você pressionar a seta para baixo o navegador vai rolar a página para baixo. Se você clicar com o botão direito você tera um menu e assim por diante.
 
-Para a maioria dos tipos de eventos, os manipuladores de eventos de JavaScript são chamados antes do comportamento padrão. Se o condutor não quer que o comportamento normal aconteça, pode chamar o método `preventDefault` no objeto de evento.
+Para a maioria dos tipos de eventos, os manipuladores de eventos de JavaScript são chamados antes do comportamento padrão. Se o condutor não quer que o comportamento normal aconteça pode simplesmente chamar o método `preventDefault` no objeto de evento.
 
-Isso pode ser usado para implementar seus próprios atalhos de teclado ou menus. Ele também pode ser utilizado para interferir com o comportamento desagradavelmente que os utilizadores esperaram. Por exemplo, aqui está um link que não podem ser clicável:
+Isso pode ser usado para implementar seus próprios atalhos de teclado ou menus. Ele também pode ser utilizado para interferir como um comportamento desagradavelmente que os utilizadores não esperam. Por exemplo aqui está um link que não podem ser clicável:
 
 ````html
 <a href="https://developer.mozilla.org/">MDN</a>
@@ -150,11 +146,11 @@ Isso pode ser usado para implementar seus próprios atalhos de teclado ou menus.
 
 Tente não fazer tais coisas, a menos que você tem uma boa razão para isso. Para as pessoas que usam sua página isso pode ser desagradável quando o comportamento que eles esperam são quebrados.
 
-Dependendo do navegador , alguns eventos não podem ser interceptados. No Chrome, por exemplo, os atalhos de teclado para fechar a aba atual (Ctrl- W ou Command-W) não pode ser manipulado por JavaScript.
+Dependendo do navegador alguns eventos não podem ser interceptados. No Chrome por exemplo, os atalhos de teclado para fechar a aba atual (Ctrl- W ou Command-W) não pode ser manipulado por JavaScript.
 
 ## Evento de tecla
 
-Quando uma tecla do teclado é pressionado, o seu browser dispara um evento `"keydown"`. Quando ele é liberado, um evento de `"keyup"` é emitido.
+Quando uma tecla do teclado é pressionado, o seu browser dispara um evento `"keydown"` quando ele é liberado um evento de `"keyup"` é emitido.
 
 ````html
 <p>This page turns violet when you hold the V key.</p>
@@ -170,12 +166,12 @@ Quando uma tecla do teclado é pressionado, o seu browser dispara um evento `"ke
 </script>
 ````
 
-Apesar do nome `"keydown"` é acionado, não só quando a tecla é empurrada para baixo fisicamente.
-Quando uma tecla é pressionada e mantida, o evento é disparado novamente toda vez que se repete a tecla. Às vezes, por exemplo, se você quiser aumentar a aceleração de um personagem do jogo, quando uma tecla de seta é pressionado é diminuido somente quando a tecla é liberada, você tem que ter cuidado para não aumentá-lo novamente toda vez que se repete a tecla ou vai acabar com os valores involuntariamente enormes.
+O evento `"keydown"` é acionado não só quando a tecla fisicamente é empurrada para baixo.
+Quando uma tecla é pressionada e mantida o evento é disparado novamente toda vez que se repete a tecla. Por exemplo se você quiser aumentar a aceleração de um personagem do jogo quando uma tecla de seta é pressionado e diminuido somente quando a tecla é liberada você tem que ter cuidado para não aumentá-lo novamente toda vez que se repete a tecla ou vai acabar com os valores involuntariamente enormes.
 
-O exemplo anterior nos atentou para a propriedade `keyCode` do objeto de evento. Isto é como você pode identificar qual tecla está sendo pressionada ou solta. Infelizmente, não é sempre óbvio traduzir o código numérico para uma tecla.
+O exemplo anterior nos atentou para a propriedade `keyCode` do objeto de evento. Isto é como você pode identificar qual tecla está sendo pressionada ou solta. Infelizmente não é sempre óbvio traduzir o código numérico para uma tecla.
 
-Para as teclas de letras e números, o código da tecla associado será o código de caracteres Unicode associado as letras maiúsculas ou número impresso na tecla. O método `charCodeAt` em `String` nos dá uma maneira de encontrar este código.
+Para as teclas de letras e números, o código da tecla associado será o código de caracteres Unicode associado as letras maiúsculas ou número impresso na tecla. O método `charCodeAt` que pertence a propriedade `String` nos dá uma maneira de encontrar este código.
 
 ````javascript
 console.log("Violet".charCodeAt(0));
@@ -186,7 +182,7 @@ console.log("1".charCodeAt(0));
 
 Outras teclas têm códigos previsíveis. A melhor maneira de encontrar os códigos que você precisa é geralmente experimentar o registo de um manipulador de eventos de tecla que registra os códigos de chave que ela recebe quando pressionado a tecla que você está interessado.
 
-Teclas modificadoras como Shift, Ctrl, Alt e Command(no Mac) geram eventos de teclas apenas como teclas normais. Mas quando se olha para as combinações de teclas, você também pode descobrir se essas teclas são pressionadas por olhar para o `shiftKey`, propriedades `ctrlKey`, `altKey` e `metakey` de eventos de teclado e mouse.
+Teclas modificadoras como Shift, Ctrl, Alt e Command(do Mac) geram eventos de teclas apenas como teclas normais. Mas quando se olha para as combinações de teclas, você também pode descobrir se essas teclas são pressionadas verificando as propriedades de eventos `shiftKey`, `ctrlKey`, `altKey` e `metakey` tanto para teclado quanto para mouse.
 
 ````html
 <p>Press Ctrl-Space to continue.</p>
@@ -198,9 +194,9 @@ Teclas modificadoras como Shift, Ctrl, Alt e Command(no Mac) geram eventos de te
 </script>
 ````
 
-Os `"KeyDown"` e eventos `"KeyUp"` dão informações sobre a tecla física que está sendo pressionado. Mas e se você está interessado no próprio texto que está sendo digitado?
+Os eventos de `"keydown"` e `"keyup"` dão informações sobre a tecla física que está sendo pressionado. Mas e se você está interessado no texto que está sendo digitado?
 Conseguir o texto a partir de códigos de tecla é estranho.
-Em vez disso, existe um outro evento, `"keypress"`, que é acionado logo após `"keydown"`(repetido junto com `"keydown"` quando a tecla é solta), mas apenas para as teclas que produzem entrada de caracteres. A propriedade `charCode` no objeto do evento contém um código que pode ser interpretado como um código de caracteres `Unicode`. Podemos usar a função `String.fromCharCode` para transformar esse código em uma verdadeira cadeia de caracteres simples.
+Em vez disso existe um outro evento `"keypress"` que é acionado logo após `"keydown"`(repetido junto com `"keydown"` quando a tecla é solta) mas apenas para as teclas que produzem entrada de caracteres. A propriedade `charCode` no objeto do evento contém um código que pode ser interpretado como um código de caracteres `Unicode`. Podemos usar a função `String.fromCharCode` para transformar esse código em uma verdadeira cadeia de caracteres simples.
 
 ````html
 <p>Focus this page and type something.</p>
@@ -211,19 +207,19 @@ Em vez disso, existe um outro evento, `"keypress"`, que é acionado logo após `
 </script>
 ````
 
-O nó `DOM`, onde um evento de tecla se origina depende do elemento que tem o foco quando a tecla for pressionada. Nós normais não podem ter o foco(a menos que você de um atributo `tabindex`), mas podem as coisas como links, botões e campos de formulário. Voltaremos para formar campos no Capítulo 18. Quando nada em particular tem foco, `document.body` é o um dos principais eventos dos destinos principais.
+O nó `DOM` onde um evento de tecla se origina depende do elemento que tem o foco quando a tecla for pressionada. Nós normais não podem ter o foco(a menos que você de um atributo `tabindex`) o focu ocorre normalmente para os nós links, botões e campos de formulário. Voltaremos a formar campos no Capítulo 18. Quando nada em particular tem foco `document.body` é o um dos principais eventos dos destinos principais.
 
 ## Evento de mouse
 
-Pressionar o botão do mouse também provoca uma série de eventos para ser emitido. O "mousedown" e "mouseup" são semelhantes aos "keydown" e "keyup" e são acionados quando o botão é pressionado e liberado. Estes irão acontecer no DOM que estão abaixo do ponteiro do mouse quando o evento ocorrer.
+Pressionar o botão do mouse também provoca uma série de eventos para ser emitido. O `"mousedown"` e `"mouseup"` são semelhantes aos `"keydown"` e  `"keyup"` e são acionados quando o botão é pressionado e liberado. Estes irão acontecer no DOM que estão abaixo do ponteiro do mouse quando o evento ocorrer.
 
-Após o evento "mouseup", um evento "click" é acionado no nó mais específico que continha tanto ao pressionar e liberar o botão. Por exemplo, se eu pressionar o botão do mouse em um parágrafo e, em seguida, movo o ponteiro para outro parágrafo e solto o botão, o evento de "click" acontecerá no elemento que contém esses dois parágrafos.
+Após o evento de `"mouseup"` um evento `"click"` é acionado no nó mais específico que continha tanto ao pressionar e liberar o botão. Por exemplo se eu pressionar o botão do mouse em um parágrafo e em seguida, movo o ponteiro para outro parágrafo e solto o botão o evento de "click" acontecerá em ambos parágrafos.
 
-Se dois cliques acontecem juntos, um "dblclick"(clique duplo) evento é emitido também após o segundo evento de clique.
+Se dois cliques acontecem juntos um evento de `"dblclick"`(clique duplo) é emitido também após o segundo evento de clique.
 
-Para obter informações precisas sobre o local onde aconteceu um evento do mouse, você pode olhar para as suas propriedades `pageX` e `pageY`, que contêm as coordenadas do evento(em pixels) em relação ao canto superior esquerdo do documento.
+Para obter informações precisas sobre o local onde aconteceu um evento do mouse você pode olhar para as suas propriedades `pageX` e `pageY`, que contêm as coordenadas do evento(em pixels) em relação ao canto superior esquerdo do documento.
 
-A seguir veja a implementação de um programa de desenho primitivo. Toda vez que você clique no documento ele acrescenta um ponto sob o ponteiro do mouse. Veja o Capítulo 19 um programa de desenho menos primitivo.
+A seguir veja a implementação de um programa de desenho primitivo. Toda vez que você clique no documento ele acrescenta um ponto sob o ponteiro do mouse. Veja o Capítulo 19 um exemplo de programa de desenho menos primitivo.
 
 ````html
 <style>
@@ -253,9 +249,9 @@ As propriedades `clientX` e `clientY` são semelhantes aos `pageX` e `pageY` mas
 
 ## Movimento do mouse
 
-Toda vez que o ponteiro do mouse se move, um eventos de "mousemove" é disparado. Este evento pode ser usado para controlar a posição do mouse. Uma situação comum em que isso é útil é ao implementar algum tipo de funcionalidade de arrastar o mouse.
+Toda vez que o ponteiro do mouse se move, um eventos de `"mousemove"` é disparado. Este evento pode ser usado para controlar a posição do mouse. Uma situação comum em que isso é útil é ao implementar algum tipo de funcionalidade de arrastar o mouse.
 
-Como exemplo, o seguinte programa exibe uma barra e configura os manipuladores de eventos para que ao arrastar para a esquerda ou direita a barra se torna mais estreita ou mais ampla:
+O exemplo a seguir exibe um programa com uma barra e configura os manipuladores de eventos para que ao arrastar para a esquerda ou direita a barra se torna mais estreita ou mais ampla:
 
 ````html
 <p>Drag the bar to change its width:</p>
@@ -285,13 +281,15 @@ Como exemplo, o seguinte programa exibe uma barra e configura os manipuladores d
 </script>
 ````
 
-Note que o controlador "mousemove" é registrado no `window`. Mesmo que o mouse vai para fora da barra durante o redimensionamento, nós ainda queremos atualizar seu tamanho e parar de arrastar quando o mouse é liberado.
+Note que o controlador `"mousemove"` é registrado no `window`. Mesmo que o mouse vai para fora da barra durante o redimensionamento nós ainda queremos atualizar seu tamanho e parar de arrastar somente quando o mouse é liberado.
 
-Sempre que o ponteiro do mouse entra ou sai de um nó, um "mouseover" ou "mouseout" evento é disparado. Esses dois eventos podem ser usados, entre outras coisas, para criar efeitos de foco, mostrando ou denominando algo quando o mouse está sobre um determinado elemento.
+Sempre que o ponteiro do mouse entra ou sai de um nó um evento de `"mouseover"` ou `"mouseout"` é disparado. Esses dois eventos podem ser usados entre outras coisas, para criar efeitos de foco, mostrando um denominado algo quando o mouse está sobre um determinado elemento.
 
-Infelizmente, a criação de um tal efeito não é tão simples de ativar o efeito em "mouseover" e acabar com ela em "mouseout". Quando o mouse se move a partir de um nó em um dos seus filhos, "mouseout" é acionado no nó pai, embora o mouse não chegou a deixar extensão do nó. Para piorar as coisas, esses eventos se propagam assim como outros eventos, portanto você também receberá eventos "mouseout" quando o mouse deixa um dos nós filhos do nó em que o manipulador é registrado.
+Infelizmente não é tão simples de ativar a criação de um tal efeito com `"mouseover"` e acabar com ela em `"mouseout"`. Quando o mouse se move a partir de um nó em um dos seus filhos `"mouseout"` é acionado no nó pai, embora o mouse não chegou a deixar extensão do nó. Para piorar as coisas esses eventos se propagam assim como outros eventos, portanto você também receberá eventos `"mouseout"` quando o mouse deixa um dos nós filhos do nó em que o manipulador é registrado.
 
-Para contornar este problema, podemos usar a propriedade `relatedTarget` dos objetos de eventos criados para esses eventos. Diz-nos que, no caso de "mouseover", o elemento o ponteiro acabou antes e, no caso de "mouseout", o elemento que vai. Nós queremos mudar o nosso efeito `hover` apenas quando o `relatedTarget` está fora do nosso nó de destino. Só nesse caso é que este evento realmente representam um cruzamento de fora para dentro do nó(ou o contrário).
+<<<<<<<<
+
+Para contornar este problema, podemos usar a propriedade `relatedTarget` dos objetos de eventos criados para esses eventos. Diz-nos que, no caso de `"mouseover"`, o elemento o ponteiro acabou antes e, no caso de "mouseout", o elemento que vai. Nós queremos mudar o nosso efeito `hover` apenas quando o `relatedTarget` está fora do nosso nó de destino. Só nesse caso é que este evento realmente representam um cruzamento de fora para dentro do nó(ou o contrário).
 
 ````html
 <p>Hover over this <strong>paragraph</strong>.</p>

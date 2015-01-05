@@ -1,6 +1,6 @@
 # Manipulando eventos
 
-> Você tem o poder sobre sua mente e não sobre eventos externos. Perceba isso e você vai encontrar resistência.
+> Você tem o poder sobre sua mente e não sobre eventos externos. Perceba isso e você encontrara resistência.
 
 > `Marcus Aurelius, Meditations`
 
@@ -8,11 +8,11 @@ Alguns programas funcionam com entradas direta do usuário, tais como a interaç
 
 ## Os manipuladores de eventos
 
-Imaginem uma interface onde a única maneira de descobrir se uma tecla está sendo pressionada é ler o estado atual dessa chave. Para ser capaz de reagir às pressões de teclas você teria que ler constantemente o estado da chave para pegá-lo antes que ele fique liberado novamente. Seria perigoso executar outros cálculos demoradas pois você pode perder uma tecla.
+Imaginem uma interface onde a única maneira de descobrir se uma tecla está sendo pressionada é ler o estado atual dessa tecla. Para ser capaz de reagir às pressões de teclas você teria que ler constantemente o estado da tecla antes que ela fique liberado novamente. Seria perigoso executar outros cálculos demoradas pois você poderia perder alguma tecla.
 
-É assim que tal atributo foi tratado em máquinas primitivas. A um passo para o hardware o sistema operacional deve notificar qual a tecla pressionada e colocá-lo em uma fila. Um programa pode então, verificar periodicamente a fila para novos eventos e reagir para o que se encontra lá.
+É assim que tal atributo foi tratado em máquinas primitivas. A um passo para o hardware, o sistema operacional deve notificar qual a tecla pressionada e colocá-lo em uma fila. Um programa pode então verificar periodicamente a fila para novos eventos e reagir ao encontrar.
 
-É claro que ele tem sempre de olhar para a fila, e executa-las muitas vezes, porque a qualquer momento entre a teclas que está sendo pressionado o programa vai perceber que o evento fará com que o software sinta-se que não esta tendo resposta. Esta abordagem é chamada de `polling`. A maioria dos programadores tenta evitar sempre que possível.
+É claro que ha sempre uma responsabilidade de verificar a fila e executa-las várias vezes, isso é necessário porque ha uma latência entre a pressão da tecla e a leitura da fila pelo programa com isso o software pode sentir que não esta tendo resposta. Esta abordagem é chamada de `polling`. A maioria dos programadores tentam evitar essa abordagem sempre que possível.
 
 A melhor mecanismo para o sistema subjacente é dar ao nosso código a chance de reagir a eventos que ocorrerem. Os browsers podem fazerem isto por que nos permite registrar funções como manipuladores para eventos específicos.
 
@@ -25,11 +25,11 @@ A melhor mecanismo para o sistema subjacente é dar ao nosso código a chance de
 </script>
 ````
 
-A função `addEventListener` registra seu segundo argumento a ser chamado sempre que o evento descrito por seu primeiro argumento ocorre.
+A função `addEventListener` registra seu segundo argumento sempre que o evento descrito por seu primeiro argumento é chamado.
 
 ## Eventos e nós do DOM
 
-Cada navegador tem seu manipulador de eventos registrado em um contexto. Quando você chamar `addEventListener` como mostramos anteriormente você estara chamando um método em todo `window`, no navegador o escopo global é equivalente ao objeto `window`. Cada elemento DOM tem seu próprio método `addEventListener` que permite ouvir eventos especificamente para cada elemento.
+Cada navegador tem seu manipulador de eventos registrado em um contexto. Quando você chamar `addEventListener` como mostramos anteriormente você estara chamando um método em todo `window` no navegador o escopo global é equivalente ao objeto `window`. Cada elemento DOM tem seu próprio método `addEventListener` que permite ouvir eventos especificamente para cada elemento.
 
 ````html
 <button>Click me</button>
@@ -44,7 +44,9 @@ Cada navegador tem seu manipulador de eventos registrado em um contexto. Quando 
 
 O exemplo atribuiu um manipulador para um nó de botão. Assim quando existir um clique no botão o manipulador sera executado, enquanto no resto do documento não.
 
-Dar um nó um atributo onclick tem um efeito similar. Mas um nó tem apenas um atributo onclick, para que você possa registrar apenas um manipulador por nó dessa forma. O método `addEventListener` permite que você adicione qualquer número de manipuladores, para que você não substitua acidentalmente um manipulador que já foi registrado.
+<<<<<<<<<<
+
+Dar um nó um atributo `onclick` tem um efeito similar. Mas um nó tem apenas um atributo onclick, para que você possa registrar apenas um manipulador por nó dessa forma. O método `addEventListener` permite que você adicione qualquer número de manipuladores, para que você não substitua acidentalmente um manipulador que já foi registrado.
 
 O método `removeEventListener` quando chamado com argumentos semelhantes assim como o `addEventListener` remove um manipulador.
 
@@ -620,9 +622,9 @@ Outro efeito interessante pode ser alcançado por um sistema de modelagem físic
 
 #### Tab
 
-A interface com abas é um padrão comum de design. Ele permite que você selecione um painel de interface escolhendo entre uma série de abas saindo acima de um elemento.
+A interface com abas é um padrão comum de design. Ele permite que você selecione um painel de interface escolhendo entre uma série de abas sobresaindo acima de um elemento.
 
-Neste exercício, você vai implementar uma interface simples com abas. Escreva uma função `asTabs` que leva um nó do DOM e cria uma interface com abas mostrando os elementos filho desse nó. Você deverá inserir uma lista de elementos `<button>` na parte superior do nó e para cada elemento filho devera conter o texto recuperado do atributo `tabname` de cada botão. Todos exceto um dos filhos originais devem ser escondidos(dando um estilo de `display: none`) atualmente os nó disponíveis podem ser selecionados com um click nos botões.
+Neste exercício você vai implementar uma interface simples com abas. Escreva uma função `asTabs` que leva um nó do DOM e cria uma interface com abas mostrando os elementos filho desse nó. Você deverá inserir uma lista de elementos `<button>` na parte superior do nó e para cada elemento filho devera conter o texto recuperado do atributo `tabname` de cada botão. Todos exceto um dos filhos originais devem ser escondidos(dando um estilo de `display: none`) atualmente os nó disponíveis podem ser selecionados com um click nos botões.
 
 Quando funcionar você devera mudar o estilo do botão quando ativo.
 
@@ -649,3 +651,5 @@ Para contornar isso vamos começar a construir uma matriz real de todos os filho
 Ao registrar manipuladores de eventos sobre os botões as funções de manipulador vai precisar saber qual elemento separador está associada com o botão. Se eles são criados em um circuito normal você pode acessar a variável de índice do ciclo de dentro da função mas não vai dar-lhe o número correto pois essa variável terá  posteriormente sido alterada pelo loop.
 
 Uma solução simples é usar o método `forEach` para criar as funções de manipulador de dentro da função passada por `forEach`. O índice de loop, que é passado como um segundo argumento para essa função, será uma variável local normal de lá e não serão substituídos por novas iterações.
+
+[Solução](http://jsfiddle.net/saulo/hjjtrh5j/)

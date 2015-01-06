@@ -287,9 +287,7 @@ Sempre que o ponteiro do mouse entra ou sai de um nó um evento de `"mouseover"`
 
 Infelizmente não é tão simples de ativar a criação de um tal efeito com `"mouseover"` e acabar com ela em `"mouseout"`. Quando o mouse se move a partir de um nó em um dos seus filhos `"mouseout"` é acionado no nó pai, embora o mouse não chegou a deixar extensão do nó. Para piorar as coisas esses eventos se propagam assim como outros eventos, portanto você também receberá eventos `"mouseout"` quando o mouse deixa um dos nós filhos do nó em que o manipulador é registrado.
 
-<<<<<<<<
-
-Para contornar este problema, podemos usar a propriedade `relatedTarget` dos objetos de eventos criados para esses eventos. Diz-nos que, no caso de `"mouseover"`, o elemento o ponteiro acabou antes e, no caso de "mouseout", o elemento que vai. Nós queremos mudar o nosso efeito `hover` apenas quando o `relatedTarget` está fora do nosso nó de destino. Só nesse caso é que este evento realmente representam um cruzamento de fora para dentro do nó(ou o contrário).
+Para contornar este problema, podemos usar a propriedade `relatedTarget` dos objetos de eventos criados por esses eventos. Ele garante que no caso de `"mouseover"` o elemento que o ponteiro do mouse passou antes e no caso do `"mouseout"` o elemento que o ponteiro do mouse ira passar. Nós queremos mudar o nosso efeito `hover` apenas quando o `relatedTarget` está fora do nosso nó de destino. Neste caso é que este evento realmente representa um cruzamento de fora para dentro do nó(ou ao contrário).
 
 ````html
 <p>Hover over this <strong>paragraph</strong>.</p>
@@ -310,9 +308,9 @@ Para contornar este problema, podemos usar a propriedade `relatedTarget` dos obj
 </script>
 ````
 
-A função `isInside` percorre os links pai do nó dado até ele atingir o topo do documento(quando for nulo), ou encontrar o pai que está procurando.
+A função `isInside` percorre os links pai do nó até ele atingir o topo do documento(quando nulo) ou encontrar o pai que está procurando.
 
-Devo acrescentar que um efeito hover como isso pode ser muito mais facilmente alcançado utilizando o pseudo selector em CSS `:hover`, como o exemplo a seguir mostra. Mas quando o seu efeito hover envolve fazer algo mais complicado do que mudar um estilo no nó de destino, você deve usar o truque com "mouseover" e eventos "mouseout".
+Devo acrescentar que um efeito hover como isso pode ser muito mais facilmente alcançado utilizando o pseudo selector em CSS `:hover` como o exemplo a seguir mostra. Mas quando o seu efeito hover envolve fazer algo mais complexo do que apenas mudar um estilo no nó de destino, você deve usar o truque com os eventos de `"mouseover"` e `"mouseout"`.
 
 ````html
 <style>
@@ -323,9 +321,9 @@ Devo acrescentar que um efeito hover como isso pode ser muito mais facilmente al
 
 ## Evento de rolagem
 
-Sempre que um elemento é rolado, um evento de `scroll` é disparado sobre ele. Isto tem vários usos, como saber o que o usuário está olhando(para desativar animações fora da tela ou o envio de relatórios de espionagem para o seu quartel general) ou apresentar alguma indicação de progresso(por destacar parte de uma tabela de conteúdo ou que mostra um número de página).
+Sempre que um elemento é rolado um evento de `"scroll"` é disparado sobre ele. Isto tem vários usos como saber o que o usuário está olhando(para desativar animações fora da tela ou o envio de relatórios de espionagem para o seu quartel general) ou apresentar alguma indicação de progresso(por destacar parte de uma tabela de conteúdo ou que mostra um número de página).
 
-O exemplo a seguir desenha uma barra de progresso no canto superior direito do documento e atualiza a enchendo quando você rolar para baixo:
+O exemplo a seguir desenha uma barra de progresso no canto superior direito do documento e atualiza enchendo quando é rolada para baixo:
 
 ````html
 <style>
@@ -356,15 +354,15 @@ O exemplo a seguir desenha uma barra de progresso no canto superior direito do d
 </script>
 ````
 
-Um elemento com uma posição fixa é muito parecido com uma posição absoluta, mas também impede a rolagem junto com o resto do documento. O efeito é fazer com que nosso progresso bar pare no canto. Dentro dele existe outro elemento, que é redimensionada para indicar o progresso atual. Usamos `%`, em vez de `px` como unidade, definindo a largura de modo que quando o elemento é dimensionado em relação ao conjunto da barra.
+Um elemento com uma posição fixa é muito parecido com um elemento de posição absoluta, mas ambos impedem a rolagem junto com o resto do documento. O efeito é fazer com que nossa barra de progresso pare no canto. Dentro dele existe outro elemento que é redimensionada para indicar o progresso atual. Usamos `%` em vez de `px` como unidade, definimos a largura de modo que quando o elemento é dimensionado em relação ao conjunto da barra.
 
-A variável `innerHeight` nos dá a altura de `window`, devemos subtrair do total altura de sua rolagem para não manter a rolagem quando você chegar no final do documento.(Há também uma `innerWidth` que acompanha o  `innerHeight`.) Ao dividir `pageYOffset` a posição de rolagem atual menos posição de deslocamento máximo multiplicando por 100, obtemos o percentual da barra de progresso .
+A variável `innerHeight` nos dá a altura de `window`, devemos subtrair do total altura de sua rolagem para não ter rolagem quando você chegar no final do documento.(Há também uma `innerWidth` que acompanha o  `innerHeight`.) Ao dividir `pageYOffset` a posição de rolagem atual menos posição de deslocamento máximo multiplicando por 100 obtemos o percentual da barra de progresso .
 
-Chamando `preventDefault` em um evento de rolagem não impede a rolagem de acontecer. Na verdade, o manipulador de eventos é chamado apenas após da rolagem ocorrer.
+Chamando `preventDefault` em um evento de rolagem não impede a rolagem de acontecer. Na verdade o manipulador de eventos é chamado apenas após da rolagem ocorrer.
 
 ## Evento de foco
 
-Quando um elemento entra em foco, o navegador dispara um evento de `"focus"` nele. Quando se perde o foco, um eventos de `"blur"` é disparado.
+Quando um elemento entra em foco o navegador dispara um evento de `"focus"` nele. Quando se perde o foco um eventos de `"blur"` é disparado.
 
 Ao contrário dos eventos discutidos anteriormente, esses dois eventos não se propagam. Um manipulador em um elemento pai não é notificado quando um filho ganha ou perde o foco do elemento.
 
@@ -389,44 +387,36 @@ O exemplo a seguir exibe um texto de ajuda para o campo de texto que possui o fo
 </script>
 ````
 
-O objeto `window` recebe o evento de "focus" e o evento de "blur" quando o usuário move-se para outra aba ou janela do navegador a qual o documento esta sendo mostrado.
+O objeto `window` recebe os eventos de `"focus"` e `"blur"` quando o usuário move-se para outra aba ou janela do navegador a qual o documento esta sendo mostrado.
 
 ## Evento de load
 
-Quando uma página termina de carregar, o evento "load" é disparado no `window` e os objetos do corpo do `document`. Isso é muitas vezes usado para programar ações de inicialização que exigem que todo o documento deve ter sido construído.
+Quando uma página termina de carregar o evento `"load"` é disparado no `window` e no objeto `body` da página. Isso é muitas vezes usado para programar ações de inicialização que exigem que todo o documento tenha sido construído.
 
 Lembre-se que o conteúdo de tags `<script>` é executado imediatamente
-quando o tag é encontrada. As vezes a tag é executado antes ou tal o conteúdo do
-`<script>` precisa fazer algo com algumas partes do `document` que ainda não
-apareceu após a tag.
+quando o tag é encontrada. As vezes a tag `<script>` é processada antes do carregamento total da página e ela necessita de algum conteúdo que ainda não foi carregado.
 
-Elementos como imagens e tags de script que carregam arquivo externo tem um
-evento de "load" para indica que os arquivos que eles fazem referência foram
-carregados .
-Eles são como os eventos de `focus`, pois não se propagam.
+Elementos como imagens e tags de script carregam arquivo externo e tem um
+evento de `"load"` para indica que os arquivos que eles fazem referência foram carregados.
+Eles são como os eventos de `focus` e não se propagam.
 
-Quando uma página é fechada ou navegação é colocado em segundo plano um evento de
-"beforeunload" é acionado. O uso principal deste evento é para evitar que o
-usuário perca o trabalho acidentalmente por fechar um documento.
-Prevenir a página de descarga não é feito com o método `preventDefault`.
-Ele é feito através do envio de uma `string` a partir do manipulador . A
-seqüência será usado em uma caixa de diálogo que pergunta ao usuário se ele quer
-ficar na página ou deixá-la.
-Este mecanismo garante que um usuário seja capaz de deixar a página, mesmo se
-estiver sendo executado um script malicioso que prefere mantê-los para sempre, a
-fim de forçá-los a olhar para alguns anúncios que leva alguns segundos.
+Quando uma página é fechada ou navegação é colocado em segundo plano um evento de `"beforeunload"` é acionado. O uso principal deste evento é para evitar que o usuário perca o trabalho acidentalmente por fechar um documento.
+Prevenir que a página seja fechada não é feito com o método `preventDefault`.
+Ele é feito através do envio de uma `string` a partir do manipulador. A
+seqüência será usado em uma caixa de diálogo que pergunta ao usuário se ele quer permanecer na página ou deixá-la.
+Este mecanismo garante que um usuário seja capaz de deixar a página, mesmo se estiver executado um script malicioso que prefere mantê-los para sempre, a fim de forçá-los a olhar para alguns anúncios que leva alguns segundos.
 
 ## Cronograma do Script de execução
 
-Há várias coisas que podem causar a inicialização da execução de um script. A leitura de um tag `<script>` é um exemplo disto. Um disparo de eventos é outra. No capítulo 13 discutimos a função `requestAnimationFrame`, que agenda uma função a ser chamada antes de redesenhar a próxima página. Essa é mais uma forma em que um script pode começar a correr.
+Há várias coisas que podem causar a inicialização da execução de um script. A leitura de um tag `<script>` é um exemplo disto. Um disparo de eventos é outra. No capítulo 13 discutimos a função `requestAnimationFrame` que agenda uma função a ser chamada antes de redesenhar a próxima página. Essa é mais uma forma em que um script pode começar a correr.
 
-É importante entender que, disparo de eventos podem ocorrer a qualquer momento, quando há dois scripts em um único documento eles nunca iram correr no mesmo tempo. Se um script já está em execução, os manipuladores de eventos e pedaços de código programados em outras formas tem que esperar pela sua vez. Esta é a razão pela qual um documento irá congelar quando um script é executado por um longo tempo. O navegador não pode reagir aos cliques e outros eventos dentro do documento, porque ele não pode executar manipuladores de eventos até que o script atual termine sua execução.
+É importante entender que disparo de eventos podem ocorrer a qualquer momento, quando há dois scripts em um único documento eles nunca iram correr no mesmo tempo. Se um script já está em execução os manipuladores de eventos e o pedaço de código programado em outras formas teram de esperar por sua vez. Esta é a razão pela qual um documento irá congelar quando um script é executado por um longo tempo. O navegador não pode reagir aos cliques e outros eventos dentro do documento porque ele não pode executar manipuladores de eventos até que o script atual termine sua execução.
 
 Alguns ambientes de programação permitem que múltiplas `threads` de execução se propaguem ao mesmo tempo.
 
-Fazer várias coisas ao mesmo tempo torna um programa mais rápido. Mas quando você tem várias ações tocando nas mesmas partes do sistema, ao mesmo tempo, torna-se pelo menos uma ordem de magnitude mais difícil.
+Fazer várias coisas ao mesmo tempo torna um programa mais rápido. Mas quando você tem várias ações tocando nas mesmas partes do sistema, ao mesmo tempo torna-se de uma amplitude muito difícil.
 
-O fato de que os programas de JavaScript fazem apenas uma coisa de cada vez torna a nossa vida mais fácil. Para os casos em que você realmente quer fazer alguma coisa de muito tempo em segundo plano, sem o congelamento da página, os navegadores fornecem algo chamado de `web workers`. Um `web workers` é um ambiente isolado do JavaScript que funciona ao lado do principal programa para um documento e pode se comunicar com ele apenas por envio e recebimento de mensagens.
+O fato de que os programas de JavaScript fazem apenas uma coisa de cada vez torna a nossa vida mais fácil. Para os casos em que você precisar realmente fazer várias coisas ao muito tempo sem o congelamento da página, os navegadores fornecem algo chamado de `web workers`. Um `web workers` é um ambiente isolado do JavaScript que funciona ao lado do principal programa de um documento e pode se comunicar com ele apenas por envio e recebimento de mensagens.
 
 Suponha que temos o seguinte código em um arquivo chamado `code/squareworker.js`:
 
@@ -436,7 +426,7 @@ addEventListener("message", function(event) {
 });
 ````
 
-Imagine que a multiplicação com os número seja pesado com uma computação de longa duração e queremos performance então colocamos em uma `thread` em segundo plano. Este código gera um `worker`, envia algumas mensagens e produz as respostas.
+Imagine que esta multiplicação de números seja pesado e com uma computação de longa duração e queremos performance então colocamos em uma `thread` em segundo plano. Este código gera um `worker` que envia algumas mensagens e produz respostas.
 
 ````javascript
 var squareWorker = new Worker("code/squareworker.js");
@@ -447,11 +437,11 @@ squareWorker.postMessage(10);
 squareWorker.postMessage(24);
 ````
 
-A função `postMessage` envia uma mensagem o que causa um evento de "message" disparado ao receptor. O roteiro que criou o `worker` envia e recebe mensagens através do objeto `Worker`, ao passo que as conversações de `worker` para o script que o criou é enviado e ouvido diretamente sobre o seu âmbito global não compartilhada com o roteiro original.
+A função `postMessage` envia uma mensagem o que causa um evento de `"message"` disparado ao receptor. O roteiro que criou o `worker` envia e recebe mensagens através do objeto `Worker`, ao passo que as conversações de `worker` para o script que o criou é enviado e ouvido diretamente sobre o seu âmbito global não compartilhada-se do mesmo roteiro original.
 
 ## Definindo temporizadores
 
-A função `requestAnimationFrame` é similar à `setTimeout`. Ele agenda outra função a ser chamado mais tarde. Mas em vez de chamar a função na próxima redesenho ele espera por uma determinada quantidade de milissegundos. Esta página muda de azul para amarelo depois de dois segundos:
+A função `requestAnimationFrame` é similar à `setTimeout`. Ele agenda outra função a ser chamado mais tarde. Mas em vez de chamar a função na próximo redesenho ele espera por uma determinada quantidade de milissegundos. Esta página muda de azul para amarelo depois de dois segundos:
 
 ````html
 <script>
@@ -463,7 +453,7 @@ A função `requestAnimationFrame` é similar à `setTimeout`. Ele agenda outra 
 </script>
 ````
 
-Às vezes você precisa cancelar uma função que você programou. Isto é feito através do armazenamento do valor devolvido por setTimeout chamando `clearTimeout`nele.
+Às vezes você precisa cancelar uma função que você programou. Isto é feito através do armazenamento do valor devolvido por setTimeout e logo em seguida chamando `clearTimeout`.
 
 ````javascript
 var bombTimer = setTimeout(function() {
@@ -478,7 +468,7 @@ if (Math.random() < 0.5) { // 50% chance
 
 A função `cancelAnimationFrame` funciona da mesma forma que `clearTimeout` chamando um valor retornado pelo `requestAnimationFrame` que irá cancelar esse `frame`(supondo que ele já não tenha sido chamado).
 
-Um conjunto de funções semelhante são `setInterval` e `clearInterval` são usados ​​para definir timers que deve repetir a cada X milisegundos.
+Um conjunto de funções semelhante são `setInterval` e `clearInterval` são usados ​​para definir `timers` que devem repetir a cada X milisegundos.
 
 ````javascript
 var ticks = 0;
@@ -493,11 +483,11 @@ var clock = setInterval(function() {
 
 ## Debouncing
 
-Alguns tipos de eventos têm o potencial para disparar rapidamente muitas vezes em uma linha(os eventos "mousemove" e "scroll" por exemplo). Ao manusear tais eventos, você deve ter cuidado para não fazer nada muito demorado ou seu manipulador vai ocupar tanto tempo que a interação com o documento passa a sentir-se lento e instável.
+Alguns tipos de eventos têm o potencial para disparar rapidamente muitas vezes em uma linha(os eventos `"mousemove"` e `"scroll"  por exemplo). Ao manusear tais eventos, você deve ter cuidado para não fazer nada muito demorado ou seu manipulador vai ocupar tanto tempo que a interação com o documento passa a ficar lento e instável.
 
-Se você precisa fazer algo não trivial em tal manipulador, você pode usar `setTimeout` para se certificar de que você não esteja fazendo isso com muita freqüência. Isto é geralmente chamado de `debouncing` de evento. Há várias abordagens ligeiramente diferentes para isso.
+Se você precisa fazer algo não trivial em tal manipulador você pode usar `setTimeout` para se certificar de que você não esteja fazendo isso com muita freqüência. Isto é geralmente chamado de `debouncing` de evento. Há várias abordagens ligeiramente diferentes para isso.
 
-No primeiro exemplo, queremos fazer algo quando o usuário digitou alguma coisa, mas não quero fazê-lo imediatamente para todos os eventos chave. Quando eles estão digitando rapidamente, nós só queremos esperar até que uma pausa é feita. Em vez de imediatamente realizar uma ação no manipulador de eventos, vamos definir um tempo limite em seu lugar. Nós também limpamos o tempo limite anterior (se houver), de modo que, quando ocorrem eventos juntos(mais perto do que o nosso tempo de espera) o tempo de espera do evento anterior será cancelado.
+No primeiro exemplo, queremos fazer algo quando o usuário digitar alguma coisa mas não quero imediatamente, para todos os eventos de tecla. Quando ele esta digitando rapidamente nós só queremos esperar até que uma pausa é feita. Em vez de realizar uma ação imediatamente no manipulador de eventos vamos definir um tempo limite em seu lugar. Nós também limpamos o tempo limite anterior(se houver), de modo que, quando ocorrer os eventos juntos(mais perto do que o nosso tempo de espera) o tempo de espera do evento anterior será cancelado.
 
 ````html
 <textarea>Type something here...</textarea>
@@ -513,9 +503,9 @@ No primeiro exemplo, queremos fazer algo quando o usuário digitou alguma coisa,
 </script>
 ````
 
-Dando um valor indefinido para `clearTimeout` ou chamando-o em um tempo limite que já tenha demitido não tem efeito. Assim, não temos que ter cuidado sobre quando a chamá-lo, simplesmente fazemos para todos os eventos.
+Dando um valor indefinido para `clearTimeout` ou chamando-o em um tempo limite que já tenha demitido, ele não tera efeito. Assim não temos que ter cuidado sobre quando chamá-lo simplesmente fazemos para todos os eventos.
 
-Podemos usar um padrão ligeiramente diferente se quisermos de respostas no espaço de modo que eles fiquem separados por pelo menos um determinado período de tempo, mas quero remove-los durante uma série de eventos e não depois. Por exemplo, podemos querer responder a eventos de "mousemove" , mostrando as coordenadas atuais do mouse, mas apenas a cada 250 milisegundos.
+Podemos usar um padrão ligeiramente diferente se quisermos de respostas no espaço de modo que eles fiquem separados por pelo menos um determinado período de tempo, mas quero remove-los durante uma série de eventos e não depois. Por exemplo, podemos querer responder a eventos de `"mousemove"`, mostrando as coordenadas atuais do mouse, mas apenas a cada 250 milisegundos.
 
 ````html
 <script>
@@ -542,21 +532,21 @@ Podemos usar um padrão ligeiramente diferente se quisermos de respostas no espa
 
 Os manipuladores de eventos tornam possível detectar e reagir sobre eventos que não têm controle direto. O método `addEventListener` é usado para registrar esse manipulador.
 
-Cada evento tem um tipo("keydown", "focus", e assim por diante) que o identifica. A maioria dos eventos são chamados em um elementos DOM específicos e então propagam aos ancestrais desse elemento, permitindo que manipuladores associados a esses elementos possam lidar com eles.
+Cada evento tem um tipo(`"keydown"`,  `"focus"`, e assim por diante) que o identifica. A maioria dos eventos são chamados em um elementos DOM específicos e então propagam aos ancestrais desse elemento, permitindo que manipuladores associados a esses elementos possam lidar com eles.
 
 Quando um manipulador de eventos é chamado, é passado um objeto de evento com informações adicionais sobre o mesmo. Este objeto também tem métodos que nos permitem parar a propagação(`stopPropagation`) ou evitar a manipulação padrão do navegador do evento(`preventDefault`).
 
-Pressionando uma tecla eventos de "keydown", "keypress" e "keyup" são disparados. Pressionar um botão do mouse, eventos de "mousedown", "mouseup" e "click" são disparados. Movendo a o mouse eventos de "mousemove" e possivelmente "mouseenter" e "mouseout" são disparados.
+Pressionando uma tecla, eventos de `"keydown"`, `"keypress"` e  `"keyup"` são disparados. Pressionar um botão do mouse, eventos de `"mousedown"`, `"mouseup"` e `"click"` são disparados. Movendo o mouse, eventos de `"mousemove"`, `"mouseenter"` e `"mouseout"` são disparados.
 
-A rolagem pode ser detectado com o evento de "scroll", e quando a mudança de foco este eventos podem ser detectadas com o "focus" e "blur". Quando o documento termina de carregar, um evento de "load" é disparado no `window`.
+A rolagem pode ser detectado com o evento de `"scroll"`, e quando a mudança de foco este eventos podem ser detectadas com o `"focus"` e `"blur"`. Quando o documento termina de carregar, um evento de `"load"` é disparado no `window`.
 
-Apenas um pedaço de programa JavaScript pode ser executado por vez. Assim, manipuladores de eventos e outros scripts programados ter que esperar até outros scripts terminarem antes de chegar a sua vez.
+Apenas um pedaço de programa JavaScript pode ser executado por vez. Manipuladores de eventos e outros scripts programados tem que esperar até outros scripts terminarem antes de chegar a sua vez.
 
 ## Exercícios
 
 #### Censores de teclado
 
-Entre 1928 e 2013, uma lei Turca proibiu o uso das letras Q, W, X em documentos oficiais. Isso foi parte de uma iniciativa mais ampla para reprimir culturas Kurdish, essas cartas ocorrer na língua utilizada por pessoas Kurdish, mas não em turco de Istambul.
+Entre 1928 e 2013, uma lei Turca proibiu o uso das letras Q, W, X em documentos oficiais. Isso foi parte de uma iniciativa mais ampla para reprimir culturas Kurdish, essas casos ocorreram na língua utilizada por pessoas Kurdish mas não para os turcos de Istambul.
 
 Neste exercício você esta fazendo uma coisas ridículas com a tecnologia, eu estou pedindo para você programar um campo de texto(uma tag `<input type="text">`) onde essas letras não pode ser digitada.
 
@@ -572,9 +562,9 @@ Neste exercício você esta fazendo uma coisas ridículas com a tecnologia, eu e
 
 **Dica**
 
-A solução para este exercício que envolve impedindo o comportamento padrão dos eventos de teclas. Você pode lidar com qualquer um "keypress" ou "keydown". Se um dos dois tiver `preventDefault` chamado sobre ele, a tecla não aparece.
+A solução para este exercício que envolve o impedindo do comportamento padrão dos eventos de teclas. Você pode lidar com qualquer evento `"keypress"` ou `"keydown"`. Se um dos dois tiver `preventDefault` chamado sobre ele, a tecla não aparece.
 
-Identificar a letra digitada requer olhar o código de acesso ou propriedade `charCode` e comparar isso com os códigos para as letras que você deseja filtrar. Em "keydown", você não precisa se preocupar com letras maiúsculas e minúsculas, uma vez que identifica somente a tecla pressionada. Se você decidir lidar com "keypress" que identifica o caráter real digitado, você tem que ter certeza que você teste para ambos os casos. Uma maneira de fazer isso seria esta:
+Identificar a letra digitada requer olhar o código de acesso ou propriedade `charCode` e comparar isso com os códigos para as letras que você deseja filtrar. Em `"keydown"` você não precisa se preocupar com letras maiúsculas e minúsculas, uma vez que precisa somente identificar somente a tecla pressionada. Se você decidir lidar com `"keypress"` que identifica o caráter real digitado você tem que ter certeza que você testou para ambos os casos. Uma maneira de fazer isso seria esta:
 
 /[qwx]/i.test(String.fromCharCode(event.charCode))
 
@@ -582,13 +572,13 @@ Identificar a letra digitada requer olhar o código de acesso ou propriedade `ch
 
 #### Trilha do mouse
 
-Nos primeiros dias de JavaScript que era a hora de home pages berrantes com lotes de imagens animadas as pessoas vieram acima com algumas maneiras verdadeiramente inspiradoras para usar a linguagem.
+Nos primeiros dias de JavaScript que era a hora de home pages berrantes com lotes de imagens animadas, as pessoas viram algumas maneiras verdadeiramente inspiradoras para usar a linguagem.
 
 Uma delas foi a "trilha do mouse" a série de imagens que viriam a seguir o ponteiro do mouse quando você muda o cursor através da página.
 
-Neste exercício, eu quero que você implementar um rastro de mouse. Use posicionadores absolutamente ao elemento `<div>` com um tamanho fixo e com uma cor de fundo(consulte o código na seção "mouseclick" para um exemplo). Crie um grupo de tais elementos e quando o mouse se move exibir na esteira do ponteiro do mouse de alguma forma.
+Neste exercício, eu quero que você implemente um rastro de mouse. Use posicionadores absolutamente ao elemento `<div>` com um tamanho fixo e com uma cor de fundo(consulte o código na seção `"mouseclick"` para um exemplo). Crie um grupo de tais elementos e quando o mouse se mover exibir a esteira do ponteiro do mouse de alguma forma.
 
-Existem várias abordagens possíveis aqui. Você pode fazer a sua solução tão simples ou tão complexo como você quiser. Uma solução simples para começar é manter um número fixo de elementos da fuga e percorrê-las, movendo-se o próximo a posição atual do rato cada vez que um evento "mousemove" ocorrer.
+Existem várias abordagens possíveis aqui. Você pode fazer a sua solução simples ou complexa; como você quiser. Uma solução simples para começar é manter um número fixo de elementos da fuga e percorrê-las, movendo-se o próximo a posição atual do rato cada vez que um evento `"mousemove"` ocorrer.
 
 ````html
 <style>
@@ -610,21 +600,21 @@ Existem várias abordagens possíveis aqui. Você pode fazer a sua solução tã
 
 **Dica**
 
-Para criar os elementos o melhor é fazer em um loop. Anexá-las ao documento para torná-los aparecer. Para ser capaz de acessá-los mais tarde para alterar a sua posição, armazenar os elementos da fuga em uma matriz.
+Para criar os elementos o melhor é fazer um loop e anexá-las ao documento para poder exibir. Para ser capaz de poder acessar mais tarde para alterar a sua posição e armazenar os elementos da fuga em uma matriz.
 
-Ciclismo através deles pode ser feito mantendo uma variável de contador e adicionando 1 a ela toda vez que o evento de "mousemove" é disparado. O operador resto(% 10) pode então ser usado para obter um índice de matriz válida para escolher o elemento que você deseja posicionar durante um determinado evento.
+Ciclismo através deles pode ser feito mantendo uma variável de contador e adicionando 1 a ela toda vez que o evento de `"mousemove"` é disparado. O operador resto(% 10) pode então ser usado para obter um índice de matriz válida para escolher o elemento que você deseja posicionar durante um determinado evento.
 
-Outro efeito interessante pode ser alcançado por um sistema de modelagem física simples. Use o evento "mousemove" apenas para atualizar um par de variáveis ​​que rastreiam a posição do mouse. Em seguida, use `requestAnimationFrame` para simular os elementos de rastros sendo atraídos para a posição do ponteiro do mouse. Em cada passo de animação atualizar a sua posição com base na sua posição relativa para o ponteiro do mouse(opcionalmente programe uma velocidade que é armazenado para cada elemento). Descobrir uma boa maneira de fazer isso é com você.
+Outro efeito interessante pode ser alcançado por um sistema de modelagem física simples. Use o evento `"mousemove"` apenas para atualizar um par de variáveis ​​que rastreiam a posição do mouse. Em seguida, use `requestAnimationFrame` para simular os elementos de rastros sendo atraídos para a posição do ponteiro do mouse. Em cada passo de animação atualizar a sua posição com base na sua posição relativa para o ponteiro do mouse(opcionalmente programe uma velocidade que é armazenado para cada elemento). Descobrir uma boa maneira de fazer isso é com você.
 
 [Solução](http://jsfiddle.net/saulo/eeb5d4zs/)
 
 #### Tab
 
-A interface com abas é um padrão comum de design. Ele permite que você selecione um painel de interface escolhendo entre uma série de abas sobresaindo acima de um elemento.
+A interface com abas é um padrão comum de design. Ele permite que você selecione um painel de interface escolhendo entre uma série de abas que se destaca acima de um outro elemento.
 
 Neste exercício você vai implementar uma interface simples com abas. Escreva uma função `asTabs` que leva um nó do DOM e cria uma interface com abas mostrando os elementos filho desse nó. Você deverá inserir uma lista de elementos `<button>` na parte superior do nó e para cada elemento filho devera conter o texto recuperado do atributo `tabname` de cada botão. Todos exceto um dos filhos originais devem ser escondidos(dando um estilo de `display: none`) atualmente os nó disponíveis podem ser selecionados com um click nos botões.
 
-Quando funcionar você devera mudar o estilo do botão quando ativo.
+Quando funcionar você devera mudar o estilo do botão ativo.
 
 ````html
 <div id="wrapper">
@@ -642,12 +632,12 @@ Quando funcionar você devera mudar o estilo do botão quando ativo.
 
 **Dica**
 
-Uma armadilha que você provavelmente vai perceber é que você não podera usar diretamente propriedade `childNodes` do nó como uma coleção de nós na tabulação. Por um lado quando você adiciona os botões eles também se tornam nós filhos e acabam neste objeto porque é ao vivo. Por outro lado os nós de texto criados para o espaço em branco entre os nós também estão lá e não deve obter os seus próprios guias.
+Uma armadilha que você provavelmente vai encontrar é que não podera usar diretamente propriedade `childNodes` do nó como uma coleção de nós na tabulação. Por um lado quando você adiciona os botões eles também se tornam nós filhos e acabam neste objeto porque é em tempo de execução. Por outro lado os nós de texto criados para o espaço em branco entre os nós também estão lá e não deve obter os seus próprios guias.
 
 Para contornar isso vamos começar a construir uma matriz real de todos os filhos do `wrapper` que têm um `nodeType` igual a 1.
 
-Ao registrar manipuladores de eventos sobre os botões as funções de manipulador vai precisar saber qual elemento separador está associada com o botão. Se eles são criados em um circuito normal você pode acessar a variável de índice do ciclo de dentro da função mas não vai dar-lhe o número correto pois essa variável terá  posteriormente sido alterada pelo loop.
+Ao registrar manipuladores de eventos sobre os botões as funções de manipulador vai precisar saber qual separador do elemento está associada ao botão. Se eles são criados em um circuito normal você pode acessar a variável de índice do ciclo de dentro da função mas não vai dar-lhe o número correto pois essa variável terá posteriormente sido alterada pelo loop.
 
-Uma solução simples é usar o método `forEach` para criar as funções de manipulador de dentro da função passada por `forEach`. O índice de loop, que é passado como um segundo argumento para essa função, será uma variável local normal de lá e não serão substituídos por novas iterações.
+Uma solução simples é usar o método `forEach` para criar as funções de manipulador de dentro da função passada. O índice de loop que é passado como um segundo argumento para essa função, será uma variável local normal e que não serão substituídos por novas iterações.
 
 [Solução](http://jsfiddle.net/saulo/hjjtrh5j/)

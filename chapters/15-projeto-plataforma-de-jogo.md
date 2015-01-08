@@ -34,3 +34,31 @@ Podemos representar o fundo como uma tabela uma vez que é uma grade imutável d
 Em jogos e outros programas que têm que animar gráficos e responder à entrada do usuário sem demora notável a eficiência é importante. Embora o DOM não foi originalmente projetado para gráficos de alto desempenho mas é o melhor que podemos esperar. Você viu algumas animações no capítulo 13. Em uma máquina moderna um jogo simples como este tem um bom desempenho mesmo se não estivermos pensando sobre otimização.
 
 No próximo capítulo vamos explorar uma outra tecnologia de navegador a tag `<canvas>` o que proporciona uma forma mais tradicional para desenhar gráficos trabalhando em termos de formas e pixels em vez de elementos no DOM.
+
+## Níveis
+
+No Capítulo 7 usamos matrizes de seqüências para descrever uma grade bidimensional. Nós podemos fazer o mesmo aqui. Ele nos permitirá projetar níveis sem antes construir um editor de níveis.
+
+A nível simples isto ficaria assim:
+
+````js
+var simpleLevelPlan = [
+  "                      ",
+  "                      ",
+  "  x              = x  ",
+  "  x         o o    x  ",
+  "  x @      xxxxx   x  ",
+  "  xxxxx            x  ",
+  "      x!!!!!!!!!!!!x  ",
+  "      xxxxxxxxxxxxxx  ",
+  "                      "
+];
+````
+
+Tanto a rede fixa e os elementos móveis são incluídos no plano. Os caracteres `x` representam paredes, os caracteres de espaço são para o `espaço vazio` e os `!` representam algo fixo(nonmoving) telhas de lava.
+
+O `@` define o local onde o jogador começa. Todo `o` é uma moeda e o sinal de igual `=` representa um bloco de lava que se move para trás e para a frente na horizontal. Note-se que a grade para essas regras será definido para conter o espaço vazio e outra estrutura de dados é usado para rastrear a posição de tais elementos em movimento.
+
+Vamos apoiar dois outros tipos de lava em movimento: O personagem pipe(`|`) para blocos que se deslocam verticalmente e `v` por gotejamento de lava verticalmente lava que não salta para trás e nem para a frente só se move para baixo pulando de volta à sua posição inicial quando atinge o chão.
+
+Um jogo inteiro é composto por vários níveis que o jogador deve completar. Um nível é concluído quando todas as moedas foram recolhidos. Se o jogador toca a lava o nível atual é restaurado à sua posição inicial e o jogador pode tentar novamente.

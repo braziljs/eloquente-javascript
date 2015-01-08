@@ -21,7 +21,7 @@ A caixa escura representa o jogador cuja a tarefa é coletar as caixas amarelas(
 
 O jogador pode andar por aí com as setas do teclado para movimentar para esquerda, para a direita ou pular com a seta para cima. `Jumping` é uma especialidade deste personagem do jogo. Ela pode atingir várias vezes sua própria altura e é capaz de mudar de direção em pleno ar. Isto pode não ser inteiramente realista mas ajuda a dar ao jogador a sensação de estar no controle direto do avatar na tela.
 
-O jogo consiste em um fundo fixo como uma grade e com os elementos que se deslocam sobreposta ao fundo. Cada campo na grade pode estar vazio, sólido ou ser uma lava. Os elementos móveis são os jogadores, moedas e alguns pedaços de lava. Ao contrário da simulação de vida artificial a partir do Capítulo 7 as posições destes elementos não são limitados à rede de suas coordenadas e pode ser fracionada permitindo movimento suave.
+O jogo consiste em um fundo fixo como uma grade e com os elementos que se deslocam sobreposta ao fundo. Cada campo na grade pode estar vazio, sólido ou ser uma lava. Os elementos móveis são os jogadores, moedas e alguns pedaços de lava. Ao contrário da simulação de vida artificial a partir do Capítulo 7 as posições destes elementos não são limitados à `grid` de suas coordenadas e pode ser fracionada permitindo movimento suave.
 
 ## A tecnologia
 
@@ -55,10 +55,59 @@ var simpleLevelPlan = [
 ];
 ````
 
-Tanto a rede fixa e os elementos móveis são incluídos no plano. Os caracteres `x` representam paredes, os caracteres de espaço são para o `espaço vazio` e os `!` representam algo fixo(nonmoving) telhas de lava.
+Tanto a `grid` fixa e os elementos móveis são incluídos no plano. Os caracteres `x` representam paredes, os caracteres de espaço são para o `espaço vazio` e os `!` representam algo fixo(nonmoving) telhas de lava.
 
 O `@` define o local onde o jogador começa. Todo `o` é uma moeda e o sinal de igual `=` representa um bloco de lava que se move para trás e para a frente na horizontal. Note-se que a grade para essas regras será definido para conter o espaço vazio e outra estrutura de dados é usado para rastrear a posição de tais elementos em movimento.
 
 Vamos apoiar dois outros tipos de lava em movimento: O personagem pipe(`|`) para blocos que se deslocam verticalmente e `v` por gotejamento de lava verticalmente lava que não salta para trás e nem para a frente só se move para baixo pulando de volta à sua posição inicial quando atinge o chão.
 
 Um jogo inteiro é composto por vários níveis que o jogador deve completar. Um nível é concluído quando todas as moedas foram recolhidos. Se o jogador toca a lava o nível atual é restaurado à sua posição inicial e o jogador pode tentar novamente.
+
+## A leitura de um level
+
+O construtor a seguir cria um objeto de nível. Seu argumento deve ser uma matriz de seqüências que define o nível.
+
+````js
+function Level(plan) {
+  this.width = plan[0].length;
+  this.height = plan.length;
+  this.grid = [];
+  this.actors = [];
+
+  for (var y = 0; y < this.height; y++) {
+    var line = plan[y], gridLine = [];
+    for (var x = 0; x < this.width; x++) {
+      var ch = line[x], fieldType = null;
+      var Actor = actorChars[ch];
+      if (Actor)
+        this.actors.push(new Actor(new Vector(x, y), ch));
+      else if (ch == "x")
+        fieldType = "wall";
+      else if (ch == "!")
+        fieldType = "lava";
+      gridLine.push(fieldType);
+    }
+    this.grid.push(gridLine);
+  }
+
+  this.player = this.actors.filter(function(actor) {
+    return actor.type == "player";
+  })[0];
+  this.status = this.finishDelay = null;
+}
+````
+
+Para deixar o código pequeno não verificamos entrada erradas. Ele assume que você sempre entregue um plano de level adequado, completo, com a posição de início do jogador e com outros itens essenciais.
+
+Um level armazena a sua largura e altura juntamente com duas matrizes, uma para a grade e um para os agentes que são os elementos dinâmicos. A grade é representado como uma matriz de matrizes onde cada uma das séries internas representa uma linha horizontal e cada quadrado contém algo ou é nulo; para as casas vazias ou uma string indicaremos o tipo do quadrado("muro" ou "lava").
+
+A matriz contém objetos que rastreiam a posição atual e estado dos elementos dinâmicos no level. Cada um deles deverá ter uma propriedade para indicar sua posição(as coordenadas do seu canto superior esquerdo), uma propriedade `size` dando o seu tamanho e uma propriedade do tipo que mantém uma cadeia que identifica o elemento("lava", "dinheiro" ou "jogador").
+
+Depois de construir a `grid` usamos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do level. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece  `finishDelay` é usado para manter o nível ativo durante um curto período de tempo de modo que uma animação simples pode ser mostrado(Repor imediatamente ou avançar o nível ficaria mais fácil). Este método pode ser usado para descobrir se um nível foi concluído.
+
+````js
+Level.prototype.isFinished = function() {
+  return this.status != null && this.finishDelay < 0;
+};
+````
+

@@ -111,3 +111,89 @@ Level.prototype.isFinished = function() {
 };
 ````
 
+## Atores
+
+Para armazenar a posição e o tamanho de um ator vamos voltar para o nosso tipo Vector que agrupa uma coordenada `x` e `y` para coordenar um objeto.
+
+````js
+function Vector(x, y) {
+  this.x = x; this.y = y;
+}
+Vector.prototype.plus = function(other) {
+  return new Vector(this.x + other.x, this.y + other.y);
+};
+Vector.prototype.times = function(factor) {
+  return new Vector(this.x * factor, this.y * factor);
+};
+````
+
+O método de escalas temporais de um vector por uma determinada quantidade . Isso será útil para quando precisarmos de multiplicar um vetor de velocidade por um intervalo de tempo para obter a distância percorrida durante esse tempo.
+
+Na seção anterior o objeto `actorChars` foi usado pelo construtor `Level` para associar personagens com as funções do construtor. O objeto parece com isso:
+
+````js
+var actorChars = {
+  "@": Player,
+  "o": Coin,
+  "=": Lava, "|": Lava, "v": Lava
+};
+````
+
+Três personagens estão sendo mapeados para o objeto `Lava`. O construtor `Level` passa o caráter fonte do ator como o segundo argumento para o construtor e o construtor de `Lava` usa isso para ajustar o seu comportamento(saltando horizontalmente, saltando verticalmente ou gotejamento).
+
+O tipo de jogador é construído da seguinte forma. A velocidade esta sendo armazenada como velocidade atual, que vai ajudar a simular movimento e gravidade.
+
+````js
+function Player(pos) {
+  this.pos = pos.plus(new Vector(0, -0.5));
+  this.size = new Vector(0.8, 1.5);
+  this.speed = new Vector(0, 0);
+}
+Player.prototype.type = "player";
+````
+
+Como um jogador é quadrados elevados one-and-a-half, a sua posição inicial está sendo definida para ser a metade de um quadrado acima da posição em que o @ personagem apareceu. Desta forma a sua parte inferior fica alinhada com a parte inferior do quadrado que apareceu.
+
+Ao construir um objeto `Lava` dinâmicamente é preciso inicializar o objeto de uma forma diferente dependendo do personagem que se baseia. `Lava Dinâmica` se move longitudinalmente em sua velocidade dada até atingir um obstáculo. Nesse ponto se ele tem uma propriedade `repeatPos` ele vai pular de volta à sua posição inicial(`gotejamento`) . Se isso não acontecer, ele irá inverter a sua velocidade e continuar no outro sentido(pular). O construtor só configura as propriedades necessárias. O método que faz o movimento real será escrito mais tarde.
+
+````js
+function Lava(pos, ch) {
+  this.pos = pos;
+  this.size = new Vector(1, 1);
+  if (ch == "=") {
+    this.speed = new Vector(2, 0);
+  } else if (ch == "|") {
+    this.speed = new Vector(0, 2);
+  } else if (ch == "v") {
+    this.speed = new Vector(0, 3);
+    this.repeatPos = pos;
+  }
+}
+Lava.prototype.type = "lava";
+````
+
+Coin são atores simples. A maioria dos blocos simplesmente esperam em seus lugarares. Mas para animar o jogo um pouco eles recebem uma "oscilação", um ligeiro movimento para vertical e para trás. Para controlar isto um objecto `coin` armazena uma posição de base bem como uma propriedade que controla a oscilação de fase do movimento no salto. Juntos esses determinam a posição real da moeda(armazenado na propriedade pos).
+
+
+````js
+function Coin(pos) {
+  this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
+  this.size = new Vector(0.6, 0.6);
+  this.wobble = Math.random() * Math.PI * 2;
+}
+Coin.prototype.type = "coin";
+````
+
+No capítulo 13 vimos que `Math.sin` nos dá a coordenada y de um ponto em um círculo. Isso para coordenar um vai e volta em forma de onda suave à medida que avançamos o círculo, a função `seno` se torna útil para a modelagem de um movimento ondulatório .
+
+Para evitar uma situação em que todas as moedas se movem para cima ou para baixo de forma síncrona, a fase inicial de cada moeda é aleatória. A fase da onda de `Math.Sin` a largura de uma onda que produz é de 2π. Multiplicamos o valor retornado pelo `Math.random` por esse número para dar a posição inicial de uma moeda de forma aleatória.
+
+Vamos agora ter escrito todas as peças necessárias para representar o nível do estado.
+
+ ````js
+var simpleLevel = new Level(simpleLevelPlan);
+console.log(simpleLevel.width, "by", simpleLevel.height);
+// → 22 by 9
+ ````
+
+ A tarefa à frente deve exibir tais níveis na tela, e assim modelar o tempo do movimento dentre deles.

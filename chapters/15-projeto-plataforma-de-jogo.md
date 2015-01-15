@@ -43,15 +43,15 @@ A nível simples isto ficaria assim:
 
 ````js
 var simpleLevelPlan = [
-  "                      ",
-  "                      ",
-  "  x              = x  ",
-  "  x         o o    x  ",
-  "  x @      xxxxx   x  ",
-  "  xxxxx            x  ",
-  "      x!!!!!!!!!!!!x  ",
-  "      xxxxxxxxxxxxxx  ",
-  "                      "
+	"                      ",
+	"                      ",
+	"  x              = x  ",
+	"  x         o o    x  ",
+	"  x @      xxxxx   x  ",
+	"  xxxxx            x  ",
+	"      x!!!!!!!!!!!!x  ",
+	"      xxxxxxxxxxxxxx  ",
+	"                      "
 ];
 ````
 
@@ -69,31 +69,31 @@ O construtor a seguir cria um objeto de nível. Seu argumento deve ser uma matri
 
 ````js
 function Level(plan) {
-  this.width = plan[0].length;
-  this.height = plan.length;
-  this.grid = [];
-  this.actors = [];
+	this.width = plan[0].length;
+	this.height = plan.length;
+	this.grid = [];
+	this.actors = [];
 
-  for (var y = 0; y < this.height; y++) {
-    var line = plan[y], gridLine = [];
-    for (var x = 0; x < this.width; x++) {
-      var ch = line[x], fieldType = null;
-      var Actor = actorChars[ch];
-      if (Actor)
-        this.actors.push(new Actor(new Vector(x, y), ch));
-      else if (ch == "x")
-        fieldType = "wall";
-      else if (ch == "!")
-        fieldType = "lava";
-      gridLine.push(fieldType);
-    }
-    this.grid.push(gridLine);
-  }
+	for (var y = 0; y < this.height; y++) {
+		var line = plan[y], gridLine = [];
+		for (var x = 0; x < this.width; x++) {
+			var ch = line[x], fieldType = null;
+			var Actor = actorChars[ch];
+			if (Actor)
+				this.actors.push(new Actor(new Vector(x, y), ch));
+			else if (ch == "x")
+				fieldType = "wall";
+			else if (ch == "!")
+				fieldType = "lava";
+			gridLine.push(fieldType);
+		}
+		this.grid.push(gridLine);
+	}
 
-  this.player = this.actors.filter(function(actor) {
-    return actor.type == "player";
-  })[0];
-  this.status = this.finishDelay = null;
+	this.player = this.actors.filter(function(actor) {
+		return actor.type == "player";
+	})[0];
+	this.status = this.finishDelay = null;
 }
 ````
 
@@ -107,7 +107,7 @@ Depois de construir a `grid` usamos o método de filtro para encontrar o objeto 
 
 ````js
 Level.prototype.isFinished = function() {
-  return this.status != null && this.finishDelay < 0;
+	return this.status != null && this.finishDelay < 0;
 };
 ````
 
@@ -117,13 +117,13 @@ Para armazenar a posição e o tamanho de um ator vamos voltar para o nosso tipo
 
 ````js
 function Vector(x, y) {
-  this.x = x; this.y = y;
+	this.x = x; this.y = y;
 }
 Vector.prototype.plus = function(other) {
-  return new Vector(this.x + other.x, this.y + other.y);
+	return new Vector(this.x + other.x, this.y + other.y);
 };
 Vector.prototype.times = function(factor) {
-  return new Vector(this.x * factor, this.y * factor);
+	return new Vector(this.x * factor, this.y * factor);
 };
 ````
 
@@ -133,9 +133,9 @@ Na seção anterior o objeto `actorChars` foi usado pelo construtor `Level` para
 
 ````js
 var actorChars = {
-  "@": Player,
-  "o": Coin,
-  "=": Lava, "|": Lava, "v": Lava
+	"@": Player,
+	"o": Coin,
+	"=": Lava, "|": Lava, "v": Lava
 };
 ````
 
@@ -145,9 +145,9 @@ O tipo de jogador é construído da seguinte forma. A velocidade esta sendo arma
 
 ````js
 function Player(pos) {
-  this.pos = pos.plus(new Vector(0, -0.5));
-  this.size = new Vector(0.8, 1.5);
-  this.speed = new Vector(0, 0);
+	this.pos = pos.plus(new Vector(0, -0.5));
+	this.size = new Vector(0.8, 1.5);
+	this.speed = new Vector(0, 0);
 }
 Player.prototype.type = "player";
 ````
@@ -158,16 +158,16 @@ Ao construir um objeto `Lava` dinâmicamente é preciso inicializar o objeto de 
 
 ````js
 function Lava(pos, ch) {
-  this.pos = pos;
-  this.size = new Vector(1, 1);
-  if (ch == "=") {
-    this.speed = new Vector(2, 0);
-  } else if (ch == "|") {
-    this.speed = new Vector(0, 2);
-  } else if (ch == "v") {
-    this.speed = new Vector(0, 3);
-    this.repeatPos = pos;
-  }
+	this.pos = pos;
+	this.size = new Vector(1, 1);
+	if (ch == "=") {
+		this.speed = new Vector(2, 0);
+	} else if (ch == "|") {
+		this.speed = new Vector(0, 2);
+	} else if (ch == "v") {
+		this.speed = new Vector(0, 3);
+		this.repeatPos = pos;
+	}
 }
 Lava.prototype.type = "lava";
 ````
@@ -177,9 +177,9 @@ Coin são atores simples. A maioria dos blocos simplesmente esperam em seus luga
 
 ````js
 function Coin(pos) {
-  this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
-  this.size = new Vector(0.6, 0.6);
-  this.wobble = Math.random() * Math.PI * 2;
+	this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
+	this.size = new Vector(0.6, 0.6);
+	this.wobble = Math.random() * Math.PI * 2;
 }
 Coin.prototype.type = "coin";
 ````
@@ -197,3 +197,197 @@ console.log(simpleLevel.width, "by", simpleLevel.height);
  ````
 
  A tarefa à frente deve exibir tais níveis na tela, e assim modelar o tempo do movimento dentre deles.
+
+ ## Tarefa de encapsulamento
+
+A maior parte do código neste capítulo não ira se preocupar com o encapsulamento. Isto tem duas razões. Em primeiro lugar o encapsulamento exige esforço extra. 
+Em programas maiores isso requer conceitos  adicionais de interfaces a serem introduzidas. Como só há código para você enviar ao leitor que esta jogando com seus olhos vidrados, fiz um esforço para manter o programa pequeno.
+
+Em segundo lugar, os vários elementos neste jogo estão estreitamente ligados que se o comportamento de um deles mudar é improvável que qualquer um dos outros seriam capazes de ficar na mesma ordem. A interfaces e os elementos acaba codificando uma série de suposições sobre a forma de como o jogo funciona. Isso os torna muito menos eficaz sempre que você altera uma parte do sistema, você ainda tem que se preocupar com a forma como ela afeta as outras partes isto porque suas interfaces não cobririam a nova situação.
+
+Alguns pontos de corte em um sistema existe bem a separação através de interfaces rigorosas mas outros não. Tentar encapsular algo que não é um limite adequado é uma maneira de desperdiçar uma grande quantidade de energia. Quando você está fazendo este erro normalmente você vai perceber que suas interfaces estaram ficando sem jeito amplo e detalhado e que eles precisam serem modificados muitas vezes, assim quando como o programa evolui.
+
+Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenho. A razão para isso é que nós vamos mostrar o mesmo jogo de uma maneira diferente no próximo capítulo. Ao colocar o desenho atrás de uma interface podemos simplesmente carregar o mesmo programa de jogo lá e ligar um novo módulo de exibir.
+
+## Desenho
+
+O encapsulamento do código de desenho é feito através da definição de um objeto de exibição que exibe um determinado nível. O tipo de exibição que definimos neste capítulo é chamado `DOMDisplay` isto porque usamos elementos simples do DOM para mostrar o nível.
+
+Nós estaremos usando uma folha de estilo para definir as cores reais e outras propriedades fixas dos elementos que faram parte do jogo. Também seria possível atribuir diretamente o estilo de propriedade dos elementos quando criá-los, mas queremos produzir programas mais detalhados.
+
+A seguinte função auxiliar fornece uma maneira curta para criar um elemento e dar-lhe uma classe:
+
+````js
+function elt(name, className) {
+  var elt = document.createElement(name);
+  if (className) elt.className = className;
+  return elt;
+}
+````
+
+O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar-se e um nível de objeto.
+
+````js
+function DOMDisplay(parent, level) {
+  this.wrap = parent.appendChild(elt("div", "game"));
+  this.level = level;
+
+  this.wrap.appendChild(this.drawBackground());
+  this.actorLayer = null;
+  this.drawFrame();
+}
+````
+
+Levando em consideração que o fato de que `appendChild` retorna o elemento acrescentado ao criar o conteúdo do elemento e armazená-lo na suas propriedade com apenas uma única instrução.
+
+O fundo do nível nunca muda, é desenhada apenas uma vez. Os atores são redesenhadas cada vez que o `display` for atualizado. A propriedade `actorLayer` será utilizado para controlar o elemento que contém os agentes de modo que eles podem ser facilmente removidos e substituídos.
+
+Nossas coordenadas e tamanhos são rastreados em unidades relativas ao tamanho da `grid`, onde o tamanho ou distância de 1 significa uma unidade da `grid`. Ao definir os tamanhos de pixel vamos ter que escalar essas coordenadas, tudo no jogo seria ridiculamente pequeno em um único pixel por metro quadrado. A variável de escala indica o número de pixels que uma única unidade ocupa na tela.
+
+````js
+var scale = 20;
+
+DOMDisplay.prototype.drawBackground = function() {
+  var table = elt("table", "background");
+  table.style.width = this.level.width * scale + "px";
+  this.level.grid.forEach(function(row) {
+    var rowElt = table.appendChild(elt("tr"));
+    rowElt.style.height = scale + "px";
+    row.forEach(function(type) {
+      rowElt.appendChild(elt("td", type));
+    });
+  });
+  return table;
+};
+````
+
+Como mencionado anteriormente o fundo é desenhado com um elemento `<table>`. Este corresponde à estrutura da propriedade `grid` onde cada linha é transformado em uma linha da tabela(elemento `<tr>`). As cordas na grade são usados ​​como nomes de classe para a célula da tabela(elemento `<td>`). O seguinte CSS ajuda a olhar o quadro resultante como o fundo que queremos:
+
+````css
+.background    { background: rgb(52, 166, 251);
+                 table-layout: fixed;
+                 border-spacing: 0;              }
+.background td { padding: 0;                     }
+.lava          { background: rgb(255, 100, 100); }
+.wall          { background: white;              }
+````
+
+Alguns deles(`table-layout`, `border-spacing` , e `padding`) são simplesmente usados ​​para suprimir o comportamento padrão indesejado. Nós não queremos que o layout da tabela dependa de suas células de conteúdos, e nós não queremos espaço entre as células da tabela ou `padding` dentro deles.
+
+A regra de `background` define a cor de fundo. Em CSS é permitido que as cores a serem especificados tanto como palavras(`write`), com um formato tal como RGB(`R, G, B`) onde as componentes vermelha, verde e azul da cor são separados em três números de 0 a 255. Assim em `rgb(52, 166, 251)`, o componente vermelho é de 52 o verde é 166 e azul é 251. Como o componente azul é o maior a cor resultante será azulada. Você pode ver que na regra lava o primeiro número(vermelho) é o maior.
+
+Chamamos a cada ator criando um elemento no DOM para ele e definindo a posição e o tamanho desse elemento com base nas propriedades do ator. Os valores devem ser multiplicadas por escala para converter para unidades de pixels do jogo.
+
+````js
+DOMDisplay.prototype.drawActors = function() {
+  var wrap = elt("div");
+  this.level.actors.forEach(function(actor) {
+    var rect = wrap.appendChild(elt("div",
+                                    "actor " + actor.type));
+    rect.style.width = actor.size.x * scale + "px";
+    rect.style.height = actor.size.y * scale + "px";
+    rect.style.left = actor.pos.x * scale + "px";
+    rect.style.top = actor.pos.y * scale + "px";
+  });
+  return wrap;
+};
+````
+
+Para dar mais classe ao elemento separamos os nomes de classe por espaços. No código CSS abaixo mostramos a classe ator que nos dá os atores com sua posição absoluta. O seu nome de tipo é usado como uma classe extra para dar-lhes uma cor. Não temos para definir a classe lava novamente porque vamos reutilizar a classe para os quadradrinhos de lava que nós definimos anteriormente.
+
+````css
+.actor  { position: absolute;            }
+.coin   { background: rgb(241, 229, 89); }
+.player { background: rgb(64, 64, 64);   }
+````
+
+Quando se atualiza a exibição o método que foi passado primeiro remove os velhos ator gráficos se houver e em seguida redesenha-os em suas novas posições. Pode ser tentador para tentar reutilizar os elementos DOM para os atores, mas para fazer esse trabalho seria preciso uma grande quantidade de fluxo de informação adicional entre o código de exibição e o código de simulação. Precisaríamos de associar os atores com os elementos do DOM e o código de desenho deve remover elementos quando seus atores desaparecem. Uma vez que não será tipicamente apenas um punhado de atores no jogo, redesenhar todos eles não custa caro.
+
+````js
+DOMDisplay.prototype.drawFrame = function() {
+  if (this.actorLayer)
+    this.wrap.removeChild(this.actorLayer);
+  this.actorLayer = this.wrap.appendChild(this.drawActors());
+  this.wrap.className = "game " + (this.level.status || "");
+  this.scrollPlayerIntoView();
+};
+````
+
+Ao adicionar o estado atual do nível com um nome de classe para o `wrapper` podemos denominar que o ator do jogador esta ligeiramente diferente quando o jogo está ganho ou perdido, para isso basta adicionar uma regra no CSS que tem efeito apenas quando o jogador tem um elemento ancestral com uma determinada classe.
+
+````css
+.lost .player {
+  background: rgb(160, 64, 64);
+}
+
+.won .player {
+  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+}
+````
+
+Depois de tocar em lava a cor do jogador ficara vermelho escuro sugerindo escaldante. Quando a última moeda foi coletada nós usamos duas caixa branca com sombras borradas, um para o canto superior esquerdo e um para o canto superior direito para criar um efeito de halo branco.
+
+Não podemos assumir que os níveis de sempre se encaixam na janela de exibição. É por isso que a chamada `scrollPlayerIntoView` é necessária e  garante que se o nível está saindo fora do visor nós podemos rolar o `viewport` para garantir que o jogador está perto de seu centro. O seguinte CSS dá ao elemento DOM o embrulho do jogo com um tamanho máximo e garante que qualquer coisa que não se destaca da caixa do elemento não é visível. Também se obter o elemento exterior numa posição relativa, de modo que os atores estão posicionados no seu interior em relação ao canto superior esquerdo do nível.
+
+````css
+.game {
+  overflow: hidden;
+  max-width: 600px;
+  max-height: 450px;
+  position: relative;
+}
+````
+
+No método `scrollPlayerIntoView` encontramos a posição do jogador e atualizamos a posição de rolagem do elemento conforme seu envolvimento. Vamos mudar a posição de rolagem através da manipulação das propriedades desses elementos com os enventos de `scrollLeft` e `scrollTop` para quando o jogador está muito perto do canto.
+
+````js
+DOMDisplay.prototype.scrollPlayerIntoView = function() {
+  var width = this.wrap.clientWidth;
+  var height = this.wrap.clientHeight;
+  var margin = width / 3;
+
+  // The viewport
+  var left = this.wrap.scrollLeft, right = left + width;
+  var top = this.wrap.scrollTop, bottom = top + height;
+
+  var player = this.level.player;
+  var center = player.pos.plus(player.size.times(0.5))
+                 .times(scale);
+
+  if (center.x < left + margin)
+    this.wrap.scrollLeft = center.x - margin;
+  else if (center.x > right - margin)
+    this.wrap.scrollLeft = center.x + margin - width;
+  if (center.y < top + margin)
+    this.wrap.scrollTop = center.y - margin;
+  else if (center.y > bottom - margin)
+    this.wrap.scrollTop = center.y + margin - height;
+};
+````
+
+A forma como centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro do ator nós adicionamos a sua posição(o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de nível mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
+
+Em seguida uma série de verificações são feitas para verificar qual a posição do jogador dentro e fora do intervalo permitido. Note-se que, por as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai obrigá-los a terem valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
+
+Ele teria sido um pouco mais simples tentar se sempre deslocarmos o jogador para o centro da janela. Mas isso cria um efeito bastante chocante. Como você está pulando a visão vai mudar constantemente de cima e para baixo. É mais agradável ter uma área `"neutra"` no meio da tela onde você pode se mover sem causar qualquer rolagem.
+
+Finalmente, vamos precisar de uma maneira de limpar um nível apresentado para ser usado quando o jogo se move para o próximo nível ou redefine um nível.
+
+ ````js
+DOMDisplay.prototype.clear = function() {
+  this.wrap.parentNode.removeChild(this.wrap);
+};
+ ````
+
+Estamos agora em condições de apresentar o nosso melhor nível atualmente.
+
+````html
+<link rel="stylesheet" href="css/game.css">
+
+<script>
+  var simpleLevel = new Level(simpleLevelPlan);
+  var display = new DOMDisplay(document.body, simpleLevel);
+</script>
+````
+
+A tag `<link>`quando usado com `rel="stylesheet"` torna-se uma maneira de carregar um arquivo CSS em uma página. O `game.css` arquivo contém os estilos necessários para o nosso jogo.

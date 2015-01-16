@@ -391,3 +391,60 @@ Estamos agora em condições de apresentar o nosso melhor nível atualmente.
 ````
 
 A tag `<link>`quando usado com `rel="stylesheet"` torna-se uma maneira de carregar um arquivo CSS em uma página. O `game.css` arquivo contém os estilos necessários para o nosso jogo.
+
+## Movimento e colisão
+
+Agora estamos no ponto em que podemos começar a adicionar movimento que é um aspecto mais interessante do jogo. A abordagem básica tomada pela maioria dos jogos como este consiste em dividir o tempo em pequenos passos, e para cada etapa move os atores por uma distância correspondente a sua velocidade(distância percorrida por segundo) multiplicada pelo tamanho do passo em tempo(em segundos).
+
+Isto é fácil. A parte difícil é lidar com as interações entre os elementos. Quando o jogador atinge uma parede ou o chão eles não devem simplesmente se mover através deles. O jogo deve notar quando um determinado movimento faz com que um objeto bata sobre outro objeto e responder adequadamente. Para paredes o movimento deve ser interrompido. As moedas devem serem recolhidas e assim por diante.
+
+Resolver este problema para o caso geral é uma grande tarefa. Você pode encontrar as bibliotecas, geralmente chamados de motores de física que simulam a interação entre os objetos físicos em duas ou três dimensões. Nós vamos ter uma abordagem mais modesta neste capítulo apenas manipularemos as colisões entre objetos retangulares e manusearemos de uma forma bastante simplista.
+
+Antes de mover o jogador ou um bloco de lava, testamos se o movimento iria levá-la para dentro de uma parte não vazio de fundo. Se isso acontecer, nós simplesmente cancelamos o movimento por completo. A resposta a tal colisão depende do tipo de ator - o jogador vai parar, enquanto um bloco de lava vai se recuperar.
+
+Essa abordagem requer alguns passos para termos uma forma reduzida, uma vez que o objeto esta em movimento e para antes dos objetos se tocarem. Se os intervalos de tempo(os movimentos dos passos) são muito grandes, o jogador iria acabar em uma distância perceptível acima do solo. Outra abordagem indiscutivelmente melhor mas é mais complicado, seria a de encontrar o local exato da colisão e se mudar para lá. Tomaremos a abordagem simples de esconder os seus problemas, garantindo que a animação prossegue em pequenos passos.
+
+Este método nos diz se e um retângulo(especificado por uma posição e um tamanho) coincide com qualquer espaço não vazio na `grid` de fundo:
+
+````js
+Level.prototype.obstacleAt = function(pos, size) {
+  var xStart = Math.floor(pos.x);
+  var xEnd = Math.ceil(pos.x + size.x);
+  var yStart = Math.floor(pos.y);
+  var yEnd = Math.ceil(pos.y + size.y);
+
+  if (xStart < 0 || xEnd > this.width || yStart < 0)
+    return "wall";
+  if (yEnd > this.height)
+    return "lava";
+  for (var y = yStart; y < yEnd; y++) {
+    for (var x = xStart; x < xEnd; x++) {
+      var fieldType = this.grid[y][x];
+      if (fieldType) return fieldType;
+    }
+  }
+};
+````
+
+Este método calcula o conjunto de quadradros que o `body` se sobrepõe a usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima e para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
+
+Se o corpo se sobressai do nível, sempre voltamos "parede" para os lados e na parte superior e "lava" para o fundo. Isso garante que o jogador morra ao cair para fora do mundo . Quando o corpo esta totalmente no interior da `grid`, que laço sobre o bloco de quadrículas encontrado arredondando as coordenadas e retornar o conteúdo do primeiro quadrado nonempty encontramos .
+
+Colisões entre o jogador e outros atores dinâmicos(moedas, lava em movimento) são tratadas depois de o jogador se mudou. Quando o movimento tomou o jogador para outro outro ator, uma moeda ou a recolha de efeito apropriado para morter. Isoo é ativado.
+
+Este método analisa o conjunto de atores, procurando um ator que se sobrepõe a um dado como um argumento:
+
+````js
+Level.prototype.actorAt = function(actor) {
+  for (var i = 0; i < this.actors.length; i++) {
+    var other = this.actors[i];
+    if (other != actor &&
+        actor.pos.x + actor.size.x > other.pos.x &&
+        actor.pos.x < other.pos.x + other.size.x &&
+        actor.pos.y + actor.size.y > other.pos.y &&
+        actor.pos.y < other.pos.y + other.size.y)
+      return other;
+  }
+};
+````
+

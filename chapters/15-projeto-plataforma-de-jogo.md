@@ -428,7 +428,9 @@ Level.prototype.obstacleAt = function(pos, size) {
 
 Este método calcula o conjunto de quadradros que o `body` se sobrepõe a usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima e para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
 
-Se o corpo se sobressai do `Level`, sempre voltamos "parede" para os lados e na parte superior e "lava" para o fundo. Isso garante que o jogador morra ao cair para fora do mundo . Quando o corpo esta totalmente no interior da `grid`, que laço sobre o bloco de quadrículas encontrado arredondando as coordenadas e retornar o conteúdo do primeiro quadrado nonempty encontramos .
+![images](http://i.imgur.com/jXvUMXC.png)
+
+Se o corpo se sobressai do `Level`, sempre voltamos "parede" para os lados e na parte superior e "lava" para o fundo. Isso garante que o jogador morra ao cair para fora do mundo . Quando o corpo esta totalmente no interior da `grid`, que laço sobre o bloco de quadrículas encontrado arredondando as coordenadas e retornar o conteúdo do primeiro quadrado nonempty encontramos.
 
 Colisões entre o jogador e outros atores dinâmicos(moedas, lava em movimento) são tratadas depois de o jogador se mudou. Quando o movimento tomou o jogador para outro outro ator, uma moeda ou a recolha de efeito apropriado para morter. Isoo é ativado.
 

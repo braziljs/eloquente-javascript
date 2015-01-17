@@ -17,7 +17,7 @@ Nosso jogo será mais ou menos baseado em azul escuro por Thomas Palef. Eu escol
 
 ![image](http://i.imgur.com/JNqX4Y0.png)
 
-A caixa escura representa o jogador cuja a tarefa é coletar as caixas amarelas(moedas) evitando o material vermelho(lava). Um nível é concluído quando todas as moedas forem recolhidos.
+A caixa escura representa o jogador cuja a tarefa é coletar as caixas amarelas(moedas) evitando o material vermelho(lava). Um `Level` é concluído quando todas as moedas forem recolhidos.
 
 O jogador pode andar por aí com as setas do teclado para movimentar para esquerda, para a direita ou pular com a seta para cima. `Jumping` é uma especialidade deste personagem do jogo. Ela pode atingir várias vezes sua própria altura e é capaz de mudar de direção em pleno ar. Isto pode não ser inteiramente realista mas ajuda a dar ao jogador a sensação de estar no controle direto do avatar na tela.
 
@@ -37,9 +37,9 @@ No próximo capítulo vamos explorar uma outra tecnologia de navegador a tag `<c
 
 ## Níveis
 
-No Capítulo 7 usamos matrizes de seqüências para descrever uma grade bidimensional. Nós podemos fazer o mesmo aqui. Ele nos permitirá projetar níveis sem antes construir um editor de níveis.
+No Capítulo 7 usamos matrizes de seqüências para descrever uma grade bidimensional. Nós podemos fazer o mesmo aqui. Ele nos permitirá projetar `Level` sem antes construir um editor de `Level`.
 
-A nível simples isto ficaria assim:
+A `Level` simples isto ficaria assim:
 
 ````js
 var simpleLevelPlan = [
@@ -61,11 +61,11 @@ O `@` define o local onde o jogador começa. Todo `o` é uma moeda e o sinal de 
 
 Vamos apoiar dois outros tipos de lava em movimento: O personagem pipe(`|`) para blocos que se deslocam verticalmente e `v` por gotejamento de lava verticalmente lava que não salta para trás e nem para a frente só se move para baixo pulando de volta à sua posição inicial quando atinge o chão.
 
-Um jogo inteiro é composto por vários níveis que o jogador deve completar. Um nível é concluído quando todas as moedas foram recolhidos. Se o jogador toca a lava o nível atual é restaurado à sua posição inicial e o jogador pode tentar novamente.
+Um jogo inteiro é composto por vários `Level` que o jogador deve completar. Um `Level` é concluído quando todas as moedas foram recolhidos. Se o jogador toca a lava o `Level` atual é restaurado à sua posição inicial e o jogador pode tentar novamente.
 
 ## A leitura de um level
 
-O construtor a seguir cria um objeto de nível. Seu argumento deve ser uma matriz de seqüências que define o nível.
+O construtor a seguir cria um objeto de `Level`. Seu argumento deve ser uma matriz de seqüências que define o `Level`.
 
 ````js
 function Level(plan) {
@@ -103,7 +103,7 @@ Um level armazena a sua largura e altura juntamente com duas matrizes, uma para 
 
 A matriz contém objetos que rastreiam a posição atual e estado dos elementos dinâmicos no level. Cada um deles deverá ter uma propriedade para indicar sua posição(as coordenadas do seu canto superior esquerdo), uma propriedade `size` dando o seu tamanho e uma propriedade do tipo que mantém uma cadeia que identifica o elemento("lava", "dinheiro" ou "jogador").
 
-Depois de construir a `grid` usamos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do level. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece  `finishDelay` é usado para manter o nível ativo durante um curto período de tempo de modo que uma animação simples pode ser mostrado(Repor imediatamente ou avançar o nível ficaria mais fácil). Este método pode ser usado para descobrir se um nível foi concluído.
+Depois de construir a `grid` usamos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do level. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece  `finishDelay` é usado para manter o `Level` ativo durante um curto período de tempo de modo que uma animação simples pode ser mostrado(Repor imediatamente ou avançar o `Level` ficaria mais fácil). Este método pode ser usado para descobrir se um `Level` foi concluído.
 
 ````js
 Level.prototype.isFinished = function() {
@@ -188,7 +188,7 @@ No capítulo 13 vimos que `Math.sin` nos dá a coordenada y de um ponto em um c�
 
 Para evitar uma situação em que todas as moedas se movem para cima ou para baixo de forma síncrona, a fase inicial de cada moeda é aleatória. A fase da onda de `Math.Sin` a largura de uma onda que produz é de 2π. Multiplicamos o valor retornado pelo `Math.random` por esse número para dar a posição inicial de uma moeda de forma aleatória.
 
-Vamos agora ter escrito todas as peças necessárias para representar o nível do estado.
+Vamos agora ter escrito todas as peças necessárias para representar o `Level` do estado.
 
  ````js
 var simpleLevel = new Level(simpleLevelPlan);
@@ -196,7 +196,7 @@ console.log(simpleLevel.width, "by", simpleLevel.height);
 // → 22 by 9
  ````
 
- A tarefa à frente deve exibir tais níveis na tela, e assim modelar o tempo do movimento dentre deles.
+ A tarefa à frente deve exibir tais `Level` na tela, e assim modelar o tempo do movimento dentre deles.
 
  ## Tarefa de encapsulamento
 
@@ -211,7 +211,7 @@ Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenh
 
 ## Desenho
 
-O encapsulamento do código de desenho é feito através da definição de um objeto de exibição que exibe um determinado nível. O tipo de exibição que definimos neste capítulo é chamado `DOMDisplay` isto porque usamos elementos simples do DOM para mostrar o nível.
+O encapsulamento do código de desenho é feito através da definição de um objeto de exibição que exibe um determinado `Level`. O tipo de exibição que definimos neste capítulo é chamado `DOMDisplay` isto porque usamos elementos simples do DOM para mostrar o `Level`.
 
 Nós estaremos usando uma folha de estilo para definir as cores reais e outras propriedades fixas dos elementos que faram parte do jogo. Também seria possível atribuir diretamente o estilo de propriedade dos elementos quando criá-los, mas queremos produzir programas mais detalhados.
 
@@ -225,7 +225,7 @@ function elt(name, className) {
 }
 ````
 
-O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar-se e um nível de objeto.
+O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar-se e um `Level` de objeto.
 
 ````js
 function DOMDisplay(parent, level) {
@@ -240,7 +240,7 @@ function DOMDisplay(parent, level) {
 
 Levando em consideração que o fato de que `appendChild` retorna o elemento acrescentado ao criar o conteúdo do elemento e armazená-lo na suas propriedade com apenas uma única instrução.
 
-O fundo do nível nunca muda, é desenhada apenas uma vez. Os atores são redesenhadas cada vez que o `display` for atualizado. A propriedade `actorLayer` será utilizado para controlar o elemento que contém os agentes de modo que eles podem ser facilmente removidos e substituídos.
+O fundo do `Level` nunca muda, é desenhada apenas uma vez. Os atores são redesenhadas cada vez que o `display` for atualizado. A propriedade `actorLayer` será utilizado para controlar o elemento que contém os agentes de modo que eles podem ser facilmente removidos e substituídos.
 
 Nossas coordenadas e tamanhos são rastreados em unidades relativas ao tamanho da `grid`, onde o tamanho ou distância de 1 significa uma unidade da `grid`. Ao definir os tamanhos de pixel vamos ter que escalar essas coordenadas, tudo no jogo seria ridiculamente pequeno em um único pixel por metro quadrado. A variável de escala indica o número de pixels que uma única unidade ocupa na tela.
 
@@ -313,7 +313,7 @@ DOMDisplay.prototype.drawFrame = function() {
 };
 ````
 
-Ao adicionar o estado atual do nível com um nome de classe para o `wrapper` podemos denominar que o ator do jogador esta ligeiramente diferente quando o jogo está ganho ou perdido, para isso basta adicionar uma regra no CSS que tem efeito apenas quando o jogador tem um elemento ancestral com uma determinada classe.
+Ao adicionar o estado atual do `Level` com um nome de classe para o `wrapper` podemos denominar que o ator do jogador esta ligeiramente diferente quando o jogo está ganho ou perdido, para isso basta adicionar uma regra no CSS que tem efeito apenas quando o jogador tem um elemento ancestral com uma determinada classe.
 
 ````css
 .lost .player {
@@ -327,7 +327,7 @@ Ao adicionar o estado atual do nível com um nome de classe para o `wrapper` pod
 
 Depois de tocar em lava a cor do jogador ficara vermelho escuro sugerindo escaldante. Quando a última moeda foi coletada nós usamos duas caixa branca com sombras borradas, um para o canto superior esquerdo e um para o canto superior direito para criar um efeito de halo branco.
 
-Não podemos assumir que os níveis de sempre se encaixam na janela de exibição. É por isso que a chamada `scrollPlayerIntoView` é necessária e  garante que se o nível está saindo fora do visor nós podemos rolar o `viewport` para garantir que o jogador está perto de seu centro. O seguinte CSS dá ao elemento DOM o embrulho do jogo com um tamanho máximo e garante que qualquer coisa que não se destaca da caixa do elemento não é visível. Também se obter o elemento exterior numa posição relativa, de modo que os atores estão posicionados no seu interior em relação ao canto superior esquerdo do nível.
+Não podemos assumir que os `Level` de sempre se encaixam na janela de exibição. É por isso que a chamada `scrollPlayerIntoView` é necessária e  garante que se o `Level` está saindo fora do visor nós podemos rolar o `viewport` para garantir que o jogador está perto de seu centro. O seguinte CSS dá ao elemento DOM o embrulho do jogo com um tamanho máximo e garante que qualquer coisa que não se destaca da caixa do elemento não é visível. Também se obter o elemento exterior numa posição relativa, de modo que os atores estão posicionados no seu interior em relação ao canto superior esquerdo do `Level`.
 
 ````css
 .game {
@@ -365,13 +365,13 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
 };
 ````
 
-A forma como centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro do ator nós adicionamos a sua posição(o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de nível mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
+A forma como centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro do ator nós adicionamos a sua posição(o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de `Level` mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
 
 Em seguida uma série de verificações são feitas para verificar qual a posição do jogador dentro e fora do intervalo permitido. Note-se que, por as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai obrigá-los a terem valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
 
 Ele teria sido um pouco mais simples tentar se sempre deslocarmos o jogador para o centro da janela. Mas isso cria um efeito bastante chocante. Como você está pulando a visão vai mudar constantemente de cima e para baixo. É mais agradável ter uma área `"neutra"` no meio da tela onde você pode se mover sem causar qualquer rolagem.
 
-Finalmente, vamos precisar de uma maneira de limpar um nível apresentado para ser usado quando o jogo se move para o próximo nível ou redefine um nível.
+Finalmente, vamos precisar de uma maneira de limpar um `Level` apresentado para ser usado quando o jogo se move para o próximo `Level` ou redefine um `Level`.
 
  ````js
 DOMDisplay.prototype.clear = function() {
@@ -379,7 +379,7 @@ DOMDisplay.prototype.clear = function() {
 };
  ````
 
-Estamos agora em condições de apresentar o nosso melhor nível atualmente.
+Estamos agora em condições de apresentar o nosso melhor `Level` atualmente.
 
 ````html
 <link rel="stylesheet" href="css/game.css">
@@ -428,7 +428,7 @@ Level.prototype.obstacleAt = function(pos, size) {
 
 Este método calcula o conjunto de quadradros que o `body` se sobrepõe a usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima e para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
 
-Se o corpo se sobressai do nível, sempre voltamos "parede" para os lados e na parte superior e "lava" para o fundo. Isso garante que o jogador morra ao cair para fora do mundo . Quando o corpo esta totalmente no interior da `grid`, que laço sobre o bloco de quadrículas encontrado arredondando as coordenadas e retornar o conteúdo do primeiro quadrado nonempty encontramos .
+Se o corpo se sobressai do `Level`, sempre voltamos "parede" para os lados e na parte superior e "lava" para o fundo. Isso garante que o jogador morra ao cair para fora do mundo . Quando o corpo esta totalmente no interior da `grid`, que laço sobre o bloco de quadrículas encontrado arredondando as coordenadas e retornar o conteúdo do primeiro quadrado nonempty encontramos .
 
 Colisões entre o jogador e outros atores dinâmicos(moedas, lava em movimento) são tratadas depois de o jogador se mudou. Quando o movimento tomou o jogador para outro outro ator, uma moeda ou a recolha de efeito apropriado para morter. Isoo é ativado.
 
@@ -598,4 +598,197 @@ Level.prototype.playerTouched = function(type, actor) {
 
 Quando lava é tocado, o status do jogo é definido como `"lost"`. Quando uma moeda é tocada essa moeda é removida do conjunto de atores e se fosse o último o estado do jogo é definido como "ganhou".
 
-Isso nos dá um nível que pode realmente ser animado. Tudo o que está faltando agora é o código que aciona a animação.
+Isso nos dá um `Level` que pode realmente ser animado. Tudo o que está faltando agora é o código que aciona a animação.
+
+## Rastreamento de teclas
+
+Para um jogo como este nós não queremos que as teclas entre em vigor uma única vez quando presionada. Pelo contrário queremos o seu efeito(movendo a figura do jogador) para continuar movendo o jogador enquanto elas são pressionadas.
+
+Precisamos criar um manipulador de teclas que armazena o estado atual da esquerda, direita e cima das teclas de seta. Nós também queremos chamar `preventDefault` para essas teclas não acabe dando rolagem da página.
+
+A função a seguir quando é passado um objeto com o código da tecla e com o nome de propriedade como valores devemos retornar um objeto que rastreia a posição atual dessas teclas. Ele registra manipuladores de eventos para `"keydown"` e `"KeyUp"` e quando o código de tecla para o evento está presente no conjunto de códigos que está rastreando executa a atualização do objeto.
+
+````js
+var arrowCodes = {37: "left", 38: "up", 39: "right"};
+
+function trackKeys(codes) {
+  var pressed = Object.create(null);
+  function handler(event) {
+    if (codes.hasOwnProperty(event.keyCode)) {
+      var down = event.type == "keydown";
+      pressed[codes[event.keyCode]] = down;
+      event.preventDefault();
+    }
+  }
+  addEventListener("keydown", handler);
+  addEventListener("keyup", handler);
+  return pressed;
+}
+````
+
+Note como a mesma manipulador da função é usado para ambos os tipos de eventos. Ele olha para a propriedade `type` do objeto de evento para determinar se o estado da tecla deve ser atualizado para true("keydown") ou falso("keyup").
+
+
+## Executar o jogo
+
+A função `requestAnimationFrame` que vimos no capítulo 13 fornece uma boa maneira de animar um jogo. Mas sua interface é bastante primitiva para usá-la, o que nos obriga a ficar controlando sua última chamada para executar a função `requestAnimationFrame` novamente após cada frame.
+
+Vamos definir uma função auxiliar que envolve as partes chatas em uma interface conveniente e nos permitir a simplesmente chamar `runAnimation` dando-lhe uma função que espera uma diferença de tempo como um argumento e desenha em um quadro único. Quando a função de armação retorna o valor falso, a animação para.
+
+````js
+function runAnimation(frameFunc) {
+  var lastTime = null;
+  function frame(time) {
+    var stop = false;
+    if (lastTime != null) {
+      var timeStep = Math.min(time - lastTime, 100) / 1000;
+      stop = frameFunc(timeStep) === false;
+    }
+    lastTime = time;
+    if (!stop)
+      requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+````
+
+Temos que definir um passo de quadros máxima de 100 milissegundos(um décimo de segundo). Quando a aba ou janela do navegador com a página estiver oculto as chamadas `requestAnimationFrame` será suspenso até que a aba ou janela é mostrado novamente. Neste caso a diferença entre `lasttime` será todo o tempo em que a página estiver oculta. Avançando o jogo, que muito em uma única etapa vai parecer fácil mas podemos ter um monte de trabalho(lembre-se o tempo-splitting no método de animação).
+
+A função também converte os passos de tempo para segundos, que são uma quantidade mais fácil de pensar do que milissegundos.
+
+A função de execução do `Level` toma um objeto do `Level` um construtor de uma exposição e opcionalmente uma função. Ele exibe o `Level`(em document.body) e permite que o usuário peça por ela. Quando o `Level` está terminado (perda ou ganho), `Level` de execução limpa o visor, pára a animação, e, caso a função andthen foi dada, chama essa função com o status do `Level`.
+
+````js
+var arrows = trackKeys(arrowCodes);
+
+function runLevel(level, Display, andThen) {
+  var display = new Display(document.body, level);
+  runAnimation(function(step) {
+    level.animate(step, arrows);
+    display.drawFrame(step);
+    if (level.isFinished()) {
+      display.clear();
+      if (andThen)
+        andThen(level.status);
+      return false;
+    }
+  });
+}
+````
+
+Um jogo é uma sequência de `Level`. Sempre que o jogador morre o `Level` atual é reiniciado. Quando um `Level` é concluído vamos passar para o próximo `Level`. Isso pode ser expresso pela seguinte função o que leva um conjunto de planos de `Level`(arrays de strings) e um construtor de exibição:
+
+````js
+function runGame(plans, Display) {
+  function startLevel(n) {
+    runLevel(new Level(plans[n]), Display, function(status) {
+      if (status == "lost")
+        startLevel(n);
+      else if (n < plans.length - 1)
+        startLevel(n + 1);
+      else
+        console.log("You win!");
+    });
+  }
+  startLevel(0);
+}
+````
+
+Estas funções mostram um estilo peculiar de programação. Ambos `runAnimation` e `Level` de execução são funções de ordem superior, mas não são no estilo vimos no capítulo 5. O argumento da função é usado para organizar as coisas para acontecer em algum momento no futuro, e nenhuma das funções retorna alguma coisa útil. A sua tarefa é, de certa forma, para agendar ações. Envolvendo estas ações em funções nos dá uma maneira de armazená-los como um valor, de modo que eles podem ser chamados no momento certo.
+
+Este estilo de programação geralmente é chamado de programação assíncrona. Manipulação de eventos também é um exemplo deste estilo, e vamos ver muito mais do que quando se trabalha com tarefas que podem levar uma quantidade arbitrária de tempo, como solicitações de rede no capítulo 17 e entrada e saída em geral no Capítulo 20.
+
+Há um conjunto de planos de `Level` disponíveis na variável `GAME_LEVELS`. Esta página alimenta-los para  `runGame`, começando um jogo real:
+
+````html
+<link rel="stylesheet" href="css/game.css">
+
+<body>
+  <script>
+    runGame(GAME_LEVELS, DOMDisplay);
+  </script>
+</body>
+````
+
+Veja se você pode bater aqueles. Eu tinha um monte de `Level` construídos.
+
+## Exercício
+
+É tradicional para jogos de plataforma para ter o início do jogador com um número limitado de vidas e subtrair uma vida cada vez que ele morre. Quando o jogador está fora de vidas, o jogo será reiniciado desde o início.
+Ajuste `runGame` para implementar as três vidas para o jogador no início com três.
+
+````html
+<link rel="stylesheet" href="css/game.css">
+
+<body>
+<script>
+  // The old runGame function. Modify it...
+  function runGame(plans, Display) {
+    function startLevel(n) {
+      runLevel(new Level(plans[n]), Display, function(status) {
+        if (status == "lost")
+          startLevel(n);
+        else if (n < plans.length - 1)
+          startLevel(n + 1);
+        else
+          console.log("You win!");
+      });
+    }
+    startLevel(0);
+  }
+  runGame(GAME_LEVELS, DOMDisplay);
+</script>
+</body>
+````
+
+**Dica**
+
+A solução mais óbvia seria, tornar a vida uma variável que vive em `runGame` e é portanto visível para o encerramento do `startLevel`.
+
+Uma outra abordagem que se encaixa com o espírito do resto da função, seria adicionar um segundo parâmetro para o `startLevel` que dá o número de vidas. Quando todo o estado de um sistema é armazenado nos argumentos para uma função, chamar essa função fornece uma maneira elegante de fazer a transição para um novo estado.
+
+Em qualquer caso, quando o `Level` está perdido deverá agora existir duas transições de estado possíveis. Se esse for a última vida vamos voltar ao `Level` zero com o montante inicial de vidas. Se não vamos repetir o `Level` atual com menos uma vida restante.
+
+#### Pausar o jogo
+
+Faça o possível para fazer uma pausa(suspenso) e retomar o jogo pressionando a tecla Esc.
+
+Isso pode ser feito alterando a execução função do `Level` para usar outro manipulador de eventos de teclado e interromper ou retomar a animação sempre que a tecla `Esc` é pressionada.
+
+A interface `runAnimation` não pode se reponsabilizar por isso à primeira vista, mas basta você reorganizar a maneira que `RUNLEVEL` é chamado.
+
+Quando você tem que trabalhar não há outra coisa que você pode tentar. O caminho que temos vindo a registrar manipuladores de eventos de teclas é um pouco problemático. O objeto `keys` é uma variável global e seus manipuladores de eventos são mantidas ao redor mesmo quando nenhum jogo está sendo executado. Pode-se dizer que isso pode vazar para fora do nosso sistema. Estender `trackKeys` nos da uma maneira de fornecer o cancelamento do registro e de seus manipuladores e em seguida mudar a execução do `Level` para registrar seus tratadores quando começa e cancelar o registro novamente quando ele for concluído.
+
+````html
+<link rel="stylesheet" href="css/game.css">
+
+<body>
+<script>
+  // The old runLevel function. Modify this...
+  function runLevel(level, Display, andThen) {
+    var display = new Display(document.body, level);
+    runAnimation(function(step) {
+      level.animate(step, arrows);
+      display.drawFrame(step);
+      if (level.isFinished()) {
+        display.clear();
+        if (andThen)
+          andThen(level.status);
+        return false;
+      }
+    });
+  }
+  runGame(GAME_LEVELS, DOMDisplay);
+</script>
+</body>
+````
+
+**Dicas**
+
+Uma animação pode ser interrompida retornando um valor `falso` na função dada ao `runAnimation`. Ele pode ser continuado chamando `runAnimation` novamente.
+
+Para comunicar informando que a animação deve ser interrompido para a função passada para `runAnimation` ele deve retornar falso; você pode usar uma variável que tanto o manipulador de eventos e a função tenha acesso.
+
+Quando encontrar uma maneira de cancelar o registro dos manipuladores registrados por `trackKeys` lembre-se que o mesmo valor função exata que foi passado para `addEventListener` deve ser passado para `removeEventListener` para remover com êxito um manipulador. Assim o valor da função manipuladora criada em `trackKeys` devera estar disponível para o código que cancela os manipuladores.
+
+Você pode adicionar uma propriedade para o objeto retornado por `trackKeys` contendo um ou outro valor da função ou um método que manipula ou remove o registro diretamente.

@@ -448,3 +448,154 @@ Level.prototype.actorAt = function(actor) {
 };
 ````
 
+## Atores e ações
+
+O método `animate` do tipo `Level` dá a todos os atores do `level` a chance de se mover. Seu argumento `step` traz o tempo do passo em segundos. O objeto `key` contém informações sobre as teclas que o jogador pressionou.
+
+````js
+var maxStep = 0.05;
+
+Level.prototype.animate = function(step, keys) {
+  if (this.status != null)
+    this.finishDelay -= step;
+
+  while (step > 0) {
+    var thisStep = Math.min(step, maxStep);
+    this.actors.forEach(function(actor) {
+      actor.act(thisStep, this, keys);
+    }, this);
+    step -= thisStep;
+  }
+};
+````
+
+Quando a propriedade `status` do `level` tem um valor não nulo(que é o caso de quando o jogador ganhou ou perdeu) devemos contar para baixo a propriedade `finishDelay` que controla o tempo entre o ponto onde o jogador ganhou ou perdeu e o ponto onde nós paramos de mostrar o `Level`.
+
+O `loop` `while` corta o passo de tempo onde estamos animando em pedaços pequenos. Ele garante que nenhum passo maior do que `maxStep` é tomado. Por exemplo um passo de 0,12 segundo iria ser cortado em dois passos de 0,05 e um segundo passo de 0,02.
+
+Objetos ator tem um método `act` que toma como argumentos o tempo do passo, o objeto do `level` e as chaves de objeto. Aqui está um para o tipo de ator(Lava) que ignora as teclas de objeto:
+
+````js
+Lava.prototype.act = function(step, level) {
+  var newPos = this.pos.plus(this.speed.times(step));
+  if (!level.obstacleAt(newPos, this.size))
+    this.pos = newPos;
+  else if (this.repeatPos)
+    this.pos = this.repeatPos;
+  else
+    this.speed = this.speed.times(-1);
+};
+````
+
+Ele calcula uma nova posição através da adição do produto do tempo do passo e a sua velocidade atual para definir sua posição. Se nenhum bloco de obstáculos é a nova posição ele se move para lá. Se houver um obstáculo o comportamento depende do tipo da lava: lava e bloco de gotejamento tem uma propriedade `repeatPos` para ele poder saltar para trás quando bater em algo. Saltando a lava simplesmente inverte sua velocidade(multiplica por -1) a fim de começar a se mover em outra direção.
+
+Coins usa seu método `act` para se mover. Eles ignoram colisões uma vez que são simplesmente oscilando em torno de dentro de sua própria quadrado e colisões com o jogador será tratado pelo método `act` do jogador.
+
+````js
+var wobbleSpeed = 8, wobbleDist = 0.07;
+
+Coin.prototype.act = function(step) {
+  this.wobble += step * wobbleSpeed;
+  var wobblePos = Math.sin(this.wobble) * wobbleDist;
+  this.pos = this.basePos.plus(new Vector(0, wobblePos));
+};
+````
+
+A propriedade `wobble` é atualizada para controlar o tempo e em seguida utilizado como um argumento para `math.sin` para criar uma onda que é usado para calcular sua nova posição.
+
+Isso deixa o próprio jogador. Movimento do jogador é tratado separadamente para cada eixo, porque bater no chão não deve impedir o movimento horizontal, e batendo na parede não deve parar de cair ou saltar movimento. Este método implementa a parte horizontal:
+
+````js
+var playerXSpeed = 7;
+
+Player.prototype.moveX = function(step, level, keys) {
+  this.speed.x = 0;
+  if (keys.left) this.speed.x -= playerXSpeed;
+  if (keys.right) this.speed.x += playerXSpeed;
+
+  var motion = new Vector(this.speed.x * step, 0);
+  var newPos = this.pos.plus(motion);
+  var obstacle = level.obstacleAt(newPos, this.size);
+  if (obstacle)
+    level.playerTouched(obstacle);
+  else
+    this.pos = newPos;
+};
+````
+
+O movimento é calculado com base no estado das teclas de seta esquerda e direita. Quando um movimento faz com que o jogador bata em alguma coisa é o método `playerTouched` que é chamado no `level` que lida com coisas como morrer na lava ou coletar moedas. Caso contrário o objecto atualiza a sua posição.
+
+Movimento vertical funciona de forma semelhante, mas tem que simular salto e gravidade.
+
+````js
+var gravity = 30;
+var jumpSpeed = 17;
+
+Player.prototype.moveY = function(step, level, keys) {
+  this.speed.y += step * gravity;
+  var motion = new Vector(0, this.speed.y * step);
+  var newPos = this.pos.plus(motion);
+  var obstacle = level.obstacleAt(newPos, this.size);
+  if (obstacle) {
+    level.playerTouched(obstacle);
+    if (keys.up && this.speed.y > 0)
+      this.speed.y = -jumpSpeed;
+    else
+      this.speed.y = 0;
+  } else {
+    this.pos = newPos;
+  }
+};
+````
+
+No início do método o jogador é acelerado verticalmente para ter em conta a gravidade. Ao saltar a velocidade da gravidade é praticamente igual a todas as outras constantes neste jogo que foram criadas por tentativa e erro. Eu testei vários valores até encontrar uma combinação agradável.
+
+Em seguida é feito um verificação para identificar se há obstáculos novamente. Se bater em um obstáculo há dois resultados possíveis. Quando a seta para cima é pressionado e estamos nos movendo para baixo(ou seja, a coisa que bater é abaixo de nós) a velocidade é definida como um valor relativamente grande e negativo. Isso faz com que o jogador salte. Se esse não for o caso, nós simplesmente esbarrou em alguma coisa e a velocidade é zerada.
+
+O método atual parece com isso:
+
+````js
+Player.prototype.act = function(step, level, keys) {
+  this.moveX(step, level, keys);
+  this.moveY(step, level, keys);
+
+  var otherActor = level.actorAt(this);
+  if (otherActor)
+    level.playerTouched(otherActor.type, otherActor);
+
+  // Losing animation
+  if (level.status == "lost") {
+    this.pos.y += step;
+    this.size.y -= step;
+  }
+};
+````
+
+Depois de se mover o método verifica para outros atores que o jogador está colidindo com ele novamente e é chamado o  `playerTouched` quando encontra um. Desta vez ele passa o objeto ator como o segundo argumento isto é porque se o outro ator é uma moeda `playerTouched` precisa saber qual moeda está sendo coletado.
+
+Finalmente quando o jogador morre(toca lava), montamos uma pequena animação que faz com que ele se "encolha" ou "afunde" reduzindo a altura do objeto jogador.
+
+E aqui é o método que manipula as colisões entre o jogador e outros objetos:
+
+````js
+Level.prototype.playerTouched = function(type, actor) {
+  if (type == "lava" && this.status == null) {
+    this.status = "lost";
+    this.finishDelay = 1;
+  } else if (type == "coin") {
+    this.actors = this.actors.filter(function(other) {
+      return other != actor;
+    });
+    if (!this.actors.some(function(actor) {
+      return actor.type == "coin";
+    })) {
+      this.status = "won";
+      this.finishDelay = 1;
+    }
+  }
+};
+````
+
+Quando lava é tocado, o status do jogo é definido como `"lost"`. Quando uma moeda é tocada essa moeda é removida do conjunto de atores e se fosse o último o estado do jogo é definido como "ganhou".
+
+Isso nos dá um nível que pode realmente ser animado. Tudo o que está faltando agora é o código que aciona a animação.

@@ -4,42 +4,41 @@
 
 > `Iain Banks, The Player of Games`
 
-Meu fascínio inicial com computadores como o de muitas crianças originou-se com jogos. Fui convocado para o pequeno mundo simulado por computador que eu poderia manipular as histórias(mais ou menos) que iam se desenrolando-se, mas suponho por causa da maneira que eu poderia projetar a minha imaginação para eles do que pelas possibilidades que eles realmente tenha sido oferecido.
+Meu fascínio inicial com computadores foi como o de muitas crianças, onde se originou-se os jogos. Fui convocado para um pequeno mundo simulado por computadores onde eu poderia manipular as histórias(mais ou menos) que iam se desenrolando-se; supondo que isso era por causa da maneira que eu poderia projetar a minha imaginação para eles do que pelas possibilidades que realmente tenha sido oferecido.
 
-Eu não desejo uma carreira na programação com jogos a ninguém. Assim como a indústria da música a discrepância entre os muitos jovens ansiosos que querem trabalhar nela e a demanda real para essas pessoas cria um ambiente não muito saudável. Mas escrever jogos para se divertir é muito legal.
+Eu não desejo uma carreira na programação de jogos a ninguém. Assim como a indústria da música a discrepância entre os muitos jovens ansiosos que querem trabalhar nela e a demanda real para essas pessoas cria um ambiente não muito saudável. Mas escrever jogos para se divertir é muito legal.
 
-?????????
-Este capítulo vai falar sobre da implementação de um jogo de plataforma simples. Jogos de Plataforma(ou jogos de "saltar e correr") são os jogos que esperam o jogador para mover uma figura através de um mundo, que muitas vezes é bidimensional e visto de lado , e fazer muitas saltar para e sobre as coisas.
+Este capítulo vai falar sobre a implementação de um jogo de plataforma simples. Jogos de Plataforma(ou jogos de "saltar e correr") são os jogos que esperam o jogador para mover uma figura através de um mundo que muitas vezes é bidimensional e visto de lado onde pode ter a possibilidades de muitos saltos para se mover sobre as coisas.
 
 #### O jogo
 
-Nosso jogo será mais ou menos baseado em azul escuro por Thomas Palef. Eu escolhi este jogo porque é divertido e minimalista e porque pode ser construído sem muito código. Observe:
+Nosso jogo será mais ou menos baseado em **Dark blue** por Thomas Palef. Eu escolhi este jogo porque é divertido, minimalista e pode ser construído sem muito código. Observe:
 
 ![image](http://i.imgur.com/JNqX4Y0.png)
 
-A caixa escura representa o jogador cuja a tarefa é coletar as caixas amarelas(moedas) evitando o material vermelho(lava). Um `Level` é concluído quando todas as moedas forem recolhidos.
+A caixa escura representa o jogador cuja a tarefa é coletar as caixas amarelas(moedas) evitando o material vermelho(lava). Um `Level` é concluído quando todas as moedas forem recolhidas.
 
-O jogador pode andar por aí com as setas do teclado para movimentar para esquerda, para a direita ou pular com a seta para cima. `Jumping` é uma especialidade deste personagem do jogo. Ela pode atingir várias vezes sua própria altura e é capaz de mudar de direção em pleno ar. Isto pode não ser inteiramente realista mas ajuda a dar ao jogador a sensação de estar no controle direto do avatar na tela.
+O jogador pode movimentar por aí com as setas do teclado para esquerda, para a direita ou pular com a seta para cima. `Jumping` é uma especialidade deste personagem do jogo. Ela pode atingir várias vezes sua própria altura e é capaz de mudar de direção em pleno ar. Isto pode não ser inteiramente realista mas ajuda a dar ao jogador a sensação de estar no controle do avatar na tela.
 
-O jogo consiste em um fundo fixo como uma grade e com os elementos que se deslocam sobreposta ao fundo. Cada campo na grade pode estar vazio, sólido ou ser uma lava. Os elementos móveis são os jogadores, moedas e alguns pedaços de lava. Ao contrário da simulação de vida artificial a partir do Capítulo 7 as posições destes elementos não são limitados à `grid` de suas coordenadas e pode ser fracionada permitindo movimento suave.
+O jogo consiste em um fundo fixo como uma grade e com os elementos que se deslocam sobreposto ao fundo. Cada campo na grade pode estar vazio, sólido ou ser uma lava. Os elementos móveis são os jogadores, moedas e alguns pedaços de lava. Ao contrário da simulação de vida artificial a partir do Capítulo 7 as posições destes elementos não são limitados a `grid` de suas coordenadas e pode ser fracionada; permitindo movimento suave.
 
 ## A tecnologia
 
-Nós vamos usar o DOM e o navegador para exibir o jogo e iremos ler a entrada do usuário por manipulação de eventos de tecla.
+Nós vamos usar o DOM e o navegador para exibir o jogo e iremos ler a entrada do usuário por manipulação de eventos de teclas.
 
-O código de triagem e relacionadas com o teclado é apenas uma pequena parte do trabalho que precisamos fazer para construir este jogo. A parte do desenho é simples uma vez que tudo parece colorido: criamos elementos no DOM e usamos `styling` para dar-lhes uma cor de fundo, tamanho e posição.
+O código de triagem e manipulação com o teclado é apenas uma pequena parte do trabalho que precisamos fazer para construir este jogo. A parte do desenho é simples uma vez que tudo parece colorido: criamos elementos no DOM e usamos `styling` para dar-lhes uma cor de fundo, tamanho e posição.
 
-Podemos representar o fundo como uma tabela uma vez que é uma grade imutável de quadrados. Os elementos de movimento livre pode ser coberto em cima disso utilizando-se de posicionamentos absolutos.
+Podemos representar o fundo como uma tabela uma vez que é uma grade imutável de quadrados. Os elementos de movimento livre pode ser coberto em cima disso utilizando-se posicionamentos absolutos.
 
-Em jogos e outros programas que têm que animar gráficos e responder à entrada do usuário sem demora notável a eficiência é importante. Embora o DOM não foi originalmente projetado para gráficos de alto desempenho mas é o melhor que podemos esperar. Você viu algumas animações no capítulo 13. Em uma máquina moderna um jogo simples como este tem um bom desempenho mesmo se não estivermos pensando sobre otimização.
+Em jogos e outros programas que têm que animar gráficos e responder à entrada do usuário sem demora notável a eficiência é importante. O DOM não foi originalmente projetado para gráficos de alto desempenho mas é o melhor que podemos esperar. Você viu algumas animações no capítulo 13. Em uma máquina moderna um jogo simples como este tem um bom desempenho mesmo se não estivermos pensando em otimização.
 
-No próximo capítulo vamos explorar uma outra tecnologia de navegador a tag `<canvas>` o que proporciona uma forma mais tradicional para desenhar gráficos trabalhando em termos de formas e pixels em vez de elementos no DOM.
+No próximo capítulo vamos explorar uma outra tecnologia do navegador que é a tag `<canvas>` onde é proporcionado uma forma mais tradicional para desenhar gráficos trabalhando em termos de formas e pixels em vez de elementos no DOM.
 
 ## Níveis
 
 No Capítulo 7 usamos matrizes de seqüências para descrever uma grade bidimensional. Nós podemos fazer o mesmo aqui. Ele nos permitirá projetar `Level` sem antes construir um editor de `Level`.
 
-A `Level` simples isto ficaria assim:
+Um `Level` simples ficaria assim:
 
 ````js
 var simpleLevelPlan = [
@@ -57,11 +56,11 @@ var simpleLevelPlan = [
 
 Tanto a `grid` fixa e os elementos móveis são incluídos no plano. Os caracteres `x` representam paredes, os caracteres de espaço são para o `espaço vazio` e os `!` representam algo fixo(nonmoving) telhas de lava.
 
-O `@` define o local onde o jogador começa. Todo `o` é uma moeda e o sinal de igual `=` representa um bloco de lava que se move para trás e para a frente na horizontal. Note-se que a grade para essas regras será definido para conter o espaço vazio e outra estrutura de dados é usado para rastrear a posição de tais elementos em movimento.
+O `@` define o local onde o jogador começa. Todo `o` é uma moeda e o sinal de igual `=` representa um bloco de lava que se move para trás e para a frente na horizontal. Note que a grade para essas regras será definido para conter o espaço vazio e outra estrutura de dados é usado para rastrear a posição de tais elementos em movimento.
 
-Vamos apoiar dois outros tipos de lava em movimento: O personagem pipe(`|`) para blocos que se deslocam verticalmente e `v` por gotejamento de lava verticalmente lava que não salta para trás e nem para a frente só se move para baixo pulando de volta à sua posição inicial quando atinge o chão.
+Vamos apoiar dois outros tipos de lava em movimento: O personagem pipe(`|`) para blocos que se deslocam verticalmente e `v` por gotejamento de lava verticalmente. Lava que não salta para trás e nem para a frente só se move para baixo pulando de volta à sua posição inicial quando atinge o chão.
 
-Um jogo inteiro é composto por vários `Level` que o jogador deve completar. Um `Level` é concluído quando todas as moedas foram recolhidos. Se o jogador toca a lava o `Level` atual é restaurado à sua posição inicial e o jogador pode tentar novamente.
+Um jogo inteiro é composto por vários `Levels` que o jogador deve completar. Um `Level` é concluído quando todas as moedas foram recolhidos. Se o jogador toca a lava o `Level` atual é restaurado à sua posição inicial e o jogador pode tentar novamente.
 
 ## A leitura de um level
 
@@ -97,13 +96,13 @@ function Level(plan) {
 }
 ````
 
-Para deixar o código pequeno não verificamos entrada erradas. Ele assume que você sempre entregue um plano de level adequado, completo, com a posição de início do jogador e com outros itens essenciais.
+Para deixar o código pequeno não verificamos entradas erradas. Ele assume que você sempre entregue um plano de level adequado, completo, com a posição de início do jogador e com outros itens essenciais.
 
 Um level armazena a sua largura e altura juntamente com duas matrizes, uma para a grade e um para os agentes que são os elementos dinâmicos. A grade é representado como uma matriz de matrizes onde cada uma das séries internas representa uma linha horizontal e cada quadrado contém algo ou é nulo; para as casas vazias ou uma string indicaremos o tipo do quadrado("muro" ou "lava").
 
-A matriz contém objetos que rastreiam a posição atual e estado dos elementos dinâmicos no level. Cada um deles deverá ter uma propriedade para indicar sua posição(as coordenadas do seu canto superior esquerdo), uma propriedade `size` dando o seu tamanho e uma propriedade do tipo que mantém uma cadeia que identifica o elemento("lava", "dinheiro" ou "jogador").
+A matriz contém objetos que rastreiam a posição atual e estado dos elementos dinâmicos no level. Cada um deles deverá ter uma propriedade para indicar sua posição(as coordenadas do seu canto superior esquerdo), uma propriedade `size` dando o seu tamanho e uma propriedade `type` que mantém uma cadeia que identifica o elemento("lava", "dinheiro" ou "jogador").
 
-Depois de construir a `grid` usamos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do level. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece  `finishDelay` é usado para manter o `Level` ativo durante um curto período de tempo de modo que uma animação simples pode ser mostrado(Repor imediatamente ou avançar o `Level` ficaria mais fácil). Este método pode ser usado para descobrir se um `Level` foi concluído.
+Depois de construir a `grid` usaremos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do `level`. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece  `finishDelay` é usado para manter o `Level` ativo durante um curto período de tempo de modo que uma animação simples pode ser mostrado(repor imediatamente ou avançar o `Level` ficaria mais fácil). Este método pode ser usado para descobrir se um `Level` foi concluído.
 
 ````js
 Level.prototype.isFinished = function() {
@@ -113,7 +112,7 @@ Level.prototype.isFinished = function() {
 
 ## Atores
 
-Para armazenar a posição e o tamanho de um ator vamos voltar para o nosso tipo Vector que agrupa uma coordenada `x` e `y` para coordenar um objeto.
+Para armazenar a posição e o tamanho de um ator vamos voltar para o nosso tipo `Vector` que agrupa uma coordenada `x` e `y` para coordenar um objeto.
 
 ````js
 function Vector(x, y) {
@@ -127,7 +126,7 @@ Vector.prototype.times = function(factor) {
 };
 ````
 
-O método de escalas temporais de um vector por uma determinada quantidade . Isso será útil para quando precisarmos de multiplicar um vetor de velocidade por um intervalo de tempo para obter a distância percorrida durante esse tempo.
+O método de escalas temporais de um vetor nos passa uma determinada quantidade. Isso será útil para quando precisarmos de multiplicar um vetor de velocidade por um intervalo de tempo para obter a distância percorrida durante esse tempo.
 
 Na seção anterior o objeto `actorChars` foi usado pelo construtor `Level` para associar personagens com as funções do construtor. O objeto parece com isso:
 
@@ -141,7 +140,7 @@ var actorChars = {
 
 Três personagens estão sendo mapeados para o objeto `Lava`. O construtor `Level` passa o caráter fonte do ator como o segundo argumento para o construtor e o construtor de `Lava` usa isso para ajustar o seu comportamento(saltando horizontalmente, saltando verticalmente ou gotejamento).
 
-O tipo de jogador é construído da seguinte forma. A velocidade esta sendo armazenada como velocidade atual, que vai ajudar a simular movimento e gravidade.
+O tipo de jogador é construído da seguinte forma. A velocidade esta sendo armazenada com velocidade atual, que vai ajudar a simular movimento e gravidade.
 
 ````js
 function Player(pos) {
@@ -152,9 +151,9 @@ function Player(pos) {
 Player.prototype.type = "player";
 ````
 
-Como um jogador é quadrados elevados one-and-a-half, a sua posição inicial está sendo definida para ser a metade de um quadrado acima da posição em que o @ personagem apareceu. Desta forma a sua parte inferior fica alinhada com a parte inferior do quadrado que apareceu.
+Como um jogador é quadrados elevados `one-and-a-half`, a sua posição inicial está sendo definida para ser a metade de um quadrado acima da posição em que o `@` personagem apareceu. Desta forma a sua parte inferior fica alinhada com a parte inferior do quadrado que apareceu.
 
-Ao construir um objeto `Lava` dinâmicamente é preciso inicializar o objeto de uma forma diferente dependendo do personagem que se baseia. `Lava Dinâmica` se move longitudinalmente em sua velocidade dada até atingir um obstáculo. Nesse ponto se ele tem uma propriedade `repeatPos` ele vai pular de volta à sua posição inicial(`gotejamento`) . Se isso não acontecer, ele irá inverter a sua velocidade e continuar no outro sentido(pular). O construtor só configura as propriedades necessárias. O método que faz o movimento real será escrito mais tarde.
+Ao construir um objeto `Lava` dinâmicamente é preciso inicializar o objeto de uma forma diferente dependendo do personagem que se baseia. `Lava Dinâmica` se move longitudinalmente em sua velocidade dada até atingir um obstáculo. Nesse ponto se ele tem uma propriedade `repeatPos` ele vai pular de volta à sua posição inicial(`gotejamento`). Se isso não acontecer, ele irá inverter a sua velocidade e continuar no outro sentido(pular). O construtor só configura as propriedades necessárias. O método que faz o movimento real será escrito mais tarde.
 
 ````js
 function Lava(pos, ch) {
@@ -172,7 +171,7 @@ function Lava(pos, ch) {
 Lava.prototype.type = "lava";
 ````
 
-Coin são atores simples. A maioria dos blocos simplesmente esperam em seus lugarares. Mas para animar o jogo um pouco eles recebem uma "oscilação", um ligeiro movimento para vertical e para trás. Para controlar isto um objecto `coin` armazena uma posição de base bem como uma propriedade que controla a oscilação de fase do movimento no salto. Juntos esses determinam a posição real da moeda(armazenado na propriedade pos).
+Coin são atores simples. A maioria dos blocos simplesmente esperam em seus lugares. Mas para animar o jogo eles recebem um pouco de "oscilação", um ligeiro movimento para vertical e para trás. Para controlar isto um objecto `coin` armazena uma posição de base bem como uma propriedade que controla a oscilação de fase do movimento no salto. Juntos esses determinam a posição real da moeda(armazenado na propriedade pos).
 
 
 ````js
@@ -184,11 +183,11 @@ function Coin(pos) {
 Coin.prototype.type = "coin";
 ````
 
-No capítulo 13 vimos que `Math.sin` nos dá a coordenada y de um ponto em um círculo. Isso para coordenar um vai e volta em forma de onda suave à medida que avançamos o círculo, a função `seno` se torna útil para a modelagem de um movimento ondulatório .
+No capítulo 13 vimos que `Math.sin` nos dá a coordenada y de um ponto em um círculo. Isso é para coordenar um vai e vem em forma de onda suave à medida que avançamos o círculo, a função `seno` se torna útil para a modelagem de um movimento ondulatório.
 
 Para evitar uma situação em que todas as moedas se movem para cima ou para baixo de forma síncrona, a fase inicial de cada moeda é aleatória. A fase da onda de `Math.Sin` a largura de uma onda que produz é de 2π. Multiplicamos o valor retornado pelo `Math.random` por esse número para dar a posição inicial de uma moeda de forma aleatória.
 
-Vamos agora ter escrito todas as peças necessárias para representar o `Level` do estado.
+Agora escrevemos todas as peças necessárias para representar o `Level` nesse estado.
 
  ````js
 var simpleLevel = new Level(simpleLevelPlan);
@@ -196,20 +195,20 @@ console.log(simpleLevel.width, "by", simpleLevel.height);
 // → 22 by 9
  ````
 
- A tarefa à frente deve exibir tais `Level` na tela, e assim modelar o tempo do movimento dentre deles.
+A tarefa a seguir deve exibir tais `Level` na tela, e assim modelar o tempo do movimento eentre deles.
 
  ## Tarefa de encapsulamento
 
 A maior parte do código neste capítulo não ira se preocupar com o encapsulamento. Isto tem duas razões. Em primeiro lugar o encapsulamento exige esforço extra. 
-Em programas maiores isso requer conceitos  adicionais de interfaces a serem introduzidas. Como só há código para você enviar ao leitor que esta jogando com seus olhos vidrados, fiz um esforço para manter o programa pequeno.
+Em programas maiores isso requer conceitos adicionais de interfaces a serem introduzidas. Como só há código para você enviar ao leitor que esta jogando com seus olhos vidrados, fiz um esforço para manter o programa pequeno.
 
-Em segundo lugar, os vários elementos neste jogo estão estreitamente ligados que se o comportamento de um deles mudar é improvável que qualquer um dos outros seriam capazes de ficar na mesma ordem. A interfaces e os elementos acaba codificando uma série de suposições sobre a forma de como o jogo funciona. Isso os torna muito menos eficaz sempre que você altera uma parte do sistema, você ainda tem que se preocupar com a forma como ela afeta as outras partes isto porque suas interfaces não cobririam a nova situação.
+Em segundo lugar, os vários elementos neste jogo estão estreitamente ligados que se o comportamento de um deles mudar é improvável que qualquer um dos outros seriam capazes de ficar na mesma ordem. A interfaces e os elementos acabam codificando uma série de suposições sobre a forma de como o jogo funciona. Isso os torna muito menos eficaz sempre que você altera uma parte do sistema, você ainda tem que se preocupar com a forma como ela afeta as outras partes isto porque suas interfaces não cobre a nova situação.
 
-Alguns pontos de corte em um sistema existe bem a separação através de interfaces rigorosas mas outros não. Tentar encapsular algo que não é um limite adequado é uma maneira de desperdiçar uma grande quantidade de energia. Quando você está fazendo este erro normalmente você vai perceber que suas interfaces estaram ficando sem jeito amplo e detalhado e que eles precisam serem modificados muitas vezes, assim quando como o programa evolui.
+Alguns pontos de corte que existe em um sistema é a separação através de interfaces rigorosas mas em outros casos não. Tentar encapsular algo que não é um limite adequado e isso é uma maneira de desperdiçar uma grande quantidade de energia. Quando você está fazendo este erro normalmente você vai perceber que suas interfaces estaram ficando sem jeito amplo e detalhado e que eles precisam serem modificados muitas vezes, assim como o programa evolui.
 
-Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenho. A razão para isso é que nós vamos mostrar o mesmo jogo de uma maneira diferente no próximo capítulo. Ao colocar o desenho atrás de uma interface podemos simplesmente carregar o mesmo programa de jogo lá e ligar um novo módulo de exibir.
+Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenho. A razão para isso é que nós vamos mostrar o mesmo jogo de uma maneira diferente no próximo capítulo. Ao colocar o desenho atrás de uma interface podemos simplesmente carregar o mesmo programa de jogo lá e ligar um novo módulo para exibição.
 
-## Desenho
+## Desenho <- parei aqui
 
 O encapsulamento do código de desenho é feito através da definição de um objeto de exibição que exibe um determinado `Level`. O tipo de exibição que definimos neste capítulo é chamado `DOMDisplay` isto porque usamos elementos simples do DOM para mostrar o `Level`.
 

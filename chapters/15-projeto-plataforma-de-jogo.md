@@ -208,11 +208,11 @@ Alguns pontos de corte que existe em um sistema é a separação através de int
 
 Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenho. A razão para isso é que nós vamos mostrar o mesmo jogo de uma maneira diferente no próximo capítulo. Ao colocar o desenho atrás de uma interface podemos simplesmente carregar o mesmo programa de jogo lá e ligar um novo módulo para exibição.
 
-## Desenho <- parei aqui
+## Desenho
 
-O encapsulamento do código de desenho é feito através da definição de um objeto de exibição que exibe um determinado `Level`. O tipo de exibição que definimos neste capítulo é chamado `DOMDisplay` isto porque usamos elementos simples do DOM para mostrar o `Level`.
+O encapsulamento do código de desenho é feito através da definição de um objeto de exibição de um determinado `Level`. O tipo de exibição que definimos neste capítulo é chamado de `DOMDisplay`,usaremos elementos simples do DOM para mostrar o `Level`.
 
-Nós estaremos usando uma folha de estilo para definir as cores reais e outras propriedades fixas dos elementos que faram parte do jogo. Também seria possível atribuir diretamente o estilo de propriedade dos elementos quando criá-los, mas queremos produzir programas mais detalhados.
+Nós estaremos usando uma folha de estilo para definir as cores reais e outras propriedades fixas dos elementos que faram parte do jogo. Também seria possível atribuir diretamente as propriedades de estilo dos elementos quando criá-los, mas queremos produzir programas mais detalhados.
 
 A seguinte função auxiliar fornece uma maneira curta para criar um elemento e dar-lhe uma classe:
 
@@ -224,7 +224,7 @@ function elt(name, className) {
 }
 ````
 
-O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar-se e um `Level` de objeto.
+O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar-se e um objeto de `Level`.
 
 ````js
 function DOMDisplay(parent, level) {
@@ -237,9 +237,9 @@ function DOMDisplay(parent, level) {
 }
 ````
 
-Levando em consideração que o fato de que `appendChild` retorna o elemento acrescentado ao criar o conteúdo do elemento e armazená-lo na suas propriedade com apenas uma única instrução.
+Levando em consideração o fato de que `appendChild` retorna o elemento ao criar o conteúdo do elemento, então podemos armazená-lo na suas propriedade com apenas uma única instrução.
 
-O fundo do `Level` nunca muda, é desenhada apenas uma vez. Os atores são redesenhadas cada vez que o `display` for atualizado. A propriedade `actorLayer` será utilizado para controlar o elemento que contém os agentes de modo que eles podem ser facilmente removidos e substituídos.
+O fundo do `Level` nunca muda é desenhada apenas uma vez. Os atores são redesenhadas cada vez que o `display` for atualizado. A propriedade `actorLayer` será utilizado para controlar o elemento que contém os agentes de modo que eles podem ser facilmente removidos e substituídos.
 
 Nossas coordenadas e tamanhos são rastreados em unidades relativas ao tamanho da `grid`, onde o tamanho ou distância de 1 significa uma unidade da `grid`. Ao definir os tamanhos de pixel vamos ter que escalar essas coordenadas, tudo no jogo seria ridiculamente pequeno em um único pixel por metro quadrado. A variável de escala indica o número de pixels que uma única unidade ocupa na tela.
 
@@ -260,7 +260,7 @@ DOMDisplay.prototype.drawBackground = function() {
 };
 ````
 
-Como mencionado anteriormente o fundo é desenhado com um elemento `<table>`. Este corresponde à estrutura da propriedade `grid` onde cada linha é transformado em uma linha da tabela(elemento `<tr>`). As cordas na grade são usados ​​como nomes de classe para a célula da tabela(elemento `<td>`). O seguinte CSS ajuda a olhar o quadro resultante como o fundo que queremos:
+Como mencionado anteriormente o fundo é desenhado com um elemento `<table>`. Este corresponde à estrutura da propriedade `grid` onde cada linha é transformado em uma linha da tabela(elemento `<tr>`). As cordas na grade são usados ​​como nomes de classe para a célula da tabela(elemento `<td>`). O seguinte CSS ajuda a olhar o resultado do quadro como o fundo que queremos:
 
 ````css
 .background    { background: rgb(52, 166, 251);
@@ -271,11 +271,11 @@ Como mencionado anteriormente o fundo é desenhado com um elemento `<table>`. Es
 .wall          { background: white;              }
 ````
 
-Alguns deles(`table-layout`, `border-spacing` , e `padding`) são simplesmente usados ​​para suprimir o comportamento padrão indesejado. Nós não queremos que o layout da tabela dependa de suas células de conteúdos, e nós não queremos espaço entre as células da tabela ou `padding` dentro deles.
+Alguns deles(`table-layout`, `border-spacing` e `padding`) são simplesmente usados ​​para suprimir o comportamento padrão indesejado. Nós não queremos que o layout da tabela dependa do conteúdo de suas células, e nós não queremos espaço entre as células da tabela ou `padding` dentro deles.
 
-A regra de `background` define a cor de fundo. Em CSS é permitido que as cores a serem especificados tanto como palavras(`write`), com um formato tal como RGB(`R, G, B`) onde as componentes vermelha, verde e azul da cor são separados em três números de 0 a 255. Assim em `rgb(52, 166, 251)`, o componente vermelho é de 52 o verde é 166 e azul é 251. Como o componente azul é o maior a cor resultante será azulada. Você pode ver que na regra lava o primeiro número(vermelho) é o maior.
+A regra de `background` define a cor de fundo. No CSS é permitido as cores serem especificadas tanto com palavras(`write`) tanto com um formato como RGB(`R, G, B`) onde os componentes são vermelha, verde e azul ou separados em três números de 0 a 255. Assim em `rgb(52, 166, 251)`, o componente vermelho é de 52 o verde é 166 e azul é 251. Como o componente azul é maior, a cor resultante será azulada. Você pode ver que na regra das `lavas` o primeiro número(vermelho) é o maior.
 
-Chamamos a cada ator criando um elemento no DOM para ele e definindo a posição e o tamanho desse elemento com base nas propriedades do ator. Os valores devem ser multiplicadas por escala para converter para unidades de pixels do jogo.
+Chamamos a cada ator criado por um elemento no DOM, e para ele definimos sua posição e o tamanho desse elemento com base nas propriedades do ator. Os valores devem ser multiplicadas por escala e converter para unidades de pixels do jogo.
 
 ````js
 DOMDisplay.prototype.drawActors = function() {
@@ -292,7 +292,7 @@ DOMDisplay.prototype.drawActors = function() {
 };
 ````
 
-Para dar mais classe ao elemento separamos os nomes de classe por espaços. No código CSS abaixo mostramos a classe ator que nos dá os atores com sua posição absoluta. O seu nome de tipo é usado como uma classe extra para dar-lhes uma cor. Não temos para definir a classe lava novamente porque vamos reutilizar a classe para os quadradrinhos de lava que nós definimos anteriormente.
+Para dar mais classe ao elemento separamos os nomes de classe com espaços. No código CSS abaixo mostramos a classe ator que nos dá os atores com sua posição absoluta. O seu nome é o tipo usado como uma classe extra para dar-lhes uma uma cor diferente. Não temos que definir a classe de lava novamente porque vamos reutilizar a classe para os quadradrinhos de lava que definimos anteriormente.
 
 ````css
 .actor  { position: absolute;            }
@@ -300,7 +300,7 @@ Para dar mais classe ao elemento separamos os nomes de classe por espaços. No c
 .player { background: rgb(64, 64, 64);   }
 ````
 
-Quando se atualiza a exibição o método que foi passado primeiro remove os velhos ator gráficos se houver e em seguida redesenha-os em suas novas posições. Pode ser tentador para tentar reutilizar os elementos DOM para os atores, mas para fazer esse trabalho seria preciso uma grande quantidade de fluxo de informação adicional entre o código de exibição e o código de simulação. Precisaríamos de associar os atores com os elementos do DOM e o código de desenho deve remover elementos quando seus atores desaparecem. Uma vez que não será tipicamente apenas um punhado de atores no jogo, redesenhar todos eles não custa caro.
+Quando se atualiza a exibição o método que foi passado primeiro remove os velhos ator gráficos se houver e em seguida redesenha-os em suas novas posições. Pode ser tentador tentar reutilizar os elementos DOM para os atores, mas para fazer esse trabalho seria preciso uma grande quantidade de fluxo de informação adicional entre o código de exibição e o código de simulação. Precisaríamos  associar os atores com os elementos do DOM e o código de desenho, a remoção dos elementos é feita quando seus atores desaparecem. Uma vez que normalmente não teremos bastante atores no jogo, redesenhar todos eles não custa caro.
 
 ````js
 DOMDisplay.prototype.drawFrame = function() {
@@ -324,9 +324,9 @@ Ao adicionar o estado atual do `Level` com um nome de classe para o `wrapper` po
 }
 ````
 
-Depois de tocar em lava a cor do jogador ficara vermelho escuro sugerindo escaldante. Quando a última moeda foi coletada nós usamos duas caixa branca com sombras borradas, um para o canto superior esquerdo e um para o canto superior direito para criar um efeito de halo branco.
+Depois de tocar em lava a cor do jogador ficara vermelho escuro escaldante. Quando a última moeda for coletada nós usamos duas caixa branca com sombras borradas, um para o canto superior esquerdo e outro para o canto superior direito para criar um efeito de halo branco.
 
-Não podemos assumir que os `Level` de sempre se encaixam na janela de exibição. É por isso que a chamada `scrollPlayerIntoView` é necessária e  garante que se o `Level` está saindo fora do visor nós podemos rolar o `viewport` para garantir que o jogador está perto de seu centro. O seguinte CSS dá ao elemento DOM o embrulho do jogo com um tamanho máximo e garante que qualquer coisa que não se destaca da caixa do elemento não é visível. Também se obter o elemento exterior numa posição relativa, de modo que os atores estão posicionados no seu interior em relação ao canto superior esquerdo do `Level`.
+Não podemos assumir que os `Level` sempre se encaixem na janela de exibição. É por isso que a chamada `scrollPlayerIntoView` é necessária e  garante que se o `Level` está saindo fora do visor nós podemos rolar o `viewport` para garantir que o jogador está perto de seu centro. O seguinte CSS dá ao elemento DOM o embrulho do jogo com um tamanho máximo e garante que qualquer coisa que não se destaca da caixa do elemento não é visível. Também se obter o elemento exterior numa posição relativa, de modo que os atores estão posicionados no seu interior em relação ao canto superior esquerdo do `Level`.
 
 ````css
 .game {
@@ -363,6 +363,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
     this.wrap.scrollTop = center.y + margin - height;
 };
 ````
+<-- Parei aqui
 
 A forma como centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro do ator nós adicionamos a sua posição(o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de `Level` mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
 

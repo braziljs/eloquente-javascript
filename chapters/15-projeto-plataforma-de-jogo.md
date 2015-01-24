@@ -363,15 +363,14 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
     this.wrap.scrollTop = center.y + margin - height;
 };
 ````
-<-- Parei aqui
 
-A forma como centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro do ator nós adicionamos a sua posição(o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de `Level` mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
+A forma de como o centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro para ator nós adicionamos a sua posição(o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de `Level` mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
 
-Em seguida uma série de verificações são feitas para verificar qual a posição do jogador dentro e fora do intervalo permitido. Note-se que, por as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai obrigá-los a terem valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
+Em seguida uma série de verificações são feitas para a posição do jogador dentro e fora do intervalo permitido. Note-se que, por as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai ser obrigdo a ter valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
 
-Ele teria sido um pouco mais simples tentar se sempre deslocarmos o jogador para o centro da janela. Mas isso cria um efeito bastante chocante. Como você está pulando a visão vai mudar constantemente de cima e para baixo. É mais agradável ter uma área `"neutra"` no meio da tela onde você pode se mover sem causar qualquer rolagem.
+Teria sido um pouco mais simples tentar deslocarmos o jogador para o centro da janela. Mas isso cria um efeito bastante chocante. Como você está pulando a visão vai mudar constantemente de cima e para baixo. É mais agradável ter uma área `"neutra"` no meio da tela onde você pode se mover sem causar qualquer rolagem.
 
-Finalmente, vamos precisar de uma maneira de limpar um `Level` apresentado para ser usado quando o jogo se move para o próximo `Level` ou redefine um `Level`.
+Finalmente, vamos precisar de uma maneira para limpar um `Level` para ser usado quando o jogo se move para o próximo `Level` ou redefine um `Level`.
 
  ````js
 DOMDisplay.prototype.clear = function() {
@@ -390,7 +389,7 @@ Estamos agora em condições de apresentar o nosso melhor `Level` atualmente.
 </script>
 ````
 
-A tag `<link>`quando usado com `rel="stylesheet"` torna-se uma maneira de carregar um arquivo CSS em uma página. O `game.css` arquivo contém os estilos necessários para o nosso jogo.
+A tag `<link>`quando usado com `rel="stylesheet"` torna-se uma maneira de carregar um arquivo CSS em uma página. O arquivo `game.css` contém os estilos necessários para o nosso jogo.
 
 ## Movimento e colisão
 
@@ -400,11 +399,11 @@ Isto é fácil. A parte difícil é lidar com as interações entre os elementos
 
 Resolver este problema para o caso geral é uma grande tarefa. Você pode encontrar as bibliotecas, geralmente chamados de motores de física que simulam a interação entre os objetos físicos em duas ou três dimensões. Nós vamos ter uma abordagem mais modesta neste capítulo apenas manipularemos as colisões entre objetos retangulares e manusearemos de uma forma bastante simplista.
 
-Antes de mover o jogador ou um bloco de lava, testamos se o movimento iria levá-la para dentro de uma parte não vazio de fundo. Se isso acontecer, nós simplesmente cancelamos o movimento por completo. A resposta a tal colisão depende do tipo de ator - o jogador vai parar, enquanto um bloco de lava vai se recuperar.
+Antes de mover o jogador ou um bloco de lava, testamos se o movimento iria levá-la para dentro de uma parte não vazio de fundo. Se isso acontecer, nós simplesmente cancelamos o movimento por completo. A resposta a tal colisão depende do tipo de ator - o jogador vai parar, enquanto um bloco de lava se recupera.
 
-Essa abordagem requer alguns passos para termos uma forma reduzida, uma vez que o objeto esta em movimento e para antes dos objetos se tocarem. Se os intervalos de tempo(os movimentos dos passos) são muito grandes, o jogador iria acabar em uma distância perceptível acima do solo. Outra abordagem indiscutivelmente melhor mas é mais complicado, seria a de encontrar o local exato da colisão e se mudar para lá. Tomaremos a abordagem simples de esconder os seus problemas, garantindo que a animação prossegue em pequenos passos.
+Essa abordagem requer alguns passos para termos uma forma reduzida, uma vez que o objeto que esta em movimento para antes dos objetos se tocarem. Se os intervalos de tempo(os movimentos dos passos) são muito grandes, o jogador iria acabar em uma distância perceptível acima do solo. A outra abordagem é indiscutivelmente melhor mas é mais complicado, que seria encontrar o local exato da colisão e se mudar para lá. Tomaremos uma abordagem simples de esconder os seus problemas, garantindo que a animação prossiga em pequenos passos.
 
-Este método nos diz se e um retângulo(especificado por uma posição e um tamanho) coincide com qualquer espaço não vazio na `grid` de fundo:
+Este método nos diz se um retângulo(especificado por uma posição e um tamanho) coincide com qualquer espaço não vazio na `grid` de fundo:
 
 ````js
 Level.prototype.obstacleAt = function(pos, size) {
@@ -426,7 +425,9 @@ Level.prototype.obstacleAt = function(pos, size) {
 };
 ````
 
-Este método calcula o conjunto de quadradros que o `body` se sobrepõe a usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima e para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
+<- Parei aqui
+
+Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima e para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
 
 ![images](http://i.imgur.com/jXvUMXC.png)
 

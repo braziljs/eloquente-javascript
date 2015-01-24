@@ -425,15 +425,14 @@ Level.prototype.obstacleAt = function(pos, size) {
 };
 ````
 
-<- Parei aqui
 
-Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima e para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
+Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
 
 ![images](http://i.imgur.com/jXvUMXC.png)
 
-Se o corpo se sobressai do `Level`, sempre voltamos "parede" para os lados e na parte superior e "lava" para o fundo. Isso garante que o jogador morra ao cair para fora do mundo . Quando o corpo esta totalmente no interior da `grid`, que laço sobre o bloco de quadrículas encontrado arredondando as coordenadas e retornar o conteúdo do primeiro quadrado nonempty encontramos.
+Se o corpo se sobressai do `Level`, sempre retornaremos `"wall"` para os lados e na parte superior e `"lava"` para o fundo. Isso garante que o jogador morra ao cair para fora do mundo. Quando o corpo esta totalmente no interior da `grid`, nosso loop sobre o bloco de quadradros encontra as coordenadas por arredondamento e retorna o conteúdo do primeira `nonempty`.
 
-Colisões entre o jogador e outros atores dinâmicos(moedas, lava em movimento) são tratadas depois de o jogador se mudou. Quando o movimento tomou o jogador para outro outro ator, uma moeda ou a recolha de efeito apropriado para morter. Isoo é ativado.
+Colisões entre o jogador e outros atores dinâmicos(moedas, lava em movimento) são tratadas depois que o jogador se mudou. Quando o movimento do jogador coincide com o de outro ator, se for uma moeda é feito o efeito de recolha ou se for lava o efeito de morte é ativado.
 
 Este método analisa o conjunto de atores, procurando um ator que se sobrepõe a um dado como um argumento:
 
@@ -450,6 +449,8 @@ Level.prototype.actorAt = function(actor) {
   }
 };
 ````
+
+<- Parei aqui
 
 ## Atores e ações
 

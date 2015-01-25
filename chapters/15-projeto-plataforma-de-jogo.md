@@ -450,8 +450,6 @@ Level.prototype.actorAt = function(actor) {
 };
 ````
 
-<- Parei aqui
-
 ## Atores e ações
 
 O método `animate` do tipo `Level` dá a todos os atores do `level` a chance de se mover. Seu argumento `step` traz o tempo do passo em segundos. O objeto `key` contém informações sobre as teclas que o jogador pressionou.
@@ -477,7 +475,7 @@ Quando a propriedade `status` do `level` tem um valor não nulo(que é o caso de
 
 O `loop` `while` corta o passo de tempo onde estamos animando em pedaços pequenos. Ele garante que nenhum passo maior do que `maxStep` é tomado. Por exemplo um passo de 0,12 segundo iria ser cortado em dois passos de 0,05 e um segundo passo de 0,02.
 
-Objetos ator tem um método `act` que toma como argumentos o tempo do passo, o objeto do `level` e as chaves de objeto. Aqui está um para o tipo de ator(Lava) que ignora as teclas de objeto:
+Objetos do ator tem um método `act` que toma como argumentos o tempo do passo, o objeto do `level` que contém as chaves de objeto. Aqui está um exemplo para o tipo de ator(Lava) que ignora as teclas de objeto:
 
 ````js
 Lava.prototype.act = function(step, level) {
@@ -491,7 +489,7 @@ Lava.prototype.act = function(step, level) {
 };
 ````
 
-Ele calcula uma nova posição através da adição do produto do tempo do passo e a sua velocidade atual para definir sua posição. Se nenhum bloco de obstáculos é a nova posição ele se move para lá. Se houver um obstáculo o comportamento depende do tipo da lava: lava e bloco de gotejamento tem uma propriedade `repeatPos` para ele poder saltar para trás quando bater em algo. Saltando a lava simplesmente inverte sua velocidade(multiplica por -1) a fim de começar a se mover em outra direção.
+Ele calcula uma nova posição através da adição do produto de tempo do passo e a sua velocidade atual para definir sua posição. Se nenhum bloco de obstáculos tem uma nova posição ele se move para lá. Se houver um obstáculo o comportamento depende do tipo da lava: lava e bloco de gotejamento tem uma propriedade `repeatPos` para ele poder saltar para trás quando bater em algo. Saltando a lava simplesmente inverte sua velocidade(multiplica por -1) a fim de começar a se mover em outra direção.
 
 Coins usa seu método `act` para se mover. Eles ignoram colisões uma vez que são simplesmente oscilando em torno de dentro de sua própria quadrado e colisões com o jogador será tratado pelo método `act` do jogador.
 
@@ -507,7 +505,7 @@ Coin.prototype.act = function(step) {
 
 A propriedade `wobble` é atualizada para controlar o tempo e em seguida utilizado como um argumento para `math.sin` para criar uma onda que é usado para calcular sua nova posição.
 
-Isso deixa o próprio jogador. Movimento do jogador é tratado separadamente para cada eixo, porque bater no chão não deve impedir o movimento horizontal, e batendo na parede não deve parar de cair ou saltar movimento. Este método implementa a parte horizontal:
+Isso deixa o próprio jogador. Movimento do jogador é tratado separadamente para cada eixo, porque bater no chão não deve impedir o movimento horizontal, e batendo na parede não deve parar de cair ou o movimento de saltar. Este método implementa a parte horizontal:
 
 ````js
 var playerXSpeed = 7;
@@ -554,7 +552,7 @@ Player.prototype.moveY = function(step, level, keys) {
 
 No início do método o jogador é acelerado verticalmente para ter em conta a gravidade. Ao saltar a velocidade da gravidade é praticamente igual a todas as outras constantes neste jogo que foram criadas por tentativa e erro. Eu testei vários valores até encontrar uma combinação agradável.
 
-Em seguida é feito um verificação para identificar se há obstáculos novamente. Se bater em um obstáculo há dois resultados possíveis. Quando a seta para cima é pressionado e estamos nos movendo para baixo(ou seja, a coisa que bater é abaixo de nós) a velocidade é definida como um valor relativamente grande e negativo. Isso faz com que o jogador salte. Se esse não for o caso, nós simplesmente esbarrou em alguma coisa e a velocidade é zerada.
+Em seguida é feito uma verificação para identificar se há obstáculos novamente. Se bater em um obstáculo há dois resultados possíveis. Quando a seta para cima é pressionado e estamos nos movendo para baixo(ou seja, a coisa que bater é abaixo de nós) a velocidade é definida como um valor relativamente grande e negativo. Isso faz com que o jogador salte. Se esse não for o caso, nós simplesmente esbarramos em alguma coisa e a velocidade é zerada.
 
 O método atual parece com isso:
 
@@ -575,7 +573,7 @@ Player.prototype.act = function(step, level, keys) {
 };
 ````
 
-Depois de se mover o método verifica para outros atores que o jogador está colidindo com ele novamente e é chamado o  `playerTouched` quando encontra um. Desta vez ele passa o objeto ator como o segundo argumento isto é porque se o outro ator é uma moeda `playerTouched` precisa saber qual moeda está sendo coletado.
+Depois de se mover o método verifica os outros atores que o jogador está colidindo com ele novamente e é chamado o  `playerTouched` quando encontra um. Desta vez ele passa o objeto ator como segundo argumento isto é porque se o outro ator é uma moeda `playerTouched` precisa saber qual moeda está sendo coletada.
 
 Finalmente quando o jogador morre(toca lava), montamos uma pequena animação que faz com que ele se "encolha" ou "afunde" reduzindo a altura do objeto jogador.
 
@@ -602,13 +600,15 @@ Level.prototype.playerTouched = function(type, actor) {
 
 Quando lava é tocado, o status do jogo é definido como `"lost"`. Quando uma moeda é tocada essa moeda é removida do conjunto de atores e se fosse o último o estado do jogo é definido como "ganhou".
 
-Isso nos dá um `Level` que pode realmente ser animado. Tudo o que está faltando agora é o código que aciona a animação.
+Isso nos da a opção do `Level` de ser animado. Tudo o que está faltando agora é o código que aciona a animação.
 
 ## Rastreamento de teclas
 
-Para um jogo como este nós não queremos que as teclas entre em vigor uma única vez quando presionada. Pelo contrário queremos o seu efeito(movendo a figura do jogador) para continuar movendo o jogador enquanto elas são pressionadas.
+Para um jogo como este nós não queremos que as teclas entre em vigor uma única vez quando presionada. Pelo contrário queremos o seu efeito(movendo a figura do jogador) para continuar movendo o jogador enquanto elas estejam pressionadas.
 
-Precisamos criar um manipulador de teclas que armazena o estado atual da esquerda, direita e cima das teclas de seta. Nós também queremos chamar `preventDefault` para essas teclas não acabe dando rolagem da página.
+Precisamos criar um manipulador de teclas que armazena o estado atual da esquerda, direita e cima das teclas de seta. Nós também queremos chamar `preventDefault` para essas teclas para não dar rolagem da página.
+
+<- Parei aqui
 
 A função a seguir quando é passado um objeto com o código da tecla e com o nome de propriedade como valores devemos retornar um objeto que rastreia a posição atual dessas teclas. Ele registra manipuladores de eventos para `"keydown"` e `"KeyUp"` e quando o código de tecla para o evento está presente no conjunto de códigos que está rastreando executa a atualização do objeto.
 

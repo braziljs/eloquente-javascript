@@ -608,9 +608,7 @@ Para um jogo como este nós não queremos que as teclas entre em vigor uma únic
 
 Precisamos criar um manipulador de teclas que armazena o estado atual da esquerda, direita e cima das teclas de seta. Nós também queremos chamar `preventDefault` para essas teclas para não dar rolagem da página.
 
-<- Parei aqui
-
-A função a seguir quando é passado um objeto com o código da tecla e com o nome de propriedade como valores devemos retornar um objeto que rastreia a posição atual dessas teclas. Ele registra manipuladores de eventos para `"keydown"` e `"KeyUp"` e quando o código de tecla para o evento está presente no conjunto de códigos que está rastreando executa a atualização do objeto.
+A função a seguir quando é passado um objeto com o código da tecla e com o nome de propriedade como valores, devemos retornar um objeto que rastreia a posição atual dessas teclas. Ele registra manipuladores de eventos para `"keydown"` e `"Keyup"`, quando o código de tecla para o evento está presente no conjunto de códigos que está sendo rastreado é executado a atualização do objeto.
 
 ````js
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
@@ -630,14 +628,14 @@ function trackKeys(codes) {
 }
 ````
 
-Note como a mesma manipulador da função é usado para ambos os tipos de eventos. Ele olha para a propriedade `type` do objeto de evento para determinar se o estado da tecla deve ser atualizado para true("keydown") ou falso("keyup").
+Note como o mesmo manipulador da função é usado para ambos os tipos de eventos. Ele olha para a propriedade `type` do objeto de evento para determinar se o estado da tecla deve ser atualizado para true("keydown") ou falso("keyup").
 
 
 ## Executar o jogo
 
 A função `requestAnimationFrame` que vimos no capítulo 13 fornece uma boa maneira de animar um jogo. Mas sua interface é bastante primitiva para usá-la, o que nos obriga a ficar controlando sua última chamada para executar a função `requestAnimationFrame` novamente após cada frame.
 
-Vamos definir uma função auxiliar que envolve as partes chatas em uma interface conveniente e nos permitir a simplesmente chamar `runAnimation` dando-lhe uma função que espera uma diferença de tempo como um argumento e desenha em um quadro único. Quando a função de armação retorna o valor falso, a animação para.
+Vamos definir uma função auxiliar que envolve as partes chatas em uma interface conveniente e nos permitir simplesmente chamar `runAnimation` dando-lhe uma função que espera uma diferença de tempo como um argumento e desenha-la em um quadro único. Quando a função de armação retorna o valor falso a animação para.
 
 ````js
 function runAnimation(frameFunc) {
@@ -656,11 +654,11 @@ function runAnimation(frameFunc) {
 }
 ````
 
-Temos que definir um passo de quadros máxima de 100 milissegundos(um décimo de segundo). Quando a aba ou janela do navegador com a página estiver oculto as chamadas `requestAnimationFrame` será suspenso até que a aba ou janela é mostrado novamente. Neste caso a diferença entre `lasttime` será todo o tempo em que a página estiver oculta. Avançando o jogo, que muito em uma única etapa vai parecer fácil mas podemos ter um monte de trabalho(lembre-se o tempo-splitting no método de animação).
+Temos que definir um passo de quadros máximo de 100 milissegundos(um décimo de segundo). Quando a aba ou janela do navegador com a página estiver oculto as chamadas `requestAnimationFrame` será suspenso até que a aba ou janela é mostrado novamente. Neste caso a diferença entre `lasttime` será todo o tempo em que a página estiver oculta. Avançando o jogo, que em uma única etapa vai parecer fácil mas podemos ter um monte de trabalho(lembre-se o tempo-splitting no método de animação).
 
 A função também converte os passos de tempo para segundos, que são uma quantidade mais fácil de pensar do que milissegundos.
 
-A função de execução do `Level` toma um objeto do `Level` um construtor de uma exposição e opcionalmente uma função. Ele exibe o `Level`(em document.body) e permite que o usuário peça por ela. Quando o `Level` está terminado (perda ou ganho), `Level` de execução limpa o visor, pára a animação, e, caso a função andthen foi dada, chama essa função com o status do `Level`.
+A função de execução do `Level` toma um objeto do `Level` no construtor de uma exposição e opcionalmente uma função. Ele exibe o `Level`(em document.body) e permite que o usuário peça por ele. Quando o `Level` está terminado(perda ou ganho), `Level` de execução, limpa o visor, para a animação e caso a função `andthen` for dada, chama essa função com o status do `Level`.
 
 ````js
 var arrows = trackKeys(arrowCodes);
@@ -698,11 +696,11 @@ function runGame(plans, Display) {
 }
 ````
 
-Estas funções mostram um estilo peculiar de programação. Ambos `runAnimation` e `Level` de execução são funções de ordem superior, mas não são no estilo vimos no capítulo 5. O argumento da função é usado para organizar as coisas para acontecer em algum momento no futuro, e nenhuma das funções retorna alguma coisa útil. A sua tarefa é, de certa forma, para agendar ações. Envolvendo estas ações em funções nos dá uma maneira de armazená-los como um valor, de modo que eles podem ser chamados no momento certo.
+Estas funções mostram um estilo peculiar de programação. Ambos `runAnimation` e `Level` de execução são funções de ordem superior, mas não são no estilo que vimos no capítulo 5. O argumento da função é usado para organizar as coisas para acontecer em algum momento no futuro e nenhuma das funções retorna alguma coisa útil. A sua tarefa é de certa forma, agendar ações. Envolvendo estas ações em funções nos dá uma maneira de armazená-las com um valor de modo que eles podem ser chamados no momento certo.
 
-Este estilo de programação geralmente é chamado de programação assíncrona. Manipulação de eventos também é um exemplo deste estilo, e vamos ver muito mais do que quando se trabalha com tarefas que podem levar uma quantidade arbitrária de tempo, como solicitações de rede no capítulo 17 e entrada e saída em geral no Capítulo 20.
+Este estilo de programação geralmente é chamado de programação assíncrona. Manipulação de eventos também é um exemplo deste estilo, vamos ver muito mais do que quando se trabalha com tarefas que podem levar uma quantidade arbitrária de tempo, como solicitações de rede no capítulo 17 e entrada e saída em geral no Capítulo 20.
 
-Há um conjunto de planos de `Level` disponíveis na variável `GAME_LEVELS`. Esta página alimenta-los para  `runGame`, começando um jogo real:
+Há um conjunto de planos de `Level` disponíveis na variável `GAME_LEVELS`. Esta página alimenta `runGame`, começando um jogo real:
 
 ````html
 <link rel="stylesheet" href="css/game.css">
@@ -714,12 +712,12 @@ Há um conjunto de planos de `Level` disponíveis na variável `GAME_LEVELS`. Es
 </body>
 ````
 
-Veja se você pode bater aqueles. Eu tinha um monte de `Level` construídos.
+Veja se você pode vencer. Aqui eu espero vários `Level` construídos.
 
 ## Exercício
 
-É tradicional para jogos de plataforma para ter o início do jogador com um número limitado de vidas e subtrair uma vida cada vez que ele morre. Quando o jogador está fora de vidas, o jogo será reiniciado desde o início.
-Ajuste `runGame` para implementar as três vidas para o jogador no início com três.
+É tradicional para jogos de plataforma ter o início do jogador com um número limitado de vidas e subtrair uma vida cada vez que ele morre. Quando o jogador está sem vidas, o jogo será reiniciado desde o início.
+Ajuste `runGame` para implementar as três vidas ao iniciar.
 
 ````html
 <link rel="stylesheet" href="css/game.css">
@@ -749,7 +747,7 @@ Ajuste `runGame` para implementar as três vidas para o jogador no início com t
 
 A solução mais óbvia seria, tornar a vida uma variável que vive em `runGame` e é portanto visível para o encerramento do `startLevel`.
 
-Uma outra abordagem que se encaixa com o espírito do resto da função, seria adicionar um segundo parâmetro para o `startLevel` que dá o número de vidas. Quando todo o estado de um sistema é armazenado nos argumentos para uma função, chamar essa função fornece uma maneira elegante de fazer a transição para um novo estado.
+Uma outra abordagem que se encaixa com o espírito do resto da função seria, adicionar um segundo parâmetro para o `startLevel` que dá o número de vidas. Quando todo o estado de um sistema é armazenado nos argumentos para uma função, chamar essa função fornece uma maneira elegante de fazer a transição para um novo estado.
 
 Em qualquer caso, quando o `Level` está perdido deverá agora existir duas transições de estado possíveis. Se esse for a última vida vamos voltar ao `Level` zero com o montante inicial de vidas. Se não vamos repetir o `Level` atual com menos uma vida restante.
 
@@ -761,7 +759,7 @@ Isso pode ser feito alterando a execução função do `Level` para usar outro m
 
 A interface `runAnimation` não pode se reponsabilizar por isso à primeira vista, mas basta você reorganizar a maneira que `RUNLEVEL` é chamado.
 
-Quando você tem que trabalhar não há outra coisa que você pode tentar. O caminho que temos vindo a registrar manipuladores de eventos de teclas é um pouco problemático. O objeto `keys` é uma variável global e seus manipuladores de eventos são mantidas ao redor mesmo quando nenhum jogo está sendo executado. Pode-se dizer que isso pode vazar para fora do nosso sistema. Estender `trackKeys` nos da uma maneira de fornecer o cancelamento do registro e de seus manipuladores e em seguida mudar a execução do `Level` para registrar seus tratadores quando começa e cancelar o registro novamente quando ele for concluído.
+Quando você tem que trabalhar não há outra coisa que você pode tentar. O caminho que temos vindo a registrar manipuladores de eventos de teclas é um pouco problemático. O objeto `keys` é uma variável global e seus manipuladores de eventos são mantidas ao redor mesmo quando nenhum jogo está sendo executado. Pode-se dizer que isso pode vazar para fora do nosso sistema. Estender `trackKeys` nos da uma maneira de fornecer o cancelamento do registro e de seus manipuladores e em seguida mudar a execução do `Level` para registrar seus tratadores quando começa e cancela o registro novamente quando ele for concluído.
 
 ````html
 <link rel="stylesheet" href="css/game.css">
@@ -791,7 +789,7 @@ Quando você tem que trabalhar não há outra coisa que você pode tentar. O cam
 
 Uma animação pode ser interrompida retornando um valor `falso` na função dada ao `runAnimation`. Ele pode ser continuado chamando `runAnimation` novamente.
 
-Para comunicar informando que a animação deve ser interrompido para a função passada para `runAnimation` ele deve retornar falso; você pode usar uma variável que tanto o manipulador de eventos e a função tenha acesso.
+Para comunicar que a animação deve ser interrompido a função passada para `runAnimation` deve retornar falso; você pode usar uma variável que tanto o manipulador de eventos e a função tenha acesso.
 
 Quando encontrar uma maneira de cancelar o registro dos manipuladores registrados por `trackKeys` lembre-se que o mesmo valor função exata que foi passado para `addEventListener` deve ser passado para `removeEventListener` para remover com êxito um manipulador. Assim o valor da função manipuladora criada em `trackKeys` devera estar disponível para o código que cancela os manipuladores.
 

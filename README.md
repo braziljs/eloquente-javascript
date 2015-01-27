@@ -61,7 +61,6 @@ O andamento das issues está divido em **3 etapas**, na ordem apresentada abaixo
 
 - Autor: **Marijn Haverbeke**
 - [Versão original](http://eloquentjavascript.net) deste livro.
-- [Download](https://leanpub.com/eloquentejavascript) do livro traduzido no formato `.pdf`, `.mobi` e `.epub`. 
 
 Licenciado sob a licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/).
 

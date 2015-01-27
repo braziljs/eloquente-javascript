@@ -173,8 +173,8 @@ Quando seu programa contém mais que uma declaração, as declarações são exe
 
 ```javascript
 
-var theNumber = Number(prompt("Pick a number", ""));
-alert("Your number is the square root de " + theNumber * theNumber);
+var theNumber = Number(prompt("Digite um número", ""));
+alert("Seu número é a raiz quadrada de" + theNumber * theNumber);
 
 ```
 

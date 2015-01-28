@@ -2,8 +2,9 @@
 
 **Uma moderna introdução ao JavaScript, programação e maravilhas digitais.**
 
-![JavaScript Eloquente](img/eloq-js.png)
+> **Mantenedor:** [Eric Douglas](https://github.com/ericdouglas)
 
+![JavaScript Eloquente](img/eloq-js.png)
 
 ## Conteúdo do Livro
 

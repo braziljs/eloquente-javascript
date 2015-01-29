@@ -12,7 +12,7 @@ A maneira como técnicas e convenções de programação sobrevivem e se dissemi
 
 Neste capítulo, discutiremos uma dessas tecnologias, expressões regulares. Expressões regulares são um modo de descrever padrões em um conjunto de caracteres. Eles formam uma pequena linguagem à parte, que é incluída no Javascript (assim como em várias outras linguagens de programação e ferramentas) .
 
-Expressões regulares são ao mesmo tempo, extremamente úteis e estranhas. Conhecê-las apropiadamente irá facilitar muito vários tipos de processamento de textos. Mas a sintaxe utilizada para descreve-las é ridiculamente enigmática. Alem disso, a interface do Javascript para elas é um tanto quanto desajeitada.
+Expressões regulares são ao mesmo tempo, extremamente úteis e estranhas. Conhecê-las apropriadamente irá facilitar muito vários tipos de processamento de textos. Mas a sintaxe utilizada para descreve-las é ridiculamente enigmática. Alem disso, a interface do Javascript para elas é um tanto quanto desajeitada.
 
 ----
 
@@ -26,13 +26,13 @@ var expReg2 = /abc/;
 ```
 Este objeto representa um padrão, que no caso é uma letra "a" seguida de uma letra "b" e depois um "c".
 
-Ao usar o construtor RegExp, o padrão é escrito como um texto normal, de modo que as regras normais se aplicam para barras invertidas. Na segunda notação, usamos barras para delimitar o padrão. Alguns outros caracteres, como sinais de interrogação (?) e sinais de soma (+), são usados como marcadores especias em expressões regulares, e precisam ser precedidos por uma barra invertida, para representarem o caractere original e não o comando de expressão regular.
+Ao usar o construtor RegExp, o padrão é escrito como um texto normal, de modo que as regras normais se aplicam para barras invertidas. Na segunda notação, usamos barras para delimitar o padrão. Alguns outros caracteres, como sinais de interrogação (?) e sinais de soma (+), são usados como marcadores especiais em expressões regulares, e precisam ser precedidos por uma barra invertida, para representarem o caractere original e não o comando de expressão regular.
 
 ```
 var umMaisum = /1 \+ 1/;
 ```
 
-Saber exatamente quais caracteres devem ser escapados com uma barra invertida em uma expressão reguar exige que você saiba todos os caracteres especiais e seus significados na sintaxe de expressões regulares. Por enquando, pode não parecer fácil saber todos, então, se tiver dúvidas, escape todos os caracteres que não sejam letras e números ou um espaço em branco.
+Saber exatamente quais caracteres devem ser escapados com uma barra invertida em uma expressão reguar exige que você saiba todos os caracteres especiais e seus significados na sintaxe de expressões regulares. Por enquanto, pode não parecer fácil saber todos, então, se tiver dúvidas, escape todos os caracteres que não sejam letras e números ou um espaço em branco.
 
 ## Testando por correspondências
 
@@ -51,7 +51,7 @@ Uma expressão regular que contenha apenas caracteres simples, representa essa m
 
 Saber quando uma string contém "abc" pode muito bem ser feito usando a função indexOf. A diferença das expressões regulares é que elas permitem padrões mais complexos de busca.
 
-Digamos que queremos achar qualquer número. Em uma expressão egular, colocar um conjunto de caracteres entre colchetes ("[]") faz com que a expressão ache qualquer dos caracteres dentro dos colchetes.
+Digamos que queremos achar qualquer número. Em uma expressão regular, colocar um conjunto de caracteres entre colchetes ("[]") faz com que a expressão ache qualquer dos caracteres dentro dos colchetes.
 
 A expressão abaixo, acha todas as strings que contem um dígito numérico.
 
@@ -64,7 +64,7 @@ console.log( /[0-9]/.test("ano 1992") );
 
 Dentro de colchetes, um hífen ("-") entre dois caracteres pode ser usado para indicar um conjunto entre dois caracteres. Uma vez que os códigos de caracteres Unicode de "0" a "9" contém todos os dígitos (códigos 48 a 57), [0-9] encontrará qualquer dígito.
 
-Existem alguns grupos de caracetes de uso comum, que já possuem atalhos incluídos na sintaxe de expressões regulares. Dígitos são um dos conjuntos que você pode escrever usando um atalho, barra invertida seguida de um "d" minúsculo (\d), com o mesmo significado que [0-9].
+Existem alguns grupos de caracteres de uso comum, que já possuem atalhos incluídos na sintaxe de expressões regulares. Dígitos são um dos conjuntos que você pode escrever usando um atalho, barra invertida seguida de um "d" minúsculo (\d), com o mesmo significado que [0-9].
 
 	- \d	caracteres numéricos
 	- \w	caracteres alfanuméricos ("letras”)
@@ -89,7 +89,7 @@ console.log( dataHora.test("30/jan/2003 15:20") );
 
 Parece confuso, certo? Muitas barras invertidas, sujando a expressão, que dificultam compreender qual o padrão procurado. Mas é assim mesmo o  trabalho com expressões regulares.
 
-Estes marcadores d ecategoria também podem ser usados dentro de colchetes, então [\d\i] significa qualquer dígito ou ponto.
+Estes marcadores de categoria também podem ser usados dentro de colchetes, então [\d\i] significa qualquer dígito ou ponto.
 
 Para "inverter" um conjunto de caracteres, buscar tudo menos o que você escreveu no padrão, um cento circunflexo ("^") é colocado no início do colchete de abertura.
 
@@ -118,7 +118,7 @@ console.log( /'\d*'/.test("''") );
 // → true
 ```
 
-O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Entao, algo com um asterisco depois nao impede um padrão de ser achado, penas retornando zero resultados.
+O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Entao, algo com um asterisco depois não impede um padrão de ser achado, penas retornando zero resultados.
 
 Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou mais vezes. Neste exemplo, é permitido  que ocorra o caracter "u", mas o padrão também é encontrado quando ele está ausente. 
 
@@ -130,7 +130,7 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-Para permitir que um padrão ocorra um número defido de vezes, chaves ("{}") são usadas. Colocando {4} depois de um elemento do padrão, mostra que ele deve ocorrer 4 vezes, exatamente. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
+Para permitir que um padrão ocorra um número definido de vezes, chaves ("{}") são usadas. Colocando {4} depois de um elemento do padrão, mostra que ele deve ocorrer 4 vezes, exatamente. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
 
 Segue outro versão do padrão mostrado acima, de data e hora. Ele permite, dias com um dígito, mês e hora como números e mais legível:
 
@@ -140,11 +140,11 @@ console.log( dataHora.test("30/1/2003 8:45") );
 // → true
 ```
 
-Também é possível deixar em aberto o número mínimo ou máximo de ocorrencias, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
+Também é possível deixar em aberto o número mínimo ou máximo de ocorrências, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
 
 ## Agrupando sub-expressões
 
-Para usar um operador como "*" ou "+" em mais de um caracter de de uma vez, é necessário o uso de parenteses. Um pedaço de uma expressão regular que é delimitado por parenteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
+Para usar um operador como "*" ou "+" em mais de um caracter de de uma vez, é necessário o uso de parênteses. Um pedaço de uma expressão regular que é delimitado por parênteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
 
 ```
 var cartoonCrying = /boo+(hoo+)+/i;
@@ -154,11 +154,11 @@ console.log( cartoonCrying.test("Boohoooohoohooo") );
 
 O terceiro "+" se aplica a todo grupo (hoo+), encontrando uma ou mais sequências como essa.
 
-O "i" no final da expressãodo exemplo acima maz com que a expressão regular seja  case-insensitive, permitindo-a encontrar a letra maiúscula "B" na string dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
+O "i" no final da expressão do exemplo acima faz com que a expressão regular seja  case-insensitive, permitindo-a encontrar a letra maiúscula "B" na string dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
 
 ## Resultados e grupos
 
-O método test é a maneira mais simples de encontrar correspondencias de uma expressão regular. Ela apenas informa se foi encontrado algo, e mais nada. Expressões regulares também possuem o método exec (executar), que irá retornar null quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
+O método test é a maneira mais simples de encontrar correspondências de uma expressão regular. Ela apenas informa se foi encontrado algo, e mais nada. Expressões regulares também possuem o método exec (executar), que irá retornar null quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
 
 ```
 var match = /\d+/.exec("one two 100");
@@ -177,7 +177,7 @@ console.log("one two 100".match(/\d+/));
 
 Um objeto retornado pelo método exec ou match possui um index de propriedades que informa aonde na string o resultado encontrado se inicia. Além disso, o objeto se parece (e de fato é) um array de strings, onde o primeiro elemento é a string que foi achada, no exemplo acima, a sequência de dígitos numéricos.
 
-Quando uma expressão regular contém expressões agrupadas entre parenteses, o texto que corresponde a esses grupos também aparece no array. O primeiro elemento sempre é todo o resultado, seguido pelo resultado do primeiro grupo entre parenteses, depois o segundo grupo e assim em diante.
+Quando uma expressão regular contém expressões agrupadas entre parênteses, o texto que corresponde a esses grupos também aparece no array. O primeiro elemento sempre é todo o resultado, seguido pelo resultado do primeiro grupo entre parênteses, depois o segundo grupo e assim em diante.
 
 ```
 var textoCitado = /'([^']*)'/;
@@ -194,7 +194,7 @@ console.log(/(\d)+/.exec("123"));
 // → ["123", "3"]
 ```
 
-Grupos podem ser muito úteis para extrair partes de uma string. Po exemplo, podemos não querer apenas verificar quando uma stringo contém uma data, mas também extraí-la, e contruir um obejeto que a representa. Se adicionarmos parenteses em volta do padrão de dígitos, poderemos selecionar a data no resultado da função exec.
+Grupos podem ser muito úteis para extrair partes de uma string. Po exemplo, podemos não querer apenas verificar quando uma string contém uma data, mas também extraí-la, e construir um objeto que a representa. Se adicionarmos parênteses em volta do padrão de dígitos, poderemos selecionar a data no resultado da função exec.
 
 Mas antes, um pequeno desvio.
 
@@ -207,7 +207,7 @@ console.log( new Date() );
 // → Fri Feb 21 2014 09:39:31 GMT-0300 (BRT)
 ```
 
-Também é possível criar um obeto para uma hora específica
+Também é possível criar um objeto para uma hora específica
 
 ```
 console.log( new Date(2014, 6, 29) );
@@ -216,11 +216,11 @@ console.log( new Date(1981, 6, 29, 18, 30, 50) );
 // → Wed Jul 29 1981 18:30:50 GMT-0300 (BRT) 
 ```
 
-O Javascript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias inciam em um. É bem confuso, então, tenha cuidado.
+O Javascript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias iniciam-se em um. É bem confuso, então, tenha cuidado.
 
 Os últimos quatro argumentos (horas, minutos, segundos e milisegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
 
-Internamente, objetos do tipo data são armazenados como o número de milisegundos desde o início de 1970. Usar o método _getTime_ em uma data retorna esse número, e ele é bem grande, como deve imaginar.
+Internamente, objetos do tipo data são armazenados como o número de milissegundos desde o início de 1970. Usar o método _getTime_ em uma data retorna esse número, e ele é bem grande, como deve imaginar.
 
 ```
 console.log( new Date(2014, 2, 21).getTime() );
@@ -229,11 +229,11 @@ console.log( new Date( 1395370800000 ) );
 // → Fri Mar 21 2014 00:00:00 GMT-0300 (BRT) 
 ```
 
-Quando fornecemos apenas um arfumento ao construtor do _Date_, ele é tratado como se fosse um número de milisegundos.
+Quando fornecemos apenas um argumento ao construtor do _Date_, ele é tratado como se fosse um número de milissegundos.
 
 Objetos _Date_ possuem métodos como _getFullYear_ (_getYear_ retorna apenas os inúteis dois últimos dígitos do ano), _getMonth_, _getDate_, _getHours_, _getMinutes_ e _getSeconds_  para extrair os componentes da data.
 
-Então agora, ao colocar parenteses em volta das partes que nos interessam, podemos facilmente extrair uma data de uma _string_.
+Então agora, ao colocar parênteses em volta das partes que nos interessam, podemos facilmente extrair uma data de uma _string_.
 
 ```
 function buscaData(string) {
@@ -247,7 +247,7 @@ console.log( buscaData("21/1/2014") );
 
 ## Limites de palavra e _string_
 
-A função _buscaData_ acima irá extrair facilmente a data de um etxto como "100/1/30000", um resultado pode acontecer em qualquer lugar da _string_ fornecida, então, nesse caso , vai encontrar no segundo caractere e terminar no último
+A função _buscaData_ acima irá extrair facilmente a data de um texto como "100/1/30000", um resultado pode acontecer em qualquer lugar da _string_ fornecida, então, nesse caso , vai encontrar no segundo caractere e terminar no último
 
 Se quisermos nos assegurar que a busca seja em todo o texto, podemos adicionar os marcadores  "^" e "$". O primeiro acha o início da _string_ fornecida e o segundo o final dela. Então /^\d+$/ encontra apenas em uma string feita de um ou mais dígitos, /^!/ encontra qualquer _string_ que começa com sinal de exclamação e /x^/ não acha nada (o início de uma string não pode ser depois de um caractere).
 
@@ -266,7 +266,7 @@ Note que esses marcadores de limite não cobrem nenhum caractere real, eles apen
 
 Agora, queremos saber se um pedaço do texto contém não apenas um número, mas um número seguido por uma das palavras "porco", "vaca", "galinha" ou seus plurais também.
 
-Podemos escrever três expressões regulares, e testar cada uma, mas existe uma maneira mais simples. O caracter pipe ("|") indica uma opção entre o padrão à esqueda ou a direita. Entao podemos fazer:
+Podemos escrever três expressões regulares, e testar cada uma, mas existe uma maneira mais simples. O caracter pipe ("|") indica uma opção entre o padrão à esquerda ou a direita. Então podemos fazer:
 
 ```
 var contagemAnimal = /\b\d+ (porco|vaca|galinha)s?\b/;
@@ -282,12 +282,12 @@ Parênteses podem ser usados para limitar a que parte do padrão que o pipe ("|"
 
 ![O mecanismo de procura](../img/re_porcogalinhas.svg)
 
-Uma _string_ coresponde à expressão se uma caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na seqüência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais ( menos os limites de palavra), continue no fluxo das caoxas.
+Uma _string_ corresponde à expressão se uma caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na seqüência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais ( menos os limites de palavra), continue no fluxo das caixas.
 
-Então se encontrarmos "the 3 pigs" existe uma corespondência entre as pocições 4 (o dígito "3") e 10 (o final da string).
+Então se encontrarmos "the 3 pigs" existe uma correspondência entre as posições 4 (o dígito "3") e 10 (o final da string).
 
-  - Na posição 4, existe um limite de palavra, entao passamos a primeira caixa
-  - Ainda na posição 4, encontramos um dígito, então ainda odemos passar a primeira caixa.
+  - Na posição 4, existe um limite de palavra, então passamos a primeira caixa
+  - Ainda na posição 4, encontramos um dígito, então ainda podemos passar a primeira caixa.
   - Na posição 5, poderíamos voltar para antes da segunda caixa (dígitos), ou avançar através da caixa que contém um único caractere de espaço. Há um espaço aqui, não um dígito, por isso escolhemos o segundo caminho.
   - Estamos agora na posição 6 (o início de "porcos") e na divisão entre três caminhos do diagrama. Nós não temos "vaca" ou "galinha" aqui, mas nós temos "porco", por isso tomamos esse caminho.
   - Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa de "s".
@@ -301,15 +301,15 @@ A expressão regular /\b([01]+b|\d+|[\da-f]h)\b/ encontra um  um número binári
 
 http://eloquentjavascript.net/2nd_edition/preview/img/re_number.svg
 
-Ao buscar esta expressão, muitas vezes o ramo superior será percorrido, mesmo que a entrada não contenha realmente um número binário. Quando busca a _string_ "103", é apenas no "3" que torna-se claro que estamos no local errado. A expressão é buscada não apenas no ramo que se está execuntando.
+Ao buscar esta expressão, muitas vezes o ramo superior será percorrido, mesmo que a entrada não contenha realmente um número binário. Quando busca a _string_ "103", é apenas no "3" que torna-se claro que estamos no local errado. A expressão é buscada não apenas no ramo que se está executando.
 
-É o que acontece se a expressão retroce. Quando entra em um ramo, ela guarda em que ponto aconteceu (nesse caso, no início da _string_, na primeira caixa do diagrama), então ela retrocede e tenta outro ramo do diagrama se o atual não encontra nenhum resultado. Então para a _string_ "103", após encontrar o caracter "3", eta irá tentar o segundo ramo, teste de número decimal. E este, encontra um resultado.
+É o que acontece se a expressão retroage. Quando entra em um ramo, ela guarda em que ponto aconteceu (nesse caso, no início da _string_, na primeira caixa do diagrama), então ela retrocede e tenta outro ramo do diagrama se o atual não encontra nenhum resultado. Então para a _string_ "103", após encontrar o caracter "3", eta irá tentar o segundo ramo, teste de número decimal. E este, encontra um resultado.
 
 Quando mais de um ramo encontra um resultado, o primeiro (na ordem em que foi escrito na expressão regular) será considerado.
 
-Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se busrcar-mos /^.*x/  em "abcxe", a parte ".*" irá tentar achar toda a _ string. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da _string_. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
+Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se buscar-mos /^.*x/  em "abcxe", a parte ".*" irá tentar achar toda a _ string. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da _string_. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
 
-É possível escrever expressões expressões regulares que fazem muitos retrocessos. O Problema ocorre quando um paddrão encontra um pedaço da _string_ de entrada de muitas maneiras. Por exemplo, se confundimos e escrevemos nossa expre˜ão regular para achar binários e números assim /([01]+)+b/.
+É possível escrever expressões expressões regulares que fazem muitos retrocessos. O Problema ocorre quando um padrão encontra um pedaço da _string_ de entrada de muitas maneiras. Por exemplo, se confundimos e escrevemos nossa expressão regular para achar binários e números assim /([01]+)+b/.
 
 http://eloquentjavascript.net/2nd_edition/preview/img/re_slow.svg
 
@@ -338,7 +338,7 @@ Quando a opção "g" ("global") é adicionada à expressão, todas as ocorrênci
 
 Seria melhor se essa opção fosse feita através de outro argumento, em vez de usar a opção própria de uma expressão regular. (Este é um exemplo de falha na sintaxe do Javascript)
 
-A verdadeira utilidade do uso de expressões regulares com o método _replace_ é a opção de fazer refrências aos grupos achados através da expressão. Por exemplo, se temos uma _string_ longa com nomes de pessoas, uma por linha, no formato "Sobrenome, Nome" e queremos trocar essa ordem e remover a vírgula, para obter o formato "Nome Sobrenome", podemos usar o seguinte código:
+A verdadeira utilidade do uso de expressões regulares com o método _replace_ é a opção de fazer referências aos grupos achados através da expressão. Por exemplo, se temos uma _string_ longa com nomes de pessoas, uma por linha, no formato "Sobrenome, Nome" e queremos trocar essa ordem e remover a vírgula, para obter o formato "Nome Sobrenome", podemos usar o seguinte código:
 
 ```
 console.log(
@@ -349,9 +349,9 @@ console.log(
 //   Dennis Ritchie
 ```
 
-O "$1" e "$2" na _string_ de substituição referen-se as partes entre parenteses no padrão. "$1" será substitído  pelo texto achado no primeiro grupo entre parênteses e "$2" pelo segundo, e assim em diante, até "$9".
+O "$1" e "$2" na _string_ de substituição referem-se as partes entre parênteses no padrão. "$1" será substituído  pelo texto achado no primeiro grupo entre parênteses e "$2" pelo segundo, e assim em diante, até "$9".
 
-Também é possível passar uma função, em vez de uma _string_ no segunto argumento do método _replace_. Para cada substituição, a função será chamada com os grupos achados (assim como o padrão) como argumentos, e o valor retornado pela função será inserido na nova _string_.
+Também é possível passar uma função, em vez de uma _string_ no segundo argumento do método _replace_. Para cada substituição, a função será chamada com os grupos achados (assim como o padrão) como argumentos, e o valor retornado pela função será inserido na nova _string_.
 
 Segue um exemplo simples:
 
@@ -386,7 +386,7 @@ O Grupo (\d+) finaliza o argumento da função e o (\w+) limita a unidade. A fun
 ## Greed
 ## Quantificador / Greed
 
-É simples usar o método _replace_ para escrever uma função que remove todos os comentários de um pedaço de código Javascriot. Veja uma primeira tentativa
+É simples usar o método _replace_ para escrever uma função que remove todos os comentários de um pedaço de código Javascript. Veja uma primeira tentativa
 
 ```
 function stripComments(code) {
@@ -404,11 +404,11 @@ A parte [\w\W] é uma maneira (feia) de encontrar qualquer caractere. Lembre-se 
 
 Mas o resultado do último exemplo parece errado. Porque?
 
-A parte ".*" da expressão, comod escita na seção "Retrocedendo", acima, irá primeiro encontrar tudo que puder e depois, se falhar, voltar atrás e tentar mais uma vez a partir daí. nesse caso, primeiro procuramos no resto da _string_ e depois continuamos a partir daí. Irá encontrar uma ocorrencia de "*/" depois voltar quatro caracteres e achar um resultado. Isto não era o que desejávamos, queríamos um comentário de uma linha, para não ir até o final do código e encontrar o final do último comentário
+A parte ".*" da expressão, como foi escrita na seção "Retrocedendo", acima, irá primeiro encontrar tudo que puder e depois, se falhar, voltar atrás e tentar mais uma vez a partir daí. nesse caso, primeiro procuramos no resto da _string_ e depois continuamos a partir daí. Irá encontrar uma ocorrência de "*/" depois voltar quatro caracteres e achar um resultado. Isto não era o que desejávamos, queríamos um comentário de uma linha, para não ir até o final do código e encontrar o final do último comentário
 
-Existem duas variaçãoes de operadores de repetição em expressões regulares (‘+’, ‘*’, e ‘{}’). Por padrão, eles eles quantificam, significa que eles encontram o que podem e retrocedem a partir daí. Se você colocar uma interrogação depois deles, eles se tornam _non_greedy_, e começam encontrando o menor grupo possível e o resto que não contenha o grupo menor.
+Existem duas variações de operadores de repetição em expressões regulares (‘+’, ‘*’, e ‘{}’). Por padrão, eles eles quantificam, significa que eles encontram o que podem e retrocedem a partir daí. Se você colocar uma interrogação depois deles, eles se tornam _non_greedy_, e começam encontrando o menor grupo possível e o resto que não contenha o grupo menor.
 
-E é exatamente o que queremos nesse caso. Com o asterisco encontramos os grupos menores que tenham "*/" no fechamento, encontarmos um bloco de comentários e nada mais.
+E é exatamente o que queremos nesse caso. Com o asterisco encontramos os grupos menores que tenham "*/" no fechamento, encontramos um bloco de comentários e nada mais.
 
 ```
 function stripComments(code) {
@@ -421,9 +421,9 @@ console.log(stripComments("1 /* a */+/* b */ 1"));
 ## Criando objetos RegExp dinamicamente
 
 
-Existem casos onde você pode não saber o padrão exato que você precisa quando escreve seu código. Digamos que você queira buscar o nome de um suário em um pedaço de texto e colocá-lo entre caracteres "_" para destacá-lo. O nome será fornecido apenas quando o programa estiver sendo executado, então não podemos usar a notação de barras para criar nosso padrão.
+Existem casos onde você pode não saber o padrão exato que você precisa quando escreve seu código. Digamos que você queira buscar o nome de um usuário em um pedaço de texto e colocá-lo entre caracteres "_" para destacá-lo. O nome será fornecido apenas quando o programa estiver sendo executado, então não podemos usar a notação de barras para criar nosso padrão.
 
-Mas podemos construit uma string e usar o construtor _RegExp_ para isso. Por exemplo:
+Mas podemos construir uma string e usar o construtor _RegExp_ para isso. Por exemplo:
 
 ```
 var name = "harry";
@@ -437,7 +437,7 @@ Ao criar os marcos de limite "\b, usamos duas barras invertidas, porque estamos 
 
 Mas e se o nome for "dea+hl[]rd" porque o usuário é um adolescente nerd? Isso irá gerar uma falsa expressão regular, por conter caracteres comando, que irá gerar um resultado estranho
 
-Para cortornar isso, adicionamos contrabarras antes de qualquer caractere que não confiamos. Adicionar contrabarras antes de qualquer caractere alfabético é uma má idéia, porque coisas como "\b" ou "\n" possuem significado para uma expressão regular. Mas escapar tudo tudo que não for alfanumérico ou espaço é seguro.
+Para contornar isso, adicionamos contrabarras antes de qualquer caractere que não confiamos. Adicionar contrabarras antes de qualquer caractere alfabético é uma má idéia, porque coisas como "\b" ou "\n" possuem significado para uma expressão regular. Mas escapar tudo tudo que não for alfanumérico ou espaço é seguro.
 
 ```
 var name = "dea+hl[]rd";
@@ -448,7 +448,7 @@ console.log(text.replace(regexp, "_$1_"));
 // → This _dea+hl[]rd_ guy is quite annoying.
 ```
 
-O marcador "$&" na _string_ de substituição age como se fosse "$1", mas será substitído em dodos os resultados ao invés do grupo encontrado.
+O marcador "$&" na _string_ de substituição age como se fosse "$1", mas será substituído em dodos os resultados ao invés do grupo encontrado.
 
 ## O método _search_
 
@@ -469,7 +469,7 @@ O método _exec_ também não possui um modo conveniente de iniciar a busca a pa
 
 Expressões regulares possuem propriedades (como _source_ que contém a _string_ que originou a expressão). Uma dessas propriedades, _lastIndex_, controla, em algumas circunstâncias, onde o busca irá começar.
 
-Essas circunstâncias são que a expressão regular precisa ter a opção "global"(g) habilitada, e precisa ser no método _exec_. Novamente, deveria ser da mesma maneira que permitir um argumento extra para o método _exec_, mas coesão não é uma caracteristica que define a sintaze de expressões regulares em javascript
+Essas circunstâncias são que a expressão regular precisa ter a opção "global"(g) habilitada, e precisa ser no método _exec_. Novamente, deveria ser da mesma maneira que permitir um argumento extra para o método _exec_, mas coesão não é uma característica que define a sintaxe de expressões regulares em javascript
 
 ```
 var pattern = /y/g;
@@ -483,9 +483,9 @@ console.log(pattern.lastIndex);
 
 A propriedade _lastIndex_ é atualizada ao ser executada após encontrar algo. Quando não encontra nada, _lastIndex_ é definida como zero, que também é o valor quando uma nova expressão é construída.
 
-Quando usando uma expressão regular global para multiplas chamadas ao método _exec_, esta mudança da propriedade _lastIndex_ pode causar problemas, sua expressão pode iniciar por acidente em um indice deixado na ultima vez que foi executada.
+Quando usando uma expressão regular global para múltiplas chamadas ao método _exec_, esta mudança da propriedade _lastIndex_ pode causar problemas, sua expressão pode iniciar por acidente em um índice deixado na ultima vez que foi executada.
 
-Outro efeito interessante da opção global é que ela muda a maneira como o método _match_ funciona em uma _string_. Quando chamada com uma expressão global, em vez de retornar um array semelhante ao retornado pelo _exec_, _match_ irá achar todos os resultados do padrão na string e retornar um array contendo dodas as _strings_ encontradas.
+Outro efeito interessante da opção global é que ela muda a maneira como o método _match_ funciona em uma _string_. Quando chamada com uma expressão global, em vez de retornar um array semelhante ao retornado pelo _exec_, _match_ irá achar todos os resultados do padrão na string e retornar um array contendo todas as _strings_ encontradas.
 
 ```
 console.log("Banana".match(/an/g));
@@ -511,7 +511,7 @@ Usa-se o fato que o valor de uma expressão de definição ('=') é o valor assi
 
 ## Parsing an ini file
 
-Agora vamos ver um problema real que pede por uma expressão regular. Imagine quue estamos escrevendo um programa que coleta informação automaticamente da internet dos nosos inimigos . (Não vamos escrever um programa aqui, apenas a parte que ;ê o arquivo de configuração, desculpe desapontá-los). Este arquivo tem a seguinte aparência:
+Agora vamos ver um problema real que pede por uma expressão regular. Imagine que estamos escrevendo um programa que coleta informação automaticamente da internet dos nossos inimigos . (Não vamos escrever um programa aqui, apenas a parte que lê o arquivo de configuração, desculpe desapontá-los). Este arquivo tem a seguinte aparência:
 
 ```
 searchengine=http://www.google.com/search?q=$1
@@ -540,11 +540,11 @@ As regras exatas desse formato (que é um formato muito usado, chamado arquivo .
 
 	Qualquer outra coisa é inválida
 
-Nossa Tarefa é converter uam _string_ como essa em um array de objetos, cada uma com um nome e um _array_ de pares nome/valor. Precisaremos de um objeto para cada seção e outro para as configurações de seção.
+Nossa Tarefa é converter uma _string_ como essa em um array de objetos, cada uma com um nome e um _array_ de pares nome/valor. Precisaremos de um objeto para cada seção e outro para as configurações de seção.
 
-Já que o formato precisa ser processado linha a linha, dividir em linhas separadas é um bom começo. Usamos o método _split_ antes para isso, _string.split("\n")_. Entretanto em alguns sistemas operacionais não uam apenas um caracter de nova linha para separar linhas, mas um caracter de retorno seguido por um de nova linha ("_\r\n_").
+Já que o formato precisa ser processado linha a linha, dividir em linhas separadas é um bom começo. Usamos o método _split_ antes para isso, _string.split("\n")_. Entretanto alguns sistemas operacionais não usam apenas um caracter de nova linha para separar linhas, mas um caracter de retorno seguido por um de nova linha ("_\r\n_").
 
-Desse modo o método _split_ ,em uma expressão regularm com _/\r?\n/_ permite separar os dois modos, com "_\n_"e "_\r\n_" enre linhas.
+Desse modo o método _split_ ,em uma expressão regular com _/\r?\n/_ permite separar os dois modos, com "_\n_"e "_\r\n_" enre linhas.
 
 ```
 function parseINI(texto) {
@@ -573,25 +573,25 @@ function parseINI(texto) {
 }
 ```
 
-O código percorre cada linha no arquivo. Ele mantem um objeto  "categoria atual", e quando encontra um directiva normal, adiciona ela ao objeto, Quando encontra uma linha que inicia uma nova categoria, ela troca a categoria atual pela nova, para adicionar as directivas seguintes. Finalmente, retorna um _array_ contendo todas as categorias que encontrou.
+O código percorre cada linha no arquivo. Ele mantém um objeto  "categoria atual", e quando encontra um directiva normal, adiciona ela ao objeto, Quando encontra uma linha que inicia uma nova categoria, ela troca a categoria atual pela nova, para adicionar as directivas seguintes. Finalmente, retorna um _array_ contendo todas as categorias que encontrou.
 
-Observe o uso recorrente de _ˆ_ e _$_ para se certificar que a expressão busca em toda a linha, não apenas em parte dela. Esquecer isso é um erro comum, que resulta um códifo que funciona mas retorna resultados estranhos para algumas entradas.
+Observe o uso recorrente de _ˆ_ e _$_ para se certificar que a expressão busca em toda a linha, não apenas em parte dela. Esquecer isso é um erro comum, que resulta um código que funciona mas retorna resultados estranhos para algumas entradas.
 
-A expressão _/^\s*(;.*)?$/_ pode ser usada para testar linhas que podem ser ignoradas. Entende como funciona? A parte entre parênteses irá encontrar comentários e o _?_ depois ira se certificar que também encontrará linahs apenas com espaços em branco.
+A expressão _/^\s*(;.*)?$/_ pode ser usada para testar linhas que podem ser ignoradas. Entende como funciona? A parte entre parênteses irá encontrar comentários e o _?_ depois ira se certificar que também encontrará linhas apenas com espaços em branco.
 
-O padrão _if (encontrados = texto.match(...))_ é parecido com o truque que foi usado como definição do _while_ antes. Geralmente não temos certeza se a expressão encontrará algo. Mas você só deseja fazer algo com o resultado se ele nao for nulo, então você precisa testar ele antes. Para não quebrar a agradável sequencia de _ifs_ podemos definir o resultado a uma variável para o teste, e fazer a busca e testes em uma única linha.
+O padrão _if (encontrados = texto.match(...))_ é parecido com o truque que foi usado como definição do _while_ antes. Geralmente não temos certeza se a expressão encontrará algo. Mas você só deseja fazer algo com o resultado se ele não for nulo, então você precisa testar ele antes. Para não quebrar a agradável sequencia de _ifs_ podemos definir o resultado a uma variável para o teste, e fazer a busca e testes em uma única linha.
 
 ## Caracteres internacionais
 
-Devido a uma implementação inicial simplista e o fato que esta abordagem simplista mais tarde foi gravada em pedra como comportamento padrão, expressões regulares do Javascript são um pouco estúpidas sobre caracteres que não parecem na língua inglesa. Por exemplo, "caracteres palavra", nesse contexto, atualmente significam apenas os 26 caracteres do alfabeto latino. Coisas como "é" ou "β", que definitvamente são caracteres de palavras, não encontrarão resultados com _\w_ (e serão encontradas com o marcador de letars maiúsculas _\W_).
+Devido a uma implementação inicial simplista e o fato que esta abordagem simplista mais tarde foi gravada em pedra como comportamento padrão, expressões regulares do Javascript são um pouco estúpidas sobre caracteres que não parecem na língua inglesa. Por exemplo, "caracteres palavra", nesse contexto, atualmente significam apenas os 26 caracteres do alfabeto latino. Coisas como "é" ou "β", que definitivamente são caracteres de palavras, não encontrarão resultados com _\w_ (e serão encontradas com o marcador de letars maiúsculas _\W_).
 
 Devido a um estranho acidente histórico, _\s_ (espaço em branco) é diferente, e irá encontrar todos os caracteres que o padrão Unicode considera como espaço em branco, como espaços sem quebra ou o separador de vogais do alfabeto Mongol.
 
-Algumas implementações de expressões regulares em outras linguagens de programação possuem uma sintaxe para buscar conjuntos especificos de caracteres Unicode, como todas as maiúsculas, todos de pontuação, carateres de controle ou semelhantes. Existem planos para adicionar esse suporte ao Javascript, mas infelizmenre parece que isso não acontecerá tão cedo.
+Algumas implementações de expressões regulares em outras linguagens de programação possuem uma sintaxe para buscar conjuntos específicos de caracteres Unicode, como todas as maiúsculas, todos de pontuação, caracteres de controle ou semelhantes. Existem planos para adicionar esse suporte ao Javascript, mas infelizmente parece que isso não acontecerá tão cedo.
 
 ## Uma ou mais ocorrências do padrão
 
-Expressões regulares são objetos que reprensentam padrões em _strings_. Eles usam sua própria sintaxe para expressar esses padrões.
+Expressões regulares são objetos que representam padrões em _strings_. Eles usam sua própria sintaxe para expressar esses padrões.
 
 	/abc/	Sequencia de caracteres
 	/[abc]/	Qualquer caractere do conjunto
@@ -614,23 +614,23 @@ Expressões regulares são objetos que reprensentam padrões em _strings_. Eles 
 
 Uma expressão regular possui um método _test_ para testar quando um padrão é encontrado em uma _string_, um método _exec_ que quando encontra um resultado retorna um _array_ com todos os grupos encontrados e uma propriedade índice que indica onde o resultado inicia.
 
-_Strings_ possuem um método _match_ para testá-las contra uma expressão regular e um método _search_ para buscar por um resultado. O método _replace_  pode substituir resultados encontrados por um padrão. Como alternativa, uma função pode ser passada para montar o texto que será substitído de acordo com que foi achado.
+_Strings_ possuem um método _match_ para testá-las contra uma expressão regular e um método _search_ para buscar por um resultado. O método _replace_  pode substituir resultados encontrados por um padrão. Como alternativa, uma função pode ser passada para montar o texto que será substituído de acordo com que foi achado.
 
-Expressões regulares podem ter opções configuradas (_flags_), que são escritas após o fechamento da barra. A opção "_i_" faz a busca sem se improtar se é maiúscula ou minúscula, a opção "_g_" faz a busca global, que, entre outras coisas, faz o método _replace_ substituir todas as ocorrências, em vez de só a primeira.
+Expressões regulares podem ter opções configuradas (_flags_), que são escritas após o fechamento da barra. A opção "_i_" faz a busca sem se importar se é maiúscula ou minúscula, a opção "_g_" faz a busca global, que, entre outras coisas, faz o método _replace_ substituir todas as ocorrências, em vez de só a primeira.
 
-O construtor _RegExp_ pode ser usado para criar uam expressão regular dinâmica a partir de uma _string_.
+O construtor _RegExp_ pode ser usado para criar uma expressão regular dinâmica a partir de uma _string_.
 
-Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. Elas irão simplificar muito algumas tarefas simples, mas rapidamente se tornarão inusáveis quando aplicadas a tarefas mais complexas. Saber quandi usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
+Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. Elas irão simplificar muito algumas tarefas simples, mas rapidamente se tornarão inusáveis quando aplicadas a tarefas mais complexas. Saber quando usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
 
 ## Exercícios
 
-É quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expresão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como debuggex.com, para ver se a vizualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias _strings_ diferentes.
+É quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expressão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como debuggex.com, para ver se a vizualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias _strings_ diferentes.
 
 ## Regex golf
 
-"Golde de Código" é um termo usado para o jogo de tentar escrever um programa com o menor número de carateres possível. Parecido, o golfe regex é a prática de escrever pequenas expressões regulares para achar um determinado padrão (e apenas esse padrão).
+"Golde de Código" é um termo usado para o jogo de tentar escrever um programa com o menor número de caracteres possível. Parecido, o golfe regex é a prática de escrever pequenas expressões regulares para achar um determinado padrão (e apenas esse padrão).
 
-Escreva uam expressão regular que testa quando qualquer das _sub-strings_ dadas ocorre em um texto. A expressão regular  deverá achar apenas _strings_ contendo uma das _sub-strings_ dadas. Não se preocupe com limites de palavras a não ser que seja explicitamente pedido. Quando a sua expressão funcionar, veja se consegue fazê-la menor.
+Escreva uma expressão regular que testa quando qualquer das _sub-strings_ dadas ocorre em um texto. A expressão regular  deverá achar apenas _strings_ contendo uma das _sub-strings_ dadas. Não se preocupe com limites de palavras a não ser que seja explicitamente pedido. Quando a sua expressão funcionar, veja se consegue fazê-la menor.
 
 	“car” e “cat”
 	“pop” e “prop”
@@ -704,13 +704,13 @@ console.log(text.replace(/A/, "B"));
 
 Dicas
 
-A solução mais óbvia é substituir apenas as aspas que não estão cercadas de caracteres de palavra. A primeira expressão vem à mente é _/\W'\W/_, mas é preciso cuidado para lidar com o ínicio da _string_ corretamente. Isso pode ser feito usando os marcadores "_ˆ_" e "_$_", como em _/(\W|^)'(\W|$)/_.
+A solução mais óbvia é substituir apenas as aspas que não estão cercadas de caracteres de palavra. A primeira expressão vem à mente é _/\W'\W/_, mas é preciso cuidado para lidar com o início da _string_ corretamente. Isso pode ser feito usando os marcadores "_ˆ_" e "_$_", como em _/(\W|^)'(\W|$)/_.
 
 ### Novamente números
 
 Séries de dígitos podem ser usados pela agradável expressão regular _/\d+/_.
 
-Escreva uma expressão que enconte (apenas) números no estilo Javascrip. Isso signica que precisa suportar um sinal de menor ou maior, opcional, na frente do número, um ponto decimal e a notação exponencial —5e-3 ou 1E10—, novamente com o sinal opcional na frente dele.
+Escreva uma expressão que encontre (apenas) números no estilo Javascript. Isso significa que precisa suportar um sinal de menor ou maior, opcional, na frente do número, um ponto decimal e a notação exponencial —5e-3 ou 1E10—, novamente com o sinal opcional na frente dele.
 
 ```
 // Preencha esta expressão regular
@@ -725,7 +725,7 @@ var number = /^...$/;
 ["1a", "+-1", "1.2.3", "1+1", "1e4.5", ".5.", "1f5",
  "."].forEach(function(s) {
   if (number.test(s))
-	console.log("Aceitou errôneamente '" + s + "'");
+	console.log("Aceitou erroneamente '" + s + "'");
 });
 ```
 
@@ -733,7 +733,7 @@ Dicas
 
 Primeiro, não esqueça da barra invertida em frente ao ponto.
 
-Achar o sinal opcional na frente do número, como na frente do expoencial, pode ser feito com _[+\-]?_ ou _(+|-|)_ (mais, menos ou nada).
+Achar o sinal opcional na frente do número, como na frente do exponencial, pode ser feito com _[+\-]?_ ou _(+|-|)_ (mais, menos ou nada).
 
 A parte mais complicada deste exercício provavelmente é a dificuldade de achar "5." e ".5"  sem achar também o ".". Para isso, achamos que a melhor solução é usar o operador "|" para separar os dois casos, um ou mais dígitos opcionalmente seguidos por um ponto e zerou ou mais dígitos, ou um ponto seguido por um ou mais dígitos.
 

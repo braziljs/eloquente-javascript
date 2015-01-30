@@ -1,6 +1,6 @@
 # Funções
 
-> "As pessoas pensam que a ciência da computação é a arte dos gênios, mas a realidade atual é o oposto, são somente pessoas fazendo coisas dependendo uns dos outros, como um muro de pequenas pedras."
+> "As pessoas pensam que Ciência da Computação é a arte dos gênios, mas a realidade atual é o oposto, são somente pessoas fazendo coisas dependendo uns dos outros, como um muro de pequenas pedras."
 >
 > - Donald Knuth
 
@@ -83,7 +83,7 @@ console.log(x);
 
 ```
 
-Este comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis estiverem compartilhadas por todo o programa, teria que haver um enorme esforço, em todos os programas, até mesmo os mais ínfimos, para garantir que nenhum nome estivesse sendo usado duas vezes. E se você reusasse o nome de uma variável, iria perceber estranhos efeitos, com código confuso e não relacionado ao valor de sua variável. Tratando as variáveis como existentes apenas na localidade dentro da função, a linguagem torna muito mais fácil de ler e entender as funções como pequenos universos, sem muitas ações a distância para complicar as coisas.
+Este comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis estiverem compartilhadas por todo o programa, teria que haver um enorme esforço, em todos os programas, até mesmo os mais ínfimos, para garantir que nenhum nome estivesse sendo usado duas vezes. E se você reusasse o nome de uma variável, iria perceber efeitos estranhos, com código confuso e não relacionado ao valor de sua variável. Tratando as variáveis como existentes apenas na localidade dentro da função, a linguagem torna muito mais fácil de ler e entender as funções como pequenos universos, sem muitas ações a distância para complicar as coisas.
 
 ## Escopo Aninhado
 
@@ -122,9 +122,9 @@ console.log(landscape());
 ```
 As funções `flat` e `moutain` podem "ver" a variável chamada `result`, desde que elas estejam dentro da função que define `result`. Mas elas não podem ver as variáveis `count` uma da outra, somente a sua própria, pois estão exteriores a cada uma. O ambiente fora da função não vê qualquer de suas variáveis definidas dentro de `landscape`.
 
-Em resumo, cada escopo local pode também ver o escopo local em que estiver dentro. O conjunto de variáveis dentro de uma função é determinado pelo lugar que essa função está no texto do programa. Todas as variáveis de blocos "em volta" de uma definição de função estão visíveis, que significa ambas as variáveis de corpos de funções ao seu redor e em níveis mais altos do programa. Essa abordagem para variáveis visíveis é chamado escopo lexical.
+Em resumo, cada escopo local pode também ver o escopo local em que estiver dentro. O conjunto de variáveis dentro de uma função é determinado pelo lugar que essa função está no texto do programa. Todas as variáveis de blocos "em volta" de uma definição de função estão visíveis, que significa ambas as variáveis de corpos de funções ao seu redor e em níveis mais altos do programa. Essa abordagem para variáveis visíveis é chamado escopo léxico.
 
-Pessoas com experiência com outras linguagens de programação devem experar que qualquer bloco de código (entre chaves) produzem um novo ambiente local. Mas no JavaScript, funções são as únicas coisas que criam um novo escopo. Você está autorizado a usar blocos de instalação livre:
+Pessoas com experiência em outras linguagens de programação devem esperar que qualquer bloco de código (entre chaves) produza um novo ambiente local. Mas no JavaScript, funções são as únicas coisas que criam um novo escopo. Você está autorizado a usar blocos de instalação livre:
 
 ```js
 
@@ -139,11 +139,11 @@ var something = 1;
 
 Mas a `something` dentro do bloco se refere a mesma variável que a fora do bloco. Na realidade, embora blocos como este sejam permitidos, eles são úteis somente para agrupar o corpo de uma declaração `if` ou um loop. 
 
-Se você acha isso estranho, você não está sozinho. A próxima versão do JavaScript vai introduzir a palavra-chave `let`, que funciona como `var`, mas cria uma variável que é local ao bloco que a contém, não a *função* que a contém.
+Se você acha isso estranho, você não está sozinho. A próxima versão do JavaScript vai introduzir a palavra-chave `let`, que funciona como `var`, mas cria uma variável que é local ao bloco que a contém e não a *função* que a contém.
 
 ## Funções Como Valores
 
-Normalmente, variáveis de função simplismente atuam como nomes para um específico pedaço do programa. Elas são definidas uma vez, e nunca mudam. Isso torna fácil a confusão entre a função e seu nome.
+Normalmente, variáveis de função simplesmente atuam como nomes para um específico pedaço do programa. Elas são definidas uma vez, e nunca mudam. Isso torna fácil a confusão entre a função e seu nome.
 
 Mas os dois são diferentes. Um valor de função pode fazer todas as coisas que outros valores podem fazer - você pode usá-lo em todo tipo de expressão, não somente chamá-lo. É possível armazenar um valor em um novo local, ou passá-lo como um argumento para uma função, e por ai vai. Similarmente, uma variável que contém uma função continua sendo uma variável regular, e pode ser atribuída com um novo valor.
 
@@ -185,7 +185,7 @@ function future() {
 
 Estas definições não fazem parte do fluxo de controle de cima para baixo. Elas são conceitualmente movidas para o topo, e podem ser usadas por todo o código no mesmo escopo. Isso algumas vezes é útil, pois permite que você coloque o código interessante no topo, e continue usando as definições de funções abaixo.
 
-O que acontece quando você coloca uma definição de função dentro de um bloco condicional `if`, ou um loop? Bom, não faça isso. Direfentes plataformas JavaScript (nos navegadores) tem tradicionalmente feito coisas diferentes nesta situação, e o último padrão realmente proibe isto. Então, se você quiser que seus programas sejam consistentes, somente use essa forma de instruções por definição de função no bloco externo de uma função ou programa.
+O que acontece quando você coloca uma definição de função dentro de um bloco condicional `if`, ou um loop? Bom, não faça isso. Diferentes plataformas JavaScript (nos navegadores) tem tradicionalmente feito coisas diferentes nesta situação, e o último padrão realmente proíbe isto. Então, se você quiser que seus programas sejam consistentes, somente use essa forma de instruções por definição de função no bloco externo de uma função ou programa.
 
 ```js
 
@@ -260,7 +260,7 @@ O JavaScript é extremamente tolerante sobre a quantidade de argumentos que voc�
 
 A desvantagem disso é que possivelmente - e provavelmente - você vai passar um número errado de argumentos de forma acidental para as funções... e ninguém vai alertá-lo sobre isso.
 
-A vantagem é que este comportamento pode ser usado para uma função que pega estes argumentos "opcionais". Por exemplo, esta versão de `power` pode ser chamada ou com 2 argumentos ou com um simples argumento, em que neste caso o expoente é dois, e a função se comporta como `square`.
+A vantagem é que este comportamento pode ser usado para uma função que pega estes argumentos "opcionais". Por exemplo, esta versão de `power` pode ser chamada com dois argumentos ou com um simples argumento, em que neste caso o expoente é dois, e a função se comporta como `square`.
 
 ```js
 
@@ -354,13 +354,13 @@ console.log(power(2, 3));
 
 ```
 
-Essa é uma forma muito próxima que os matemáticos definem a exponenciação, e indiscutivelmente define o conceito de uma forma mais elegante que uma variação de loop faz. A função chama a si mesma múltiplas vezes com diferentes argumentos para alcançar a múltiplicação repetida.
+Essa é uma forma muito próxima que os matemáticos definem a exponenciação, e indiscutivelmente define o conceito de uma forma mais elegante que uma variação de loop faz. A função chama a si mesma múltiplas vezes com diferentes argumentos para alcançar a multiplicação repetida.
 
 Temos um problema importante: Em implementações típicas no JavaScript, esta segunda versão é aproximadamente dez vezes mais lenta que a primeira. Rodar sobre um simples loop é muito mais barato que chamar uma função inúmeras vezes. Em cima disso, usando um expoente suficientemente grande para esta função pode fazer com que a pilha transborde.
 
 O dilema da velocidade versus a elegância é interessante. Quase todo programa pode ser feito mais rápido, tornando-o maior e mais complicado. Você pode ver isso como um tipo de disputa entre amigabilidade para homens ou máquinas.
 
-No caso da função `power` anterior, o não elegante versão (loop) é ainda sim simples e fácil de ser lida. Não tem muito sentido trocá-lo pela versão recursiva. Muitas vezes, porém, os conceitos que um programa está lidando são tão complexos que dar mais eficiência ao invés de fazer programas mais simples se torna uma escolha atrativa.
+No caso da função `power` anterior, a versão não elegante (loop) é ainda assim simples e fácil de ser lida. Não tem muito sentido trocá-la pela versão recursiva. Muitas vezes, porém, os conceitos que um programa está lidando são tão complexos que dar mais eficiência ao invés de fazer programas mais simples se torna uma escolha atrativa.
 
 A regra básica, que tem sido repetida por muitos programadores e com a qual eu concordo plenamente, é não se preocupar com eficiência até que você saiba com certeza que o programa está muito lento. Quando isso acontecer, encontre quais partes estão gastando maior tempo, e comece a trocar elegância por eficiência nestas partes.
 
@@ -398,11 +398,11 @@ console.log(findSolution(24));
 
 Note que não é necessário encontrar uma sequência mais curta de operações - ela é satisfeita quando encontra qualquer sequência.
 
-Eu não espero necessariamente que você veja como isso funcione imediatamente. Mas vamos trabalho nisso, pois é um grande exercício para o pensamento recursivo.
+Eu não espero que você entenda como isso funciona imediatamente, mas vamos analisar o exemplo pois é um ótimo exercício para entender o pensamento recursivo.
 
-A função interior `find` faz a recursão real. Ela pega dois argumentos, o número atual e a string que registra como chegamos neste número, e retorna ou uma string que mostra como chegar no número esperado, ou `null`.
+A função interior `find` faz a recursão real. Ela pega dois argumentos, o número atual e a string que registra como chegamos neste número, e retorna uma string que mostra como chegar no número esperado ou `null`.
 
-Em razão de fazer isso, é realizado 3 ações. Se o número atual é o número esperado, o histórico atual é uma forma de encontrar o objetivo, então ele é simplesmente retornado. Se o número atual é maior que o esperado, não há sentido em continuar explorando o histórico, desde que ambas as possibilidades farão o número ainda maior. E finalmente, se nós estamos abaixo do objetivo, a função tenta todos os caminhos possíveis que iniciam do número atual, chamando-o duas vezes, uma para ambos os próximos passos permitidos. Se a primeira chamada retorna algo que não é `null`, ela é retornada. De outra forma, a segunda chamada é retornada (independetemente se ela produz uma string ou null).
+Em razão de fazer isso, é realizado três ações. Se o número atual é o número esperado, o histórico atual é uma forma de encontrar o objetivo, então ele é simplesmente retornado. Se o número atual é maior que o esperado, não há sentido em continuar explorando o histórico, desde que ambas as possibilidades farão o número ainda maior. E finalmente, se nós estamos abaixo do objetivo, a função tenta todos os caminhos possíveis que iniciam do número atual, chamando-o duas vezes, uma para ambos os próximos passos permitidos. Se a primeira chamada retorna algo que não é `null`, ela é retornada. De outra forma, a segunda chamada é retornada (independentemente se ela produz uma string ou null).
 
 Como essa simples função produz o efeito que estamos procurando? Vamos ver as chamadas à `find` que são feitas quando buscamos por uma solução para o número 13:
 
@@ -436,7 +436,7 @@ A segunda forma é que você precisa de alguma funcionalidade que você ainda n�
 
 A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro está um conceito o qual você tenta envolver. Vamos ver um exemplo.
 
-Nós queremos escrever um programa que imprime dois números, a quantidade de vacas e galinhas em uma fazenda, com as palavras `Cows` e `Chickens` depois deles, e zeros inseridos antes de ambos os números para que estes sempre sejam números de três digitos.
+Nós queremos escrever um programa que imprime dois números, a quantidade de vacas e galinhas em uma fazenda, com as palavras `Cows` e `Chickens` depois deles, e zeros inseridos antes de ambos os números para que estes sempre sejam números de três dígitos.
 
 ```
 
@@ -463,9 +463,9 @@ printFarmInventory(7, 11);
 
 ```
 
-Adicionando `.length` depois do valor de uma string vai nos fornecer o comprimento desta string. Então, o loop `while` continua colocando zeros na frente do número de strings até que tenha no mínimo 3 caracteres de comprimento.
+Adicionando `.length` depois do valor de uma string vai nos fornecer o comprimento desta string. Então, o loop `while` continua colocando zeros na frente do número de strings até que tenha no mínimo três caracteres de comprimento.
 
-Missão cumprida! Mas quando iriamos enviar o código a ele (juntamente com uma fatura pesada é claro), o fazendeiro ligou e disse que começou a criar porcos (pigs), e se poderíamos extender o software para também imprimir `pigs`.
+Missão cumprida! Mas quando iríamos enviar o código a ele (juntamente com uma fatura pesada é claro), o fazendeiro ligou e disse que começou a criar porcos (pigs), e se poderíamos extender o software para também imprimir `pigs`.
 
 Nós podemos claro. Mas antes de entrar no processo de copiar e colar estas quatro linhas mais uma vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui a primeira tentativa:
 
@@ -523,7 +523,7 @@ Funções podem ser dividas em aquelas que são chamadas pelos seus efeitos cola
 
 A primeira função auxiliar no exemplo da fazenda, `printZeroPaddedWithLabel`, é chamada pelo seu efeito colateral (ela imprimi uma linha). A segunda, `zeroPad`, é chamada pelo seu valor de retorno. Não é coincidência que a segunda é útil em mais situações que a primeira. Funções que criam valores são mais fáceis de ser combinadas em novas formas do que realizando diretamente um efeito colateral.
 
-Uma função *pura* é um tipo específico de *função de produção de valor* que não somente não tem efeitos colaterias, como também não depende de efeitos colaterais de outro código - por exemplo, ela não lê variáveis que são ocasionalmente mudadas por outro código. Uma função pura tem a agradável propriedade que, quando chamada com os mesmos argumentos, ela sempre produz os mesmos valores (e não faz nada mais). Isso a torna fácil de ser pensada - uma chamada a ela pode ser mentalmente substituída por seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função está funcionando corretamente, você pode testá-la simplesmente chamando-a e sabendo que se ela funciona neste contexto, ela vai funcionar em qualquer contexto. Função impuras devem retornar valores diferentes baseado em vários tipos de valores e têm efeitos colaterais que podem ser difíceis de testar e pensar sobre.
+Uma função *pura* é um tipo específico de *função de produção de valor* que não somente não tem efeitos colaterais, como também não depende de efeitos colaterais de outro código - por exemplo, ela não lê variáveis que são ocasionalmente mudadas por outro código. Uma função pura tem a agradável propriedade que, quando chamada com os mesmos argumentos, ela sempre produz os mesmos valores (e não faz nada mais). Isso a torna fácil de ser pensada - uma chamada a ela pode ser mentalmente substituída por seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função está funcionando corretamente, você pode testá-la simplesmente chamando-a e sabendo que se ela funciona neste contexto, ela vai funcionar em qualquer contexto. Função impuras devem retornar valores diferentes baseado em vários tipos de valores e têm efeitos colaterais que podem ser difíceis de testar e pensar sobre.
 
 Não há necessidade de se sentir mal ao escrever função impuras, nem começar uma guerra santa e limpar todos os códigos impuros. Efeitos colaterais são úteis também. Não existe uma forma pura de escrever um `console.log`, por exemplo, e o `console.log` é certamente útil. Algumas operações também podem ser mais caras quando feitas sem efeitos colaterais, quando todo os dados envolvidos precisam ser copiados, ao invés de modificados.
 
@@ -581,7 +581,7 @@ Defina uma função recursiva `isEven` correspondente a essa descrição. A fun�
 Teste isso com 50 e 75. Veja como se comporta com -1. Por que? Você pode pensar numa forma de consertar isso?
 
 ```js
-// Seu código aqui.
+// Your code here.
 
 console.log(isEven(50));
 // → true

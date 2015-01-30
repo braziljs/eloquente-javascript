@@ -1,14 +1,17 @@
 #Capítulo 17
 ##HTTP
 
-The dream behind the Web is of a common information space in which we communicate by sharing information. Its universality is essential: the fact that a hypertext link can point to anything, be it personal, local or global, be it draft or highly polished.
+O sonho por trás da web é o de um espaço comum de compartilhamento de informações no qual nós comunicamos através do compartilhamento de informações. Sua universalidade é essencial: O fato que um link de hipertexto pode apontar para qualquer coisa, seja esta pessoal, local ou global, seja um rascunho ou algo profissional. 
 
 Tim Berners-Lee, The World Wide Web: A very short personal history
-The Hypertext Transfer Protocol, already mentioned in Chapter 12, is the mechanism through which data is requested and provided on the World Wide Web. This chapter describes the protocol in more detail and explains the way browser JavaScript has access to it.
 
-The protocol
+O Hypertext Transfer Protocol (HTTP), já mencionado no capítulo 12, é o mecanismo pelo qual dados são requeridos e entregues na internet. Este capítulo descreve o protocolo em mais detalhes e explica como o javascript de um navegador tem acesso a ele.
 
-If you type eloquentjavascript.net/17_http.html into your browser’s address bar, the browser first looks up the address of the server associated with eloquentjavascript.net and tries to open a TCP connection to it on port 80, the default port for HTTP traffic. If the server exists and accepts the connection, the browser sends something like this:
+###O Protocolo
+
+Se você digitar eloquentjavascript.net/17_http.html na barra de endereços do seu navegador, este irá, primeiramente, procurar o endereço do servidor associado ao domínio eloquentjavascript.net e tentar abrir uma conexão de TCP com ele na porta 80, a porta padrão para tráfego de HTTP. Se o servidor existir e aceitar a conexão, o navegador enviará algo como isso:
+
+```sh
 
 GET /17_http.html HTTP/1.1
 Host: eloquentjavascript.net
@@ -22,6 +25,8 @@ Last-Modified: Wed, 09 Apr 2014 10:48:09 GMT
 
 <!doctype html>
 ... the rest of the document
+
+```
 The browser then takes the part of the response after the blank line and displays it as an HTML document.
 
 The information sent by the client is called the request. It starts with this line:

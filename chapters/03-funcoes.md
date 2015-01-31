@@ -1,14 +1,13 @@
 # Funções
 
-> "As pessoas pensam que Ciência da Computação é a arte dos gênios, mas a realidade atual é o oposto, são somente pessoas fazendo coisas dependendo uns dos outros, como um muro de pequenas pedras."
->
-> - Donald Knuth
+> “As pessoas pensam que Ciência da Computação é a arte de gênios. Na realidade é o oposto, são várias pessoas fazendo coisas que dependem uma das outras, como um muro de pequenas pedras.”
+> — Donald Knuth
 
-Você viu valores de funções, e como chamá-las. Funções são o "pão com manteiga" da programação JavaScript. O conceito de envolver um pedaço do programa em um valor tem várias serventias. Isto é uma ferramenta para estruturar programas maiores, para reduzir a repetição, associando nomes com sub-programas, e isolando estes sub-programas entre eles.
+Você já viu valores de funções como `alert`, e como invocá-las. Funções são essenciais na programação JavaScript. O conceito de encapsular uma parte do programa em um valor tem vários usos. É uma ferramenta usada para estruturar aplicações de larga escala, reduzir repetição de código, associar nomes a subprogramas e isolar esses subprogramas uns dos outros.
 
-A mais óbvia aplicação das função é a definição de um novo vocabulário. ??? Creating new words left and right in regular, human-language prose is usually bad style. In programming, it is indispensable. ???
+A aplicação mais óbvia das funções é quando queremos definir novos vocabulários. Criar novas palavras no nosso dia-a-dia geralmente não é uma boa ideia, porém em programação é indispensável.
 
-Um adulto típico que fala a língua inglesa tem em torno de 20 mil palavras em seu vocabulário. Poucas linguagens de programação têm consigo 20 mil conceitos embutidos. E o vocabulário que está disponível tende a ser mais precisamente definido, e então menos flexível, que as palavras da linguagens falada. Assim, frequentemente temos que adicionar algo do nosso próprio vocabulário para evitar a nossa repetição.
+Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se tem disponível tende a ser bem definido, e por isso menos flexível do que a linguagem usada pelas pessoas. Por isso, normalmente temos que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
 
 ## Definindo Uma Função
 

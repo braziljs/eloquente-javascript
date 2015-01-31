@@ -14,12 +14,12 @@ Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas a
 Uma definição de função nada mais é do que uma definição normal de uma variável na qual o valor recebido pela variável é uma função. Por exemplo, o código a seguir define uma variável `square` que se refere a uma função que retorna o quadrado do número dado:
 
 ```js
-var square = function (x) {
-    return x * x;
+var square = function(x) {
+  return x * x;
 };
 
 console.log(square(12));
-// 144
+// → 144
 ```
 
 Uma função é criada através de uma expressão que se inicia com a palavra-chave `function`. Funções podem receber uma série de parâmetros (nesse caso, somente `x`) e um “corpo”, contendo as declarações que serão executadas quando a função for invocada. O corpo da função deve estar sempre envolvido por chaves, mesmo quando for formado por apenas uma simples declaração (como no exemplo anterior).

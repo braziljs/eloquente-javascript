@@ -1,9 +1,9 @@
 #Capítulo 17
 ##HTTP
 
-O sonho por trás da web é o de um espaço comum de compartilhamento de informações no qual nós comunicamos através do compartilhamento de informações. Sua universalidade é essencial: O fato que um link de hipertexto pode apontar para qualquer coisa, seja esta pessoal, local ou global, seja um rascunho ou algo profissional. 
+<blockquote>O sonho por trás da web é o de um espaço comum de informações no qual nós comunicamos através do compartilhamento de informações. Sua universalidade é essencial: O fato que um link de hipertexto pode apontar para qualquer coisa, seja esta pessoal, local ou global, seja um rascunho ou algo profissional. </blockquote>
 
-Tim Berners-Lee, The World Wide Web: A very short personal history
+<strong>Tim Berners-Lee</strong>,<i> The World Wide Web: A very short personal history</i>
 
 O Hypertext Transfer Protocol (HTTP), já mencionado no capítulo 12, é o mecanismo pelo qual dados são requeridos e entregues na internet. Este capítulo descreve o protocolo em mais detalhes e explica como o javascript de um navegador tem acesso a ele.
 
@@ -15,8 +15,8 @@ Se você digitar eloquentjavascript.net/17_http.html na barra de endereços do s
 
 GET /17_http.html HTTP/1.1
 Host: eloquentjavascript.net
-User-Agent: Your browser's name
-Then the server responds, through that same connection.
+User-Agent:O nome do seu navegador
+Então o navegador responde, pela mesma conexão.
 
 HTTP/1.1 200 OK
 Content-Length: 65585
@@ -24,7 +24,7 @@ Content-Type: text/html
 Last-Modified: Wed, 09 Apr 2014 10:48:09 GMT
 
 <!doctype html>
-... the rest of the document
+... Resto do documento
 
 ```
 
@@ -76,12 +76,13 @@ As we saw in the example, a browser will make a request when we enter a URL in i
 A moderately complicated website can easily include anywhere from 10 to 200 resources. To be able to fetch those quickly, browsers will make several requests simultaneously, rather than waiting for the responses one at a time. Such documents are always fetched using GET requests.
 
 HTML pages may include forms, which allow the user to fill out information and send it to the server. This is an example of a form:
-
+```html
 <form method="GET" action="example/message.html">
   <p>Name: <input type="text" name="name"></p>
   <p>Message:<br><textarea name="message"></textarea></p>
   <p><button type="submit">Send</button></p>
 </form>
+```
 This code describes a form with two fields: a small one asking for a name and a larger one to write a message in. When you click the Send button, the information in those fields will be encoded into a query string. When the <form> element’s method attribute is GET (or is omitted), that query string is tacked onto the action URL, and the browser makes a GET request to that URL.
 
 GET /example/message.html?name=Jean&message=Yes%3F HTTP/1.1

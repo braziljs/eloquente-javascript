@@ -71,29 +71,44 @@ Após os cabeçalhos, ambos 'requests' e respostas podem incluir uma linha em br
 
 ###Navegadores e o HTTP
 
-As we saw in the example, a browser will make a request when we enter a URL in its address bar. When the resulting HTML page references other files, such as images and JavaScript files, those are also fetched.
+Como vimos no exemplo, o navegador irá fazer um 'request' quando submetermos uma URL na barra de endereços. Quando a página de HTML  originada faz referências a outros arquivos, como imagens ou arquivos de Javascript, estes são buscados também.
 
-A moderately complicated website can easily include anywhere from 10 to 200 resources. To be able to fetch those quickly, browsers will make several requests simultaneously, rather than waiting for the responses one at a time. Such documents are always fetched using GET requests.
+Um website moderadamente complicado pode ter fácilmente algo em torno de 10 a 200 recursos. Para conseguir pegar estes recursos rápidamente, os navegadores irão realizar diversos 'requests' simultaneamente, ao invés de esperar pelo retorno da resposta de cada 'request' feito. Tais documentos são sempre pegos utilizando o método GET para os pedidos.
 
+<<<<<<< HEAD
 HTML pages may include forms, which allow the user to fill out information and send it to the server. This is an example of a form:
+=======
+###Páginas de HTML 
+
+Páginas de HTML podem incluir formulários, que permitem que o usuário preencha informações e as envie para o servidor. Este é um exemplo de formulário:
+
 ```html
 <form method="GET" action="example/message.html">
-  <p>Name: <input type="text" name="name"></p>
-  <p>Message:<br><textarea name="message"></textarea></p>
-  <p><button type="submit">Send</button></p>
+  <p>Nome: <input type="text" name="name"></p>
+  <p>Mensagem:<br><textarea name="message"></textarea></p>
+  <p><button type="submit">Enviar</button></p>
 </form>
+
 ```
-This code describes a form with two fields: a small one asking for a name and a larger one to write a message in. When you click the Send button, the information in those fields will be encoded into a query string. When the <form> element’s method attribute is GET (or is omitted), that query string is tacked onto the action URL, and the browser makes a GET request to that URL.
+Este código descreve um formulário com dois campos:um pequeno, que solicita um nome, e um maior, que solicita que o usuário escreva uma mensagem. Quando você clica no botão  'Enviar', a informação nestes campos será codificada em uma "String" de pesquisa. Quando o método do elemento é GET (ou o método é omitido), esta "String" de pesquisa é colocada em uma URL de ação e o navegador fará um 'request' com esta URL.
 
+
+```sh
 GET /example/message.html?name=Jean&message=Yes%3F HTTP/1.1
-The start of a query string is indicated by a question mark. After that follow pairs of names and values, corresponding to the name attribute on the form field elements and the content of those elements, respectively. An ampersand character (&) is used to separate the pairs.
+```
+O começo desta 'String' de pesquisa é indicado por um ponto de interrogação. Após este ponto, seguem os pares nomes e valores, que correspondem ao campo 'Nome' nos elementos do  formulário e o conteúdo destes elementos, respectivamente. Um caractere de concatenação ('&') é usado para separar os pares.
 
-The actual message encoded in the previous URL is “Yes?”, even though the question mark is replaced by a strange code. Some characters in query strings must be escaped. The question mark is one of those, and it is represented as %3F. There seems to be an unwritten rule that every format needs its own way of escaping characters. This one, called URL encoding, uses a percent sign followed by two hexadecimal digits that encode the character code. In this case, 3F, which is 63 in decimal notation, is the code of a question mark character. JavaScript provides the encodeURIComponent and decodeURIComponent functions to encode and decode this format.
+A mensagem codificada na URL anterior é "Yes?", mesmo que o ponto de exclamação seja substituído por um código estranho. Alguns caracteres em "Strings" de pesquisa precisam ser escapados. O ponto de interrogação é um um destes e é representado como "%3F". Parace ser uma regra não escrita que cada formato precisa de sua própria maneira de escapar caracteres. Este formato, chamado de Codificação de URL, usa um caractere de percentual (%) seguido por dois digítos hexadecimais para codificar o código do caractere. Neste caso, o 3F, que significa 63 em notação decimal, é o código que referencia o ponto de exclamação. O JavaScript confere as funções encodeURIComponent e decodeURIComponent para codificar e decodificar este formato.
+
+```js
 
 console.log(encodeURIComponent("Hello & goodbye"));
 // → Hello%20%26%20goodbye
 console.log(decodeURIComponent("Hello%20%26%20goodbye"));
 // → Hello & goodbye
+
+```
+
 If we change the method attribute of the HTML form in the example we saw earlier to POST, the HTTP request made to submit the form will use the POST method and put the query string in body of the request, rather than adding it to the URL.
 
 POST /example/message.html HTTP/1.1

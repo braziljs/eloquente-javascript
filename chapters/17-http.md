@@ -27,12 +27,17 @@ Last-Modified: Wed, 09 Apr 2014 10:48:09 GMT
 ... the rest of the document
 
 ```
-The browser then takes the part of the response after the blank line and displays it as an HTML document.
 
-The information sent by the client is called the request. It starts with this line:
+O navegador então participa da resposta após a linha em branco e a mostra como um documento HTML.
 
+A informação enviado pelo cliente (no caso, o navegador) é chamada de 'request'. Ela começa com essa linha:
+
+```sh
 GET /17_http.html HTTP/1.1
-The first word is the method of the request. GET means that we want to get the specified resource. Other common methods are DELETE to delete a resource, PUT to replace it, and POST to send information to it. Note that the server is not obliged to carry out every request it gets. If you walk up to a random website and tell it to DELETE its main page, it’ll probably refuse.
+```
+
+A primeira palavra é o metodo do 'request'. GET significa que nós queremos obter o uma determinada informação. Outros metodos comuns são DELETE, para deletar alguma informação, PUT para substitui-la e POST para enviar uma informação. Fique atento para o fato de que o servidor não precisa, necessáriamente, executar todo pedido que recebe. Se você for for a um site qualquer e executar um 'request' de DELETE de sua página principal, este 'request' provavelmente será recusado.
+
 
 The part after the method name is the path of the resource the request applies to. In the simplest case, a resource is simply a file on the server, but the protocol doesn’t require it to be. A resource may be anything that can be transferred as if it is a file. Many servers generate the responses they produce on the fly. For example, if you open twitter.com/marijnjh, the server looks in its database for a user named marijnjh, and if it finds one, it will generate a profile page for that user.
 

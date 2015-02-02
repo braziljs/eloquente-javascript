@@ -38,28 +38,38 @@ GET /17_http.html HTTP/1.1
 
 A primeira palavra é o metodo do 'request'. GET significa que nós queremos obter o uma determinada informação. Outros metodos comuns são DELETE, para deletar alguma informação, PUT para substitui-la e POST para enviar uma informação. Fique atento para o fato de que o servidor não precisa, necessáriamente, executar todo pedido que recebe. Se você for for a um site qualquer e executar um 'request' de DELETE de sua página principal, este 'request' provavelmente será recusado.
 
+A parte após o nome do metodo é o caminho do recurso que o 'request' se aplica. Na hipótese mais simples, o recurso é simplesmente um arquivo no servidor, mas o protocolo (HTTP) não requer que o recurso seja necessáriamente um arquivo. Um recurso pode ser qualquer coisa passível de ser transferida como um arquivo. Muitos servidores geram respostas na medida em que são solicitados. Por exemplo, se você abrir twitter.com/marinjnjh, o servidor irá procurar em sua base de dados por um usuário chamado marijnjh, e se achar um, irá gerar a página de perfil para esse usuário.
 
-The part after the method name is the path of the resource the request applies to. In the simplest case, a resource is simply a file on the server, but the protocol doesn’t require it to be. A resource may be anything that can be transferred as if it is a file. Many servers generate the responses they produce on the fly. For example, if you open twitter.com/marijnjh, the server looks in its database for a user named marijnjh, and if it finds one, it will generate a profile page for that user.
+Após o caminho do recurso, a primeira linha do 'request' menciona o HTTP/1.1 para indicar a versão do protocolo HTTP que está sendo usada.
 
-After the resource path, the first line of the request mentions HTTP/1.1 to indicate the version of the HTTP protocol it is using.
+A resposta do servidor começará com a versão sendo usada também, seguida pelo status da resposta do servidor,primeiro na forma de um código de status da resposta e em seguda por um texto legível.
 
-The server’s response will start with a version as well, followed by the status of the response, first as a three-digit status code and then as a human-readable string.
+```sh
 
 HTTP/1.1 200 OK
-Status codes starting with a 2 indicate that the request succeeded. Codes starting with 4 mean there was something wrong with the request. 404 is probably the most famous HTTP status code—it means that the resource that was requested could not be found. Codes that start with 5 mean an error happened on the server and the request is not to blame.
 
-The first line of a request or response may be followed by any number of headers. These are lines in the form “name: value” that specify extra information about the request or response. These headers were part of the example response:
+```
+
+Códigos de Status começando com 2 indicam que o 'request' foi bem sucedido. Códigos que começam com 4 significam que alguma coisa deu errado com o 'request'. 404 é provavelmente o código de resposta HTTP mais famoso e significa que o recurso procurado não foi encontrado. Códigos que começam 5 significam que um erro aconteceu no servidor e que a culpa não é do 'request'.
+
+A primeira linha do 'request' ou da resposta pode ser seguida por qualquer número de cabeçalhos. Estas são as linhas no formulário "nome:valor" que especificam informações extras sobre o 'request' ou sobre a resposta. Estes cabeçalhos são parte do exemplo de resposta a seguir:
+
+```sh
 
 Content-Length: 65585
 Content-Type: text/html
 Last-Modified: Wed, 09 Apr 2014 10:48:09 GMT
-This tells us the size and type of the response document. In this case, it is an HTML document of 65,585 bytes. It also tells us when that document was last modified.
 
-For the most part, a client or server decides which headers to include in a request or response, though a few headers are required. For example, the Host header, which specifies the hostname, should be included in a request because a server might be serving multiple hostnames on a single IP address, and without that header, the server won’t know which host the client is trying to talk to.
+```
 
-After the headers, both requests and responses may include a blank line followed by a body, which contains the data being sent. GET and DELETE requests don’t send along any data, but PUT and POST requests do. Similarly, some response types, such as error responses, do not require a body.
+Este trecho nos mostra o tamanho e o tipo da resposta. Neste caso, é um cocumento de HTML com 65.585 bytes. Ele mostra também quando foi a última vez que o documento foi modificado.
 
-Browsers and HTTP
+Na maior parta, o cliente ou servidor decidem quais cabeçalhos incluir em um 'request' ou resposta, apesar de alguns serem obrigatórios. Por exemplo, o cabeçalho do Host, que especifica o hostname, deve ser incluído em um 'request' porque um servidor pode estar servindo múltiplos hostnams em um mesmo endereço de IP, e sem este cabeçalho, o servidor não saberá qual host o cliente está tentando conversar.
+
+Após os cabeçalhos, ambos 'requests' e respostas podem incluir uma linha em branco, seguida pelo corpo, que contém os dados que estão sendo enviados.Os métodos GET e DELETE não enviam qualquer tipo de dado, mas PUT e POST enviam. De maneira semelhante, alguns tipos de resposta, como respostas de erro, também não precisam de um corpo.
+
+
+###Navegadores e o HTTP
 
 As we saw in the example, a browser will make a request when we enter a URL in its address bar. When the resulting HTML page references other files, such as images and JavaScript files, those are also fetched.
 

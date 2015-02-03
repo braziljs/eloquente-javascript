@@ -51,7 +51,7 @@ Algumas funções produzem um valor, como as funções `power` e `square` vistas
 
 Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor inicial é informado por quem invocou a função, e não pelo código da função em si.
 
-Um propriedade importante das funções é que variáveis definidas dentro do corpo delas, incluindo seus parâmetros, são *locais* à própria função. Isso significa, por exemplo, que a variável `result` no exemplo `power` irá ser criada novamente toda vez que a função for invocada, sendo que as diferentes execuções não interferem umas nas outras.
+Uma propriedade importante das funções é que variáveis definidas dentro do corpo delas, incluindo seus parâmetros, são *locais* à própria função. Isso significa, por exemplo, que a variável `result` no exemplo `power` irá ser criada novamente toda vez que a função for invocada, sendo que as diferentes execuções não interferem umas nas outras.
 
 Esse “senso de localidade” das variáveis se aplica somente aos parâmetros e as variáveis que forem declaradas usando a palavra-chave `var` dentro do corpo da função. Variáveis declaradas fora do contexto de alguma função são chamadas de *globais* (não-locais), pois elas são visíveis em qualquer parte da aplicação. É possível acessar variáveis *globais* dentro de qualquer função, contanto que você não tenha declarado uma variável local com o mesmo nome.
 

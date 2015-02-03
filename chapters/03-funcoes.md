@@ -49,109 +49,100 @@ Algumas funções produzem um valor, como as funções `power` e `square` vistas
 
 ## Parâmetros e Escopos
 
-Os parâmetros de uma função comportam-se como variáveis - mas aquelas que são utilizadas para declarar um valor inicial pelo chamador da função, não o código da função em si.
+Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor inicial é informado por quem invocou a função, e não pelo código da função em si.
 
-Uma propriedade muito importante das funções é que variáveis criadas dentro das funções, incluindo seus parâmetros, são *locais* à função. Isso significa, por exemplo, que a variável `result` no exemplo `power` vai ser novamente criada toda vez que a função for chamada, e suas encarnações separadas não interferem umas com as outras.
+Uma propriedade importante das funções é que variáveis definidas dentro do corpo delas, incluindo seus parâmetros, são *locais* à própria função. Isso significa, por exemplo, que a variável `result` no exemplo `power` irá ser criada novamente toda vez que a função for invocada, sendo que as diferentes execuções não interferem umas nas outras.
 
-Essa "senso de localidade" das variáveis se aplica somente aos parâmetros e as variáveis declaradas com a palavra-chave `var` dentro do corpo da função. É possível acessar variáveis *globais* (não-locais) dentro de uma função, contanto que você não tenha declarado uma variável local com o mesmo nome.
+Esse “senso de localidade” das variáveis se aplica somente aos parâmetros e as variáveis que forem declaradas usando a palavra-chave `var` dentro do corpo da função. Variáveis declaradas fora do contexto de alguma função são chamadas de *globais* (não-locais), pois elas são visíveis em qualquer parte da aplicação. É possível acessar variáveis *globais* dentro de qualquer função, contanto que você não tenha declarado uma variável local com o mesmo nome.
 
-O código seguinte demonstra isto. Ele define (e chama) duas funções que ambas atribuem um valor à variável `x`. No primeiro declaramos a variável como local e depois mudamos somente a variável local. No segundo não declaramos `x` localmente, e portanto, as referências ao `x` dentro dele irão se referir a variável global `x` definida no início do exemplo.
+O código a seguir demonstra esse conceito. Ele define e executa duas funções em que ambas atribuem um valor a variável `x`. A primeira função `f1` declara a variável como local e então muda apenas seu valor. Já a segunda função `f2` não declara `x` localmente, portanto sua referência a `x` está associada a variável global `x` definida no topo do exemplo:
 
 ```js
-
 var x = "outside";
 
-var f1 = function () {
-	var x = "inside f1";
+var f1 = function() {
+  var x = "inside f1";
 };
 f1();
 console.log(x);
-// outside
+// → outside
 
-var f2 = function () {
-	x = "inside f2";
+var f2 = function() {
+  x = "inside f2";
 };
 f2();
 console.log(x);
-// inside f2
-
+// → inside f2
 ```
 
-Este comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis estiverem compartilhadas por todo o programa, teria que haver um enorme esforço, em todos os programas, até mesmo os mais ínfimos, para garantir que nenhum nome estivesse sendo usado duas vezes. E se você reusasse o nome de uma variável, iria perceber efeitos estranhos, com código confuso e não relacionado ao valor de sua variável. Tratando as variáveis como existentes apenas na localidade dentro da função, a linguagem torna muito mais fácil de ler e entender as funções como pequenos universos, sem muitas ações a distância para complicar as coisas.
+Esse comportamento ajuda a previnir interferências acidentais entre funções. Se todas as variáveis fosse compartilhadas por toda a aplicação, iria ser muito trabalhoso garantir que o mesmo nome não fosse utilizado em duas situações com propósitos diferentes. E *se* fosse o caso de você reutilizar uma variável com o mesmo nome, você talvez possa se deparar com efeitos estranhos de códigos que alteram o valor da sua variável. Assumindo que variáveis locais existem apenas dentro do contexto da função, a linguagem torna possível ler e entender funções como “pequenos universos”, sem termos que nos preocupar com o código da aplicação inteira de uma só vez.
 
 ## Escopo Aninhado
 
-No JavaScript, a distinção não é somente entre variáveis *globais* e *locais*. Na realidade, existem graus de localidade. Funções podem ser criadas em qualquer lugar dentro do programa, incluindo dentro de outras funções.
+O JavaScript não se distingue apenas pela diferenciação entre variáveis *locais* e *globais*. Funções também podem ser criadas dentro de outras funções, criando vários níveis de “localidades”.
 
-Por exemplo, esta função sem sentido tem duas funções dentro dela:
+Por exemplo, a função `landscape` possui duas funções `flat` e `mountain` declaradas dentro do seu corpo:
 
 ```js
+var landscape = function() {
+  var result = "";
+  var flat = function(size) {
+    for (var count = 0; count < size; count++)
+      result += "_";
+  };
+  var mountain = function(size) {
+    result += "/";
+    for (var count = 0; count < size; count++)
+      result += "'";
+    result += "\\";
+  };
 
-var landscape = function () {
-	var result = "";
-	var flat = function (size) {
-		for (var count = 0; count < size; count++)
-			result += "_";
-	};
-	var moutain = function (size) {
-		result += "/";
-		for (var count = 0; count < size; count++)
-			result += "/";
-			for (var count = 0; count < size; count++)
-				result += "'";
-			result += "\\";
-	};
-
-	flat(3);
-	moutain(4);
-	flat(6);
-	moutain(1);
-	flat(1);
-	return result
+  flat(3);
+  mountain(4);
+  flat(6);
+  mountain(1);
+  flat(1);
+  return result;
 };
 
 console.log(landscape());
-// ___/''''\______/'\_
-
+// → ___/''''\______/'\_
 ```
-As funções `flat` e `moutain` podem "ver" a variável chamada `result`, desde que elas estejam dentro da função que define `result`. Mas elas não podem ver as variáveis `count` uma da outra, somente a sua própria, pois estão exteriores a cada uma. O ambiente fora da função não vê qualquer de suas variáveis definidas dentro de `landscape`.
 
-Em resumo, cada escopo local pode também ver o escopo local em que estiver dentro. O conjunto de variáveis dentro de uma função é determinado pelo lugar que essa função está no texto do programa. Todas as variáveis de blocos "em volta" de uma definição de função estão visíveis, que significa ambas as variáveis de corpos de funções ao seu redor e em níveis mais altos do programa. Essa abordagem para variáveis visíveis é chamado escopo léxico.
+As funções `flat` e `mountain` podem “ver” a variável `result` porque elas estão dentro do mesmo escopo da função que as definiram. Entretanto, elas não conseguem ver a variável `count` uma da outra (somente a sua própria), pois elas estão definidas em escopos diferentes. O ambiente externo a função `landscape` não consegue ver as variáveis definidas dentro de `landscape`.
 
-Pessoas com experiência em outras linguagens de programação devem esperar que qualquer bloco de código (entre chaves) produza um novo ambiente local. Mas no JavaScript, funções são as únicas coisas que criam um novo escopo. Você está autorizado a usar blocos de instalação livre:
+Em resumo, cada escopo local pode também ver todos os escopos locais que o contém. O conjunto de variáveis visíveis dentro de uma função é determinado pelo local onde aquela função está escrita na aplicação. Todas as variáveis que estejam em blocos *ao redor* de definições de funções são visíveis aos corpos dessas funções e também a aqueles que estão no mesmo nível. Essa abordagem em relação a visibilidade de variáveis é chamada de *escopo léxico*.
+
+Pessoas com experiência em outras linguagens de programação podem talvez esperar que qualquer bloco de código entre chaves produza um novo “ambiente local”. Entretanto, no JavaScript as funções são as únicas coisas que podem criar novos escopos. É também permitido a utilização de “blocos livres”:
 
 ```js
-
 var something = 1;
 {
-	var something = 2;
-	// Faça algo com a variável something
+  var something = 2;
+  // Do stuff with variable something...
 }
-// Fora do bloco novamente
-
+// Outside of the block again...
 ```
 
-Mas a `something` dentro do bloco se refere a mesma variável que a fora do bloco. Na realidade, embora blocos como este sejam permitidos, eles são úteis somente para agrupar o corpo de uma declaração `if` ou um loop. 
+Entretanto, a variável `something` dentro do bloco faz referência a mesma variável fora do bloco. Na realidade, embora blocos como esse sejam permitidos, eles são úteis somente para agrupar o corpo de uma declaração condicional `if` ou um loop.
 
-Se você acha isso estranho, você não está sozinho. A próxima versão do JavaScript vai introduzir a palavra-chave `let`, que funciona como `var`, mas cria uma variável que é local ao bloco que a contém e não a *função* que a contém.
+Se você acha isso estranho, não se preocupe pois você não está sozinho. A próxima versão do JavaScript vai introduzir a palavra-chave `let`, que funcionará como `var`, mas criará uma variável que é local ao *bloco* que a contém e não a *função* que a contém.
 
 ## Funções Como Valores
 
-Normalmente, variáveis de função simplesmente atuam como nomes para um específico pedaço do programa. Elas são definidas uma vez, e nunca mudam. Isso torna fácil a confusão entre a função e seu nome.
+As variáveis de função normalmente atuam apenas como nomes para um pedaço específico da aplicação. Tais variáveis são definidas uma vez e nunca se alteram. Isso faz com que seja fácil confundir a função com seu próprio nome.
 
-Mas os dois são diferentes. Um valor de função pode fazer todas as coisas que outros valores podem fazer - você pode usá-lo em todo tipo de expressão, não somente chamá-lo. É possível armazenar um valor em um novo local, ou passá-lo como um argumento para uma função, e por ai vai. Similarmente, uma variável que contém uma função continua sendo uma variável regular, e pode ser atribuída com um novo valor.
+Entretanto, são duas coisas distintas. Um valor de função pode fazer todas as coisas que outros valores podem fazer (você pode usá-lo em qualquer tipo de expressão e não apenas invocá-la). É possível armazenar um valor de função em um novo local, passá-lo como argumento para outra função e por aí vai. Não muito diferente, uma variável que faz referência a uma função continua sendo apenas uma variável regular e pode ser atribuída a um novo valor, como mostra o exemplo abaixo:
 
 ```js
-
-var launchMissiles = function (value) {
-	missileSystem.launch("now");
+var launchMissiles = function(value) {
+  missileSystem.launch("now");
 };
 if (safeMode)
-	launchMissiles = function (value) {/* não faz nada */};
-
+  launchMissiles = function(value) {/* do nothing */};
 ```
 
-No capítulo 5, nós vamos discutir as maravilhosas coisas que podem ser feitas passando valores de função para outras funções.
+No capítulo 5, nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
 
 ## Notação Por Declaração
 

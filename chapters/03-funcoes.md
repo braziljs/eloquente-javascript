@@ -11,46 +11,41 @@ Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas a
 
 ## Definindo Uma Função
 
-Uma definição de função é somente uma definição normal de variável onde o valor dado a variável passa a ser uma função. Por exemplo, isso define a variável `square` para se referir a uma função que produz o quadrado do número dado:
+Uma definição de função nada mais é do que uma definição normal de uma variável na qual o valor recebido pela variável é uma função. Por exemplo, o código a seguir define uma variável `square` que se refere a uma função que retorna o quadrado do número dado:
 
 ```js
-
-var square = function (x) {
-	return x * x;
+var square = function(x) {
+  return x * x;
 };
 
 console.log(square(12));
-// 144
-
+// → 144
 ```
 
-Uma função é criada por uma expressão que começa com a palavra-chave `function`. Funções tem um conjunto de parâmetros (neste caso, somente `x`), e um "corpo", contendo as declarações que são executadas quando a função é chamada. Estas declarações devem sempre estar envoltas entre chaves, mesmo quando o corpo consiste em apenas uma simples declaração (como no exemplo).
+Uma função é criada através de uma expressão que se inicia com a palavra-chave `function`. Funções podem receber uma série de parâmetros (nesse caso, somente `x`) e um “corpo”, contendo as declarações que serão executadas quando a função for invocada. O corpo da função deve estar sempre envolvido por chaves, mesmo quando for formado por apenas uma simples declaração (como no exemplo anterior).
 
-Uma função pode ter múltiplos parâmetros, ou nenhum.
+Uma função pode receber múltiplos parâmetros ou até mesmo nenhum. No exemplo a seguir, `makeNoise` não recebe nenhum parâmetro, enquanto `power` recebe dois:
 
 ```js
-
-var makeNoise = function () {
-	console.log("Pling!");
+var makeNoise = function() {
+  console.log("Pling!");
 };
 
 makeNoise();
-//Pling!
+// → Pling!
 
-var power = function (base, exponent) {
-	var result = 1;
-	for (var count = 0; count < exponent; count++)
-		result *= base;
-
-	return result;
+var power = function(base, exponent) {
+  var result = 1;
+  for (var count = 0; count < exponent; count++)
+    result *= base;
+  return result;
 };
 
 console.log(power(2, 10));
-// 1024
-
+// → 1024
 ```
 
-Algumas funções produzem um valor, como as funções `power` e `square` vistas acima, e algumas não, como a `makeNoise` (que somente tem um efeito secundário). Uma declaração `return` é usada para determinar o valor que retorna da função. Quando o controle passa por esta declaração, imediatamente ele pula para fora da função atual e retorna o valor para o código que chamou a função. A palavra-chave `returned` sem uma expressão após ela vai retornar `undefined`.
+Algumas funções produzem um valor, como as funções `power` e `square` vistas acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após a mesma, irá fazer com que a função retorne `undefined`.
 
 ## Parâmetros e Escopos
 

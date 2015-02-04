@@ -63,3 +63,30 @@ Um contexto é criado através do método `getContext` sobre o elemento `<canvas
 Depois de criar o objeto de contexto o exemplo desenha um retângulo vermelho de 100 pixels de largura e 50 pixels de altura com o seu canto superior esquerdo nas coordenadas (10,10).
 
 Assim como em HTML e SVG o sistema que a tela usa puts(0,0) no canto superior esquerdo de coordenadas, e o eixo y positivo vai para baixo. Então (10,10) é de 10 pixels abaixo e à direita do canto superior esquerdo.
+
+#### Preenchimento e traçado
+
+Preenchimento e traçado
+
+Na interface uma forma pode ser cheia ou seja, a sua área é dada uma determinada cor padrão ou pode ser riscada o que significa que uma linha é desenhada ao longo de sua borda. A mesma terminologia é utilizada por SVG.
+
+O método `fillRect` preenche um retângulo. É preciso ter as coordenadas `x` e `y` do canto superior esquerdo do retângulo, em seguida a sua largura e a sua altura. Um método semelhante `strokeRect` desenha o contorno de um retângulo.
+
+Nenhum método leva quaisquers parâmetros. A cor do preenchimento espessura do acidente vascular cerebral, e assim por diante, não são determinados por um argumento para o método (como se poderia esperar justamente), mas sim pelas propriedades do objecto de contexto.
+
+Definir `fillStyle` altera o jeito que as formas são preenchidas. Pode ser definido como uma cadeia de caracteres que especifica uma cor ou qualquer cor compreendido por CSS também podem ser usados aqui.
+
+A propriedade strokeStyle funciona de forma semelhante, mas determina a cor usada para uma linha acariciou. A largura de linha que é determinada pela propriedade lineWidth ', que pode conter qualquer número positivo.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.strokeStyle = "blue";
+  cx.strokeRect(5, 5, 50, 50);
+  cx.lineWidth = 5;
+  cx.strokeRect(135, 5, 50, 50);
+</script>
+```
+
+Quando nenhuma largura ou altura atributo é especificado, como no exemplo anterior, um elemento de tela adquire uma largura padrão de 300 e altura de 150 pixels.

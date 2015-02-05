@@ -108,14 +108,17 @@ console.log(decodeURIComponent("Hello%20%26%20goodbye"));
 // → Hello & goodbye
 
 ```
-git 
-If we change the method attribute of the HTML form in the example we saw earlier to POST, the HTTP request made to submit the form will use the POST method and put the query string in body of the request, rather than adding it to the URL.
+Se nós mudarmos o método do atributo do formulário de HTML no exemplo que vimos antes para POST, o 'request' de HTTP feito para enviar o formulário irá usar POST e usará a 'String' de pesquisa no corpo do 'request', ao inves de adicioná-lo a URL. 
 
+```sh
 POST /example/message.html HTTP/1.1
 Content-length: 24
 Content-type: application/x-www-form-urlencoded
 
 name=Jean&message=Yes%3F
+```
+
+Por convenção, o método GET é usado para 'requests' que não possuem efeitos colateriais, como ao fazer pesquisas.'Requests' que mudam algo no servidor, como aqueles que criam uma nova conta ou postam uma mensagem, devem ser expressados com outros métodos, como o POST. Softwares do lado do cliente, como navegadores, sabem que não devem fazer 'requests' POST cegamente, mas farão, implicitamente, 'requests' GET para, por exemplo, pré-carregar um recurso
 By convention, the GET method is used for requests that do not have side effects, such as doing a search. Requests that change something on the server, such as creating a new account or posting a message, should be expressed with other methods, such as POST. Client-side software, such as a browser, knows that it shouldn’t blindly make POST requests but will often implicitly make GET requests—for example to prefetch a resource it believes the user will soon need.
 
 The next chapter will return to forms and talk about how we can script them with JavaScript.

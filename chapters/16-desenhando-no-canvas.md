@@ -90,3 +90,41 @@ A propriedade `strokeStyle` funciona de forma semelhante, mas determina a cor us
 ```
 
 Quando nenhuma largura ou altura é especificado como atributo, como no exemplo anterior um elemento de tela adquire uma largura padrão de 300 pixels e altura de 150 pixels.
+
+#### Paths
+
+Um `path` é uma seqüência de linhas. A interface de uma tela 2D tem uma abordagem peculiar de descrever esse `path`. Isso é feito inteiramente através de efeitos colaterais. Os `paths` não constituem valores que podem ser armazenados ou repassados. Se você deseja fazer algo com um `path`, você faz uma seqüência de chamadas de método para descrever sua forma.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.beginPath();
+  for (var y = 10; y < 100; y += 10) {
+    cx.moveTo(10, y);
+    cx.lineTo(90, y);
+  }
+  cx.stroke();
+</script>
+```
+
+Este exemplo cria um `path` com um número de segmentos de linha horizontal e em seguida faz traços usando o método `stroke`. Cada segmento criado com `lineTo` começa na posição atual do `path`. Esta posição é normalmente o fim do último segmento a não ser que `moveTo` for chamado. Nesse caso, o próximo segmento começara na posição passada para `moveTo`.
+
+Ao preencher um `path`(usando o método de `fill`) cada forma é preenchido separadamente. Um `path` pode conter várias formas, cada movimento com `moveTo` inicia um novo. Mas o `path` tem de ser fechado(ou seja o seu início e fim estão na mesma posição) antes de ser preenchido. 
+Se o `path` não estiver fechado a linha é adicionada a partir de sua extremidade para o começo ou forma delimitada pelo `path` completado é preenchido.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.beginPath();
+  cx.moveTo(50, 10);
+  cx.lineTo(10, 70);
+  cx.lineTo(90, 70);
+  cx.fill();
+</script>
+```
+
+Este exemplo estabelece um triângulo a cheio. Note-se que apenas dois dos lados do triângulo são explicitamente desenhado. A terceira é a partir do canto inferior direito ate o topo; é implícito e não estará lá quando você traçar o `path`.
+
+Você também pode usar o método `closePath` para fechar explicitamente um `path` através da adição de um segmento da linha atual de volta ao início do `path`. Este segmento é desenhado traçando o `path`.

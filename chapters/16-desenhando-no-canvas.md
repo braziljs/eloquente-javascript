@@ -72,11 +72,11 @@ Na interface uma forma pode ser cheia ou seja, a sua área é dada uma determina
 
 O método `fillRect` preenche um retângulo. É preciso ter as coordenadas `x` e `y` do canto superior esquerdo do retângulo, em seguida a sua largura e a sua altura. Um método semelhante `strokeRect` desenha o contorno de um retângulo.
 
-Nenhum método leva quaisquers parâmetros. A cor do preenchimento espessura do acidente vascular cerebral, e assim por diante, não são determinados por um argumento para o método (como se poderia esperar justamente), mas sim pelas propriedades do objecto de contexto.
+Nenhum dos métodos tem parâmetros. A cor do preenchimento da espessura do traçadonão são determinados por argumento do método(como você espera), mas sim pelas propriedades do contexto do objecto.
 
-Definir `fillStyle` altera o jeito que as formas são preenchidas. Pode ser definido como uma cadeia de caracteres que especifica uma cor ou qualquer cor compreendido por CSS também podem ser usados aqui.
+As definições de `fillStyle` podem alterar o jeito que as formas são preenchidas. Ele pode ser definido como uma `string` que especifica uma cor, qualquer cor compreendido por CSS podem serem usados aqui.
 
-A propriedade strokeStyle funciona de forma semelhante, mas determina a cor usada para uma linha acariciou. A largura de linha que é determinada pela propriedade lineWidth ', que pode conter qualquer número positivo.
+A propriedade `strokeStyle` funciona de forma semelhante, mas determina a cor usada para uma linha. A largura da linha é determinada pela propriedade `lineWidth` que pode conter qualquer número positivo.
 
 ```html
 <canvas></canvas>
@@ -89,4 +89,4 @@ A propriedade strokeStyle funciona de forma semelhante, mas determina a cor usad
 </script>
 ```
 
-Quando nenhuma largura ou altura atributo é especificado, como no exemplo anterior, um elemento de tela adquire uma largura padrão de 300 e altura de 150 pixels.
+Quando nenhuma largura ou altura é especificado como atributo, como no exemplo anterior um elemento de tela adquire uma largura padrão de 300 pixels e altura de 150 pixels.

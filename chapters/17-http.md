@@ -108,7 +108,7 @@ console.log(decodeURIComponent("Hello%20%26%20goodbye"));
 // → Hello & goodbye
 
 ```
-
+git 
 If we change the method attribute of the HTML form in the example we saw earlier to POST, the HTTP request made to submit the form will use the POST method and put the query string in body of the request, rather than adding it to the URL.
 
 POST /example/message.html HTTP/1.1

@@ -128,3 +128,83 @@ Se o `path` não estiver fechado a linha é adicionada a partir de sua extremida
 Este exemplo estabelece um triângulo a cheio. Note-se que apenas dois dos lados do triângulo são explicitamente desenhado. A terceira é a partir do canto inferior direito ate o topo; é implícito e não estará lá quando você traçar o `path`.
 
 Você também pode usar o método `closePath` para fechar explicitamente um `path` através da adição de um segmento da linha atual de volta ao início do `path`. Este segmento é desenhado traçando o `path`.
+
+#### Curvas
+
+Um `path` também pode conter linhas com curvas. Estes infelizmente é um pouco mais complexo do que desenhar linhas retas.
+O método `quadraticCurveTo` desenha uma curva ate um ponto considerado. Para determinar a curvatura da linha é dado no método um ponto de controle e um ponto de destino. Imagine o seguinte, ponto de controle é uma atração a linha, o que da a ela sua curvatura. A linha não vai passar pelo ponto de controle. Ao contrário disso a direcção da linha nos seus pontos de início e fim fica alinhado com a linha de lá para o ponto de controle. O exemplo a seguir ilustra isso:
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.beginPath();
+  cx.moveTo(10, 90);
+  // control=(60,10) goal=(90,90)
+  cx.quadraticCurveTo(60, 10, 90, 90);
+  cx.lineTo(60, 10);
+  cx.closePath();
+  cx.stroke();
+</script>
+```
+
+Nós desenharemos uma curva quadrática a partir da esquerda para a direita com (60,10) no ponto de controle e depois tirar dois segmentos da linha passando por esse ponto de controle e de volta para o início da linha. O resultado lembra um pouco uma insígnia do Star Trek. Você pode ver o efeito do ponto de controle: as linhas que saem dos cantos inferiores começam na direção do ponto de controle e em seguida curva em direção a seu alvo.
+
+O método `bezierCurve` desenha um tipo semelhante de curva. Em vez de um único ponto de controle este tem dois, um para cada um dos pontos das extremidades da linha. Aqui é um esboço semelhante para ilustrar o comportamento de uma tal curva:
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.beginPath();
+  cx.moveTo(10, 90);
+  // control1=(10,10) control2=(90,10) goal=(50,90)
+  cx.bezierCurveTo(10, 10, 90, 10, 50, 90);
+  cx.lineTo(90, 10);
+  cx.lineTo(10, 10);
+  cx.closePath();
+  cx.stroke();
+</script>
+```
+
+Os dois pontos de controle especificam a direção em ambas as extremidades da curva. Quanto mais eles estão longe de seu ponto correspondente maior a curva que vai nesse sentido.
+
+Tais curvas pode ser difícil de trabalhar, nem sempre é evidente encontrar a forma dos pontos de controle que proporcionam a forma que você está procurando. Às vezes você pode calcular e às vezes você apenas tem que encontrar um valor apropriado por tentativa e erro.
+
+Fragmentos `arcs` de um círculo são mais fáceis de se trabalhar. O método `arcTo` não leva menos de cinco argumentos. Os quatro primeiros argumentos agem um pouco como os argumentos para `quadraticCurveTo`. O primeiro par fornece uma espécie de ponto de controle e o segundo par dá destino a linha. O quinto argumento fornece o raio do arco. O método vai conceitualmente projetar um canto da linha que vai para o ponto de controle e em seguida de volta ao ponto de destino para que ele faça parte de um círculo com o raio dado. O método `arcTo` chega então a uma parte arredondada bem como uma linha a partir da posição de partida ate o início de uma parte arredondada.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.beginPath();
+  cx.moveTo(10, 10);
+  // control=(90,10) goal=(90,90) radius=20
+  cx.arcTo(90, 10, 90, 90, 20);
+  cx.moveTo(10, 10);
+  // control=(90,10) goal=(90,90) radius=80
+  cx.arcTo(90, 10, 90, 90, 80);
+  cx.stroke();
+</script>
+```
+
+O método `arcTo` não vai desenhar a linha a partir da parte final do arredondamento para a posição do objetivo embora a palavra no seu nome poderia sugerir o que ele faz. Você pode acompanhar com uma chamada de `lineTo` com o mesmo objetivo de coordena e acrescentar uma parte da linha.
+
+Para desenhar um círculo você poderia usar quatro chamadas para `arcTo`(cada um que giram 90 graus). Mas o método de arco fornece uma maneira mais simples. É preciso um par de coordenadas para o centro do arco, um raio, e em seguida um ângulo de início e fim.
+
+Esses dois últimos parâmetros tornam possível desenhar apenas uma parte do círculo. Os ângulos são medidos em radianos não em graus. Isso significa que um círculo completo tem um ângulo de `2π` ou `2 * Math.PI` que é de cerca de `6,28`. O ângulo começa a contar no ponto a partir da direita do centro do círculo e vai no sentido horário a partir daí. Você pode usar um começo de `0` e um fim maior do que `2π`(digamos 7) para desenhar um círculo completo.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.beginPath();
+  // center=(50,50) radius=40 angle=0 to 7
+  cx.arc(50, 50, 40, 0, 7);
+  // center=(150,50) radius=40 angle=0 to ½π
+  cx.arc(150, 50, 40, 0, 0.5 * Math.PI);
+  cx.stroke();
+</script>
+```
+
+A imagem resultante contém uma linha na esquerda do círculo completo(primeira chamada de `ARC`) a esquerda do quarto de círculo(segunda chamada). Como outros métodos de desenho de `path` uma linha traçada com arco é ligado ao segmento do `path` anterior por padrão. Se você quiser evitar isso teria que chamar `moveTo` ou iniciar um novo `path`.

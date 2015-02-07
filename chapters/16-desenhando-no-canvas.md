@@ -271,3 +271,158 @@ Você pode especificar o tamanho, estilo e tipo da letra do texto com a propried
 Os dois últimos argumentos para `fillText`(e `strokeText`) fornecem a posição em que a fonte é desenhado. Por padrão indica a posição do início da linha na base alfabética do texto, que é a linha que as letras ficam não tendo partes penduradas; em letras como `j` ou `p` você pode mudar a posição horizontal definindo a propriedade `textAlign` para `end` ou `center` e a posição vertical definindo `TextBaseline` para `top`, `middle` ou `bottom`.
 
 Vamos voltar ao nosso gráfico de pizza para corrigir o problema de rotular as fatias nos exercícios no final do capítulo.
+
+#### Imagens
+
+Na computação gráfica uma distinção é feita frequentemente entre gráficos vetoriais e bitmap. O primeiro é como iremos fazer neste capítulo; a especificação da imagem dando uma descrição lógica de formas. Os gráficos de bitmap não especificam formas reais, mas sim trabalham com dados de pixel(ratros de pontos coloridos).
+
+O método `drawImage` nos permite desenhar dados de pixel em `canvas`. Estes dados de pixel pode ter origem a partir de um elemento `<img>` ou de `<canvas>`, e nem tem de ser visível no documento atual. O exemplo a seguir cria um destacado elemento <img> e carrega um arquivo de imagem nele. Mas não é iniciado imediatamente; a elaboração desta imagem não ocorreu porque o browser ainda não buscou por isso ainda. Para lidar com tal situação registramos um manipulador de eventos(`"load"`)  para fazer o desenho depois que a imagem for carregada.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  var img = document.createElement("img");
+  img.src = "img/hat.png";
+  img.addEventListener("load", function() {
+    for (var x = 10; x < 200; x += 30)
+      cx.drawImage(img, x, 10);
+  });
+</script>
+```
+
+Por padrão, `drawImage` vai desenhar a imagem em seu tamanho original. Você também pode dar-lhe dois argumentos adicionais para ditar uma largura e altura diferente.
+
+`drawImage` recebe nove argumentos, ele pode ser utilizado para desenhar apenas um fragmento de uma imagem. Do segundo ao quinto argumento indicam o retângulo(x, y, largura e altura) na imagem de origem que deve ser copiado, do sexto ao nono argumentos indica o retângulo(na tela) em que deve ser copiado.
+
+Isso pode ser usado para embalar várias sprites(elementos de imagem) em um único arquivo de imagem, em seguida desenhar apenas a parte que você precisa. Por exemplo, nós temos esta imagem contendo uma personagem do jogo em várias poses:
+
+![img](http://eloquentjavascript.net/img/player_big.png)
+
+Ao alternar a pose que traçamos, podemos mostrar uma animação que que simula o movimento de andar do personagem.
+
+Para animar a imagem em uma tela  o método `clearRect` é útil. Assemelha-se a `fillRect` mas ao invés de colorir o retângulo, torna-se transparente removendo os pixels previamente desenhados.
+
+Sabemos que a cada sprite, cada sub-imagem,é de 24 pixels de largura por 30 pixels de altura. O código a seguir carrega a imagem e em seguida, define um intervalo(temporizador de repetição) para desenhar o quadro seguinte:
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  var img = document.createElement("img");
+  img.src = "img/player.png";
+  var spriteW = 24, spriteH = 30;
+  img.addEventListener("load", function() {
+    var cycle = 0;
+    setInterval(function() {
+      cx.clearRect(0, 0, spriteW, spriteH);
+      cx.drawImage(img,
+                   // source rectangle
+                   cycle * spriteW, 0, spriteW, spriteH,
+                   // destination rectangle
+                   0,               0, spriteW, spriteH);
+      cycle = (cycle + 1) % 8;
+    }, 120);
+  });
+</script>
+```
+
+A variável `cycle` mapeia nossa posição na animação. A cada quadro ele é incrementado e em seguida, cortado de volta para o intervalo de 0 a 7 usando o operador restante. Esta variável é então usada para calcular a coordenada `x` que o sprite para a pose atual da imagem.
+
+
+#### Transformações
+
+Mas e se queremos que o nosso personagem ande para a esquerda em vez de para a direita? Poderíamos acrescentar um outro conjunto de sprites, é claro. Mas também podemos instruir a tela para desenhar a imagem de outra maneira.
+
+Chamar o método `scale` fará com que qualquer coisa desenhada depois possa ser escalado. Este método tem dois parâmetros, um para definir uma escala horizontal e um para definir uma escala vertical.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.scale(3, .5);
+  cx.beginPath();
+  cx.arc(50, 50, 40, 0, 7);
+  cx.lineWidth = 3;
+  cx.stroke();
+</script>
+```
+
+`Scaling` fará tudo sobre a imagem desenhada incluindo: a largura da linha a ser esticado ou espremido juntos conforme especificado. Dimensionamento por um valor negativo vai inverter a imagem ao redor. A inversão acontece em torno do ponto(0,0); o que significa que também irá virar a direção do sistema de coordenadas. Quando uma escala horizontal de -1 é aplicada a forma desenhada em x na posição 100 vai acabar com a posição -100.
+
+Então para transformar uma imagem em torno não podemos simplesmente adicionar `cx.scale (-1, 1)` antes da chamada `drawImage` pois ira mover a nossa imagem fora da tela onde não será mais visível. Você pode ajustar as coordenadas dadas a `drawImage` para compensar esse pelo desenho da imagem em x na posição -50 em vez de 0. Outra solução que não exige que o código faça o desenho para saber sobre a mudança de escala, é ajustar o eixo em torno do qual a escala acontece.
+
+Há vários outros métodos além de `scale` que influenciam no sistema de coordenadas para o `canvas`. Você pode girar formas posteriormente desenhados com o método de `rotation` e movê-los com o método de `translate`. É interessante e confuso saber que estas transformações são realizados no estilo de pilha, o que significa que cada uma acontece em relação às transformações anteriores.
+
+Então se nós fizermos um `translate` de 10 pixels na horizontal por duas vezes, tudo será desenhada 20 pixels para a direita. Se primeiro mover o centro do sistema de coordenadas de (50,50) e em seguida girar 20 graus(0.1π em radianos), a rotação vai acontecer em torno do ponto (50,50).
+
+![img](http://i.imgur.com/2js2RCw.png)
+
+Mas se nós primeiro girarmos 20 graus e em seguida aplicarmos um `translate` de (50,50), o `translate` ira acontecer na rotação do sistema de coordenadas e assim produzir uma orientação diferente. A ordem em que as transformações são assuntos aplicadas.
+
+Para inverter uma imagem em torno da linha vertical em uma determinada posição x podemos fazer o seguinte:
+
+```js
+function flipHorizontally(context, around) {
+  context.translate(around, 0);
+  context.scale(-1, 1);
+  context.translate(-around, 0);
+}
+```
+
+Nós deslocamos o `eixo-y` para onde queremos que o nosso espelho fique e aplicamos, finalmente deslocamos o `eixo-y` de volta ao seu lugar adequado no universo espelhado. O quadro a seguir explica por que isso funciona:
+
+![img](http://i.imgur.com/m65HwcW.png)
+
+Isto mostra o sistemas de coordenadas antes e após o espelhamento do outro lado da linha central. Se desenharmos um triângulo em uma posição positiva x, estaria por padrão no lugar onde triângulo 1 esta. Uma chamada para `flipHorizontally` faz primeiro um `translate` para a direita, o que nos leva ao triângulo 2. Em seguida `scale` lançando o triângulo de volta para a posição 3. Este não é o lugar onde ele deveria estar se fosse espelhada na linha dada. O segundo `translate` para correções da chamadas esta cancelando o `translate` inicial e faz triângulo 4 aparecer exatamente onde deveria.
+
+Agora podemos desenhar um personagem espelhado na posição (100,0) rodando o mundo em torno do centro vertical do personagem.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  var img = document.createElement("img");
+  img.src = "img/player.png";
+  var spriteW = 24, spriteH = 30;
+  img.addEventListener("load", function() {
+    flipHorizontally(cx, 100 + spriteW / 2);
+    cx.drawImage(img, 0, 0, spriteW, spriteH,
+                 100, 0, spriteW, spriteH);
+  });
+</script>
+```
+
+#### Armazenar e limpando transformações
+
+Transformações ficar por aqui. Qualquer outra coisa que desenhar depois de desenhar esse personagem espelhado também ficara espelhado. Isso pode ser um problema.
+
+É possível salvar a transformação atual, fazer algum desenho e transformar e em seguida restaurar a velho transformação. Isso geralmente é a coisa certa a fazer para uma função que necessita transformar temporariamente o sistema de coordenadas. Em primeiro lugar vamos salvar qualquer que seja a transformação do código que chamou a função que estava utilizando. Em seguida a função faz a sua parte(no topo da transformação existente) possivelmente adicionando mais transformações. E finalmente revertemos a transformação que nós fizemos.
+
+Os salvar e o restaurar nos métodos em contexto `canvas` 2D realizam um tipo de gerenciamento na transformação. Eles conceitualmente mantém uma pilha de estados de transformação. Quando você chama o salvar o estado atual é colocado na pilha, e quando você chama o restaurar, o estado no topo da pilha é retirado e utilizado como transformação atual do contexto.
+
+A função de ramificação no exemplo a seguir ilustra o que você pode fazer com uma função que altera a transformação e em seguida chama outra função, que continua a desenhar com a transformação dada no desenho anterior.
+
+Esta função desenha uma forma lebrando um desenho de uma árvore com linhas; movendo o sistema de coordenadas do centro para o fim da linha, e chamando ele novamente. A primeira girada acontece para a esquerda e depois rodado para a direita. Cada chamada reduz o comprimento do ramo desenhada e a recursividade para quando o comprimento cai abaixo de 8.
+
+```html
+<canvas width="600" height="300"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  function branch(length, angle, scale) {
+    cx.fillRect(0, 0, 1, length);
+    if (length < 8) return;
+    cx.save();
+    cx.translate(0, length);
+    cx.rotate(-angle);
+    branch(length * scale, angle, scale);
+    cx.rotate(2 * angle);
+    branch(length * scale, angle, scale);
+    cx.restore();
+  }
+  cx.translate(300, 0);
+  branch(60, 0.5, 0.8);
+</script>
+```
+
+Se as chamadas para salvar e restaurar não estivessem lá, a segunda chamada recursiva dos galho acabariam com a mesma posição de rotação criado pela primeira chamada. Não estariam ligados ao ramo atual, mas estaria a direita do ramo desenhado pela primeira chamada. A forma resultante também poderia ser interessante mas não é definitivamente uma árvore.

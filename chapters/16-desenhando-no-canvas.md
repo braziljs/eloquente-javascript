@@ -208,3 +208,66 @@ Esses dois últimos parâmetros tornam possível desenhar apenas uma parte do c�
 ```
 
 A imagem resultante contém uma linha na esquerda do círculo completo(primeira chamada de `ARC`) a esquerda do quarto de círculo(segunda chamada). Como outros métodos de desenho de `path` uma linha traçada com arco é ligado ao segmento do `path` anterior por padrão. Se você quiser evitar isso teria que chamar `moveTo` ou iniciar um novo `path`.
+
+#### Desenho de um gráfico de pizza
+
+Imagine que você acabou de conseguir um emprego na EconomiCorp Inc. e sua primeira missão é desenhar um gráfico de pizza dos resultados da pesquisa de satisfação do cliente.
+
+A variável dos resultados contém uma matriz de objetos que representam as respostas da pesquisa.
+
+```js
+var results = [
+  {name: "Satisfied", count: 1043, color: "lightblue"},
+  {name: "Neutral", count: 563, color: "lightgreen"},
+  {name: "Unsatisfied", count: 510, color: "pink"},
+  {name: "No comment", count: 175, color: "silver"}
+];
+```
+
+Para desenhar um gráfico de pizza, traçamos um número de fatias, cada um é composto por um arco e um par de linhas para o centro desse arco. Podemos calcular o ângulo ocupado por cada arco dividindo um círculo completo(2π) pelo número total de respostas, em seguida multiplicamos esse número(o ângulo por resposta) pelo número de pessoas que fizeram determinadas escolhas.
+
+```html
+<canvas width="200" height="200"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  var total = results.reduce(function(sum, choice) {
+    return sum + choice.count;
+  }, 0);
+  // Start at the top
+  var currentAngle = -0.5 * Math.PI;
+  results.forEach(function(result) {
+    var sliceAngle = (result.count / total) * 2 * Math.PI;
+    cx.beginPath();
+    // center=100,100, radius=100
+    // from current angle, clockwise by slice's angle
+    cx.arc(100, 100, 100,
+           currentAngle, currentAngle + sliceAngle);
+    currentAngle += sliceAngle;
+    cx.lineTo(100, 100);
+    cx.fillStyle = result.color;
+    cx.fill();
+  });
+</script>
+```
+
+Mas um gráfico que não nos diz o que significa não é útil. Nós precisamos de uma maneira para desenhar o texto na tela.
+
+#### Texto
+
+Um contexto de desenho canvas 2D fornece os métodos `fillText` e `strokeText`. Este último pode ser útil para delinear as letras mas geralmente `fillText` é o que você precisa. Ele vai encher o texto com a cor atual de `fillColor`.
+
+```html
+<canvas></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.font = "28px Georgia";
+  cx.fillStyle = "fuchsia";
+  cx.fillText("I can draw text, too!", 10, 50);
+</script>
+```
+
+Você pode especificar o tamanho, estilo e tipo da letra do texto com a propriedade `font`. Este exemplo apenas dá um tamanho de fonte e nome da família. Você pode adicionar o itálico ou negrito para o início de uma seqüência de caracteres.
+
+Os dois últimos argumentos para `fillText`(e `strokeText`) fornecem a posição em que a fonte é desenhado. Por padrão indica a posição do início da linha na base alfabética do texto, que é a linha que as letras ficam não tendo partes penduradas; em letras como `j` ou `p` você pode mudar a posição horizontal definindo a propriedade `textAlign` para `end` ou `center` e a posição vertical definindo `TextBaseline` para `top`, `middle` ou `bottom`.
+
+Vamos voltar ao nosso gráfico de pizza para corrigir o problema de rotular as fatias nos exercícios no final do capítulo.

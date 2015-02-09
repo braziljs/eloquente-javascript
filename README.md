@@ -49,13 +49,15 @@
 * **em tradução**: sinaliza que um arquivo está em tradução.
 * **aguardando revisão**: sinaliza que um arquivo já traduzido está esperando para ser revisado.
 * **em revisão**: sinaliza que um arquivo traduzido está sendo revisado.
+* **aguardando supervisão**: sinaliza que um arquivo que já foi traduzido e revisado está esperando uma última revisão antes de ser finalizado.
+* **em supervisão**: sinaliza que um arquivo já traduzido e revisado está recebendo uma última revisão antes de ser finalizado.
 * **dúvidas**: dúvidas, sugestões e outros.
 
 ### Fluxo do Trabalho - Issues
 
 O andamento das issues está divido em **3 etapas**, na ordem apresentada abaixo:
 
-**`em tradução` > `aguardando revisão` > `em revisão` > `fechamento da issue`**
+**`em tradução` > `aguardando revisão` > `em revisão` > `aguardando supervisão` > `em supervisão` > `fechamento da issue`**
 
 
 ## Informações Importantes

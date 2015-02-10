@@ -146,41 +146,35 @@ No capítulo 5, nós vamos discutir as coisas maravilhosas que podem ser feitas 
 
 ## Notação Por Declaração
 
-Existe uma forma ligeiramente mais curta para dizer "`var x = function...`". A palavra-chave `function` também pode ser usada no início da declaração, para produzir uma instrução de declaração da função.
+Existe uma maneira mais simples de expressar “`var square = function…`”. A palavra-chave `function` também pode ser usada no início da declaração, como demonstrado abaixo:
 
 ```js
-
-function square (x) {
-	return x * x;
+function square(x) {
+  return x * x;
 }
-
 ```
 
-Isso define a variável `square` e a aponta para a determinada função. Até ai tudo bem. Há uma sutileza com esta forma de definição de função:
+Isso é uma *declaração de função*. Ela define a variável `square` e faz com que ela referencie a função em questão. Até aí tudo bem, porém existe uma pequena diferença nessa maneira de definir uma função.
 
 ```js
-
-console.log("The future says: ", future());
+console.log("The future says:", future());
 
 function future() {
-	return "Nós CONTINUAMOS não tendo carros voadores."
+  return "We STILL have no flying cars.";
 }
-
 ```
 
-Estas definições não fazem parte do fluxo de controle de cima para baixo. Elas são conceitualmente movidas para o topo, e podem ser usadas por todo o código no mesmo escopo. Isso algumas vezes é útil, pois permite que você coloque o código interessante no topo, e continue usando as definições de funções abaixo.
+O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de função não fazem parte do fluxo normal de controle que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações porque nos permite ter liberdade na hora de ordenar o código de uma maneira que seja mais expressiva, sem se preocupar muito com o fato de ter que definir todas as funções antes de usá-las.
 
-O que acontece quando você coloca uma definição de função dentro de um bloco condicional `if`, ou um loop? Bom, não faça isso. Diferentes plataformas JavaScript (nos navegadores) tem tradicionalmente feito coisas diferentes nesta situação, e o último padrão realmente proíbe isto. Então, se você quiser que seus programas sejam consistentes, somente use essa forma de instruções por definição de função no bloco externo de uma função ou programa.
+O que acontece quando definimos uma declaração de função dentro de um bloco condicional (`if`), ou um laço de repetição? Bom, não faça isso. Diferentes plataformas JavaScript usadas em diferentes navegadores têm tradicionalmente feito coisas diferentes nessas situações, e a última versão basicamente proíbe essa prática. Se você deseja que suas aplicações se comportem de forma consistente, somente use essa forma de definição de função no bloco externo de uma outra função ou programa.
 
 ```js
-
-function example () {
-	function a () {} // Okay
-	if (something) {
-		function b () {} // Danger!
-	}
+function example() {
+  function a() {} // Okay
+  if (something) {
+    function b() {} // Danger!
+  }
 }
-
 ```
 
 ## A Pilha de Chamadas

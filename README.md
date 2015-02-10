@@ -19,13 +19,13 @@ $ gem install jekyll
 3 - Agora clone o projeto.
 
 ```sh
-$ git clone git@github.com:randsonjs/eloquent-javascript.git
+$ git clone git@github.com:braziljs/eloquente-javascript.git
 ```
 
 4 - Navegue até a pasta do projeto
 
 ```sh
-$ cd eloquent-javascript
+$ cd eloquente-javascript
 ```
 
 5 - E finalmente rode:
@@ -75,19 +75,19 @@ _Mais informações sobre a estrutura de arquivos do jekyll veja [aqui](https://
 
 ### Seja um tradutor
 
-Primeiro verifique quem está **traduzindo** o que. [Para isso confira essa página](https://github.com/ericdouglas/eloquente-javascript/issues).
+Primeiro verifique quem está **traduzindo** o que. [Para isso confira essa página](https://github.com/braziljs/eloquente-javascript/issues).
 
 Depois é só escolher um capitulo que não está sendo traduzido mandar bala!
 
 ### Seja um revisor
 
-Primeiro verifique quem está **revisando** o que. [Para isso confira essa página](https://github.com/ericdouglas/eloquente-javascript/issues).
+Primeiro verifique quem está **revisando** o que. [Para isso confira essa página](https://github.com/braziljs/eloquente-javascript/issues).
 
 Depois é só escolher um capitulo que não está sendo revisado mandar bala!
 
 ### Reporte um erro
 
-Caso encontre algum erro de tradução, por favor nos avise através das [issues](https://github.com/randsonjs/eloquent-javascript/issues).
+Caso encontre algum erro de tradução, por favor nos avise através das [issues](https://github.com/brazil/eloquente-javascript/issues).
 
 ### Contribuindo com código-fonte
 
@@ -98,4 +98,4 @@ Caso encontre algum erro de tradução, por favor nos avise através das [issues
 5. Realize um pull request :D
 
 ## Licença
-[Licença MIT](./LICENSE) © Randson Oliveira
+[Licença MIT](./LICENSE) © BrazilJS Foundation

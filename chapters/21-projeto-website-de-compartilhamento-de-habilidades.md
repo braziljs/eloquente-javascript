@@ -38,3 +38,79 @@ Para evitar que as conexões excedam o tempo limite(sendo anulado por causa de u
 
 Um servidor que esta ocupado usando `long polling` pode ter milhares de pedidos em espera com conexões TCP em aberto. Node torna fácil de gerenciar muitas conexões sem criar uma thread separada de controle para cada uma, sendo assim uma boa opção para esse sistema.
 
+#### Interface HTTP
+
+Antes de começarmos a comunicar servidor e cliente, vamos pensar sobre o ponto em que se tocam: a interface HTTP sobre as quais eles se comunicam.
+
+Vamos basear nossa interface em JSON e como vimos no servidor de arquivos a partir do capítulo 20; vamos tentar fazer um bom uso de métodos HTTP. A interface é centrado em torno do path `/talks`. `Paths` que não começam com `/talks` serão usado para servir arquivos estáticos como: código HTML, JavaScript, que implementam o sistema do lado do cliente.
+
+A solicitação do tipo GET para `/talks` devolve um documento JSON como este:
+
+```json
+{"serverTime": 1405438911833,
+ "talks": [{"title": "Unituning",
+            "presenter": "Carlos",
+            "summary": "Modifying your cycle for extra style",
+            "comment": []}]}
+```
+
+O campo `serverTime` vai ser usado para fazer sondagem de `long polling`. Voltarei a isso mais tarde.
+
+Para criar um novo talk é preciso uma solicitação do tipo PUT para a URL `/talks/unituning/`, onde após a segunda barra é o título da palestra. O corpo da solicitação PUT deve conter um objeto JSON que tem o apresentador e o sumário como propriedade do corpo da solicitação.
+
+O títulos da palestra pode conter espaços e outros caracteres que podem não aparecerem normalmente em um URL, a `string` do título deve ser codificado com a função `encodeURIComponent` ao construir a URL.
+
+```js
+console.log("/talks/" + encodeURIComponent("How to Idle"));
+// → /talks/How%20to%20Idle
+```
+
+O pedido de criação de uma palestra é parecido com isto:
+
+```js
+PUT /talks/How%20to%20Idle HTTP/1.1
+Content-Type: application/json
+Content-Length: 92
+
+{"presenter": "Dana",
+ "summary": "Standing still on a unicycle"}
+```
+
+Essas URLs também suportam requisições GET para recuperar a representação do JSON de uma palestra ou DELETE para solicitações de exclusão de uma palestra.
+
+Adicionando um comentário a uma conversa é feito com uma solicitação POST para uma URL `/talks/Unituning/comments` com um objeto JSON que tem o autor e a mensagem como propriedades do corpo da solicitação.
+
+```js
+POST /talks/Unituning/comments HTTP/1.1
+Content-Type: application/json
+Content-Length: 72
+
+{"author": "Alice",
+ "message": "Will you talk about raising a cycle?"}
+```
+
+Para apoio ao `long polling`, pedidos GET para `/talks` podem incluir um parâmetro de consulta chamado `changesSince`, ele sera usado para indicar que o cliente está interessado em atualizações que aconteceram desde de um determinado tempo. Quando existem tais mudanças eles são imediatamente devolvidos. Quando não há a resposta é adiada até que algo aconteça ou até que um determinado período de tempo(vamos usar 90 segundos) for decorrido.
+
+O tempo deve ser indicado em números em milissegundos decorridos desde do início de 1970, o mesmo tipo de número que é retornado por `Date.now()`. Para garantir que ele recebe todas as atualizações e não recebe a mesma atualização mais de uma vez o cliente deve passar o tempo da última informação recebida do servidor. O relógio do servidor pode não ser exatamente sincronizado com o relógio do cliente e mesmo se fosse seria impossível para o cliente saber a hora exata em que o servidor enviou uma resposta porque a transferência de dados através de rede leva um tempo.
+
+Esta é a razão da existência da propriedade `serverTime` em respostas enviadas a pedidos GET para `/talks`. Essa propriedade diz ao cliente o tempo preciso do servidor em que os dados recebidos foram criados. O cliente pode então simplesmente armazenar esse tempo e passá-los no seu próximo pedido de `polling` para certificar de que ele recebe exatamente as atualizações que não tenha visto antes.
+
+```js
+GET /talks?changesSince=1405438911833 HTTP/1.1
+
+(time passes)
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 95
+
+{"serverTime": 1405438913401,
+ "talks": [{"title": "Unituning",
+            "deleted": true}]}
+```
+
+Quando a palestra for alterada, criada recentemente ou tem um comentário adicional; a representação completa da palestra estara incluída na próxima resposta de solicitação na busca do cliente. Quando a conversa é excluída somente o seu título e a propriedade excluído estão incluídos. O cliente pode então adicionar as negociações com títulos que não tenha visto antes de sua exibição, atualização fala que já estava mostrando, e remover aquelas que foram excluídas.
+
+O protocolo descrito neste capítulo não ira fazer qualquer controle de acesso. Todos podem comentar, modificar fala, e até mesmo excluí-los. Uma vez que a Internet está cheia de arruaceiros colocando um tal sistema on-line sem proteção adicional é provável que acabe em um desastre.
+
+Uma solução simples seria colocar o sistema de proxy reverso por trás, o que é um servidor HTTP que aceita conexões de fora do sistema e os encaminha para servidores HTTP que estão sendo executados localmente. O proxy pode ser configurado para exigir um nome de usuário e senha, você pode ter certeza de que somente os participantes do grupo de compartilhamento de habilidade teram essa senha.

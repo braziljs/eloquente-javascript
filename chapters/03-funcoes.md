@@ -179,22 +179,21 @@ function example() {
 
 ## A Pilha de Chamadas
 
-Acredito que vai ser útil dar uma olhada mais de perto na maneira como o controle flui através das funções. Aqui temos um simples programa fazendo algumas chamadas de funções:
+Será muito útil observamos como o fluxo de controle flui através das execuções das funções. Aqui temos um simples programa fazendo algumas chamadas de funções:
 
 ```js
-
-function greet (who) {
-	console.log("Hello" + who);
+function greet(who) {
+  console.log("Hello " + who);
 }
 greet("Harry");
 console.log("Bye");
-
 ```
 
-Uma *corrida* neste programa vai ser mais ou menos assim: A chamada a `greet` faz com que o controle pule para o início desta função (linha 2), que chama `console.log` (uma função embutida do navegador), permitindo que ele assuma o controle. Isso eventualmente termina, e o controle retorna para a linha 2. Nós chegamos no fim da função `greet`, então retornamos de volta ao lugar em que a chamamos, na linha 4. A linha após a chamada de `console.log()` novamente. Nós podemos mostrar o fluxo de controle esquematicamente assim:
+A execução desse programa funciona da seguinte forma: a chamada à função `greet` faz com que o controle pule para o início dessa função (linha 2). Em seguida, é invocado `console.log` (uma função embutida no navegador), que assume o controle, faz seu trabalho e então retorna o controle para a linha 2 novamente. O controle chega ao fim da função `greet` e retorna para o local onde a função foi invocada originalmente (linha 4). Por fim, o controle executa uma nova chamada a `console.log`.
+
+Podemos representar o fluxo de controle esquematicamente assim:
 
 ```
-
 top
    greet
         console.log
@@ -202,25 +201,23 @@ top
 top
    console.log
 top
-
 ```
 
-Tendo função, quando retorna, voltar ao local da chamada, o computador deve lembrar-se do contexto que a função foi chamada. Em um caso, `console.log` pulou para a função `greet`. Em outro caso, ele pularia para o fim do programa.
+Devido ao fato de que a função deve retornar ao local onde foi chamada após finalizar a sua execução, o computador precisa se lembrar do contexto no qual a função foi invocada originalmente. Em um dos casos, `console.log` retorna o controle para a função `greet`. No outro caso, ela retorna para o final do programa.
 
-O lugar onde este contexto é armazenado é o *call stack* (pilha de chamada). Toda vez que uma função é chamada, o contexto atual é colocado no topo desta "pilha" de contextos. Quando a função retorna, ela pega o topo do contexto desta pilha, e o usa para continuar a execução.
+O local onde o computador armazena esse contexto é chamado de *call stack* (pilha de chamadas). Toda vez que uma função é invocada, o contexto atual é colocado no topo dessa “pilha” de contextos. Quando a função finaliza sua execução, o contexto no topo da pilha é removido e utilizado para continuar o fluxo de execução.
 
-Essa pilha requer espaço da memória para ser armazenada. Quando ela aumenta demais, o computador vai enviar uma mensagem como "out of stack space" (fora do espaço da pilha) ou "too much recursion" (muitas recursões). O código seguinte ilustra isso - ele pergunta ao computador uma questão realmente difícil, que causa um infinito vai e vem entre duas funções. Ou melhor, isso vai ser infinito, se nós temos uma pilha infinita. Como é finita, ela vai ficar sem espaço e "explodir a pilha".
+Armazenar essa pilha de contextos necessita de espaço na memória do computador. Quando a pilha começa a ficar muito grande, o computador irá reclamar com uma mensagem do tipo “out of stack space” (sem espaço na pilha) ou “too much recursion” (muitas recursões). O código a seguir demonstra esse problema fazendo uma pergunta muito difícil para o computador, que resultará em um ciclo infinito de chamadas entre duas funções. Se o computador tivesse uma pilha de tamanho “infinito”, isso *poderia* ser possível, no entanto, iremos eventualmente chegar ao limite de espaço e “explodir a pilha”.
 
 ```js
-
-function chicken () {
-	return egg();
+function chicken() {
+  return egg();
 }
-function egg () {
-	return chicken();
+function egg() {
+  return chicken();
 }
 console.log(chicken() + " came first.");
-
+// → ??
 ```
 
 ## Argumentos Opcionais

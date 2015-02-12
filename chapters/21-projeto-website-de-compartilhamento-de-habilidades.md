@@ -114,3 +114,51 @@ Quando a palestra for alterada, criada recentemente ou tem um comentário adicio
 O protocolo descrito neste capítulo não ira fazer qualquer controle de acesso. Todos podem comentar, modificar fala, e até mesmo excluí-los. Uma vez que a Internet está cheia de arruaceiros colocando um tal sistema on-line sem proteção adicional é provável que acabe em um desastre.
 
 Uma solução simples seria colocar o sistema de proxy reverso por trás, o que é um servidor HTTP que aceita conexões de fora do sistema e os encaminha para servidores HTTP que estão sendo executados localmente. O proxy pode ser configurado para exigir um nome de usuário e senha, você pode ter certeza de que somente os participantes do grupo de compartilhamento de habilidade teram essa senha.
+
+#### O serviço
+
+
+Vamos começar a escrever código do lado do servidor. O código desta seção é executado em Node.js.
+
+#### Roteamento
+
+O nosso servidor irá utilizar `http.createServer` para iniciar um servidor de HTTP. Na função que lida com um novo pedido, iremos distinguir entre os vários tipos de solicitações(conforme determinado pelo método e o `path`) que suportamos. Isso pode ser feito com uma longa cadeia de `if` mas há uma maneira mais agradável.
+
+As rotas é um componente que ajuda a enviar uma solicitação através de uma função. Você pode dizer para as rotas que os pedidos combine com um caminho usando expressão regular `/^\/talks\/([^\/]+)$/`(que corresponde a `/talks/` seguido pelo título) para ser tratado por uma determinada função. Isso pode ajudar a extrair as partes significativas de um `path`, neste caso o título da palestra, que estara envolto entre os parênteses na expressão regular, após disto é passado para o manipulador de função.
+
+Há uma série de bons pacotes de roteamento na NPM mas vamos escrever um nós mesmos para ilustrar o princípio.
+
+Este é router.js que exigirá mais tarde do nosso módulo de servidor:
+
+```js
+var Router = module.exports = function() {
+  this.routes = [];
+};
+
+Router.prototype.add = function(method, url, handler) {
+  this.routes.push({method: method,
+                    url: url,
+                    handler: handler});
+};
+
+Router.prototype.resolve = function(request, response) {
+  var path = require("url").parse(request.url).pathname;
+
+  return this.routes.some(function(route) {
+    var match = route.url.exec(path);
+    if (!match || route.method != request.method)
+      return false;
+
+    var urlParts = match.slice(1).map(decodeURIComponent);
+    route.handler.apply(null, [request, response]
+                                .concat(urlParts));
+    return true;
+  });
+};
+```
+
+O módulo exporta o construtor de `Router`. Um objeto de `Router` permite que novos manipuladores sejam registados com o método `add` e resolver os pedidos com o método `resolve`.
+
+Este último irá retornar um `booleano` que indica se um manipulador foi encontrado. Há um método no conjunto de rotas que tenta as rotas um de cada vez(na ordem em que elas foram definidos) e retorna a verdadeira quando alguma for correspondida.
+
+As funções de manipulação são chamadas com os objetos de solicitação e resposta. Quando a expressão regular que corresponde a URL contém algum grupo, as `string` que correspondem são passadas para o manipulador como argumentos extras. Essas seqüências tem que ser URL decodificada tendo a URL codificada assim `%20-style code`.

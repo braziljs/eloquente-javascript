@@ -198,3 +198,107 @@ function respondJSON(response, status, data) {
           "application/json");
 }
 ```
+
+#### Recursos de palestras
+
+O servidor mantém as conversações que têm sido propostas em um objeto chamado `talks`, cujos nomes são propriedades de títulos de um `talk`. Estes serão expostos como recursos HTTP sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementara vários métodos que podem serem utilizados pelo os clientes.
+
+O manipulador de solicitações serve uma única resposta, quer seja alguns dados do tipo `JSON` da conversa, uma resposta de 404 ou um erro.
+
+```js
+var talks = Object.create(null);
+
+router.add("GET", /^\/talks\/([^\/]+)$/,
+           function(request, response, title) {
+  if (title in talks)
+    respondJSON(response, 200, talks[title]);
+  else
+    respond(response, 404, "No talk '" + title + "' found");
+});
+```
+
+A exclusão de um `talk` é feito para remove-lo do objeto conversações.
+
+```js
+router.add("DELETE", /^\/talks\/([^\/]+)$/,
+           function(request, response, title) {
+  if (title in talks) {
+    delete talks[title];
+    registerChange(title);
+  }
+  respond(response, 204, null);
+});
+```
+
+A função `registerChange` que iremos definir; notifica alterações enviando uma solicitação de log polling ou simplemente espera.
+
+Para ser capaz de obter facilmente o conteúdo do `body` de uma solicitação de  `JSON` codificado teremos que definir uma função chamada `readStreamAsJSON` que lê todo o conteúdo de um `stream`, analisa o `JSON` e em seguida chama uma função de retorno.
+
+```js
+function readStreamAsJSON(stream, callback) {
+  var data = "";
+  stream.on("data", function(chunk) {
+    data += chunk;
+  });
+  stream.on("end", function() {
+    var result, error;
+    try { result = JSON.parse(data); }
+    catch (e) { error = e; }
+    callback(error, result);
+  });
+  stream.on("error", function(error) {
+    callback(error);
+  });
+}
+```
+
+Um manipulador que precisa ler respostas JSON é o manipulador PUT que é usado para criar novas palestras. Nesta `request` devemos verificar se os dados enviados tem um apresentador e propriedades de sumárias, ambos so tipo strings. Quaisquer dados que vêm de fora do sistema pode conter erros e nós não queremos corromper o nosso modelo de dados interno ou mesmo travar quando os pedidos ruins entrarem.
+
+Se os dados se parece válido o manipulador armazena um objeto que representa uma nova palestra no objeto, possivelmente substituindo uma conversa existente com este título e mais uma vez chama `registerChange`.
+
+```js
+router.add("PUT", /^\/talks\/([^\/]+)$/,
+           function(request, response, title) {
+  readStreamAsJSON(request, function(error, talk) {
+    if (error) {
+      respond(response, 400, error.toString());
+    } else if (!talk ||
+               typeof talk.presenter != "string" ||
+               typeof talk.summary != "string") {
+      respond(response, 400, "Bad talk data");
+    } else {
+      talks[title] = {title: title,
+                      presenter: talk.presenter,
+                      summary: talk.summary,
+                      comments: []};
+      registerChange(title);
+      respond(response, 204, null);
+    }
+  });
+});
+```
+
+Para adicionar um comentário a uma conversa, funciona de forma semelhante. Usamos `readStreamAsJSON` para obter o conteúdo do pedido, validar os dados resultantes e armazená-los como um comentário quando for válido.
+
+```js
+router.add("POST", /^\/talks\/([^\/]+)\/comments$/,
+           function(request, response, title) {
+  readStreamAsJSON(request, function(error, comment) {
+    if (error) {
+      respond(response, 400, error.toString());
+    } else if (!comment ||
+               typeof comment.author != "string" ||
+               typeof comment.message != "string") {
+      respond(response, 400, "Bad comment data");
+    } else if (title in talks) {
+      talks[title].comments.push(comment);
+      registerChange(title);
+      respond(response, 204, null);
+    } else {
+      respond(response, 404, "No talk '" + title + "' found");
+    }
+  });
+});
+```
+
+Ao tentar adicionar um comentário a uma palestra inexistente é claro que devemos retornar um erro 404.

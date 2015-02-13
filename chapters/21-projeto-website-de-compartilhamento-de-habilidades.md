@@ -162,3 +162,39 @@ O módulo exporta o construtor de `Router`. Um objeto de `Router` permite que no
 Este último irá retornar um `booleano` que indica se um manipulador foi encontrado. Há um método no conjunto de rotas que tenta as rotas um de cada vez(na ordem em que elas foram definidos) e retorna a verdadeira quando alguma for correspondida.
 
 As funções de manipulação são chamadas com os objetos de solicitação e resposta. Quando a expressão regular que corresponde a URL contém algum grupo, as `string` que correspondem são passadas para o manipulador como argumentos extras. Essas seqüências tem que ser URL decodificada tendo a URL codificada assim `%20-style code`.
+
+#### Servindo arquivos
+
+Quando um pedido não corresponde a nenhum dos tipos de solicitação que esta definidos em nosso `router` o servidor deve interpretá-lo como sendo um pedido de um arquivo que esta no diretório público. Seria possível usar o servidor de arquivos feito no Capítulo 20 para servir esses arquivos; nenhuma destas solicitações sera do tipo `PUT` e `DELETE`, nós gostaríamos de ter recursos avançados como suporte para armazenamento em cache. Então vamos usar um servidor de arquivo estático a partir de uma NPM.
+
+Optei por `ecstatic`. Este não é o único tipo de servidor NPM, mas funciona bem e se encaixa para nossos propósitos. O módulo de `ecstatic` exporta uma função que pode ser chamado com um objeto de configuração para produzir uma função de manipulação de solicitação. Nós usamos a opção `root` para informar ao servidor onde ele devera procurar pelos arquivos. A função do manipulador aceita solicitação e resposta através de parâmetros e pode ser passado diretamente para `createServer` onde é criado um servidor que serve apenas arquivos. Primeiro verificamos se a solicitações não ha nada de especial, por isso envolvemos em uma outra função.
+
+```js
+var http = require("http");
+var Router = require("./router");
+var ecstatic = require("ecstatic");
+
+var fileServer = ecstatic({root: "./public"});
+var router = new Router();
+
+http.createServer(function(request, response) {
+  if (!router.resolve(request, response))
+    fileServer(request, response);
+}).listen(8000);
+```
+
+`response` e `respondJSON` serão funções auxiliaras utilizadas em todo o código do server para ser capaz de enviar as respostas com uma única chamada de função.
+
+```js
+function respond(response, status, data, type) {
+  response.writeHead(status, {
+    "Content-Type": type || "text/plain"
+  });
+  response.end(data);
+}
+
+function respondJSON(response, status, data) {
+  respond(response, status, JSON.stringify(data),
+          "application/json");
+}
+```

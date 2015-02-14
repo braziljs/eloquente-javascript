@@ -302,3 +302,111 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/,
 ```
 
 Ao tentar adicionar um comentário a uma palestra inexistente é claro que devemos retornar um erro 404.
+
+#### Apoio a long polling
+
+O aspecto mais interessante do servidor é a parte que trata de `long polling`. Quando uma requisição GET chega para `/talks` pode ser um simples pedido de todas as conversações ou um pedido de atualização com um parâmetro `changesSince`.
+
+Haverá várias situações em que teremos que enviar uma lista de conversa para o cliente de modo que primeiro devemos definir uma pequena função auxiliar que atribuira um campo `servertime` para tais respostas.
+
+```js
+function sendTalks(talks, response) {
+  respondJSON(response, 200, {
+    serverTime: Date.now(),
+    talks: talks
+  });
+}
+```
+
+O manipulador precisa olhar para os parâmetros de consulta da URL do pedido para ver se um parâmetro `changesSince` foi dado. Se você entregar a `url` para o módulo da função `parse` teremos um segundo argumento que sera `true`; também teremos que analisar parte por parte de uma URL. Se o objeto que ele retornou tem uma propriedade `query` matemos o outro objeto que mapeia os parâmetros de nomes para os valores.
+
+```js
+router.add("GET", /^\/talks$/, function(request, response) {
+  var query = require("url").parse(request.url, true).query;
+  if (query.changesSince == null) {
+    var list = [];
+    for (var title in talks)
+      list.push(talks[title]);
+    sendTalks(list, response);
+  } else {
+    var since = Number(query.changesSince);
+    if (isNaN(since)) {
+      respond(response, 400, "Invalid parameter");
+    } else {
+      var changed = getChangedTalks(since);
+      if (changed.length > 0)
+         sendTalks(changed, response);
+      else
+        waitForChanges(since, response);
+    }
+  }
+});
+```
+
+Quando o parâmetro `changesSince` não é enviado, o manipulador simplesmente acumula uma lista de todas as conversações e retorna.
+
+Caso contrário o parâmetro `changeSince` tem que ser verificado primeiro para certificar de que é um número válido. A função `getChangedTalks` a ser definido em breve retorna uma matriz de conversas que mudaram desde um determinado tempo. Se retornar um `array` vazio significa que o servidor ainda não tem nada para armazenar no objeto de resposta e enviar de volta para o cliente(usando `waitForChanges`), o que pode também ser respondida em um momento posterior.
+
+```js
+var waiting = [];
+
+function waitForChanges(since, response) {
+  var waiter = {since: since, response: response};
+  waiting.push(waiter);
+  setTimeout(function() {
+    var found = waiting.indexOf(waiter);
+    if (found > -1) {
+      waiting.splice(found, 1);
+      sendTalks([], response);
+    }
+  }, 90 * 1000);
+}
+```
+
+O método `splice` é utilizado para cortar um pedaço de uma matriz. Você dá um índice e uma série de elementos para transforma a matriz removendo o restante do elementos após o índice dado. Neste caso nós removemos um único elemento o objeto que controla a resposta de espera cujo índice encontramos chamando `indexOf`. Se você passar argumentos adicionais para `splice` seus valores serão inseridas na matriz na posição determinada substituindo os elementos removidos.
+
+Quando um objeto de resposta é armazenado na matriz de espera o tempo de espera é ajustado imediatamente. Passados 90 segundos o tempo limite vê se o pedido está ainda à espera e se for, envia uma resposta vazia e remove a espera a partir da matriz.
+
+Para ser capaz de encontrar exatamente essas conversações que foram alterados desde um determinado ponto no tempo precisamos acompanhar o histórico de alterações. Registrando uma mudança com `registerChange` podemos escutar as mudança juntamente com o tempo atual em um `array` chamado de `waiting`. Quando ocorre uma alteração isso significa que há novos dados, então todos os pedidos em espera podem serem respondidos imediatamente.
+
+```js
+var changes = [];
+
+function registerChange(title) {
+  changes.push({title: title, time: Date.now()});
+  waiting.forEach(function(waiter) {
+    sendTalks(getChangedTalks(waiter.since), waiter.response);
+  });
+  waiting = [];
+}
+```
+
+Finalmente `getChangedTalks` podera usar a matriz de mudanças para construir uma série de palestras alteradas,incluindo no objetos uma propriedade de `deleted` para as palestras que não existem mais. Ao construir essa matriz `getChangedTalks` tem de garantir que ele não incluiu a mesma conversa duas vezes; isso pode acontecer se houver várias alterações em uma palestra desde o tempo dado.
+
+```js
+function getChangedTalks(since) {
+  var found = [];
+  function alreadySeen(title) {
+    return found.some(function(f) {return f.title == title;});
+  }
+  for (var i = changes.length - 1; i >= 0; i--) {
+    var change = changes[i];
+    if (change.time <= since)
+      break;
+    else if (alreadySeen(`change.title))
+      continue;
+    else if (change.title in talks)
+      found.push(talks[change.title]);
+    else
+      found.push({title: change.title, deleted: true});
+  }
+  return found;
+}
+```
+
+Aqui concluimos o código do servidor. Executando o programa definido até agora você vai ver um servidor rodando na porta `8000` que serve arquivos do subdiretório `public` ao lado de uma interface de gerenciamento de palestras sob a URL `/talks`.
+
+#### O cliente
+
+A parte do cliente é onde vamos gerenciar as palestras, basicamente isso consiste em três arquivos: uma página HTML, uma folha de estilo e um arquivo JavaScript.
+

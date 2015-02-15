@@ -18,7 +18,7 @@ O servidor mantém uma lista de conversas propostas para a próxima reunião e o
 
 ![](http://eloquentjavascript.net/img/skillsharing.png)
 
-O aplicativo será configurada para mostrar uma exibição em tempo real das atuais conversações propostas e seus comentários. Sempre que alguém apresentar uma nova conversa ou adiciona um comentário, todas as pessoas que têm a página aberta no navegador deve ver a mudança imediatamente. Isto coloca um pouco de um desafio, pois não há caminho para um servidor web abrir uma conexão com um cliente nem há uma boa maneira de saber o que os clientes está olhando atualmente no site.
+O aplicativo será configurada para mostrar uma exibição em tempo real das atuais conversações propostas e seus comentários. Sempre que alguém apresentar uma nova conversa ou adiciona um comentário, todas as pessoas que têm a página aberta no navegador deve ver a mudança imediatamente. Isto coloca um pouco de um desafio, pois não há `path` para um servidor web abrir uma conexão com um cliente nem há uma boa maneira de saber o que os clientes está olhando atualmente no site.
 
 Uma solução comum para este problema é chamado de `long polling`, que passa a ser uma das motivações para o projeto ser em Node.
 
@@ -124,7 +124,7 @@ Vamos começar a escrever código do lado do servidor. O código desta seção �
 
 O nosso servidor irá utilizar `http.createServer` para iniciar um servidor de HTTP. Na função que lida com um novo pedido, iremos distinguir entre os vários tipos de solicitações(conforme determinado pelo método e o `path`) que suportamos. Isso pode ser feito com uma longa cadeia de `if` mas há uma maneira mais agradável.
 
-As rotas é um componente que ajuda a enviar uma solicitação através de uma função. Você pode dizer para as rotas que os pedidos combine com um caminho usando expressão regular `/^\/talks\/([^\/]+)$/`(que corresponde a `/talks/` seguido pelo título) para ser tratado por uma determinada função. Isso pode ajudar a extrair as partes significativas de um `path`, neste caso o título da palestra, que estara envolto entre os parênteses na expressão regular, após disto é passado para o manipulador de função.
+As rotas é um componente que ajuda a enviar uma solicitação através de uma função. Você pode dizer para as rotas que os pedidos combine com um `path` usando expressão regular `/^\/talks\/([^\/]+)$/`(que corresponde a `/talks/` seguido pelo título) para ser tratado por uma determinada função. Isso pode ajudar a extrair as partes significativas de um `path`, neste caso o título da palestra, que estara envolto entre os parênteses na expressão regular, após disto é passado para o manipulador de função.
 
 Há uma série de bons pacotes de roteamento na NPM mas vamos escrever um nós mesmos para ilustrar o princípio.
 
@@ -410,3 +410,70 @@ Aqui concluimos o código do servidor. Executando o programa definido até agora
 
 A parte do cliente é onde vamos gerenciar as palestras, basicamente isso consiste em três arquivos: uma página HTML, uma folha de estilo e um arquivo JavaScript.
 
+#### HTML
+
+Servir arquivos com o nome de `index.html` é uma convenção amplamente utilizado para servidores web quando uma solicitação é feita diretamente para um `path` que corresponde a um diretório. O módulo de um servidor de arquivos que usamos, `ecstatic`, suporta esta convenção. Quando um pedido é feito para o `path` `/` o servidor procura pelo arquivo em `./public/index.html`(`./public` é a raiz que especificamos) e retorna esse arquivo se for encontrado.
+
+Se quisermos uma página para mostrar quando um navegador está apontado para o nosso servidor, devemos coloca-la em `public/index.html`. Esta é a maneira que o nosso arquivo `index` começa:
+
+```html
+<!doctype html>
+
+<title>Skill Sharing</title>
+<link rel="stylesheet" href="skillsharing.css">
+
+<h1>Skill sharing</h1>
+
+<p>Your name: <input type="text" id="name"></p>
+
+<div id="talks"></div>
+```
+
+Ele define o título do documento e inclui uma folha de estilo que define alguns estilos, adicionei uma borda em torno de palestras. Em seguida ele adiciona um `input` de nome. É esperado que o usuário coloque seu nome para que ele possa ser redirecionado para observação das palestras.
+
+O elemento `<div>` com o `id` "talks" conterá a lista atual de todas as palestras. O script preenche a lista quando recebe as palestras do servidor.
+
+Segue o formulário que é usado para criar uma nova palestra:
+
+```html
+<form id="newtalk">
+  <h3>Submit a talk</h3>
+  Title: <input type="text" style="width: 40em" name="title">
+  <br>
+  Summary: <input type="text" style="width: 40em" name="summary">
+  <button type="submit">Send</button>
+</form>
+```
+
+Um script irá adicionar um manipulador de eventos de "enviar"  para este formulário, a partir do qual ele pode fazer a solicitação HTTP que informa ao servidor sobre a palestra.
+
+Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição definido como `none`, impedindo que ele apareça na página. Você consegue adivinhar para o que é?
+
+```html
+<div id="template" style="display: none">
+  <div class="talk">
+    <h2>{{title}}</h2>
+    <div>by <span class="name">{{presenter}}</span></div>
+    <p>{{summary}}</p>
+    <div class="comments"></div>
+    <form>
+      <input type="text" name="comment">
+      <button type="submit">Add comment</button>
+      <button type="button" class="del">Delete talk</button>
+    </form>
+  </div>
+  <div class="comment">
+    <span class="name">{{author}}</span>: {{message}}
+  </div>
+</div>
+```
+
+Criar estruturas de DOM complicadas com JavaScript produz código feio. Você pode tornar o código um pouco melhor através da introdução de funções auxiliares como a função `elt` do capítulo 13, mas o resultado ainda vai ficar pior do que no HTML, que pode ser pensado como uma linguagem de domínio específico para expressar estruturas DOM.
+
+Para criar uma estrutura DOM para as palestras, o nosso programa vai definir um sistema de modelos simples, que utiliza estruturas DOM escondidos incluídos no documento para instanciar novas estruturas DOM, substituindo os espaços reservados entre chaves duplas para os valores de uma conversa específica.
+
+Por fim, o documento HTML inclui um arquivo de `script` que contém o código do lado do cliente.
+
+```html
+<script src="skillsharing_client.js"></script>
+```

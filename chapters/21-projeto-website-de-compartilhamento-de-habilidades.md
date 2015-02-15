@@ -477,3 +477,54 @@ Por fim, o documento HTML inclui um arquivo de `script` que contém o código do
 ```html
 <script src="skillsharing_client.js"></script>
 ```
+
+#### O inicio
+
+A primeira coisa que o cliente tem que fazer quando a página é carregada é pedir ao servidor um conjunto atual de palestras. Uma vez que estamos indo fazer um monte de solicitações `HTTP`, vamos novamente definir um pequeno invólucro em torno `XMLHttpRequest`, que aceita um objeto para configurar o pedido, bem como um callback para chamar quando o pedido for concluído.
+
+```js
+function request(options, callback) {
+  var req = new XMLHttpRequest();
+  req.open(options.method || "GET", options.pathname, true);
+  req.addEventListener("load", function() {
+    if (req.status < 400)
+      callback(null, req.responseText);
+    else
+      callback(new Error("Request failed: " + req.statusText));
+  });
+  req.addEventListener("error", function() {
+    callback(new Error("Network error"));
+  });
+  req.send(options.body || null);
+}
+```
+
+O pedido inicial mostra as palestras que recebe na tela e inicia o processo de `long polling` chamando `waitForChanges`.
+
+```js
+var lastServerTime = 0;
+
+request({pathname: "talks"}, function(error, response) {
+  if (error) {
+    reportError(error);
+  } else {
+    response = JSON.parse(response);
+    displayTalks(response.talks);
+    lastServerTime = response.serverTime;
+    waitForChanges();
+  }
+});
+```
+
+A variável `lastServerTime` é usado para controlar o tempo da última atualização que foi recebido do servidor. Após o pedido inicial as palestras exibidas pelo cliente corresponde ao tempo em que a resposta das palestras foi devolvida pelo servidor. Assim a propriedade `serverTime` incluído na resposta, fornece um valor inicial apropriado para `lastServerTime`.
+
+Quando a solicitação falhar nós não queremos ter que a nossa página não faça nada sem explicação. Assim definimos uma função simples chamada de `reportError` que pelo menos irá mostra ao usuário uma caixa de diálogo que lhes diz que algo deu errado.
+
+```js
+function reportError(error) {
+  if (error)
+    alert(error.toString());
+}
+```
+
+A função verifica se existe um erro real, ele irá alerta somente quando houver um. Dessa forma podemos também passar diretamente esta função para solicitar pedidos onde podemos ignorar a resposta. Isso garante que, se a solicitação falhar, o erro é relatado para o usuário.

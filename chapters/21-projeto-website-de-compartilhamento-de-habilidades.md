@@ -4,7 +4,7 @@ Uma reunião de compartilhamento de habilidades é um evento onde as pessoas com
 
 Tais meetups muitas vezes também chamados grupos de usuários quando eles estão falando sobre computadores. Isso é uma ótima maneira de aprofundar o seu horizonte e aprender sobre novos desenvolvimentos ou simplesmente reunir pessoas com interesses semelhantes. Muitas cidades grandes têm um meetup JavaScript. Eles são tipicamente livre para assistir e eu visitei uma que é amigável e acolhedora.
 
-Neste último capítulo do projeto, o nosso objetivo é a criação de um site para gerenciar estas conversas dadas em um encontro de compartilhamento de habilidade. Imagine um pequeno grupo de pessoas que se encontra regularmente no escritório de um dos membros para falar sobre Monociclo. O problema é que quando um organizador de alguma reunião anterior se mudar para outra cidade, ninguém se apresentara para assumir esta tarefa. Queremos um sistema que permite que os participantes proponha e discuta as negociações entre si sem um organizador central.
+Neste último capítulo do projeto, o nosso objetivo é a criação de um site para gerenciar estas palestras dadas em um encontro de compartilhamento de habilidade. Imagine um pequeno grupo de pessoas que se encontra regularmente no escritório de um dos membros para falar sobre Monociclo. O problema é que quando um organizador de alguma reunião anterior se mudar para outra cidade, ninguém se apresentara para assumir esta tarefa. Queremos um sistema que permite que os participantes proponha e discuta as palestras entre si sem um organizador central.
 
 ![](http://i.imgur.com/2rIVEWv.png)
 
@@ -12,13 +12,13 @@ Assim como no capítulo anterior, o código neste capítulo é escrito em Node.j
 
 #### Projeto
 
-Há uma parte do servidor para este projeto escrito em Node.js e uma parte do cliente escrito para o browser. O servidor armazena os dados do sistema e fornece-o para o cliente. Ela também serve os arquivos HTML e JavaScript que implementam o sistema do lado do cliente.
+Há uma parte do servidor para este projeto escrito em Node.js e uma parte do cliente escrito para o browser. O servidor armazena os dados do sistema e fornece para o cliente. Ela também serve os arquivos HTML e JavaScript que implementam o sistema do lado do cliente.
 
-O servidor mantém uma lista de conversas propostas para a próxima reunião e o cliente mostra esta lista. Cada palestra tem um nome do apresentador, um título, um resumo e uma lista de comentários associados. O cliente permite que os usuários proponha novas conversações(adicionando-os à lista), exclua as negociações, e comente sobre as negociações existentes. Sempre que o usuário faz tal mudança o cliente faz uma solicitação HTTP para informar para o servidor o que fazer.
+O servidor mantém uma lista de palestras propostas para a próxima reunião e o cliente mostra esta lista. Cada palestra tem um nome do apresentador, um título, um resumo e uma lista de comentários dos participantes. O cliente permite que os usuários proponha novas palestras(adicionando a lista), exclua as palestras, e comente sobre as palestras existentes. Sempre que o usuário faz tal mudança o cliente faz uma solicitação HTTP para informar para o servidor o que fazer.
 
 ![](http://eloquentjavascript.net/img/skillsharing.png)
 
-O aplicativo será configurada para mostrar uma exibição em tempo real das atuais conversações propostas e seus comentários. Sempre que alguém apresentar uma nova conversa ou adiciona um comentário, todas as pessoas que têm a página aberta no navegador deve ver a mudança imediatamente. Isto coloca um pouco de um desafio, pois não há `path` para um servidor web abrir uma conexão com um cliente nem há uma boa maneira de saber o que os clientes está olhando atualmente no site.
+O aplicativo será configurada para mostrar uma exibição em tempo real das atuais palestras propostas e seus comentários. Sempre que alguém apresentar uma nova palestra ou adiciona um comentário, todas as pessoas que têm a página aberta no navegador deve ver a mudança imediatamente. Isto coloca um pouco de um desafio, pois não há `path` para um servidor web abrir uma conexão com um cliente nem há uma boa maneira de saber o que os clientes está olhando atualmente no site.
 
 Uma solução comum para este problema é chamado de `long polling`, que passa a ser uma das motivações para o projeto ser em Node.
 
@@ -32,7 +32,7 @@ Uma solicitação HTTP permite apenas um fluxo simples de informações, onde o 
 
 Neste capítulo vamos utilizar uma técnica relativamente simples, `long polling`, onde os clientes continuamente pediram ao servidor para obter novas informações usando solicitações HTTP e o servidor simplesmente barrara sua resposta quando ele não tem nada de novo para relatar.
 
-Enquanto o cliente torna-se constantemente um `long polling` aberto, ele ira receber informações do servidor imediatamente. Por exemplo, se Alice tem o nosso aplicativo de compartilhamento de habilidade aberta em seu navegador, o navegador terá feito um pedido de atualizações e estara a espera de uma resposta a esse pedido. Quando Bob submeter uma palestra sobre a `extrema Downhill Monociclo` o servidor vai notificar que Alice está esperando por atualizações e enviar essas informações sobre a nova conversa como uma resposta ao seu pedido pendente. Navegador de Alice receberá os dados e atualizara a tela para mostrar a conversa.
+Enquanto o cliente torna-se constantemente um `long polling` aberto, ele ira receber informações do servidor imediatamente. Por exemplo, se Alice tem o nosso aplicativo de compartilhamento de habilidade aberta em seu navegador, o navegador terá feito um pedido de atualizações e estara a espera de uma resposta a esse pedido. Quando Bob submeter uma palestra sobre a `extrema Downhill Monociclo` o servidor vai notificar que Alice está esperando por atualizações e enviar essas informações sobre a nova palestra como uma resposta ao seu pedido pendente. Navegador de Alice receberá os dados e atualizara a tela para mostrar a palestra.
 
 Para evitar que as conexões excedam o tempo limite(sendo anulado por causa de uma falta de atividade), podemos definir uma técnica que normalmente define um tempo máximo para cada pedido do `long polling`; após esse tempo o servidor irá responder de qualquer maneira, mesmo que ele não tem nada a relatar, e o cliente inicia um novo pedido. Reiniciar o pedido periodicamente torna a técnica mais robusta a qual permite aos clientes se recuperarem de falhas de conexão temporárias ou de problemas no servidor.
 
@@ -78,7 +78,7 @@ Content-Length: 92
 
 Essas URLs também suportam requisições GET para recuperar a representação do JSON de uma palestra ou DELETE para solicitações de exclusão de uma palestra.
 
-Adicionando um comentário a uma conversa é feito com uma solicitação POST para uma URL `/talks/Unituning/comments` com um objeto JSON que tem o autor e a mensagem como propriedades do corpo da solicitação.
+Adicionando um comentário a uma palestra é feito com uma solicitação POST para uma URL `/talks/Unituning/comments` com um objeto JSON que tem o autor e a mensagem como propriedades do corpo da solicitação.
 
 ```js
 POST /talks/Unituning/comments HTTP/1.1
@@ -109,7 +109,7 @@ Content-Length: 95
             "deleted": true}]}
 ```
 
-Quando a palestra for alterada, criada recentemente ou tem um comentário adicional; a representação completa da palestra estara incluída na próxima resposta de solicitação na busca do cliente. Quando a conversa é excluída somente o seu título e a propriedade excluído estão incluídos. O cliente pode então adicionar as negociações com títulos que não tenha visto antes de sua exibição, atualização fala que já estava mostrando, e remover aquelas que foram excluídas.
+Quando a palestra for alterada, criada recentemente ou tem um comentário adicional; a representação completa da palestra estara incluída na próxima resposta de solicitação na busca do cliente. Quando a palestra é excluída somente o seu título e a propriedade excluído estão incluídos. O cliente pode então adicionar as palestras com títulos que não tenha visto antes de sua exibição, atualização fala que já estava mostrando, e remover aquelas que foram excluídas.
 
 O protocolo descrito neste capítulo não ira fazer qualquer controle de acesso. Todos podem comentar, modificar fala, e até mesmo excluí-los. Uma vez que a Internet está cheia de arruaceiros colocando um tal sistema on-line sem proteção adicional é provável que acabe em um desastre.
 
@@ -201,9 +201,9 @@ function respondJSON(response, status, data) {
 
 #### Recursos de palestras
 
-O servidor mantém as conversações que têm sido propostas em um objeto chamado `talks`, cujos nomes são propriedades de títulos de um `talk`. Estes serão expostos como recursos HTTP sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementara vários métodos que podem serem utilizados pelo os clientes.
+O servidor mantém as palestras que têm sido propostas em um objeto chamado `talks`, cujos nomes são propriedades de títulos de um `talk`. Estes serão expostos como recursos HTTP sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementara vários métodos que podem serem utilizados pelo os clientes.
 
-O manipulador de solicitações serve uma única resposta, quer seja alguns dados do tipo `JSON` da conversa, uma resposta de 404 ou um erro.
+O manipulador de solicitações serve uma única resposta, quer seja alguns dados do tipo `JSON` da palestra, uma resposta de 404 ou um erro.
 
 ```js
 var talks = Object.create(null);
@@ -217,7 +217,7 @@ router.add("GET", /^\/talks\/([^\/]+)$/,
 });
 ```
 
-A exclusão de um `talk` é feito para remove-lo do objeto conversações.
+A exclusão de um `talk` é feito para remove-lo do objeto palestras.
 
 ```js
 router.add("DELETE", /^\/talks\/([^\/]+)$/,
@@ -254,7 +254,7 @@ function readStreamAsJSON(stream, callback) {
 
 Um manipulador que precisa ler respostas JSON é o manipulador PUT que é usado para criar novas palestras. Nesta `request` devemos verificar se os dados enviados tem um apresentador e propriedades de sumárias, ambos so tipo strings. Quaisquer dados que vêm de fora do sistema pode conter erros e nós não queremos corromper o nosso modelo de dados interno ou mesmo travar quando os pedidos ruins entrarem.
 
-Se os dados se parece válido o manipulador armazena um objeto que representa uma nova palestra no objeto, possivelmente substituindo uma conversa existente com este título e mais uma vez chama `registerChange`.
+Se os dados se parece válido o manipulador armazena um objeto que representa uma nova palestra no objeto, possivelmente substituindo uma palestra existente com este título e mais uma vez chama `registerChange`.
 
 ```js
 router.add("PUT", /^\/talks\/([^\/]+)$/,
@@ -278,7 +278,7 @@ router.add("PUT", /^\/talks\/([^\/]+)$/,
 });
 ```
 
-Para adicionar um comentário a uma conversa, funciona de forma semelhante. Usamos `readStreamAsJSON` para obter o conteúdo do pedido, validar os dados resultantes e armazená-los como um comentário quando for válido.
+Para adicionar um comentário a uma palestra, funciona de forma semelhante. Usamos `readStreamAsJSON` para obter o conteúdo do pedido, validar os dados resultantes e armazená-los como um comentário quando for válido.
 
 ```js
 router.add("POST", /^\/talks\/([^\/]+)\/comments$/,
@@ -305,9 +305,9 @@ Ao tentar adicionar um comentário a uma palestra inexistente é claro que devem
 
 #### Apoio a long polling
 
-O aspecto mais interessante do servidor é a parte que trata de `long polling`. Quando uma requisição GET chega para `/talks` pode ser um simples pedido de todas as conversações ou um pedido de atualização com um parâmetro `changesSince`.
+O aspecto mais interessante do servidor é a parte que trata de `long polling`. Quando uma requisição GET chega para `/talks` pode ser um simples pedido de todas as palestras ou um pedido de atualização com um parâmetro `changesSince`.
 
-Haverá várias situações em que teremos que enviar uma lista de conversa para o cliente de modo que primeiro devemos definir uma pequena função auxiliar que atribuira um campo `servertime` para tais respostas.
+Haverá várias situações em que teremos que enviar uma lista de palestra para o cliente de modo que primeiro devemos definir uma pequena função auxiliar que atribuira um campo `servertime` para tais respostas.
 
 ```js
 function sendTalks(talks, response) {
@@ -343,9 +343,9 @@ router.add("GET", /^\/talks$/, function(request, response) {
 });
 ```
 
-Quando o parâmetro `changesSince` não é enviado, o manipulador simplesmente acumula uma lista de todas as conversações e retorna.
+Quando o parâmetro `changesSince` não é enviado, o manipulador simplesmente acumula uma lista de todas as palestras e retorna.
 
-Caso contrário o parâmetro `changeSince` tem que ser verificado primeiro para certificar de que é um número válido. A função `getChangedTalks` a ser definido em breve retorna uma matriz de conversas que mudaram desde um determinado tempo. Se retornar um `array` vazio significa que o servidor ainda não tem nada para armazenar no objeto de resposta e enviar de volta para o cliente(usando `waitForChanges`), o que pode também ser respondida em um momento posterior.
+Caso contrário o parâmetro `changeSince` tem que ser verificado primeiro para certificar de que é um número válido. A função `getChangedTalks` a ser definido em breve retorna uma matriz de palestras que mudaram desde um determinado tempo. Se retornar um `array` vazio significa que o servidor ainda não tem nada para armazenar no objeto de resposta e enviar de volta para o cliente(usando `waitForChanges`), o que pode também ser respondida em um momento posterior.
 
 ```js
 var waiting = [];
@@ -367,7 +367,7 @@ O método `splice` é utilizado para cortar um pedaço de uma matriz. Você dá 
 
 Quando um objeto de resposta é armazenado na matriz de espera o tempo de espera é ajustado imediatamente. Passados 90 segundos o tempo limite vê se o pedido está ainda à espera e se for, envia uma resposta vazia e remove a espera a partir da matriz.
 
-Para ser capaz de encontrar exatamente essas conversações que foram alterados desde um determinado ponto no tempo precisamos acompanhar o histórico de alterações. Registrando uma mudança com `registerChange` podemos escutar as mudança juntamente com o tempo atual em um `array` chamado de `waiting`. Quando ocorre uma alteração isso significa que há novos dados, então todos os pedidos em espera podem serem respondidos imediatamente.
+Para ser capaz de encontrar exatamente essas palestras que foram alterados desde um determinado ponto no tempo precisamos acompanhar o histórico de alterações. Registrando uma mudança com `registerChange` podemos escutar as mudança juntamente com o tempo atual em um `array` chamado de `waiting`. Quando ocorre uma alteração isso significa que há novos dados, então todos os pedidos em espera podem serem respondidos imediatamente.
 
 ```js
 var changes = [];
@@ -381,7 +381,7 @@ function registerChange(title) {
 }
 ```
 
-Finalmente `getChangedTalks` podera usar a matriz de mudanças para construir uma série de palestras alteradas,incluindo no objetos uma propriedade de `deleted` para as palestras que não existem mais. Ao construir essa matriz `getChangedTalks` tem de garantir que ele não incluiu a mesma conversa duas vezes; isso pode acontecer se houver várias alterações em uma palestra desde o tempo dado.
+Finalmente `getChangedTalks` podera usar a matriz de mudanças para construir uma série de palestras alteradas,incluindo no objetos uma propriedade de `deleted` para as palestras que não existem mais. Ao construir essa matriz `getChangedTalks` tem de garantir que ele não incluiu a mesma palestra duas vezes; isso pode acontecer se houver várias alterações em uma palestra desde o tempo dado.
 
 ```js
 function getChangedTalks(since) {
@@ -445,7 +445,7 @@ Segue o formulário que é usado para criar uma nova palestra:
 </form>
 ```
 
-Um script irá adicionar um manipulador de eventos de "enviar"  para este formulário, a partir do qual ele pode fazer a solicitação HTTP que informa ao servidor sobre a palestra.
+Um script irá adicionar um manipulador de eventos de `"submit"`  para este formulário, a partir do qual ele pode fazer a solicitação HTTP que informa ao servidor sobre a palestra.
 
 Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição definido como `none`, impedindo que ele apareça na página. Você consegue adivinhar para o que é?
 
@@ -470,7 +470,7 @@ Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição d
 
 Criar estruturas de DOM complicadas com JavaScript produz código feio. Você pode tornar o código um pouco melhor através da introdução de funções auxiliares como a função `elt` do capítulo 13, mas o resultado ainda vai ficar pior do que no HTML, que pode ser pensado como uma linguagem de domínio específico para expressar estruturas DOM.
 
-Para criar uma estrutura DOM para as palestras, o nosso programa vai definir um sistema de modelos simples, que utiliza estruturas DOM escondidos incluídos no documento para instanciar novas estruturas DOM, substituindo os espaços reservados entre chaves duplas para os valores de uma conversa específica.
+Para criar uma estrutura DOM para as palestras, o nosso programa vai definir um sistema de `templates` simples, que utiliza estruturas DOM escondidos incluídos no documento para instanciar novas estruturas DOM, substituindo os espaços reservados entre chaves duplas para os valores de uma palestra específica.
 
 Por fim, o documento HTML inclui um arquivo de `script` que contém o código do lado do cliente.
 
@@ -528,3 +528,151 @@ function reportError(error) {
 ```
 
 A função verifica se existe um erro real, ele irá alerta somente quando houver um. Dessa forma podemos também passar diretamente esta função para solicitar pedidos onde podemos ignorar a resposta. Isso garante que, se a solicitação falhar, o erro é relatado para o usuário.
+
+#### Resultados das palestras
+
+Para ser capaz de atualizar a visualização das palestras quando as mudanças acontecem, o cliente deve manter a par das palestras que ele está mostrando. Dessa forma quando uma nova versão de uma palestra que já está na tela vem, a palestra pode ser substituído (no local) com a sua forma atualizada. Da mesma forma, quando a informação que vem de uma palestra está a ser eliminada, o elemento DOM pode ser removido direto do documento.
+
+A função `displayTalks` é usada tanto para construir a tela inicial e atualizá-la quando algo muda. Ele vai usar o objeto `shownTalks`, que associa os títulos da palestras com os nós DOM para lembrar das palestras que tem atualmente na tela.
+
+```js
+var talkDiv = document.querySelector("#talks");
+var shownTalks = Object.create(null);
+
+function displayTalks(talks) {
+  talks.forEach(function(talk) {
+    var shown = shownTalks[talk.title];
+    if (talk.deleted) {
+      if (shown) {
+        talkDiv.removeChild(shown);
+        delete shownTalks[talk.title];
+      }
+    } else {
+      var node = drawTalk(talk);
+      if (shown)
+        talkDiv.replaceChild(node, shown);
+      else
+        talkDiv.appendChild(node);
+      shownTalks[talk.title] = node;
+    }
+  });
+}
+```
+
+Construir a estrutura DOM para as palestras serão feitas usando os `templates` que foram incluídas no documento HTML. Primeiro temos que definir `instantiateTemplate` que verifica e preenche com um `template`.
+
+O parâmetro `name` é o nome do `template`. Para buscar o elemento de `templates`, buscamos um elemento cujo nome da classe corresponda ao nome do `template` que é filho do elemento com ID "template". Usando o método `querySelector` facilita essa busca. Temos `templates` nomeados como "talk" e "comment" na página HTML.
+
+```js
+function instantiateTemplate(name, values) {
+  function instantiateText(text) {
+    return text.replace(/\{\{(\w+)\}\}/g, function(_, name) {
+      return values[name];
+    });
+  }
+  function instantiate(node) {
+    if (node.nodeType == document.ELEMENT_NODE) {
+      var copy = node.cloneNode();
+      for (var i = 0; i < node.childNodes.length; i++)
+        copy.appendChild(instantiate(node.childNodes[i]));
+      return copy;
+    } else if (node.nodeType == document.TEXT_NODE) {
+      return document.createTextNode(
+               instantiateText(node.nodeValue));
+    }
+  }
+
+  var template = document.querySelector("#template ." + name);
+  return instantiate(template);
+}
+```
+
+O método `cloneNode` que tem em todos os nós DOM, cria uma cópia de um nó. Ele não copia os nós filhos do nó a menos que `true` é dada como primeiro argumento. A função instancia recursivamente uma cópia do `template` preenchendo onde o `template` deve aparecer.
+
+O segundo argumento para `instantiateTemplate` deve ser um objecto cujas propriedades deve ser `strings` com os mesmos atributos que estão presente no `teplate`. Um espaço reservado como `{{title}}` será substituído com o valor da propriedade de valor do atributo `title`.
+
+Esta é uma abordagem básica para a implementação de `template`, mas é suficiente para implementar o `drawTalk`.
+
+```js
+function drawTalk(talk) {
+  var node = instantiateTemplate("talk", talk);
+  var comments = node.querySelector(".comments");
+  talk.comments.forEach(function(comment) {
+    comments.appendChild(
+      instantiateTemplate("comment", comment));
+  });
+
+  node.querySelector("button.del").addEventListener(
+    "click", deleteTalk.bind(null, talk.title));
+
+  var form = node.querySelector("form");
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    addComment(talk.title, form.elements.comment.value);
+    form.reset();
+  });
+  return node;
+}
+```
+
+Depois de instanciar o `template` de "talk" há várias coisas que precisam ser remendadas. Em primeiro lugar os comentários têm de ser preenchidos pelo `template` "comments" e anexando os resultados no nó com a class "commnets". Em seguida, os manipuladores de eventos tem que anexar um botão que apaga a palestra e um formulário que adiciona um novo comentário.
+
+#### Atualizando o servidor
+
+Os manipuladores de eventos registrados pela `drawTalk` chamam o a função `deleteTalk` e `addComment` para executar as ações reais necessários para excluir uma conversa ou adicionar um comentário. Estes terão de construirem URLs que se referem as palestras com um determinado título, para o qual se define a função auxiliar de `talkURL`.
+
+```js
+function talkURL(title) {
+  return "talks/" + encodeURIComponent(title);
+}
+```
+
+A função `deleteTalk` dispara uma requisição DELETE e informa o erro quando isso falhar.
+
+```js
+function deleteTalk(title) {
+  request({pathname: talkURL(title), method: "DELETE"},
+          reportError);
+}
+```
+
+Adicionar um comentário requer a construção de uma representação JSON dos comentários e delegar que seja parte de um pedido POST.
+
+```js
+function addComment(title, comment) {
+  var comment = {author: nameField.value, message: comment};
+  request({pathname: talkURL(title) + "/comments",
+           body: JSON.stringify(comment),
+           method: "POST"},
+          reportError);
+}
+```
+
+A variável `nameField` é usado para definir a propriedade o autor do comentário, é uma referência do campo `<input>` na parte superior da página que permite que o usuário especifique o seu nome. Nós também inserimos o nome no `localStorage` para que ele não tem que ser preenchido novamente a cada vez que a página é recarregada.
+
+```js
+var nameField = document.querySelector("#name");
+
+nameField.value = localStorage.getItem("name") || "";
+
+nameField.addEventListener("change", function() {
+  localStorage.setItem("name", nameField.value);
+});
+```
+
+O formulário na parte inferior da página propoe uma nova conversa, recebe um manipulador de evento `"submit"`. Este manipulador impede efeito padrão do evento(o que causaria um recarregamento da página) passando a ter o comportamento de limpa o formulário e dispara uma solicitação PUT para criar uma a conversa.
+
+```js
+var talkForm = document.querySelector("#newtalk");
+
+talkForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+  request({pathname: talkURL(talkForm.elements.title.value),
+           method: "PUT",
+           body: JSON.stringify({
+             presenter: nameField.value,
+             summary: talkForm.elements.summary.value
+           })}, reportError);
+  talkForm.reset();
+});
+```

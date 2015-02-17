@@ -222,49 +222,41 @@ console.log(chicken() + " came first.");
 
 ## Argumentos Opcionais
 
-O código seguinte é permitido e executa sem problemas:
+O código abaixo é permitido e executa sem problemas:
 
 ```js
-
 alert("Hello", "Good Evening", "How do you do?");
-
-```
+``
 
 A função `alert` oficialmente aceita somente um argumento. No entanto, quando você a chama assim, ela não reclama. Ela simplesmente ignora os outros argumentos e lhe mostra "Hello".
 
-O JavaScript é extremamente tolerante sobre a quantidade de argumentos que você passa a uma função. Se você passa muitos, os extras são ignorados. Se você passar poucos, as variáveis para os parâmetros faltantes simplesmente receberão o valor `undefined`.
+O JavaScript é extremamente tolerante com a quantidade de argumentos que você passa para uma função. Se você passar mais argumentos que o necessário, os extras são ignorados. Se você passar menos argumentos, os parâmetros faltantes simplesmente receberão o valor `undefined`.
 
-A desvantagem disso é que possivelmente - e provavelmente - você vai passar um número errado de argumentos de forma acidental para as funções... e ninguém vai alertá-lo sobre isso.
+A desvantagem disso é que possivelmente - e provavelmente - você vai passar um número errado de argumentos de forma acidental para as funções e nada irá alertá-lo sobre isso.
 
-A vantagem é que este comportamento pode ser usado para uma função que pega estes argumentos "opcionais". Por exemplo, esta versão de `power` pode ser chamada com dois argumentos ou com um simples argumento, em que neste caso o expoente é dois, e a função se comporta como `square`.
+A vantagem é que esse comportamento pode ser usado em funções que aceitam argumentos “opcionais”. Por exemplo, essa nova versão de `power` pode ser chamada tanto com um ou dois argumentos. No caso de ser invocada com apenas um argumento, ela irá assumir o valor 2 para o expoente e a função irá se comportar como `square`.
 
 ```js
-
-function power (base, expoent) {
-	if (expoent == undefined)
-		expoent = 2;
-
-	var result = 1;
-	for (var count = 0; count < expoent; count++)
-		result *= base;
-
-	return result;
+function power(base, exponent) {
+  if (exponent == undefined)
+    exponent = 2;
+  var result = 1;
+  for (var count = 0; count < exponent; count++)
+    result *= base;
+  return result;
 }
 
 console.log(power(4));
-// 16
+// → 16
 console.log(power(4, 3));
-// 64
-
+// → 64
 ```
 
-No próximo capítulo, nós vamos ver uma forma em que o corpo de uma função pode pegar a lista exata de argumentos que foi passado. Isso é útil pois torna possível para a função aceitar qualquer número de argumentos. `console.log` faz uso disso - ela retorna todos os valores dados.
+No [TODO: adicionar link]próximo capítulo[/TODO], iremos ver uma maneira de acessar a lista que contém todos os argumentos que foram passados para uma função. Isso é útil pois torna possível uma função aceitar qualquer número de argumentos. Por exemplo, `console.log` tira proveito disso, imprimindo todos os valores que foram passados.
 
 ```js
-
 console.log("R", 2, "D", 2);
-// R 2 D 2
-
+// → R 2 D 2
 ```
 
 ## Closure

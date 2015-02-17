@@ -723,3 +723,49 @@ A solução mais simples que posso dar para você codificar é transformar todas
 Escolha um nome para o arquivo, por exemplo `./talks.json`. Quando o servidor é iniciado ele pode tentar ler esse arquivo com `fs.readFile` e se isso for bem sucedido o servidor pode usar o conteúdo do arquivo como seus dados iniciais.
 
 Porém cuidado, as palestras começam como um protótipo menos como um objeto para que possa ser operado normalmente. `JSON.parse` retorna objetos regulares com `Object.prototype` como sendo seu protótipo. Se você usar `JSON` como formato de arquivo você terá que copiar as propriedades do objeto retornados por `JSON.parse` em um novo objeto menos como protótipo.
+
+#### Melhorias nos templates
+
+A maioria dos sistemas de templates fazer mais do que apenas preencher algumas strings. No mínimo permitem a inclusão de condicional em alguma parte do template com a chave `if` ou uma repetição do pedaço de um template semelhante a um `while`.
+
+Se fomos capazes de repetir um pedaço de template para cada elemento em uma matriz, não precisaríamos de um segundo template ("comment"). Em vez disso poderíamos especificar que o template "talk" verifique os conjuntos das propriedade de uma palestra e dos comentários reliazando um interação para cada comentário que esteja no array de comentários.
+
+Ele poderia ser assim:
+
+```js
+<div class="comments">
+  <div class="comment" template-repeat="comments">
+    <span class="name">{{author}}</span>: {{message}}
+  </div>
+</div>
+```
+
+A idéia é que sempre que um nó com um atributo `template-repeat` é encontrado durante instanciação do template, o código faz um loop sobre a matriz na propriedade chamada por esse atributo. Para cada elemento na matriz ele adiciona um exemplo de nó. Contexto do template(a variável de valores em `instantiateTemplate`) iria durante este ciclo apontar para o elemento atual da matriz para que `{{author}}` seja o objeto de comentário e não o contexto original(a `talk`).
+
+Reescreva `instantiateTemplate` para implementar isso e, em seguida altere os templates para usar este recurso e remover a prestação explícita dos comentários da função `drawTalk`.
+
+Como você gostaria de acrescentar instanciação condicional de nós tornando-se possível omitir partes do template quando um determinado valor é verdadeira ou falsa?
+
+**Dica:**
+
+Você poderia mudar `instantiateTemplate` de modo que sua função interna leva não apenas um nó mas também um contexto atual como um argumento. Você pode verificar se um loop sobre nós filhos de um nó tem um atributo filho em `template-repeat`. Se isso acontecer não instancie, em vez de um loop sobre a matriz indicada pelo valor do atributo instancie uma vez para cada elemento da matriz, passando o elemento da matriz atual como contexto.
+
+Condicionais pode ser implementado de uma forma semelhante com atributos de chamadas, por exemplo `template-when` e `template-unless` quando inserido no template ele ira instanciar ou não um nó dependendo de uma determinada propriedade que pode ser verdadeiro ou falso.
+
+#### Os unscriptables 
+
+Quando alguém visita o nosso site com um navegador que tenha JavaScript desabilitado ou o navegador que não suporta a execução de JavaScript eles vão conseguir ver uma página inoperável e completamente quebrado. Isso não é bom.
+
+Alguns tipos de aplicações web realmente não pode ser feito sem JavaScript. Para outros você simplesmente não tem o orçamento ou paciência para se preocupar com os clientes que não podem executar scripts. Mas para páginas com um grande público é uma forma educado apoiar os usuários que não tenha suporte a script.
+
+Tente pensar de uma maneira com que o site de compartilhamento de habilidade poderia ser configurado para preservar a funcionalidade básica quando executado sem JavaScript. As atualizações automáticas não seria mais suportada e as pessoas vão ter que atualizar sua página da maneira antiga. Seria bom sermos capazes de possibilitar esses usuários de ver as palestras existentes, criar novas e apresentar comentários apenas.
+
+Não se sinta obrigado a implementar isso. Esboçando uma solução é o suficiente. Será que a abordagem vista é mais ou menos elegante do que o que fizemos inicialmente?
+
+**Dica:**
+
+Dois aspectos centrais da abordagem feita neste capítulo como interface HTTP e um `template` do lado do cliente de renderização  não funcionam sem JavaScript. Formulários HTML normais podem enviar solicitações GET e POST, mas não solicitações PUT ou DELETE e os dados podem serem enviados apenas por uma URL fixa.
+
+Assim o servidor teria que ser revisto para aceitar comentários, novas palestras e remover palestras através de solicitações POST, cujos corpos não podem serem JSONs, então devemos converter para o formato codificado em um URL para conseguirmos usar os formulários HTML(ver Capítulo 17). Estes pedidos teria que retornar a nova página inteira para que os usuários vejam os novos estados depois que fazirem alguma mudança. Isso não seria muito difícil de fazer e poderia ser aplicado conjuntamente com uma interface HTTP mais "clean".
+
+O código para mostrar as palestras teria que ser duplicado no servidor. O arquivo `index.html` ao invés de ser um arquivo estático, teria de ser gerado dinamicamente adicionando um manipulador para que o roteador incluia as palestras e comentários atuais quando é servido.

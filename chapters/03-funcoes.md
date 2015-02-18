@@ -261,49 +261,47 @@ console.log("R", 2, "D", 2);
 
 ## Closure
 
-A habilidade de tratar funções como valores, combinado com o fato que variáveis locais são "recriadas" todas as vezes que a função é chamada, traz à tona uma questão interessante. O que acontece com as variáveis locais quando a chamada de função que as criou não está mais ativa? O código seguinte ilustra isso:
+A habilidade de tratar funções como valores, combinado com o fato de que variáveis locais são “recriadas” todas as vezes que uma função é invocada, traz à tona uma questão interessante. O que acontece com as variáveis locais quando a função que as criou não está mais ativa?
+
+O código a seguir mostra um exemplo disso. Ele define uma função `wrapValue` que cria uma variável local e retorna uma função que acessa e retorna essa variável.
 
 ```js
-
-function wrapValue (n) {
-	var localVariable = n;
-	return function () { return localVariable };
+function wrapValue(n) {
+  var localVariable = n;
+  return function() { return localVariable; };
 }
 
 var wrap1 = wrapValue(1);
 var wrap2 = wrapValue(2);
 console.log(wrap1());
-// 1
+// → 1
 console.log(wrap2());
-// 2
-
+// → 2
 ```
 
-Quando `wrapValue` é chamada, ela cria uma variável local que armazena este parâmetro, e então retorna uma função que retorna essa variável local. Isso é permitido, e funciona como você esperaria - a variável sobrevive. De fato, instâncias múltiplas da variável podem estar vivas ao mesmo tempo, que é outra boa ilustração do conceito de que variáveis locais realmente são recriadas para toda chamada - chamadas diferentes não podem sobrepor outras variáveis locais.
+Isso é permitido e funciona como você esperaria: a variável ainda pode ser acessada. Várias instâncias da variável podem co-existir ao mesmo tempo, o que é uma boa demonstração do conceito de que variáveis locais são realmente recriadas para cada nova chamada, sendo que cada chamada não interfere nas variáveis locais uma das outras.
 
-Essa característica, nos torna capazes de referenciar uma instância específica de variáveis locais em uma função que as engloba, isso é chamado *closure*. Uma função que "fecha sobre" variáveis locais é chamada uma *closure*. Este comportamento não somente o liberta da preocupação sobre a vida das variáveis, como também permite usos criativos de valores da função.
+A funcionalidade de ser capaz de referenciar uma instância específica de uma variável local após a execução de uma função é chamada *closure*. Uma função que “closes over” (fecha sobre) variáveis locais é chamada de *closure*. Esse comportamento faz com que você não tenha que se preocupar com o tempo de vida das variáveis, como também permite usos criativos de valores de função.
 
-Com uma pequena mudança, podemos tornar a função exemplo em uma forma de criar funções que multiplicam por uma quantidade arbitrária:
+Com uma pequena mudança, podemos transformar o exemplo anterior possibilitando criar funções que multiplicam por um valor arbitrário.
 
 ```js
-
-function multiplier (factor) {
-	return function (number) {
-		return number * factor;
-	};
+function multiplier(factor) {
+  return function(number) {
+    return number * factor;
+  };
 }
 
 var twice = multiplier(2);
 console.log(twice(5));
-// 10
-
+// → 10
 ```
 
-A variável local explícita do exemplo `wrapNumber` não é necessária, pois um parâmetro é ele mesmo uma variável local.
+A variável explícita `localVariable` do exemplo com a função `wrapValue` não é necessária, pois o parâmetro em si já é uma variável local.
 
-Pensar sobre programas dessa forma requer um certo exercício. Um bom modelo mental é pensar a palavra-chave `function` como "congelando" o código em seu corpo, e envolvendo-o dentro de um pacote (valor). Então quando você lê `return function (...) {...}`, há um pedaço de computação sendo congelada para uso posterior, e um manipulador para esta computação será retornado.
+Pensar em programas que funcionam dessa forma requer um pouco de prática. Um bom modelo mental é pensar que a palavra-chave `function` “congela” o código que está em seu corpo e o envolve em um pacote (o valor da função). Quando você lê `return function(...) {...}`, pense como se estivesse retornando um manipulador que possibilita executar instruções computacionais que foram congeladas para um uso posterior.
 
-Esta computação congelada é retornada de `multiplier` e armazenada na variável `twice`. A última linha do exemplo então chama o valor nesta variável, fazendo com que o código envolto (`return number * factor;`) finalmente seja ativado. Ele continua tendo acesso à variável `factor` da chamada `multiplier` que o criou, e em adição ele tem acesso ao argumento que nós passamos a ele, 5, através do parâmetro `number`.
+No exemplo, `multiplier` retorna um pedaço de código congelado que fica armazenado na variável `twice`. A última linha do exemplo chama o valor armazenado nessa variável, fazendo com que o código congelado (`return number * factor;`) seja executado. Ele continua tendo acesso à variável `factor` que foi criada na chamada de `multiplier`, e além disso, ele tem acesso ao argumento que foi passado a ele (o valor 5), através do parâmetro `number`.
 
 ## Recursão
 

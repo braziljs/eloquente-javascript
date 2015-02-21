@@ -24,27 +24,25 @@ Uma solução comum para este problema é chamado de `long polling` que passa a 
 
 #### Long polling
 
--> Parei aqui
-
-Para ser capaz de se comunicar imediatamente com um cliente que algo mudou precisamos de uma conexão com esses clientes. Desde navegadores não tradicionais, geralmente os dispositivos por trás bloqueiam de qualquer maneira tais conexões aceitas pelo cliente, toda essa ligação deve ser feita via servidor, o que não é muito prático.
+Para ser capaz de se comunicar imediatamente com um cliente que algo mudou precisamos de uma conexão com o cliente. Os navegadores não tradicionais bloqueiam de qualquer maneira tais conexões que deveriam ser aceitas pelo cliente; toda essa ligação deve ser feita via servidor o que não é muito prático.
 
 Nós podemos mandar o cliente abrir a conexão e mantê-la de modo que o servidor possa usá-la para enviar informações quando for preciso.
 
-Uma solicitação HTTP permite apenas um fluxo simples de informações, onde o cliente envia a solicitação e o servidor devolve uma única resposta. Há uma tecnologia chamada soquetes web, suportado pelos navegadores modernos o que torna possível abrir as ligações para a troca de dados arbitrária. É um pouco difícil usá-las corretamente.
+Uma solicitação HTTP permite apenas um fluxo simples de informações, onde o cliente envia a solicitação e o servidor devolve uma única resposta. Há uma tecnologia que chamamos de soquetes web, suportado pelos navegadores modernos o que torna possível abrir as ligações para a troca de dados arbitrária. É um pouco difícil usá-las corretamente.
 
 Neste capítulo vamos utilizar uma técnica relativamente simples, `long polling`, onde os clientes continuamente pediram ao servidor para obter novas informações usando solicitações HTTP e o servidor simplesmente barrara sua resposta quando ele não tem nada de novo para relatar.
 
-Enquanto o cliente torna-se constantemente um `long polling` aberto, ele ira receber informações do servidor imediatamente. Por exemplo, se Alice tem o nosso aplicativo de compartilhamento de habilidade aberta em seu navegador, o navegador terá feito um pedido de atualizações e estara a espera de uma resposta a esse pedido. Quando Bob submeter uma palestra sobre a `extrema Downhill Monociclo` o servidor vai notificar que Alice está esperando por atualizações e enviar essas informações sobre a nova palestra como uma resposta ao seu pedido pendente. Navegador de Alice receberá os dados e atualizara a tela para mostrar a palestra.
+Enquanto o cliente torna-se constantemente um `long polling` aberto, ele ira receber informações do servidor imediatamente. Por exemplo, se Alice tem o nosso aplicativo de compartilhamento de habilidade aberto em seu navegador, ele terá feito um pedido de atualizações e estara a espera de uma resposta a esse pedido. Quando Bob submeter uma palestra sobre a `extrema Downhill Monociclo` o servidor vai notificar que Alice está esperando por atualizações e enviar essas informações sobre a nova palestra como uma resposta ao seu pedido pendente. O navegador de Alice receberá os dados e atualizara a tela para mostrar a nova palestra.
 
-Para evitar que as conexões excedam o tempo limite(sendo anulado por causa de uma falta de atividade), podemos definir uma técnica que normalmente define um tempo máximo para cada pedido do `long polling`; após esse tempo o servidor irá responder de qualquer maneira, mesmo que ele não tem nada a relatar, e o cliente inicia um novo pedido. Reiniciar o pedido periodicamente torna a técnica mais robusta a qual permite aos clientes se recuperarem de falhas de conexão temporárias ou de problemas no servidor.
+Para evitar que as conexões excedam o tempo limite(sendo anulado por causa de uma falta de atividade) podemos definir uma técnica que normalmente define um tempo máximo para cada pedido do `long polling`; após esse tempo o servidor irá responder de qualquer maneira mesmo que ele não tem nada a relatar e o cliente inicia um novo pedido. Reiniciar o pedido periodicamente torna a técnica mais robusta a qual permite aos clientes se recuperarem de falhas de conexão temporárias ou de problemas no servidor.
 
-Um servidor que esta ocupado usando `long polling` pode ter milhares de pedidos em espera com conexões TCP em aberto. Node torna fácil de gerenciar muitas conexões sem criar uma thread separada de controle para cada uma, sendo assim uma boa opção para esse sistema.
+Um servidor que esta ocupado usando `long polling` pode ter milhares de pedidos em espera com conexões TCP em aberto. Node torna fácil de gerenciar muitas conexões sem criar uma thread separada com controle para cada uma; sendo o Node uma boa opção para esse sistema.
 
 #### Interface HTTP
 
-Antes de começarmos a comunicar servidor e cliente, vamos pensar sobre o ponto em que se tocam: a interface HTTP sobre as quais eles se comunicam.
+Antes de começarmos a comunicar servidor e cliente vamos pensar sobre o ponto em que é feita a comunicação: a interface HTTP.
 
-Vamos basear nossa interface em JSON e como vimos no servidor de arquivos a partir do capítulo 20; vamos tentar fazer um bom uso de métodos HTTP. A interface é centrado em torno do path `/talks`. `Paths` que não começam com `/talks` serão usado para servir arquivos estáticos como: código HTML, JavaScript, que implementam o sistema do lado do cliente.
+Vamos basear nossa interface em JSON e como vimos no servidor de arquivos a partir do capítulo 20 vamos tentar fazer um bom uso de métodos HTTP. A interface é centrado em torno do path `/talks`. `Paths` que não começam com `/talks` serão usado para servir arquivos estáticos como: código HTML, JavaScript que implementam o sistema do lado do cliente.
 
 A solicitação do tipo GET para `/talks` devolve um documento JSON como este:
 
@@ -56,9 +54,9 @@ A solicitação do tipo GET para `/talks` devolve um documento JSON como este:
             "comment": []}]}
 ```
 
-O campo `serverTime` vai ser usado para fazer sondagem de `long polling`. Voltarei a isso mais tarde.
+O campo `serverTime` vai ser usado para fazer a sondagem de `long polling`. Voltarei a explicar isso adiante.
 
-Para criar um novo talk é preciso uma solicitação do tipo PUT para a URL `/talks/unituning/`, onde após a segunda barra é o título da palestra. O corpo da solicitação PUT deve conter um objeto JSON que tem o apresentador e o sumário como propriedade do corpo da solicitação.
+Para criar um novo talk é preciso uma solicitação do tipo `PUT` para a URL `/talks/unituning/`, onde após a segunda barra é o título da palestra. O corpo da solicitação `PUT` deve conter um objeto JSON que tem o apresentador e o sumário como propriedade do corpo da solicitação.
 
 O títulos da palestra pode conter espaços e outros caracteres que podem não aparecerem normalmente em um URL, a `string` do título deve ser codificado com a função `encodeURIComponent` ao construir a URL.
 
@@ -78,9 +76,9 @@ Content-Length: 92
  "summary": "Standing still on a unicycle"}
 ```
 
-Essas URLs também suportam requisições GET para recuperar a representação do JSON de uma palestra ou DELETE para solicitações de exclusão de uma palestra.
+Essas URLs também suportam requisições `GET` para recuperar a representação do JSON de uma palestra ou DELETE para exclusão de uma palestra.
 
-Adicionando um comentário a uma palestra é feito com uma solicitação POST para uma URL `/talks/Unituning/comments` com um objeto JSON que tem o autor e a mensagem como propriedades do corpo da solicitação.
+Adicionando um comentário a uma palestra é feito com uma solicitação `POST` para uma URL `/talks/Unituning/comments` com um objeto JSON contendo o autor e a mensagem como propriedades do corpo da solicitação.
 
 ```js
 POST /talks/Unituning/comments HTTP/1.1
@@ -91,11 +89,11 @@ Content-Length: 72
  "message": "Will you talk about raising a cycle?"}
 ```
 
-Para apoio ao `long polling`, pedidos GET para `/talks` podem incluir um parâmetro de consulta chamado `changesSince`, ele sera usado para indicar que o cliente está interessado em atualizações que aconteceram desde de um determinado tempo. Quando existem tais mudanças eles são imediatamente devolvidos. Quando não há a resposta é adiada até que algo aconteça ou até que um determinado período de tempo(vamos usar 90 segundos) for decorrido.
+Para termos apoio do `long polling` precisamos de pedidos GET para `/talks`. Podemos incluir um parâmetro de consulta chamado `changesSince` ele sera usado para indicar que o cliente está interessado em atualizações que aconteceram desde de um determinado tempo. Quando existem tais mudanças eles são imediatamente devolvidos. Quando não há a resposta é adiada até que algo aconteça até um determinado período de tempo(vamos usar 90 segundos).
 
-O tempo deve ser indicado em números em milissegundos decorridos desde do início de 1970, o mesmo tipo de número que é retornado por `Date.now()`. Para garantir que ele recebe todas as atualizações e não recebe a mesma atualização mais de uma vez o cliente deve passar o tempo da última informação recebida do servidor. O relógio do servidor pode não ser exatamente sincronizado com o relógio do cliente e mesmo se fosse seria impossível para o cliente saber a hora exata em que o servidor enviou uma resposta porque a transferência de dados através de rede leva um tempo.
+O tempo deve ser indicado em números em milissegundos decorridos desde do início de 1970, o mesmo tipo de número que é retornado por `Date.now()`. Para garantir que ele recebeu todas as atualizações e não recebeu a mesma atualização mais de uma vez; o cliente deve passar o tempo da última informação recebida do servidor. O relógio do servidor pode não ser exatamente sincronizado com o relógio do cliente e mesmo se fosse seria impossível para o cliente saber a hora exata em que o servidor enviou uma resposta porque a transferência de dados através de rede tem um pouco de atraso.
 
-Esta é a razão da existência da propriedade `serverTime` em respostas enviadas a pedidos GET para `/talks`. Essa propriedade diz ao cliente o tempo preciso do servidor em que os dados recebidos foram criados. O cliente pode então simplesmente armazenar esse tempo e passá-los no seu próximo pedido de `polling` para certificar de que ele recebe exatamente as atualizações que não tenha visto antes.
+Esta é a razão da existência da propriedade `serverTime` em respostas enviadas a pedidos GET para `/talks`. Essa propriedade diz ao cliente o tempo preciso do servidor em que os dados foram recebidos ou criados. O cliente pode então simplesmente armazenar esse tempo e passá-los no seu próximo pedido de `polling` para certificar de que ele receba exatamente as atualizações que não tenha visto antes.
 
 ```js
 GET /talks?changesSince=1405438911833 HTTP/1.1
@@ -111,14 +109,13 @@ Content-Length: 95
             "deleted": true}]}
 ```
 
-Quando a palestra for alterada, criada recentemente ou tem um comentário adicional; a representação completa da palestra estara incluída na próxima resposta de solicitação na busca do cliente. Quando a palestra é excluída somente o seu título e a propriedade excluído estão incluídos. O cliente pode então adicionar as palestras com títulos que não tenha visto antes de sua exibição, atualização fala que já estava mostrando, e remover aquelas que foram excluídas.
+Quando a palestra é alterada, criada recentemente ou tem um comentário adicionado; a representação completa da palestra estara incluída na próxima resposta de solicitação na busca do cliente. Quando a palestra é excluída somente o seu título é a propriedade que estara incluída. O cliente pode então adicionar os títulos das palestras que não estão sendo exibido na página, atualizar as que ja estão sendo exibida ou remover aquelas que foram excluídas.
 
-O protocolo descrito neste capítulo não ira fazer qualquer controle de acesso. Todos podem comentar, modificar fala, e até mesmo excluí-los. Uma vez que a Internet está cheia de arruaceiros colocando um tal sistema on-line sem proteção adicional é provável que acabe em um desastre.
+O protocolo descrito neste capítulo não ira fazer qualquer controle de acesso. Todos podem comentar, modificar a palestras e até mesmo excluir. Uma vez que a Internet está cheia de arruaceiros ao colocarmos um sistema on-line sem proteção adicional é provável que acabe em um desastre.
 
-Uma solução simples seria colocar o sistema de proxy reverso por trás, o que é um servidor HTTP que aceita conexões de fora do sistema e os encaminha para servidores HTTP que estão sendo executados localmente. O proxy pode ser configurado para exigir um nome de usuário e senha, você pode ter certeza de que somente os participantes do grupo de compartilhamento de habilidade teram essa senha.
+Uma solução simples seria colocar um sistema de proxy reverso por trás, que é um servidor HTTP que aceita conexões de fora do sistema e os encaminha para servidores HTTP que estão sendo executados localmente. O proxy pode ser configurado para exigir um nome de usuário e senha, você pode ter certeza de que somente os participantes do grupo de compartilhamento de habilidade teram essa senha.
 
 #### O serviço
-
 
 Vamos começar a escrever código do lado do servidor. O código desta seção é executado em Node.js.
 
@@ -126,11 +123,11 @@ Vamos começar a escrever código do lado do servidor. O código desta seção �
 
 O nosso servidor irá utilizar `http.createServer` para iniciar um servidor de HTTP. Na função que lida com um novo pedido, iremos distinguir entre os vários tipos de solicitações(conforme determinado pelo método e o `path`) que suportamos. Isso pode ser feito com uma longa cadeia de `if` mas há uma maneira mais agradável.
 
-As rotas é um componente que ajuda a enviar uma solicitação através de uma função. Você pode dizer para as rotas que os pedidos combine com um `path` usando expressão regular `/^\/talks\/([^\/]+)$/`(que corresponde a `/talks/` seguido pelo título) para ser tratado por uma determinada função. Isso pode ajudar a extrair as partes significativas de um `path`, neste caso o título da palestra, que estara envolto entre os parênteses na expressão regular, após disto é passado para o manipulador de função.
+As rotas é um componente que ajuda a enviar uma solicitação através de uma função. Você pode dizer para as rotas que os pedidos combine com um `path` usando expressão regular `/^\/talks\/([^\/]+)$/`(que corresponde a `/talks/` seguido pelo título) para tratar por uma determinada função. Isso pode ajudar a extrair as partes significativas de um `path`, neste caso o título da palestra, que estara envolto entre os parênteses na expressão regular, após disto é passado para o manipulador de função.
 
 Há uma série de bons pacotes de roteamento na NPM mas vamos escrever um nós mesmos para ilustrar o princípio.
 
-Este é router.js que exigirá mais tarde do nosso módulo de servidor:
+Este é `router.js` que exigirá mais tarde do nosso módulo do servidor:
 
 ```js
 var Router = module.exports = function() {
@@ -161,15 +158,15 @@ Router.prototype.resolve = function(request, response) {
 
 O módulo exporta o construtor de `Router`. Um objeto de `Router` permite que novos manipuladores sejam registados com o método `add` e resolver os pedidos com o método `resolve`.
 
-Este último irá retornar um `booleano` que indica se um manipulador foi encontrado. Há um método no conjunto de rotas que tenta as rotas um de cada vez(na ordem em que elas foram definidos) e retorna a verdadeira quando alguma for correspondida.
+Este último irá retornar um `booleano` que indica se um manipulador foi encontrado. Há um método no conjunto de rotas que tenta uma rota de cada vez(na ordem em que elas foram definidos) e retorna a verdadeira quando alguma for correspondida.
 
-As funções de manipulação são chamadas com os objetos de solicitação e resposta. Quando a expressão regular que corresponde a URL contém algum grupo, as `string` que correspondem são passadas para o manipulador como argumentos extras. Essas seqüências tem que ser URL decodificada tendo a URL codificada assim `%20-style code`.
+As funções de manipulação são chamadas com os objetos de solicitação e resposta. Quando algum grupo da expressão regular corresponder a uma URL, as `string` que correspondem são passadas para o manipulador como argumentos extras. Essas sequências tem que ser uma URL decodificada tendo a URL codificada assim `%20-style code`.
 
 #### Servindo arquivos
 
-Quando um pedido não corresponde a nenhum dos tipos de solicitação que esta definidos em nosso `router` o servidor deve interpretá-lo como sendo um pedido de um arquivo que esta no diretório público. Seria possível usar o servidor de arquivos feito no Capítulo 20 para servir esses arquivos; nenhuma destas solicitações sera do tipo `PUT` e `DELETE`, nós gostaríamos de ter recursos avançados como suporte para armazenamento em cache. Então vamos usar um servidor de arquivo estático a partir de uma NPM.
+Quando um pedido não corresponde a nenhum dos tipos de solicitação que esta sendo definidos em nosso `router` o servidor deve interpretar como sendo um pedido de um arquivo que esta no diretório público. Seria possível usar o servidor de arquivos feito no Capítulo 20 para servir esses arquivos; nenhuma destas solicitações sera do tipo `PUT` e `DELETE`, nós gostaríamos de ter recursos avançados como suporte para armazenamento em cache. Então vamos usar um servidor de arquivo estático a partir de uma NPM.
 
-Optei por `ecstatic`. Este não é o único tipo de servidor NPM, mas funciona bem e se encaixa para nossos propósitos. O módulo de `ecstatic` exporta uma função que pode ser chamado com um objeto de configuração para produzir uma função de manipulação de solicitação. Nós usamos a opção `root` para informar ao servidor onde ele devera procurar pelos arquivos. A função do manipulador aceita solicitação e resposta através de parâmetros e pode ser passado diretamente para `createServer` onde é criado um servidor que serve apenas arquivos. Primeiro verificamos se a solicitações não ha nada de especial, por isso envolvemos em uma outra função.
+Optei por `ecstatic`. Este não é o único tipo de servidor NPM, mas funciona bem e se encaixa para nossos propósitos. O módulo de `ecstatic` exporta uma função que pode ser chamado com um objeto de configuração para produzir uma função de manipulação de solicitação. Nós usamos a opção `root` para informar ao servidor onde ele devera procurar pelos arquivos. A função do manipulador aceita solicitação e resposta através de parâmetros e pode ser passado diretamente para `createServer` onde é criado um servidor que serve apenas arquivos. Primeiro verificamos se na solicitações não ha nada de especial, por isso envolvemos em uma outra função.
 
 ```js
 var http = require("http");
@@ -201,9 +198,9 @@ function respondJSON(response, status, data) {
 }
 ```
 
-#### Recursos de palestras
+#### Recursos da palestras
 
-O servidor mantém as palestras que têm sido propostas em um objeto chamado `talks`, cujos nomes são propriedades de títulos de um `talk`. Estes serão expostos como recursos HTTP sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementara vários métodos que podem serem utilizados pelo os clientes.
+O servidor mantém as palestras que têm sido propostas em um objeto chamado `talks`, cujos os títulos são propriedades de nomes de uma palestra. Estes serão expostos como recursos HTTP sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementara vários métodos que podem serem utilizados pelo os clientes.
 
 O manipulador de solicitações serve uma única resposta, quer seja alguns dados do tipo `JSON` da palestra, uma resposta de 404 ou um erro.
 
@@ -254,7 +251,7 @@ function readStreamAsJSON(stream, callback) {
 }
 ```
 
-Um manipulador que precisa ler respostas JSON é o manipulador PUT que é usado para criar novas palestras. Nesta `request` devemos verificar se os dados enviados tem um apresentador e propriedades de sumárias, ambos so tipo strings. Quaisquer dados que vêm de fora do sistema pode conter erros e nós não queremos corromper o nosso modelo de dados interno ou mesmo travar quando os pedidos ruins entrarem.
+Um manipulador que precisa ler respostas JSON é o manipulador `PUT` que é usado para criar novas palestras. Nesta `request` devemos verificar se os dados enviados tem um apresentador e o título nas propriedades ambos so tipo strings. Quaisquer dados que vêm de fora do sistema pode conter erros e nós não queremos corromper o nosso modelo de dados interno ou mesmo travar quando os pedidos ruins entrarem.
 
 Se os dados se parece válido o manipulador armazena um objeto que representa uma nova palestra no objeto, possivelmente substituindo uma palestra existente com este título e mais uma vez chama `registerChange`.
 
@@ -347,7 +344,7 @@ router.add("GET", /^\/talks$/, function(request, response) {
 
 Quando o parâmetro `changesSince` não é enviado, o manipulador simplesmente acumula uma lista de todas as palestras e retorna.
 
-Caso contrário o parâmetro `changeSince` tem que ser verificado primeiro para certificar de que é um número válido. A função `getChangedTalks` a ser definido em breve retorna uma matriz de palestras que mudaram desde um determinado tempo. Se retornar um `array` vazio significa que o servidor ainda não tem nada para armazenar no objeto de resposta e enviar de volta para o cliente(usando `waitForChanges`), o que pode também ser respondida em um momento posterior.
+Caso contrário o parâmetro `changeSince` tem que ser verificado primeiro para certificar de que é um número válido. A função `getChangedTalks` a ser definido em breve retorna um `array` de palestras que mudaram desde um determinado tempo. Se retornar um `array` vazio significa que o servidor ainda não tem nada para armazenar no objeto de resposta e retorna de volta para o cliente(usando `waitForChanges`), o que pode também ser respondida em um momento posterior.
 
 ```js
 var waiting = [];
@@ -365,11 +362,11 @@ function waitForChanges(since, response) {
 }
 ```
 
-O método `splice` é utilizado para cortar um pedaço de uma matriz. Você dá um índice e uma série de elementos para transforma a matriz removendo o restante do elementos após o índice dado. Neste caso nós removemos um único elemento o objeto que controla a resposta de espera cujo índice encontramos chamando `indexOf`. Se você passar argumentos adicionais para `splice` seus valores serão inseridas na matriz na posição determinada substituindo os elementos removidos.
+O método `splice` é utilizado para cortar um pedaço de um `array` `array`. Você dá um índice e uma série de elementos para transforma é um `array` removendo o restante dos elementos após o índice dado. Neste caso nós removemos um único elemento do objeto que controla a resposta de espera cujo índice encontramos pelo `indexOf`. Se você passar argumentos adicionais para `splice` seus valores serão inseridas no `array` na posição determinada substituindo os elementos removidos.
 
-Quando um objeto de resposta é armazenado na matriz de espera o tempo de espera é ajustado imediatamente. Passados 90 segundos o tempo limite vê se o pedido está ainda à espera e se for, envia uma resposta vazia e remove a espera a partir da matriz.
+Quando um objeto de resposta é armazenado no `array` de espera o tempo de espera é ajustado imediatamente. Passados 90 segundos o tempo limite vê se o pedido está ainda à espera e se estiver ele envia uma resposta vazia e remove a espera a partir do `array`.
 
-Para ser capaz de encontrar exatamente essas palestras que foram alterados desde um determinado ponto no tempo precisamos acompanhar o histórico de alterações. Registrando uma mudança com `registerChange` podemos escutar as mudança juntamente com o tempo atual em um `array` chamado de `waiting`. Quando ocorre uma alteração isso significa que há novos dados, então todos os pedidos em espera podem serem respondidos imediatamente.
+Para ser capaz de encontrar exatamente essas palestras que foram alterados desde um determinado tempo precisamos acompanhar o histórico de alterações. Registrando uma mudança com `registerChange`, podemos escutar as mudança juntamente com o tempo atual do `array` chamado de `waiting`. Quando ocorre uma alteração isso significa que há novos dados, então todos os pedidos em espera podem serem respondidos imediatamente.
 
 ```js
 var changes = [];
@@ -383,7 +380,7 @@ function registerChange(title) {
 }
 ```
 
-Finalmente `getChangedTalks` podera usar a matriz de mudanças para construir uma série de palestras alteradas,incluindo no objetos uma propriedade de `deleted` para as palestras que não existem mais. Ao construir essa matriz `getChangedTalks` tem de garantir que ele não incluiu a mesma palestra duas vezes; isso pode acontecer se houver várias alterações em uma palestra desde o tempo dado.
+Finalmente `getChangedTalks` podera usar o `array` de mudanças para construir uma série de palestras alteradas, incluindo no objetos uma propriedade de `deleted` para as palestras que não existem mais. Ao construir esse `array`, `getChangedTalks` tem de garantir que ele não incluiu a mesma palestra duas vezes; isso pode acontecer se houver várias alterações em uma palestra desde o tempo dado.
 
 ```js
 function getChangedTalks(since) {
@@ -414,7 +411,7 @@ A parte do cliente é onde vamos gerenciar as palestras, basicamente isso consis
 
 #### HTML
 
-Servir arquivos com o nome de `index.html` é uma convenção amplamente utilizado para servidores web quando uma solicitação é feita diretamente para um `path` que corresponde a um diretório. O módulo de um servidor de arquivos que usamos, `ecstatic`, suporta esta convenção. Quando um pedido é feito para o `path` `/` o servidor procura pelo arquivo em `./public/index.html`(`./public` é a raiz que especificamos) e retorna esse arquivo se for encontrado.
+Servir arquivos com o nome de `index.html` é uma convenção amplamente utilizado para servidores web quando uma solicitação é feita diretamente de um `path` que corresponde a um diretório. O módulo de um servidor de arquivos que usamos, o `ecstatic`, suporta esta convenção. Quando um pedido é feito para o `path` `/` o servidor procura pelo arquivo em `./public/index.html`(`./public` é a raiz que especificamos) e retorna esse arquivo se for encontrado.
 
 Se quisermos uma página para mostrar quando um navegador está apontado para o nosso servidor, devemos coloca-la em `public/index.html`. Esta é a maneira que o nosso arquivo `index` começa:
 
@@ -431,7 +428,7 @@ Se quisermos uma página para mostrar quando um navegador está apontado para o 
 <div id="talks"></div>
 ```
 
-Ele define o título do documento e inclui uma folha de estilo que define alguns estilos, adicionei uma borda em torno de palestras. Em seguida ele adiciona um `input` de nome. É esperado que o usuário coloque seu nome para que ele possa ser redirecionado para observação das palestras.
+Ele define o título do documento e inclui uma folha de estilo que define alguns estilos, adicionei uma borda em torno de palestras. Em seguida ele adiciona um `input` de nome. É esperado que o usuário coloque seu nome para que ele possa ser redirecionado para a observação das palestras.
 
 O elemento `<div>` com o `id` "talks" conterá a lista atual de todas as palestras. O script preenche a lista quando recebe as palestras do servidor.
 
@@ -447,7 +444,7 @@ Segue o formulário que é usado para criar uma nova palestra:
 </form>
 ```
 
-Um script irá adicionar um manipulador de eventos de `"submit"`  para este formulário, a partir do qual ele pode fazer a solicitação HTTP que informa ao servidor sobre a palestra.
+Um script irá adicionar um manipulador de evento `"submit"`  para este formulário, a partir do qual ele pode fazer a solicitação HTTP que informa ao servidor sobre a palestra.
 
 Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição definido como `none`, impedindo que ele apareça na página. Você consegue adivinhar para o que é?
 
@@ -470,9 +467,9 @@ Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição d
 </div>
 ```
 
-Criar estruturas de DOM complicadas com JavaScript produz código feio. Você pode tornar o código um pouco melhor através da introdução de funções auxiliares como a função `elt` do capítulo 13, mas o resultado ainda vai ficar pior do que no HTML, que pode ser pensado como uma linguagem de domínio específico para expressar estruturas DOM.
+Criar estruturas de DOM com JavaScript é complicado e produz um código feio. Você pode tornar o código um pouco melhor através da introdução de funções auxiliares como a função `elt` do capítulo 13, mas o resultado ainda vai ficar pior do que no HTML, que foi pensado como uma linguagem de domínio específico para expressar estruturas DOM.
 
-Para criar uma estrutura DOM para as palestras, o nosso programa vai definir um sistema de `templates` simples, que utiliza estruturas DOM escondidos incluídos no documento para instanciar novas estruturas DOM, substituindo os espaços reservados entre chaves duplas para os valores de uma palestra específica.
+Para criar uma estrutura DOM para as palestras, o nosso programa vai definir um sistema de `templates` simples que utiliza estruturas DOM escondidos incluídos no documento para instanciar novas estruturas DOM, substituindo os espaços reservados entre chaves duplas para os valores de uma palestra específica.
 
 Por fim, o documento HTML inclui um arquivo de `script` que contém o código do lado do cliente.
 
@@ -481,6 +478,8 @@ Por fim, o documento HTML inclui um arquivo de `script` que contém o código do
 ```
 
 #### O inicio
+
+<- Parei aqui
 
 A primeira coisa que o cliente tem que fazer quando a página é carregada é pedir ao servidor um conjunto atual de palestras. Uma vez que estamos indo fazer um monte de solicitações `HTTP`, vamos novamente definir um pequeno invólucro em torno `XMLHttpRequest`, que aceita um objeto para configurar o pedido, bem como um callback para chamar quando o pedido for concluído.
 
@@ -730,7 +729,7 @@ Porém cuidado, as palestras começam como um protótipo menos como um objeto pa
 
 A maioria dos sistemas de templates fazer mais do que apenas preencher algumas strings. No mínimo permitem a inclusão de condicional em alguma parte do template com a chave `if` ou uma repetição do pedaço de um template semelhante a um `while`.
 
-Se fomos capazes de repetir um pedaço de template para cada elemento em uma matriz, não precisaríamos de um segundo template ("comment"). Em vez disso poderíamos especificar que o template "talk" verifique os conjuntos das propriedade de uma palestra e dos comentários reliazando um interação para cada comentário que esteja no array de comentários.
+Se fomos capazes de repetir um pedaço de template para cada elemento em uma `array`, não precisaríamos de um segundo template ("comment"). Em vez disso poderíamos especificar que o template "talk" verifique os conjuntos das propriedade de uma palestra e dos comentários reliazando um interação para cada comentário que esteja no array de comentários.
 
 Ele poderia ser assim:
 
@@ -742,7 +741,7 @@ Ele poderia ser assim:
 </div>
 ```
 
-A idéia é que sempre que um nó com um atributo `template-repeat` é encontrado durante instanciação do template, o código faz um loop sobre a matriz na propriedade chamada por esse atributo. Para cada elemento na matriz ele adiciona um exemplo de nó. Contexto do template(a variável de valores em `instantiateTemplate`) iria durante este ciclo apontar para o elemento atual da matriz para que `{{author}}` seja o objeto de comentário e não o contexto original(a `talk`).
+A idéia é que sempre que um nó com um atributo `template-repeat` é encontrado durante instanciação do template, o código faz um loop sobre a `array` na propriedade chamada por esse atributo. Para cada elemento na `array` ele adiciona um exemplo de nó. Contexto do template(a variável de valores em `instantiateTemplate`) iria durante este ciclo apontar para o elemento atual da `array` para que `{{author}}` seja o objeto de comentário e não o contexto original(a `talk`).
 
 Reescreva `instantiateTemplate` para implementar isso e, em seguida altere os templates para usar este recurso e remover a prestação explícita dos comentários da função `drawTalk`.
 
@@ -750,7 +749,7 @@ Como você gostaria de acrescentar instanciação condicional de nós tornando-s
 
 **Dica:**
 
-Você poderia mudar `instantiateTemplate` de modo que sua função interna leva não apenas um nó mas também um contexto atual como um argumento. Você pode verificar se um loop sobre nós filhos de um nó tem um atributo filho em `template-repeat`. Se isso acontecer não instancie, em vez de um loop sobre a matriz indicada pelo valor do atributo instancie uma vez para cada elemento da matriz, passando o elemento da matriz atual como contexto.
+Você poderia mudar `instantiateTemplate` de modo que sua função interna leva não apenas um nó mas também um contexto atual como um argumento. Você pode verificar se um loop sobre nós filhos de um nó tem um atributo filho em `template-repeat`. Se isso acontecer não instancie, em vez de um loop sobre a `array` indicada pelo valor do atributo instancie uma vez para cada elemento da `array`, passando o elemento da `array` atual como contexto.
 
 Condicionais pode ser implementado de uma forma semelhante com atributos de chamadas, por exemplo `template-when` e `template-unless` quando inserido no template ele ira instanciar ou não um nó dependendo de uma determinada propriedade que pode ser verdadeiro ou falso.
 

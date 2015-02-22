@@ -75,9 +75,6 @@ Como vimos no exemplo, o navegador irá fazer um 'request' quando submetermos um
 
 Um website moderadamente complicado pode ter fácilmente algo em torno de 10 a 200 recursos. Para conseguir pegar estes recursos rápidamente, os navegadores irão realizar diversos 'requests' simultaneamente, ao invés de esperar pelo retorno da resposta de cada 'request' feito. Tais documentos são sempre pegos utilizando o método GET para os pedidos.
 
-<<<<<<< HEAD
-HTML pages may include forms, which allow the user to fill out information and send it to the server. This is an example of a form:
-=======
 ###Páginas de HTML 
 
 Páginas de HTML podem incluir formulários, que permitem que o usuário preencha informações e as envie para o servidor. Este é um exemplo de formulário:

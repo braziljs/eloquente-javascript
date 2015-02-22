@@ -295,7 +295,7 @@ Por padrão, `drawImage` vai desenhar a imagem em seu tamanho original. Você ta
 
 Isso pode ser usado para embalar várias sprites(elementos de imagem) em um único arquivo de imagem, em seguida desenhar apenas a parte que você precisa. Por exemplo, nós temos esta imagem contendo uma personagem do jogo em várias poses:
 
-![img](http://eloquentjavascript.net/img/player_big.png)
+![Player big](../img/player_big.png)
 
 Ao alternar a pose que traçamos, podemos mostrar uma animação que que simula o movimento de andar do personagem.
 
@@ -353,7 +353,7 @@ Há vários outros métodos além de `scale` que influenciam no sistema de coord
 
 Então se nós fizermos um `translate` de 10 pixels na horizontal por duas vezes, tudo será desenhada 20 pixels para a direita. Se primeiro mover o centro do sistema de coordenadas de (50,50) e em seguida girar 20 graus(0.1π em radianos) a rotação vai acontecer em torno do ponto (50,50).
 
-![img](http://i.imgur.com/2js2RCw.png)
+![Transform](../img/transform.png)
 
 Mas se nós primeiro girarmos 20 graus e em seguida aplicarmos um `translate` de (50,50), o `translate` ira acontecer na rotação do sistema de coordenadas e assim produzir uma orientação diferente. A ordem em que as transformações são aplicadas sera assunto nos próximos tópicos.
 
@@ -369,7 +369,7 @@ function flipHorizontally(context, around) {
 
 Nós deslocamos o `eixo-y` para onde queremos que o nosso espelho fique e aplicamos, finalmente deslocamos o `eixo-y` de volta ao seu lugar adequado no universo espelhado. O quadro a seguir explica por que isso funciona:
 
-![img](http://i.imgur.com/m65HwcW.png)
+![Mirror](../img/mirror.png)
 
 Isto mostra o sistemas de coordenadas antes e após o espelhamento do outro lado da linha central. Se desenharmos um triângulo em uma posição positiva x, estaria por padrão no lugar onde triângulo 1 esta. Uma chamada para `flipHorizontally` faz primeiro um `translate` para a direita, o que nos leva ao triângulo 2. Em seguida `scale` é lançado e o triângulo volta para a posição 3. Este não é o lugar onde ele deveria estar se fosse espelhada na linha dada. O segundo `translate` para correções da chamadas esta cancelando o `translate` inicial e faz triângulo 4 aparecer exatamente onde deveria.
 
@@ -544,7 +544,7 @@ CanvasDisplay.prototype.drawBackground = function() {
 
 Azulejos que não estão vazias(null) são desenhados com `drawImage`. A imagem `otherSprites` contém os outros elementos do jogo. Como os azulejos da parede, a telha de lava, e o sprite para uma moeda.
 
-![img](http://eloquentjavascript.net/img/sprites_big.png)
+![Sprite big](../img/sprites_big.png)
 
 Azulejos de fundo são 20 por 20 pixels, usaremos a mesma escala que usamos no `DOMDisplay`. Assim o deslocamento para telhas de lava é de 20(o valor da variável de escala) e o deslocamento para paredes é 0.
 
@@ -561,7 +561,6 @@ playerSprites.src = "img/player.png";
 var playerXOverlap = 4;
 
 CanvasDisplay.prototype.drawPlayer = function(x, y, width,
-																							height) {
 	var sprite = 8, player = this.level.player;
 	width += playerXOverlap * 2;
 	x -= playerXOverlap;
@@ -577,10 +576,7 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width,
 	if (this.flipPlayer)
 		flipHorizontally(this.cx, x + width / 2);
 
-	this.cx.drawImage(playerSprites,
-										sprite * width, 0, width, height,
-										x,              y, width, height);
-
+	this.cx.drawImage(playerSprites, sprite * width, 0, width, height, x, y, width, height);
 	this.cx.restore();
 };
 ```
@@ -668,7 +664,7 @@ Escreva um programa que tira as seguintes formas de uma tela:
 - Uma espiral composta de 100 segmentos de linha reta
 - Uma estrela amarela
 
-![img](http://eloquentjavascript.net/img/exercise_shapes.png)
+![Exercise shapes](../img/exercise_shapes.png)
 
 Ao desenhar os dois últimos, você pode querer referir-se a explicação do `Math.cos` e `Math.sin` do capítulo 13 que descreve como obter coordenadas em um círculo usando essas funções.
 

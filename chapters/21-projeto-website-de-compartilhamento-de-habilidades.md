@@ -6,7 +6,7 @@ Tais reuniões muitas vezes também são chamados de grupos de usuários quando 
 
 Neste último capítulo do projeto o nosso objetivo é a criação de um site para gerenciar estas palestras dadas em um encontro de compartilhamento de habilidade. Imagine um pequeno grupo de pessoas que se encontra regularmente no escritório de um dos membros para falar sobre Monociclo. O problema é que quando um organizador de alguma reunião anterior muda de cidade ninguém se apresentara para assumir esta tarefa. Queremos um sistema que permite que os participantes proponha e discuta as palestras entre si sem um organizador central.
 
-![](http://i.imgur.com/2rIVEWv.png)
+![Unicyble](../img/unicycle.png)
 
 Assim como no capítulo anterior, o código neste capítulo é escrito em Node.js, e executá-lo diretamente em uma página HTML é improvável que funcione. O código completo para o projeto pode ser baixado [aqui](eloquentjavascript.net/code/skillsharing.zip).
 
@@ -16,7 +16,7 @@ Há uma parte do servidor para este projeto escrito em Node.js e uma parte do cl
 
 O servidor mantém uma lista de palestras propostas para a próxima reunião e o cliente mostra esta lista. Cada palestra tem um nome do apresentador, um título, um resumo e uma lista de comentários dos participantes. O cliente permite que os usuários proponha novas palestras(adicionando a lista), exclua as palestras, e comente sobre as palestras existentes. Sempre que o usuário faz tal mudança o cliente faz uma solicitação HTTP para informar para o servidor o que fazer.
 
-![](http://eloquentjavascript.net/img/skillsharing.png)
+![Skill Sharing](../img/skillsharing.png)
 
 O aplicativo será configurada para mostrar uma exibição em tempo real das atuais palestras propostas e seus comentários. Sempre que alguém apresentar uma nova palestra ou adicionar um comentário, todas as pessoas que têm a página aberta no navegador devem vizualizarem a mudança imediatamente. Isto coloca um pouco de um desafio, pois não há `path` para um servidor web abrir uma conexão com um cliente nem há uma boa maneira de saber o que os clientes está olhando atualmente no site.
 

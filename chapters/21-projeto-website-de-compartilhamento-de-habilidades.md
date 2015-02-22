@@ -479,9 +479,7 @@ Por fim, o documento HTML inclui um arquivo de `script` que contém o código do
 
 #### O inicio
 
-<- Parei aqui
-
-A primeira coisa que o cliente tem que fazer quando a página é carregada é pedir ao servidor um conjunto atual de palestras. Uma vez que estamos indo fazer um monte de solicitações `HTTP`, vamos novamente definir um pequeno invólucro em torno `XMLHttpRequest`, que aceita um objeto para configurar o pedido, bem como um callback para chamar quando o pedido for concluído.
+A primeira coisa que o cliente tem que fazer quando a página é carregada é pedir ao servidor um conjunto atual de palestras. Uma vez que estamos indo fazer um monte de solicitações `HTTP`, vamos novamente definir um pequeno invólucro em torno `XMLHttpRequest` que aceita um objeto para configurar o pedido, bem como um callback para chamar quando o pedido for concluído.
 
 ```js
 function request(options, callback) {
@@ -517,9 +515,9 @@ request({pathname: "talks"}, function(error, response) {
 });
 ```
 
-A variável `lastServerTime` é usado para controlar o tempo da última atualização que foi recebido do servidor. Após o pedido inicial as palestras exibidas pelo cliente corresponde ao tempo em que a resposta das palestras foi devolvida pelo servidor. Assim a propriedade `serverTime` incluído na resposta, fornece um valor inicial apropriado para `lastServerTime`.
+A variável `lastServerTime` é usado para controlar o tempo da última atualização que foi recebido do servidor. Após o pedido inicial as palestras exibidas pelo cliente corresponde ao tempo da resposta das palestras foi devolvida pelo servidor. Assim a propriedade `serverTime` incluído na resposta fornece um valor inicial apropriado para `lastServerTime`.
 
-Quando a solicitação falhar nós não queremos ter que a nossa página não faça nada sem explicação. Assim definimos uma função simples chamada de `reportError` que pelo menos irá mostra ao usuário uma caixa de diálogo que lhes diz que algo deu errado.
+Quando a solicitação falhar nós não queremos que a nossa página não faça nada sem explicação. Assim definimos uma função simples chamada de `reportError` que pelo menos irá mostra ao usuário uma caixa de diálogo que lhes diz que algo deu errado.
 
 ```js
 function reportError(error) {
@@ -528,13 +526,13 @@ function reportError(error) {
 }
 ```
 
-A função verifica se existe um erro real, ele irá alerta somente quando houver um. Dessa forma podemos também passar diretamente esta função para solicitar pedidos onde podemos ignorar a resposta. Isso garante que, se a solicitação falhar, o erro é relatado para o usuário.
+A função verifica se existe um erro real, ele irá alertar somente quando houver um. Dessa forma podemos também passar diretamente esta função para solicitar pedidos onde podemos ignorar a resposta. Isso garante que se a solicitação falhar o erro é relatado para o usuário.
 
 #### Resultados das palestras
 
-Para ser capaz de atualizar a visualização das palestras quando as mudanças acontecem, o cliente deve manter a par das palestras que ele está mostrando. Dessa forma quando uma nova versão de uma palestra que já está na tela vem, a palestra pode ser substituído (no local) com a sua forma atualizada. Da mesma forma, quando a informação que vem de uma palestra está a ser eliminada, o elemento DOM pode ser removido direto do documento.
+Para ser capaz de atualizar a visualização das palestras quando as mudanças acontecem o cliente deve manter a par das palestras que estão sendo mostradas. Dessa forma quando uma nova versão de uma palestra que já está na tela vem a palestra pode ser substituído com a sua forma atualizada. Da mesma forma quando a informação que vem de uma palestra deve ser eliminada o elemento DOM pode ser removido direto do documento.
 
-A função `displayTalks` é usada tanto para construir a tela inicial e atualizá-la quando algo muda. Ele vai usar o objeto `shownTalks`, que associa os títulos da palestras com os nós DOM para lembrar das palestras que tem atualmente na tela.
+A função `displayTalks` é usada tanto para construir a tela inicial e atualizá-la quando algo muda. Ele vai usar o objeto `shownTalks` que associa os títulos da palestras com os nós DOM para lembrar das palestras que tem atualmente na tela.
 
 ```js
 var talkDiv = document.querySelector("#talks");
@@ -562,7 +560,7 @@ function displayTalks(talks) {
 
 Construir a estrutura DOM para as palestras serão feitas usando os `templates` que foram incluídas no documento HTML. Primeiro temos que definir `instantiateTemplate` que verifica e preenche com um `template`.
 
-O parâmetro `name` é o nome do `template`. Para buscar o elemento de `templates`, buscamos um elemento cujo nome da classe corresponda ao nome do `template` que é filho do elemento com ID "template". Usando o método `querySelector` facilita essa busca. Temos `templates` nomeados como "talk" e "comment" na página HTML.
+O parâmetro `name` é o nome do `template`. Para buscar o elemento de `templates` buscamos um elemento cujo nome da classe corresponda ao nome do `template` que é filho do elemento com id do `template`. O método `querySelector` facilita essa busca. Temos `templates` nomeados como `talk` e `comment` na página HTML.
 
 ```js
 function instantiateTemplate(name, values) {
@@ -588,11 +586,11 @@ function instantiateTemplate(name, values) {
 }
 ```
 
-O método `cloneNode` que tem em todos os nós DOM, cria uma cópia de um nó. Ele não copia os nós filhos do nó a menos que `true` é dada como primeiro argumento. A função instancia recursivamente uma cópia do `template` preenchendo onde o `template` deve aparecer.
+O método `cloneNode` tem em todos os nós DOM, ele cria uma cópia de um nó. Ele não copia os filhos do nó a menos que `true` é enviado como primeiro argumento. A função instancia recursivamente uma cópia do `template` preenchendo onde o `template` deve aparecer.
 
-O segundo argumento para `instantiateTemplate` deve ser um objecto cujas propriedades deve ser `strings` com os mesmos atributos que estão presente no `teplate`. Um espaço reservado como `{{title}}` será substituído com o valor da propriedade de valor do atributo `title`.
+O segundo argumento para `instantiateTemplate` deve ser um objecto cujas propriedades são `strings` com os mesmos atributos que estão presente no `teplate`. Um espaço reservado como `{{title}}` será substituído com o valor da propriedade do atributo `title`.
 
-Esta é uma abordagem básica para a implementação de `template`, mas é suficiente para implementar o `drawTalk`.
+Esta é uma abordagem básica para a implementação de um `template`, mas é suficiente para implementar o `drawTalk`.
 
 ```js
 function drawTalk(talk) {
@@ -616,11 +614,11 @@ function drawTalk(talk) {
 }
 ```
 
-Depois de instanciar o `template` de "talk" há várias coisas que precisam ser remendadas. Em primeiro lugar os comentários têm de ser preenchidos pelo `template` "comments" e anexando os resultados no nó com a class "commnets". Em seguida, os manipuladores de eventos tem que anexar um botão que apaga a palestra e um formulário que adiciona um novo comentário.
+Depois de instanciar o `template` de `talk` há várias coisas que precisam serem feitas. Em primeiro lugar os comentários têm de ser preenchidos pelo `template comments` e anexar os resultados no nó com na classe `commnets`. Em seguida os manipuladores de eventos tem que anexar um botão que apaga a palestra e um formulário que adiciona um novo comentário.
 
 #### Atualizando o servidor
 
-Os manipuladores de eventos registrados pela `drawTalk` chamam o a função `deleteTalk` e `addComment` para executar as ações reais necessários para excluir uma conversa ou adicionar um comentário. Estes terão de construirem URLs que se referem as palestras com um determinado título, para o qual se define a função auxiliar de `talkURL`.
+Os manipuladores de eventos registrados pela `drawTalk` chamam a função `deleteTalk` e `addComment` para executar as ações necessárias para excluir uma palestra ou adicionar um comentário. Estes terão de construirem as URLs que se referem as palestras com um determinado título para o qual se define a função auxiliar de `talkURL`.
 
 ```js
 function talkURL(title) {
@@ -649,7 +647,7 @@ function addComment(title, comment) {
 }
 ```
 
-A variável `nameField` é usado para definir a propriedade o autor do comentário, é uma referência do campo `<input>` na parte superior da página que permite que o usuário especifique o seu nome. Nós também inserimos o nome no `localStorage` para que ele não tem que ser preenchido novamente a cada vez que a página é recarregada.
+A variável `nameField` é usado para definir a propriedade autor de um comentário com referência do campo `<input>` na parte superior da página que permite que o usuário especifique o seu nome. Nós também inserimos o nome no `localStorage` para que ele não tem que ser preenchido novamente a cada vez que a página é recarregada.
 
 ```js
 var nameField = document.querySelector("#name");
@@ -661,7 +659,7 @@ nameField.addEventListener("change", function() {
 });
 ```
 
-O formulário na parte inferior da página propoe uma nova conversa, recebe um manipulador de evento `"submit"`. Este manipulador impede efeito padrão do evento(o que causaria um recarregamento da página) passando a ter o comportamento de limpa o formulário e dispara uma solicitação PUT para criar uma a conversa.
+O formulário na parte inferior da página propoe uma nova palestra, ele recebe um manipulador de evento `"submit"`. Este manipulador impede o efeito padrão do evento(o que causaria um recarregamento da página) passando a ter o comportamento de disparar uma solicitação PUT para criar uma palestra e limpar o formulário.
 
 ```js
 var talkForm = document.querySelector("#newtalk");
@@ -701,7 +699,7 @@ function waitForChanges() {
 }
 ```
 
-Esta função é chamada uma vez quando o programa inicia e em seguida continua a chamar assegurando que um pedido de `polling` está sempre ativo. Quando a solicitação falha, não podemos chamar o método `reportError` pois se o servidor cair a cada chamada uma popup iria aparecer para o usuário deixando nosso programa bem chato de usar. Em vez disso o erro é escrito no console(para facilitar a depuração) e uma outra tentativa é feita `two-and-a-half` segundos depois.
+Esta função é chamada uma vez quando o programa inicia e em seguida continua a chamar assegurando que um pedido de `polling` esteja sempre ativo. Quando a solicitação falhar não podemos chamar o método `reportError` pois se o servidor cair a cada chamada uma popup ira aparecer para o usuário deixando nosso programa bem chato de se usar. Em vez disso o `output` do erro deverá aparecer no console(para facilitar a depuração) e uma outra tentativa é feita em dois segundos e meio depois.
 
 Quando o pedido for bem-sucedido os novos dados é colocado na tela e `lastServerTime` é atualizado para refletir o fato de que recebemos dados correspondentes nesse novo momento. O pedido é imediatamente reiniciado para esperar pela próxima atualização.
 
@@ -719,17 +717,17 @@ Estenda o servidor e faça ele armazenar os dados da palestra em disco, e ache u
 
 **Dica:**
 
-A solução mais simples que posso dar para você codificar é transformar todas as palestras em objeto JSON e coloca-las em um arquivo usando `fs.writeFile`. Já existe uma função(`registerChange`) que é chamada toda vez que temos alterações de dados no servidor. Ele pode ser estendido para escrever os novos dados no disco.
+A solução mais simples que posso dar para você é transformar todas as palestras em objeto JSON e coloca-las em um arquivo usando `fs.writeFile`. Já existe uma função(`registerChange`) que é chamada toda vez que temos alterações no servidor. Ele pode ser estendido para escrever os novos dados no disco.
 
-Escolha um nome para o arquivo, por exemplo `./talks.json`. Quando o servidor é iniciado ele pode tentar ler esse arquivo com `fs.readFile` e se isso for bem sucedido o servidor pode usar o conteúdo do arquivo como seus dados iniciais.
+Escolha um nome para o arquivo, por exemplo `./talks.json`. Quando o servidor é iniciado ele pode tentar ler esse arquivo com `fs.readFile` e se isso for bem sucedido o servidor pode usar o conteúdo de arquivo como seus dados iniciais.
 
-Porém cuidado, as palestras começam como um protótipo menos como um objeto para que possa ser operado normalmente. `JSON.parse` retorna objetos regulares com `Object.prototype` como sendo seu protótipo. Se você usar `JSON` como formato de arquivo você terá que copiar as propriedades do objeto retornados por `JSON.parse` em um novo objeto menos como protótipo.
+Porém cuidado, as palestras começam como um protótipo menos como um objeto para que possa ser operado normalmente. `JSON.parse` retorna objetos regulares com `Object.prototype` como sendo do seu protótipo. Se você usar `JSON` como formato de arquivo você terá que copiar as propriedades do objeto retornados por `JSON.parse` em um novo objeto.
 
 #### Melhorias nos templates
 
-A maioria dos sistemas de templates fazer mais do que apenas preencher algumas strings. No mínimo permitem a inclusão de condicional em alguma parte do template com a chave `if` ou uma repetição do pedaço de um template semelhante a um `while`.
+A maioria dos sistemas de templates fazem mais do que apenas preencher algumas strings. No mínimo permitem a inclusão de condicional em alguma parte do template como `if` ou uma repetição de pedaço de um template semelhante a um `while`.
 
-Se fomos capazes de repetir um pedaço de template para cada elemento em uma `array`, não precisaríamos de um segundo template ("comment"). Em vez disso poderíamos especificar que o template "talk" verifique os conjuntos das propriedade de uma palestra e dos comentários reliazando um interação para cada comentário que esteja no array de comentários.
+Se fomos capazes de repetir um pedaço de template para cada elemento em uma `array` não precisaríamos de um segundo template (`comment`). Em vez disso poderíamos especificar que o template `talk` verifica os conjuntos das propriedade de uma palestra e dos comentários reliazando uma interação para cada comentário que esteja no `array`.
 
 Ele poderia ser assim:
 
@@ -741,15 +739,15 @@ Ele poderia ser assim:
 </div>
 ```
 
-A idéia é que sempre que um nó com um atributo `template-repeat` é encontrado durante instanciação do template, o código faz um loop sobre a `array` na propriedade chamada por esse atributo. Para cada elemento na `array` ele adiciona um exemplo de nó. Contexto do template(a variável de valores em `instantiateTemplate`) iria durante este ciclo apontar para o elemento atual da `array` para que `{{author}}` seja o objeto de comentário e não o contexto original(a `talk`).
+A idéia é que sempre que um nó com um atributo `template-repeat` é encontrado durante instanciação do template, o código faz um loop sobre a `array` na propriedade chamada por esse atributo. Para cada elemento do `array` ele adiciona um exemplo de nó. O contexto do template(a variável de valores em `instantiateTemplate`) durante este ciclo aponta para o elemento atual do `array` para que `{{author}}` seja o objeto de um comentário e não o contexto original do objeto `talk`.
 
-Reescreva `instantiateTemplate` para implementar isso e, em seguida altere os templates para usar este recurso e remover a prestação explícita dos comentários da função `drawTalk`.
+Reescreva `instantiateTemplate` para implementar isso e em seguida altere os templates para usar este recurso e remover a prestação explícita dos comentários da função `drawTalk`.
 
-Como você gostaria de acrescentar instanciação condicional de nós tornando-se possível omitir partes do template quando um determinado valor é verdadeira ou falsa?
+Como você gostaria de acrescentar a instanciação condicional de nós tornando-se possível omitir partes do template quando um determinado valor é verdadeira ou falsa?
 
 **Dica:**
 
-Você poderia mudar `instantiateTemplate` de modo que sua função interna leva não apenas um nó mas também um contexto atual como um argumento. Você pode verificar se um loop sobre nós filhos de um nó tem um atributo filho em `template-repeat`. Se isso acontecer não instancie, em vez de um loop sobre a `array` indicada pelo valor do atributo instancie uma vez para cada elemento da `array`, passando o elemento da `array` atual como contexto.
+Você poderia mudar `instantiateTemplate` de modo que sua função interna leve ou não apenas um nó mas também um contexto atual como um argumento. Você pode verificar se um loop sobre nós filhos de um nó tem um atributo filho em `template-repeat`. Se isso acontecer não instancie, em vez de um loop sobre o `array` indicada pelo valor do atributo instancie uma vez para cada elemento da `array` passando o elemento do `array` atual como contexto.
 
 Condicionais pode ser implementado de uma forma semelhante com atributos de chamadas, por exemplo `template-when` e `template-unless` quando inserido no template ele ira instanciar ou não um nó dependendo de uma determinada propriedade que pode ser verdadeiro ou falso.
 
@@ -757,16 +755,16 @@ Condicionais pode ser implementado de uma forma semelhante com atributos de cham
 
 Quando alguém visita o nosso site com um navegador que tenha JavaScript desabilitado ou o navegador que não suporta a execução de JavaScript eles vão conseguir ver uma página inoperável e completamente quebrado. Isso não é bom.
 
-Alguns tipos de aplicações web realmente não pode ser feito sem JavaScript. Para outros você simplesmente não tem o orçamento ou paciência para se preocupar com os clientes que não podem executar scripts. Mas para páginas com um grande público é uma forma educado apoiar os usuários que não tenha suporte a script.
+Alguns tipos de aplicações web realmente não pode ser feito sem JavaScript. Para outros você simplesmente não tem o orçamento ou paciência para se preocupar com os clientes que não podem executar scripts. Mas para páginas com um grande público é uma forma educada apoiar os usuários que não tenha suporte a script.
 
-Tente pensar de uma maneira com que o site de compartilhamento de habilidade poderia ser configurado para preservar a funcionalidade básica quando executado sem JavaScript. As atualizações automáticas não seria mais suportada e as pessoas vão ter que atualizar sua página da maneira antiga. Seria bom sermos capazes de possibilitar esses usuários de ver as palestras existentes, criar novas e apresentar comentários apenas.
+Tente pensar de uma maneira com que o site de compartilhamento de habilidade poderia ser configurado para preservar a funcionalidade básica quando executado sem JavaScript. As atualizações automáticas não seria mais suportada e as pessoas vão ter que atualizar sua página da maneira antiga. Seria bom sermos capazes de possibilitar esses usuários de ver as palestras existentes, criar novas e apresentar comentários.
 
-Não se sinta obrigado a implementar isso. Esboçando uma solução é o suficiente. Será que a abordagem vista é mais ou menos elegante do que o que fizemos inicialmente?
+Não se sinta obrigado a implementar isso. Esboçar uma solução é o suficiente. Será que a abordagem vista é mais ou menos elegante do que o que fizemos inicialmente?
 
 **Dica:**
 
-Dois aspectos centrais da abordagem feita neste capítulo como interface HTTP e um `template` do lado do cliente de renderização  não funcionam sem JavaScript. Formulários HTML normais podem enviar solicitações GET e POST, mas não solicitações PUT ou DELETE e os dados podem serem enviados apenas por uma URL fixa.
+Dois aspectos centrais da abordagem feita neste capítulo como interface HTTP e um `template` do lado do cliente de renderização  não funcionam sem JavaScript. Formulários HTML normais podem enviar solicitações `GET` e `POST`, mas não solicitações `PUT` ou `DELETE` e os dados podem serem enviados apenas por uma URL fixa.
 
-Assim o servidor teria que ser revisto para aceitar comentários, novas palestras e remover palestras através de solicitações POST, cujos corpos não podem serem JSONs, então devemos converter para o formato codificado em um URL para conseguirmos usar os formulários HTML(ver Capítulo 17). Estes pedidos teria que retornar a nova página inteira para que os usuários vejam os novos estados depois que fazirem alguma mudança. Isso não seria muito difícil de fazer e poderia ser aplicado conjuntamente com uma interface HTTP mais "clean".
+Assim o servidor teria que ser revisto para aceitar comentários, novas palestras e remover palestras através de solicitações POST, cujos corpos não podem serem JSONs, então devemos converter para o formato codificado em um URL para conseguirmos usar os formulários HTML(ver Capítulo 17). Estes pedidos teria que retornar a nova página inteira para que os usuários vejam os novos estados depois que é feito alguma mudança. Isso não seria muito difícil de fazer e poderia ser aplicado conjuntamente com uma interface HTTP mais "clean".
 
-O código para mostrar as palestras teria que ser duplicado no servidor. O arquivo `index.html` ao invés de ser um arquivo estático, teria de ser gerado dinamicamente adicionando um manipulador para que o roteador incluia as palestras e comentários atuais quando é servido.
+O código para mostrar as palestras teria que ser duplicado no servidor. O arquivo `index.html` ao invés de ser um arquivo estático, teria de ser gerado dinamicamente adicionando um manipulador para que o roteador incluia as palestras e comentários atuais quando for servido.

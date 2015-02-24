@@ -14,7 +14,7 @@ Este capítulo vai falar sobre a implementação de um jogo de plataforma simple
 
 Nosso jogo será mais ou menos baseado em **Dark blue** por Thomas Palef. Eu escolhi este jogo porque é divertido, minimalista e pode ser construído sem muito código. Observe:
 
-![image](http://i.imgur.com/JNqX4Y0.png)
+![Dark blue](../img/darkblue.png)
 
 A caixa escura representa o jogador cuja a tarefa é coletar as caixas amarelas(moedas) evitando o material vermelho(lava). Um `Level` é concluído quando todas as moedas forem recolhidas.
 
@@ -428,7 +428,7 @@ Level.prototype.obstacleAt = function(pos, size) {
 
 Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
 
-![images](http://i.imgur.com/jXvUMXC.png)
+![Game grid](../img/game_grid.png)
 
 Se o corpo se sobressai do `Level`, sempre retornaremos `"wall"` para os lados e na parte superior e `"lava"` para o fundo. Isso garante que o jogador morra ao cair para fora do mundo. Quando o corpo esta totalmente no interior da `grid`, nosso loop sobre o bloco de quadradros encontra as coordenadas por arredondamento e retorna o conteúdo do primeira `nonempty`.
 

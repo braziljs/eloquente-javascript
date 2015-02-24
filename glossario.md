@@ -2,11 +2,11 @@ Body - Corpo
 Client - Cliente
 Encoded - Codificado
 Prefetch - Pré-carregar
-Query String -'String' de pesquisa
+Query String - String de pesquisa
 Resource - Recurso
-Request - 'Request'
+Request - Request
 Response - Resposta
-String - 'String'
+String - String
 URL Encoding - Codificação da URL
 touched - Tocado?
 DOM nodes - nós do DOM?

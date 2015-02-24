@@ -146,61 +146,54 @@ No capítulo 5, nós vamos discutir as coisas maravilhosas que podem ser feitas 
 
 ## Notação Por Declaração
 
-Existe uma forma ligeiramente mais curta para dizer "`var x = function...`". A palavra-chave `function` também pode ser usada no início da declaração, para produzir uma instrução de declaração da função.
+Existe uma maneira mais simples de expressar “`var square = function…`”. A palavra-chave `function` também pode ser usada no início da declaração, como demonstrado abaixo:
 
 ```js
-
-function square (x) {
-	return x * x;
+function square(x) {
+  return x * x;
 }
-
 ```
 
-Isso define a variável `square` e a aponta para a determinada função. Até ai tudo bem. Há uma sutileza com esta forma de definição de função:
+Isso é uma *declaração de função*. Ela define a variável `square` e faz com que ela referencie a função em questão. Até aí tudo bem, porém existe uma pequena diferença nessa maneira de definir uma função.
 
 ```js
-
-console.log("The future says: ", future());
+console.log("The future says:", future());
 
 function future() {
-	return "Nós CONTINUAMOS não tendo carros voadores."
+  return "We STILL have no flying cars.";
 }
-
 ```
 
-Estas definições não fazem parte do fluxo de controle de cima para baixo. Elas são conceitualmente movidas para o topo, e podem ser usadas por todo o código no mesmo escopo. Isso algumas vezes é útil, pois permite que você coloque o código interessante no topo, e continue usando as definições de funções abaixo.
+O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de função não fazem parte do fluxo normal de controle que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações porque nos permite ter liberdade na hora de ordenar o código de uma maneira que seja mais expressiva, sem se preocupar muito com o fato de ter que definir todas as funções antes de usá-las.
 
-O que acontece quando você coloca uma definição de função dentro de um bloco condicional `if`, ou um loop? Bom, não faça isso. Diferentes plataformas JavaScript (nos navegadores) tem tradicionalmente feito coisas diferentes nesta situação, e o último padrão realmente proíbe isto. Então, se você quiser que seus programas sejam consistentes, somente use essa forma de instruções por definição de função no bloco externo de uma função ou programa.
+O que acontece quando definimos uma declaração de função dentro de um bloco condicional (`if`), ou um laço de repetição? Bom, não faça isso. Diferentes plataformas JavaScript usadas em diferentes navegadores têm tradicionalmente feito coisas diferentes nessas situações, e a última versão basicamente proíbe essa prática. Se você deseja que suas aplicações se comportem de forma consistente, somente use essa forma de definição de função no bloco externo de uma outra função ou programa.
 
 ```js
-
-function example () {
-	function a () {} // Okay
-	if (something) {
-		function b () {} // Danger!
-	}
+function example() {
+  function a() {} // Okay
+  if (something) {
+    function b() {} // Danger!
+  }
 }
-
 ```
 
 ## A Pilha de Chamadas
 
-Acredito que vai ser útil dar uma olhada mais de perto na maneira como o controle flui através das funções. Aqui temos um simples programa fazendo algumas chamadas de funções:
+Será muito útil observamos como o fluxo de controle flui através das execuções das funções. Aqui temos um simples programa fazendo algumas chamadas de funções:
 
 ```js
-
-function greet (who) {
-	console.log("Hello" + who);
+function greet(who) {
+  console.log("Hello " + who);
 }
 greet("Harry");
 console.log("Bye");
-
 ```
 
-Uma *corrida* neste programa vai ser mais ou menos assim: A chamada a `greet` faz com que o controle pule para o início desta função (linha 2), que chama `console.log` (uma função embutida do navegador), permitindo que ele assuma o controle. Isso eventualmente termina, e o controle retorna para a linha 2. Nós chegamos no fim da função `greet`, então retornamos de volta ao lugar em que a chamamos, na linha 4. A linha após a chamada de `console.log()` novamente. Nós podemos mostrar o fluxo de controle esquematicamente assim:
+A execução desse programa funciona da seguinte forma: a chamada à função `greet` faz com que o controle pule para o início dessa função (linha 2). Em seguida, é invocado `console.log` (uma função embutida no navegador), que assume o controle, faz seu trabalho e então retorna o controle para a linha 2 novamente. O controle chega ao fim da função `greet` e retorna para o local onde a função foi invocada originalmente (linha 4). Por fim, o controle executa uma nova chamada a `console.log`.
+
+Podemos representar o fluxo de controle esquematicamente assim:
 
 ```
-
 top
    greet
         console.log
@@ -208,119 +201,107 @@ top
 top
    console.log
 top
-
 ```
 
-Tendo função, quando retorna, voltar ao local da chamada, o computador deve lembrar-se do contexto que a função foi chamada. Em um caso, `console.log` pulou para a função `greet`. Em outro caso, ele pularia para o fim do programa.
+Devido ao fato de que a função deve retornar ao local onde foi chamada após finalizar a sua execução, o computador precisa se lembrar do contexto no qual a função foi invocada originalmente. Em um dos casos, `console.log` retorna o controle para a função `greet`. No outro caso, ela retorna para o final do programa.
 
-O lugar onde este contexto é armazenado é o *call stack* (pilha de chamada). Toda vez que uma função é chamada, o contexto atual é colocado no topo desta "pilha" de contextos. Quando a função retorna, ela pega o topo do contexto desta pilha, e o usa para continuar a execução.
+O local onde o computador armazena esse contexto é chamado de *call stack* (pilha de chamadas). Toda vez que uma função é invocada, o contexto atual é colocado no topo dessa “pilha” de contextos. Quando a função finaliza sua execução, o contexto no topo da pilha é removido e utilizado para continuar o fluxo de execução.
 
-Essa pilha requer espaço da memória para ser armazenada. Quando ela aumenta demais, o computador vai enviar uma mensagem como "out of stack space" (fora do espaço da pilha) ou "too much recursion" (muitas recursões). O código seguinte ilustra isso - ele pergunta ao computador uma questão realmente difícil, que causa um infinito vai e vem entre duas funções. Ou melhor, isso vai ser infinito, se nós temos uma pilha infinita. Como é finita, ela vai ficar sem espaço e "explodir a pilha".
+Armazenar essa pilha de contextos necessita de espaço na memória do computador. Quando a pilha começa a ficar muito grande, o computador irá reclamar com uma mensagem do tipo “out of stack space” (sem espaço na pilha) ou “too much recursion” (muitas recursões). O código a seguir demonstra esse problema fazendo uma pergunta muito difícil para o computador, que resultará em um ciclo infinito de chamadas entre duas funções. Se o computador tivesse uma pilha de tamanho “infinito”, isso *poderia* ser possível, no entanto, iremos eventualmente chegar ao limite de espaço e “explodir a pilha”.
 
 ```js
-
-function chicken () {
-	return egg();
+function chicken() {
+  return egg();
 }
-function egg () {
-	return chicken();
+function egg() {
+  return chicken();
 }
 console.log(chicken() + " came first.");
-
+// → ??
 ```
 
 ## Argumentos Opcionais
 
-O código seguinte é permitido e executa sem problemas:
+O código abaixo é permitido e executa sem problemas:
 
 ```js
-
 alert("Hello", "Good Evening", "How do you do?");
-
-```
+``
 
 A função `alert` oficialmente aceita somente um argumento. No entanto, quando você a chama assim, ela não reclama. Ela simplesmente ignora os outros argumentos e lhe mostra "Hello".
 
-O JavaScript é extremamente tolerante sobre a quantidade de argumentos que você passa a uma função. Se você passa muitos, os extras são ignorados. Se você passar poucos, as variáveis para os parâmetros faltantes simplesmente receberão o valor `undefined`.
+O JavaScript é extremamente tolerante com a quantidade de argumentos que você passa para uma função. Se você passar mais argumentos que o necessário, os extras são ignorados. Se você passar menos argumentos, os parâmetros faltantes simplesmente receberão o valor `undefined`.
 
-A desvantagem disso é que possivelmente - e provavelmente - você vai passar um número errado de argumentos de forma acidental para as funções... e ninguém vai alertá-lo sobre isso.
+A desvantagem disso é que possivelmente - e provavelmente - você vai passar um número errado de argumentos de forma acidental para as funções e nada irá alertá-lo sobre isso.
 
-A vantagem é que este comportamento pode ser usado para uma função que pega estes argumentos "opcionais". Por exemplo, esta versão de `power` pode ser chamada com dois argumentos ou com um simples argumento, em que neste caso o expoente é dois, e a função se comporta como `square`.
+A vantagem é que esse comportamento pode ser usado em funções que aceitam argumentos “opcionais”. Por exemplo, essa nova versão de `power` pode ser chamada tanto com um ou dois argumentos. No caso de ser invocada com apenas um argumento, ela irá assumir o valor 2 para o expoente e a função irá se comportar como `square`.
 
 ```js
-
-function power (base, expoent) {
-	if (expoent == undefined)
-		expoent = 2;
-
-	var result = 1;
-	for (var count = 0; count < expoent; count++)
-		result *= base;
-
-	return result;
+function power(base, exponent) {
+  if (exponent == undefined)
+    exponent = 2;
+  var result = 1;
+  for (var count = 0; count < exponent; count++)
+    result *= base;
+  return result;
 }
 
 console.log(power(4));
-// 16
+// → 16
 console.log(power(4, 3));
-// 64
-
+// → 64
 ```
 
-No próximo capítulo, nós vamos ver uma forma em que o corpo de uma função pode pegar a lista exata de argumentos que foi passado. Isso é útil pois torna possível para a função aceitar qualquer número de argumentos. `console.log` faz uso disso - ela retorna todos os valores dados.
+No [TODO: adicionar link]próximo capítulo[/TODO], iremos ver uma maneira de acessar a lista que contém todos os argumentos que foram passados para uma função. Isso é útil pois torna possível uma função aceitar qualquer número de argumentos. Por exemplo, `console.log` tira proveito disso, imprimindo todos os valores que foram passados.
 
 ```js
-
 console.log("R", 2, "D", 2);
-// R 2 D 2
-
+// → R 2 D 2
 ```
 
 ## Closure
 
-A habilidade de tratar funções como valores, combinado com o fato que variáveis locais são "recriadas" todas as vezes que a função é chamada, traz à tona uma questão interessante. O que acontece com as variáveis locais quando a chamada de função que as criou não está mais ativa? O código seguinte ilustra isso:
+A habilidade de tratar funções como valores, combinado com o fato de que variáveis locais são “recriadas” todas as vezes que uma função é invocada, traz à tona uma questão interessante. O que acontece com as variáveis locais quando a função que as criou não está mais ativa?
+
+O código a seguir mostra um exemplo disso. Ele define uma função `wrapValue` que cria uma variável local e retorna uma função que acessa e retorna essa variável.
 
 ```js
-
-function wrapValue (n) {
-	var localVariable = n;
-	return function () { return localVariable };
+function wrapValue(n) {
+  var localVariable = n;
+  return function() { return localVariable; };
 }
 
 var wrap1 = wrapValue(1);
 var wrap2 = wrapValue(2);
 console.log(wrap1());
-// 1
+// → 1
 console.log(wrap2());
-// 2
-
+// → 2
 ```
 
-Quando `wrapValue` é chamada, ela cria uma variável local que armazena este parâmetro, e então retorna uma função que retorna essa variável local. Isso é permitido, e funciona como você esperaria - a variável sobrevive. De fato, instâncias múltiplas da variável podem estar vivas ao mesmo tempo, que é outra boa ilustração do conceito de que variáveis locais realmente são recriadas para toda chamada - chamadas diferentes não podem sobrepor outras variáveis locais.
+Isso é permitido e funciona como você esperaria: a variável ainda pode ser acessada. Várias instâncias da variável podem co-existir ao mesmo tempo, o que é uma boa demonstração do conceito de que variáveis locais são realmente recriadas para cada nova chamada, sendo que cada chamada não interfere nas variáveis locais uma das outras.
 
-Essa característica, nos torna capazes de referenciar uma instância específica de variáveis locais em uma função que as engloba, isso é chamado *closure*. Uma função que "fecha sobre" variáveis locais é chamada uma *closure*. Este comportamento não somente o liberta da preocupação sobre a vida das variáveis, como também permite usos criativos de valores da função.
+A funcionalidade de ser capaz de referenciar uma instância específica de uma variável local após a execução de uma função é chamada *closure*. Uma função que “closes over” (fecha sobre) variáveis locais é chamada de *closure*. Esse comportamento faz com que você não tenha que se preocupar com o tempo de vida das variáveis, como também permite usos criativos de valores de função.
 
-Com uma pequena mudança, podemos tornar a função exemplo em uma forma de criar funções que multiplicam por uma quantidade arbitrária:
+Com uma pequena mudança, podemos transformar o exemplo anterior possibilitando criar funções que multiplicam por um valor arbitrário.
 
 ```js
-
-function multiplier (factor) {
-	return function (number) {
-		return number * factor;
-	};
+function multiplier(factor) {
+  return function(number) {
+    return number * factor;
+  };
 }
 
 var twice = multiplier(2);
 console.log(twice(5));
-// 10
-
+// → 10
 ```
 
-A variável local explícita do exemplo `wrapNumber` não é necessária, pois um parâmetro é ele mesmo uma variável local.
+A variável explícita `localVariable` do exemplo com a função `wrapValue` não é necessária, pois o parâmetro em si já é uma variável local.
 
-Pensar sobre programas dessa forma requer um certo exercício. Um bom modelo mental é pensar a palavra-chave `function` como "congelando" o código em seu corpo, e envolvendo-o dentro de um pacote (valor). Então quando você lê `return function (...) {...}`, há um pedaço de computação sendo congelada para uso posterior, e um manipulador para esta computação será retornado.
+Pensar em programas que funcionam dessa forma requer um pouco de prática. Um bom modelo mental é pensar que a palavra-chave `function` “congela” o código que está em seu corpo e o envolve em um pacote (o valor da função). Quando você lê `return function(...) {...}`, pense como se estivesse retornando um manipulador que possibilita executar instruções computacionais que foram congeladas para um uso posterior.
 
-Esta computação congelada é retornada de `multiplier` e armazenada na variável `twice`. A última linha do exemplo então chama o valor nesta variável, fazendo com que o código envolto (`return number * factor;`) finalmente seja ativado. Ele continua tendo acesso à variável `factor` da chamada `multiplier` que o criou, e em adição ele tem acesso ao argumento que nós passamos a ele, 5, através do parâmetro `number`.
+No exemplo, `multiplier` retorna um pedaço de código congelado que fica armazenado na variável `twice`. A última linha do exemplo chama o valor armazenado nessa variável, fazendo com que o código congelado (`return number * factor;`) seja executado. Ele continua tendo acesso à variável `factor` que foi criada na chamada de `multiplier`, e além disso, ele tem acesso ao argumento que foi passado a ele (o valor 5), através do parâmetro `number`.
 
 ## Recursão
 

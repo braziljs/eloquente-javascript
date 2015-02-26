@@ -305,36 +305,35 @@ No exemplo, `multiplier` retorna um pedaço de código congelado que fica armaze
 
 ## Recursão
 
-É perfeitamente possível para uma função chamar a si própria. Uma função que chama a si mesma é denominada *recursiva*. Recursão permite a algumas funções serem escritas de uma forma divertida. Por exemplo, esta implementação alternativa de `power`:
+É perfeitamente aceitável uma função chamar a si mesma, contanto que se tenha cuidado para não sobrecarregar a pilha de chamadas. Uma função que chama a si mesma é denominada *recursiva*. A recursividade permite que as funções sejam escritas em um estilo diferente. Veja esse exemplo de uma implementação alternativa de `power`:
 
 ```js
-
-function power (base, exponent) {
-	if (exponent == 0)
-		return 1;
-	else
-		return base * power(base, exponent - 1);
+function power(base, exponent) {
+  if (exponent == 0)
+    return 1;
+  else
+    return base * power(base, exponent - 1);
 }
 
 console.log(power(2, 3));
-
+// → 8
 ```
 
-Essa é uma forma muito próxima que os matemáticos definem a exponenciação, e indiscutivelmente define o conceito de uma forma mais elegante que uma variação de loop faz. A função chama a si mesma múltiplas vezes com diferentes argumentos para alcançar a multiplicação repetida.
+Essa é a maneira mais próxima da forma que os matemáticos definem a exponenciação, descrevendo o conceito de uma forma mais elegante do que a variação que usa um laço de repetição. A função chama a si mesma várias vezes com diferentes argumentos para alcançar a multiplicação repetida.
 
-Temos um problema importante: Em implementações típicas no JavaScript, esta segunda versão é aproximadamente dez vezes mais lenta que a primeira. Rodar sobre um simples loop é muito mais barato que chamar uma função inúmeras vezes. Em cima disso, usando um expoente suficientemente grande para esta função pode fazer com que a pilha transborde.
+Entretanto, há um grave problema: em implementações típicas no JavaScript, a versão recursiva é aproximadamente dez vezes mais lenta do que a variação que utiliza um laço de repetição. Percorrer um laço de repetição simples é mais rápido do que invocar uma função múltiplas vezes.
 
-O dilema da velocidade versus a elegância é interessante. Quase todo programa pode ser feito mais rápido, tornando-o maior e mais complicado. Você pode ver isso como um tipo de disputa entre amigabilidade para homens ou máquinas.
+O dilema “velocidade vs. elegância” é bastante interessante. Você pode interpretá-lo como uma forma de transição gradual entre acessibilidade para humanos e máquina. Praticamente todos os programas podem se tornar mais rápidos quando se tornam maiores e mais complexos, cabendo ao desenvolvedor decidir qual o balanço ideal entre ambos.
 
-No caso da função `power` anterior, a versão não elegante (loop) é ainda assim simples e fácil de ser lida. Não tem muito sentido trocá-la pela versão recursiva. Muitas vezes, porém, os conceitos que um programa está lidando são tão complexos que dar mais eficiência ao invés de fazer programas mais simples se torna uma escolha atrativa.
+No caso da [TODO: adicionar link]versão anterior[/TODO] da implementação de `power`, a versão menos elegante (usando laço de repetição) é bem simples e fácil de ser lida, não fazendo sentido substituí-la pela versão recursiva. Porém, frequentemente lidamos com aplicações mais complexas e sacrificar um pouco a eficiência para tornar o código mais legível e simples acaba se tornando uma escolha atrativa.
 
-A regra básica, que tem sido repetida por muitos programadores e com a qual eu concordo plenamente, é não se preocupar com eficiência até que você saiba com certeza que o programa está muito lento. Quando isso acontecer, encontre quais partes estão gastando maior tempo, e comece a trocar elegância por eficiência nestas partes.
+A regra básica, que tem sido repetida por muitos programadores e com a qual eu concordo plenamente, é não se preocupar com eficiência até que você saiba com certeza que o programa está muito lento. Quando isso acontecer, encontre quais partes estão consumindo maior tempo de execução e comece a trocar elegância por eficiência nessas partes.
 
-Claro, a regra anterior não significa que vamos ignorar performance completamente. Em muitos casos, como na função `power`, não ganhamos muita simplicidade pela abordagem "elegante". Em outros casos, um programador experiente pode ver imediatamente que uma abordagem simples nunca vai ser rápida o suficiente.
+É evidente que essa regra não significa que deve-se ignorar a performance completamente. Em muitos casos, como na função `power`, não há muito benefício em usar a abordagem mais “elegante”. Em outros casos, um programador experiente pode identificar rapidamente que uma abordagem mais simples nunca vai ser rápida o suficiente.
 
-A razão por eu estar salientando isso é que surpreendentemente muitos programadores iniciantes focam inicialmente em eficiência, mesmo nos mais pequenos detalhes. O resultado são programas maiores, mais complicados e as vezes menos corretos, que demoram mais para serem escritos do que equivalentes mais simples e que rodam somente um pouco mais rápidos.
+A razão pela qual estou enfatizando isso é que surpreendentemente muitos programadores iniciantes focam excessivamente em eficiência, até nos mais pequenos detalhes. Isso acaba gerando programas maiores, mais complicados e muitas vezes menos corretos, que demoram mais tempo para serem escritos e normalmente executam somente um pouco mais rápido do que as variações mais simples e diretas.
 
-Porém, recursão não é sempre uma alternativa menos eficiente para fazer loops. Alguns problemas são muito mais fáceis de resolver com recursão do que com loops. A maioria destes problemas requerem exploração ou processamento de vários "branches" (ramificações), cada um dos quais pode ramificar-se de novo em mais ramos.
+Porém, muitas vezes a recursão não é uma alternativa menos eficiente do que um laço de repetição. Alguns problemas são muito mais simples de se resolver com recursão do que com laços de repetição. A maioria desses problemas envolvem exploração ou processamento de várias ramificações, as quais podem se dividir em novas ramificações e assim por diante.
 
 Considere este quebra-cabeça: Iniciando com o número 1 e repetidamente adicionando 5 ou multiplicando por 3, uma infinita quantidade de números pode ser produzida. Como você pode escrever uma função que, dado um número, tente achar a sequência de adições e multiplicações que produzem este número?
 

@@ -226,7 +226,7 @@ O código abaixo é permitido e executa sem problemas:
 
 ```js
 alert("Hello", "Good Evening", "How do you do?");
-``
+```
 
 A função `alert` oficialmente aceita somente um argumento. No entanto, quando você a chama assim, ela não reclama. Ela simplesmente ignora os outros argumentos e lhe mostra "Hello".
 

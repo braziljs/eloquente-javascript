@@ -335,61 +335,55 @@ A razão pela qual estou enfatizando isso é que surpreendentemente muitos progr
 
 Porém, muitas vezes a recursão não é uma alternativa menos eficiente do que um laço de repetição. Alguns problemas são muito mais simples de se resolver com recursão do que com laços de repetição. A maioria desses problemas envolvem exploração ou processamento de várias ramificações, as quais podem se dividir em novas ramificações e assim por diante.
 
-Considere este quebra-cabeça: Iniciando com o número 1 e repetidamente adicionando 5 ou multiplicando por 3, uma infinita quantidade de números pode ser produzida. Como você pode escrever uma função que, dado um número, tente achar a sequência de adições e multiplicações que produzem este número?
-
-Por exemplo, o número 13 pode ser alcançado primeiramente multiplicando por 3 e depois adicionando 5 duas vezes. O número 15 não pode ser alcançado de nenhuma forma.
+Considere este quebra-cabeça: iniciando com o número 1 e repetidamente adicionando 5 ou multiplicando por 3, uma infinita quantidade de novos números podem ser produzidos. Como você implementaria uma função que, dado um número, tente achar a sequência de adições e multiplicações que produzem este número? Por exemplo, o número 13 pode ser produzido multiplicando por 3 e adicionando 5 duas vezes. Já o número 15 não pode ser produzido de nenhuma forma.
 
 Aqui uma solução recursiva:
 
 ```js
-
-function findSolution (goal) {
-	function find (start, history) {
-		if (start == goal)
-			return history;
-		else if (start > goal)
-			return null;
-		else
-			return find(start + 5, "(" + history + " + 5)") ||
-				   find(start * 3. "(" + history + " * 3");
-	}
-	return find(1, "1");
+function findSolution(target) {
+  function find(start, history) {
+    if (start == target)
+      return history;
+    else if (start > target)
+      return null;
+    else
+      return find(start + 5, “(“ + history + “ + 5)”) ||
+             find(start * 3, “(“ + history + “ * 3)”);
+  }
+  return find(1, “1”);
 }
 
 console.log(findSolution(24));
-// (((1 * 3) + 5) * 3)
-
+// → (((1 * 3) + 5) * 3)
 ```
 
-Note que não é necessário encontrar uma sequência mais curta de operações - ela é satisfeita quando encontra qualquer sequência.
+Note que esse programa não necessariamente encontra a *menor* sequência de operações. Ele termina sua execução quando encontra a primeira solução possível.
 
-Eu não espero que você entenda como isso funciona imediatamente, mas vamos analisar o exemplo pois é um ótimo exercício para entender o pensamento recursivo.
+Eu não necessariamente espero que você entenda como isso funcione imediatamente, mas vamos analisar o exemplo pois é um ótimo exercício para entender o pensamento recursivo.
 
-A função interior `find` faz a recursão real. Ela pega dois argumentos, o número atual e a string que registra como chegamos neste número, e retorna uma string que mostra como chegar no número esperado ou `null`.
+A função interna `find` é responsável pela recursão. Ela recebe dois argumentos (o número atual e uma string que registra como chegamos neste número) e retorna uma string que mostra como chegar no número esperado ou `null`.
 
-Em razão de fazer isso, é realizado três ações. Se o número atual é o número esperado, o histórico atual é uma forma de encontrar o objetivo, então ele é simplesmente retornado. Se o número atual é maior que o esperado, não há sentido em continuar explorando o histórico, desde que ambas as possibilidades farão o número ainda maior. E finalmente, se nós estamos abaixo do objetivo, a função tenta todos os caminhos possíveis que iniciam do número atual, chamando-o duas vezes, uma para ambos os próximos passos permitidos. Se a primeira chamada retorna algo que não é `null`, ela é retornada. De outra forma, a segunda chamada é retornada (independentemente se ela produz uma string ou null).
+Para fazer isso, a função executa uma entre três ações possíveis. Se o número atual é o número esperado, o histórico atual reflete uma possível sequência para alcançar o número esperado, então ele é simplesmente retornado. Se o número atual é maior que o número esperado, não faz sentido continuar explorando o histórico, já que adicionar ou multiplicar o número atual irá gerar um número ainda maior. Por fim, se nós tivermos um número menor do que o número esperado, a função tenta percorrer todos os caminhos possíveis que iniciam do número atual, chamando ela mesma duas vezes, uma para cada próximo passo que seja permitido. Se a primeira chamada retornar algo que não seja `null`, ela é retornada. Caso contrário, a segunda chamada é retornada independentemente se ela produz a string ou `null`.
 
-Como essa simples função produz o efeito que estamos procurando? Vamos ver as chamadas à `find` que são feitas quando buscamos por uma solução para o número 13:
+Para entender melhor como essa função produz o resultado que estamos esperando, vamos analisar todas as chamadas a `find` que são feitas quando procuramos a solução para o número 13.
 
 ```
-
-find(1, "1")
-  find(6, "(1 + 5)")
-    find(11, "((1 + 5) + 5)")
-      find(16, "(((1 + 5) + 5) + 5)")
+find(1, “1”)
+  find(6, “(1 + 5)”)
+    find(11, “((1 + 5) + 5)”)
+      find(16, “(((1 + 5) + 5) + 5)”)
         too big
-      find(33, "(((1 + 5) + 5) * 3)")
+      find(33, “(((1 + 5) + 5) * 3)”)
         too big
-    find(18, "((1 + 5) * 3)")
+    find(18, “((1 + 5) * 3)”)
       too big
-  find(3, "(1 * 3)")
-    find(8, "((1 * 3) + 5)")
-      find(13, "(((1 * 3) + 5) + 5)")
+  find(3, “(1 * 3)”)
+    find(8, “((1 * 3) + 5)”)
+      find(13, “(((1 * 3) + 5) + 5)”)
         found!
-
 ```
 
-A indentação sugere a profundidade da pilha de chamadas. A primeira chamada a `find` chama `find` duas vezes, para explorar as soluções que começam com `(1 + 5)` e `(1 * 3)`. A primeira chamada falha para encontrar a solução que começa com `(1 + 5)` - usando recursão, ela explora todas as soluções que produzem um número menor que o número esperado. Então, ela retorna `null`, e o operador `||` causa a chamada que explora `(1 * 3)` e a faz acontecer. Esta teve mais sorte, sua primeira chamada recursiva, através de *outra* chamada recursiva, encontrou o número procurado 13. Então, uma string é retornada, e cada um dos operadores `||` no intermédio da chamada nos mostram a sequência, que é a nossa solução.
+A indentação reflete a profundidade da pilha de chamadas. A primeira chamada a `find` chama ela mesma duas vezes, explorando as soluções que começam com `(1 + 5)` e `(1 * 3)`. A primeira chamada tenta achar a solução que começa com `(1 + 5)`, e usando recursão percorre *todas* as possíveis soluções que produzem um número menor ou igual ao número esperado. Como ele não encontra uma solução para o número esperado, o valor `null` é retornado até retornar para a chamada inicial. Nesse momento, o operador `||` faz com que a pilha de chamadas inicie o processo de exploração pelo outro caminho (1 * 3). Essa busca tem resultados satisfatórios porque após duas chamadas recursivas, acaba encontrando o número 13. Esse chamada recursiva mais interna retorna uma string e cada operador `||` nas chamadas intermediárias passa essa string adiante, retornando no final a solução esperada.
 
 ## Funções Crescentes
 

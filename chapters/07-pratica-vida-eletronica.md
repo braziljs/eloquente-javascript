@@ -102,8 +102,49 @@ console.log(grid.get(new Vector(1, 1)));
 // → X
 ```
 
-## A interface de programação do bicho
+## A interface de programação dos bichos
 
-Antes de começarmos no construtor global, devemos ser mais específico sobre os objetos de quais bichos estarão vivendo dentro dela. Eu mencionei que o mundo vai pedir os bichos as ações que eles querem tirar. Isso funciona da seguinte forma: cada objeto bicho tem um método de ato que, quando chamado, retorna uma ação. Uma ação é um objeto com uma propriedade de tipo, que dá nome ao tipo de ação o bicho quer levar, por exemplo, "move". A acção pode também conter informação extra, tais como a direcção do bicho quer mover em.
+Antes de começarmos nosso construtor global, devemos específicar quais os objetos de bichos estarão vivendo em nosso mundo. Eu mencionei que o mundo vai especificar os bichos e as ações que eles teram. Isso funciona da seguinte forma: cada bicho é um objeto e tem um método de ação que quando chamado retorna uma ação. Uma ação é um objeto com uma propriedade de tipo, que dá nome a ação que o bicho terá, por exemplo `"move"`. A ação pode também conter informação extra de como a direção que o bicho vai se mover.
 
-Bichos são terrivelmente míope e pode ver apenas as praças diretamente em torno deles no grid. Mas mesmo essa visão limitada pode ser útil ao decidir que ação tomar. Quando o método ato é chamado, é dado um objeto de exibição que permite que o bicho para inspecionar seus arredores. Nós nomear os oito praças vizinhas por seus sentidos do compasso: "n" para norte, "ne" para nordeste, e assim por diante. Aqui está o objeto, vamos utilizar para mapear nomes de direção para coordenar offsets:
+Bichos são terrivelmente míope e pode ver apenas os quadrados em torno da `grid`. Mas essa visão limitada pode ser útil ao decidir que ação tomar. Quando o método ato é chamado o objeto de exibição permite que o bicho inspecione seus arredores. Nós vamos nomear oito quadrados vizinhos para ser as coordenadas: `"n"` para norte, `"ne"` para nordeste e assim por diante. Aqui está o objeto, vamos utilizar para mapear nomes de direções para coordenar os  `offsets`:
+
+```js
+var directions = {
+  "n":  new Vector( 0, -1),
+  "ne": new Vector( 1, -1),
+  "e":  new Vector( 1,  0),
+  "se": new Vector( 1,  1),
+  "s":  new Vector( 0,  1),
+  "sw": new Vector(-1,  1),
+  "w":  new Vector(-1,  0),
+  "nw": new Vector(-1, -1)
+};
+```
+
+O objeto de exibição tem um método que observa em qual  direção o bicho esta indo e retorna um personagem por exemplo, um "#" quando há uma parede na direção ou um "" (espaço) quando não há nada. O objeto também fornece os métodos `find` e `findAll`. Ambos tomam um mapa de caráter como um argumento. O primeiro retorna a direção em que o personagem pode ser encontrado ao lado do bicho ou retorna nulo se não existir tal sentido. O segundo retorna um `array` contendo todas as direções com esse personagem. Por exemplo, uma criatura sentada à esquerda(oeste) de um muro vai ter ["ne", "e", "se"] ao chamar `findAll` passando o  caractere "#" como argumento.
+
+Aqui é um bicho simples e estúpido que segue apenas seu nariz até que ela atinja um obstáculo e depois salta para fora em uma direção aleatória:
+
+```js
+function randomElement(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+var directionNames = "n ne e se s sw w nw".split(" ");
+
+function BouncingCritter() {
+  this.direction = randomElement(directionNames);
+};
+
+BouncingCritter.prototype.act = function(view) {
+  if (view.look(this.direction) != " ")
+    this.direction = view.find(" ") || "s";
+  return {type: "move", direction: this.direction};
+};
+```
+
+A função auxiliar `randomElement` simplesmente pega um elemento aleatório de uma matriz usando `Math.random` para obter um índice aleatório. Vamos usar isso de novo mais tarde porque a aleatoriedade pode ser útil em simulações.
+
+Para escolher uma direção aleatória o construtor de `BouncingCritter` chama `randomElement` em uma matriz de nomes de direção. Nós também poderia ter usado `Object.keys` para obter essa matriz de direções que definimos anteriormente, mas não é garantido a ordem em que as propriedades seram listadas. Na maioria das situações os motores modernos de JavaScript retornam as propriedades na ordem em que foram definidos, mas eles não são obrigados a terem tais comportamentos.
+
+O `“|| "s"”` no método de ação serve para impedir `this.direction` de obter um valor nulo para o bicho que está preso em um espaço vazio em torno dele(por exemplo, quando um canto esta lotado de outros bichos).

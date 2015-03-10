@@ -101,3 +101,9 @@ grid.set(new Vector(1, 1), "X");
 console.log(grid.get(new Vector(1, 1)));
 // → X
 ```
+
+## A interface de programação do bicho
+
+Antes de começarmos no construtor global, devemos ser mais específico sobre os objetos de quais bichos estarão vivendo dentro dela. Eu mencionei que o mundo vai pedir os bichos as ações que eles querem tirar. Isso funciona da seguinte forma: cada objeto bicho tem um método de ato que, quando chamado, retorna uma ação. Uma ação é um objeto com uma propriedade de tipo, que dá nome ao tipo de ação o bicho quer levar, por exemplo, "move". A acção pode também conter informação extra, tais como a direcção do bicho quer mover em.
+
+Bichos são terrivelmente míope e pode ver apenas as praças diretamente em torno deles no grid. Mas mesmo essa visão limitada pode ser útil ao decidir que ação tomar. Quando o método ato é chamado, é dado um objeto de exibição que permite que o bicho para inspecionar seus arredores. Nós nomear os oito praças vizinhas por seus sentidos do compasso: "n" para norte, "ne" para nordeste, e assim por diante. Aqui está o objeto, vamos utilizar para mapear nomes de direção para coordenar offsets:

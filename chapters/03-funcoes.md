@@ -387,42 +387,38 @@ A indentação reflete a profundidade da pilha de chamadas. A primeira chamada a
 
 ## Funções Crescentes
 
-Existem duas formas mais ou menos naturais para as funções serem introduzidas nos programas.
+Existem duas razões naturais para as funções serem introduzidas nos programas.
 
-A primeira é que você se encontra escrevendo código muito parecido muitas vezes. Nós queremos evitar isso - ter mais código significa mais espaço para erros acontecerem, e mais material para ser lido por pessoas tentando entender o programa. Então pegamos a funcionalidade repetida, encontramos um bom nome para isso, e a colocamos dentro de uma função.
+A primeira é quando você percebe que está escrevendo o mesmo código várias vezes. Nós queremos evitar isso, pois quanto mais código, maiores são as chances de erros e mais linhas de código para as pessoas lerem e entenderem o programa. Por isso, nós extraímos a funcionalidade repetida, encontramos um bom nome para ela e colocamos dentro de uma função.
 
-A segunda forma é que você precisa de alguma funcionalidade que você ainda não escreveu, e isso soa como necessidade de uma função própria. Você vai começar nomeando a função, e então escrever seu corpo. Você pode até escrever primeiro outro pedaço de código que já usa a função, antes de criar a função em si.
+A segunda razão é quando você precisa de uma funcionalidade que ainda não foi escrita e que merece ser encapsulada em uma função própria. Você começa dando um nome a função, e em seguida escreve o seu corpo. As vezes, você pode até começar escrevendo o código que usa a função antes mesmo de defini-la.
 
-A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro está um conceito o qual você tenta envolver. Vamos ver um exemplo.
+A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro é o conceito que você está tentando encapsular. Vamos analisar um exemplo.
 
-Nós queremos escrever um programa que imprime dois números, a quantidade de vacas e galinhas em uma fazenda, com as palavras `Cows` e `Chickens` depois deles, e zeros inseridos antes de ambos os números para que estes sempre sejam números de três dígitos.
+Nós queremos escrever uma programa que imprima dois números, sendo eles o número de vacas e galinhas em uma fazenda com as palavras `Cows` (vacas) e `Chickens (galinhas) depois deles. Além disso, inserimos algarismos zeros antes de ambos os números para que sejam sempre números de três dígitos.
 
 ```
-
 007 Cows
 011 Chickens
-
 ```
 
-Bom, isso claramente é uma função com dois argumentos. Vamos codar.
+Bom, isso claramente é uma função com dois argumentos. [TODO: ref #92]Vamos codar.[/TODO]
 
 ```js
-
 function printFarmInventory(cows, chickens) {
   var cowString = String(cows);
   while (cowString.length < 3)
-    cowString = "0" + cowString;
-  console.log(cowString + " Cows");
+    cowString = “0” + cowString;
+  console.log(cowString + “ Cows”);
   var chickenString = String(chickens);
   while (chickenString.length < 3)
-    chickenString = "0" + chickenString;
-  console.log(chickenString + " Chickens");
+    chickenString = “0” + chickenString;
+  console.log(chickenString + “ Chickens”);
 }
 printFarmInventory(7, 11);
-
 ```
 
-Adicionando `.length` depois do valor de uma string vai nos fornecer o comprimento desta string. Então, o loop `while` continua colocando zeros na frente do número de strings até que tenha no mínimo três caracteres de comprimento.
+Adicionar `.length` após o valor de uma string irá nos fornecer o tamanho (quantidade de caracteres) daquela string. Por isso, o laço de repetição `while` continua adicionando zeros no início da string que representa o número até que a mesma tenha três caracteres.
 
 Missão cumprida! Mas quando iríamos enviar o código a ele (juntamente com uma fatura pesada é claro), o fazendeiro ligou e disse que começou a criar porcos (pigs), e se poderíamos extender o software para também imprimir `pigs`.
 

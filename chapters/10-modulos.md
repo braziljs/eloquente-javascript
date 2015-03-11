@@ -24,7 +24,7 @@ Os benefícios de dividir um programa em vários arquivos ou módulos são semel
 
 Alguns programas são organizados seguindo modelo de um texto tradicional, com uma ordem bem definida que encoraja o leitor a percorrer o programa, e muito falatório (comentários) fornecendo uma descrição coerente do código. Isso faz o programa muito menos intimidador (ler código desconhecido é intimidador, geralmente). Mas existe um lado ruim que é a maior quantidade de trabalho a fazer e dificulta um pouco as alteraçoes, porque os comentários tendem a ser mais interligados do que o código em si.
 
-Como regra geral, organização tem um custo, e é nos estágios iniciais do projeto,q uando não sabemos com certeza aonde vamos e que tipo de módulos o programa precisará. Eu defendo uma estrutura minimalista, com pouca estrutura. Apenas coloque tudo em um simples arquivo até que o código estabiliza. Dessa maneira, você não não estará se sobreccaregando pensando em organização enquanto tem pouca informação, não perderá tempo fazendo e desfazendo coisas, e não irá acidentalmente travar-se em uma estrutura que não serve realmente para seu programa.
+Como regra geral, organização tem um custo, e é nos estágios iniciais do projeto,q uando não sabemos com certeza aonde vamos e que tipo de módulos o programa precisará. Eu defendo uma estrutura minimalista, com pouca estrutura. Apenas coloque tudo em um simples arquivo até que o código estabiliza. Dessa maneira, você não não estará se sobrecaregando pensando em organização enquanto tem pouca informação, não perderá tempo fazendo e desfazendo coisas, e não irá acidentalmente travar-se em uma estrutura que não serve realmente para seu programa.
 
 ## Namespaces
 

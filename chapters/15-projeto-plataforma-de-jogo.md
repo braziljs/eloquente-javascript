@@ -16,11 +16,11 @@ Nosso jogo será mais ou menos baseado em **Dark blue** por Thomas Palef. Eu esc
 
 ![Dark blue](../img/darkblue.png)
 
-A caixa escura representa o jogador cuja a tarefa é coletar as caixas amarelas(moedas) evitando o material vermelho(lava). Um `Level` é concluído quando todas as moedas forem recolhidas.
+A caixa escura representa o jogador, cuja a tarefa é coletar as caixas amarelas (moedas), evitando o material vermelho (lava). Um nível (*level*) é concluído quando todas as moedas forem recolhidas.
 
-O jogador pode movimentar por aí com as setas do teclado para esquerda, para a direita ou pular com a seta para cima. `Jumping` é uma especialidade deste personagem do jogo. Ela pode atingir várias vezes sua própria altura e é capaz de mudar de direção em pleno ar. Isto pode não ser inteiramente realista mas ajuda a dar ao jogador a sensação de estar no controle do avatar na tela.
+O jogador pode movimentar o personagem com as setas do teclado para a esquerda, para a direita, ou pular com a seta para cima. *Jumping* é uma especialidade deste personagem do jogo. Ela pode atingir várias vezes sua própria altura e é capaz de mudar de direção em pleno ar. Isto pode não ser inteiramente realista mas ajuda a dar ao jogador a sensação de estar no controle do avatar na tela.
 
-O jogo consiste em um fundo fixo como uma grade e com os elementos que se deslocam sobreposto ao fundo. Cada campo na grade pode estar vazio, sólido ou ser uma lava. Os elementos móveis são os jogadores, moedas e alguns pedaços de lava. Ao contrário da simulação de vida artificial a partir do Capítulo 7 as posições destes elementos não são limitados a `grid` de suas coordenadas e pode ser fracionada; permitindo movimento suave.
+O jogo consiste em um fundo fixo como uma grade e com os elementos que se deslocam, sobrepostos ao fundo. Cada campo na grade pode estar vazio, sólido ou ser uma lava. Os elementos móveis são os jogadores, moedas e alguns pedaços de lava. Ao contrário da simulação de vida artificial no Capítulo 7, as posições destes elementos não estão limitados a grade - suas coordenadas podem ser fracionadas, permitindo movimentos suaves.
 
 ## A tecnologia
 

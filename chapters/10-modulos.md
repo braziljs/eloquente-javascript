@@ -4,13 +4,13 @@ Capítulo 10
 
 Um programador iniciante escreve seus programas como uma formiga constrói seu formigueiro, um pedaço de cada vez, sem pensar na estrutura maior. Seus programas irão parecer como areia solta. Eles podem durar um tempo, mas se crescem demais, desmoronam.
 
-Percebendo esse problema, o programador começrá a gastar muito tempo pensando sobre a estrutura. seus programas serão rígidamente estruturados, como esculturas em pedra. Eles são sólidos, mas quando precisam mudar, devem ser quebrados.
+Percebendo esse problema, o programador começará a gastar muito tempo pensando sobre a estrutura. Seus programas serão rígidamente estruturados, como esculturas em pedra. Eles são sólidos, mas quando precisam mudar, devem ser quebrados.
 
 O programador experiente sabe quando aplicar uma estrutura equando deixar as coisas mais simples. Seus programas são como argila, solido mas ainda maleáveis.
 
 Mestre Yuan-Ma, O livro da Programação
 
-Todo programa possui uma forma. Em menor scala, essa forma é determinada pela divisão em funções e os blocos são o código dentro delas. Programadores tem muita liberdade na forma que dão aos seus programas. é determinado mais pelo bom (ou mau) gosto, do que pela funcionalidade planejada.
+Todo programa possui uma forma. Em menor escala, essa forma é determinada pela divisão em funções e os blocos são o código dentro delas. Programadores tem muita liberdade na forma que dão aos seus programas. É determinado mais pelo bom (ou mau) gosto, do que pela funcionalidade planejada.
 
 Quando olhamos um programa grande em seu todo, funções individuais começam a se misturar e seria bom possuir uma unidade maior de organização.
 
@@ -24,7 +24,7 @@ Os benefícios de dividir um programa em vários arquivos ou módulos são semel
 
 Alguns programas são organizados seguindo modelo de um texto tradicional, com uma ordem bem definida que encoraja o leitor a percorrer o programa, e muito falatório (comentários) fornecendo uma descrição coerente do código. Isso faz o programa muito menos intimidador (ler código desconhecido é intimidador, geralmente). Mas existe um lado ruim que é a maior quantidade de trabalho a fazer e dificulta um pouco as alteraçoes, porque os comentários tendem a ser mais interligados do que o código em si.
 
-Como regra geral, organização tem um custo, e é nos estágios iniciais do projeto,q uando não sabemos com certeza aonde vamos e que tipo de módulos o programa precisará. Eu defendo uma estrutura minimalista, com pouca estrutura. Apenas coloque tudo em um simples arquivo até que o código estabiliza. Dessa maneira, você não não estará se sobreccaregando pensando em organização enquanto tem pouca informação, não perderá tempo fazendo e desfazendo coisas, e não irá acidentalmente travar-se em uma estrutura que não serve realmente para seu programa.
+Como regra geral, organização tem um custo, e é nos estágios iniciais do projeto, quando não sabemos com certeza aonde vamos e que tipo de módulos o programa precisará. Eu defendo uma estrutura minimalista, com pouca estrutura. Apenas coloque tudo em um simples arquivo até que o código estabiliza. Dessa maneira, você não não estará se sobreccaregando pensando em organização enquanto tem pouca informação, não perderá tempo fazendo e desfazendo coisas, e não irá acidentalmente travar-se em uma estrutura que não serve realmente para seu programa.
 
 ## Namespaces
 

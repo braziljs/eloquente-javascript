@@ -148,3 +148,80 @@ A função auxiliar `randomElement` simplesmente pega um elemento aleatório de 
 Para escolher uma direção aleatória o construtor de `BouncingCritter` chama `randomElement` em uma matriz de nomes de direção. Nós também poderia ter usado `Object.keys` para obter essa matriz de direções que definimos anteriormente, mas não é garantido a ordem em que as propriedades seram listadas. Na maioria das situações os motores modernos de JavaScript retornam as propriedades na ordem em que foram definidos, mas eles não são obrigados a terem tais comportamentos.
 
 O `“|| "s"”` no método de ação serve para impedir `this.direction` de obter um valor nulo para o bicho que está preso em um espaço vazio em torno dele(por exemplo, quando um canto esta lotado de outros bichos).
+
+## O objeto do mundo
+
+Agora podemos começar a fazer o objeto mundo. O construtor tem um plano(a matriz de strings que representa a grade do mundo como descrito anteriormente) e uma legenda como argumentos. A legenda é um objeto que nos diz o que cada personagem no mapa significa. Ela contém um construtor para cada personagem, exceto para o caractere de espaço que sempre se refere como `null` sendo este o valor que vamos usar para representar o espaço vazio.
+
+```js
+function elementFromChar(legend, ch) {
+  if (ch == " ")
+    return null;
+  var element = new legend[ch]();
+  element.originChar = ch;
+  return element;
+}
+
+function World(map, legend) {
+  var grid = new Grid(map[0].length, map.length);
+  this.grid = grid;
+  this.legend = legend;
+
+  map.forEach(function(line, y) {
+    for (var x = 0; x < line.length; x++)
+      grid.set(new Vector(x, y),
+               elementFromChar(legend, line[x]));
+  });
+}
+```
+
+Em `elementFromChar` primeiro criamos uma instância do tipo correto, observando o construtor do caráter aplicando novo para ele. Em seguida é adicionado uma propriedade `originChar` tornando mais fácil de descobrir em qual personagem o elemento foi originalmente criado.
+
+Precisamos da propriedade `originChar` quando implementarmos o método `toString` no mundo. Este método constrói uma seqüência de mapeamento de estado atual do mundo através da realização de um ciclo de duas dimensões sobre os quadrados na grid.
+
+```js
+function charFromElement(element) {
+  if (element == null)
+    return " ";
+  else
+    return element.originChar;
+}
+
+World.prototype.toString = function() {
+  var output = "";
+  for (var y = 0; y < this.grid.height; y++) {
+    for (var x = 0; x < this.grid.width; x++) {
+      var element = this.grid.get(new Vector(x, y));
+      output += charFromElement(element);
+    }
+    output += "\n";
+  }
+  return output;
+};
+```
+
+A parede é um objeto simples que é usado apenas para ocupar espaço e não tem nenhum método ação.
+
+```js
+function Wall() {}
+```
+
+Vamos criar um objeto Mundo com base no plano passado no início do capítulo, em seguida iremos chamar `toString` sobre ele.
+
+```js
+var world = new World(plan, {"#": Wall,
+                             "o": BouncingCritter});
+console.log(world.toString());
+// → ############################
+//   #      #    #      o      ##
+//   #                          #
+//   #          #####           #
+//   ##         #   #    ##     #
+//   ###           ##     #     #
+//   #           ###      #     #
+//   #   ####                   #
+//   #   ##       o             #
+//   # o  #         o       ### #
+//   #    #                     #
+//   ############################
+```

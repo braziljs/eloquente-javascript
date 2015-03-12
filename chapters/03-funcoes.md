@@ -420,57 +420,53 @@ printFarmInventory(7, 11);
 
 Adicionar `.length` após o valor de uma string irá nos fornecer o tamanho (quantidade de caracteres) daquela string. Por isso, o laço de repetição `while` continua adicionando zeros no início da string que representa o número até que a mesma tenha três caracteres.
 
-Missão cumprida! Mas quando iríamos enviar o código a ele (juntamente com uma fatura pesada é claro), o fazendeiro ligou e disse que começou a criar porcos (pigs), e se poderíamos extender o software para também imprimir `pigs`.
+Missão cumprida! Porém, no momento em que iríamos enviar o código ao fazendeiro (juntamente com uma grande cobrança, é claro), ele nos liga dizendo que começou a criar porcos, e se poderíamos extender a funcionalidade do software para também imprimir os porcos?
 
-Nós podemos claro. Mas antes de entrar no processo de copiar e colar estas quatro linhas mais uma vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui a primeira tentativa:
+É claro que podemos. Antes de entrar no processo de copiar e colar estas as mesmas quatro linhas outra vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui a primeira tentativa:
 
 ```js
-
 function printZeroPaddedWithLabel(number, label) {
   var numberString = String(number);
   while (numberString.length < 3)
-    numberString = "0" + numberString;
-  console.log(numberString + " " + label);
+    numberString = “0” + numberString;
+  console.log(numberString + “ “ + label);
 }
 
 function printFarmInventory(cows, chickens, pigs) {
-  printZeroPaddedWithLabel(cows, "Cows");
-  printZeroPaddedWithLabel(chickens, "Chickens");
-  printZeroPaddedWithLabel(pigs, "Pigs");
+  printZeroPaddedWithLabel(cows, “Cows”);
+  printZeroPaddedWithLabel(chickens, “Chickens”);
+  printZeroPaddedWithLabel(pigs, “Pigs”);
 }
 
 printFarmInventory(7, 11, 3);
-
 ```
 
-Funcionou! Mas este nome, `printZeroPaddedWithLabel` é um pouco estranho. Ele funde três coisas - printing, zero-padding e adding a label - em uma simples função.
+Funcionou! Mas o nome `printZeroPaddedWithLabel` é um pouco estranho. Ele é uma combinação de três coisas (imprimir, adicionar zeros e adicionar a label correta) em uma única função.
 
-Ao invés de ressaltar a parte repetida do programa destacado, vamos tentar escolher outro conceito. Podemos fazer melhor:
+Ao invés de tentarmos abstrair a parte repetida do nosso programa como um todo, vamos tentar selecionar apenas um *conceito*.
 
 ```js
-
 function zeroPad(number, width) {
   var string = String(number);
   while (string.length < width)
-    string = "0" + string;
+    string = “0” + string;
   return string;
 }
 
 function printFarmInventory(cows, chickens, pigs) {
-  console.log(zeroPad(cows, 3) + " Cows");
-  console.log(zeroPad(chickens, 3) + " Chickens");
-  console.log(zeroPad(pigs, 3) + " Pigs");
+  console.log(zeroPad(cows, 3) + “ Cows”);
+  console.log(zeroPad(chickens, 3) + “ Chickens”);
+  console.log(zeroPad(pigs, 3) + “ Pigs”);
 }
 
 printFarmInventory(7, 16, 3);
-
 ```
 
-`zeroPad` tem um belo e óbvio nome, que torna fácil para qualquer um ler o código e saber o que ele faz. E ele é útil em mais situações do que somente neste programa específico. Por exemplo, você pode usá-lo para imprimir belas tabelas alinhadas com números.
+Ter uma função com um nome simples, óbvio e descritivo como `zeroPad`, torna fácil para qualquer um ler e entender o código. Além disso, ele pode ser útil em outras situações além deste programa específico. Você pode usá-lo, por exemplo, para imprimir números corretamente alinhados em uma tabela.
 
-Quão esperta e versátil nossa função é? Nós podemos escrever qualquer coisa desde uma função extremamente simples que apenas formata um número para ter três caracteres de largura, até um complicado sistema de formatação de números fracionários, números negativos, alinhamento de pontos, formatação com diferentes caracteres e por ai vai...
+O quão inteligente e versátil as nossas funções deveriam ser? Nós poderíamos escrever funções extremamente simples que apenas adicionam algarismos para que o número tenha três caracteres, até funções complicadas para formatação de números fracionários, números negativos, alinhamento de casas decimais, formatação com diferentes caracteres e por aí vai.
 
-Um princípio útil é não adicionar inteligência a menos que você tenha certeza absoluta que irá precisar. Pode ser tentador escrever "estruturas" gerais para cada pouco de funcionalidade que você se deparar. Resista a isso. Você não terá nenhum trabalho feito, e você vai acabar escrevendo um monte de código que ninguém nunca vai usar.
+Um princípio útil é não adicionar funcionalidades a menos que você tenha certeza absoluta que irá precisar delas. Pode ser tentador escrever soluções genéricas para cada funcionalidade que você se deparar. Resista a essa vontade, pois você não vai ganhar nenhum valor real com isso e vai acabar escrevendo muitas linhas de código que nunca serão usadas.
 
 ## Funções e Efeitos Colaterais
 

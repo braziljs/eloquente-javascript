@@ -387,94 +387,86 @@ A indentação reflete a profundidade da pilha de chamadas. A primeira chamada a
 
 ## Funções Crescentes
 
-Existem duas formas mais ou menos naturais para as funções serem introduzidas nos programas.
+Existem duas razões naturais para as funções serem introduzidas nos programas.
 
-A primeira é que você se encontra escrevendo código muito parecido muitas vezes. Nós queremos evitar isso - ter mais código significa mais espaço para erros acontecerem, e mais material para ser lido por pessoas tentando entender o programa. Então pegamos a funcionalidade repetida, encontramos um bom nome para isso, e a colocamos dentro de uma função.
+A primeira é quando você percebe que está escrevendo o mesmo código várias vezes. Nós queremos evitar isso, pois quanto mais código, maiores são as chances de erros e mais linhas de código para as pessoas lerem e entenderem o programa. Por isso, nós extraímos a funcionalidade repetida, encontramos um bom nome para ela e colocamos dentro de uma função.
 
-A segunda forma é que você precisa de alguma funcionalidade que você ainda não escreveu, e isso soa como necessidade de uma função própria. Você vai começar nomeando a função, e então escrever seu corpo. Você pode até escrever primeiro outro pedaço de código que já usa a função, antes de criar a função em si.
+A segunda razão é quando você precisa de uma funcionalidade que ainda não foi escrita e que merece ser encapsulada em uma função própria. Você começa dando um nome a função, e em seguida escreve o seu corpo. As vezes, você pode até começar escrevendo o código que usa a função antes mesmo de defini-la.
 
-A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro está um conceito o qual você tenta envolver. Vamos ver um exemplo.
+A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro é o conceito que você está tentando encapsular. Vamos analisar um exemplo.
 
-Nós queremos escrever um programa que imprime dois números, a quantidade de vacas e galinhas em uma fazenda, com as palavras `Cows` e `Chickens` depois deles, e zeros inseridos antes de ambos os números para que estes sempre sejam números de três dígitos.
+Nós queremos escrever uma programa que imprima dois números, sendo eles o número de vacas e galinhas em uma fazenda com as palavras `Cows` (vacas) e `Chickens (galinhas) depois deles. Além disso, inserimos algarismos zeros antes de ambos os números para que sejam sempre números de três dígitos.
 
 ```
-
 007 Cows
 011 Chickens
-
 ```
 
-Bom, isso claramente é uma função com dois argumentos. Vamos codar.
+Bom, isso claramente é uma função com dois argumentos. [TODO: ref #92]Vamos codar.[/TODO]
 
 ```js
-
 function printFarmInventory(cows, chickens) {
   var cowString = String(cows);
   while (cowString.length < 3)
-    cowString = "0" + cowString;
-  console.log(cowString + " Cows");
+    cowString = “0” + cowString;
+  console.log(cowString + “ Cows”);
   var chickenString = String(chickens);
   while (chickenString.length < 3)
-    chickenString = "0" + chickenString;
-  console.log(chickenString + " Chickens");
+    chickenString = “0” + chickenString;
+  console.log(chickenString + “ Chickens”);
 }
 printFarmInventory(7, 11);
-
 ```
 
-Adicionando `.length` depois do valor de uma string vai nos fornecer o comprimento desta string. Então, o loop `while` continua colocando zeros na frente do número de strings até que tenha no mínimo três caracteres de comprimento.
+Adicionar `.length` após o valor de uma string irá nos fornecer o tamanho (quantidade de caracteres) daquela string. Por isso, o laço de repetição `while` continua adicionando zeros no início da string que representa o número até que a mesma tenha três caracteres.
 
-Missão cumprida! Mas quando iríamos enviar o código a ele (juntamente com uma fatura pesada é claro), o fazendeiro ligou e disse que começou a criar porcos (pigs), e se poderíamos extender o software para também imprimir `pigs`.
+Missão cumprida! Porém, no momento em que iríamos enviar o código ao fazendeiro (juntamente com uma grande cobrança, é claro), ele nos liga dizendo que começou a criar porcos, e se poderíamos extender a funcionalidade do software para também imprimir os porcos?
 
-Nós podemos claro. Mas antes de entrar no processo de copiar e colar estas quatro linhas mais uma vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui a primeira tentativa:
+É claro que podemos. Antes de entrar no processo de copiar e colar estas as mesmas quatro linhas outra vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui a primeira tentativa:
 
 ```js
-
 function printZeroPaddedWithLabel(number, label) {
   var numberString = String(number);
   while (numberString.length < 3)
-    numberString = "0" + numberString;
-  console.log(numberString + " " + label);
+    numberString = “0” + numberString;
+  console.log(numberString + “ “ + label);
 }
 
 function printFarmInventory(cows, chickens, pigs) {
-  printZeroPaddedWithLabel(cows, "Cows");
-  printZeroPaddedWithLabel(chickens, "Chickens");
-  printZeroPaddedWithLabel(pigs, "Pigs");
+  printZeroPaddedWithLabel(cows, “Cows”);
+  printZeroPaddedWithLabel(chickens, “Chickens”);
+  printZeroPaddedWithLabel(pigs, “Pigs”);
 }
 
 printFarmInventory(7, 11, 3);
-
 ```
 
-Funcionou! Mas este nome, `printZeroPaddedWithLabel` é um pouco estranho. Ele funde três coisas - printing, zero-padding e adding a label - em uma simples função.
+Funcionou! Mas o nome `printZeroPaddedWithLabel` é um pouco estranho. Ele é uma combinação de três coisas (imprimir, adicionar zeros e adicionar a label correta) em uma única função.
 
-Ao invés de ressaltar a parte repetida do programa destacado, vamos tentar escolher outro conceito. Podemos fazer melhor:
+Ao invés de tentarmos abstrair a parte repetida do nosso programa como um todo, vamos tentar selecionar apenas um *conceito*.
 
 ```js
-
 function zeroPad(number, width) {
   var string = String(number);
   while (string.length < width)
-    string = "0" + string;
+    string = “0” + string;
   return string;
 }
 
 function printFarmInventory(cows, chickens, pigs) {
-  console.log(zeroPad(cows, 3) + " Cows");
-  console.log(zeroPad(chickens, 3) + " Chickens");
-  console.log(zeroPad(pigs, 3) + " Pigs");
+  console.log(zeroPad(cows, 3) + “ Cows”);
+  console.log(zeroPad(chickens, 3) + “ Chickens”);
+  console.log(zeroPad(pigs, 3) + “ Pigs”);
 }
 
 printFarmInventory(7, 16, 3);
-
 ```
 
-`zeroPad` tem um belo e óbvio nome, que torna fácil para qualquer um ler o código e saber o que ele faz. E ele é útil em mais situações do que somente neste programa específico. Por exemplo, você pode usá-lo para imprimir belas tabelas alinhadas com números.
+Ter uma função com um nome simples, óbvio e descritivo como `zeroPad`, torna fácil para qualquer um ler e entender o código. Além disso, ele pode ser útil em outras situações além deste programa específico. Você pode usá-lo, por exemplo, para imprimir números corretamente alinhados em uma tabela.
 
-Quão esperta e versátil nossa função é? Nós podemos escrever qualquer coisa desde uma função extremamente simples que apenas formata um número para ter três caracteres de largura, até um complicado sistema de formatação de números fracionários, números negativos, alinhamento de pontos, formatação com diferentes caracteres e por ai vai...
+O quão inteligente e versátil as nossas funções deveriam ser? Nós poderíamos escrever funções extremamente simples que apenas adicionam algarismos para que o número tenha três caracteres, até funções complicadas para formatação de números fracionários, números negativos, alinhamento de casas decimais, formatação com diferentes caracteres e por aí vai.
 
-Um princípio útil é não adicionar inteligência a menos que você tenha certeza absoluta que irá precisar. Pode ser tentador escrever "estruturas" gerais para cada pouco de funcionalidade que você se deparar. Resista a isso. Você não terá nenhum trabalho feito, e você vai acabar escrevendo um monte de código que ninguém nunca vai usar.
+Um princípio útil é não adicionar funcionalidades a menos que você tenha certeza absoluta que irá precisar delas. Pode ser tentador escrever soluções genéricas para cada funcionalidade que você se deparar. Resista a essa vontade, pois você não vai ganhar nenhum valor real com isso e vai acabar escrevendo muitas linhas de código que nunca serão usadas.
 
 ## Funções e Efeitos Colaterais
 

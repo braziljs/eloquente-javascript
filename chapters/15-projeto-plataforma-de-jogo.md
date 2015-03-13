@@ -26,13 +26,13 @@ O jogo consiste em um fundo fixo como uma grade e com os elementos que se desloc
 
 Nós vamos usar o DOM e o navegador para exibir o jogo e iremos ler a entrada do usuário por manipulação de eventos de teclas.
 
-O código de triagem e manipulação com o teclado é apenas uma pequena parte do trabalho que precisamos fazer para construir este jogo. A parte do desenho é simples uma vez que tudo parece colorido: criamos elementos no DOM e usamos `styling` para dar-lhes uma cor de fundo, tamanho e posição.
+O código de triagem e manipulação com o teclado é apenas uma pequena parte do trabalho que precisamos fazer para construir este jogo. A parte do desenho é simples, uma vez que tudo parece colorido: criamos elementos no DOM e usamos `styling` para dar-lhes uma cor de fundo, tamanho e posição.
 
-Podemos representar o fundo como uma tabela uma vez que é uma grade imutável de quadrados. Os elementos de movimento livre pode ser coberto em cima disso utilizando-se posicionamentos absolutos.
+Podemos representar o fundo como uma tabela, uma vez que é uma grade imutável de quadrados. Os elementos de movimento livre podem ser cobertos em cima disso, utilizando-se posicionamentos absolutos.
 
-Em jogos e outros programas que têm que animar gráficos e responder à entrada do usuário sem demora notável a eficiência é importante. O DOM não foi originalmente projetado para gráficos de alto desempenho mas é o melhor que podemos esperar. Você viu algumas animações no capítulo 13. Em uma máquina moderna um jogo simples como este tem um bom desempenho mesmo se não estivermos pensando em otimização.
+Em jogos e outros programas, que têm que animar gráficos e responder à entrada do usuário sem demora notável, a eficiência é importante. O DOM não foi originalmente projetado para gráficos de alto desempenho, mas é o melhor que podemos esperar. Você viu algumas animações no capítulo 13. Em uma máquina moderna um jogo simples como este tem um bom desempenho mesmo se não estivermos pensando em otimização.
 
-No próximo capítulo vamos explorar uma outra tecnologia do navegador que é a tag `<canvas>` onde é proporcionado uma forma mais tradicional para desenhar gráficos trabalhando em termos de formas e pixels em vez de elementos no DOM.
+No próximo capítulo vamos explorar uma outra tecnologia do navegador que é a tag `<canvas>`, onde é proporcionado uma forma mais tradicional para desenhar gráficos, trabalhando em termos de formas e pixels em vez de elementos no DOM.
 
 ## Níveis
 

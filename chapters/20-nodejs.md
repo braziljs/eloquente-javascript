@@ -44,7 +44,7 @@ Node foi inicialmente concebido para o propósito de tornar a assincroneidade I/
 mais fácil e conveniente. Nós já vimos interfaces síncronas antes, como o objeto
 ```XMLHttpRequest``` do navegador, discutodo no Capítulo 17. Uma interface
 asíncrona permite que o script continue executando enquanto ela faz seu trabalho
-e chama uam função de *callback* quando está finalizada. Isso é como Node faz
+e chama uma função de *callback* quando está finalizada. Isso é como Node faz
 todo seu I/O.
 
 JavaScript é ideal para um sistema como Node. É uma das poucas linguagens de
@@ -52,10 +52,10 @@ programação que não tem uma maneira embutida de fazer I/O. Dessa forma,
 JavaScript poderia encaixar-se bastante na abordagem excêntrica do Node para
 o I/O sem acabar ficando com duas interfaces inconsistentes. Em 2009, quando
 Node foi desenhado, as pessoas já estavam fazendo I/O baseado em funções de
-retorno no navegador, então a comunidade em volta da linguagem estava acostumada
+*callback* no navegador, então a comunidade em volta da linguagem estava acostumada
 com um estilo de programação assíncrono.
 
-## Assincronismo
+## Assincronia
 
 Eu vou tentar ilustrar I/O síncrono contra I/O assíncrono com um pequeno
 exemplo, onde um programa precisa buscar rescursos da Internet e então fazer
@@ -80,6 +80,25 @@ pelo I/O. Em um modelo síncrono, o tempo gasto pelo I/O faz parte da linha do
 tempo de uma determinada *thread* de controle. Em um modelo assíncrono, iniciar
 uma ação de I/O causa uma divisão na linha do tempo, conceitualmente falando. A
 *thread* que iniciou o I/O continua rodando, e o I/O é finalizado juntamente à
-ela, chamando uma função de retorno quando é finalizada.
+ela, chamando uma função de *callback* quando é finalizada.
 
 ![Control flow for synchronous and asynchronous I/O](http://eloquentjavascript.net/img/control-io.svg)
+
+Uma outra maneira de mostrar essa diferença é que essa espera para que o I/O
+finalize é implícita no modelo síncrono, enquanto que é explícita no assíncrono.
+Mas assincronia é uma faca de dois gumes. Ela faz com que expressivos programas
+que seguem uma linha reta se tornem mais estranhos.
+
+No capítulo 17, eu já mensionei o fato de que todos esses *callbacks* adicionam
+um pouco de ruído e rodeios para um programa. Se esse estilo de assincronia é
+uma boa ideia ou não, em geral isso pode ser discutido. De qualquer modo, levará
+algum tempo para se acostumar.
+
+Mas para um sistema baseado em JavaScript, eu poderia afirmar que esse estilo de
+assincronia com callback é uma escolha sensata. Uma das forças do JavaScript é
+sua simplicidade, e tentar adicionar múltiplas *threads* de controle poderia
+causar uma grande complexidade. Embora os *callbacks* não tendem a ser códigos
+simples, como conceito, eles são agradavelmente simples e ainda assim poderosos
+o suficiente para escrever servidores web de alta perfomance.
+
+

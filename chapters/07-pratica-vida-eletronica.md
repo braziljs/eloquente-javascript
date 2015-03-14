@@ -225,3 +225,60 @@ console.log(world.toString());
 //   #    #                     #
 //   ############################
 ```
+
+## `This` e seu escopo
+
+O construtor do mundo contém uma chamada de `forEach`. Uma coisa interessante que podemos notar é que dentro da função do `forEach` não estamos mais diretamente o escopo da função do construtor. Cada chamada de função recebe o seu próprio escopo de modo que o escopo presente na função interna não se refere ao objeto externo recém-construído. Na verdade quando a função não é chamada como um método isso refere ao objeto global.
+
+Isso significa que não podemos escrever `this.grid` para acessar nada de fora de dentro do `loop`. Em vez disso a função exterior cria uma variável local, `grid`, onde a função interna tera acesso à rede.
+
+Isso é um erro de `design` no JavaScript. Felizmente a próxima versão da linguagem fornece uma solução para este problema. Enquanto isso, existem soluções alternativas. Um padrão comum é dizer `var auto = this`, uma variável local que guarda que se referencia a si mesmo.
+
+Outra solução é usar o método de `bind`, o que nos permite oferecer uma chamada explícita para o objeto.
+
+```js
+var test = {
+  prop: 10,
+  addPropTo: function(array) {
+    return array.map(function(elt) {
+      return this.prop + elt;
+    }.bind(this));
+  }
+};
+console.log(test.addPropTo([5]));
+// → [15]
+```
+
+A função mapeia um `array` e retorna o valor do `prop` que esta dentro do objeto  `test` mais o resultado do valor de um elemento do `array`.
+
+A maioria dos métodos que mapeam matrizes tais como `forEach` e `map`, tem um segundo argumento opcional que pode ser usado para fornecer um escopo para dentro do bloco de interação(primeiro argumento do interador). Assim, você poderá expressar o exemplo anterior de uma forma um pouco mais simples.
+
+```js
+var test = {
+  prop: 10,
+  addPropTo: function(array) {
+    return array.map(function(elt) {
+      return this.prop + elt;
+    }, this); // ← no bind
+  }
+};
+console.log(test.addPropTo([5]));
+// → [15]
+```
+
+Isso funciona apenas para as funções de interadoras que suportam tal parâmetro de contexto. Quando algum método não suporta receber um contexto, você vai precisar usar as outras abordagens.
+
+Em nossas próprias funções de interações, podemos apoiar tal parâmetro de contexto enviando como um segundo argumento do bloco. Por exemplo, aqui no método `forEach` para o nosso tipo de grade, chamaremos uma determinada função para cada elemento da grade que não seja nulo ou indefinido:
+
+```js
+Grid.prototype.forEach = function(f, context) {
+  for (var y = 0; y < this.height; y++) {
+    for (var x = 0; x < this.width; x++) {
+      var value = this.space[x + y * this.width];
+      if (value != null)
+        f.call(context, value, new Vector(x, y));
+    }
+  }
+};
+```
+

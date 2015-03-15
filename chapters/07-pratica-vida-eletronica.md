@@ -10,11 +10,11 @@ Nosso projeto neste capítulo é construir um ecossistema virtual, um mundo pequ
 
 ## Definição
 
-Para tornar esta tarefa gerenciável, vamos simplificar radicalmente o conceito de um mundo. Ou seja, um mundo será uma grade bidimensional onde cada entidade ocupa um quadrado da grade. Em cada turno os bichos todos tem a chance de tomar algumas medidas.
+Para tornar esta tarefa gerenciável, vamos simplificar radicalmente o conceito de um mundo. Ou seja, um mundo será uma `grid` bidimensional onde cada entidade ocupa um quadrado da `grid`. Em cada turno os bichos todos tem a chance de tomar algumas medidas.
 
 Utilizaremos o tempo e o espaço em unidades com um tamanho fixo: quadrados para o espaço e voltas para o tempo. É claro que as aproximações seram imprecisas. Mas nossa simulação pretende ser divertida, para que possamos livremente cortar esses cantos.
 
-Podemos definir um mundo com um plano, uma matriz de strings que estabelece uma grade do mundo usando um personagem por metro quadrado.
+Podemos definir um mundo com um plano, uma matriz de strings que estabelece uma `grid` do mundo usando um personagem por metro quadrado.
 
 ```js
 var plan = ["############################",
@@ -151,7 +151,7 @@ O `“|| "s"”` no método de ação serve para impedir `this.direction` de obt
 
 ## O objeto do mundo
 
-Agora podemos começar a fazer o objeto mundo. O construtor tem um plano(a matriz de strings que representa a grade do mundo como descrito anteriormente) e uma legenda como argumentos. A legenda é um objeto que nos diz o que cada personagem no mapa significa. Ela contém um construtor para cada personagem, exceto para o caractere de espaço que sempre se refere como `null` sendo este o valor que vamos usar para representar o espaço vazio.
+Agora podemos começar a fazer o objeto mundo. O construtor tem um plano(a matriz de strings que representa a `grid` do mundo como descrito anteriormente) e uma legenda como argumentos. A legenda é um objeto que nos diz o que cada personagem no mapa significa. Ela contém um construtor para cada personagem, exceto para o caractere de espaço que sempre se refere como `null` sendo este o valor que vamos usar para representar o espaço vazio.
 
 ```js
 function elementFromChar(legend, ch) {
@@ -268,7 +268,7 @@ console.log(test.addPropTo([5]));
 
 Isso funciona apenas para as funções de interadoras que suportam tal parâmetro de contexto. Quando algum método não suporta receber um contexto, você vai precisar usar as outras abordagens.
 
-Em nossas próprias funções de interações, podemos apoiar tal parâmetro de contexto enviando como um segundo argumento do bloco. Por exemplo, aqui no método `forEach` para o nosso tipo de grade, chamaremos uma determinada função para cada elemento da grade que não seja nulo ou indefinido:
+Em nossas próprias funções de interações, podemos apoiar tal parâmetro de contexto enviando como um segundo argumento do bloco. Por exemplo, aqui no método `forEach` para o nosso tipo de `grid`, chamaremos uma determinada função para cada elemento da `grid` que não seja nulo ou indefinido:
 
 ```js
 Grid.prototype.forEach = function(f, context) {
@@ -282,3 +282,81 @@ Grid.prototype.forEach = function(f, context) {
 };
 ```
 
+## Dando vida
+
+O próximo passo é escrever um método para o objeto mundo que dá aos bichos a chance de movimento. Ele vai passar por cima da `grid` usando o método `forEach` que acabamos de definir a procura de objetos com um método `act`. Quando ele encontra um ele chama o método para obter uma ação e realiza a ação quando ela for válida. Por enquanto apenas as ações `"move"` serão compreendidas.
+
+Existe um problema com esta abordagem. Você consegue identificar? Se deixarmos as criaturas se mover livremente, eles podem se mover para um quadrado que não existe, e nós vamos permitir que eles se mova novamente quando estiver dentro do quadrado vázio. Assim temos que ficar mantendo uma variedade de criaturas que já sumiram ao invés de apenas ignoramos.
+
+```js
+World.prototype.turn = function() {
+  var acted = [];
+  this.grid.forEach(function(critter, vector) {
+    if (critter.act && acted.indexOf(critter) == -1) {
+      acted.push(critter);
+      this.letAct(critter, vector);
+    }
+  }, this);
+};
+```
+
+Nós usamos o contexto como segundo parâmetro no método `forEach` para ser a referência da `grid` para conseguirmos acessar corretamente as funções internas. O método `letAct` contém a lógica real que permite que os bichos se movam.
+
+```js
+World.prototype.letAct = function(critter, vector) {
+  var action = critter.act(new View(this, vector));
+  if (action && action.type == "move") {
+    var dest = this.checkDestination(action, vector);
+    if (dest && this.grid.get(dest) == null) {
+      this.grid.set(vector, null);
+      this.grid.set(dest, critter);
+    }
+  }
+};
+
+World.prototype.checkDestination = function(action, vector) {
+  if (directions.hasOwnProperty(action.direction)) {
+    var dest = vector.plus(directions[action.direction]);
+    if (this.grid.isInside(dest))
+      return dest;
+  }
+};
+```
+
+Em primeiro lugar, nós simplesmente pedimos para o bicho se mover, passando um objeto de exibição que tem informações sobre o mundo e a posição atual do bicho naquele mundo(vamos definir a tela em algum momento). O método retorna alguma tipo de ação.
+
+Se o tipo de ação não é `"move"` ele será ignorado. Se é `"move"` ele terá uma propriedade de direção que se refere a um sentido válido caso o `quadrado` na direção referida estiver vazio(`null`). Iremos definir o bicho para o `quadrado` de destino e ao se mover novamente vamos definir `null` para este quadrado visitado e armazenar o bicho na próximo `quadrado`.
+
+Perceba que `letAct` não ignora coisas que não fazem sentidos como, se a propriedade direção é válida ou que a propriedade do tipo faz sentido. Este tipo de programação defensiva faz sentido em algumas situações. A principal razão para fazê-la é validar alguma fonte proveniente que não seja de controle(como alguma entrada de valores definidas por usuários), mas também pode ser útil para isolar outros subsistemas. Neste caso a intenção é que os bichos podem serem programados de forma não cuidadosa, eles não têm de verificar se suas ações de destinado faz sentido. Eles podem simplesmente solicitar uma ação e o mundo que vai permitir a ação.
+
+Estes dois métodos não fazem parte da interface externa de um objeto do mundo. Eles são um detalhe interno. Algumas línguas fornece maneiras de declarar explicitamente certos métodos e propriedades privadas e sinalizar um erro quando você tenta usá-los de fora do objeto. JavaScript não faz isso então você vai ter que confiar em alguma outra forma de comunicação para descrever o que faz ou não parte da interface de um objeto. Às vezes ele pode ajudar a usar um esquema de nomes para distinguir entre as propriedades externas e internas, por exemplo, prefixando todas as propriedades internas com um caractere sublinhado(`_`). Isso fará com que os usos acidentais de propriedades que não fazem parte da interface de um objeto fique mais fácil de detectar.
+
+A única parte que falta, para a tela, parece com isso:
+
+```js
+function View(world, vector) {
+  this.world = world;
+  this.vector = vector;
+}
+View.prototype.look = function(dir) {
+  var target = this.vector.plus(directions[dir]);
+  if (this.world.grid.isInside(target))
+    return charFromElement(this.world.grid.get(target));
+  else
+    return "#";
+};
+View.prototype.findAll = function(ch) {
+  var found = [];
+  for (var dir in directions)
+    if (this.look(dir) == ch)
+      found.push(dir);
+  return found;
+};
+View.prototype.find = function(ch) {
+  var found = this.findAll(ch);
+  if (found.length == 0) return null;
+  return randomElement(found);
+};
+```
+
+O método observa e descobre se as coordenadas que estamos visitando esta dentro da `grid` e se o personagem correspondente ao elemento. Para coordenadas fora da `grid` podemos simplesmente fingir que há uma paredes, modo que podemos definir um mundo que não é murado mas os bichos ainda não irá caminhar fora das bordas.

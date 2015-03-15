@@ -36,7 +36,7 @@ No próximo capítulo vamos explorar uma outra tecnologia do navegador que é a 
 
 ## Níveis
 
-No Capítulo 7 usamos matrizes de seqüências para descrever uma grade bidimensional. Nós podemos fazer o mesmo aqui. Ele nos permitirá projetar `Level` sem antes construir um editor de `Level`.
+No Capítulo 7 usamos matrizes de sequências para descrever uma grade bidimensional. Nós podemos fazer o mesmo aqui. Ele nos permitirá projetar `Level` sem antes construir um editor de `Level`.
 
 Um `Level` simples ficaria assim:
 
@@ -54,13 +54,13 @@ var simpleLevelPlan = [
 ];
 ````
 
-Tanto a `grid` fixa e os elementos móveis são incluídos no plano. Os caracteres `x` representam paredes, os caracteres de espaço são para o `espaço vazio` e os `!` representam algo fixo(nonmoving) telhas de lava.
+Tanto a grade (*grid*) fixa e os elementos móveis são inclusos no plano. Os caracteres `x` representam paredes, os caracteres de espaço são para o `espaço vazio` e os `!` representam algo fixo, seções de lava que não se mechem.
 
-O `@` define o local onde o jogador começa. Todo `o` é uma moeda e o sinal de igual `=` representa um bloco de lava que se move para trás e para a frente na horizontal. Note que a grade para essas regras será definido para conter o espaço vazio e outra estrutura de dados é usado para rastrear a posição de tais elementos em movimento.
+O `@` define o local onde o jogador começa. Todo `o` é uma moeda e o sinal de igual `=` representa um bloco de lava que se move para trás e para a frente na horizontal. Note que a grade para essas regras será definida para conter o espaço vazio, e outra estrutura de dados é usada para rastrear a posição de tais elementos em movimento.
 
-Vamos apoiar dois outros tipos de lava em movimento: O personagem pipe(`|`) para blocos que se deslocam verticalmente e `v` por gotejamento de lava verticalmente. Lava que não salta para trás e nem para a frente só se move para baixo pulando de volta à sua posição inicial quando atinge o chão.
+Vamos apoiar dois outros tipos de lava em movimento: O personagem *pipe* (`|`) para blocos que se deslocam verticalmente e `v` por gotejamento de lava verticalmente. Lava que não salta para trás e nem para a frente só se move para baixo pulando de volta à sua posição inicial quando atinge o chão.
 
-Um jogo inteiro é composto por vários `Levels` que o jogador deve completar. Um `Level` é concluído quando todas as moedas foram recolhidos. Se o jogador toca a lava o `Level` atual é restaurado à sua posição inicial e o jogador pode tentar novamente.
+Um jogo inteiro é composto por vários `Levels` que o jogador deve completar. Um `Level` é concluído quando todas as moedas forem recolhidas. Se o jogador toca a lava o `Level` atual é restaurado à sua posição inicial e o jogador pode tentar novamente.
 
 ## A leitura de um level
 

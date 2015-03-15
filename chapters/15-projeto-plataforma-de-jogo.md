@@ -64,7 +64,7 @@ Um jogo inteiro é composto por vários `Levels` que o jogador deve completar. U
 
 ## A leitura de um level
 
-O construtor a seguir cria um objeto de `Level`. Seu argumento deve ser uma matriz de seqüências que define o `Level`.
+O construtor a seguir cria um objeto de `Level`. Seu argumento deve ser uma matriz de sequências que define o `Level`.
 
 ````js
 function Level(plan) {
@@ -96,13 +96,13 @@ function Level(plan) {
 }
 ````
 
-Para deixar o código pequeno não verificamos entradas erradas. Ele assume que você sempre entregue um plano de level adequado, completo, com a posição de início do jogador e com outros itens essenciais.
+Para deixar o código pequeno, não verificamos entradas erradas. Ele assume que você sempre entrega um plano de *level* adequado, completo, com a posição de início do jogador e com outros itens essenciais.
 
-Um level armazena a sua largura e altura juntamente com duas matrizes, uma para a grade e um para os agentes que são os elementos dinâmicos. A grade é representado como uma matriz de matrizes onde cada uma das séries internas representa uma linha horizontal e cada quadrado contém algo ou é nulo; para as casas vazias ou uma string indicaremos o tipo do quadrado("muro" ou "lava").
+Um *level* armazena a sua largura e altura juntamente com duas matrizes, uma para a grade e um para os agentes que são os elementos dinâmicos. A grade é representada como uma matriz de matrizes onde cada uma das séries internas representam uma linha horizontal, e cada quadrado contém algo ou é nulo; para as casas vazias, ou uma string, indicaremos o tipo do quadrado ("muro" ou "lava").
 
-A matriz contém objetos que rastreiam a posição atual e estado dos elementos dinâmicos no level. Cada um deles deverá ter uma propriedade para indicar sua posição(as coordenadas do seu canto superior esquerdo), uma propriedade `size` dando o seu tamanho e uma propriedade `type` que mantém uma cadeia que identifica o elemento("lava", "dinheiro" ou "jogador").
+A matriz contém objetos que rastreiam a posição atual e estado dos elementos dinâmicos no *level*. Cada um deles deverá ter uma propriedade para indicar sua posição (as coordenadas do seu canto superior esquerdo), uma propriedade `size` dando o seu tamanho, e uma propriedade `type` que mantém uma cadeia que identifica o elemento ("lava", "dinheiro" ou "jogador").
 
-Depois de construir a `grid` usaremos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do `level`. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece  `finishDelay` é usado para manter o `Level` ativo durante um curto período de tempo de modo que uma animação simples pode ser mostrado(repor imediatamente ou avançar o `Level` ficaria mais fácil). Este método pode ser usado para descobrir se um `Level` foi concluído.
+Depois de construir a `grid` (grade), usaremos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do `level`. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece, `finishDelay` é usado para manter o `Level` ativo durante um curto período de tempo, de modo que uma animação simples pode ser mostrada (repor imediatamente ou avançar o `Level` ficaria mais fácil). Este método pode ser usado para descobrir se um `Level` foi concluído.
 
 ````js
 Level.prototype.isFinished = function() {

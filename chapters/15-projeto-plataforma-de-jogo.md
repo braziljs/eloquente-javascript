@@ -96,7 +96,7 @@ function Level(plan) {
 }
 ````
 
-Para deixar o código pequeno, não verificamos entradas erradas. Ele assume que você sempre entregua um plano de *level* adequado, completo, com a posição de início do jogador e com outros itens essenciais.
+Para deixar o código pequeno, não verificamos entradas erradas. Ele assume que você sempre entrega um plano de *level* adequado, completo, com a posição de início do jogador e com outros itens essenciais.
 
 Um *level* armazena a sua largura e altura juntamente com duas matrizes, uma para a grade e um para os agentes que são os elementos dinâmicos. A grade é representada como uma matriz de matrizes onde cada uma das séries internas representam uma linha horizontal, e cada quadrado contém algo ou é nulo; para as casas vazias, ou uma string, indicaremos o tipo do quadrado ("muro" ou "lava").
 

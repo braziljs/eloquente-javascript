@@ -360,3 +360,79 @@ View.prototype.find = function(ch) {
 ```
 
 O método observa e descobre se as coordenadas que estamos visitando esta dentro da `grid` e se o personagem correspondente ao elemento. Para coordenadas fora da `grid` podemos simplesmente fingir que há uma paredes, modo que podemos definir um mundo que não é murado mas os bichos ainda não irá caminhar fora das bordas.
+
+## O movimento
+
+Nós instanciamos um objeto mundo antes. Agora que nós adicionamos todos os métodos necessários, devemos fazer os movimentos dos elementos no mundo.
+
+```js
+for (var i = 0; i < 5; i++) {
+  world.turn();
+  console.log(world.toString());
+}
+// → … five turns of moving critters
+```
+
+Imprimir várias cópias do mundo é uma forma bastante desagradável para movimentar um mundo. É por isso que o `sandbox` oferece uma função `animateWorld` que executa uma animação, movendo o mundo com três voltas por segundo, até que você aperte o botão de `stop`.
+
+ ```js
+ animateWorld(world);
+// → … life!
+ ```
+
+ A implementação do `animateWorld` parece algo mistérioso agora, mas depois que você ler os capítulos deste livro que discutem a integração JavaScript em navegadores web, ele não sera tão mágico.
+
+ ## Mais formas de vida
+
+O destaque dramático do nosso mundo, é quando duas criaturas saltam para fora. Você consegue pensar em outra forma interessante de comportamento?
+
+O bicho que se move ao longo das paredes. Conceitualmente, o bicho mantém a sua mão esquerda(pata, tentáculo ou o que for) para a parede e segue junto. Este jeito acaba sendo não muito trivial de implementar.
+
+Precisamos ser capazes de calcular as direções com a bússola. As direções são modelados por um conjunto de `String`, precisamos definir nossa própria operação(`dirPlus`) para calcular as direções relativas. Então `dirPlus("n", 1)` significa 45 graus no sentido horário para norte, retornando "ne". Da mesma forma `dirPlus("s", -2)` significa 90 graus para a esquerda ao sul, retornando leste.
+
+```js
+function dirPlus(dir, n) {
+  var index = directionNames.indexOf(dir);
+  return directionNames[(index + n + 8) % 8];
+}
+
+function WallFollower() {
+  this.dir = "s";
+}
+
+WallFollower.prototype.act = function(view) {
+  var start = this.dir;
+  if (view.look(dirPlus(this.dir, -3)) != " ")
+    start = this.dir = dirPlus(this.dir, -2);
+  while (view.look(this.dir) != " ") {
+    this.dir = dirPlus(this.dir, 1);
+    if (this.dir == start) break;
+  }
+  return {type: "move", direction: this.dir};
+};
+```
+
+O método `act` só tem `"varre"` os arredores do bicho, a partir do seu lado esquerdo no sentido horário até encontrar um quadrado vazio. Em seguida ele se move na direção do quadrado vazia.
+
+O que complica é que um bicho pode acabar no meio de um espaço vazio, quer como a sua posição de partida ou como um resultado de caminhar em torno de um outro bicho. Se aplicarmos a abordagem que acabei de descrever no espaço vazio, o bicho vai apenas virar à esquerda a cada passo, correndo em círculos.
+
+Portanto, há uma verificação extra(instrução if)no inicio da digitalização para a esquerda para analisar se o bicho acaba de passar algum tipo de obstáculo, no caso, se o espaço atrás e à esquerda do bicho não está vazio. Caso contrário, o bicho começa a digitalizar diretamente à frente, de modo que ele vai andar em linha reta ate um espaço vazio.
+
+E, finalmente, há um teste comparando `this.dir` para começar após cada passagem do laço para se certificar de que o circuito não vai correr para sempre quando o bicho está no muro ou quando o mundo esta lotados de outros bichos não podendo achar quadrados vazios.
+
+Este pequeno mundo demonstra as criaturas na parede:
+
+```js
+animateWorld(new World(
+  ["############",
+   "#     #    #",
+   "#   ~    ~ #",
+   "#  ##      #",
+   "#  ##  o####",
+   "#          #",
+   "############"],
+  {"#": Wall,
+   "~": WallFollower,
+   "o": BouncingCritter}
+));
+```

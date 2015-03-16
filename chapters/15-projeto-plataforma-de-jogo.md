@@ -126,9 +126,9 @@ Vector.prototype.times = function(factor) {
 };
 ````
 
-O método de escalas temporais de um vetor nos passa uma determinada quantidade. Isso será útil para quando precisarmos de multiplicar um vetor de velocidade por um intervalo de tempo para obter a distância percorrida durante esse tempo.
+O método de escalas temporais de um vetor nos passa uma determinada quantidade. Isso será útil para quando precisarmos de multiplicar um vetor de velocidade por um intervalo de tempo, para obter a distância percorrida durante esse tempo.
 
-Na seção anterior o objeto `actorChars` foi usado pelo construtor `Level` para associar personagens com as funções do construtor. O objeto parece com isso:
+Na seção anterior, o objeto `actorChars` foi usado pelo construtor `Level` para associar personagens com as funções do construtor. O objeto parece com isso:
 
 ````js
 var actorChars = {
@@ -138,9 +138,9 @@ var actorChars = {
 };
 ````
 
-Três personagens estão sendo mapeados para o objeto `Lava`. O construtor `Level` passa o caráter fonte do ator como o segundo argumento para o construtor e o construtor de `Lava` usa isso para ajustar o seu comportamento(saltando horizontalmente, saltando verticalmente ou gotejamento).
+Três personagens estão sendo mapeados para o objeto `Lava`. O construtor `Level` passa o caractere fonte do ator como o segundo argumento para o construtor, e o construtor de `Lava` usa isso para ajustar o seu comportamento (saltando horizontalmente, saltando verticalmente ou gotejando).
 
-O tipo de jogador é construído da seguinte forma. A velocidade esta sendo armazenada com velocidade atual, que vai ajudar a simular movimento e gravidade.
+O tipo do jogador é construído da seguinte forma. A velocidade esta sendo armazenada com velocidade atual, que vai ajudar a simular movimento e gravidade.
 
 ````js
 function Player(pos) {
@@ -151,9 +151,9 @@ function Player(pos) {
 Player.prototype.type = "player";
 ````
 
-Como um jogador é quadrados elevados `one-and-a-half`, a sua posição inicial está sendo definida para ser a metade de um quadrado acima da posição em que o `@` personagem apareceu. Desta forma a sua parte inferior fica alinhada com a parte inferior do quadrado que apareceu.
+Como um jogador tem a altura de um quadrado e meio, a sua posição inicial está sendo definida para ser a metade de um quadrado acima da posição em que o `@` personagem apareceu. Desta forma a sua parte inferior fica alinhada com a parte inferior do quadrado que apareceu.
 
-Ao construir um objeto `Lava` dinâmicamente é preciso inicializar o objeto de uma forma diferente dependendo do personagem que se baseia. `Lava Dinâmica` se move longitudinalmente em sua velocidade dada até atingir um obstáculo. Nesse ponto se ele tem uma propriedade `repeatPos` ele vai pular de volta à sua posição inicial(`gotejamento`). Se isso não acontecer, ele irá inverter a sua velocidade e continuar no outro sentido(pular). O construtor só configura as propriedades necessárias. O método que faz o movimento real será escrito mais tarde.
+Ao construir um objeto `Lava` dinamicamente é preciso inicializar o objeto de uma forma diferente, dependendo do personagem que se baseia. `Lava Dinâmica` se move longitudinalmente em sua velocidade dada até atingir um obstáculo. Nesse ponto, se ele tem uma propriedade `repeatPos` ele vai pular de volta à sua posição inicial (`gotejamento`). Se isso não acontecer, ele irá inverter a sua velocidade e continuar no outro sentido (pular). O construtor só configura as propriedades necessárias. O método que faz o movimento real será escrito mais tarde.
 
 ````js
 function Lava(pos, ch) {
@@ -171,7 +171,7 @@ function Lava(pos, ch) {
 Lava.prototype.type = "lava";
 ````
 
-Coin são atores simples. A maioria dos blocos simplesmente esperam em seus lugares. Mas para animar o jogo eles recebem um pouco de "oscilação", um ligeiro movimento para vertical e para trás. Para controlar isto um objecto `coin` armazena uma posição de base bem como uma propriedade que controla a oscilação de fase do movimento no salto. Juntos esses determinam a posição real da moeda(armazenado na propriedade pos).
+`Coin` são atores simples. A maioria dos blocos simplesmente esperam em seus lugares. Mas para animar o jogo eles recebem um pouco de "oscilação", um ligeiro movimento vertical de vai e volta. Para controlar isto, um objeto `coin` armazena uma posição da base, bem como uma propriedade que controla a oscilação da fase do movimento no salto. Juntas essas propriedades determinam a posição real da moeda (armazenada na propriedade `pos`).
 
 
 ````js
@@ -183,9 +183,9 @@ function Coin(pos) {
 Coin.prototype.type = "coin";
 ````
 
-No capítulo 13 vimos que `Math.sin` nos dá a coordenada y de um ponto em um círculo. Isso é para coordenar um vai e vem em forma de onda suave à medida que avançamos o círculo, a função `seno` se torna útil para a modelagem de um movimento ondulatório.
+No capítulo 13 vimos que `Math.sin` nos dá a coordenada `y` de um ponto em um círculo. Isso é para coordenar um vai e vem em forma de onda suave à medida que avançamos o círculo, fazendo a função `seno` se tornar útil para a modelagem de um movimento ondulatório.
 
-Para evitar uma situação em que todas as moedas se movem para cima ou para baixo de forma síncrona, a fase inicial de cada moeda é aleatória. A fase da onda de `Math.Sin` a largura de uma onda que produz é de 2π. Multiplicamos o valor retornado pelo `Math.random` por esse número para dar a posição inicial de uma moeda de forma aleatória.
+Para evitar uma situação em que todas as moedas se movam para cima ou para baixo de forma síncrona, a fase inicial de cada moeda é aleatória. A fase da onda de `Math.Sin`, a largura de uma onda produzida, é de 2π. Multiplicamos o valor retornado pelo `Math.random` por esse número para dar a posição inicial de uma moeda de forma aleatória.
 
 Agora escrevemos todas as peças necessárias para representar o `Level` nesse estado.
 
@@ -195,7 +195,7 @@ console.log(simpleLevel.width, "by", simpleLevel.height);
 // → 22 by 9
  ````
 
-A tarefa a seguir deve exibir tais `Level` na tela, e assim modelar o tempo do movimento eentre deles.
+A tarefa a seguir deve exibir tais *levels* na tela, e assim modelar o tempo do movimento entre deles.
 
  ## Tarefa de encapsulamento
 

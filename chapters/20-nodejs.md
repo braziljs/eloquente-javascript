@@ -229,7 +229,7 @@ $ node main.js JavaScript
 Of{fXhwnuy
 ```
 
-## Installing with NPM
+## Instalando com NPM
 
 NPM, que brevemente discutido no Capítulo 10, é um repositório online de módulos
 JavaScript, muitos deles escritos para Node. Quando você instala o Node no seu

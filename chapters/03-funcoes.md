@@ -402,7 +402,7 @@ Nós queremos escrever uma programa que imprima dois números, sendo eles o núm
 011 Chickens
 ```
 
-Bom, isso claramente é uma função com dois argumentos. [TODO: ref #92]Vamos codar.[/TODO]
+Bom, isso claramente é uma função com dois argumentos. Vamos codar.
 
 ```js
 function printFarmInventory(cows, chickens) {

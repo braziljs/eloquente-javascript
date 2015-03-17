@@ -199,14 +199,13 @@ A tarefa a seguir deve exibir tais *levels* na tela, e assim modelar o tempo do 
 
  ## Tarefa de encapsulamento
 
-A maior parte do código neste capítulo não ira se preocupar com o encapsulamento. Isto tem duas razões. Em primeiro lugar o encapsulamento exige esforço extra. 
-Em programas maiores isso requer conceitos adicionais de interfaces a serem introduzidas. Como só há código para você enviar ao leitor que esta jogando com seus olhos vidrados, fiz um esforço para manter o programa pequeno.
+A maior parte do código neste capítulo não ira se preocupar com o encapsulamento. Isto tem duas razões. Em primeiro lugar o encapsulamento exige esforço extra. Em programas maiores isso requer conceitos adicionais de interfaces a serem introduzidas. Como só há código para você enviar ao leitor que esta jogando com seus olhos vidrados, fiz um esforço para manter o programa pequeno.
 
-Em segundo lugar, os vários elementos neste jogo estão estreitamente ligados que se o comportamento de um deles mudar é improvável que qualquer um dos outros seriam capazes de ficar na mesma ordem. A interfaces e os elementos acabam codificando uma série de suposições sobre a forma de como o jogo funciona. Isso os torna muito menos eficaz sempre que você altera uma parte do sistema, você ainda tem que se preocupar com a forma como ela afeta as outras partes isto porque suas interfaces não cobre a nova situação.
+Em segundo lugar, os vários elementos neste jogo estão tão ligados que se o comportamento de um deles mudar, é improvável que qualquer um dos outros seriam capazes de ficar na mesma ordem. As interfaces e os elementos acabam codificando uma série de suposições sobre a forma de como o jogo funciona. Isso os torna muito menos eficazes - sempre que você altera uma parte do sistema, você ainda tem que se preocupar com a forma como ela afeta as outras partes, isto porque suas interfaces não cobrem a nova situação.
 
-Alguns pontos de corte que existe em um sistema é a separação através de interfaces rigorosas mas em outros casos não. Tentar encapsular algo que não é um limite adequado e isso é uma maneira de desperdiçar uma grande quantidade de energia. Quando você está fazendo este erro normalmente você vai perceber que suas interfaces estaram ficando sem jeito amplo e detalhado e que eles precisam serem modificados muitas vezes, assim como o programa evolui.
+Alguns pontos de corte que existem em um sistema são as separações através de interfaces rigorosas, mas em outros casos não. Tentar encapsular algo que não é um limite adequado é uma maneira de desperdiçar uma grande quantidade de energia. Quando você está cometendo este erro, normalmente você vai perceber que suas interfaces estarão ficando desajeitadamente grandes e detalhadas, e que elas precisam ser modificadas muitas vezes, durante a evolução do programa.
 
-Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenho. A razão para isso é que nós vamos mostrar o mesmo jogo de uma maneira diferente no próximo capítulo. Ao colocar o desenho atrás de uma interface podemos simplesmente carregar o mesmo programa de jogo lá e ligar um novo módulo para exibição.
+Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenho. A razão para isso é que nós vamos mostrar o mesmo jogo de uma maneira diferente no próximo capítulo. Ao colocar o desenho atrás de uma interface, podemos simplesmente carregar o mesmo programa de jogo lá e ligar um novo módulo para exibição.
 
 ## Desenho
 

@@ -39,7 +39,7 @@ Ao mostrar-se interessado por uma _Issue_ seguiremos as regras:
 
 **3.** Quando o prazo da _milestone_ vencer, nós verificaremos a atividade da _Issue_, caso necessário estenderemos o prazo para 2 semanas.
 
-**4.** Quando o prazo da _milestone_ vencer e não houver nenhuma atividade correspondente a _Issue_, entraremos em contato com responsável pela própria _Issue_, caso a pessoa não se manifestar no prazo de **x** dias; a _Issue_ ficara livre a quem quiser continuar.
+**4.** Quando o prazo da _milestone_ vencer e não houver nenhuma atividade correspondente a _Issue_, entraremos em contato com responsável pela própria _Issue_, caso a pessoa não se manifestar no prazo de **14 dias**; a _Issue_ retrocedera ao estado anterior, de acordo com as [etapas citado acima](#etapas-da-isuue).
 
 ### Boas práticas
 
@@ -95,12 +95,12 @@ git push -f origin master
 
 **5.** Quando for iniciar uma nova tradução ou revisão, inicie todo processo pelo passo 2.
 
-### Emagando seus commits
+### Esmagando seus commits
 
 Quando algum revisor achar que alguma mensagem de commit não estiver coerente, ele pode pedir para você esmagar seus commits. Mais informações você encontra [aqui](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html).
 
 ### O que é traduzivél?
 
-Apenas os textos, códigos permanecem intactos.
+Apenas os textos, códigos e termos técnicos permanecem intactos.
 
 Obrigado! :heart: :heart: :heart:

@@ -231,7 +231,7 @@ Of{fXhwnuy
 
 ## Instalando com NPM
 
-NPM, que brevemente discutido no Capítulo 10, é um repositório online de módulos
+NPM, que foi brevemente discutido no Capítulo 10, é um repositório online de módulos
 JavaScript, muitos deles escritos para Node. Quando você instala o Node no seu
 computador, você também instala um programa chamado ```npm```, que fornece uma
 interface conveniente para esse repositório.
@@ -293,3 +293,168 @@ transferir e usá-los.
 Esse livro não vai abordar detalhes da utilização do NPM. Dê uma olhada em
 npmjs.org para uma documentação mais detalhada e para uma maneira simples de
 procurar por bibliotecas.
+
+## O módulo de arquivos de sistema
+
+Um dos módulos integrados mais comuns que vêm com o Node é o módulo ```"fs"```,
+que significa *file system*. Esse módulo fornece funções para o trabalho com
+arquivos de diretórios.
+
+Por exemplo, existe uma função chamada ```readFile```, que lê um arquivo e então
+chama um *callback* com o conteúdo desse arquivo.
+
+```javascript
+var fs = require("fs");
+fs.readFile("file.txt", "utf8", function(error, text) {
+    if (error)
+        throw error;
+    console.log("The file contained:", text);
+});
+```
+
+O segundo argumento passado para ```readFile``` indica a codificação de caracter
+usada para decodificar o arquivo numa *string*. Existem muitas maneiras de
+codificar texto em informação binária, mas a maioria dos sistemas modernos usam
+UTF-8 para codificar texto, então a menos que você tenha razões para acreditar
+que outra forma de codifica'ão deve ser usada, pssar "utf8" ao ler um arquivo de
+texto é uma aposta segura. Se você não passar uma codificação, o Node vai
+assumir que você está interessado na informação binária e vai te dar um objeto
+```Buffer``` ao invés de uma *string*. O que por sua vez, é um objeto
+*array-like* que contém números representando os *bytes* nos arquivos.
+
+```javascript
+var fs = require("fs");
+fs.readFile("file.txt", function(error, buffer) {
+  if (error)
+    throw error;
+  console.log("The file contained", buffer.length, "bytes.",
+              "The first byte is:", buffer[0]);
+});
+```
+
+Uma função similar, ```writeFile```, é usada para escrever um arquivo no disco.
+
+```javascript
+var fs = require("fs");
+fs.writeFile("graffiti.txt", "Node was here", function(err) {
+  if (err)
+    console.log("Failed to write file:", err);
+  else
+    console.log("File written.");
+});
+```
+
+Aqui, não foi necessário especificar a codificação de caracteres, pois a função
+```writeFile``` assume que recebeu uma *string* e não um objeto ```Buffer```, e
+então deve escrever essa *string* como texto usando a codificação de caracteres
+padrão, que é UTF-8.
+
+O módulo ```"fs"``` contém muitas outras funções úteis: ```readdir``` que vai
+retornar os arquivos em um diretório como um *array* de *strings*, ```stat```
+vai buscar informação sobre um arquivo, ```rename``` vai renomear um arquivo,
+```unlink``` vai remover um arquivo, e assim por diante. Veja a documentação em
+nodejs.org para especificidades.
+
+Muitas das funções em ```"fs"``` vêm com variantes síncronas e assíncronas. Por
+exemplo, existe uma versão síncrona de ```readFile``` chamada
+```readFileSync```.
+
+```javascript
+var fs = require("fs");
+console.log(fs.readFileSync("file.txt", "utf8"));
+```
+
+Funções síncronas requerem menos formalismo na sua utilização e podem ser úteis
+em alguns scripts, onde a extra velocidade oferecida pela assincronia *I/O* é
+irrelevante. Mas note que enquanto tal operação síncrona é executada, seu
+programa fica totalmente parado. Se nesse período ele deveria responder ao
+usuário ou a outras máquinas na rede, ficar preso com um *I/O* síncrono pode
+acabar produzindo atrasos inconvenientes.
+
+## O Módulo HTTP
+
+Outro principal é o ```"http"```. Ele fornece funcionalidade para rodar
+servidores HTTP e realizar requisições HTTP.
+
+Isso é tudo que você precisa para rodar um simples servidor HTTP:
+
+```javascript
+var http = require("http");
+var server = http.createServer(function(request, response) {
+  response.writeHead(200, {"Content-Type": "text/html"});
+  response.write("<h1>Hello!</h1><p>You asked for <code>" +
+                 request.url + "</code></p>");
+  response.end();
+});
+server.listen(8000);
+```
+
+Se você rodar esse script na sua máquina, você pode apontar seu navegador para o
+endereço http://localhost:8000/hello para fazer uma requisição no seu servidor.
+Ele irá responder com uma pequena página HTML.
+
+A função passada como um argumento para ```createServer``` é chamada toda vez
+que um cliente tenta se conecar ao servidor. As variáveis ```request``` e
+```response``` são os objetos que representam a informação que chega e sai. A
+primeira contém informações sobre a requisição, como por exemplo a propriedade
+```url```, que nos diz em qual URL essa requisição foi feita.
+
+Para enviar alguma coisa de volta, você chama métodos do objeto ```response```.
+O primeiro, ```writeHead```, vai escrever os cabeçalhos de resposta (veja o
+Capítulo 17). Você define o código de status (200 para "OK" nesse caso) e um
+objeto que contém valores de cabeçalho. Aqui nós dizemos ao cliente que
+estaremos enviando um documento HTML de volta.
+
+Em seguida, o corpo da resposta (o prórpio documento) é enviado com
+```response.write```. Você pode chamar esse método quantas vezes você quiser
+para enviar a resposta peça por peça, possibilitando que a iformação seja
+transimitida para o cliente assim que ela esteja disponível. Finalmente,
+```response,end``` assina o fim da resposta.
+
+A chamada de ```server.listen```  faz com que o servidor comece a esperar por
+conexões na porta 8000. Por isso você precisa se conectar a *localhost:8000*, ao
+invés de somente *localhost* (que deveria usar a porta 80, por padrão), para se
+comunicar com o servidor.
+
+Para parar de rodar um script Node como esse, que não finaliza automaticamente
+pois está aguardando por eventos futuros (nesse caso, conexões de rede), aperte
+Ctrl+C.
+
+Um servidor real normalmente faz mais do que o que nós vimos no exemplo
+anterior—ele olha o método da requisição (a propriedade ```method```) para ver
+que ação o cliente está tentando realizar e olha também a URL da requisição para
+descobrir que recurso essa ação está executando. Você verá um servidor mais
+avançado daqui a pouco neste capítulo.
+
+Para agir como um *cliente HTTP*, nós podemos usar a função ```request``` no
+módulo ```"http"```.
+
+```javascript
+var http = require("http");
+var request = http.request({
+  hostname: "eloquentjavascript.net",
+  path: "/20_node.html",
+  method: "GET",
+  headers: {Accept: "text/html"}
+}, function(response) {
+  console.log("Server responded with status code",
+              response.statusCode);
+});
+request.end();
+```
+
+O primeiro parâmetro passado para ```request``` configura a requisição, dizendo
+pro Node qual o servidor que ele deve se comunicar, que caminho solicitar
+daquele servidor, que método usar, e assim por diante. O segundo parâmetro é a
+função que deverá ser chamada quando uma resposta chegar. É informado um objeto
+que nos permite inspecionar a resposta, para descobrir o seu código de status,
+por exemplo.
+
+Assim como o objeto ```response``` que vimos no servidor, o objeto ```request```
+nos permite transmitir informação na requisição com o método ```write``` e
+finalizar a requisição com o método ```end```. O exemplo não usa ```write```
+porque requisições ```GET``` não devem conter informação no corpo da requisição.
+
+Para fazer requisições para URLs HTTP seguras (HTTPS), o Node fornece um pacote
+chamado ```https```, que contém sua própria função ```request```, parecida a
+```http.request```.

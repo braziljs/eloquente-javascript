@@ -32,34 +32,6 @@
 1. [Node.js](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/20-nodejs.md) - (**Parte 3: Node.js**)
 1. [Projeto: Website de Compartilhamento de Habilidades](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/21-projeto-website-de-compartilhamento-de-habilidades.md)
 
-
-## Contribuições
-
-### Guia para contribuir
-
-1. Faça o _fork_ do projeto.
-2. Veja nas [issues](https://github.com/braziljs/eloquente-javascript/issues) o status, através das *labels*, do capítulo que você deseja traduzir e/ou revisar.
-3. Caso o capítulo ainda não esteja em tradução e/ou revisão, comente na _issue_ correspondente que você irá iniciar tal tarefa, para que assim possamos adicionar a label de status nela.
-4. Faça o _Pull Request_ para o repositório original.
-
-**IMPORTANTE:** "Adquira" a concessão para tradução de outro capítulo somente **após** terminar o anteriormente solicitado.
-
-### Entendendo as labels
-
-* **em tradução**: sinaliza que um arquivo está em tradução.
-* **aguardando revisão**: sinaliza que um arquivo já traduzido está esperando para ser revisado.
-* **em revisão**: sinaliza que um arquivo traduzido está sendo revisado.
-* **aguardando supervisão**: sinaliza que um arquivo que já foi traduzido e revisado está esperando uma última revisão antes de ser finalizado.
-* **em supervisão**: sinaliza que um arquivo já traduzido e revisado está recebendo uma última revisão antes de ser finalizado.
-* **dúvidas**: dúvidas, sugestões e outros.
-
-### Fluxo do Trabalho - Issues
-
-O andamento das issues está divido em **5 etapas**, na ordem apresentada abaixo:
-
-**`em tradução` > `aguardando revisão` > `em revisão` > `aguardando supervisão` > `em supervisão` > `fechamento da issue`**
-
-
 ## Informações Importantes
 
 - Autor: **Marijn Haverbeke**

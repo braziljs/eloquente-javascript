@@ -32,6 +32,10 @@
 1. [Node.js](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/20-nodejs.md) - (**Parte 3: Node.js**)
 1. [Projeto: Website de Compartilhamento de Habilidades](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/21-projeto-website-de-compartilhamento-de-habilidades.md)
 
+## Como Contribuir
+
+Veja nosso guia de contribuição [aqui](https://github.com/braziljs/eloquente-javascript/blob/master/CONTRIBUTING.md).
+
 ## Informações Importantes
 
 - Autor: **Marijn Haverbeke**

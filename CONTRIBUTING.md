@@ -33,17 +33,17 @@ O andamento das _Issues_ está divido em **5 etapas** na ordem apresentada abaix
 
 Ao mostrar-se interessado por uma _Issue_ seguiremos as regras:
 
-**1.** O _Issue_ será atribuido ao interessado.
+**1.** A _Issue_ será atribuida ao interessado.
 
 **2.** Colocaremos uma _milestone_ com o prazo de 2 semanas para entrega do _Pull Request_.
 
-**3.** Quando o prazo da _milestone_ vencer, nós verificaremos a atividade da _Issue_, caso necessário estenderemos o prazo para 2 semanas.
+**3.** Quando o prazo da _milestone_ vencer, nós verificaremos a atividade da _Issue_, caso necessário estenderemos o prazo para mais 2 semanas.
 
-**4.** Quando o prazo da _milestone_ vencer e não houver nenhuma atividade correspondente a _Issue_, entraremos em contato com responsável pela própria _Issue_, caso a pessoa não se manifestar no prazo de **14 dias**; a _Issue_ retrocedera ao estado anterior, de acordo com as [etapas citado acima](#etapas-da-isuue).
+**4.** Quando o prazo da _milestone_ vencer e não houver nenhuma atividade correspondente a _Issue_, entraremos em contato com responsável pela própria _Issue_. Caso a pessoa não se manifestar no prazo de **14 dias**, a _Issue_ retrocederá ao estado anterior, de acordo com as [etapas citadas acima](#etapas-da-isuue).
 
 ### Boas práticas
 
-**1.** Faça referência do repositório oficial ao terminar o _fork_ 
+**1.** Faça referência ao repositório oficial após o _fork_ 
 
 ```
 git remote add upstream git@github.com:braziljs/eloquente-javascript.git
@@ -69,11 +69,11 @@ git checkout -b c0xr0y
 
 ```
 git add --all
-git commit -am'Tradução do tópico foo do capítulo 1'
+git commit -am 'Tradução do tópico foo do capítulo 1'
 git push origin c0xr0y
 ```
 
-Caso queira enviar o _Pull Request_ do que foi feito abra-o referenciando para a `master` do repositório oficial.
+Caso queira enviar o _Pull Request_ do que foi feito, abra-o referenciando para a `master` do repositório oficial.
 
 **4.** Após finalizar a tradução ou revisão de uma _Issue_ siga os passos:
 

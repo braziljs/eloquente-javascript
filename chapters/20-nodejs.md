@@ -37,14 +37,14 @@ na velocidade em que um sistema responde ao usuário ou às requisições da red
 
 A maneira tradicional de tratar a entrada e saída é ter uma função, como
 ```readfile```, que começa a ler um arquivo e só retorna quando o arquivo foi
-totalmente lido. Isso é chamado *I/O* síncrono (I/O quer dizer input/output ou
+totalmente lido. Isso é chamado _I/O_ síncrono (I/O quer dizer input/output ou
 entrada/saída).
 
 Node foi inicialmente concebido para o propósito de tornar a assincroneidade I/O
 mais fácil e conveniente. Nós já vimos interfaces síncronas antes, como o objeto
 ```XMLHttpRequest``` do navegador, discutodo no Capítulo 17. Uma interface
 asíncrona permite que o script continue executando enquanto ela faz seu trabalho
-e chama uma função de *callback* quando está finalizada. Isso é como Node faz
+e chama uma função de _callback_ quando está finalizada. Isso é como Node faz
 todo seu I/O.
 
 JavaScript é ideal para um sistema como Node. É uma das poucas linguagens de
@@ -52,7 +52,7 @@ programação que não tem uma maneira embutida de fazer I/O. Dessa forma,
 JavaScript poderia encaixar-se bastante na abordagem excêntrica do Node para
 o I/O sem acabar ficando com duas interfaces inconsistentes. Em 2009, quando
 Node foi desenhado, as pessoas já estavam fazendo I/O baseado em funções de
-*callback* no navegador, então a comunidade em volta da linguagem estava acostumada
+_callback_ no navegador, então a comunidade em volta da linguagem estava acostumada
 com um estilo de programação assíncrono.
 
 ## Assincronia
@@ -68,19 +68,19 @@ no mínimo a soma da duração das duas requisições. Isso não é um uso efica
 máquina, que vai estar inativa por boa parte do tempo enquanto os dados são
 transmitidos através rede.
 
-A solução para esse problema, num sistema síncrono, é iniciar *threads* de
-controle. (Dê uma olhada no Capítulo 14 para uma discussão sobre *threads*.) Uma
-sebgunda *thread* poderia iniciar a segunda requisição, e então ambas as
-*threads* vão esperar os resultados voltarem, e após a resincronização elas vão
+A solução para esse problema, num sistema síncrono, é iniciar _threads_ de
+controle. (Dê uma olhada no Capítulo 14 para uma discussão sobre _threads_.) Uma
+sebgunda _thread_ poderia iniciar a segunda requisição, e então ambas as
+_threads_ vão esperar os resultados voltarem, e após a resincronização elas vão
 combinar seus resultados.
 
 No seguinte diagrama, as linhas grossa representam o tempo que o programa gastou
 em seu processo normal, e as linhas finas representam o tempo gasto esperando
 pelo I/O. Em um modelo síncrono, o tempo gasto pelo I/O faz parte da linha do
-tempo de uma determinada *thread* de controle. Em um modelo assíncrono, iniciar
+tempo de uma determinada _thread_ de controle. Em um modelo assíncrono, iniciar
 uma ação de I/O causa uma divisão na linha do tempo, conceitualmente falando. A
-*thread* que iniciou o I/O continua rodando, e o I/O é finalizado juntamente à
-ela, chamando uma função de *callback* quando é finalizada.
+_thread_ que iniciou o I/O continua rodando, e o I/O é finalizado juntamente à
+ela, chamando uma função de _callback_ quando é finalizada.
 
 ![Control flow for synchronous and asynchronous I/O](http://eloquentjavascript.net/img/control-io.svg)
 
@@ -89,15 +89,15 @@ finalize é implícita no modelo síncrono, enquanto que é explícita no assín
 Mas assincronia é uma faca de dois gumes. Ela faz com que expressivos programas
 que seguem uma linha reta se tornem mais estranhos.
 
-No capítulo 17, eu já mensionei o fato de que todos esses *callbacks* adicionam
+No capítulo 17, eu já mensionei o fato de que todos esses _callbacks_ adicionam
 um pouco de ruído e rodeios para um programa. Se esse estilo de assincronia é
 uma boa ideia ou não, em geral isso pode ser discutido. De qualquer modo, levará
 algum tempo para se acostumar.
 
 Mas para um sistema baseado em JavaScript, eu poderia afirmar que esse estilo de
 assincronia com callback é uma escolha sensata. Uma das forças do JavaScript é
-sua simplicidade, e tentar adicionar múltiplas *threads* de controle poderia
-causar uma grande complexidade. Embora os *callbacks* não tendem a ser códigos
+sua simplicidade, e tentar adicionar múltiplas _threads_ de controle poderia
+causar uma grande complexidade. Embora os _callbacks_ não tendem a ser códigos
 simples, como conceito, eles são agradavelmente simples e ainda assim poderosos
 o suficiente para escrever servidores web de alta perfomance.
 
@@ -124,7 +124,7 @@ navegador. Ele imprime um pedaço de texto. Mas no Node, o texto será impresso
 pelo processo padrão de saída, e não no console JavaScript do navegador.
 
 Se você rodar ```node``` sem especificar nenhum arquivo, ele te fornecerá um
-*prompt* no qual você poderá escrever códigos JavaScript e ver o resultado
+_prompt_ no qual você poderá escrever códigos JavaScript e ver o resultado
 imediatamente.
 
 ```
@@ -145,10 +145,10 @@ comando) se o programa foi completado com sucesso (código zero) ou se encontrou
 algum erro (qualquer outro código).
 
 Para encontrar os argumentos de linha de comando recebidos pelo seu script, você
-pode ler ```process.argv```, que é um *array* de *strings*. Note que também
+pode ler ```process.argv```, que é um _array_ de _strings_. Note que também
 estarão inclusos o nome dos comandos ```node``` e o nome do seu script, fazendo
 com que os argumentos começem na posição 2. Se ```showargv.js``` contém somente
-o *statement* ```console.log(process.argv)```, você pode rodá-lo dessa forma:
+o _statement_ ```console.log(process.argv)```, você pode rodá-lo dessa forma:
 
 ```
 $ node showargv.js one --and two
@@ -181,7 +181,7 @@ arquivo ```/home/braziljs/elife/run.js```, Node vai tentar carregar o arquivo
 ```/home/braziljs/elife/world/world.js```. A extensão ```.js``` pode ser
 omitida.
 
-Quando uma *string* recebida pelo ```require``` não parece ter um caminho
+Quando uma _string_ recebida pelo ```require``` não parece ter um caminho
 relativo ou absoluto, fica implícito que ela se refere a um módulo integrado ou
 que está instalado no diretório ```node_modules```do. Por exemplo,
 ```require(fs)``` disponibilizará o módulo de sistema de arquivos integrado ao
@@ -191,7 +191,7 @@ essas é usando NPM, que em breve nós vamos discutir.
 
 Para ilustrar o uso do ```require```, vamos configurar um projeto simples que
 consiste de dois arquivos. O primeiro é chamado ```main.js```, que define um
-script que pode ser chamado da linha de comando para alterar uma *string*.
+script que pode ser chamado da linha de comando para alterar uma _string_.
 
 ```javascript
 var garble = require("./garble");
@@ -219,9 +219,9 @@ Lembre-se que substituir ```module.exports```, ao invés de adicionar propiedade
 fizemos com que o resultado ao requerir nosso arquivo ```garble``` seja a
 própria função de alterar.
 
-A função separa a *string* recebida em dois caracteres únicos separando a
-*string* vazia e então substituindo cada caracter cujo código é cinco pontos
-maior. Finalmente, o resultado é reagrupado novamente numa *string*.
+A função separa a _string_ recebida em dois caracteres únicos separando a
+_string_ vazia e então substituindo cada caracter cujo código é cinco pontos
+maior. Finalmente, o resultado é reagrupado novamente numa _string_.
 
 Agora nós podemos chamar nossa ferramenta dessa forma:
 ```
@@ -237,7 +237,7 @@ computador, você também instala um programa chamado ```npm```, que fornece uma
 interface conveniente para esse repositório.
 
 Por exemplo, um módulo que você vai encontrar na NPM é ```figlet```, que pode
-converter texto em *ASCII art*—desenhos feitos de caracteres de texto. O trecho
+converter texto em _ASCII art_—desenhos feitos de caracteres de texto. O trecho
 a seguir mostra como instalar e usar esse módulo:
 
 ```
@@ -269,8 +269,8 @@ chamamos ```require("figlet")```, essa biblioteca é carregada, e nós podemos
 chamar seu método ```text``` para desenhar algumas letras grandes.
 
 Talvez de forma inesperada, ao invés de retornar a string que faz crescer as
-letras, ```figlet.text``` têm uma função de *callback* que passa o resultado
-para ela. Ele também passa outro parâmetro no *callback*, ```error```, que vai
+letras, ```figlet.text``` têm uma função de _callback_ que passa o resultado
+para ela. Ele também passa outro parâmetro no _callback_, ```error```, que vai
 possuir um objeto de erro quando alguma coisa sair errada ou nulo se tudo
 ocorrer bem.
 
@@ -297,11 +297,11 @@ procurar por bibliotecas.
 ## O módulo de arquivos de sistema
 
 Um dos módulos integrados mais comuns que vêm com o Node é o módulo ```"fs"```,
-que significa *file system*. Esse módulo fornece funções para o trabalho com
+que significa _file system_. Esse módulo fornece funções para o trabalho com
 arquivos de diretórios.
 
 Por exemplo, existe uma função chamada ```readFile```, que lê um arquivo e então
-chama um *callback* com o conteúdo desse arquivo.
+chama um _callback_ com o conteúdo desse arquivo.
 
 ```javascript
 var fs = require("fs");
@@ -313,14 +313,14 @@ fs.readFile("file.txt", "utf8", function(error, text) {
 ```
 
 O segundo argumento passado para ```readFile``` indica a codificação de caracter
-usada para decodificar o arquivo numa *string*. Existem muitas maneiras de
+usada para decodificar o arquivo numa _string_. Existem muitas maneiras de
 codificar texto em informação binária, mas a maioria dos sistemas modernos usam
 UTF-8 para codificar texto, então a menos que você tenha razões para acreditar
 que outra forma de codifica'ão deve ser usada, pssar "utf8" ao ler um arquivo de
 texto é uma aposta segura. Se você não passar uma codificação, o Node vai
 assumir que você está interessado na informação binária e vai te dar um objeto
-```Buffer``` ao invés de uma *string*. O que por sua vez, é um objeto
-*array-like* que contém números representando os *bytes* nos arquivos.
+```Buffer``` ao invés de uma _string_. O que por sua vez, é um objeto
+_array-like_ que contém números representando os _bytes_ nos arquivos.
 
 ```javascript
 var fs = require("fs");
@@ -345,12 +345,12 @@ fs.writeFile("graffiti.txt", "Node was here", function(err) {
 ```
 
 Aqui, não foi necessário especificar a codificação de caracteres, pois a função
-```writeFile``` assume que recebeu uma *string* e não um objeto ```Buffer```, e
-então deve escrever essa *string* como texto usando a codificação de caracteres
+```writeFile``` assume que recebeu uma _string_ e não um objeto ```Buffer```, e
+então deve escrever essa _string_ como texto usando a codificação de caracteres
 padrão, que é UTF-8.
 
 O módulo ```"fs"``` contém muitas outras funções úteis: ```readdir``` que vai
-retornar os arquivos em um diretório como um *array* de *strings*, ```stat```
+retornar os arquivos em um diretório como um _array_ de _strings_, ```stat```
 vai buscar informação sobre um arquivo, ```rename``` vai renomear um arquivo,
 ```unlink``` vai remover um arquivo, e assim por diante. Veja a documentação em
 nodejs.org para especificidades.
@@ -365,10 +365,10 @@ console.log(fs.readFileSync("file.txt", "utf8"));
 ```
 
 Funções síncronas requerem menos formalismo na sua utilização e podem ser úteis
-em alguns scripts, onde a extra velocidade oferecida pela assincronia *I/O* é
+em alguns scripts, onde a extra velocidade oferecida pela assincronia _I/O_ é
 irrelevante. Mas note que enquanto tal operação síncrona é executada, seu
 programa fica totalmente parado. Se nesse período ele deveria responder ao
-usuário ou a outras máquinas na rede, ficar preso com um *I/O* síncrono pode
+usuário ou a outras máquinas na rede, ficar preso com um _I/O_ síncrono pode
 acabar produzindo atrasos inconvenientes.
 
 ## O Módulo HTTP
@@ -412,8 +412,8 @@ transimitida para o cliente assim que ela esteja disponível. Finalmente,
 ```response,end``` assina o fim da resposta.
 
 A chamada de ```server.listen```  faz com que o servidor comece a esperar por
-conexões na porta 8000. Por isso você precisa se conectar a *localhost:8000*, ao
-invés de somente *localhost* (que deveria usar a porta 80, por padrão), para se
+conexões na porta 8000. Por isso você precisa se conectar a _localhost:8000_, ao
+invés de somente _localhost_ (que deveria usar a porta 80, por padrão), para se
 comunicar com o servidor.
 
 Para parar de rodar um script Node como esse, que não finaliza automaticamente
@@ -426,7 +426,7 @@ que ação o cliente está tentando realizar e olha também a URL da requisiçã
 descobrir que recurso essa ação está executando. Você verá um servidor mais
 avançado daqui a pouco neste capítulo.
 
-Para agir como um *cliente HTTP*, nós podemos usar a função ```request``` no
+Para agir como um _cliente HTTP_, nós podemos usar a função ```request``` no
 módulo ```"http"```.
 
 ```javascript
@@ -458,3 +458,34 @@ porque requisições ```GET``` não devem conter informação no corpo da requis
 Para fazer requisições para URLs HTTP seguras (HTTPS), o Node fornece um pacote
 chamado ```https```, que contém sua própria função ```request```, parecida a
 ```http.request```.
+
+## Streams
+
+Nós já vimos dois exemplos de _streams_ em HTTP—são, consecutivamente, o
+objeto de resposta no qual o servidor pode escrever e o objeto de requisição que
+foi retornado do ```http.request```.
+
+_Strams_ de gravação são um conceito amplamente usado nas interfaces Node.
+Todos os _streams_ de gravação possuem um método ```write```, que pode receber
+uma _string_ ou um objeto ```Buffer```. Seus métodos ```end```
+fecham a transmissão e, se passado um parâmetro, também vai escrever alguma
+informação antes de fechar. Ambos métodos podem receber um _callback_ como um
+parâmetro adicional, que eles vão chamar ao fim do escrever ou fechar a
+transmissão.
+
+É possível criar _streams_ de gravação que apontam para um arquivo com a função
+```fs.createWritebleStram```. Então você pode usar o método ```write``` no
+objeto resultante para escrever o arquivo peça por peça, ao invés de escrever
+tudo de uma só vez com o ```fs.writeFile```.
+
+_Streams_ de leitura são um pouco mais fechados. Em ambos a variável
+```request``` que foi passada para a função de _callback_ do servidor HTTP e a
+variável ```response``` para o cliente HTTP são _streams_ de leitura. (Um
+servidor lê os pedidos e então escreve as respostas, enquanto que um cliente
+primeiro escreve um pedido e então lê a resposta.) Para ler de um *stream*
+usamos manipuladores de eventos, e não métodos.
+
+Objetos que emitem eventos no Node têm um método chamado ```on``` que é similar
+ao método ```addEventListener``` no navegador. Você dá um nome de evento e então
+uma função, e isso irá registrar uma função para ser chamada toda vez que um
+dado evento ocorrer.

@@ -436,3 +436,149 @@ animateWorld(new World(
    "o": BouncingCritter}
 ));
 ```
+
+## Uma simulação mais realista
+
+Para tornar a vida em nosso mundo mais interessante vamos adicionar os conceitos de alimentação e reprodução. Cada coisa viva no mundo ganha uma nova propriedade, a energia, a qual é reduzida por realizar ações e aumenta comendo alguma coisas. Quando o bicho tem energia suficiente ele pode se reproduzir, gerando um novo bicho da mesma espécie. Para manter as coisas simples; os bichos em nosso mundo se reproduzem assexuadamente ou seja por si so.
+
+Se bichos só se movimentar e comer uns aos outros o mundo em breve ira se sucumbir na lei da entropia crescente, ficando sem energia e tornando um deserto sem vida. Para evitar que isso aconteça(muito rapidamente pelo menos) adicionaremos plantas para o mundo. As plantas não se movem. Eles só usam a fotossíntese para crescer(ou seja aumentar a sua energia) e se reproduzir.
+
+Para fazer este trabalho vamos precisar de um mundo com um método diferente de `letAct`. Poderíamos simplesmente substituir o protótipo global do método mas eu gostei muito da nossa simulação e gostaria que os novos bichos mantivesse o mesmo jeito do velho mundo.
+
+Uma solução é usar herança. Criamos um novo construtor, `LifelikeWorld`, cujo seu protótipo é baseado no protótipo global, mas que substitui o método `letAct`. O novo método `letAct` delega o trabalho do que realmente deve executar uma ação para várias funções armazenados no objeto `actionTypes`.
+
+```js
+function LifelikeWorld(map, legend) {
+  World.call(this, map, legend);
+}
+LifelikeWorld.prototype = Object.create(World.prototype);
+
+var actionTypes = Object.create(null);
+
+LifelikeWorld.prototype.letAct = function(critter, vector) {
+  var action = critter.act(new View(this, vector));
+  var handled = action &&
+    action.type in actionTypes &&
+    actionTypes[action.type].call(this, critter,
+                                  vector, action);
+  if (!handled) {
+    critter.energy -= 0.2;
+    if (critter.energy <= 0)
+      this.grid.set(vector, null);
+  }
+};
+```
+
+O novo método `letAct` verifica primeiro se uma ação foi devolvido, então se a função manipuladora para este tipo de ação existir, o resultado deste manipulador sera `true`, indicando que ele tratou com sucesso a ação. Observe que usamos uma chamada para dar o acesso ao manipulador do mundo, através de sua chamada.
+Observe que para dar o acesso ao manipulador no mundo, precisamos fazer uma chamada.
+
+Se a ação não funcionou por algum motivo a ação padrão é que a criatura simplesmente espere. Perde um quinto de sua energia e se o seu nível de energia chega a zero ou abaixo a criatura morre e é removido da `grid`.
+
+## Manipuladores de ações
+
+A ação mais simples que uma criatura pode executar é `"crescer"` e sera usado pelas plantas. Quando um objeto de ação como `{type: "grow"}` é devolvido o seguinte método de manipulação será chamado:
+
+```js
+actionTypes.grow = function(critter) {
+  critter.energy += 0.5;
+  return true;
+};
+```
+
+Crescer com sucesso acrescenta meio ponto no nível total da reserva de energia.
+
+Analise o método para se mover
+
+```js
+actionTypes.move = function(critter, vector, action) {
+  var dest = this.checkDestination(action, vector);
+  if (dest == null ||
+      critter.energy <= 1 ||
+      this.grid.get(dest) != null)
+    return false;
+  critter.energy -= 1;
+  this.grid.set(vector, null);
+  this.grid.set(dest, critter);
+  return true;
+};
+```
+
+Esta ação verifica primeiro se o destino é válido usando o método `checkDestination`. Se não é válido, se o destino não está vazio ou se o bicho não tem energia necessária; o movimento retorna `false` para indicar que nenhuma ação foi feita. Caso contrário ele move o bicho e subtrai sua energia.
+
+Além de movimentar, os bichos pode comer.
+
+```js
+actionTypes.eat = function(critter, vector, action) {
+  var dest = this.checkDestination(action, vector);
+  var atDest = dest != null && this.grid.get(dest);
+  if (!atDest || atDest.energy == null)
+    return false;
+  critter.energy += atDest.energy;
+  this.grid.set(dest, null);
+  return true;
+};
+```
+
+Comer um outro bicho também envolve o fornecimento de um quadrado de destino válido. Desta vez o destino não pode estar vazio e deve conter algo com energia, por exemplo um bicho(mas não pode ser a parede pois elas não são comestíveis). Sendo assim a energia a partir da comida é transferido para o comedor e a vítima é retirada da `grid`.
+
+E finalmente nós permitiremos que os nossos bichos se reproduzem.
+
+```js
+actionTypes.reproduce = function(critter, vector, action) {
+  var baby = elementFromChar(this.legend,
+                             critter.originChar);
+  var dest = this.checkDestination(action, vector);
+  if (dest == null ||
+      critter.energy <= 2 * baby.energy ||
+      this.grid.get(dest) != null)
+    return false;
+  critter.energy -= 2 * baby.energy;
+  this.grid.set(dest, baby);
+  return true;
+};
+```
+
+Reproduzir custa duas vezes mais o nível de energia de um bicho recém-nascido. Então primeiro criamos o bebê(hipotéticamente) usando `elementFromChar` no próprio caráter origem do bicho. Uma vez que temos um bebê podemos encontrar o seu nível de energia e testar se o pai tem energia suficiente para trazê-lo com sucesso no mundo. Também é exigido um destino válido(vazio).
+
+Se tudo estiver bem o bebê é colocado sobre a `grid`(que já não é hipotéticamente), e a energia é subtraida do pai.
+
+## Populando o novo mundo
+
+Agora temos um quadro para simular essas criaturas mais realistas. Poderíamos colocar os bichos do velho mundo para o novo, mas eles só iriam morrer, uma vez que não temos uma propriedade de energia. Então vamos fazer novos elementos. Primeiro vamos escrever uma planta que é uma forma de vida bastante simples.
+
+```js
+function Plant() {
+  this.energy = 3 + Math.random() * 4;
+}
+Plant.prototype.act = function(context) {
+  if (this.energy > 15) {
+    var space = context.find(" ");
+    if (space)
+      return {type: "reproduce", direction: space};
+  }
+  if (this.energy < 20)
+    return {type: "grow"};
+};
+```
+
+As plantas começam com um nível de energia randomizados entre 3 e 7, isso é para que eles não se reproduzam todos no mesmo tempo. Quando a planta atinge nível 15 de energia e não há espaço vazio nas proximidades ela não se reproduz. Se uma planta não pode se reproduzir ele simplesmente cresce até atingir o nível 20 de energia.
+
+Vamos agora definir um comedor de plantas.
+
+```js
+function PlantEater() {
+  this.energy = 20;
+}
+PlantEater.prototype.act = function(context) {
+  var space = context.find(" ");
+  if (this.energy > 60 && space)
+    return {type: "reproduce", direction: space};
+  var plant = context.find("*");
+  if (plant)
+    return {type: "eat", direction: plant};
+  if (space)
+    return {type: "move", direction: space};
+};
+```
+
+Vamos usar o caractere `*` para representar as plantas, quando algum bichos encontrar eles podem consumir como alimento.

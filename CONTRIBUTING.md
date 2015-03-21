@@ -69,9 +69,13 @@ git checkout -b c0xr0y
 
 ```
 git add --all
-git commit -am 'Tradução do tópico foo do capítulo 1'
+git commit -am 'Tradução do tópico foo do capítulo 1 #numero-da-issue'
 git push origin c0xr0y
 ```
+
+> **ps**: Lembre de **sempre** fazer a referência da issue que representa o capítulo em tradução/revisão na hora do commit.
+>
+> **Ex**: `git commit -m 'Tradução capítulo 13 - DOM #13'`
 
 Caso queira enviar o _Pull Request_ do que foi feito, abra-o referenciando para a `master` do repositório oficial.
 

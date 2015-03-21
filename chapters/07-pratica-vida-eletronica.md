@@ -582,3 +582,118 @@ PlantEater.prototype.act = function(context) {
 ```
 
 Vamos usar o caractere `*` para representar as plantas, quando algum bichos encontrar eles podem consumir como alimento.
+
+## Dando a vida
+
+Agora faremos elementos suficientes para experimentar o nosso novo mundo. Imagine o seguinte mapa sendo um vale gramado com um rebanho de herbívoros em que há algumas pedras e vida vegetal exuberante em todos os lugares.
+
+```js
+var valley = new LifelikeWorld(
+  ["############################",
+   "#####                 ######",
+   "##   ***                **##",
+   "#   *##**         **  O  *##",
+   "#    ***     O    ##**    *#",
+   "#       O         ##***    #",
+   "#                 ##**     #",
+   "#   O       #*             #",
+   "#*          #**       O    #",
+   "#***        ##**    O    **#",
+   "##****     ###***       *###",
+   "############################"],
+  {"#": Wall,
+   "O": PlantEater,
+   "*": Plant}
+);
+```
+
+Vamos ver o que acontece ao executar.
+
+```js
+animateWorld(valley);
+```
+
+Na maioria das vezes as plantas se multiplicam e expandem muito rapidamente, mas em seguida a abundância de alimento provoca uma explosão populacional dos herbívoros que saem para acabar com quase todas as plantas resultando em uma fome em massa dos bichos. Às vezes o ecossistema se recupera e começa outro ciclo. Em outros momentos uma das espécies desaparece completamente. Se é os herbívoros todo o espaço irá ser preenchido por plantas. Se é as plantas os bichos restantes morrem de fome e o vale se torna uma terra desolada. Olha que crueldade da natureza.
+
+## Exercícios
+
+### Estupidez artificial
+
+Tendo os habitantes do nosso mundo se extinguindo após alguns minutos é uma espécie de deprimente. Para lidar com isso poderíamos tentar criar uma forma mais inteligente para o comedor de plantas.
+
+Há vários problemas óbvios com os nossos herbívoros. Primeiro eles são terrivelmente ganancioso enchendo-se com todas as plantas que vêem até que tenham dizimado a vida vegetal local. Em segundo lugar o seu movimento randomizado(lembre-se que o método `view.find` retorna uma direção aleatória quando múltiplas direções combinar) faz com que eles fique em torno de si e acabe morrendo de fome se não não acontecer de haver plantas nas proximidades. E finalmente eles se reproduzem muito rápido o que faz com que os ciclos entre abundância e fome se torne bastante intenso.
+
+Escrever um novo tipo de bicho que tenta abordar um ou mais desses pontos e substituí-lo para o tipo `PlantEater` no velho no mundo do vale. Veja como é que as tarifas estão. Ajuste um pouco mais se necessário.
+
+```js
+// Your code here
+function SmartPlantEater() {}
+
+animateWorld(new LifelikeWorld(
+  ["############################",
+   "#####                 ######",
+   "##   ***                **##",
+   "#   *##**         **  O  *##",
+   "#    ***     O    ##**    *#",
+   "#       O         ##***    #",
+   "#                 ##**     #",
+   "#   O       #*             #",
+   "#*          #**       O    #",
+   "#***        ##**    O    **#",
+   "##****     ###***       *###",
+   "############################"],
+  {"#": Wall,
+   "O": SmartPlantEater,
+   "*": Plant}
+));
+```
+
+**Dicas:**
+
+O problema avidez podem ser atacados de diversas maneiras. Os bichos pode parar de comer quando atingem um certo nível de energia. Ou eles poderiam comer apenas a cada N voltas(mantendo um contador de voltas desde a sua última refeição em uma propriedade no objeto da criatura). Ou para certificar-se de que as plantas nunca seja extinta totalmente, os animais poderiam se recusar a comer uma planta a menos que tenha pelo menos uma outra planta próxima(usando o método `findAll` no `view`). Uma combinação desta ou alguma estratégia completamente diferente pode funcionar.
+
+Podemos recuperar uma das estratégias do movimento dos bichos em nosso velho mundo para fazer os bichos se moverem de forma mais eficaz. Tanto o comportamento de saltar e o de seguir pela parede mostrou uma gama muito maior de movimento do que a de completamente aleatória.
+
+Fazendo as criaturas mais lentas na reprodução pode ser trivial. Basta aumentar o nível de energia mínima em que se reproduzem. É claro que ao fazer isto o ecossistema ficara mais estável tornando-se também mais chato. Se você tem um rodada cheia de bichos imóveis mastigando um mar de plantas e nunca se reproduzindo torna o ecossistema muito estável. E ninguém quer ver isso.
+
+### Predators
+
+Qualquer ecossistema sério tem uma cadeia alimentar mais do que um único link. Faça outro bicho que sobrevive comendo o bicho herbívoro. Você vai notar que a estabilidade é ainda mais difícil de conseguir, agora que há ciclos em vários níveis. Tente encontrar uma estratégia para tornar o ecossistema funcional sem problemas durante pelo menos um curto período.
+
+Uma coisa que vai ajudar é fazer um mundo maior. Desta forma o crescimento da população local ou de bustos são menos propensos a acabar com uma espécie inteiramente e não há espaço para a população relativamente grande de presa necessária para sustentar uma população pequena de predadores.
+
+```js
+// Your code here
+function Tiger() {}
+
+animateWorld(new LifelikeWorld(
+  ["####################################################",
+   "#                 ####         ****              ###",
+   "#   *  @  ##                 ########       OO    ##",
+   "#   *    ##        O O                 ****       *#",
+   "#       ##*                        ##########     *#",
+   "#      ##***  *         ****                     **#",
+   "#* **  #  *  ***      #########                  **#",
+   "#* **  #      *               #   *              **#",
+   "#     ##              #   O   #  ***          ######",
+   "#*            @       #       #   *        O  #    #",
+   "#*                    #  ######                 ** #",
+   "###          ****          ***                  ** #",
+   "#       O                        @         O       #",
+   "#   *     ##  ##  ##  ##               ###      *  #",
+   "#   **         #              *       #####  O     #",
+   "##  **  O   O  #  #    ***  ***        ###      ** #",
+   "###               #   *****                    ****#",
+   "####################################################"],
+  {"#": Wall,
+   "@": Tiger,
+   "O": SmartPlantEater, // from previous exercise
+   "*": Plant}
+));
+```
+
+**Dicas:**
+
+Muitos dos mesmos truques que trabalhamos no exercício anterior também se aplicam aqui. Fazer os predadores grandes(lotes de energia) se reproduzirem lentamente é recomendado. Isso vai torná-los menos vulneráveis aos períodos de fome quando os herbívoros estiverem escassos.
+
+Além de manter-se vivo, manter seu estoque de alimentos vivo é o objetivo principal de um predador. Encontrar uma forma de fazer predadores caçarem de forma mais agressiva quando há um grande número de herbívoros e caçarem mais lentamente quando a presa é rara. Os comedores de plantas se movimentam, o simples truque de comer um só quando os outros estão nas proximidades é improvável que funcione, raramente pode acontecer que seu predador morra de fome. Mas você poderia manter o controle de observações nas voltas anteriores; de alguma forma precisamos manter a estrutura de dados nos objetos dos predadores e teremos que basear o seu comportamento no que ele tem visto recentemente.

@@ -480,32 +480,32 @@ Mesmo assim, não há necessidade de se sentir mal ao escrever funções que nã
 
 ## Resumo
 
-Este capítulo ensinou a você como escrever suas próprias funções. A `function keyword`, quando usada como uma expressão, pode criar um valor de função. Quando usada como uma declaração, pode ser usada para declarar uma variável e dar a ela uma função como valor.
+Este capítulo ensinou você a como escrever suas próprias funções. A palavra-chave `function`, quando usada como uma expressão, pode criar um valor de função. Quando usada como uma declaração, pode ser usada para declarar uma variável e dar a ela uma função como valor.
 
 ```js
+// Create a function value f
+var f = function(a) {
+  console.log(a + 2);
+};
 
-// Create a function and immediately call it
-(function (a) { console.log(a + 2); })(4);
-// → 6
-
-// Declare f to be a function
-function f(a, b) {
+// Declare g to be a function
+function g(a, b) {
   return a * b * 3.5;
 }
-
 ```
-Um aspecto chave no entendimento das funções é entender os escopos locais. Parâmetros e variáveis declaradas dentro de uma função são locais a função, recriados todas as vezes que a função é chamada, e não visíveis do lado de fora. Funções declaradas dentro de outras funções têm acesso ao escopo das funções exteriores.
 
-Separando as tarefas diferentes seu programa executa diferentes funções e isso é útil. Você não precisa de repetir a si mesmo várias vezes, e quando alguém tentar ler seu programa, ele poderá ter o mesmo papel que capítulos e seções de um texto normal.
+Um aspecto chave para se entender funções é entender como os escopos locais funcionam. Parâmetros e variáveis declaradas dentro de uma função são locais àquela função, recriados todas as vezes que a função é invocada, e não são acessíveis ao contexto externo à função. Funções declaradas dentro de outras têm acesso ao escopo local das funções mais externas que as envolvem.
+
+Separar as tarefas que a sua aplicação executa em diferentes funções é bastante útil. Você evita repetir código e faz com que ele seja mais legível, pois funções possibilitam agrupar o código em blocos com conceitos similares, da mesma forma que capítulos e seções ajudam a organizar textos.
 
 ## Exercícios
 
 ### Mínimo
 
-O capítulo anterior introduziu a função padrão `Math.min` que retorna seu menor argumento. Nós podemos fazer isso nós mesmos agora. Escreva uma função `min` que recebe dois argumentos e retorna o valor mínimo.
+O [TODO: adicionar link]capítulo anterior[/TODO] introduziu a função `Math.min` que retorna o seu menor argumento. Nós podemos reproduzir essa funcionalidade agora. Escreva uma função `min` que recebe dois argumentos e retorna o menor deles.
 
 ```js
-// Seu código aqui.
+// Your code here.
 
 console.log(min(0, 10));
 // → 0
@@ -513,23 +513,19 @@ console.log(min(0, -10));
 // → -10
 ```
 
-T> Se você tiver problemas para colocar as chaves e parênteses no lugar certo para ter uma definição de função válida, comece copiando um dos exemplos neste capítulo e modifique-o.
-T>
-T> Uma função pode conter múltiplas declarações `return`.
+Dica: Se estiver tendo problemas para colocar as chaves e os parênteses nos seus lugares corretos para ter uma definição de função válida, comece copiando um dos exemplos desse capítulo e modificando-o. Uma função pode conter várias declarações de retorno (`return`).
 
 ### Recursão
 
-Vimos que o `%` (operador resto) pode ser usado para testar se um número é par ou ímpar usando `% 2` para verificar se o número é divisível por dois. Aqui uma outra maneira de verificar se um número inteiro positivo é par ou ímpar:
+Nós vimos que o `%` (operador resto) pode ser usado para testar se um número é par ou ímpar usando `% 2` para verificar se ele é divisível por dois. Abaixo está uma outra maneira de definir se um número inteiro positivo é par ou ímpar:
 
-* Zero é par.
+- Zero é par.
+- Um é ímpar.
+- Para todo outro número *N*, sua paridade é a mesma de *N - 2*.
 
-* Um é ímpar.
+Defina uma função recursiva `isEven` que satisfaça as condições descritas acima. A função deve aceitar um número (`number`) como parâmetro e retornar um valor Booleano.
 
-* Para qualquer outro número N, seu padrão é o mesmo que N - 2.
-
-Defina uma função recursiva `isEven` correspondente a essa descrição. A função deve aceitar um número como parâmetro e retornar um `Boolean`. 
-
-Teste isso com 50 e 75. Veja como se comporta com -1. Por que? Você pode pensar numa forma de consertar isso?
+Teste-a com os valores 50 e 75. Observe como ela se comporta com o valor -1. Por que? Você consegue pensar em uma maneira de consertar isso?
 
 ```js
 // Your code here.
@@ -542,9 +538,9 @@ console.log(isEven(-1));
 // → ??
 ```
 
-T> Sua função vai parecer com a função `find` no exemplo recursivo `findSolution` neste capítulo, com uma cadeia `if/else if/else` que testa qual dos três casos será aplicado. Cada um dos *branches* (ramificações) deverá conter uma declaração `return` ou ser organizada de outra forma para um valor específica para ser retornado.
-T>
-T> Quando for passado um número negativo, a função vai ser chamada de novo e de novo, passando para si mesma um número cada vez mais negativo, indo sempre mais longe de retornar um resultado. Isso eventualmente vai sair do espaço da memória e abortar.
+Dica: Sua função irá ser semelhante a função interna `find` do exemplo recursivo `findSolution` neste capítulo, com uma cadeia de declarações `if`/`else if`/`else` que testam qual dos três casos se aplica. O `else` final, correspondente ao terceiro caso, é responsável por fazer a chamada recursiva. Cada uma das ramificações deverá conter uma declaração de retorno (`return`) ou retornar um valor específico.
+
+Quando o argumento recebido for um número negativo, a função irá ser chamada recursivamente várias vezes, passando para si mesma um número cada vez mais negativo, se afastando cada vez mais de retornar um resultado. Ela eventualmente irá consumir todo o espaço em memória da pilha de chamadas e abortar.
 
 ### Contando feijões
 

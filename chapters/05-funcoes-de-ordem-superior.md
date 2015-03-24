@@ -1,17 +1,17 @@
 # Funções de ordem superior
 
-> "Tzu-li e Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. _Duzentas mil linhas_, disse Tzu-li, _sem contar os comentários!_ Tzu-ssu repondeu, _Pss, o meu já é quase um milhão de linhas_. Mestre Yuan-Ma disse, _Meu melhor programa tinha quinhentas linas_. Ouvindo isso os alunos estavam boquiabertos."
+> "Tzu-li e Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. _Duzentas mil linhas_, disse Tzu-li, _sem contar os comentários!_ Tzu-ssu repondeu, _Pss, o meu já é quase um milhão de linhas_. Mestre Yuan-Ma disse, _Meu melhor programa tinha quinhentas linhas_. Ouvindo isso os alunos ficaram admirados."
 >
 > - Mestre Yuan-Ma, _The Book of Programming_
 
->"Existem duas maneiras de construir um design de software: um jeito é deixá-lo tão simples que obviamente não há nenhuma deficiência e a outra maneira é tão complicada que obviamente não há deficiências óbvias."
+>"Existem duas maneiras de construir o design de um software: um jeito é deixá-lo tão simples de tal forma que não há nenhuma deficiência e a outra maneira é tão complicada que obviamente não haverá deficiências óbvias."
 >
 > - C.A.R. Hoare, _1980 ACM Turing Award Lecture_
 
-Um programa grande é um programa dispendioso. Não necessariamente devido ao tempo que o leva para construir. Tamanho quase sempre envolve complexidade e complexidade confunde programadores. Programadores confusos tem um efeito negativo sobre um programa -- eles tendem a criar erros (bugs). Um programa grande também provê um grande espaço para que esses bugs se escondam, ficando difícil de encontrá-los.
+Um programa grande é um programa dispendioso. Não necessariamente devido ao tempo que leva para construir. Tamanho quase sempre envolve uma complexidade e complexidade confunde os programadores. Programadores confusos tem um efeito negativo sobre um programa - eles tendem a criar erros (bugs). Um programa grande tem a possibilidade de esconder bugs que são difíceis de serem encontrados.
 
-Vamos rapidamente voltar para os dois exemplos finais da introdução.
-O primeiro é auto contido e num total de 6 linhas.
+Vamos rapidamente abordar dois exemplos que foram citados na introdução.
+O primeiro contém um total de 6 linhas.
 
 ```js
 
@@ -24,42 +24,40 @@ console.log(total);
 
 ```
 
-O segundo necessita de duas funções externas e é apenas numa linha.
+O segundo necessita de duas funções externas e é escrito em apenas uma linha.
 
 `console.log(sum(range(1, 10)));`
 
-Qual é mais provável de conter um erro?
+Qual é mais propenso a erros?
 
-Se contarmos as definições de `sum` e `range`, o segundo código é ainda maior que o primeiro, mas ainda sim, eu diria que é mais provável estar correto.
+Se juntarmos as definições de `sum` e `range` o tamanho do segundo código será bem maior do que o primeiro, mas eu diria que ele é o mais correto.
 
-A razão de provavelmente estar mais correto é que, primeiramente constrói um linguagem que expressa o problema, e então resolvendo o problema no seu próprio domínio, a solução ganha claridade. Somar uma sequência de números não se trata de laços e contadores, mas sim de somas e sequência de números.
+A razão dele ser o mais correto é que primeiramente ele constrói uma linguagem que expressa o problema e resolve em seu próprio domínio com uma solução clara. Somar uma sequência de números não se trata de um laço com contadores mas sim de somas e sequências de números.
 
-A definição do vocabulário em si (as funções `sum` e `range`) ainda sim terão que lidar elas mesmos com laços, contadores e outros detalhes bobos. Mas devido a eles expressarem conceitos mais simples (a construção de blocos é mais simples do que construir), eles são mais fáceis de entender.
+A definição do vocabulário (funções `sum` e `range`) terão que lidar com laços, contadores e outros detalhes não muito interessante. Mas por causa deles expressarem conceitos mais simples fica mais fácil de entender.
 
-É claro, conseguir uma soma de uma sequência de números é trivial, com ou sem vocabulário. Considere que é um exemplo miniatura de outro realmente difícil.
+## Abstração
 
-## Abstração ##
+No contexto da programação esse tipo de vocabulário é geralmente expressado pelo termo _abstrações_. Abstrações escondem detalhes e nos dá a habilidade de falar em um alto nível (mais abstrato).
 
-No contexto da programação, o termo normalmente usado para esses tipos de vocabulário são _abstrações_. Abstrações escondem detalhes e nos dá a habilidade de falar num nível mais alto(mais abstrato).
+Isto é uma analogia que compara duas receitas de sopa de ervilha:
 
-Uma analogia é a receita para sopa de lentilha:
+> "Coloque 1 copo de ervilha por pessoa num recipiente. Adicione água até as ervilhas ficarem cobertas. Deixa as ervilhas na água por no mínimo 12 horas. Tire as ervilhas da água e coloque-as numa panela. Adicione 4 copos de água por pessoa. Cubra a panela e deixe-as cozinhando por duas horas. Pegue meia cebola por pessoa, corte em pedaços, adicione às ervilhas. Pegue um talo de aipo por pessoa, corte em pedaços e adicione às ervilhas. Pegue uma cenoura por pessoa, corte em pedaços! Adicione às ervilhas. Cozinhe por 10 minutos".
 
-> "Coloque 1 copo de lentilhas por pessoa num recipiente. Adicione água até as lentilhas ficarem cobertas. Deixa as lentilhas na água por no mínimo 12 horas. Tire as lentilhas da água e coloque-as numa panela. Adicione 4 copos de água por pessoa. Cubra a panela e deixas cozinhando por duas horas. Pegue meia cebola por pessoa, corte em pedaços com uma faca, adicione às lentilhas. Pegue um naco de aipo por pessoa, corte em pedaços com uma faca, adicione às lentilhas. Pegue uma cenoura por pessoa, corte em pedaços, com uma faca! Adicione às lentilhas. Cozinhe por 10 minutos".
+E a segunda receita:
 
-Comparada com essa aqui:
+> "Para uma pessoa: 1 copo de ervilha, meia cebola, um talo de aipo e uma cenoura."
+Embeba as ervilhas por 12 horas, ferva por 2 horas em 4 copos de água (por pessoa). Pique e adicione os vegetais. Deixe cozinhar por mais 10 minutos".
 
-> "Por pessoa: 1 copo de lentilhas, meia cebola, um naco de aipo e uma cenoura."
-Embeba por 12 horas, ferva por 2 horas em 4 copos de água (por pessoa). Pique e adicione os vegetais. Deixe cozinhar por mais 10 minutos".
+A segunda é bem menor e mais fácil de interpretar. Mas ela necessita de um maior conhecimento sobre algumas palavras relacionadas à cozinhar como: "embeber", "ferva", "pique" e "vegetais".
 
-A segunda é menor e mais fácil de interpretar. Ela confia no seu entendimento de algumas palavras mais relacionadas à cozinhar: "embeber", "ferva", "pique" e, acho, "vegetais".
+Quando programamos não podemos contar com todas as palavras do dicionário para expressar o que precisamos. Assim cairemos no primeiro padrão de receita - onde damos cada comando que o computador tem que realizar, um a um, ocultando os conceitos de alto níveis que se expressam.
 
-Quando programamos, se não pudermos utilizar as palavras que já existem criadas anteriormente, esperando por nós no dicionário, é fácil cair no padrão da primeira receita -- onde damos cada comando que o computador tem que realizar, um por um, cegos a um conceito de alto nível que eles expressam.
+Perceber quando um conceito implora para ser abstraído em uma nova palavra é um costume que tem de virar algo natural quando programamos.
 
-Tem que virar algo natural, quando programamos, perceber quando um conceito implora para ser abstraído num nova palavra.
+## Abstraindo a travessia de um `Array`
 
-## Abstraindo a travessia do array ##
-
-Funções, como vimos anteriormente, são boas maneiras de criar abstrações. Mas algumas vezes elas caem por terra.
+Funções, como vimos anteriormente, são boas maneiras para se criar abstrações. Mas algumas vezes elas caem por terra.
 
 No capítulo anterior, esse tipo de `loop` apareceu várias vezes:
 
@@ -73,11 +71,11 @@ for (var i = 0; i < array.length; i++) {
 
 ```
 
-O que ele tem a dizer é "para cada elemento do array, faça isso". Mas utiliza um jeito redundante que envolve uma variável contadora, um checagem do tamanho do array e a declaração de uma variável extra para pegar o elemento atual. Deixando de lado a monstruosidade que é, ele também nos dá espaço para possíveis erros: reúso da variável `i`, escrever errado `lenght`, confundir as variáveis `i` e `current`, por aí vai...
+O que ele diz é: "para cada elemento do array, faça isso". Mas utiliza um jeito redundante que envolve uma variável contadora, uma checagem do tamanho do array e a declaração de uma variável extra para pegar o elemento atual. Deixando de lado a monstruosidade do código, ele também nos dá espaço para possíveis erros: reúso da variável `i`, escrever o método `lenght` errado, confundir as variáveis `i` e `current` e por aí vai...
 
-Então, vamos abstrair isso numa função. Consegue pensar num jeito?
+Então vamos tentar abstrair isso em uma nova função. Consegue pensar em alguma forma?
 
-O problema é que, onde muitas funções apenas pegam alguns valores, combina-os e talvez retorna alguma coisa, esses laços `for` contém um pedaço de código que eles devem executar. É fácil escrever uma função que passa sobre um array e chama `console.log` em cada elemento:
+É trivial escrever uma função que passa sobre um array e chama `console.log` para cada elemento:
 
 ```js
 
@@ -88,7 +86,7 @@ function logEach(array) {
 
 ```
 
-Mas e se quisermos fazer algo diferente de escrever os elementos? Desde que "fazendo alguma coisa" pode ser representado como uma função e funções são valores também, podemos passar nossa ação como um valor de função:
+Mas e se quisermos fazer algo diferente do que apenas registrar os elementos? Uma vez que "fazer alguma coisa" pode ser representado com uma função e as funções são apenas valores, podemos passar nossas ações como um valor para a função.
 
 ```js
 
@@ -104,7 +102,8 @@ forEach(["Wampeter", "Foma", "Granfalloon"], console.log);
 
 ```
 
-Normalmente você não passa uma função predefinida para o `forEach`, mas cria uma função no local.
+Normalmente você não irá passar uma função predefinida para o `forEach`, mas ela será criada localmente dentro da função.
+
 
 ```js
 

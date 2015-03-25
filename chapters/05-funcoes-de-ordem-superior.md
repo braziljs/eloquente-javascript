@@ -14,14 +14,12 @@ Vamos rapidamente abordar dois exemplos que foram citados na introdução.
 O primeiro contém um total de 6 linhas.
 
 ```js
-
 var total = 0, count = 1;
 while (count <= 10) {
-	total += count;
-	count += 1;
+  total += count;
+  count += 1;
 }
 console.log(total);
-
 ```
 
 O segundo necessita de duas funções externas e é escrito em apenas uma linha.
@@ -62,13 +60,11 @@ Funções, como vimos anteriormente, são boas maneiras para se criar abstraçõ
 No capítulo anterior, esse tipo de `loop` apareceu várias vezes:
 
 ```js
-
 var array = [1, 2, 3];
 for (var i = 0; i < array.length; i++) {
-	var current = array[i];
-	// faça alguma coisa com current
+  var current = array[i];
+  console.log(current);
 }
-
 ```
 
 O que ele diz é: "para cada elemento do array, faça isso". Mas utiliza um jeito redundante que envolve uma variável contadora, uma checagem do tamanho do array e a declaração de uma variável extra para pegar o elemento atual. Deixando de lado a monstruosidade do código, ele também nos dá espaço para possíveis erros: reúso da variável `i`, escrever o método `lenght` errado, confundir as variáveis `i` e `current` e por aí vai...
@@ -78,176 +74,155 @@ Então vamos tentar abstrair isso em uma nova função. Consegue pensar em algum
 É trivial escrever uma função que passa sobre um array e chama `console.log` para cada elemento:
 
 ```js
-
 function logEach(array) {
-	for (var i = 0; i < array.length; i++)
-	console.log(array[i]);
+  for (var i = 0; i < array.length; i++)
+    console.log(array[i]);
 }
-
 ```
 
 Mas e se quisermos fazer algo diferente do que apenas registrar os elementos? Uma vez que "fazer alguma coisa" pode ser representado com uma função e as funções são apenas valores, podemos passar nossas ações como um valor para a função.
 
 ```js
-
 function forEach(array, action) {
-	for (var i = 0; i < array.length; i++)
-	action(array[i]);
+  for (var i = 0; i < array.length; i++)
+    action(array[i]);
 }
 
 forEach(["Wampeter", "Foma", "Granfalloon"], console.log);
 // → Wampeter
 // → Foma
 // → Granfalloon
-
 ```
 
 Normalmente você não irá passar uma função predefinida para o `forEach`, mas ela será criada localmente dentro da função.
 
-
 ```js
-
 var numbers = [1, 2, 3, 4, 5], sum = 0;
 forEach(numbers, function(number) {
-	sum += number;
+  sum += number;
 });
 console.log(sum);
 // → 15
-
 ```
 
-Esse parece muito com um `loop` clássico, com o seu corpo escrito como no bloco acima. Exceto que agora o corpo está dentro da função, assim como dentro dos parênteses da chamada `forEach`. É por isso que precisa ser fechado com chave, parêntese e ponto e vírgula.
+O exemplo acima se parece muito com um `loop` clássico, o corpo esta escrito como um bloco. No entanto o corpo está dentro do valor da função, bem como esta dentro dos parênteses da chamada de `forEach`. É por isso que precisamos fechar com chave e parêntese.
 
-Nesse padrão, podemos simplificar o nome da variável (`number`) pelo elemento atual como argumento da função, ao invés de simplesmente pegar manualmente o array.
+Nesse padrão, podemos simplificar o nome da variável (`number`) pelo elemento atual que chega como argumento da função ao invés de simplesmente pegar o `array` manualmente.
 
-Não precisamos escrever `forEach`. É disponível como método padrão em arrays (pegando a função como primeiro argumento, já que o array é providenciado como o alvo que o método age sobre).
+Não precisamos definir um método `forEach`. Ele esta disponível como um método padrão em `arrays`. Quando um `array` é fornecido para o método agir sobre ele, o `forEach` espera apenas um argumento obrigatório: a função a ser executada para cada elemento.
 
-Para ilustrar o quão útil isso é, lembre-se dessa função do capítulo anterior que continha dois array-travessias.
+Para ilustrar o quão útil isso é, vamos lembrar da função que vimos no capítulo anterior, onde continha dois `arrays` transversais.
 
 ```js
-
 function gatherCorrelations(journal) {
-	var phis = {};
-	for (var entry = 0; entry < journal.length; ++entry) {
-	var events = journal[entry].events;
-	for (var i = 0; i < events.length; i++) {
-		var event = events[i];
-		if (!(event in phis))
-		phis[event] = phi(tableFor(event, journal));
-	}
-	}
-	return phis;
+  var phis = {};
+  for (var entry = 0; entry < journal.length; entry++) {
+    var events = journal[entry].events;
+    for (var i = 0; i < events.length; i++) {
+      var event = events[i];
+      if (!(event in phis))
+        phis[event] = phi(tableFor(event, journal));
+    }
+  }
+  return phis;
 }
-
 ```
 
 Trabalhando com `forEach` faz parecer levemente menor e bem menos confuso.
 
 ``` js
-
 function gatherCorrelations(journal) {
-	var phis = {};
-	journal.forEach(function(entry) {
-	entry.events.forEach(function(event) {
-		if (!(event in phis))
-		phis[event] = phi(tableFor(event, journal));
-	});
-	});
-	return phis;
+  var phis = {};
+  journal.forEach(function(entry) {
+    entry.events.forEach(function(event) {
+      if (!(event in phis))
+        phis[event] = phi(tableFor(event, journal));
+    });
+  });
+  return phis;
 }
-
 ```
 
-## Funções de ordem superior ##
+## Funções de ordem superior
 
-O termo para funções que operão sobre funçoes (pegando-os como argumentos, ou retornando-os) são _funções de ordem superior_. Para programadores Javascript, que estão acostumados com funções sendo valores normais, não existe nada de mais no fato de que tais funções existem. O termo vem da matemática, onde a distinção entre funções e outros valores é levado um pouco mais a sério.
+Funções que operam em outras funções, seja ela apenas devolvendo argumentos, são chamadas de funções de ordem superior. Se você concorda com o fato de que as funções são valores normais, não há nada de notável sobre o fato de sua existência. O termo vem da matemática onde a distinção entre funções e outros valores é levado mais a sério.
 
-Funções de ordem superior permite-nos abstrair sobre ações, não apenas valores. Eles vêm em várias formas. Você pode ter funções que criam uma nova função.
+Funções de ordem superior nos permitem abstrair as ações. Elas podem serem de diversas formas. Por exemplo, você pode ter funções que criam novas funções.
 
 ```js
-
 function greaterThan(n) {
-	return function(m) { return m > n; };
+  return function(m) { return m > n; };
 }
 var greaterThan10 = greaterThan(10);
 console.log(greaterThan10(11));
 // → true
-
 ```
 
-Ou funções que mudam outra função.
+Ou funções que mudam outras funções.
 
 ```js
-
 function noisy(f) {
-	return function(arg) {
-	console.log("calling with", arg);
-	var val = f(arg);
-	console.log("called with", arg, "- got", val);
-	return val;
-	};
+  return function(arg) {
+    console.log("calling with", arg);
+    var val = f(arg);
+    console.log("called with", arg, "- got", val);
+    return val;
+  };
 }
 noisy(Boolean)(0);
 // → calling with 0
 // → called with 0 - got false
-
 ```
 
-Ou ainda criar funções que implementão seus próprios tipos de fluxo de controle.
+Ou ainda criar funções que implementão seus próprios fluxos de controles.
 
 ```js
-
 function unless(test, then) {
-	if (!test) then();
+  if (!test) then();
 }
 function repeat(times, body) {
-	for (var i = 0; i < times; i++) body(i);
+  for (var i = 0; i < times; i++) body(i);
 }
 
 repeat(3, function(n) {
-	unless(n % 2, function() {
-	console.log(n, "is even");
-	});
+  unless(n % 2, function() {
+    console.log(n, "is even");
+  });
 });
 // → 0 is even
 // → 2 is even
-
 ```
 
-As regras de "escopo léxico" que discutimos no Capítulo 3 trabalham a nosso favor quando usamos funções dessa maneira. No exemplo acima, a variável `n` é o parâmetro da função de fora. Por que funções internas vivem dentro do ambiente da que existe por fora, podendo usá-la. Ainda, os corpos de tais funções podem usar livremente as variáveis ao seu redor e ter um papel similar aos blocos `{}` usados em `loops` normais e expressões de condição (n.t.: `if` e `while`, por exemplo). Uma diferença importante é que variáveis declaradas dentro delas não acabam no ambiente da função de fora. E isso normalmente é algo bom.
+As regras de "escopo léxico" que discutimos no Capítulo 3 trabalham a nosso favor quando usamos funções dessa maneira. No exemplo acima, a variável `n` é um parâmetro da função de fora mas como as funções internas vivem dentro do ambiente externo, podemos usar a variável. Ainda os corpos de tais funções podem usar livremente as variáveis ao seu redor e ter um papel similar aos blocos `{}` usados em `loops` e expressões codicionais. Uma diferença importante é que variáveis declaradas dentro delas não podem serem acessadas fora da função. Isso normalmente é algo bom.
 
-## Passando argumentos ##
+## Passando argumentos
 
-A função `noisy` acima, que circula seu argumento em outra função, tem uma séria deficiência.
+A função `noisy` declarada abaixo envolve seu argumento em outra função, isso gera uma grave deficiência.
 
 ```js
-
 function noisy(f) {
-	return function(arg) {
-	console.log("calling with", arg);
-	var val = f(arg);
-	console.log("called with", arg, "- got", val);
-	return val;
-	};
+  return function(arg) {
+    console.log("calling with", arg);
+    var val = f(arg);
+    console.log("called with", arg, "- got", val);
+    return val;
+  };
 }
-
 ```
 
-Se `f` recebe mais de um parâmetro, apenas o primeiro é passado para ele. Podemos adicionar um monte de outros argumentos para a função interna (`arg1`, `arg2`, por aí vai), e passar elas para `f`, mas não fica claro quantos são necessários. Também tiraria de `f` a informação em `arguments.length`. Desde que sempre passamos o mesmo tamanho de argumentos para ele, ele nunca saberia quantos argumentos realmente foi passado.
+Se `f` receber mais de um parâmetro, apenas o primeiro parâmetro será passado para ele. Podemos adicionar outros argumentos para a função interna (`arg1`, `arg2`, assim por diante) e passar elas para `f`, mas mesmo assim isso não deixaria explícito uma quantidade de parâmetros exatos. Essa solução limita algumas informações de `f` como por exemplo `arguments.length`. Nunca saberemos a quantidade exata de argumentos que foi passada.
 
-Para esse tipo de situação, funções Javascript possuem um método `apply`. O método `apply` recebe um array (ou um pseudo array) de argumentos e vai chamar a função com esses argumentos.
+Para esse tipo de situação, funções em Javascript possuem um método chamado `apply`. O método `apply` recebe um array (ou um `array` de `objeto`) de argumentos que é enviado para função que esta sendo chamada.
 
 ```js
-
 function transparentWrapping(f) {
-	return function() {
-	return f.apply(null, arguments);
-	};
+  return function() {
+    return f.apply(null, arguments);
+  };
 }
-
 ``` 
 
-Essa é particularmente uma função sem uso, mas mostra o padrão que estamos interessados, a função resultante vai passar todos os argumentos dados e apenas esses argumentos para `f`. Ela faz isso apenas passando seus próprios argumentos para `apply`. O primeiro argumento para `apply`, para o quaĺ passamos `null` aqui, pode ser usado para sumlar o método `call`. Mais sobre isso no próximo capítulo.
+Particularmente essa função é inútil, mas nos mostra o padrão que estamos interessados, a função que retorna irá passar todos os argumentos dados para `f`. Ela faz isso apenas passando seus próprios argumentos para o `apply`. O primeiro argumento do `apply` definimos como `null` mas isto pode ser usado para simular uma chamada de método. Iremos voltar a ver isto novamente no próximo capítulo.
 
 ## Exemplo de dados ##
 

@@ -99,6 +99,18 @@ git push -f origin master
 
 **5.** Quando for iniciar uma nova tradução ou revisão, inicie todo processo pelo passo 2.
 
+### Dúvidas em tradução de termos, palavras, expressões etc...
+
+Quando estiver em uma situação em que você não sabe exatamente como traduzir uma palavra, termo ou expressão, nós recomendamos que siga os seguintes passos:
+
+**1.** Abra uma _Issue_ com um título descritivo como por exemplo: "_Como traduzir a palavra/termo "x"?_" e coloque uma descrição fazendo referência a _Issue_ do capítulo que você está trabalhando e explicando o contexto com informações relevantes.
+
+**2.** Adicione um label `[TODO: ref #<número-da-issue-da-discussão>]<palavra/termo não traduzido>[/TODO]` e continue trabalhando no arquivo enquanto não há uma conclusão na _Issue_. Esse processo é importante para facilitar o acesso a itens pendentes e ter uma referência clara onde está ocorrendo a discussão.
+
+**3.** Após a conslusão da discussão na _Issue_, feche a mesma. Em seguida, remova o label adicionado no passo 2 e atualize a palavra/termo não traduzido.
+
+**4.** Como mantemos um arquivo de [glossário](https://github.com/braziljs/eloquente-javascript/blob/master/glossario.md), faça um _Pull Request_ adicionando o novo termo, colocando a referência `#<número-da-issue>` no termo/palavra em questão para fácil acesso no futuro.
+
 ### Esmagando seus commits
 
 Quando algum revisor achar que alguma mensagem de commit não estiver coerente, ele pode pedir para você esmagar seus commits. Mais informações você encontra [aqui](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html).

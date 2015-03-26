@@ -224,117 +224,114 @@ function transparentWrapping(f) {
 
 Particularmente essa função é inútil, mas nos mostra o padrão que estamos interessados, a função que retorna irá passar todos os argumentos dados para `f`. Ela faz isso apenas passando seus próprios argumentos para o `apply`. O primeiro argumento do `apply` definimos como `null` mas isto pode ser usado para simular uma chamada de método. Iremos voltar a ver isto novamente no próximo capítulo.
 
-## Exemplo de dados ##
+## JSON
 
-Funções de ordem superior que de alguma forma aplicam para os elementos de um array são bastante usadas em JavaScript. O método `forEach` é o mais primitivo como função. Existe um número de outras variações disponíveis como métodos em arrays. Para nos familiarizarmos com eles, vamos brincar com outro conjunto de dados.
+Funções de ordem superior que aplicam uma função de alguma forma para os elementos de um `array` são bastante usadas em JavaScript. O método`forEach` é uma função mais primitiva. Existe outras variantes disponíveis como métodos em `arrays`. Para acostumarmos com eles vamos brincar com um outro conjunto de dados.
 
-Alguns anos atras, alguém pesquisou através de um monte de arquivos, procurando juntar um livro sobre a história do nome da minha família ("Haverbeke", literalmente "Riacho de aveia"). Eu esperava encontrar cavaleiros, piratas e alquimistas... Mas o livro acabou se tornando mais sobre fazendeiros belgas. Para o meu divertimento, eu extraí a informação dos meus ancestrais diretos e coloquei-os num formato para ser lido no computador. Vamos brincar com essa informação.
+Há alguns anos alguém juntou um monte de arquivos e montou um livro sobre a história do nome da minha família (Haverbeke que significa Oatbrook). Abri-o na esperança de encontrar cavaleiros, piratas, e alquimistas mas o livro acaba por ser principalmente de agricultores de flamengos. Para minha diversão extrai uma informação sobre os meus antepassados e coloquei em um formato legível por um computador.
 
-## JSON ##
-
-O arquivo que eu criei parece mais ou menos assim:
+O arquivo que eu criei se parece mais ou menos assim:
 
 ```js
-
 [
-	{"name": "Emma de Milliano", "sex": "f",
-	 "born": 1876, "died": 1956,
-	 "father": "Petrus de Milliano",
-	 "mother": "Sophia van Damme"},
-	{"name": "Carolus Haverbeke", "sex": "m",
-	 "born": 1832, "died": 1905,
-	 "father": "Carel Haverbeke",
-	 "mother": "Maria van Brussel"},
-	
-	//… por aí vai
+  {"name": "Emma de Milliano", "sex": "f",
+   "born": 1876, "died": 1956,
+   "father": "Petrus de Milliano",
+   "mother": "Sophia van Damme"},
+  {"name": "Carolus Haverbeke", "sex": "m",
+   "born": 1832, "died": 1905,
+   "father": "Carel Haverbeke",
+   "mother": "Maria van Brussel"},
+  … and so on
 ]
-
 ```
 
-Essa notação é muito similar com o jeito JavaScript de escrever arrays e objetos, com algumas restrições. Todos os nomes de propriedades devem ser em aspas e apenas conjuntos simples de dados (sem chamadas de funções, ou variáveis, ou qualquer coisa que involva algum cálculo) são permitidos.
+Este formato é chamado de JSON (pronuncia-se "Jason") que significa JavaScript Object Notation. Json é amplamente utilizado como armazenamento de dados e como um formato de comunicação na Web.
 
-Essa forma é chamado JSON, pronuncia-se "Diêisson", que significa JavaScript Object Notation (Notação de objetos JavaScript). É muito usado como forma de armazenamento de dados e formato comunicação na internet.
+Json se escreve semelhatemente como `arrays` e objetos em Javascript mas com algumas restrições.
+Todos os nomes das propriedades devem ficar entre aspas e serem apenas expressões de dados simples; é permitido chamadas de funções, variáveis ou qualquer coisa que envolva um cálculo real. Comentários não são permitidos.
 
-JavaScript provê duas funções, `JSON.stringify` e `JSON.parse`, que converte de e para esse formato.
+JavaScript nos fornece duas funções `JSON.stringify` e `JSON.parse`, que convertem dados para outro formato. O primeiro recebe um valor em JavaScript e retorna um string codificada em JSON. A segunda obtém uma `string` e converte-a para um valor de código.
 
 ```js
-
 var string = JSON.stringify({name: "X", born: 1980});
 console.log(string);
 // → {"name":"X","born":1980}
 console.log(JSON.parse(string).born);
 // → 1980
-
 ```
 
-A variável `ANCESTRY_FILE`, disponível no sandbox(caixa de areia) para esse capítulo assim como arquivo para download no _site_, contêm o valor do meu arquivo JSON como string. Vamos decodificar e ver quantas pessoas contêm:
+O variável `ANCESTRY_FILE` esta disponível na `sandbox` neste capítulo para download no site, onde contém o conteúdo do meu arquivo `JSON` como uma `string`. Vamos decodificá-lo e ver quantas pessoas contém.
 
 ```js
-
 var ancestry = JSON.parse(ANCESTRY_FILE);
 console.log(ancestry.length);
 // → 39
-
 ```
 
-## Filtrando um array ##
+## Filtrando um array
 
-Uma função passada como um argumento para uma função de ordem superior não representa apenas uma ação que pode ser executada. Também retorna um valor, que podemos usar, como por exemplo, tomar uma decisão.
-
-Para encontrar as pessoas nos dados dos ancestrais que eram jovens em 1924, a função a seguir pode ser útil. Ela filtra os elementos em um array que não passa um teste.
+Para encontrar um conjunto de pessoas nos dados ancestrais que eram  jovens em 1924 a seguinte função pode ser útil. Ele filtra os elementos em uma matriz que não passa de apenas um teste condicional. 
 
 ```js
-
 function filter(array, test) {
-	var passed = [];
-	for (var i = 0; i < array.length; i++) {
-	if (test(array[i]))
-		passed.push(array[i]);
-	}
-	return passed;
+  var passed = [];
+  for (var i = 0; i < array.length; i++) {
+    if (test(array[i]))
+      passed.push(array[i]);
+  }
+  return passed;
 }
 
 console.log(filter(ancestry, function(person) {
-	return person.born > 1900 && person.born < 1925;
+  return person.born > 1900 && person.born < 1925;
 }));
 // → [{name: "Philibert Haverbeke", …}, …]
-
 ```
+
+Este utiliza o argumento chamado de `test` como um valor de função para preencher uma "lacuna" na computação. A função de `test` é chamado para cada elemento e o seu valor de retorno determina se um elemento é incluído na matriz retornada.
 
 Três pessoas no arquivo estavam vivas e jovens em 1924: meu avô, minha avó e minha tia-avó.
 
-Como `forEach`, filtrar é um método padrão em arrays. O exemplo define a função apenas para mostrar o que ocorre internamente. De agora em diante, usaremos `ancestry.filter(...)`.
+Observe que a função `filter` em vez de apagar os elementos do `array` ela constrói um novo com apenas os elementos que passaram no teste. Esta função é primitiva e não modifica o `array` dado.
 
-## Transformando com map ##
-
-Digamos que possuímos um array de objetos pessoa, produzidos ao filtrar o array de ancestrais de alguma forma, mas queremos um array de nomes, que é mais fácil de ler.
-
-A função `map` transforma um array aplicando a função para todos os seus elementos e constrói um novo array
-através dos valores retornados. O novo array vai ter o mesmo tamanho array enviado, mas seu conteúdo vai ser "mapeado" para um novo formato através da função.
+Assim como `forEach`, `filter` é um método padrão de `arrays`. O exemplo abaixo define uma função só para mostrar o que ele faz internamente. A partir de agora vamos utiliza-la assim:
 
 ```js
+console.log(ancestry.filter(function(person) {
+  return person.father == "Carel Haverbeke";
+}));
+// → [{name: "Carolus Haverbeke", …}]
+```
 
+## Transformando com map
+
+Digamos que temos um `array` de objetos que representam pessoas produzidos atravéz da filtragem do `array` de ancestrais. Mas queremos um `array` com os nomes o que é mais fácil de ler.
+
+A método `map` transforma um `array` atravez da aplicação de uma função para todos os seus elementos e constrói um novo `array`
+através dos valores devolvidos. O novo `array` terá o mesmo tamanho do `array` enviado mas seu conteúdo vai ser mapeado para um novo formato através da função.
+
+```js
 function map(array, transform) {
-	var mapped = [];
-	for (var i = 0; i < array.length; i++)
-	mapped.push(transform(array[i]));
-	return mapped;
+  var mapped = [];
+  for (var i = 0; i < array.length; i++)
+    mapped.push(transform(array[i]));
+  return mapped;
 }
 
 var overNinety = ancestry.filter(function(person) {
-	return person.died - person.born > 90;
+  return person.died - person.born > 90;
 });
 console.log(map(overNinety, function(person) {
-	return person.name;
+  return person.name;
 }));
 // → ["Clara Aernoudts", "Emile Haverbeke",
 //    "Maria Haverbeke"]
-
 ```
 
-Interessantemente, as pessoas que viveram mais de 90 anos são as mesmas pessoas que vimos antes. Pessoas que eram jovens nos anos 20, que por acaso eram a geração mais nova nos meus dados. Acredito que a medicina realmente avançou um bocado.
+Curiosamente as pessoas que eram jovens na década de 1920 e que viveram pelo menos até aos 90 anos de idade são as mesmas três pessoas que vimos antes, o que acaba de ser a geração mais recente do meu conjunto de dados. Eu acho que a medicina já percorreu um longo caminho.
 
-Como `forEach` e `filter`, `map` também um método padrão em arrays.
+Assim como `forEach` e `filter`, `map` também é um método padrão de `arrays`.
 
 ## Resumindo com reduce ##
 

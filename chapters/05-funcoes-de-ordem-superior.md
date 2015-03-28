@@ -407,93 +407,112 @@ Ao invés de juntar toda a lógica requerida num `loop` gigante, podemos decompo
 
 Escrever um código limpo é fabuloso. Infelizmente essa clareza tem um custo.
 
-## O Custo ##
+## O Custo
 
-No mundo elegante de códigos e lindos arco-íris, vive um monstro mal e estraga-prazeres chamado "\_ineficiência\_".
+No mundo dos códigos elegantes e lindos arco-íris, vive um monstro mal que estraga os prazeres chamado de ineficiência.
 
-Reduzir o processamento de um array numa sequência de passos claramente separados, que cada um faz algo com o array e produz um novo array é fácil de pensar. Mas construir todos esses arrays é de certa forma custoso.
+Um programa que processa um `array` é mais elegante e expressa em uma seqüência de etapas que são separadas para que cada processo faça algo com o `array` e produza um novo `array`. Mas a construção de todos esses `arrays` intermediários é um pouco custoso.
 
-Passar uma função para `forEach` e deixar que o método cuide da iteração para nós é conveniente e elegante. Porém chamadas de funções em JavaScript são custosas, comparadas com blocos simples de `loop`.
+Passar uma função para `forEach` e deixar que o método cuide da iteração para os nós é conveniente e fácil de ler. Porém chamadas de funções em JavaScript são custosas comparadas com blocos simples de `loop`.
 
-Então entram um monte de técnicas que ajudam a esclarecer o código. Elas adicionam camadas entre as coisas cruas que o computador está fazendo com os conceitos que estamos trabalhando e faz com que a máquina faça mais trabalho. Isso não é uma lei inescapável -- existem linguagens de programação que possuem um melhor suporte para construir aplicações sem adicionar ineficiências, e ainda em JavaScript, um programador experiente pode encontrar jeitos de escrever códigos relativamente abstratos que ainda são rápidos, porém é um problema frequente.
+Adicionar camadas de abstrações entre as coisas cruas que o computador está fazendo e os conceitos que estamos trabalhando, faz com que a máquina realize seu trabalho mais rápido. Esta não é uma lei de ferro, exitem linguagens de programação que tem melhor suporte para a construção de abstrações sem adição de ineficiências, até mesmo em JavaScript, um programador experiente pode encontrar maneiras de escrever um código abstrato e rápido. Mas é um problema que é muito visto.
 
-Felizmente, muitos computadores são extremamente rápidos e se você estiver processando uma coleção de dados, ou fazendo alguma coisa que acontece no tempo de escala humano (digamos, apenas uma vez, ou toda vez que o usuário clica um botão), então não importa se você escreveu aquela linda solução que leva meio milissegundo, ou a solução super optimizada que leva um décimo de um milissegundo.
+Existem várias técnicas que ajudam a esclarecer o código. Elas adicionam camadas entre as coisas cruas que o computador está fazendo com os conceitos que estamos trabalhando e faz com que a máquina trabalhe mais rápido. Isso não é uma lei inescapável -- existem linguagens de programação que possuem um melhor suporte para construir aplicações sem adicionar ineficiências, e ainda em JavaScript, um programador experiente pode encontrar jeitos de escrever códigos relativamente abstratos que ainda são rápidos, porém é um problema frequente.
 
-É útil saber de vez em quando quanto tempo leva um trecho de código leva para executar. Se vocês têm um `loop` dentro de um `loop` (diretamente, ou através de um `loop` externo chamando uma função que executa um `loop` interno), o código dentro do `loop` interno acabará rodando número x de vezes, onde N é o número de vezes que o `loop` de fora repete e M o número de vezes o `loop` interno repete. Se esse `loop` interno conter outro `loop` que realize P voltas, seu bloco rodará MxNxP vezes, e assim vai. Isso se soma. 
+Felizmente muitos computadores são extremamente rápidos e se você estiver processando uma coleção de dados ou fazendo alguma coisa que acontece no tempo de escala humano (digamos, apenas uma vez ou toda vez que o usuário clica em um botão), então não importa se você escreveu aquela linda solução que leva meio milissegundo ou a solução super otimizada que leva um décimo de um milisegundo.
 
-## O pai do pai do pai do pai do pai... ##
+É útil saber de vez em quando quanto tempo leva um trecho de código para executar. Se vocês têm um `loop` dentro de um `loop` (diretamente, ou através de um `loop` externo chamando uma função que executa um `loop` interno), o código dentro do `loop` interno acaba rodando x número de vezes, onde N é o número de vezes que o `loop` de fora repete e M o número de vezes que o `loop` interno repete. Se esse `loop` interno conter outro `loop` que realize P voltas seu bloco rodará `M x N x P` vezes e assim por diante. Isto pode adicionar muitas operações. Quando um programa é lento o problema muitas das vezes pode estar atribuída a apenas uma pequena parte do código que fica dentro de um circuito interno.
 
-Meu avô, Philibert Haverbeke, está incluído nos dados do arquivo. Como exemplo final, eu quero saber quem é o meu mais antigo ancestral no arquivo (Pauwels van Haverbeke), e se possível, quanto DNA teoricamente compartilho com ele.
+## O pai do pai do pai do pai
 
-Primeiro, construí um objeto que faz que seja fácil encontrar pessoas através do nome.
+Meu avô, Philibert Haverbeke está incluído nos dados do arquivo. Como exemplo final eu quero saber quem é o meu mais antigo ancestral no arquivo, (Pauwels van Haverbeke), e se possível descobrir teoricamente quanto de DNA compartilho com ele.
+
+Para ser capaz de fazer uma busca pelo nome de um pai para um objeto real que representa uma pessoa, primeiramente precisamos construirmos um objeto que associa os nomes com as pessoas.
 
 ```js
-
 var byName = {};
 ancestry.forEach(function(person) {
-	byName[person.name] = person;
+  byName[person.name] = person;
 });
 
 console.log(byName["Philibert Haverbeke"]);
 // → {name: "Philibert Haverbeke", …}
-
 ```
+Agora o problema não é totalmente simples como conseguir as propriedades dos pais e ir contando quantos levam até chegar a Pauwels. Existem vários casos de família onde três pessoas casaram com seus primos segundos (pequenos vilarejos tem essas coisas). Isso faz com que ramificações da família se reencontrem em certos lugares, o que significa que eu compartilho mais de 1/2G com essa pessoa, usaremos G como número para gerações, cada geração se divide os genes em dois.
 
-Agora o problema não é totalmente simples como conseguir as propriedades dos pais e ir contando quantos levam até chegar a Pauwels. Existem vários casos na família onde três pessoas casaram com seus primos segundos (pequenos vilarejos tem essas coisas). Isso faz com que ramificações da família se reencontrem em certos lugares, o que significa que eu compartilho mais de 1/2G com essa pessoa (usando G como número para gerações, cada geração dividindo os genes em dois).
+Uma maneira razoável de pensar sobre este problema é olhar para ele como sendo análogo ao reduzir um `array` para um único valor, por valores que combinam várias vezes da esquerda para a direita. Neste caso nós também queremos condensar a nossa estrutura de dados para um único valor mas de uma forma que segue as linhas da família. O formato dos dados é a de uma árvore genealógica em vez de uma lista plana.
 
-Uma maneira razoável de pensar nesse problema é colocar em termos similares ao algoritmo `reduce`. Uma família tem uma estrutura mais interessante do array plano. Uma estrutura que de fato sugere uma maneira de computar valores dele.
+A maneira que nós queremos reduzir é através da forma de cálculo de um valor para uma determinada pessoa combinando os valores de seus ancestrais. Isso pode ser feito de uma forma recursiva: se estamos interessados ​​em uma pessoa A, temos que calcular os valores para os pais de A que por sua vez obriga-nos a calcular o valor para os avós de A e assim por diante. A princípio isso iria exigir-mos a olhar para um número infinito de pessoas, ja que o nosso conjunto de dados é finito, temos que parar em algum lugar. Vamos definir um valor padrão para nossa função de redução, para pessoas que não estão nos dados. No nosso caso esse valor é simplesmente zero, pressupondo de que as pessoas que não estão na lista não compartilham o DNA do ancestral que estamos olhando.
 
-Dado uma pessoa, uma função que combina valores de dois pais de uma certa pessoa e um valor zero que é usado para pessoas desconhecidas, a função `reduceAncestors` calcula um valor da árvore da família.
+Dado uma função para uma pessoa que combina valores de dois pais e um valor zero usado por pessoas desconhecidas, a função `reduceAncestors` calcula o valor da árvore da família.
 
 ```js
-
-function reduceAncestors(person, f, zero) {
-	function reduce(person) {
-	if (person == null) return zero;
-	var father = byName[person.father];
-	var mother = byName[person.mother];
-	return f(person, reduce(father), reduce(mother));
-	}
-	return reduce(person);
+function reduceAncestors(person, f, defaultValue) {
+  function valueFor(person) {
+    if (person == null)
+      return defaultValue;
+    else
+      return f(person, valueFor(byName[person.mother]),
+                       valueFor(byName[person.father]));
+  }
+  return valueFor(person);
 }
-
 ```
 
-A função interna (`reduce`) lida com apenas uma pessoa. Através da magica da recursividade, ela pode chamar a si mesma para lidar com o pai e com a mãe dessa pessoa. Os resultados, junto com o objeto da pessoa em si, são passados para `f`.
+A função interna (`valueFor`) lida com apenas uma pessoa. Através da magica da recursividade ela pode chamar a si mesma para lidar com o pai e com a mãe. Os resultados junto com o objeto da pessoa em si, são passados para `f` na qual devolve o valor real para essa pessoa.
 
-O pai e a mãe de algumas pessoas não estão no arquivo (obviamente, caso contrário incluiria um grande número de pessoas). Então ao procurar o pai ou a mãe e não encontrar um valor, `reduce` simplesmente retorna o valor zero que foi passado para `reduceAncestor`.
-
-Podemos usar isso para calcular o quanto de DNA meu avô compartilhava com Pauwels van Haverbeke e dividir por quatro.
+Podemos então usar isso para calcular a quantidade de DNA que meu avô compartilhou com Pauwels van Haverbeke e depois dividir por quatro.
 
 ```js
-
-function sharedDNA(person, fromFather, fromMother) {
+function sharedDNA(person, fromMother, fromFather) {
   if (person.name == "Pauwels van Haverbeke")
-	return 1;
+    return 1;
   else
-	return (fromFather + fromMother) / 2;
+    return (fromMother + fromFather) / 2;
 }
 var ph = byName["Philibert Haverbeke"];
 console.log(reduceAncestors(ph, sharedDNA, 0) / 4);
 // → 0.00049
-
 ```
 
-A pessoa com o nome Pauwels van Haverbeke obviamente compartilhava 100% de seu DNA com Pauwels van Haverbeke (não existem pessoas com mesmo nome no arquivo). Todas as outras pessoas compartilham a média de que seus pais possuem.
+A pessoa com o nome Pauwels van Haverbeke obviamente compartilhada 100 por cento de seu DNA com Pauwels van Haverbeke (não existem pessoas que compartilham o mesmo nome no conjunto de dados), então a função retorna 1 para ele. Todas as outras pessoas compartilham a média dos montantes que os seus pais possuem.
 
-Então, estatisticamente falando, eu divido por volta de 0,05% do meu DNA com essa pessoa do século 16. As chances de um dos meus 44 cromossomos não-XY virem dele são bem pequenas. No entanto, considerando que não há nenhuma criança fora do casamento na história da familia, eu tenho seu cromossomo Y.
+Assim estatisticamente falando, eu compartilho cerca de 0,05 por cento do DNA de uma pessoa do século 16. Deve-se notar que este é só uma aproximação estatística e não uma quantidade exata. É um número bastante pequeno mas dado a quantidade de material genético que carregamos (cerca de 3 bilhões de pares de bases), ainda existe algum aspecto na minha máquina biológica que se originou de Pauwels.
 
-Estruturas de dados (como essa árvore genealógica) normalmente podem ser fáceis de usar procurando funções análogas a `forEach` (iterar), `map` (transformar) e `reduce` que se aplicam à elas. Uma função `forEachAncestor` simplesmente iria chamar a função para cada ancestral. Um função que mapeie provavelmente não seria de muito uso para essa estrutura, mas seria, por exemplo, útil para os tipos de lista que foram mostradas nos exercícios do último capítulo.
-
-## Binding ##
-
-Com certa frequência, você vai se encontrar escrevendo funções que apenas chamam outra função, adicionando um argumento fixo.
-
-O código abaixo usa um array de strings, um conjunto de nomes e define uma função `isInSet` que nos diz se a pessoa está no conjunto. Para colocar um filtro a modo de coletar essas pessoas nos quais o nome está num conjunto específico, nós podemos escrever uma função que faz um chamado à `isInSet` com o nosso conjunto como seu primeiro argumento, ou _parcialmente aplicar_ (`apply`) a função `isInSet`.
+Nós também poderiamos ter calculado esse número sem depender de `reduceAncestors`. Mas separando a abordagem geral (condensação de uma árvore de família) a partir do caso específico (computação do DNA compartilhado) podemos melhorar a clareza do código permitindo reutilizar a parte abstrata do programa para outros casos. Por exemplo, o seguinte código encontra a porcentagem de antepassados ​​conhecidos para uma determinada pessoa que viveu no século 70:
 
 ```js
+function countAncestors(person, test) {
+  function combine(person, fromMother, fromFather) {
+    var thisOneCounts = test(person);
+    return fromMother + fromFather + (thisOneCounts ? 1 : 0);
+  }
+  return reduceAncestors(person, combine, 0);
+}
+function longLivingPercentage(person) {
+  var all = countAncestors(person, function(person) {
+    return true;
+  });
+  var longLiving = countAncestors(person, function(person) {
+    return (person.died - person.born) >= 70;
+  });
+  return longLiving / all;
+}
+console.log(longLivingPercentage(byName["Emile Haverbeke"]));
+// → 0.145
+```
 
-var theSet = ["Carel Haverbeke", "Maria van Brussel", "Donald Duck"];
+Tais números não são levados muito a sério, uma vez que o nosso conjunto de dados contém uma coleção bastante arbitrária de pessoas. Mas o código ilustra o fato de que `reduceAncestors` dá-nos uma peça útil para trabalhar o vocabulário da estrutura de dados de uma árvore genealógica.
+
+## Binding
+
+O método `bind` esta disponível em todas as funções, ele basicamente insiste em criar uma nova função que irá chamar a função original mas com alguns dos argumentos já fixados.
+
+O código a seguir mostra um exemplo de `bind` em uso. Ele define uma função `isInSet` que nos diz se uma pessoa está em um determinado conjunto de `string`. Ao chamar `filer` ele seleciona os objetos pessoa cujos nomes estão em um conjunto específico. Ele pode escrever uma expressão de função que faz  chamada para `isInSet` enviando nosso conjunto como primeiro argumento parcial da função `isInSet`.
+
+```js
+var theSet = ["Carel Haverbeke", "Maria van Brussel",
+              "Donald Duck"];
 function isInSet(set, person) {
   return set.indexOf(person.name) > -1;
 }
@@ -505,22 +524,11 @@ console.log(ancestry.filter(function(person) {
 //    {name: "Carel Haverbeke", …}]
 console.log(ancestry.filter(isInSet.bind(null, theSet)));
 // → … same result
-
 ```
 
-O método `bind`, que todas as funções possuem, cria uma nova função que vai chamar a função original, mas com alguns argumentos já colocados. Chamar a função acima com `bind` vai fazer com que chame `isInSet` com `theSet` como seu primeiro argumento, seguido de quaisquer argumentos remanescentes dados a função.
+A chamada usando `bind` retorna uma função que chama `isInSet` com `theset` sendo o primeiro argumento seguido por todos os demais argumentos indicados pela função vinculada.
 
-O primeiro argumento, onde o exemplo passa `null`, é usado para chamadas de método, similar ao primeiro argumento de `apply`. Nós podemos anexar um método `push` de array para pegar uma função que adiciona um argumento para o array específico.
-
-```js
-
-var array = [];
-var addElement = array.push.bind(array);
-addElement(1);
-console.log(array);
-// → [1]
-
-```
+O primeiro argumento onde o exemplo passa `null` é utilizado para as chamadas de método semelhante ao primeiro argumento aplicado. Eu vou descrever isso com mais detalhes no próximo capítulo.
 
 ## Sumário ##
 

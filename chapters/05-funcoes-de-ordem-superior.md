@@ -530,36 +530,33 @@ A chamada usando `bind` retorna uma função que chama `isInSet` com `theset` se
 
 O primeiro argumento onde o exemplo passa `null` é utilizado para as chamadas de método semelhante ao primeiro argumento aplicado. Eu vou descrever isso com mais detalhes no próximo capítulo.
 
-## Sumário ##
+## Sumário
 
-Sendo possível passar funções como argumento para outras funções não é um artifício aleatório, mas sim um aspecto muito útil do JavaScript. Nos permite descrever cálculos com "lacunas" nelas como funções e permite ao código que chame essas funções para preencher as lacunas, providenciando funções que descrevem as computações faltantes.
+A possibilidade de passar funções como argumento para outras funções não é apenas um artifício aleatório, mas sim um aspecto muito útil em JavaScript. Ela nos permitem escrever cálculos com "lacunas" sendo ela uma função e permite ao código que execute essa função para preencher as lacunas providenciando os valores que faltam para descreverem os cálculos.
 
-Arrays proveem grande número de funções de ordem superior como o método `forEach` para fazer algo com cada elemento em um array, `map` para construir um novo array onde cada elemento foi colocado através de uma função e `reduce` para combinar todos os elementos no array em um valor único.
+`Arrays` fornece um grande número de funções de ordem superior como o método `forEach` para fazer algo com cada elemento de um array, `map` para construir um novo array onde cada elemento é colocado através de uma função e `reduce` para combinar todos os elementos de um array em um valor único.
 
-Funções têm um método `apply` que pode ser usado para chamá-los com um array especificando seus argumentos. Eles também possuem um método `bind`, que é usado para criar uma versão parcialmente aplicada da função.
+Funções têm o método `apply` que pode ser usado para chamar um `array` especificando seus argumentos. Elas também possuem um método `bind` que é usado para criar uma versão parcial da função que foi aplicada.
 
-## Exercícios ##
+## Exercícios
 
-### Juntando ###
+### Juntando
 
-Use o método `reduce` em combinação com `concat` para juntar um array de arrays em apenas um array que possui todos os elementos.
+Use o método `reduce` juntamente com o método `concat` para juntar um `array` de `arrays` em um único `array` que tem todos os elementos de entrada do `array`.
 
 ```js
-
 var arrays = [[1, 2, 3], [4, 5], [6]];
 // Your code here.
-// → [1, 2, 3, 4, 5, 6];
-
+// → [1, 2, 3, 4, 5, 6]
 ```
 
-### Mãe-filho diferença de idade ###
+### Diferença de idade entre mãe e filho
 
-Usando o conjunto de dados desse capítulo, calcule a média da diferença de idade entre mães e filhos. Você pode usar a função `average` descrita acima.
+Usando os dados de exemplo definidos neste capítulo calcule a diferença de idade média entre mães e filhos (a idade da mãe quando a criança nasce). Você pode usar a função `average` definida anteriormente neste capítulo.
 
-Note que nem todas as mães mencionadas no conjunto estão presentes no array. O objeto `byName`, que deixa fácil de encontrar o objeto pessoa através do nome, pode ser útil aqui.
+Note que nem todas as mães mencionadas no conjunto de dados estão presentes no `array`. O objeto `byName` facilita a busca por um objeto pessoa através de seu nome. Esse método pode ser útil agora.
 
 ```js
-
 function average(array) {
   function plus(a, b) { return a + b; }
   return array.reduce(plus) / array.length;
@@ -573,20 +570,19 @@ ancestry.forEach(function(person) {
 // Your code here.
 
 // → 31.2
-
 ```
 
-_Dica_:
-Nem todos elementos no array de ancestrais produzem informação útil (não podemos calcular a diferença de idade até que soubermos a data de nascimento da mãe), nós podemos aplicar (`apply`) `filter` de uma maneira antes de calcular a média. Você pode fazer isso como o primeiro passo, definindo uma função `hasKnownMother` (tradução: "tem mãe conhecida") e filtrando por isso primeiro. Alternativamente, você pode começar chamando `map` e no seu mapeamento retornar a idade de diferença, ou `null` se a mãe não for conhecida. Então você pode chamar `filter` para remover os elementos `null` antes de passar o array à média.
+**Dica:**
 
-### Histórico esperado de vida ###
+Como nem todos os elementos do `array` de ascendência produz dados úteis (não podemos calcular a diferença de idade, a menos que saibamos a data de nascimento da mãe) teremos de aplicar de alguma maneira um filtro antes de chamarmos o `average`. Você pode fazer isso como primeiro passo, basta definir uma função `hasKnownMother` para uma primeira filtragem. Alternativamente você pode começar a chamar o `map` e na função de mapeamento retornar a diferença de idade ou nulo se mãe for desconhecida. Em seguida você pode chamar o `filter` para remover os elementos nulos antes de passar o `array` para o método `average`.
 
-Quando olhamos para todas as pessoas no conjunto que vivera mais de 90 anos, apenas os últimos da geração apareceram. Vamos observar esse fenômeno.
+### O Histórico da expectativa de vida
 
-Calcule o resultado da média das pessoas no conjunto de ancestrais por século. Uma pessoa é atribuída a um século pegando o ano da sua morte, dividindo por 100 e arredondando para cima, assim como em `Math.ceil(person.died / 100)`.
+Quando olhamos para todas as pessoas que viveram mais de 90 anos no conjunto de dados; só a última geração dos dados saiu. Vamos observar mais de perto esse fenômeno.
+
+Calcule o resultado da média das pessoas no conjunto de dados ancestrais definidos por século. Uma pessoa é atribuída a um século pegando o ano da sua morte, dividindo por 100 e arredondando para cima com `Math.ceil(person.died / 100)`.
 
 ```js
-
 function average(array) {
   function plus(a, b) { return a + b; }
   return array.reduce(plus) / array.length;
@@ -600,29 +596,27 @@ function average(array) {
 //   19: 54.8
 //   20: 84.7
 //   21: 94
-
 ```
 
-_Dica_:
-A essência desse exemplo reside em agrupar os elementos de uma coleção através de alguns aspectos—dividindo o array de ancestrais em pequenos arrays com os ancestrais para cada século.
+Para ganhar um ponto extra escreva uma função `groupBy` que abstrai a operação de agrupamento. Ele deve aceitar como argumentos um `array` e uma função que calcula o grupo para um elemento do `array` e retorna um objeto que mapeia nomes dos grupos de `arrays` e membros do grupo.
 
-Durante o processo de agrupamento, deixe um objeto que associa os nomes dos séculos (números) com arrays de objetos pessoas, ou idades. Já que não sabemos à frente quais categorias vamos encontrar, vamos ter que criá-los na hora. Para cada pessoa, depois de encontrar seu século, vamos testar se o século já foi encontrado, se não, adicione um array para ele. Então adicione a pessoa (ou idade) para o array no século apropriado.
+**Dica:**
 
-Finalmente, um loop `for/in` pode ser usado para escrever a média de idades para séculos individuais.
+A essência desse exemplo encontra-se no agrupamento dos elementos de um conjunto por aspectos de divisões do `array` de ancestrais em pequenos `arrays` com os ancestrais de cada século.
 
-Para um bonus, escreva uma função `groupBy` (tradução: "separe por") que abstrai os algoritmos de separação. Que aceita como argumento um array e uma função que calcula o grupo para um elemento no array e retorna o objeto contento os grupos.
+Durante o processo de agrupamento deixe um objeto que associa os nomes dos séculos (números) com os `arrays` de objetos de pessoas por idades. Já que não sabemos quais categorias iremos encontrarmos então teremos que criá-los em tempo real. Para cada pessoa depois de encontrar seu século, vamos testar se o século já foi encontrado, se não adicione um array para ele. Em seguida adicione a pessoa (ou idade) para o `array` no século apropriado.
 
-### Todos e alguns ###
+Finalmente um `loop` `for/in` pode ser usado para escrever a média de idades para os séculos individuais.
 
-Arrays também vêm com métodos padrões `every` (todos) e `some` (alguns), que são análogos aos operadores `&&` e `||`.
+### Todos e alguns
 
-Ambos recebem uma função predicada que, quando chamada com um array como argumento, retornam `true` ou `false`. Assim como `&&` apenas retorna um valor `true` quando as expressões de ambos os lados são verdadeiras, `every` apenas retorna `true` quando o predicado retorna verdadeiro para cada elemento. Eles não processam mais elementos que o necessário, como o `for` por exemplo, se algum encontra o predicado no primeiro elemento do array, ele não irá olhar os outros elementos após isso.
+`Arrays` também vêm com os métodos padrões `every` (todos) e `some` (alguns). Ambos recebem uma função predicada que quando chamada com um `array` como argumento retorna `true` ou `false`. Assim como `&&` apenas retorna um valor `true` quando as expressões de ambos os lados forem verdadeiras; `every` retorna `true` quando a função predicada retorna verdadeiro para cada elemento. Eles não processam mais elementos que o necessário, como o `for` por exemplo, se algum encontrar um predicado no primeiro elemento do `array` ele não percorrerá os outros elementos após isso.
 
-Escreva duas funções, `every` and `some`, que se comporte como esses métodos, exceto que eles recebam o array como seu primeiro argumento, ao invés de um método.
+Faça duas funções, `every` and `some`, que se comporte como esses métodos, exceto se eles receberem um `array` como seu primeiro argumento ao invés de um método.
+
 
 ```js
-
-// Seu código aqui.
+// Your code here.
 
 console.log(every([NaN, NaN, NaN], isNaN));
 // → true
@@ -632,8 +626,8 @@ console.log(some([NaN, 3, 4], isNaN));
 // → true
 console.log(some([2, 3, 4], isNaN));
 // → false
-
 ```
 
-_Dica:_
-As funções podem seguir um padrão similar a definição de `forEach` no começo do capítulo, exceto que eles devem retornar imediatamente (com o valor correto) quando a função predicada retornar `false` ou `true`. Não esqueça de colocar um `return` após o loop, para que a função também retorne o valor correto quando chega ao final do array.
+**Dica:**
+
+As funções podem seguir um padrão semelhante à definição de `forEach` que foi mostrado no início do capítulo a única exceção é que eles devem retornar imediatamente (com o valor à direita) quando a função predicada retorna falso ou verdadeiro. Não se esqueça de colocar uma outra instrução de retorno após o `loop`; para que a função retorne um valor correto quando atingir o final do `array`.

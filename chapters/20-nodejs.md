@@ -52,8 +52,8 @@ programação que não tem uma maneira embutida de fazer I/O. Dessa forma,
 JavaScript poderia encaixar-se bastante na abordagem excêntrica do Node para
 o I/O sem acabar ficando com duas interfaces inconsistentes. Em 2009, quando
 Node foi desenhado, as pessoas já estavam fazendo I/O baseado em funções de
-_callback_ no navegador, então a comunidade em volta da linguagem estava acostumada
-com um estilo de programação assíncrono.
+_callback_ no navegador, então a comunidade em volta da linguagem estava
+acostumada com um estilo de programação assíncrono.
 
 ## Assincronia
 
@@ -233,10 +233,10 @@ Of{fXhwnuy
 
 ## Instalando com NPM
 
-NPM, que foi brevemente discutido no Capítulo 10, é um repositório online de módulos
-JavaScript, muitos deles escritos para Node. Quando você instala o Node no seu
-computador, você também instala um programa chamado `npm`, que fornece uma
-interface conveniente para esse repositório.
+NPM, que foi brevemente discutido no Capítulo 10, é um repositório online de
+módulos JavaScript, muitos deles escritos para Node. Quando você instala o Node
+no seu computador, você também instala um programa chamado `npm`, que fornece
+uma interface conveniente para esse repositório.
 
 Por exemplo, um módulo que você vai encontrar na NPM é `figlet`, que pode
 converter texto em _ASCII art_—desenhos feitos de caracteres de texto. O trecho
@@ -496,10 +496,10 @@ _Streams_ de leitura possuem os eventos `"data"` e `"end"`. O primeiro é
 acionado sempre que existe alguma informação chegando, e o segundo é chamado
 sempre que a _stream_ chega ao fim. Esse modelo é mais adequado para um
 _streamming_ de dados, que pode ser imediatamente processado, mesmo quando todo
-documento ainda não está disponíevel. Um arquivo pode ser lido como uma _stream_
+documento ainda não está disponível. Um arquivo pode ser lido como uma _stream_
 de leitura usando a função `fs.createReadStream`.
 
-O seguinte código  cria um servidor que lê o corpo da requisição e o devolve em
+O seguinte código cria um servidor que lê o corpo da requisição e o devolve em
 caixa alta para o cliente via _stream_:
 
 ```javascript

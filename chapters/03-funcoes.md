@@ -544,21 +544,21 @@ Quando o argumento recebido for um número negativo, a função irá ser chamada
 
 ### Contando feijões
 
-Você pode pegar o caracter *N*, ou letra, de uma string escrevendo `"string".charAt(N)`, similar a como você pega seu tamanho com `"s".length`. O valor retornado vai ser uma `string` contendo somente um caracter (por exemplo, `"b"`). O primeiro caracter tem posição zero, que faz com que o último seja encontrado na posição `string.length - 1`. Em outras palavras, uma string com dois caracteres tem `length` 2, e seus caracteres tem posição `0` e `1`.
+Você pode acessar o N-ésimo caractere, ou letra, de uma string escrevendo `"string".charAt(N)`, similar a como você acessa seu tamanho com `"string".length`. O valor retornado será uma string contendo somente um caractere (por exemplo, `"b"`). O primeiro caractere está na posição zero, o que faz com que o último seja encontrado na posição `string.length -1`. Em outras palavras, uma string com dois caracteres possui tamanho (`length`) dois, e suas respectivas posições são `0` e `1`.
 
-Escreva uma função `countBs` que pega um string como como seu único argumento e retorna um número que indica quantos caracteres "B" em caixa alta (*uppercase*) existem na string.
+Escreva uma função `countBs` que receba uma string como único argumento e retorna o número que indica quantos caracteres “B” (em maiúsculo) estão presentes na string.
 
-Depois, escreva uma função chamada `countChar` que se comporta como `countBs`, exceto que ela recebe um segundo argumento que indica o caracter que será contado (ao invés de contar somente os caracteres "B"). Reescreva `countBs` para fazer o uso dessa nova função.
+Em seguida, escreva uma função chamada `countChar` que se comporta de forma parecida com `countBs`, exceto que ela recebe um segundo argumento que indica o caractere que será contado (ao invés de contar somente o caractere “B” em maiúsculo). Reescreva `countBs` utilizando essa nova funcionalidade.
 
 ```js
-// Seu código aqui.
+// Your code here.
 
-console.log(countBs("BBC"));
+console.log(countBs(“BBC”));
 // → 2
-console.log(countChar("kakkerlak", "k"));
+console.log(countChar(“kakkerlak”, “k”));
 // → 4
 ```
 
-T> Um loop em sua função vai olhar em cada caracter da string rodando um índice de zero até um a menos que seu tamanho (`< string.length`). Se o caracter na posição atual é o mesmo que a função está procurando, ele adiciona 1 a variável contadora (`counter`). Uma vez que o loop terminou, a variável `counter` pode ser retornada.
-T>
-T> Certifique-se de criar todas as variáveis usadas na função dentro da própria função usando a palavra-chave `var`.
+Dica: Um loop em sua função fará com que todos os caracteres na string sejam verificados se usarmos um índice de zero até uma unidade abaixo que seu tamanho (`< string.length`). Se o caractere na posição atual for o mesmo que a função está procurando, ele incrementa uma unidade na variável de contagem (`counter`). Quando o loop chegar ao seu fim, a variável `counter` pode ser retornada.
+
+Certifique-se de usar e criar variáveis locais à função, utilizando a palavra-chave `var`.

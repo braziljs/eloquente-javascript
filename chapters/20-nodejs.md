@@ -52,8 +52,8 @@ programação que não tem uma maneira embutida de fazer I/O. Dessa forma,
 JavaScript poderia encaixar-se bastante na abordagem excêntrica do Node para
 o I/O sem acabar ficando com duas interfaces inconsistentes. Em 2009, quando
 Node foi desenhado, as pessoas já estavam fazendo I/O baseado em funções de
-_callback_ no navegador, então a comunidade em volta da linguagem estava acostumada
-com um estilo de programação assíncrono.
+_callback_ no navegador, então a comunidade em volta da linguagem estava
+acostumada com um estilo de programação assíncrono.
 
 ## Assincronia
 
@@ -204,7 +204,7 @@ console.log(garble(parametro));
 ```
 
 O arquivo `garble.js` define uma biblioteca para alterar string, que pode
-ser usada tanto da linha de comando quanto por outrs scripts que precisam ter
+ser usada tanto da linha de comando quanto por outros scripts que precisam ter
 acesso direto a função de alterar.
 
 ```javascript
@@ -233,10 +233,10 @@ Of{fXhwnuy
 
 ## Instalando com NPM
 
-NPM, que foi brevemente discutido no Capítulo 10, é um repositório online de módulos
-JavaScript, muitos deles escritos para Node. Quando você instala o Node no seu
-computador, você também instala um programa chamado `npm`, que fornece uma
-interface conveniente para esse repositório.
+NPM, que foi brevemente discutido no Capítulo 10, é um repositório online de
+módulos JavaScript, muitos deles escritos para Node. Quando você instala o Node
+no seu computador, você também instala um programa chamado `npm`, que fornece
+uma interface conveniente para esse repositório.
 
 Por exemplo, um módulo que você vai encontrar na NPM é `figlet`, que pode
 converter texto em _ASCII art_—desenhos feitos de caracteres de texto. O trecho
@@ -491,3 +491,61 @@ Objetos que emitem eventos no Node têm um método chamado `on` que é similar
 ao método `addEventListener` no navegador. Você dá um nome de evento e então
 uma função, e isso irá registrar uma função para ser chamada toda vez que um
 dado evento ocorrer.
+
+_Streams_ de leitura possuem os eventos `"data"` e `"end"`. O primeiro é
+acionado sempre que existe alguma informação chegando, e o segundo é chamado
+sempre que a _stream_ chega ao fim. Esse modelo é mais adequado para um
+_streamming_ de dados, que pode ser imediatamente processado, mesmo quando todo
+documento ainda não está disponível. Um arquivo pode ser lido como uma _stream_
+de leitura usando a função `fs.createReadStream`.
+
+O seguinte código cria um servidor que lê o corpo da requisição e o devolve em
+caixa alta para o cliente via _stream_:
+
+```javascript
+var http = require("http");
+http.createServer(function(request, response) {
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  request.on("data", function(chunk) {
+    response.write(chunk.toString().toUpperCase());
+  });
+  request.on("end", function() {
+    response.end();
+  });
+}).listen(8000);
+```
+
+A variável `chunk` enviada para o manipulador de dados será um `Buffer` binário,
+que nós podemos converter para uma _string_ chamando `toString` nele, que vai
+decodificá-lo usando a codificação padrão (UTF-8).
+
+O seguinte trecho de código, se rodado enquanto o servidor que transforma letras
+em caixa alta estiver rodando, vai enviar uma requisição para esse servidor e
+retornar a resposta que obtiver:
+
+```javascript
+var http = require("http");
+var request = http.request({
+  hostname: "localhost",
+  port: 8000,
+  method: "POST"
+}, function(response) {
+  response.on("data", function(chunk) {
+    process.stdout.write(chunk.toString());
+  });
+});
+request.end("Hello server");
+```
+
+O exemplo escreve no `process.stdout` (a saída padrão de processos, como uma
+_stream_ de escrita) ao invés de usar `console.log`. Nós não podemos usar
+`console.log` porque isso adicionaria uma linha extra depois de cada pedaço de
+texto escrito, o que é adequado no nosso exemplo.
+
+## Um servidor de arquivos simples
+
+Vamos combinar nossas novas descobertas sobre servidores HTTP e conversas sobre
+sistema de arquivos e criar uma ponte entre eles: um servidor HTTP que permite
+acesso remoto ao sistema de arquivos. Um servidor desse tipo possui diversos
+usuários. Ele permite que aplicações web guardem e compartilhem dados ou dá
+direito para um determinado grupo de pessoas compartilhar muitos arquivos.

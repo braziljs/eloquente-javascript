@@ -209,9 +209,9 @@ Há uma coisa que vamos encapsular neste capítulo que é o subsistema de desenh
 
 ## Desenho
 
-O encapsulamento do código de desenho é feito através da definição de um objeto de exibição de um determinado `Level`. O tipo de exibição que definimos neste capítulo é chamado de `DOMDisplay`,usaremos elementos simples do DOM para mostrar o `Level`.
+O encapsulamento do código de desenho é feito através da definição de um objeto de exibição de um determinado `Level`. O tipo de exibição que definimos neste capítulo é chamado de `DOMDisplay`, e usaremos elementos simples do DOM para mostrar o `Level`.
 
-Nós estaremos usando uma folha de estilo para definir as cores reais e outras propriedades fixas dos elementos que faram parte do jogo. Também seria possível atribuir diretamente as propriedades de estilo dos elementos quando criá-los, mas queremos produzir programas mais detalhados.
+Nós estaremos usando uma folha de estilo para definir as cores reais e outras propriedades fixas dos elementos que farão parte do jogo. Também seria possível atribuir diretamente as propriedades de estilo dos elementos quando os criamos, mas queremos produzir programas mais detalhados.
 
 A seguinte função auxiliar fornece uma maneira curta para criar um elemento e dar-lhe uma classe:
 
@@ -223,7 +223,7 @@ function elt(name, className) {
 }
 ````
 
-O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar-se e um objeto de `Level`.
+O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar e um objeto de `Level`.
 
 ````js
 function DOMDisplay(parent, level) {
@@ -238,9 +238,9 @@ function DOMDisplay(parent, level) {
 
 Levando em consideração o fato de que `appendChild` retorna o elemento ao criar o conteúdo do elemento, então podemos armazená-lo na suas propriedade com apenas uma única instrução.
 
-O fundo do `Level` nunca muda é desenhada apenas uma vez. Os atores são redesenhadas cada vez que o `display` for atualizado. A propriedade `actorLayer` será utilizado para controlar o elemento que contém os agentes de modo que eles podem ser facilmente removidos e substituídos.
+O fundo do `Level`, que nunca muda, é desenhado apenas uma vez. Os atores são redesenhados toda vez que o `display` for atualizado. A propriedade `actorLayer` será utilizada para controlar o elemento que contém os agentes, de modo que elas possam ser facilmente removidas e substituídas.
 
-Nossas coordenadas e tamanhos são rastreados em unidades relativas ao tamanho da `grid`, onde o tamanho ou distância de 1 significa uma unidade da `grid`. Ao definir os tamanhos de pixel vamos ter que escalar essas coordenadas, tudo no jogo seria ridiculamente pequeno em um único pixel por metro quadrado. A variável de escala indica o número de pixels que uma única unidade ocupa na tela.
+Nossas coordenadas e tamanhos são rastreadas em unidades relativas ao tamanho do `grid`, onde o tamanho ou distância de 1 significa uma unidade do `grid`. Ao definir os tamanhos de pixel vamos ter que escalar essas coordenadas, tudo no jogo seria ridiculamente pequeno em um único pixel por metro quadrado. A variável de escala indica o número de pixels que uma única unidade ocupa na tela.
 
 ````js
 var scale = 20;
@@ -259,7 +259,7 @@ DOMDisplay.prototype.drawBackground = function() {
 };
 ````
 
-Como mencionado anteriormente o fundo é desenhado com um elemento `<table>`. Este corresponde à estrutura da propriedade `grid` onde cada linha é transformado em uma linha da tabela(elemento `<tr>`). As cordas na grade são usados ​​como nomes de classe para a célula da tabela(elemento `<td>`). O seguinte CSS ajuda a olhar o resultado do quadro como o fundo que queremos:
+Como mencionado anteriormente o fundo é desenhado com um elemento `<table>`. Este corresponde à estrutura da propriedade `grid` onde cada linha é transformada em uma linha da tabela (elemento `<tr>`). As cordas na grade são usadas ​​como nomes de classe para a célula da tabela (elemento `<td>`). O seguinte CSS ajuda a olhar o resultado do quadro como o fundo que queremos:
 
 ````css
 .background    { background: rgb(52, 166, 251);

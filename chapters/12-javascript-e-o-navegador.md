@@ -184,28 +184,49 @@ I will also usually omit the doctype. This is not to be taken as an encouragemen
 Eu geralmente também irei omitir o *doctype*. Isso não deve ser interpretado como um incentivo a omitir declarações de *doctype*. Os navegadores frequentemente irão fazer coisas ridículas quando você esquece delas. Você deve considerá-las implicitamente presentes nos exemplos, mesmo quando elas não forem mostradas no texto.
 
 ## HTML and JavaScript
+## HTML e JavaScript
 
 In the context of this book, the most important HTML tag is `<script>`. This tag allows us to include a piece of JavaScript in a document.
 
-  <h1>Testing alert</h1>
-  <script>alert("hello!");</script>
+No contexto desse livro, a *tag* mais importante do HTML é `<script>`. Essa *tag* nos permite incluir trechos de JavaScript em um documento.
+
+```html
+<h1>Testing alert</h1>
+<script>alert("hello!");</script>
+```
 
 Such a script will run as soon as its `<script>` tag is encountered as the browser reads the HTML. The page shown earlier will pop up an alert dialog when opened.
 
+Esse *script* será executado assim que a *tag* `<script>` for encontrada enquanto o navegador interpreta o HTML. A página mostrada acima irá exibir uma mensagem de alerta quando aberta. 
+
 Including large programs directly in HTML documents is often impractical. The `<script>` tag can be given an `src` attribute in order to fetch a script file (a text file containing a JavaScript program) from a URL.
 
-  <h1>Testing alert</h1>
-  <script src="code/hello.js"></script>
+Incluir programas grandes diretamente no documento HTML é impraticável. A *tag* `<script>` pode receber um atributo `src` a fim de buscar um arquivo de *script* (um arquivo de texto contendo um programa em JavaScript) a partir de uma URL.
+
+```html
+<h1>Testing alert</h1>
+<script src="code/hello.js"></script>
+```
 
 The `code/hello.js` file included here contains the same simple program, `alert("hello!")`. When an HTML page references other URLs as part of itself, for example an image file or a script, web browsers will retrieve them immediately and include them in the page.
 
+O arquivo `code/hello.js` incluído aqui contém o mesmo simples programa, `alert("hello!")`. Quando uma página HTML referencia outras URLs como parte de si, por exemplo um arquivo de imagem ou um *script*, os navegadores irão buscá-los imediatamente e incluí-los na página.
+
 A script tag must always be closed with `</script>`, even if it refers to a script file and doesn’t contain any code. If you forget this, the rest of the page will be interpreted as part of the script.
+
+Uma *tag*  de *script* deve sempre ser fechada com `</script>`, mesmo quando fizer referência para um arquvio externo e não contenha nenhum código. Se você esquecer disso, o restante da página será interpretado como parte de um *script* .
 
 Some attributes can also contain a JavaScript program. The `<button>` tag shown next (which shows up as a button) has an `onclick` attribute, whose content will be run whenever the button is clicked.
 
-  <button onclick="alert('Boom!');">DO NOT PRESS</button>
+Alguns atributos podem conter um programa JavaScript. A *tag* `<button>` mostrada abaixo (que aparece como um botão na página) possui um atributo `onclick`, cujo conteúdo será executado sempre que o botão for clicado.
+
+```html
+<button onclick="alert('Boom!');">DO NOT PRESS</button>
+```
 
 Note that I had to use single quotes for the string in the `onclick` attribute because double quotes are already used to quote the whole attribute. I could also have used `&quot;`, but that’d make the program harder to read.
+
+Perceba que eu tive que usar aspas simples para a *string* do atributo `onclick` porque aspas duplas já estão sendo usadas para envolver o valor do atributo. Eu também poderia ter usado `&quot;`, mas isso tornaría o programa difícil de ler.
 
 ## In the sandbox
 

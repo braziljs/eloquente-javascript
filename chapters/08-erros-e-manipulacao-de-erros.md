@@ -1,40 +1,39 @@
 # Manipulação de erros
 
-> "A depuração é duas vezes mais difícil do que escrever o código pela primeiro vez. Portanto, se você escrever um código o quanto inteligentemente  possível, por definição, você não é inteligente o suficiente para depurá-lo."
+> "A depuração é duas vezes mais difícil do que escrever o código pela primeira vez. Portanto se você escrever um código o quanto inteligentemente  possível, por definição, você não será inteligente o suficiente para depurá-lo."
 >
 > `Brian Kernighan e PJ Plauger, Os elementos do estilo de programação`
 
 > ---
 
-> "Yuan-Ma havia escrito um pequeno programa onde utilizou muitas variáveis globais e atalhos de má qualidade. Um estudante lendo perguntou: Você nos advertiu contra tais técnicas, mas acabo encontrá-las em seu programa. Como pode isso? O mestre disse: Não há necessidade de se buscar uma mangueira de água, quando a casa não está em chamas."
+> "Yuan-Ma havia escrito um pequeno programa onde utilizou muitas variáveis globais e atalhos de má qualidade. Um estudante lendo perguntou: Você nos advertiu contra tais técnicas, mas acabo encontrá-las em seu programa. Como pode isso? O mestre disse: Não há necessidade de se buscar uma mangueira de água quando a casa não está em chamas."
 >
 > `Mestre Yuan-Ma, O Livro de Programação`
 
 
-Um programa são pensamentos cristalizadas. Às vezes, esses pensamentos estão confusos. Outras vezes os erros são introduzidos ao converter esse pensamento em código. De qualquer forma o resultado será um programa falho.
+Um programa são pensamentos cristalizados. Às vezes esses pensamentos são confusos. Outras vezes os erros são introduzidos ao converter esse pensamento em código. De qualquer forma o resultado será um programa falho.
 
-Falhas em um programa são considerados como bugs. Bugs podem ser erros causado pelo programador ou problemas em outros sistemas que o programa interage. Alguns erros podem ser detectados facilmente, enquanto outros são extremamentes sutis e pode permanecer escondido em um sistema por anos.
+Falhas em um programa são considerados como bugs. Bugs podem ser erros causados pelo programador ou problemas em outros sistemas na qual o programa interage. Alguns erros podem serem detectados facilmente enquanto outros são extremamentes sutis e pode permanecer escondido em um sistema por anos.
 
-Muitas vezes, os problemas vem a tona apenas quando um programa encontra em um estado em que o programador não considerou no desenvolvimento. Às vezes tais situações são inevitáveis. Quando o usuário é solicitado a inserir sua idade e tipos inválidos são inseridos; isso coloca o nosso programa em uma situação difícil. Mas essa situação tem que ser esperada e manipulada de alguma forma.
+Muitas vezes os problemas vem a tona apenas quando um programa encontra-se em um estado em que o programador não considerou no desenvolvimento. Às vezes tais situações são inevitáveis. Quando o usuário é solicitado a inserir sua idade e um tipo inválido é inserido, isso colocará o nosso programa em uma situação difícil. Mas essa situação deve ser esperada e manipulada de alguma forma.
 
 ## Erros do programador
 
-Quando se trata de erros do programador o nosso objectivo é simples. Devemos encontrá-los e corrigi-los. Tais erros podem variar entre erros simples que faz o computador reclamar assim que ele tenta executar o nosso programa ou erros sutis causado por uma compreensão errada da logica do programa levando a resultados incorretos, podendo ser constante ou em apenas algumas condições específicas. Esse último tipo de erros pode levar semanas para ter um diagnostico correto.
+O nosso objetivo é simples quando se trata de erros do programador. Devemos encontrá-los e corrigi-los. Tais erros podem variar entre erros simples que faz o computador reclamar assim que ele tenta executar o programa ou erros sutis causado por uma compreensão errada da lógica do programa levando a resultados incorretos, podendo ser constante ou em apenas algumas condições específicas. Esse último tipo de erros pode levar semanas para ter um diagnostico correto.
 
-O nível de ajuda que as línguagens oferece para encontrar os erros varia bastante. Isso não é nenhuma surpresa pois o JavaScript está "quase não ajuda em nada" no final dessa escala. Algumas línguagens quer saber os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso da a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma inconsistente.
-JavaScript considera os tipos somente na execução do programa e mesmo assim ele permite que você faça algumas coisas visivelmente absurdas sem dar nenhum tipo de aviso, como por exemplo: `x = true "macaco" *`.
+O nível de ajuda que as línguagens oferece para encontrar os erros variam bastante. Isso não é nenhuma surpresa pois o JavaScript está no "quase não ajuda em nada" no final dessa escala. Algumas línguagens exigem os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso da a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma incorreta.
+JavaScript considera os tipos somente na execução do programa e mesmo assim ele permite que você faça algumas coisas visivelmente absurdas sem dar nenhum tipo de aviso como por exemplo: `x = true "macaco" *`.
 
-Há algumas coisas que o JavaScript não se queixam. Mas escrever um programa que é sintaticamente incorreto faz com que ele nem execute disparando um erro imediatamente.
-Existem outras coisas como, chamar algo que não é uma função ou procurar uma propriedade em um valor indefinido, isso causará um erro a ser relatado somente quando o programa entrar em execução e encontrar essa ação que não tem sentido.
+Há algumas coisas que o JavaScript não se queixam. Mas escrever um programa que é sintaticamente incorreto faz com que ele nem execute e dispare um erro imediatamente.
+Existem outras coisas como, chamar algo que não é uma função ou procurar uma propriedade em um valor indefinido, isso causa um erro a ser relatado somente quando o programa entrar em execução e encontrar essa ação que não tem sentido.
 
-Mas muitas vezes, um cálculo absurdo simplesmente pode produzir um NaN (não um número) ou um valor indefinido.
-O programa continua alegremente convencido de que está fazendo algo correto. O erro vai se manifestar somente mais tarde, depois que o valor falso passou por várias funções. Não que isso venha desencadear um erro em tudo, mas isso pode silenciosamente causar uma série de saídas erradas. Encontrar a fonte de tais problemas são considerados difíceis.
+Mas muitas das vezes um cálculo absurdo pode simplesmente produzir um `NaN` (não um número) ou um valor indefinido. O programa irá continua alegremente convencido de que está fazendo algo correto. O erro vai se manifestar somente mais tarde, depois que o valor falso passou por várias funções. Não que isso venha desencadear um erro em tudo, mas isso pode silenciosamente causar uma série de saídas erradas. Encontrar a fonte de tais problemas são considerados difíceis.
 
-O processo de encontrar erros(bugs) nos programas é chamado de depuração.
+O processo de encontrar erros (bugs) nos programas é chamado de depuração.
 
 # Modo estrito
 
-JavaScript pode ser feito de uma forma mais rigorosa, permitindo que o modo seja estrito. Para obter esse modo basta inserir uma string "use strict" na parte superior de um arquivo ou no corpo de uma função. Veja um exemplo:
+JavaScript pode ser feito de uma forma mais rigorosa, permitindo que o modo seja estrito. Para obter esse modo basta inserir uma string `"use strict"` na parte superior de um arquivo ou no corpo de uma função. Veja o exemplo:
 
 ````js
 function canYouSpotTheProblem() {
@@ -47,11 +46,11 @@ canYouSpotTheProblem();
 // → ReferenceError: counter is not defined
 ````
 
-Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no contador do exemplo, o JavaScript cria uma variável global para utiliza-la, no entando no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
+Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no exemplo, o JavaScript cria uma variável global para utiliza-la, no entando no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
 
-Outra mudança no modo estrito é que esta ligação tem o valor `undefined` para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referencia do objeto é do escopo global. Então, se você acidentalmente chama um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
+Outra mudança no modo estrito é que esta ligação tem o valor `undefined` para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referencia do objeto é do escopo global. Então se você acidentalmente chamar um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
 
-Por exemplo, considere o seguinte código que chama um construtor sem a nova palavra-chave na qual seu objeto não vai se referir a um objeto recém-construído:
+Por exemplo, considere o seguinte código que chama um construtor sem a nova palavra-chave, na qual seu objeto não vai se referir a um objeto recém-construído:
 
 ````js
 function Person(name) { this.name = name; }
@@ -72,13 +71,13 @@ var ferdinand = Person("Ferdinand");
 
 Somos imediatamente informados de que algo está errado. Isso é útil.
 
-Existe mais coisas no modo estrito. Ele não permite dar a uma função vários parâmetros com o mesmo nome e remove totalmente certas características problemática da linguagem.
+Existe mais coisas no modo estrito. Ele não permite dar a uma função vários parâmetros com o mesmo nome e remove totalmente certas características problemáticas da linguagem.
 
-Em suma, colocando um "use strict" no topo do seu programa não irá causar frustações mas vai ajudar a detectar problemas.
+Em suma, colocando um `"use strict"` no topo do seu programa não irá causar frustações mas vai ajudar a detectar problemas.
 
 ## Testando
 
-A linguagem não vai nos ajudar muito para encontrar erros, nós vamos ter que encontrá-los da maneira mais difícil: executando o programa e analisando se o comportamento esta correto.
+A linguagem não vai nos ajudar muito a encontrar erros, nós vamos ter que encontrá-los da maneira mais difícil: executando o programa e analisando se o comportamento esta correto.
 
 Fazer sempre testes manualmente é uma maneira insana de conduzir-se. Felizmente é possível muitas das vezes escrever um segundo programa que automatiza o teste do seu programa atual.
 
@@ -95,7 +94,7 @@ Vector.prototype.plus = function(other) {
 };
 ````
 
-Vamos escrever um programa para verificar se a nossa implementação do objeto `Vector` funciona como esperado. Então, cada vez que mudarmos a implementação execute o programa de teste, de modo que fiquemos razoavelmentes confiantes de que nós não quebramos nada. Quando adicionarmos uma funcionalidade extra(por exemplo, um novo método) no objeto `Vector`, também devemos adicionar testes para o novo recurso.
+Vamos escrever um programa para verificar se a nossa implementação do objeto `Vector` funciona como o esperado. Então cada vez que mudarmos a implementação o programa de teste é executado, de modo que fiquemos razoavelmentes confiantes de que nós não quebramos nada. Quando adicionarmos uma funcionalidade extra(por exemplo, um novo método) no objeto `Vector`, também devemos adicionar testes para o novo recurso.
 
 ````js
 function testVector() {
@@ -114,7 +113,7 @@ console.log(testVector());
 // → everything ok
 ````
 
-Escrevendo testes como este tende a parecer um pouco repetitivo e um código estranho. Felizmente existem opções de software que ajudam a construir e executar coleções de testes(suites de teste), fornecendo uma linguagem(na forma de funções e métodos) adequada para expressar testes e emitir informações informativas de quando um teste falhou. Isto é chamados de estruturas de teste.
+Escrevendo testes como este tende a parecer um pouco repetitivo e um código estranho. Felizmente existem opções de software que ajudam a construir e executar coleções de testes (suites de teste), fornecendo uma linguagem (na forma de funções e métodos) adequada para expressar os testes e emitir informações informativas de quando um teste falhou. Isto é chamados de estruturas de teste.
 
 ## Depuração
 

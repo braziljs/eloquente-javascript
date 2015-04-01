@@ -103,8 +103,13 @@ Vamos ver com mais detalhes sobre o protocolo HTTP no capítulo 17.
 
 HTML, which stands for *Hypertext Markup Language*, is the document format used for web pages. An HTML document contains text, as well as *tags* that give structure to the text, describing things such as links, paragraphs, and headings.
 
+HTML, que significa *Hypertext Markup Language (Linguagem de marcação de hipertexto)*, é o formato de documento usado para as páginas web. Um documento HTML contém texto, bem como *tags* que fornecem estrutura para esse texto, descrevendo coisas como links, parágrafos e cabeçalhos.
+
 A simple HTML document looks like this:
 
+Um documento HTML simples, se parece  com este:
+
+```html
   <!doctype html>
   <html>
     <head>
@@ -117,25 +122,45 @@ A simple HTML document looks like this:
         <a href="http://eloquentjavascript.net">here</a>.</p>
     </body>
   </html>
+```
 
 The tags, wrapped in angular brackets (< and >), provide information about the structure of the document. The other text is just plain text.
 
+As *tags*, definidas entre os sinais de menor e maior que (< e >), fornecem informações sobre a estrutura do documento. O conteúdo restante é apenas texto puro.
+
 The document starts with `<!doctype html>`, which tells the browser to interpret it as *modern* HTML, as opposed to various dialects that were in use in the past.
+
+O documento começa com `<!doctype html>`, que diz ao navegador para interepretá-lo como HTML *moderno* (HTML5), ao invés de outras versões que foram usadas no passado.
 
 HTML documents have a head and a body. The head contains information *about* the document, and the body contains the document itself. In this case, we first declared that the title of this document is “My home page” and then gave a document containing a heading (`<h1>`, meaning “heading 1”—`<h2>` to `<h6>` produce more minor headings) and two paragraphs (`<p>`).
 
+Documentos HTML possuem um `head` (cabeça) e um `body` (corpo). O `head` contém informações *sobre* o documento, o `body` contém o documento em si. Neste caso, nós primeiro declaramos que o título do documento é *"My home page"* e em seguida, declaramos o `body` contendo um cabeçalho (`<h1>`, que significa *"heading 1"* - As *tags* de `<h2>` a `<h6>` produzem cabeçalhos menores) e dois parágrafos (`<p>`). 
+
 Tags come in several forms. An element, such as the body, a paragraph, or a link, is started by an opening tag like `<p>` and ended by a closing tag like `</p>`. Some opening tags, such as the one for the link (`<a>`), contain extra information in the form of `name="value"` pairs. These are called *attributes*. In this case, the destination of the link is indicated with `href="http://eloquentjavascript.net"`, where href stands for “hypertext reference”.
+
+*Tags* aparecem em diversas formas. Um elemento, como o `<body>`, um parágrafo ou um link, começa com uma *tag* de abertura como em  `<p>` e termina com uma *tag* de fechamento como em `</p>`. Algumas *tags* de abertura, como aquela para o link (`<a>`), contém informações extra na forma de pares `nome="valor"`. Estes são chamados de *atributos*. Nesse caso, o destino do link é indicado pelo atributo `href="http://eloquentjavascript.net"`, onde `href` significa "*hypertext reference*" (referência de hipertexto).
 
 Some kinds of tags do not enclose anything and thus do not need to be closed. An example of this would be `<img src="http://example.com/image.jpg">`, which will display the image found at the given source URL.
 
+Alguns tipos de *tags* não englobam conteúdo e assim não necessitam de uma *tag* de fechamento. Um exemplo seria `<img src="http://example.com/image.jpg">`, que irá mostrar a imagem encontrada na URL informada no atributo `src`.
+
 To be able to include angular brackets in the text of a document, even though they have a special meaning in HTML, yet another form of special notation has to be introduced. A plain opening angular bracket is written as `&lt;` (“less than”), and a closing bracket is written as `&gt;` (“greater than”). In HTML, an ampersand (&) character followed by a word and a semicolon (;) is called an *entity*, and will be replaced by the character it encodes.
 
-This is analogous to the way backslashes are used in JavaScript strings. Since this mechanism gives ampersand characters a special meaning too, those need to be escaped as `&amp;`. Inside an attribute, which is wrapped in double quotes, `&quot;` can be used to insert an actual quote character.
+Para sermos capazes de incluir os sinais de menor e maior no texto de um documento, mesmo esses possuindo um significado especial em HTML, teremos que introduzir mais uma nova forma de notação especial. Uma *tag* de abertura simples é escrita como `&lt;` ("*less than*" - menor que), e uma *tag* de fechamento é escrita como `&gt;` ("*greater than*" - maior que). Em HTML, o caractere & (o sinal de "E comercial") seguido por uma palavra e um ponto e vírgula é chamado de "entidade" (*entity*), e será substituída pelo caractere que representa.
+
+This is analogous to the way backslashes are used in JavaScript strings. Since this mechanism gives ampersand characters a special meaning too, those need to be escaped as `&amp;`. Inside an attribute, which is wrapped in double quotes, `&quot;` can be used to insert an actual quote -character.
+
+Essa notação é parecida com a forma que as barras invertidas são utilizadas nas *strings* em JavaScript. Uma vez que esse mecanismo dá ao caractere `&` um significado especial, este tem que ser representado como `&amp;`. Dentro que um atributo, que é definido entre aspas duplas, a entidade `&quot;` pode ser usada para representar um caractere de aspas duplas.
 
 HTML is parsed in a remarkably error-tolerant way. When tags that should be there are missing, the browser reconstructs them. The way in which this is done has been standardized, and you can rely on all modern browsers to do it in the same way.
 
+O HTML é interpretado de uma forma notavelmente tolerante a erros. Se uma *tag* é omitida, o navegador irá inserí-la. A forma com que isto é feito foi padronizada, você pode confiar em todos os navegadores modernos para realizar tal tarefa.
+
 The following document will be treated just like the one shown previously:
 
+O documento a seguir será tratado exatamente como o mostrado anteriormente:
+
+```html
   <!doctype html>
 
   <title>My home page</title>
@@ -144,12 +169,19 @@ The following document will be treated just like the one shown previously:
   <p>Hello, I am Marijn and this is my home page.
   <p>I also wrote a book! Read it
     <a href=http://eloquentjavascript.net>here</a>.
+```
 
 The `<html>`, `<head>`, and `<body>` tags are gone completely. The browser knows that `<title>` belongs in a head, and that `<h1>` in a body. Furthermore, I am no longer explicitly closing the paragraphs since opening a new paragraph or ending the document will close them implicitly. The quotes around the link target are also gone.
 
+As *tags* `<html>`, `<head>` e `<body>` foram retiradas. O navegador sabe que a *tag* `<title>` pertence ao `head`, e que `<h1>` pertence ao `body`. Além disso, eu não especifiquei o final dos parágrafos, o fato de começar um novo parágrafo ou fechar o documento irá implicitamente fechá-los. As aspas que envolviam o destino do link também foram retiradas.
+
 This book will usually omit the `<html>`, `<head>`, and `<body>` tags from examples to keep them short and free of clutter. But I *will* close tags and include quotes around attributes.
 
+Esse livro geralmente vai omitir as tags `<html>`, `<head>` e `<body>` dos exemplos para mantê-los curtos e  ordenados. Mas eu irei fechar as *tags* e incluir aspas nos valores de atributos.
+
 I will also usually omit the doctype. This is not to be taken as an encouragement to omit doctype declarations. Browsers will often do ridiculous things when you forget them. You should consider doctypes implicitly present in examples, even when they are not actually shown in the text.
+
+Eu geralmente também irei omitir o *doctype*. Isso não deve ser interpretado como um incentivo a omitir declarações de *doctype*. Os navegadores frequentemente irão fazer coisas ridículas quando você esquece delas. Você deve considerá-las implicitamente presentes nos exemplos, mesmo quando elas não forem mostradas no texto.
 
 ## HTML and JavaScript
 

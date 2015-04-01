@@ -229,16 +229,27 @@ Note that I had to use single quotes for the string in the `onclick` attribute b
 Perceba que eu tive que usar aspas simples para a *string* do atributo `onclick` porque aspas duplas já estão sendo usadas para envolver o valor do atributo. Eu também poderia ter usado `&quot;`, mas isso tornaría o programa difícil de ler.
 
 ## In the sandbox
+## Na caixa de areia
 
 Running programs downloaded from the Internet is potentially dangerous. You do not know much about the people behind most sites you visit, and they do not necessarily mean well. Running programs by people who do not mean well is how you get your computer infected by viruses, your data stolen, and your accounts hacked.
 
+Executar programas baixados da internet é potencialmente perigoso. Você não sabe muito sobre as pessoas por trás da maioria dos sites que visita e eles não necessariamente são bem intencionados. Executar programas de pessoas que tenham más intenções é como você tem seu computador infectado por vírus, seus dados roubados e suas contas *hackeadas*.
+
 Yet the attraction of the Web is that you can surf it without necessarily trusting all the pages you visit. This is why browsers severely limit the things a JavaScript program may do: it can’t look at the files on your computer or modify anything not related to the web page it was embedded in.
+
+Contudo, a atração da *Web* é que você pode navegar sem necessariamente confiar nas páginas que visita. Esse é o motivo pelo qual os navegadores limitam severamente as funções que um programa JavaScript pode fazer: eles não podem bisbilhotar os arquivos do seu computador ou modificar qualquer coisa que não esteja relacionada a página em que foi incorporado.
 
 Isolating a programming environment in this way is called *sandboxing*, the idea being that the program is harmlessly playing in a sandbox. But you should imagine this particular kind of sandbox as having a cage of thick steel bars over it, which makes it somewhat different from your typical playground sandbox.
 
+O isolamento de um ambiente de programação dessa maneira é chamado de *sandboxing*, a ideia é que o programa é inofensivo "brincando" em uma "caixa de areia". Mas você deve imaginar esse tipo específico de caixas de areia como tendo sobre si uma gaiola de grossas barras de aço, o que as torna um pouco diferentes das caixas de areia típicas de *playgrounds*.
+
 The hard part of sandboxing is allowing the programs enough room to be useful yet at the same time restricting them from doing anything dangerous. Lots of useful functionality, such as communicating with other servers or reading the content of the copy-paste clipboard, can also be used to do problematic, privacy-invading things.
 
+A parte difícil do *sandboxing* é permitir que os programas tenham espaço suficiente para serem úteis e ao mesmo tempo impedí-los de fazer qualquer coisa perigosa. Várias funcionalidades úteis, como se comunicar com outros servidores ou ler o conteúdo da área de transferência, podem ser usadas para tarefas problemáticas ou invasivas à privacidade.
+
 Every now and then, someone comes up with a new way to circumvent the limitations of a browser and do something harmful, ranging from leaking minor private information to taking over the whole machine that the browser runs on. The browser developers respond by fixing the hole, and all is well again—that is, until the next problem is discovered, and hopefully publicized, rather than secretly exploited by some government or mafia.
+
+De vez em quando, alguém aparece com uma nova forma de burlar as limitações de um navegador e fazer algo prejudicial, variando de vazamentos de alguma pequena informação pessoal até assumir o controle total da máquina onde o navegador está sendo executado. Os desenvolvedores de navegadores respondem "tapando o buraco", e tudo está bem novamente —até que o próximo problema seja descoberto e divulgado, ao invés de ser secretamente explorado por algum governo ou máfia.
 
 ## Compatibility and the browser wars
 

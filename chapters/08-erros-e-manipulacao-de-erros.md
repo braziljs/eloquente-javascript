@@ -117,13 +117,13 @@ Escrevendo testes como este tende a parecer um pouco repetitivo e um código est
 
 ## Depuração
 
-Você consegue perceber que há algo errado com o seu programa quando ele esta se comportando mal ou produz erros; o próximo passo é descobrir o problema.
+Você consegue perceber que há algo errado com o seu programa quando ele esta se comportando mal ou produzindo erros; o próximo passo é descobrir qual é o problema.
 
-Às vezes é óbvio. A mensagem de erro vai apontar para a linha específica, e se você olhar para a descrição do erro e para linha de código muitas vezes você vai entender o problema.
+Às vezes é óbvio. A mensagem de erro vai apontar para a linha específica; e se você olhar para a descrição do erro e para linha de código muitas vezes você irá entender o problema.
 
-Mas nem sempre. Às vezes a linha que desencadeou o problema é simplesmente o primeiro lugar onde um valor falso foi produzido e que em outros lugares foi usado de uma forma inválida ou as vezes não há nenhuma mensagem de erro, apenas um resultado inválido. Se você tentou resolver os exercícios nos capítulos anteriores você provavelmente já experimentou tais situações.
+Mas nem sempre é assim. Às vezes a linha que desencadeou o problema é simplesmente o primeiro lugar onde um valor falso foi produzido e que em outros lugares foi usado de uma forma incorreta ou as vezes não há nenhuma mensagem de erro, apenas um resultado inválido. Se você tentou resolver os exercícios nos capítulos anteriores você provavelmente já experimentou tais situações.
 
-O exemplo seguinte tenta converter um número inteiro para uma cadeia em qualquer base(decimal, binário, e assim por diante), escolhendo repetidamente o último dígito e em seguida dividindo-se o número para se livrar do último dígito. Mas a saída produzida sugere que ele tem um bug.
+O exemplo seguinte tenta converter um número inteiro para uma cadeia em qualquer base (decimal, binário, e assim por diante), para se livrar do último dígito escolhemos o último dígito repetidamente e em seguida dividimos. Mas a saída produzida sugere que ele tem um bug.
 
 ````js
 function numberToString(n, base) {
@@ -142,11 +142,11 @@ console.log(numberToString(13, 10));
 // → 1.5e-3231.3e-3221.3e-3211.3e-3201.3e-3191.3e-3181.3…
 ````
 
-Mesmo se você já viu o problema e fingiu por um momento que você não viu. Sabemos que o nosso programa não está funcionando corretamente, e queremos descobrir o porquê.
+Mesmo se você já viu o problema e fingiu por um momento que você não viu. Sabemos que o nosso programa não está funcionando corretamente e queremos descobrir o porquê.
 
-Este é o lugar onde você deve resistir à tentação de começar a fazer mudanças aleatórias no código. Em vez disso pense, analise o que está acontecendo e chegue a uma teoria de por que isso pode estar acontecendo. Então faça observações adicionais para testar esta teoria ou se você ainda não tem uma teoria, faça observações adicionais que podem ajudá-lo.
+Esta é a hora onde você deve resistir à tentação de começar a fazer mudanças aleatórias no código. Em vez disso pense, analise o que está acontecendo e chegue a uma teoria de por que isso pode estar acontecendo. Então faça observações adicionais para testar esta teoria ou se você ainda não tem uma teoria, faça observações adicionais que podem ajudá-lo.
 
-Colocar algumas chamadas `console.log` estratégicas para o programa é uma boa maneira de obter informações adicionais sobre o que o programa está fazendo. Neste caso queremos tomar `n` os valores de 13, 1 e em seguida 0. Vamos escrever o seu valor no início do loop.
+Colocar algumas chamadas `console.log` estratégicas no programa é uma boa maneira de obter informações adicionais sobre o que o programa está fazendo. Neste caso queremos tomar os `n` valores de 13, 1 até 0. Vamos descrever o seu valor no início do loop.
 
 ````
 13
@@ -159,13 +159,13 @@ Colocar algumas chamadas `console.log` estratégicas para o programa é uma boa 
 
 Certo. Dividindo 13 por 10 não produz um número inteiro. Em vez de `n / = base` o que nós realmente queremos é `n = Math.floor (n / base)` de modo que o número está devidamente deslocando-se para a direita.
 
-Uma alternativa ao uso `console.log` é usar os recursos de depurador do seu browser. Navegadores modernos vêm com a capacidade de definir um ponto de interrupção em uma linha específica de seu código. Isso fará com que a execução do programa faz uma pausa a cada vez que a linha com o ponto de interrupção é atingido. Isso permite que você inspecione os valores das variáveis nesse ponto. Eu não vou entrar em detalhes aqui pois depuradores diferem de navegador para navegador, mas vale a pena olhar as ferramentas de desenvolvimento do seu navegador e pesquisar na web para obter mais informações. Outra maneira de definir um ponto de interrupção é incluir uma declaração no depurador(que consiste em simplesmente em uma palavra-chave) em seu programa. Se as ferramentas de desenvolvedor do seu navegador estão ativos, o programa fará uma pausa sempre que ele atinge essa declaração, e você será capaz de inspecionar o seu estado.
+Uma alternativa para o uso do `console.log` é usar os recursos de depuração do seu browser. Navegadores modernos vêm com a capacidade de definir um ponto de interrupção em uma linha específica de seu código. Isso fará com que a execução do programa faz uma pausa a cada vez que a linha com o ponto de interrupção é atingido. Isso permite que você inspecione os valores das variáveis nesse ponto. Eu não vou entrar em detalhes aqui pois depuradores diferem de navegador para navegador, mas vale a pena olhar as ferramentas de desenvolvimento do seu navegador e pesquisar na web para obter mais informações. Outra maneira de definir um ponto de interrupção é incluir uma declaração no depurador (que consiste em simplesmente em uma palavra-chave) em seu programa. Se as ferramentas de desenvolvedor do seu navegador estão ativos, o programa fará uma pausa sempre que ele atingir esta declaração e você será capaz de inspecionar o seu estado.
 
 ## Propagação de erros
 
-Infelizmente nem todos os problemas podem ser evitados pelo programador. Se o seu programa se comunica com o mundo externo de qualquer forma, há uma chance da entrada ser inválida ou outros sistemas que ele tente se comunicar estarem quebrados ou inacessíveis.
+Infelizmente nem todos os problemas podem ser evitados pelo programador. Se o seu programa se comunica com o mundo externo de qualquer forma há uma chance da entrada de outros sistemas estarem inválidos ou a comunicação estar quebrada ou inacessível.
 
-Programas simples ou programas que são executados somente sob a sua supervisão, pode dar ao luxo de simplesmente desistir quando esse problema ocorre. Você vai olhar para o problema e tentar novamente. Aplicações "reais" por outro lado espera-se que nunca falhe. Às vezes a maneira correta é tirar a má entrada rapidamente, para que o programe continue funcionando. Em outros casos é melhor informar ao usuário o que deu errado para depois desistir. Mas em qualquer situação o programa tem de fazer algo rapidamente em resposta ao problema.
+Programas simples ou programas que são executados somente sob a sua supervisão pode se dar ao luxo de simplesmente desistir quando esse problema ocorre. Você vai olhar para o problema e tentar novamente. Aplicações "reais" por outro lado espera que nunca falhe. Às vezes a maneira correta é tirar a má entrada rapidamente para que o programe continue funcionando. Em outros casos é melhor informar ao usuário o que deu de errado para depois desistir. Mas em qualquer situação o programa tem de fazer algo rapidamente em resposta ao problema.
 
 Digamos que você tenha uma função `promptInteger` que pede para o usuário um número inteiro e retorna-o. O que ele deve retornar se a entradas do usuário for incorreta?
 
@@ -181,19 +181,19 @@ function promptNumber(question) {
 console.log(promptNumber("How many trees do you see?"));
 ````
 
-Isto é uma boa estratégia. Agora qualquer código que chamar a função `promptNumber` deve verificar se um número real foi lido, e na falha deve-se de alguma forma recuperar preencheendo um valor padrão ou retornando um valor especial para o seu chamador indicando que ele não conseguiu fazer o que foi solicitado.
+Isto é uma boa estratégia. Agora qualquer código que chamar a função `promptNumber` deve verificar se um número real foi lido, e na falha deve de alguma forma recuperar preencheendo um valor padrão ou retornando um valor especial para o seu chamador indicando que ele não conseguiu fazer o que foi solicitado.
 
-Em muitas situações, principalmente quando os erros são comuns e o chamador deve explicitamente tê-las em conta; retornar um valor especial é uma forma perfeita para indicar um erro. Mas essa maneira no entanto tem suas desvantagens. Em primeiro lugar, como a função pode retornar todos os tipos possíveis de valores? Para tal função é difícil encontrar um valor especial que pode ser distinguido a partir de um resultado válido.
+Em muitas situações, principalmente quando os erros são comuns e o chamador deve explicitamente tê-las em conta, retornaremos um valor especial, é uma forma perfeita para indicar um erro. Mas essa maneira no entanto tem suas desvantagens. Em primeiro lugar, como a função pode retornar todos os tipos possíveis de valores? Para tal função é difícil encontrar um valor especial que pode ser distinguido a partir de um resultado válido.
 
-O segundo problema com o retorno de valores especiais é que isso pode levar a um código muito confuso. Se um pedaço de código chamaa função `promptNumber` 10 vezes, tem que verificar 10 vezes se nulo foi devolvido. E se a sua resposta ao encontrar nulo é simplesmente retornar nulo, o chamador por sua vez tem que verificar e assim por diante.
+O segundo problema é com o retorno de valores especiais, isso pode levar a um código muito confuso. Se um pedaço de código chama a função `promptNumber` 10 vezes, teremos que verificar 10 vezes se nulo foi devolvido. E se a sua resposta ao encontrar nulo é simplesmente retornar nulo, o chamador por sua vez tem que verificar assim por diante.
 
 ## Exceções
 
-Quando uma função não pode prosseguir normalmente, o que gostaríamos de fazer é simplesmente parar o que estamos fazendo e saltar imediatamente de volta para um lugar que saiba lidar com o problema. Isto é o que faz o tratamento de exceção.
+Quando uma função não pode prosseguir normalmente, o que gostaríamos de fazermos é simplesmente parar o que esta sendo feito e saltar imediatamente de volta para o lugar onde devemos lidar com o problema. Isto é o que faz o tratamento de exceção.
 
-As exceções são um mecanismo que torna possível parar o código que é executado com problema disparando(ou lançar) uma exceção, que nada mais é que um simples um valor. Levantando uma exceção lembra um pouco um retorno super-carregado a partir de uma função: ele salta para fora não apenas da função atual mas também fora de todo o caminho de seus interlocutores para a primeira chamada que iniciou a execução atual. Isto é chamado de desenrolamento do `stack`. Você pode se lembrar da chamadas do `stack` de função que foi mencionado no Capítulo 3. Uma exceção é exibida no `stack` indicando todos os contextos de chamadas que ele se encontra.
+As exceções são um mecanismo que torna possível parar o código que é executado com problema disparando (ou lançar) uma exceção que nada mais é que um simples valor. Levantando uma exceção lembra um pouco um retorno super carregado a partir de uma função: ele salta para fora não apenas da função atual mas também fora de todo o caminho de seus interlocutores para a primeira chamada que iniciou a execução atual. Isto é chamado de desenrolamento do `stack`. Você pode se lembrar das chamadas de função do `stack` que foi mencionado no Capítulo 3. Uma exceção é exibida no `stack` indicando todos os contextos de chamadas que ele encontrou.
 
-Se exceções tivessem seu o seu `stack` de uma forma ampliada não seria muito útil. Eles apenas fornecem uma nova maneira de explodir o seu programa. Seu poder reside no fato de que você pode definir "obstáculos" ao longo do seu `stack` para capturar a exceção. Depois você pode fazer alguma coisa com ele no ponto em que a exceção foi pego para que o programa continua em execução.
+Se as exceções tivessem um `stack` de uma forma ampliada não seria muito útil. Eles apenas fornecem uma nova maneira de explodir o seu programa. Seu poder reside no fato de que você pode definir "obstáculos" ao longo do seu `stack` para capturar a exceção. Depois você pode fazer alguma coisa com ele no ponto em que a exceção foi pega para que o programa continua em execução.
 
 Aqui está um exemplo:
 
@@ -219,13 +219,13 @@ try {
 }
 ````
 
-A palavra-chave `throw` é usada para gerar uma exceção. Para tratar uma excessão basta envolver um pedaço de código em um bloco try, seguido pela palavra-chave catch. Quando o código no bloco try causa uma exceção a ser lançada, o bloco catch é chamado. O nome da variável(entre parênteses) após captura será vinculado ao valor de exceção. Após o termino do bloco `catch` ou do bloco `try` o controle prossegue sob toda a instrução `try/catch`.
+A palavra chave `throw` é usada para gerar uma exceção. Para tratar uma excessão basta envolver um pedaço de código em um bloco `try`, seguido pela palavra chave `catch`. Quando o código no bloco `try` causa uma exceção a ser lançada o bloco `catch` é chamado. O nome da variável (entre parênteses) após captura será vinculado ao valor de exceção. Após o termino do bloco `catch` ou do bloco `try` o controle prossegue sob toda a instrução `try/catch`.
 
-Neste caso, usamos o construtor de erro para lançar o nosso valor de exceção. Este é um construtor JavaScript normal que cria um objeto com uma propriedade de mensagem. Em ambientes de JavaScript modernos instâncias deste construtor também coletam informações para o `stack` sobre chamadas que existia quando a exceção foi criado, o chamado `stack` de rastreamento. Esta informação é armazenada na propriedade do `stack` e pode ser útil ao tentar depurar um problema: ela nos diz a função precisa de onde ocorreu o problema e que outras funções levou até a chamada que falhou.
+Neste caso usamos o construtor de erro para lançar o nosso valor de exceção. Este é um construtor JavaScript normal que cria um objeto com uma propriedade de mensagem. Em ambientes de JavaScript modernos instâncias deste construtor também coletam informações para o `stack` e sobre chamadas que existia quando a exceção foi criado, o chamado `stack` de rastreamento. Esta informação é armazenada na propriedade do `stack` e pode ser útil ao tentar depurar um problema: ela nos diz a função precisa de onde ocorreu o problema e que outras funções que levou até a chamada onde ocorreu a falha.
 
-Note-se que se olharmos para função ignoramos completamente a possibilidade de que `promptDirection` pode conter erros. Esta é a grande vantagem de tratamento de erros - código de manipulação de erro é necessário apenas no ponto em que ocorre o erro e no ponto em que ela é tratada. As funções no meio pode perder tudo sobre ele.
+Note que se olharmos para função `promptDirection` podemos ignoramos completamente a possibilidade de que ela pode conter erros. Esta é a grande vantagem do tratamento de erros - manipulação de erro no código é necessário apenas no ponto em que o erro ocorre e no ponto onde ela é tratada. Essas funções no meio pode esquecer tudo sobre ela.
 
-Bem, estamos quase lá...
+Bem, estamos quase lá.
 
 ## Limpeza após exceções
 

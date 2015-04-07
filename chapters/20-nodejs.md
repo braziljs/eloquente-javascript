@@ -549,3 +549,90 @@ sistema de arquivos e criar uma ponte entre eles: um servidor HTTP que permite
 acesso remoto ao sistema de arquivos. Um servidor desse tipo possui diversos
 usuários. Ele permite que aplicações web guardem e compartilhem dados ou dá
 direito para um determinado grupo de pessoas compartilhar muitos arquivos.
+
+Quando lidamos com arquivos de recursos HTTP, os métodos HTTP `GET`, `PUT` e
+`DELETE` podem ser usados, respectivamente, para ler, escrever e apagar esses
+arquivos. Nós vamos interpretar o caminho na requisição como o caminho do
+arquivo referido por aquela requisição.
+
+Provavelmente nós não queremos compartilhar todo nosso sitema de arquivos, então
+nós vamos interpretar esses caminhos como se começassem no diretório de trabalho
+do servidor, que é o diretório no qual ele começou. Se eu rodar o servidor de
+`/home/braziljs/public/` (ou `C:\Users\braziljs\public\` no Windows), então a
+requisição por `/file.txt` deve ser referir a `/home/braziljs/public/file.txt` (
+ou `C:\Users\braziljs\public\file.txt`).
+
+Nós vamos construir um programa peça por peça, usando um objeto chamado
+`methods` para guardar as funções que tratam o vários métodos HTTP.
+
+```javascript
+var http = require("http"), fs = require("fs");
+
+var methods = Object.create(null);
+
+http.createServer(function(request, response) {
+  function respond(code, body, type) {
+    if (!type) type = "text/plain";
+    response.writeHead(code, {"Content-Type": type});
+    if (body && body.pipe)
+      body.pipe(response);
+    else
+      response.end(body);
+  }
+  if (request.method in methods)
+    methods[request.method](urlToPath(request.url),
+                            respond, request);
+  else
+    respond(405, "Method " + request.method +
+            " not allowed.");
+}).listen(8000);
+```
+
+Isso vai começar um servidor que apenas retorna erro 405 nas respostas, que é o
+código usado para indicar que dado método não está sendo tratado pelo servidor.
+
+A função `respond` é passada para as funções que tratam os vários métodos e agem
+como _callback_ para finalizar a requisição. Isso carrega um código de status
+do HTTP, um corpo e opcionalmente um tipo conteúdo como argumentos. Se o valor
+passado para o corpo é um _stream_ de leitura, ele terá um método `pipe`, que
+será usado para encaminhar uma _stream_ de leitura para uma _stream_ de escrita.
+Caso contrário, assumimos que o corpo será `null` (não há corpo) ou uma _string_
+é passada diretamente para o método `end` da resposta.
+
+Para obter um caminho de uma URL em uma requisição, a função `urlToPath` usa o
+módulo "`url`" embutido no Node para parsear a URL. Ela pega o nome do caminho,
+que será algo parecido a `/file.txt`, o decodifica para tirar os códigos de
+escape (como `%20` e etc), e coloca um único ponto para produzir um caminho
+relativo ao diretório atual.
+
+```javascript
+function urlToPath(url) {
+  var path = require("url").parse(url).pathname;
+  return "." + decodeURIComponent(path);
+}
+```
+
+É provável que você esteja preocupado com a segurança da função ```urlToPath`,
+e você está certo, deve se preocupar mesmo. Nós vamos retornar a ela nos
+exercícios.
+
+Nós vamos fazer com que o método `GET` retorne uma lista de arquivos quando
+lermos um diretório e retornar o conteúdo do arquivo quando lermos um arquivo
+regular.
+
+Uma questão delicada é que tipo de cabeçalho `Content-Type` nós devemos
+adicionar quando retornar um conteúdo de um arquivo. Tendo em vista que esses
+arquivos podem ser qualquer coisa, nosso servidor não pode simplesmente retornar
+o mesmo tipo para todos eles. Mas o NPM pode ajudar com isso. O pacote `mime`
+(indicadores de tipo de conteúdo como `text/plain` também são chamados
+_MIME types_) sabe o tipo adequado de um grande número de extensões de arquivos.
+
+Se você rodar o seguinte comando `npm` no diretório aonde o script do servidor
+está, você estará apto a usar `require("mime")` para acessar essa biblioteca:
+
+```javascript
+$ npm install mime
+npm http GET https://registry.npmjs.org/mime
+npm http 304 https://registry.npmjs.org/mime
+mime@1.2.11 node_modules/mime
+```

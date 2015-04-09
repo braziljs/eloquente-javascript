@@ -364,7 +364,7 @@ Isso vai pegar apenas os casos de `InputError` e atravéz disso deixa algumas ex
 
 ## Asserções
 
-As asserções são uma ferramenta para fazer a verificação de sanidade básica erros do programador. Considere essa função auxiliar, que afirma:
+As asserções são ferramentas que auxiliam na verificação da sanidade básica de erros do programador. Considere essa função auxiliar que afirma:
 
 ````js
 function AssertionFailed(message) {
@@ -383,17 +383,17 @@ function lastElement(array) {
 }
 ````
 
-Isso fornece uma maneira compacta de fazer cumprir as expectativas solícitada para quebrar um programa se a condição descrita não se sustentar. Por exemplo se a função `lastElement` que busca o último elemento de uma matriz voltar indefinida para matrizes vazias se a declaração foi omitida. Buscar o último elemento de uma matriz vazia não faz muito sentido por isso é quase certeza de que um erro de programação pode acontecer.
+Isso fornece uma maneira compacta de fazer cumprir as expectativas solicitadas para quebrar um programa se a condição descrita não for válida. Por exemplo se a função `lastElement` que busca o último elemento de uma matriz voltar indefinida para matrizes vazias caso a declaração for omitida. Buscar o último elemento de uma matriz vazia não faz muito sentido por isso é quase certeza de que um erro de programação pode acontecer.
 
-As afirmações são uma maneira de certificar-se de que erros pode causar falhas e qual o ponto deste erro ao invés de valores produzidos silenciosamente sem sentido que pode acarretar problemas em uma parte do programa a qual não se tem nenhuma relação de onde realmente ocorreu.
+As afirmações são maneiras de certificar-se de que erros pode causar falhas e qual o ponto deste erro ao invés de valores sem sentido produzidos silenciosamente que pode acarretar problemas em uma parte do programa a qual não se tem nenhuma relação de onde ocorreu realmente.
 
 ## Resumo
 
-Erros e má entrada acontecem. Erros de programas precisam ser encontrados e corrigidos. Eles podem tornar-se mais fácil de perceber quando se tem uma suites de testes automatizados e asserções adicionas nos seu programa.
+Erros e má entrada acontecem. Erros de programas precisam ser encontrados e corrigidos. Eles podem tornar-se mais fácil de perceber quando se tem uma suites de testes automatizadas e asserções adicionadas em seu programa.
 
-Problemas causados por fatores fora do controle do programa deve geralmente ser tratadas normalmente. Às vezes quando o problema pode acontecer tratado localmente, valores de retorno especiais são um caminho sensato para monitorá-los. Caso contrário, as exceções são preferíveis.
+Problemas causados por fatores fora do controle do programa devem geralmente serem tratados normalmente. Às vezes quando o problema pode ser tratado localmente, valores de retorno especiais é um caminho sensato para monitorá-los. Caso contrário as exceções são preferíveis.
 
-Lançar uma exceção faz com que `stack` de chamadas pode desencadear o bloco `try/catch` ou até a parte inferior do `stack`. O valor de exceção será capturado pelo bloco `catch` onde podemos verificar se ele é realmente o tipo de exceção esperada e em seguida fazer algo com ele. Para lidar com o fluxo de controle imprevisível causado pelas exceções, o bloco `finally` pode ser utilizado para garantir que um pedaço de código seja sempre executado.
+Lançar uma exceção faz com que `stack` de chamadas se desencadeie o bloco `try/catch` até a parte inferior do `stack`. O valor da exceção será capturado pelo bloco `catch` onde podemos verificar se ele é realmente do tipo de exceção esperada e em seguida fazer algo com ela. Para lidar com o fluxo de controle imprevisível causado pelas exceções, o bloco `finally` pode ser utilizado para garantir que um pedaço de código seja sempre executado.
 
 ## Exercícios
 
@@ -420,7 +420,13 @@ function reliableMultiply(a, b) {
 console.log(reliableMultiply(8, 8));
 // → 64
 ````
-[Veja a resolução](https://gist.github.com/SauloSilva/95c270deacfd4f306463)
+
+**Dica**
+
+A chamada de `primitiveMultiply` obviamente deve acontecer em um bloco `try`. 
+O bloco `catch` fica responsável para relançar a exceção quando não é uma instância de `MultiplicatorUnitFailure` e garantir que a chamada é repetida quando ele é uma instância de `MultiplicatorUnitFailure`.
+
+Para refazer o processo, você pode usar um `loop` que quebra somente quando a chamada for bem sucedida; veja os exemplos de recursão nos cápitulos anteriores e faça o uso; espero que você não tenha uma grande séries de erros na função `primitiveMultiply` pois isso pode estrapolar o `stack` e entrar em loop infinito.
 
 2- A caixa trancada
 
@@ -442,7 +448,7 @@ var box = {
 };
 ````
 
-Isto é uma caixa com um cadeado. Dentro dela tem um array mas você pode obtê-lo apenas quando a caixa for desbloqueada. Não é permitido acessar a propriedade `_content` diretamente.
+Isto é uma caixa com um cadeado. Dentro dela tem um `array` mas você pode obtê-lo apenas quando a caixa for desbloqueada. Não é permitido acessar a propriedade `_content` diretamente.
 
 Escreva uma função chamada `withBoxUnlocked` que assume o valor da função que é passada por argumento para abrir esta caixa. Execute a função e em seguida garanta que a caixa está bloqueada antes de voltar novamente; não importa se o argumento da função retornou normalmente ou emitiu uma exceção.
 
@@ -467,6 +473,12 @@ console.log(box.locked);
 // → true
 ````
 
-Para ganhar pontos extras, certifique-se de que se você chamou `withBoxUnlocked` quando a caixa já estava desbloqueada pois a caixa deve sempre permanecer desbloqueada.
+Para ganhar pontos extras, certifique-se de que chamou `withBoxUnlocked` quando a caixa já estava desbloqueada, pois a caixa deve sempre permanecer desbloqueada.
 
-[Veja a resolução](https://gist.github.com/SauloSilva/74595b9220e4a21480c2)
+**Dica:**
+
+Você provalvemente deve ter adivinhado que este exercício solicita o uso do bloco `finally`. 
+Sua função deve ser destravar a caixa e em seguida chamar a função que vem de argumento dentro da função `withBoxUnlocked`. 
+E no `finally` ele deve travar a caixa novamente.
+
+Para certificar-se de que nós não bloqueamos a caixa quando ela já estava bloqueada verifique no início da função se a mesma verificação é válida para quando a caixa esta desbloqueada e para quando quisermos bloquear ela novamete.

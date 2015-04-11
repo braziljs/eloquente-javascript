@@ -2,7 +2,7 @@
 
 Uma reunião de compartilhamento de habilidades é um evento onde as pessoas com um interesse em comum se juntam e dão pequenas apresentações informais sobre coisas que eles sabem. Em uma reunião de compartilhamento de habilidade de jardinagem alguém pode explicar como cultivar um Aipo. Ou em um grupo de compartilhamento de habilidades orientadas para a programação você poderia aparecer e dizer a todos sobre Node.js.
 
-Tais reuniões muitas vezes também são chamados de grupos de usuários quando eles estão falando sobre computadores. Isso é uma ótima maneira de aprofundar o seu horizonte e aprender sobre novos desenvolvimentos ou simplesmente reunir pessoas com interesses semelhantes. Muitas cidades grandes têm um grupo de JavaScript. Eles são tipicamente livre para assistir ou visitar.
+Tais reuniões muitas vezes também são chamados de grupos de usuários quando eles estão falando sobre computadores. Isso é uma ótima maneira de aprofundar o seu conhecimento e aprender sobre novos desenvolvimentos ou simplesmente reunir pessoas com interesses semelhantes. Muitas cidades têm grandes grupos de JavaScript. Eles são tipicamente livre para assistir ou visitar.
 
 Neste último capítulo do projeto o nosso objetivo é a criação de um site para gerenciar estas palestras dadas em um encontro de compartilhamento de habilidade. Imagine um pequeno grupo de pessoas que se encontra regularmente no escritório de um dos membros para falar sobre Monociclo. O problema é que quando um organizador de alguma reunião anterior muda de cidade ninguém se apresentara para assumir esta tarefa. Queremos um sistema que permite que os participantes proponha e discuta as palestras entre si sem um organizador central.
 

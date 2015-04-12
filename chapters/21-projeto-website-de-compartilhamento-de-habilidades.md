@@ -24,27 +24,27 @@ Uma solução comum para este problema é chamado de `long polling` que passa a 
 
 #### Long polling
 
-Para ser capaz de se comunicar imediatamente com um cliente que algo mudou precisamos de uma conexão com o cliente. Os navegadores não tradicionais bloqueiam de qualquer maneira tais conexões que deveriam ser aceitas pelo cliente; toda essa ligação deve ser feita via servidor o que não é muito prático.
+Para ser capaz de se comunicar imediatamente com um cliente que algo mudou precisamos de uma conexão com o cliente. Os navegadores não tradicionais, bloqueiam de qualquer maneira tais conexões que deveriam ser aceitas pelo cliente; toda essa ligação deve ser feita via servidor o que não é muito prático.
 
 Nós podemos mandar o cliente abrir a conexão e mantê-la de modo que o servidor possa usá-la para enviar informações quando for preciso.
 
-Uma solicitação HTTP permite apenas um fluxo simples de informações, onde o cliente envia a solicitação e o servidor devolve uma única resposta. Há uma tecnologia que chamamos de soquetes web, suportado pelos navegadores modernos o que torna possível abrir as ligações para a troca de dados arbitrária. É um pouco difícil usá-las corretamente.
+Uma solicitação HTTP permite apenas um fluxo simples de informações, onde o cliente envia a solicitação e o servidor devolve uma única resposta. Há uma tecnologia que chamamos de soquetes web, suportado pelos navegadores modernos, isso torna possível abrir as ligações para a troca de dados arbitrária. É um pouco difícil usá-las corretamente.
 
-Neste capítulo vamos utilizar uma técnica relativamente simples, `long polling`, onde os clientes continuamente pediram ao servidor para obter novas informações usando solicitações HTTP e o servidor simplesmente barrara sua resposta quando ele não tem nada de novo para relatar.
+Neste capítulo vamos utilizar uma técnica relativamente simples, `long polling`, onde os clientes continuamente pedem ao servidor para obter novas informações usando solicitações `HTTP` e o servidor simplesmente barrara sua resposta quando ele não houver nada de novo para relatar.
 
 Enquanto o cliente torna-se constantemente um `long polling` aberto, ele ira receber informações do servidor imediatamente. Por exemplo, se Alice tem o nosso aplicativo de compartilhamento de habilidade aberto em seu navegador, ele terá feito um pedido de atualizações e estara a espera de uma resposta a esse pedido. Quando Bob submeter uma palestra sobre a `extrema Downhill Monociclo` o servidor vai notificar que Alice está esperando por atualizações e enviar essas informações sobre a nova palestra como uma resposta ao seu pedido pendente. O navegador de Alice receberá os dados e atualizara a tela para mostrar a nova palestra.
 
-Para evitar que as conexões excedam o tempo limite(sendo anulado por causa de uma falta de atividade) podemos definir uma técnica que normalmente define um tempo máximo para cada pedido do `long polling`; após esse tempo o servidor irá responder de qualquer maneira mesmo que ele não tem nada a relatar e o cliente inicia um novo pedido. Reiniciar o pedido periodicamente torna a técnica mais robusta a qual permite aos clientes se recuperarem de falhas de conexão temporárias ou de problemas no servidor.
+Para evitar que as conexões excedam o tempo limite (sendo anulado por causa de uma falta de atividade) podemos definir uma técnica que define um tempo máximo para cada pedido do `long polling`; após esse tempo o servidor irá responder de qualquer maneira mesmo que ele não tenha nada a relatar, dai então o cliente inicia um novo pedido. Reiniciar o pedido periodicamente torna a técnica mais robusta a qual permite aos clientes se recuperarem de falhas de conexão temporárias ou de problemas no servidor.
 
-Um servidor que esta ocupado usando `long polling` pode ter milhares de pedidos em espera com conexões TCP em aberto. Node torna fácil de gerenciar muitas conexões sem criar uma thread separada com controle para cada uma; sendo o Node uma boa opção para esse sistema.
+Um servidor que esta ocupado usando `long polling` pode ter milhares de pedidos em espera com conexões `TCP` em aberto. Node torna fácil de gerenciar muitas conexões sem criar uma thread separada com controle para cada uma, sendo assim, Node é uma boa opção para esse sistema.
 
 #### Interface HTTP
 
-Antes de começarmos a comunicar servidor e cliente vamos pensar sobre o ponto em que é feita a comunicação: a interface HTTP.
+Antes de começarmos a comunicar servidor e cliente vamos pensar sobre o ponto em que é feita a comunicação: a interface `HTTP`.
 
-Vamos basear nossa interface em JSON e como vimos no servidor de arquivos a partir do capítulo 20 vamos tentar fazer um bom uso de métodos HTTP. A interface é centrado em torno do path `/talks`. `Paths` que não começam com `/talks` serão usado para servir arquivos estáticos como: código HTML, JavaScript que implementam o sistema do lado do cliente.
+Vamos basear nossa interface em `JSON` e como vimos no servidor de arquivos a partir do capítulo 20 vamos tentar fazer um bom uso dos métodos `HTTP`. A interface é centrado em torno de um path `/talks`. `Paths` que não começam com `/talks` serão usado para servir arquivos estáticos como: código HTML e JavaScript que serão implementados no sistema do lado do cliente.
 
-A solicitação do tipo GET para `/talks` devolve um documento JSON como este:
+A solicitação do tipo GET para `/talks` devolve um documento `JSON` como este:
 
 ```json
 {"serverTime": 1405438911833,
@@ -54,9 +54,9 @@ A solicitação do tipo GET para `/talks` devolve um documento JSON como este:
             "comment": []}]}
 ```
 
-O campo `serverTime` vai ser usado para fazer a sondagem de `long polling`. Voltarei a explicar isso adiante.
+O campo `serverTime` vai ser usado para fazer a sondagem de `long polling`. Voltarei a explicar isso mais adiante.
 
-Para criar um novo talk é preciso uma solicitação do tipo `PUT` para a URL `/talks/unituning/`, onde após a segunda barra é o título da palestra. O corpo da solicitação `PUT` deve conter um objeto JSON que tem o apresentador e o sumário como propriedade do corpo da solicitação.
+Para criar um novo talk é preciso uma solicitação do tipo `PUT` para a URL `/talks/unituning/`, onde após a segunda barra é o título da palestra. O corpo da solicitação `PUT` deve conter um objeto `JSON` que tem o apresentador e o sumário como propriedade do corpo da solicitação.
 
 O títulos da palestra pode conter espaços e outros caracteres que podem não aparecerem normalmente em um URL, a `string` do título deve ser codificado com a função `encodeURIComponent` ao construir a URL.
 
@@ -65,7 +65,7 @@ console.log("/talks/" + encodeURIComponent("How to Idle"));
 // → /talks/How%20to%20Idle
 ```
 
-O pedido de criação de uma palestra é parecido com isto:
+O pedido para criação de uma palestra é parecido com isto:
 
 ```js
 PUT /talks/How%20to%20Idle HTTP/1.1
@@ -76,9 +76,9 @@ Content-Length: 92
  "summary": "Standing still on a unicycle"}
 ```
 
-Essas URLs também suportam requisições `GET` para recuperar a representação do JSON de uma palestra ou DELETE para exclusão de uma palestra.
+Essas URLs também suportam requisições `GET` para recuperar a representação do `JSON` de uma palestra ou `DELETE` para exclusão de uma palestra.
 
-Adicionando um comentário a uma palestra é feito com uma solicitação `POST` para uma URL `/talks/Unituning/comments` com um objeto JSON contendo o autor e a mensagem como propriedades do corpo da solicitação.
+Para adicionar um comentário a uma palestra é necessário uma solicitação `POST` para uma URL `/talks/Unituning/comments` com um objeto `JSON` contendo o autor e a mensagem como propriedades do corpo da solicitação.
 
 ```js
 POST /talks/Unituning/comments HTTP/1.1
@@ -89,11 +89,11 @@ Content-Length: 72
  "message": "Will you talk about raising a cycle?"}
 ```
 
-Para termos apoio do `long polling` precisamos de pedidos GET para `/talks`. Podemos incluir um parâmetro de consulta chamado `changesSince` ele sera usado para indicar que o cliente está interessado em atualizações que aconteceram desde de um determinado tempo. Quando existem tais mudanças eles são imediatamente devolvidos. Quando não há a resposta é adiada até que algo aconteça até um determinado período de tempo(vamos usar 90 segundos).
+Para termos apoio do `long polling` precisamos de pedidos `GET` para `/talks`. Podemos incluir um parâmetro de consulta chamado `changesSince` ele será usado para indicar que o cliente está interessado em atualizações que aconteceram desde de um determinado tempo. Quando existem tais mudanças eles são imediatamente devolvidos. Quando não há a resposta é adiada até que algo aconteça em um determinado período de tempo (vamos determinar 90 segundos).
 
-O tempo deve ser indicado em números em milissegundos decorridos desde do início de 1970, o mesmo tipo de número que é retornado por `Date.now()`. Para garantir que ele recebeu todas as atualizações e não recebeu a mesma atualização mais de uma vez; o cliente deve passar o tempo da última informação recebida do servidor. O relógio do servidor pode não ser exatamente sincronizado com o relógio do cliente e mesmo se fosse seria impossível para o cliente saber a hora exata em que o servidor enviou uma resposta porque a transferência de dados através de rede tem um pouco de atraso.
+O tempo deve ser indicado em números por milissegundos decorridos desde do início de 1970, o mesmo tipo de número que é retornado por `Date.now()`. Para garantir que ele recebeu todas as atualizações sem receber a mesma atualização repetida; o cliente deve passar o tempo da última informação recebida ao servidor. O relógio do servidor pode não ser exatamente sincronizado com o relógio do cliente e mesmo se fosse seria impossível para o cliente saber a hora exata em que o servidor enviou uma resposta porque a transferência de dados através de rede pode ter um pouco de atraso.
 
-Esta é a razão da existência da propriedade `serverTime` em respostas enviadas a pedidos GET para `/talks`. Essa propriedade diz ao cliente o tempo preciso do servidor em que os dados foram recebidos ou criados. O cliente pode então simplesmente armazenar esse tempo e passá-los no seu próximo pedido de `polling` para certificar de que ele receba exatamente as atualizações que não tenha visto antes.
+Esta é a razão da existência da propriedade `serverTime` em respostas enviadas a pedidos `GET` para `/talks`. Essa propriedade diz ao cliente o tempo preciso do servidor em que os dados foram recebidos ou criados. O cliente pode então simplesmente armazenar esse tempo e passá-los no seu próximo pedido de `polling` para certificar de que ele vai receber exatamente as atualizações que não tenha visto antes.
 
 ```js
 GET /talks?changesSince=1405438911833 HTTP/1.1

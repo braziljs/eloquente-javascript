@@ -40,7 +40,7 @@ No Capítulo 7 usamos matrizes de sequências para descrever uma grade bidimensi
 
 Um `Level` simples ficaria assim:
 
-````js
+```js
 var simpleLevelPlan = [
   "                      ",
   "                      ",
@@ -52,7 +52,7 @@ var simpleLevelPlan = [
   "      xxxxxxxxxxxxxx  ",
   "                      "
 ];
-````
+```
 
 Tanto a grade (*grid*) fixa e os elementos móveis são inclusos no plano. Os caracteres `x` representam paredes, os caracteres de espaço são para o `espaço vazio` e os `!` representam algo fixo, seções de lava que não se mechem.
 
@@ -66,7 +66,7 @@ Um jogo inteiro é composto por vários `Levels` que o jogador deve completar. U
 
 O construtor a seguir cria um objeto de `Level`. Seu argumento deve ser uma matriz de sequências que define o `Level`.
 
-````js
+```js
 function Level(plan) {
   this.width = plan[0].length;
   this.height = plan.length;
@@ -94,7 +94,7 @@ function Level(plan) {
   })[0];
   this.status = this.finishDelay = null;
 }
-````
+```
 
 Para deixar o código pequeno, não verificamos entradas erradas. Ele assume que você sempre entrega um plano de *level* adequado, completo, com a posição de início do jogador e com outros itens essenciais.
 
@@ -104,17 +104,17 @@ A matriz contém objetos que rastreiam a posição atual e estado dos elementos 
 
 Depois de construir a `grid` (grade), usaremos o método de filtro para encontrar o objeto jogador que nós armazenamos em uma propriedade do `level`. A propriedade `status` controla se o jogador ganhou ou perdeu. Quando isto acontece, `finishDelay` é usado para manter o `Level` ativo durante um curto período de tempo, de modo que uma animação simples pode ser mostrada (repor imediatamente ou avançar o `Level` ficaria mais fácil). Este método pode ser usado para descobrir se um `Level` foi concluído.
 
-````js
+```js
 Level.prototype.isFinished = function() {
   return this.status != null && this.finishDelay < 0;
 };
-````
+```
 
 ## Atores
 
 Para armazenar a posição e o tamanho de um ator vamos voltar para o nosso tipo `Vector` que agrupa uma coordenada `x` e `y` para coordenar um objeto.
 
-````js
+```js
 function Vector(x, y) {
   this.x = x; this.y = y;
 }
@@ -124,38 +124,38 @@ Vector.prototype.plus = function(other) {
 Vector.prototype.times = function(factor) {
   return new Vector(this.x * factor, this.y * factor);
 };
-````
+```
 
 O método de escalas temporais de um vetor nos passa uma determinada quantidade. Isso será útil para quando precisarmos de multiplicar um vetor de velocidade por um intervalo de tempo, para obter a distância percorrida durante esse tempo.
 
 Na seção anterior, o objeto `actorChars` foi usado pelo construtor `Level` para associar personagens com as funções do construtor. O objeto parece com isso:
 
-````js
+```js
 var actorChars = {
   "@": Player,
   "o": Coin,
   "=": Lava, "|": Lava, "v": Lava
 };
-````
+```
 
 Três personagens estão sendo mapeados para o objeto `Lava`. O construtor `Level` passa o caractere fonte do ator como o segundo argumento para o construtor, e o construtor de `Lava` usa isso para ajustar o seu comportamento (saltando horizontalmente, saltando verticalmente ou gotejando).
 
 O tipo do jogador é construído da seguinte forma. A velocidade esta sendo armazenada com velocidade atual, que vai ajudar a simular movimento e gravidade.
 
-````js
+```js
 function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5));
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
 }
 Player.prototype.type = "player";
-````
+```
 
 Como um jogador tem a altura de um quadrado e meio, a sua posição inicial está sendo definida para ser a metade de um quadrado acima da posição em que o `@` personagem apareceu. Desta forma a sua parte inferior fica alinhada com a parte inferior do quadrado que apareceu.
 
 Ao construir um objeto `Lava` dinamicamente é preciso inicializar o objeto de uma forma diferente, dependendo do personagem que se baseia. `Lava Dinâmica` se move longitudinalmente em sua velocidade dada até atingir um obstáculo. Nesse ponto, se ele tem uma propriedade `repeatPos` ele vai pular de volta à sua posição inicial (`gotejamento`). Se isso não acontecer, ele irá inverter a sua velocidade e continuar no outro sentido (pular). O construtor só configura as propriedades necessárias. O método que faz o movimento real será escrito mais tarde.
 
-````js
+```js
 function Lava(pos, ch) {
   this.pos = pos;
   this.size = new Vector(1, 1);
@@ -169,19 +169,19 @@ function Lava(pos, ch) {
   }
 }
 Lava.prototype.type = "lava";
-````
+```
 
 `Coin` são atores simples. A maioria dos blocos simplesmente esperam em seus lugares. Mas para animar o jogo eles recebem um pouco de "oscilação", um ligeiro movimento vertical de vai e volta. Para controlar isto, um objeto `coin` armazena uma posição da base, bem como uma propriedade que controla a oscilação da fase do movimento no salto. Juntas essas propriedades determinam a posição real da moeda (armazenada na propriedade `pos`).
 
 
-````js
+```js
 function Coin(pos) {
   this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
   this.size = new Vector(0.6, 0.6);
   this.wobble = Math.random() * Math.PI * 2;
 }
 Coin.prototype.type = "coin";
-````
+```
 
 No capítulo 13 vimos que `Math.sin` nos dá a coordenada `y` de um ponto em um círculo. Isso é para coordenar um vai e vem em forma de onda suave à medida que avançamos o círculo, fazendo a função `seno` se tornar útil para a modelagem de um movimento ondulatório.
 
@@ -189,11 +189,11 @@ Para evitar uma situação em que todas as moedas se movam para cima ou para bai
 
 Agora escrevemos todas as peças necessárias para representar o `Level` nesse estado.
 
- ````js
+ ```js
 var simpleLevel = new Level(simpleLevelPlan);
 console.log(simpleLevel.width, "by", simpleLevel.height);
 // → 22 by 9
- ````
+ ```
 
 A tarefa a seguir deve exibir tais *levels* na tela, e assim modelar o tempo do movimento entre deles.
 
@@ -215,17 +215,17 @@ Nós estaremos usando uma folha de estilo para definir as cores reais e outras p
 
 A seguinte função auxiliar fornece uma maneira curta para criar um elemento e dar-lhe uma classe:
 
-````js
+```js
 function elt(name, className) {
   var elt = document.createElement(name);
   if (className) elt.className = className;
   return elt;
 }
-````
+```
 
 O modo de exibição é criado dando-lhe um elemento pai a que se deve acrescentar e um objeto de `Level`.
 
-````js
+```js
 function DOMDisplay(parent, level) {
   this.wrap = parent.appendChild(elt("div", "game"));
   this.level = level;
@@ -234,7 +234,7 @@ function DOMDisplay(parent, level) {
   this.actorLayer = null;
   this.drawFrame();
 }
-````
+```
 
 Levando em consideração o fato de que `appendChild` retorna o elemento ao criar o conteúdo do elemento, então podemos armazená-lo na suas propriedade com apenas uma única instrução.
 
@@ -242,7 +242,7 @@ O fundo do `Level`, que nunca muda, é desenhado apenas uma vez. Os atores são 
 
 Nossas coordenadas e tamanhos são rastreadas em unidades relativas ao tamanho do `grid`, onde o tamanho ou distância de 1 significa uma unidade do `grid`. Ao definir os tamanhos de pixel vamos ter que escalar essas coordenadas, tudo no jogo seria ridiculamente pequeno em um único pixel por metro quadrado. A variável de escala indica o número de pixels que uma única unidade ocupa na tela.
 
-````js
+```js
 var scale = 20;
 
 DOMDisplay.prototype.drawBackground = function() {
@@ -257,26 +257,26 @@ DOMDisplay.prototype.drawBackground = function() {
   });
   return table;
 };
-````
+```
 
 Como mencionado anteriormente o fundo é desenhado com um elemento `<table>`. Este corresponde à estrutura da propriedade `grid` onde cada linha é transformada em uma linha da tabela (elemento `<tr>`). As cordas na grade são usadas ​​como nomes de classe para a célula da tabela (elemento `<td>`). O seguinte CSS ajuda a olhar o resultado do quadro como o fundo que queremos:
 
-````css
+```css
 .background    { background: rgb(52, 166, 251);
                  table-layout: fixed;
                  border-spacing: 0;              }
 .background td { padding: 0;                     }
 .lava          { background: rgb(255, 100, 100); }
 .wall          { background: white;              }
-````
+```
 
-Alguns deles(`table-layout`, `border-spacing` e `padding`) são simplesmente usados ​​para suprimir o comportamento padrão indesejado. Nós não queremos que o layout da tabela dependa do conteúdo de suas células, e nós não queremos espaço entre as células da tabela ou `padding` dentro deles.
+Alguns deles (`table-layout`, `border-spacing` e `padding`) são simplesmente usados ​​para suprimir o comportamento padrão indesejado. Nós não queremos que o layout da tabela dependa do conteúdo de suas células, e nós não queremos espaço entre as células da tabela ou `padding` dentro deles.
 
-A regra de `background` define a cor de fundo. No CSS é permitido as cores serem especificadas tanto com palavras(`write`) tanto com um formato como RGB(`R, G, B`) onde os componentes são vermelha, verde e azul ou separados em três números de 0 a 255. Assim em `rgb(52, 166, 251)`, o componente vermelho é de 52 o verde é 166 e azul é 251. Como o componente azul é maior, a cor resultante será azulada. Você pode ver que na regra das `lavas` o primeiro número(vermelho) é o maior.
+A regra de `background` define a cor de fundo. No CSS é permitido as cores serem especificadas tanto com palavras (`write`) tanto com um formato como RGB (`R, G, B`) onde os componentes são vermelho, verde e azul ou separados em três números de 0 a 255. Assim em `rgb(52, 166, 251)`, o componente vermelho é de 52 o verde é 166 e azul é 251. Como o componente azul é maior, a cor resultante será azulada. Você pode ver que na regra das `lavas` o primeiro número (vermelho) é o maior.
 
-Chamamos a cada ator criado por um elemento no DOM, e para ele definimos sua posição e o tamanho desse elemento com base nas propriedades do ator. Os valores devem ser multiplicadas por escala e converter para unidades de pixels do jogo.
+Chamamos a cada ator criado por um elemento no DOM, e para ele definimos sua posição e o tamanho desse elemento com base nas propriedades do ator. Os valores devem ser multiplicados por escala e convertidos para unidades de pixels do jogo.
 
-````js
+```js
 DOMDisplay.prototype.drawActors = function() {
   var wrap = elt("div");
   this.level.actors.forEach(function(actor) {
@@ -289,19 +289,19 @@ DOMDisplay.prototype.drawActors = function() {
   });
   return wrap;
 };
-````
+```
 
 Para dar mais classe ao elemento separamos os nomes de classe com espaços. No código CSS abaixo mostramos a classe ator que nos dá os atores com sua posição absoluta. O seu nome é o tipo usado como uma classe extra para dar-lhes uma uma cor diferente. Não temos que definir a classe de lava novamente porque vamos reutilizar a classe para os quadradrinhos de lava que definimos anteriormente.
 
-````css
+```css
 .actor  { position: absolute;            }
 .coin   { background: rgb(241, 229, 89); }
 .player { background: rgb(64, 64, 64);   }
-````
+```
 
-Quando se atualiza a exibição o método que foi passado primeiro remove os velhos ator gráficos se houver e em seguida redesenha-os em suas novas posições. Pode ser tentador tentar reutilizar os elementos DOM para os atores, mas para fazer esse trabalho seria preciso uma grande quantidade de fluxo de informação adicional entre o código de exibição e o código de simulação. Precisaríamos  associar os atores com os elementos do DOM e o código de desenho, a remoção dos elementos é feita quando seus atores desaparecem. Uma vez que normalmente não teremos bastante atores no jogo, redesenhar todos eles não custa caro.
+Quando se atualiza a exibição, o método `drawFrame` que foi passado primeiro remove os velhos gráficos do ator, se houver algum, e em seguida redesenha-os em suas novas posições. Pode ser tentador tentar reutilizar os elementos DOM para os atores, mas para fazer esse trabalho seria preciso uma grande quantidade de fluxo de informação adicional entre o código de exibição e o código de simulação. Precisaríamos  associar os atores com os elementos do DOM e o código de desenho, a remoção dos elementos é feita quando seus atores desaparecem. Uma vez que normalmente não teremos bastante atores no jogo, redesenhar todos eles não custa caro.
 
-````js
+```js
 DOMDisplay.prototype.drawFrame = function() {
   if (this.actorLayer)
     this.wrap.removeChild(this.actorLayer);
@@ -309,11 +309,11 @@ DOMDisplay.prototype.drawFrame = function() {
   this.wrap.className = "game " + (this.level.status || "");
   this.scrollPlayerIntoView();
 };
-````
+```
 
 Ao adicionar o estado atual do `Level` com um nome de classe para o `wrapper` podemos denominar que o ator do jogador esta ligeiramente diferente quando o jogo está ganho ou perdido, para isso basta adicionar uma regra no CSS que tem efeito apenas quando o jogador tem um elemento ancestral com uma determinada classe.
 
-````css
+```css
 .lost .player {
   background: rgb(160, 64, 64);
 }
@@ -321,24 +321,24 @@ Ao adicionar o estado atual do `Level` com um nome de classe para o `wrapper` po
 .won .player {
   box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
-````
+```
 
-Depois de tocar em lava a cor do jogador ficara vermelho escuro escaldante. Quando a última moeda for coletada nós usamos duas caixa branca com sombras borradas, um para o canto superior esquerdo e outro para o canto superior direito para criar um efeito de halo branco.
+Depois de tocar em lava a cor do jogador ficara vermelho escuro escaldante. Quando a última moeda for coletada nós usamos duas caixas brancas com sombras borradas, um para o canto superior esquerdo e outro para o canto superior direito, para criar um efeito de halo branco.
 
-Não podemos assumir que os `Level` sempre se encaixem na janela de exibição. É por isso que a chamada `scrollPlayerIntoView` é necessária e  garante que se o `Level` está saindo fora do visor nós podemos rolar o `viewport` para garantir que o jogador está perto de seu centro. O seguinte CSS dá ao elemento DOM o embrulho do jogo com um tamanho máximo e garante que qualquer coisa que não se destaca da caixa do elemento não é visível. Também se obter o elemento exterior numa posição relativa, de modo que os atores estão posicionados no seu interior em relação ao canto superior esquerdo do `Level`.
+Não podemos assumir que os `Level` sempre se encaixem na janela de exibição. É por isso que a chamada `scrollPlayerIntoView` é necessária e  garante que se o `Level` está saindo do visor nós podemos rolar o `viewport` para garantir que o jogador está perto de seu centro. O seguinte CSS dá ao elemento DOM o embrulho do jogo com um tamanho máximo e garante que qualquer coisa que não se destaca da caixa do elemento não é visível. Também damos ao elemento exterior uma posição relativa, de modo que os atores estão posicionados no seu interior em relação ao canto superior esquerdo do `Level`.
 
-````css
+```css
 .game {
   overflow: hidden;
   max-width: 600px;
   max-height: 450px;
   position: relative;
 }
-````
+```
 
-No método `scrollPlayerIntoView` encontramos a posição do jogador e atualizamos a posição de rolagem do elemento conforme seu envolvimento. Vamos mudar a posição de rolagem através da manipulação das propriedades desses elementos com os enventos de `scrollLeft` e `scrollTop` para quando o jogador está muito perto do canto.
+No método `scrollPlayerIntoView` encontramos a posição do jogador e atualizamos a posição de rolagem do elemento conforme seu envolvimento. Vamos mudar a posição de rolagem através da manipulação das propriedades desses elementos com os enventos de `scrollLeft` e `scrollTop` para quando o jogador estiver muito perto do canto.
 
-````js
+```js
 DOMDisplay.prototype.scrollPlayerIntoView = function() {
   var width = this.wrap.clientWidth;
   var height = this.wrap.clientHeight;
@@ -361,34 +361,34 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
   else if (center.y > bottom - margin)
     this.wrap.scrollTop = center.y + margin - height;
 };
-````
+```
 
-A forma de como o centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro para ator nós adicionamos a sua posição(o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de `Level` mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
+A forma de como o centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro do ator nós adicionamos a sua posição (o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de `Level` mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
 
-Em seguida uma série de verificações são feitas para a posição do jogador dentro e fora do intervalo permitido. Note-se que, por as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai ser obrigdo a ter valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
+Em seguida uma série de verificações são feitas para a posição do jogador dentro e fora do intervalo permitido. Note-se que, as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai ser obrigdo a ter valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
 
-Teria sido um pouco mais simples tentar deslocarmos o jogador para o centro da janela. Mas isso cria um efeito bastante chocante. Como você está pulando a visão vai mudar constantemente de cima e para baixo. É mais agradável ter uma área `"neutra"` no meio da tela onde você pode se mover sem causar qualquer rolagem.
+Teria sido um pouco mais simples tentar deslocarmos o jogador para o centro da janela. Mas isso cria um efeito bastante chocante. Como você está pulando a visão vai mudar constantemente de cima e para baixo. É mais agradável ter uma área "neutra" no meio da tela onde você pode se mover sem causar qualquer rolagem.
 
-Finalmente, vamos precisar de uma maneira para limpar um `Level` para ser usado quando o jogo se move para o próximo `Level` ou redefine um `Level`.
+Finalmente, vamos precisar de algo para limpar um `Level` para ser usado quando o jogo se move para o próximo `Level` ou redefine um `Level`.
 
- ````js
+ ```js
 DOMDisplay.prototype.clear = function() {
   this.wrap.parentNode.removeChild(this.wrap);
 };
- ````
+ ```
 
 Estamos agora em condições de apresentar o nosso melhor `Level` atualmente.
 
-````html
+```html
 <link rel="stylesheet" href="css/game.css">
 
 <script>
   var simpleLevel = new Level(simpleLevelPlan);
   var display = new DOMDisplay(document.body, simpleLevel);
 </script>
-````
+```
 
-A tag `<link>`quando usado com `rel="stylesheet"` torna-se uma maneira de carregar um arquivo CSS em uma página. O arquivo `game.css` contém os estilos necessários para o nosso jogo.
+A tag `<link>` quando usado com `rel="stylesheet"` torna-se uma maneira de carregar um arquivo CSS em uma página. O arquivo `game.css` contém os estilos necessários para o nosso jogo.
 
 ## Movimento e colisão
 
@@ -404,7 +404,7 @@ Essa abordagem requer alguns passos para termos uma forma reduzida, uma vez que 
 
 Este método nos diz se um retângulo(especificado por uma posição e um tamanho) coincide com qualquer espaço não vazio na `grid` de fundo:
 
-````js
+```js
 Level.prototype.obstacleAt = function(pos, size) {
   var xStart = Math.floor(pos.x);
   var xEnd = Math.ceil(pos.x + size.x);
@@ -422,7 +422,7 @@ Level.prototype.obstacleAt = function(pos, size) {
     }
   }
 };
-````
+```
 
 
 Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
@@ -435,7 +435,7 @@ Colisões entre o jogador e outros atores dinâmicos(moedas, lava em movimento) 
 
 Este método analisa o conjunto de atores, procurando um ator que se sobrepõe a um dado como um argumento:
 
-````js
+```js
 Level.prototype.actorAt = function(actor) {
   for (var i = 0; i < this.actors.length; i++) {
     var other = this.actors[i];
@@ -447,13 +447,13 @@ Level.prototype.actorAt = function(actor) {
       return other;
   }
 };
-````
+```
 
 ## Atores e ações
 
 O método `animate` do tipo `Level` dá a todos os atores do `level` a chance de se mover. Seu argumento `step` traz o tempo do passo em segundos. O objeto `key` contém informações sobre as teclas que o jogador pressionou.
 
-````js
+```js
 var maxStep = 0.05;
 
 Level.prototype.animate = function(step, keys) {
@@ -468,7 +468,7 @@ Level.prototype.animate = function(step, keys) {
     step -= thisStep;
   }
 };
-````
+```
 
 Quando a propriedade `status` do `level` tem um valor não nulo(que é o caso de quando o jogador ganhou ou perdeu) devemos contar para baixo a propriedade `finishDelay` que controla o tempo entre o ponto onde o jogador ganhou ou perdeu e o ponto onde nós paramos de mostrar o `Level`.
 
@@ -476,7 +476,7 @@ O `loop` `while` corta o passo de tempo onde estamos animando em pedaços pequen
 
 Objetos do ator tem um método `act` que toma como argumentos o tempo do passo, o objeto do `level` que contém as chaves de objeto. Aqui está um exemplo para o tipo de ator(Lava) que ignora as teclas de objeto:
 
-````js
+```js
 Lava.prototype.act = function(step, level) {
   var newPos = this.pos.plus(this.speed.times(step));
   if (!level.obstacleAt(newPos, this.size))
@@ -486,13 +486,13 @@ Lava.prototype.act = function(step, level) {
   else
     this.speed = this.speed.times(-1);
 };
-````
+```
 
 Ele calcula uma nova posição através da adição do produto de tempo do passo e a sua velocidade atual para definir sua posição. Se nenhum bloco de obstáculos tem uma nova posição ele se move para lá. Se houver um obstáculo o comportamento depende do tipo da lava: lava e bloco de gotejamento tem uma propriedade `repeatPos` para ele poder saltar para trás quando bater em algo. Saltando a lava simplesmente inverte sua velocidade(multiplica por -1) a fim de começar a se mover em outra direção.
 
 Coins usa seu método `act` para se mover. Eles ignoram colisões uma vez que são simplesmente oscilando em torno de dentro de sua própria quadrado e colisões com o jogador será tratado pelo método `act` do jogador.
 
-````js
+```js
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
 Coin.prototype.act = function(step) {
@@ -500,13 +500,13 @@ Coin.prototype.act = function(step) {
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
 };
-````
+```
 
 A propriedade `wobble` é atualizada para controlar o tempo e em seguida utilizado como um argumento para `math.sin` para criar uma onda que é usado para calcular sua nova posição.
 
 Isso deixa o próprio jogador. Movimento do jogador é tratado separadamente para cada eixo, porque bater no chão não deve impedir o movimento horizontal, e batendo na parede não deve parar de cair ou o movimento de saltar. Este método implementa a parte horizontal:
 
-````js
+```js
 var playerXSpeed = 7;
 
 Player.prototype.moveX = function(step, level, keys) {
@@ -522,13 +522,13 @@ Player.prototype.moveX = function(step, level, keys) {
   else
     this.pos = newPos;
 };
-````
+```
 
 O movimento é calculado com base no estado das teclas de seta esquerda e direita. Quando um movimento faz com que o jogador bata em alguma coisa é o método `playerTouched` que é chamado no `level` que lida com coisas como morrer na lava ou coletar moedas. Caso contrário o objecto atualiza a sua posição.
 
 Movimento vertical funciona de forma semelhante, mas tem que simular salto e gravidade.
 
-````js
+```js
 var gravity = 30;
 var jumpSpeed = 17;
 
@@ -547,7 +547,7 @@ Player.prototype.moveY = function(step, level, keys) {
     this.pos = newPos;
   }
 };
-````
+```
 
 No início do método o jogador é acelerado verticalmente para ter em conta a gravidade. Ao saltar a velocidade da gravidade é praticamente igual a todas as outras constantes neste jogo que foram criadas por tentativa e erro. Eu testei vários valores até encontrar uma combinação agradável.
 
@@ -555,7 +555,7 @@ Em seguida é feito uma verificação para identificar se há obstáculos novame
 
 O método atual parece com isso:
 
-````js
+```js
 Player.prototype.act = function(step, level, keys) {
   this.moveX(step, level, keys);
   this.moveY(step, level, keys);
@@ -570,7 +570,7 @@ Player.prototype.act = function(step, level, keys) {
     this.size.y -= step;
   }
 };
-````
+```
 
 Depois de se mover o método verifica os outros atores que o jogador está colidindo com ele novamente e é chamado o  `playerTouched` quando encontra um. Desta vez ele passa o objeto ator como segundo argumento isto é porque se o outro ator é uma moeda `playerTouched` precisa saber qual moeda está sendo coletada.
 
@@ -578,7 +578,7 @@ Finalmente quando o jogador morre(toca lava), montamos uma pequena animação qu
 
 E aqui é o método que manipula as colisões entre o jogador e outros objetos:
 
-````js
+```js
 Level.prototype.playerTouched = function(type, actor) {
   if (type == "lava" && this.status == null) {
     this.status = "lost";
@@ -595,7 +595,7 @@ Level.prototype.playerTouched = function(type, actor) {
     }
   }
 };
-````
+```
 
 Quando lava é tocado, o status do jogo é definido como `"lost"`. Quando uma moeda é tocada essa moeda é removida do conjunto de atores e se fosse o último o estado do jogo é definido como "ganhou".
 
@@ -609,7 +609,7 @@ Precisamos criar um manipulador de teclas que armazena o estado atual da esquerd
 
 A função a seguir quando é passado um objeto com o código da tecla e com o nome de propriedade como valores, devemos retornar um objeto que rastreia a posição atual dessas teclas. Ele registra manipuladores de eventos para `"keydown"` e `"Keyup"`, quando o código de tecla para o evento está presente no conjunto de códigos que está sendo rastreado é executado a atualização do objeto.
 
-````js
+```js
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
 
 function trackKeys(codes) {
@@ -625,7 +625,7 @@ function trackKeys(codes) {
   addEventListener("keyup", handler);
   return pressed;
 }
-````
+```
 
 Note como o mesmo manipulador da função é usado para ambos os tipos de eventos. Ele olha para a propriedade `type` do objeto de evento para determinar se o estado da tecla deve ser atualizado para true("keydown") ou falso("keyup").
 
@@ -636,7 +636,7 @@ A função `requestAnimationFrame` que vimos no capítulo 13 fornece uma boa man
 
 Vamos definir uma função auxiliar que envolve as partes chatas em uma interface conveniente e nos permitir simplesmente chamar `runAnimation` dando-lhe uma função que espera uma diferença de tempo como um argumento e desenha-la em um quadro único. Quando a função de armação retorna o valor falso a animação para.
 
-````js
+```js
 function runAnimation(frameFunc) {
   var lastTime = null;
   function frame(time) {
@@ -651,7 +651,7 @@ function runAnimation(frameFunc) {
   }
   requestAnimationFrame(frame);
 }
-````
+```
 
 Temos que definir um passo de quadros máximo de 100 milissegundos(um décimo de segundo). Quando a aba ou janela do navegador com a página estiver oculto as chamadas `requestAnimationFrame` será suspenso até que a aba ou janela é mostrado novamente. Neste caso a diferença entre `lasttime` será todo o tempo em que a página estiver oculta. Avançando o jogo, que em uma única etapa vai parecer fácil mas podemos ter um monte de trabalho(lembre-se o tempo-splitting no método de animação).
 
@@ -659,7 +659,7 @@ A função também converte os passos de tempo para segundos, que são uma quant
 
 A função de execução do `Level` toma um objeto do `Level` no construtor de uma exposição e opcionalmente uma função. Ele exibe o `Level`(em document.body) e permite que o usuário peça por ele. Quando o `Level` está terminado(perda ou ganho), `Level` de execução, limpa o visor, para a animação e caso a função `andthen` for dada, chama essa função com o status do `Level`.
 
-````js
+```js
 var arrows = trackKeys(arrowCodes);
 
 function runLevel(level, Display, andThen) {
@@ -675,11 +675,11 @@ function runLevel(level, Display, andThen) {
     }
   });
 }
-````
+```
 
 Um jogo é uma sequência de `Level`. Sempre que o jogador morre o `Level` atual é reiniciado. Quando um `Level` é concluído vamos passar para o próximo `Level`. Isso pode ser expresso pela seguinte função o que leva um conjunto de planos de `Level`(arrays de strings) e um construtor de exibição:
 
-````js
+```js
 function runGame(plans, Display) {
   function startLevel(n) {
     runLevel(new Level(plans[n]), Display, function(status) {
@@ -693,7 +693,7 @@ function runGame(plans, Display) {
   }
   startLevel(0);
 }
-````
+```
 
 Estas funções mostram um estilo peculiar de programação. Ambos `runAnimation` e `Level` de execução são funções de ordem superior, mas não são no estilo que vimos no capítulo 5. O argumento da função é usado para organizar as coisas para acontecer em algum momento no futuro e nenhuma das funções retorna alguma coisa útil. A sua tarefa é de certa forma, agendar ações. Envolvendo estas ações em funções nos dá uma maneira de armazená-las com um valor de modo que eles podem ser chamados no momento certo.
 
@@ -701,7 +701,7 @@ Este estilo de programação geralmente é chamado de programação assíncrona.
 
 Há um conjunto de planos de `Level` disponíveis na variável `GAME_LEVELS`. Esta página alimenta `runGame`, começando um jogo real:
 
-````html
+```html
 <link rel="stylesheet" href="css/game.css">
 
 <body>
@@ -709,7 +709,7 @@ Há um conjunto de planos de `Level` disponíveis na variável `GAME_LEVELS`. Es
     runGame(GAME_LEVELS, DOMDisplay);
   </script>
 </body>
-````
+```
 
 Veja se você pode vencer. Aqui eu espero vários `Level` construídos.
 
@@ -718,7 +718,7 @@ Veja se você pode vencer. Aqui eu espero vários `Level` construídos.
 É tradicional para jogos de plataforma ter o início do jogador com um número limitado de vidas e subtrair uma vida cada vez que ele morre. Quando o jogador está sem vidas, o jogo será reiniciado desde o início.
 Ajuste `runGame` para implementar as três vidas ao iniciar.
 
-````html
+```html
 <link rel="stylesheet" href="css/game.css">
 
 <body>
@@ -740,7 +740,7 @@ Ajuste `runGame` para implementar as três vidas ao iniciar.
   runGame(GAME_LEVELS, DOMDisplay);
 </script>
 </body>
-````
+```
 
 **Dica**
 
@@ -760,7 +760,7 @@ A interface `runAnimation` não pode se reponsabilizar por isso à primeira vist
 
 Quando você tem que trabalhar não há outra coisa que você pode tentar. O caminho que temos vindo a registrar manipuladores de eventos de teclas é um pouco problemático. O objeto `keys` é uma variável global e seus manipuladores de eventos são mantidas ao redor mesmo quando nenhum jogo está sendo executado. Pode-se dizer que isso pode vazar para fora do nosso sistema. Estender `trackKeys` nos da uma maneira de fornecer o cancelamento do registro e de seus manipuladores e em seguida mudar a execução do `Level` para registrar seus tratadores quando começa e cancela o registro novamente quando ele for concluído.
 
-````html
+```html
 <link rel="stylesheet" href="css/game.css">
 
 <body>
@@ -782,7 +782,7 @@ Quando você tem que trabalhar não há outra coisa que você pode tentar. O cam
   runGame(GAME_LEVELS, DOMDisplay);
 </script>
 </body>
-````
+```
 
 **Dicas**
 

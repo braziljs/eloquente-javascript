@@ -109,25 +109,25 @@ Content-Length: 95
             "deleted": true}]}
 ```
 
-Quando a palestra é alterada, criada recentemente ou tem um comentário adicionado; a representação completa da palestra estara incluída na próxima resposta de solicitação na busca do cliente. Quando a palestra é excluída somente o seu título é a propriedade que estara incluída. O cliente pode então adicionar os títulos das palestras que não estão sendo exibido na página, atualizar as que ja estão sendo exibida ou remover aquelas que foram excluídas.
+Quando a palestra é alterada, criada ou tem um comentário adicionado; a representação completa da palestra estará incluída na próxima resposta de solicitação que o cliente busca. Quando a palestra é excluída, somente o seu título e a propriedade que será excluida da onde ela estará incluída. O cliente pode então adicionar os títulos das palestras que não estão sendo exibidas na página, atualizar as que ja estão sendo exibidas ou remover aquelas que foram excluídas.
 
-O protocolo descrito neste capítulo não ira fazer qualquer controle de acesso. Todos podem comentar, modificar a palestras e até mesmo excluir. Uma vez que a Internet está cheia de arruaceiros ao colocarmos um sistema on-line sem proteção adicional é provável que acabe em um desastre.
+O protocolo descrito neste capítulo não irá fazer qualquer controle de acesso. Todos podem comentar, modificar a palestras e até mesmo excluir. Uma vez que a Internet está cheia de arruaceiros ao colocarmos um sistema on-line sem proteção adicional é provável que acabe em um desastre.
 
-Uma solução simples seria colocar um sistema de proxy reverso por trás, que é um servidor HTTP que aceita conexões de fora do sistema e os encaminha para servidores HTTP que estão sendo executados localmente. O proxy pode ser configurado para exigir um nome de usuário e senha, você pode ter certeza de que somente os participantes do grupo de compartilhamento de habilidade teram essa senha.
+Uma solução simples seria colocar um sistema de `proxy` reverso por trás, sendo ele um servidor `HTTP` que aceita conexões de fora do sistema e os encaminha para servidores `HTTP` que estão sendo executados localmente. O `proxy` pode ser configurado para exigir um nome de usuário e senha, você pode ter certeza de que somente os participantes do grupo de compartilhamento de habilidade tenham essa senha.
 
 #### O serviço
 
-Vamos começar a escrever código do lado do servidor. O código desta seção é executado em Node.js.
+Vamos começar a escrever código do lado do servidor. O código desta seção é executado em `Node.js`.
 
 #### Roteamento
 
-O nosso servidor irá utilizar `http.createServer` para iniciar um servidor de HTTP. Na função que lida com um novo pedido, iremos distinguir entre os vários tipos de solicitações(conforme determinado pelo método e o `path`) que suportamos. Isso pode ser feito com uma longa cadeia de `if` mas há uma maneira mais agradável.
+O nosso servidor irá utilizar `http.createServer` para iniciar um servidor `HTTP`. Na função que lida com um novo pedido, iremos distinguir entre os vários tipos de solicitações (conforme determinado pelo método e o `path`) que suportamos. Isso pode ser feito com uma longa cadeia de `if` mas há uma maneira mais agradável.
 
-As rotas é um componente que ajuda a enviar uma solicitação através de uma função. Você pode dizer para as rotas que os pedidos combine com um `path` usando expressão regular `/^\/talks\/([^\/]+)$/`(que corresponde a `/talks/` seguido pelo título) para tratar por uma determinada função. Isso pode ajudar a extrair as partes significativas de um `path`, neste caso o título da palestra, que estara envolto entre os parênteses na expressão regular, após disto é passado para o manipulador de função.
+As rotas é um componente que ajuda a enviar uma solicitação através de uma função. Você pode dizer para as rotas que os pedidos combine com um `path` usando expressão regular `/^\/talks\/([^\/]+)$/` (que corresponde a `/talks/` seguido pelo título) para tratar por uma determinada função. Isso pode ajudar a extrair as partes significativas de um `path`, neste caso o título da palestra, que estará envolto entre os parênteses na expressão regular, após disto é passado para o manipulador de função.
 
-Há uma série de bons pacotes de roteamento na NPM mas vamos escrever um nós mesmos para ilustrar o princípio.
+Há uma série de bons pacotes de roteamento na `NPM` mas vamos escrever um nós mesmos para ilustrar o princípio.
 
-Este é `router.js` que exigirá mais tarde do nosso módulo do servidor:
+Este é `router.js` que exigirá mais tarde do nosso módulo de servidor:
 
 ```js
 var Router = module.exports = function() {
@@ -158,7 +158,7 @@ Router.prototype.resolve = function(request, response) {
 
 O módulo exporta o construtor de `Router`. Um objeto de `Router` permite que novos manipuladores sejam registados com o método `add` e resolver os pedidos com o método `resolve`.
 
-Este último irá retornar um `booleano` que indica se um manipulador foi encontrado. Há um método no conjunto de rotas que tenta uma rota de cada vez(na ordem em que elas foram definidos) e retorna a verdadeira quando alguma for correspondida.
+Este último irá retornar um `booleano` que indica se um manipulador foi encontrado. Há um método no conjunto de rotas que tenta uma rota de cada vez (na ordem em que elas foram definidos) e retorna a verdadeira quando alguma for correspondida.
 
 As funções de manipulação são chamadas com os objetos de solicitação e resposta. Quando algum grupo da expressão regular corresponder a uma URL, as `string` que correspondem são passadas para o manipulador como argumentos extras. Essas sequências tem que ser uma URL decodificada tendo a URL codificada assim `%20-style code`.
 
@@ -166,7 +166,7 @@ As funções de manipulação são chamadas com os objetos de solicitação e re
 
 Quando um pedido não corresponde a nenhum dos tipos de solicitação que esta sendo definidos em nosso `router` o servidor deve interpretar como sendo um pedido de um arquivo que esta no diretório público. Seria possível usar o servidor de arquivos feito no Capítulo 20 para servir esses arquivos; nenhuma destas solicitações sera do tipo `PUT` e `DELETE`, nós gostaríamos de ter recursos avançados como suporte para armazenamento em cache. Então vamos usar um servidor de arquivo estático a partir de uma NPM.
 
-Optei por `ecstatic`. Este não é o único tipo de servidor NPM, mas funciona bem e se encaixa para nossos propósitos. O módulo de `ecstatic` exporta uma função que pode ser chamado com um objeto de configuração para produzir uma função de manipulação de solicitação. Nós usamos a opção `root` para informar ao servidor onde ele devera procurar pelos arquivos. A função do manipulador aceita solicitação e resposta através de parâmetros e pode ser passado diretamente para `createServer` onde é criado um servidor que serve apenas arquivos. Primeiro verificamos se na solicitações não ha nada de especial, por isso envolvemos em uma outra função.
+Optei por `ecstatic`. Este não é o único tipo de servidor NPM, mas funciona bem e se encaixa para nossos propósitos. O módulo de `ecstatic` exporta uma função que pode ser chamada com um objeto de configuração para produzir uma função de manipulação de solicitação. Nós usamos a opção `root` para informar ao servidor onde ele devera procurar pelos arquivos. A função do manipulador aceita solicitação e resposta através de parâmetros que pode ser passado diretamente para `createServer` onde é criado um servidor que serve apenas arquivos. Primeiro verificamos se na solicitações não ha nada de especial, por isso envolvemos em uma outra função.
 
 ```js
 var http = require("http");
@@ -182,7 +182,7 @@ http.createServer(function(request, response) {
 }).listen(8000);
 ```
 
-`response` e `respondJSON` serão funções auxiliaras utilizadas em todo o código do server para ser capaz de enviar as respostas com uma única chamada de função.
+`response` e `respondJSON` serão funções auxiliares utilizadas em todo o código do servidor para ser capaz de enviar as respostas com uma única chamada de função.
 
 ```js
 function respond(response, status, data, type) {

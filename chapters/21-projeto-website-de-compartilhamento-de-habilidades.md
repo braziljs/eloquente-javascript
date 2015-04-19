@@ -200,7 +200,7 @@ function respondJSON(response, status, data) {
 
 #### Recursos da palestras
 
-O servidor mantém as palestras que têm sido propostas em um objeto chamado `talks`, cujos os títulos são propriedades de nomes de uma palestra. Estes serão expostos como recursos HTTP sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementara vários métodos que podem serem utilizados pelo os clientes.
+O servidor mantém as palestras que têm sido propostas em um objeto chamado `talks`, cujos os títulos são propriedades de nomes de uma palestra. Estes serão expostos como recursos `HTTP` sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementaram vários métodos que podem serem utilizados pelo o cliente.
 
 O manipulador de solicitações serve uma única resposta, quer seja alguns dados do tipo `JSON` da palestra, uma resposta de 404 ou um erro.
 
@@ -216,7 +216,7 @@ router.add("GET", /^\/talks\/([^\/]+)$/,
 });
 ```
 
-A exclusão de um `talk` é feito para remove-lo do objeto palestras.
+A exclusão de um `talk` é feito para remove-la do objeto de `talks`.
 
 ```js
 router.add("DELETE", /^\/talks\/([^\/]+)$/,
@@ -229,9 +229,9 @@ router.add("DELETE", /^\/talks\/([^\/]+)$/,
 });
 ```
 
-A função `registerChange` que iremos definir; notifica alterações enviando uma solicitação de log polling ou simplemente espera.
+A função `registerChange` que iremos definir; notifica alterações enviando uma solicitação de `long polling` ou simplemente espera.
 
-Para ser capaz de obter facilmente o conteúdo do `body` de uma solicitação de  `JSON` codificado teremos que definir uma função chamada `readStreamAsJSON` que lê todo o conteúdo de um `stream`, analisa o `JSON` e em seguida chama uma função de retorno.
+Para ser capaz de obter facilmente o conteúdo do `body` de uma solicitação de  `JSON`, teremos que definir uma função chamada `readStreamAsJSON` que lê todo o conteúdo de um `stream`, analisa o `JSON` e em seguida chama uma função de retorno.
 
 ```js
 function readStreamAsJSON(stream, callback) {
@@ -251,9 +251,9 @@ function readStreamAsJSON(stream, callback) {
 }
 ```
 
-Um manipulador que precisa ler respostas JSON é o manipulador `PUT` que é usado para criar novas palestras. Nesta `request` devemos verificar se os dados enviados tem um apresentador e o título nas propriedades ambos so tipo strings. Quaisquer dados que vêm de fora do sistema pode conter erros e nós não queremos corromper o nosso modelo de dados interno ou mesmo travar quando os pedidos ruins entrarem.
+Um manipulador que precisa ler respostas JSON é o manipulador `PUT` que é usado para criar novas palestras. Nesta `request` devemos verificar se os dados enviados tem um apresentador e o título como propriedades ambos do tipo `String`. Quaisquer dados que vêm de fora do sistema pode conter erros e nós não queremos corromper o nosso modelo de dados interno ou mesmo travar quando os pedidos ruins entrarem.
 
-Se os dados se parece válido o manipulador armazena um objeto que representa uma nova palestra no objeto, possivelmente substituindo uma palestra existente com este título e mais uma vez chama `registerChange`.
+Se os dados se parecem válidos o manipulador armazena-os em um novo objeto que representa uma nova palestra no objeto `talks`, possivelmente substituindo uma palestra que já exista com este título e mais uma vez chama `registerChange`.
 
 ```js
 router.add("PUT", /^\/talks\/([^\/]+)$/,
@@ -304,9 +304,9 @@ Ao tentar adicionar um comentário a uma palestra inexistente é claro que devem
 
 #### Apoio a long polling
 
-O aspecto mais interessante do servidor é a parte que trata de `long polling`. Quando uma requisição GET chega para `/talks` pode ser um simples pedido de todas as palestras ou um pedido de atualização com um parâmetro `changesSince`.
+O aspecto mais interessante do servidor é a parte que trata de `long polling`. Quando uma requisição `GET` chega para `/talks` pode ser um simples pedido de todas as palestras ou um pedido de atualização com um parâmetro `changesSince`.
 
-Haverá várias situações em que teremos que enviar uma lista de palestra para o cliente de modo que primeiro devemos definir uma pequena função auxiliar que atribuira um campo `servertime` para tais respostas.
+Haverá várias situações em que teremos que enviar uma lista de palestra para o cliente de modo que primeiro devemos definir uma pequena função auxiliar que atribuirá um campo `servertime` para tais respostas.
 
 ```js
 function sendTalks(talks, response) {
@@ -317,7 +317,7 @@ function sendTalks(talks, response) {
 }
 ```
 
-O manipulador precisa olhar para os parâmetros de consulta da URL do pedido para ver se um parâmetro `changesSince` foi dado. Se você entregar a `url` para o módulo da função `parse` teremos um segundo argumento que sera `true`; também teremos que analisar parte por parte de uma URL. Se o objeto que ele retornou tem uma propriedade `query` matemos o outro objeto que mapeia os parâmetros de nomes para os valores.
+O manipulador precisa olhar para os parâmetros de consulta da URL do pedido para ver se o parâmetro `changesSince` foi enviado. Se você entregar a `url` para o módulo da função `parse` teremos um segundo argumento que será `true`; também teremos que analisar parte por parte de uma URL. Se o objeto que ele retornou tem uma propriedade `query` removemos o outro objeto que mapeia os parâmetros de nomes para os valores.
 
 ```js
 router.add("GET", /^\/talks$/, function(request, response) {
@@ -344,7 +344,7 @@ router.add("GET", /^\/talks$/, function(request, response) {
 
 Quando o parâmetro `changesSince` não é enviado, o manipulador simplesmente acumula uma lista de todas as palestras e retorna.
 
-Caso contrário o parâmetro `changeSince` tem que ser verificado primeiro para certificar de que é um número válido. A função `getChangedTalks` a ser definido em breve retorna um `array` de palestras que mudaram desde um determinado tempo. Se retornar um `array` vazio significa que o servidor ainda não tem nada para armazenar no objeto de resposta e retorna de volta para o cliente(usando `waitForChanges`), o que pode também ser respondida em um momento posterior.
+Caso contrário o parâmetro `changeSince` tem que ser verificado primeiro para certificar-se de que é um número válido. A função `getChangedTalks` a ser definido em breve retorna um `array` de palestras que mudaram desde um determinado tempo. Se retornar um `array` vazio significa que o servidor ainda não tem nada para armazenar no objeto de resposta e retorna de volta para o cliente (usando `waitForChanges`), o que pode também ser respondida em um momento posterior.
 
 ```js
 var waiting = [];
@@ -362,11 +362,11 @@ function waitForChanges(since, response) {
 }
 ```
 
-O método `splice` é utilizado para cortar um pedaço de um `array` `array`. Você dá um índice e uma série de elementos para transforma é um `array` removendo o restante dos elementos após o índice dado. Neste caso nós removemos um único elemento do objeto que controla a resposta de espera cujo índice encontramos pelo `indexOf`. Se você passar argumentos adicionais para `splice` seus valores serão inseridas no `array` na posição determinada substituindo os elementos removidos.
+O método `splice` é utilizado para cortar um pedaço de um `array`. Você dá um índice e uma série de elementos para transforma é um `array` removendo o restante dos elementos após o índice dado. Neste caso nós removeremos um único elemento do objeto que controla a resposta de espera cujo índice encontramos pelo `indexOf`. Se você passar argumentos adicionais para `splice` seus valores serão inseridas no `array` na posição determinada substituindo os elementos removidos.
 
-Quando um objeto de resposta é armazenado no `array` de espera o tempo de espera é ajustado imediatamente. Passados 90 segundos o tempo limite vê se o pedido está ainda à espera e se estiver ele envia uma resposta vazia e remove a espera a partir do `array`.
+Quando um objeto de resposta é armazenado no `array` de espera o tempo é ajustado imediatamente. Determinamos 90 segundos para ser o tempo limite do pedido, caso ele ainda estiver a espera ele envia uma resposta de `array` vazio e remove a espera.
 
-Para ser capaz de encontrar exatamente essas palestras que foram alterados desde um determinado tempo precisamos acompanhar o histórico de alterações. Registrando uma mudança com `registerChange`, podemos escutar as mudança juntamente com o tempo atual do `array` chamado de `waiting`. Quando ocorre uma alteração isso significa que há novos dados, então todos os pedidos em espera podem serem respondidos imediatamente.
+Para ser capaz de encontrar exatamente essas palestras que foram alterados desde um determinado tempo precisamos acompanhar o histórico de alterações. Registrando a mudança com `registerChange`, podemos escutar as mudança juntamente com o tempo atual do `array` chamado de `waiting`. Quando ocorre uma alteração isso significa que há novos dados, então todos os pedidos em espera podem serem respondidos imediatamente.
 
 ```js
 var changes = [];
@@ -380,7 +380,7 @@ function registerChange(title) {
 }
 ```
 
-Finalmente `getChangedTalks` podera usar o `array` de mudanças para construir uma série de palestras alteradas, incluindo no objetos uma propriedade de `deleted` para as palestras que não existem mais. Ao construir esse `array`, `getChangedTalks` tem de garantir que ele não incluiu a mesma palestra duas vezes; isso pode acontecer se houver várias alterações em uma palestra desde o tempo dado.
+Finalmente `getChangedTalks` poderá usar o `array` de mudanças para construir uma série de palestras alteradas, incluindo no objetos uma propriedade de `deleted` para as palestras que não existem mais. Ao construir esse `array`, `getChangedTalks` tem de garantir que ele não incluiu a mesma palestra duas vezes; isso pode acontecer se houver várias alterações em uma palestra desde o tempo dado.
 
 ```js
 function getChangedTalks(since) {
@@ -403,7 +403,7 @@ function getChangedTalks(since) {
 }
 ```
 
-Aqui concluimos o código do servidor. Executando o programa definido até agora você vai ver um servidor rodando na porta `8000` que serve arquivos do subdiretório `public` ao lado de uma interface de gerenciamento de palestras sob a URL `/talks`.
+Aqui concluimos o código do servidor. Executando o programa definido até agora você vai ter um servidor rodando na porta `8000` que serve arquivos do subdiretório `public` ao lado de uma interface de gerenciamento de palestras sob a URL `/talks`.
 
 #### O cliente
 

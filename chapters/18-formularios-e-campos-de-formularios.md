@@ -94,10 +94,8 @@ Para algumas páginas, espera-se que o usuário interaja com um campo de formul�
 Navegadores tradicionais também permitem que  o usuário mova o foco através do documento pressionando a tecla [Tab]. Nós podemos influenciar a ordem na qual os elementos recebem o focus com o atributo `tabindex`. Seguindo o exemplo do documento vai pular o foco do input text para o botão OK em vez de passar em primeiro pelo link de help.
 
 ```html
-
 <input type="text" tabindex=1> <a href=".">(help)</a>
 <button onclick="console.log('ok')" tabindex=2>OK</button>
-
 ```
 Por padrão, a maioria dos tipos de elementos HTML não podem ser focado. Mas você pode adicionar um atributo `tabindex` a qualquer elemento, o que tornará focalizável.
 
@@ -126,6 +124,7 @@ O atributo `name` de um campo de formulário determina como seu valor será iden
     <button type="submit">Log in</button>
   </form>
 ```  
+
 ```javascript  
 var form = document.querySelector("form");
 console.log(form.elements[1].type);
@@ -134,7 +133,6 @@ console.log(form.elements.password.type);
 // → password
  console.log(form.elements.name.form == form);
 // → true
-
 ```
 Um botão com um atributo type do submit, quando pressionado, faz com que o formulário seja enviado. Pressionando Enter quando um campo de formulário é focado tem alguns efeitos.
 
@@ -147,14 +145,13 @@ O envio de um formulário normalmente significa que o navegador navega para a p�
   <button type="submit">Save</button>
 </form>
 ```
-```javascript
 
+```javascript
   var form = document.querySelector("form");
   form.addEventListener("submit", function(event) {
     console.log("Saving value", form.elements.value.value);
     event.preventDefault();
   });
-
 ```
 Interceptar eventos _submit_ em JavaScript tem vários usos. Podemos escrever código para verificar se o valores que o usuário digitou faz sentido imediatamente mostrar uma mensagem de erro, em vez de enviar o formulário. Ou nós podemos desabilitar o modo regular de enviar o formulário por completo, como no exemplo anterior, temos o nosso programa que manipula o `input`, possivelmente usando _XMLHttRequest_ para enviá-lo para um servidor sem recarregar a página.
 
@@ -165,13 +162,11 @@ Campos criados pela tag `<input>` com um tipo de text ou password, bem como uma 
 As propriedades `selectionEnd e `selectionEnd` de campos de texto nos dão informações sobre o curso e seleção do texto. Quando não temos nada selecionado, estas duas propriedades tem o mesmo número o que indica a posição do cursor. Por exemplo, 0 indica o início do texto, e 10 indica o curso está após o décimo caractere. Quando uma parte do campo é selecionada as duas propriedades serão diferentes, nos dando o final e inicio do texto selecionado. Essas propriedades também podem ser gravadas como valores.
 
 
-Como exemplo, imagine que você está escrevendo um artigo sobre Khasekhemwy, mas tem alguns problemas para soletrar o seu nome. As seguintes linhas de código até a tag <textarea>  com um manipulador de eventos que, quando você pressionar F2, a string "Khasekhemwy" é inserida para você. 
+Como exemplo, imagine que você está escrevendo um artigo sobre Khasekhemwy, mas tem alguns problemas para soletrar o seu nome. As seguintes linhas de código até a tag `<textarea>`  com um manipulador de eventos que, quando você pressionar F2, a string "Khasekhemwy" é inserida para você. 
 
-```html
-<textarea></textarea>
-```
+`< textarea > < / textarea >`
+
 ```javascript
-
   var textarea = document.querySelector("textarea");
   textarea.addEventListener("keydown", function(event) {
     // The key code for F2 happens to be 113
@@ -201,16 +196,14 @@ digitar um caractere, exclui do texto, ou de outra forma manipula o conteúdo do
 O exemplo a seguir mostra um campo de texto e um contador que mostra o comprimento atual do texto inserido:
 
 
-```html
-<input type="text"> length: <span id="length">0</span>
-```
+`< input type="text" > length: < span id="length" >0< / span >`
+
 ```javascript
   var text = document.querySelector("input");
   var output = document.querySelector("#length");
   text.addEventListener("input", function() {
     output.textContent = text.value.length;
   });
-
 ```
 
 ## Checkboxes e radio buttons
@@ -219,11 +212,8 @@ Um Checkbox é uma alternância binária simples. Seu valor pode ser extraído o
 propriedade checked, que tem um valor booleano.
 
 
-
-```html
-<input type="checkbox" id="purple">
-<label for="purple">Make this page purple</label>
-```
+`<input type="checkbox" id="purple">` 
+`<label for="purple">Make this page purple</label>`
 
 ```javascript  
 var checkbox = document.querySelector("#purple");
@@ -247,6 +237,7 @@ Color:
 <input type="radio" name="color" value="lightgreen"> Green
 <input type="radio" name="color" value="lightblue"> Blue
 ```
+
 ```javascript
 
 var buttons = document.getElementsByName("color");
@@ -266,10 +257,10 @@ como este, que será chamado em diferentes elementos e precisa de alguma forma d
 
 Os campos select são conceitualmente similares aos radio buttons, eles também permitem que o usuário escolha a
 partir de um conjunto de opções. Mas onde um botão de opção coloca a disposição das opções sob o nosso controle,
-a aparência de uma tag <select>  é determinada pelo browser.
+a aparência de uma tag `<select>`  é determinada pelo browser.
 
 Campos select também têm uma variante que é mais parecido com uma lista de checkboxes, em vez de radio 
-boxes. Quando dado o atributo múltiplo, um <select> tag vai permitir que o usuário selecione qualquer número 
+boxes. Quando dado o atributo múltiplo, um `<select>` tag vai permitir que o usuário selecione qualquer número 
 de opções, em vez de apenas uma única opção.
 
 ```html
@@ -285,17 +276,17 @@ de opções, em vez de apenas uma única opção.
 Isto, na maioria dos navegadores, mostra-se diferente do que um campo select não-múltiplo, que é comumente desenhado 
 como um controle _drop-down_ que mostra as opções somente quando você abrir.
 
-O atributo _size_ da tag <select>  é usada para definir o número de opções que são visíveis ao mesmo tempo, 
+O atributo _size_ da tag `<select>`  é usada para definir o número de opções que são visíveis ao mesmo tempo, 
 o que lhe dá o controle sobre a aparência do _drop-down_. Por exemplo, 
 definir o atributo _size_ para "3" fará com que o campo mostre três linhas, se ele tem a opção de `multiple` habilitado 
 ou não.
 
-Cada tag <option>  tem um valor. Este valor pode ser definido com um atributo de value, mas quando isso não for dado,
+Cada tag `<option>`  tem um valor. Este valor pode ser definido com um atributo de value, mas quando isso não for dado,
 o texto dentro do `option` irá contar como o valor do `option`.
-O valor da propriedade de um elemento <select> reflete a opção selecionada no momento. Para um campo `multiple`, porém,
+O valor da propriedade de um elemento `<select>` reflete a opção selecionada no momento. Para um campo `multiple`, porém,
 esta propriedade não significa muito, uma vez que vai possuir o valor apenas uma das opções escolhidas no momento.
 
-As tags `<option>` de um campo <select> pode ser acessada como um objeto de array-like através de opções
+As tags `<option>` de um campo `<select>` pode ser acessada como um objeto de array-like através de opções
 propriedade do campo. Cada opção tem uma propriedade chamada selected, o que indica se essa opção for selecionada.
 A propriedade também pode ser escrita para marcar ou desmarcar uma opção.
 
@@ -362,10 +353,10 @@ O que ele não tem é uma propriedade que contém o conteúdo do arquivo. Como  
 Desde a leitura de um arquivo do disco pode levar tempo, a interface terá de ser assíncrona para evitar 
 o congelamento do documento. Você pode pensar o construtor _FileReader_ como sendo semelhante a _XMLHttpRequest_, mas para arquivos.
 
-
 ```html
 <input type="file" multiple>
 ```
+
 ```javascript
   var input = document.querySelector("input");
   input.addEventListener("change", function() {
@@ -442,7 +433,7 @@ das pessoas com lixo não é realmente viável, impede esse recurso de ocupar mu
 
 O código a seguir implementa uma simples aplicação de anotações. Ele mantém notas do usuário como um objeto, 
 associando títulos de notas com strings de conteúdo. Este objeto é codificado como JSON e armazenados em 
-localStorage. O usuário pode selecionar uma nota de um campo <select> e mudar o texto  da nota em um <textarea>.
+localStorage. O usuário pode selecionar uma nota de um campo `<select>` e mudar o texto  da nota em um `<textarea>`.
 A nota pode ser adicionado clicando em um botão.
 
 Notes: 
@@ -549,7 +540,6 @@ erro que é elevado,em uma string e exibi-lo depois de o campo de texto.
   <script>
     // Your code here.
   </script>
-
 ```
 
 Use `document.querySelector` ou `document.getElementById` para ter acesso aos elementos definidos em seu HTML.
@@ -590,7 +580,7 @@ foi digitado. Quando uma sugestão é clicada, substitua o valor atual do campo 
 O melhor evento para a atualização da lista de sugestões é "`input`", uma vez que será acionado imediatamente 
 quando o conteúdo do campo é alterado.
 
-Em seguida, um loop por meio do array de termos e ver se eles começam com a string dada. Por exemplo, você poderia chamar `indexOf` e ver se o resultado é zero. Para cada seqüência correspondente, adicionar um elemento para as sugestões <div>. Você deve, provavelmente,  cada vez que você inicia começar vazio e atualizar as sugestões, por exemplo, definindo sua textContent para a string vazia.
+Em seguida, um loop por meio do array de termos e ver se eles começam com a string dada. Por exemplo, você poderia chamar `indexOf` e ver se o resultado é zero. Para cada seqüência correspondente, adicionar um elemento para as sugestões `<div>`. Você deve, provavelmente,  cada vez que você inicia começar vazio e atualizar as sugestões, por exemplo, definindo sua textContent para a string vazia.
 
 Você poderia adicionar um manipulador de evento "`click`" [para cada elemento  ou adicionar um único para
 fora `<div>` que prende-los e olhar para a propriedade target do evento para descobrir qual sugestão foi 
@@ -622,11 +612,10 @@ com um botão ao lado dele para avançar para a próxima geração. Quando os co
 ou desmarca as checkboxes , as alterações devem ser incluídos no cálculo a próxima geração.
 
 ```html
-
 <div id="grid"></div>
 <button id="next">Next generation</button>
-
 ```
+
 ```js
 <script>
   // Your code here.
@@ -641,7 +630,7 @@ Representando a grade pode ser feito em qualquer das formas mostradas nos capít
 vivos podem ser feitas com dois loops aninhados, percorrer coordenadas adjacentes. Tome cuidado para não contar
 as células fora do campo e ignorar o celular no centro, cujos vizinhos estamos contando.
 
-Fazer alterações em checkboxes em vigor na próxima geração pode ser feito de duas maneiras. Um manipulador 
+Fazer alterações em check-boxes em vigor na próxima geração pode ser feito de duas maneiras. Um manipulador 
 de eventos pode perceber essas alterações e atualizar a grade atual para refleti-los, ou você poderia gerar 
 uma nova grade a partir dos valores nas caixas de seleção antes de calcular o próximo turno.
 

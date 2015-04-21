@@ -411,9 +411,9 @@ A parte do cliente é onde vamos gerenciar as palestras, basicamente isso consis
 
 #### HTML
 
-Servir arquivos com o nome de `index.html` é uma convenção amplamente utilizado para servidores web quando uma solicitação é feita diretamente de um `path` que corresponde a um diretório. O módulo de um servidor de arquivos que usamos, o `ecstatic`, suporta esta convenção. Quando um pedido é feito para o `path` `/` o servidor procura pelo arquivo em `./public/index.html`(`./public` é a raiz que especificamos) e retorna esse arquivo se for encontrado.
+Servir arquivos com o nome de `index.html` é uma convenção amplamente utilizado para servidores web quando uma solicitação é feita diretamente de um `path`, onde corresponde a um diretório. O módulo de servidor de arquivos que usamos foi o `ecstatic`, ele suporta esta convenção. Quando um pedido é feito para o `path` `/` o servidor procura pelo arquivo em `./public/index.html` (`./public` é a raiz que especificamos) e retorna esse arquivo se for encontrado.
 
-Se quisermos uma página para mostrar quando um navegador está apontado para o nosso servidor, devemos coloca-la em `public/index.html`. Esta é a maneira que o nosso arquivo `index` começa:
+Se quisermos uma página para mostrar quando um navegador estiver apontado para o nosso servidor devemos coloca-lá em `public/index.html`. Esta é a maneira que o nosso arquivo `index` irá começar:
 
 ```html
 <!doctype html>
@@ -428,9 +428,9 @@ Se quisermos uma página para mostrar quando um navegador está apontado para o 
 <div id="talks"></div>
 ```
 
-Ele define o título do documento e inclui uma folha de estilo que define alguns estilos, adicionei uma borda em torno de palestras. Em seguida ele adiciona um `input` de nome. É esperado que o usuário coloque seu nome para que ele possa ser redirecionado para a observação das palestras.
+Ele define o título do documento e inclui uma folha de estilo que define alguns estilos, adicionei uma borda em torno das palestras. Em seguida ele adiciona um `input` de nome; onde é esperado que o usuário coloque seu nome para que ele possa ser redirecionado para a observação das palestras.
 
-O elemento `<div>` com o `id` "talks" conterá a lista atual de todas as palestras. O script preenche a lista quando recebe as palestras do servidor.
+O elemento `<div>` com o `id "talks"` conterá a lista atual de todas as palestras. O `script` preenche a lista quando recebe as palestras do servidor.
 
 Segue o formulário que é usado para criar uma nova palestra:
 
@@ -444,9 +444,9 @@ Segue o formulário que é usado para criar uma nova palestra:
 </form>
 ```
 
-Um script irá adicionar um manipulador de evento `"submit"`  para este formulário, a partir do qual ele pode fazer a solicitação HTTP que informa ao servidor sobre a palestra.
+Um `script` irá adicionar um manipulador de evento `"submit"`  para este formulário, a partir do qual ele fará a solicitação `HTTP` que informará ao servidor sobre a palestra.
 
-Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição definido como `none`, impedindo que ele apareça na página. Você consegue adivinhar para o que é?
+Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição definido como `none`, impedindo que ele apareça na página. Você consegue adivinhar para o que serve?
 
 ```html
 <div id="template" style="display: none">
@@ -467,11 +467,11 @@ Em seguida, vem um bloco bastante misterioso, que tem seu estilo de exibição d
 </div>
 ```
 
-Criar estruturas de DOM com JavaScript é complicado e produz um código feio. Você pode tornar o código um pouco melhor através da introdução de funções auxiliares como a função `elt` do capítulo 13, mas o resultado ainda vai ficar pior do que no HTML, que foi pensado como uma linguagem de domínio específico para expressar estruturas DOM.
+Criar estruturas de DOM com JavaScript é complicado e produz um código feio. Você pode tornar o código um pouco melhor através da introdução de funções auxiliares como a função `elt` do capítulo 13, mas o resultado  vai ficar ainda pior do que no HTML que foi pensado como uma linguagem de domínio específico para expressar estruturas do DOM.
 
-Para criar uma estrutura DOM para as palestras, o nosso programa vai definir um sistema de `templates` simples que utiliza estruturas DOM escondidos incluídos no documento para instanciar novas estruturas DOM, substituindo os espaços reservados entre chaves duplas para os valores de uma palestra específica.
+Para criar uma estrutura DOM para as palestras, o nosso programa vai definir um sistema de `templates` simples que utiliza estruturas incluídas no DOM que estejam escondidas no documento para instanciar novas estruturas, substituindo os espaços reservados entre chaves duplas para os valores de uma palestra em específico.
 
-Por fim, o documento HTML inclui um arquivo de `script` que contém o código do lado do cliente.
+Por fim, o documento `HTML` inclui um arquivo de `script` que contém o código do lado do cliente.
 
 ```html
 <script src="skillsharing_client.js"></script>
@@ -479,7 +479,7 @@ Por fim, o documento HTML inclui um arquivo de `script` que contém o código do
 
 #### O inicio
 
-A primeira coisa que o cliente tem que fazer quando a página é carregada é pedir ao servidor um conjunto atual de palestras. Uma vez que estamos indo fazer um monte de solicitações `HTTP`, vamos novamente definir um pequeno invólucro em torno `XMLHttpRequest` que aceita um objeto para configurar o pedido, bem como um callback para chamar quando o pedido for concluído.
+A primeira coisa que o cliente tem que fazer quando a página é carregada é pedir ao servidor um conjunto atual de palestras. Uma vez que estamos indo fazer um monte de solicitações `HTTP`, vamos novamente definir um pequeno invólucro em torno `XMLHttpRequest` que aceita um objeto para configurar o pedido, bem como um `callback` para chamar quando o pedido for concluído.
 
 ```js
 function request(options, callback) {
@@ -498,7 +498,7 @@ function request(options, callback) {
 }
 ```
 
-O pedido inicial mostra as palestras que recebe na tela e inicia o processo de `long polling` chamando `waitForChanges`.
+O pedido inicial mostra as palestras que recebeu na tela e inicia o processo de `long polling` chamando o método `waitForChanges`.
 
 ```js
 var lastServerTime = 0;
@@ -515,9 +515,9 @@ request({pathname: "talks"}, function(error, response) {
 });
 ```
 
-A variável `lastServerTime` é usado para controlar o tempo da última atualização que foi recebido do servidor. Após o pedido inicial as palestras exibidas pelo cliente corresponde ao tempo da resposta das palestras foi devolvida pelo servidor. Assim a propriedade `serverTime` incluído na resposta fornece um valor inicial apropriado para `lastServerTime`.
+A variável `lastServerTime` é usado para controlar o tempo da última atualização que foi recebido do servidor. Após o pedido inicial as palestras exibidas pelo cliente correspondem ao tempo da resposta das palestras que foram devolvidas pelo servidor. Assim a propriedade `serverTime` que foi incluída na resposta fornece um valor inicial apropriado para `lastServerTime`.
 
-Quando a solicitação falhar nós não queremos que a nossa página não faça nada sem explicação. Assim definimos uma função simples chamada de `reportError` que pelo menos irá mostra ao usuário uma caixa de diálogo que lhes diz que algo deu errado.
+Quando a solicitação falhar nós não queremos que a nossa página não faça nada sem explicação. Assim definimos uma função simples chamada de `reportError` que pelo menos irá mostra ao usuário uma caixa de diálogo que diz que algo deu errado.
 
 ```js
 function reportError(error) {
@@ -526,7 +526,7 @@ function reportError(error) {
 }
 ```
 
-A função verifica se existe um erro real, ele irá alertar somente quando houver um. Dessa forma podemos também passar diretamente esta função para solicitar pedidos onde podemos ignorar a resposta. Isso garante que se a solicitação falhar o erro é relatado para o usuário.
+A função verifica se existe um erro real, alertando somente quando houver. Dessa forma podemos passar diretamente esta função para solicitar pedidos onde podemos ignorar a resposta. Isso garante que se a solicitação falhar o erro será relatado ao usuário.
 
 #### Resultados das palestras
 

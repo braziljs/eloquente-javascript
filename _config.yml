@@ -3,7 +3,7 @@ title: "Eloquent Javascript"
 email: "randsonjs@gmail.com"
 description: "A portuguese translation of Eloquent JavaScript 2 edition by Marijn Haverbeke"
 baseurl: ""
-url: "http://eloquentjavascript.com.br"
+# url: "http://eloquentjavascript.com.br"
 
 # Build settings
 markdown: kramdown
@@ -18,4 +18,4 @@ permalink: /:title/
 
 sass:
     sass_dir: ./assets/sass
-    style: :compressed
+    # style: :compressed

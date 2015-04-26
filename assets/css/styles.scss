@@ -422,3 +422,30 @@ table {
         }
     }
 }
+@media screen and (max-width: 700px) {
+	article {
+		max-width: 100%;
+		padding: 1em 0.8em;
+	}
+	img {
+		margin-left: 0;
+	}
+}
+@media screen and (max-width: 600px) {
+	h3 {
+		top: -35px!important;
+		left: 0;
+	}
+	.cap-title {
+		margin-top: 40px;
+	}
+	pre, pre.cm-s-default, pre p {
+		margin: 0;
+		padding: 0;
+	}
+}
+@media screen and (max-width: 480px) {
+	img {
+		width: 100%;
+	}
+}

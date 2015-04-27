@@ -392,17 +392,17 @@ A tag `<link>` quando usado com `rel="stylesheet"` torna-se uma maneira de carre
 
 ## Movimento e colisão
 
-Agora estamos no ponto em que podemos começar a adicionar movimento que é um aspecto mais interessante do jogo. A abordagem básica tomada pela maioria dos jogos como este consiste em dividir o tempo em pequenos passos, e para cada etapa move os atores por uma distância correspondente a sua velocidade(distância percorrida por segundo) multiplicada pelo tamanho do passo em tempo(em segundos).
+Agora estamos no ponto em que podemos começar a adicionar movimento, que é um aspecto mais interessante do jogo. A abordagem básica tomada pela maioria dos jogos como este consiste em dividir o tempo em pequenos passos, e para cada etapa movemos os atores por uma distância correspondente a sua velocidade (distância percorrida por segundo), multiplicada pelo tamanho do passo em tempo (em segundos).
 
-Isto é fácil. A parte difícil é lidar com as interações entre os elementos. Quando o jogador atinge uma parede ou o chão eles não devem simplesmente se mover através deles. O jogo deve notar quando um determinado movimento faz com que um objeto bata sobre outro objeto e responder adequadamente. Para paredes o movimento deve ser interrompido. As moedas devem serem recolhidas e assim por diante.
+Isto é fácil. A parte difícil é lidar com as interações entre os elementos. Quando o jogador atinge uma parede ou o chão ele não devem simplesmente se mover através deles. O jogo deve notar quando um determinado movimento faz com que um objeto bata sobre outro objeto e responder adequadamente. Para paredes o movimento deve ser interrompido. As moedas devem serem recolhidas e assim por diante.
 
-Resolver este problema para o caso geral é uma grande tarefa. Você pode encontrar as bibliotecas, geralmente chamados de motores de física que simulam a interação entre os objetos físicos em duas ou três dimensões. Nós vamos ter uma abordagem mais modesta neste capítulo apenas manipularemos as colisões entre objetos retangulares e manusearemos de uma forma bastante simplista.
+Resolver este problema para o caso geral é uma grande tarefa. Você pode encontrar as bibliotecas, geralmente chamadas de motores de física, que simulam a interação entre os objetos físicos em duas ou três dimensões. Nós vamos ter uma abordagem mais modesta neste capítulo, apenas manipularemos as colisões entre objetos retangulares e manusearemos de uma forma bastante simplista.
 
-Antes de mover o jogador ou um bloco de lava, testamos se o movimento iria levá-la para dentro de uma parte não vazio de fundo. Se isso acontecer, nós simplesmente cancelamos o movimento por completo. A resposta a tal colisão depende do tipo de ator - o jogador vai parar, enquanto um bloco de lava se recupera.
+Antes de mover o jogador ou um bloco de lava, testamos se o movimento iria levá-los para dentro de uma parte não vazio de fundo. Se isso acontecer, nós simplesmente cancelamos o movimento por completo. A resposta a tal colisão depende do tipo de ator - o jogador vai parar, enquanto um bloco de lava se recupera.
 
-Essa abordagem requer alguns passos para termos uma forma reduzida, uma vez que o objeto que esta em movimento para antes dos objetos se tocarem. Se os intervalos de tempo(os movimentos dos passos) são muito grandes, o jogador iria acabar em uma distância perceptível acima do solo. A outra abordagem é indiscutivelmente melhor mas é mais complicado, que seria encontrar o local exato da colisão e se mudar para lá. Tomaremos uma abordagem simples de esconder os seus problemas, garantindo que a animação prossiga em pequenos passos.
+Essa abordagem requer alguns passos para termos uma forma reduzida, uma vez que o objeto que esta em movimento para antes dos objetos se tocarem. Se os intervalos de tempo (os movimentos dos passos) são muito grandes, o jogador iria acabar em uma distância perceptível acima do solo. A outra abordagem é indiscutivelmente melhor mas é mais complicada, que seria encontrar o local exato da colisão e se mudar para lá. Tomaremos uma abordagem simples de esconder os seus problemas, garantindo que a animação prossiga em pequenos passos.
 
-Este método nos diz se um retângulo(especificado por uma posição e um tamanho) coincide com qualquer espaço não vazio na `grid` de fundo:
+Este método nos diz se um retângulo (especificado por uma posição e um tamanho) coincide com qualquer espaço não vazio na `grid` de fundo:
 
 ```js
 Level.prototype.obstacleAt = function(pos, size) {
@@ -425,13 +425,13 @@ Level.prototype.obstacleAt = function(pos, size) {
 ```
 
 
-Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que a unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima para baixo temos o quadrados da gama de fundo que tem os toques nas caixas.
+Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que as unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima para baixo temos o quadrado da gama de fundo que tem os toques nas caixas.
 
 ![Game grid](../img/game_grid.png)
 
 Se o corpo se sobressai do `Level`, sempre retornaremos `"wall"` para os lados e na parte superior e `"lava"` para o fundo. Isso garante que o jogador morra ao cair para fora do mundo. Quando o corpo esta totalmente no interior da `grid`, nosso loop sobre o bloco de quadradros encontra as coordenadas por arredondamento e retorna o conteúdo do primeira `nonempty`.
 
-Colisões entre o jogador e outros atores dinâmicos(moedas, lava em movimento) são tratadas depois que o jogador se mudou. Quando o movimento do jogador coincide com o de outro ator, se for uma moeda é feito o efeito de recolha ou se for lava o efeito de morte é ativado.
+Colisões entre o jogador e outros atores dinâmicos (moedas, lava em movimento) são tratadas depois que o jogador se mudou. Quando o movimento do jogador coincide com o de outro ator, se for uma moeda é feito o efeito de recolha ou se for lava o efeito de morte é ativado.
 
 Este método analisa o conjunto de atores, procurando um ator que se sobrepõe a um dado como um argumento:
 

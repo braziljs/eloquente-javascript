@@ -530,9 +530,9 @@ A função verifica se existe um erro real, alertando somente quando houver. Des
 
 #### Resultados das palestras
 
-Para ser capaz de atualizar a visualização das palestras quando as mudanças acontecem o cliente deve manter a par das palestras que estão sendo mostradas. Dessa forma quando uma nova versão de uma palestra que já está na tela vem a palestra pode ser substituído com a sua forma atualizada. Da mesma forma quando a informação que vem de uma palestra deve ser eliminada o elemento DOM pode ser removido direto do documento.
+Para ser capaz de atualizar a visualização das palestras quando as mudanças acontecem, o cliente deve se manter atualizado das palestras que estão sendo mostradas. Dessa forma quando uma nova versão de uma palestra que já está na tela sofre atualizações ela deve ser substituído pela atual. Da mesma forma quando a informação que vem de uma palestra deve ser eliminada o elemento do DOM pode ser removido direto do documento.
 
-A função `displayTalks` é usada tanto para construir a tela inicial e atualizá-la quando algo muda. Ele vai usar o objeto `shownTalks` que associa os títulos da palestras com os nós DOM para lembrar das palestras que tem atualmente na tela.
+A função `displayTalks` é usada tanto para construir a tela inicial tanto para atualizá-la quando algo muda. Ele vai usar o objeto `shownTalks` que associa os títulos da palestras com os nós do DOM para lembrar das palestras que se tem atualmente na tela.
 
 ```js
 var talkDiv = document.querySelector("#talks");
@@ -558,9 +558,9 @@ function displayTalks(talks) {
 }
 ```
 
-Construir a estrutura DOM para as palestras serão feitas usando os `templates` que foram incluídas no documento HTML. Primeiro temos que definir `instantiateTemplate` que verifica e preenche com um `template`.
+Para construir a estrutura DOM para as palestras usaremos os `templates` que foram incluídas no documento HTML. Primeiro temos que definir o método `instantiateTemplate` que verifica e preenche com um `template`.
 
-O parâmetro `name` é o nome do `template`. Para buscar o elemento de `templates` buscamos um elemento cujo nome da classe corresponda ao nome do `template` que é filho do elemento com id do `template`. O método `querySelector` facilita essa busca. Temos `templates` nomeados como `talk` e `comment` na página HTML.
+O parâmetro `name` é o nome do `template`. Para buscar o elemento de `templates` buscamos um elemento cujo nome da classe corresponda ao nome do `template` que é o filho do elemento com id do `template`. O método `querySelector` facilita essa busca. Temos `templates` nomeados como `talk` e `comment` na página HTML.
 
 ```js
 function instantiateTemplate(name, values) {
@@ -586,11 +586,11 @@ function instantiateTemplate(name, values) {
 }
 ```
 
-O método `cloneNode` tem em todos os nós DOM, ele cria uma cópia de um nó. Ele não copia os filhos do nó a menos que `true` é enviado como primeiro argumento. A função instancia recursivamente uma cópia do `template` preenchendo onde o `template` deve aparecer.
+O método `cloneNode` cria uma cópia de um nó. Ele não copia os filhos do nó a menos que `true` seja enviado como primeiro argumento. A função instancia recursivamente uma cópia do `template` preenchendo onde o `template` deve aparecer.
 
 O segundo argumento para `instantiateTemplate` deve ser um objecto cujas propriedades são `strings` com os mesmos atributos que estão presente no `teplate`. Um espaço reservado como `{{title}}` será substituído com o valor da propriedade do atributo `title`.
 
-Esta é uma abordagem básica para a implementação de um `template`, mas é suficiente para implementar o `drawTalk`.
+Esta é uma abordagem básica para a implementação de um `template` mas suficiente para implementar o `drawTalk`.
 
 ```js
 function drawTalk(talk) {
@@ -614,7 +614,7 @@ function drawTalk(talk) {
 }
 ```
 
-Depois de instanciar o `template` de `talk` há várias coisas que precisam serem feitas. Em primeiro lugar os comentários têm de ser preenchidos pelo `template comments` e anexar os resultados no nó com na classe `commnets`. Em seguida os manipuladores de eventos tem que anexar um botão que apaga a palestra e um formulário que adiciona um novo comentário.
+Depois de instanciar o `template` de `talk` há várias coisas que precisamos fazermos. Em primeiro lugar os comentários têm que ser preenchido pelo `template comments` e anexar os resultados no nó da classe `commnets`. Em seguida os manipuladores de eventos tem que anexar um botão que apaga a palestra e um formulário que adiciona um novo comentário.
 
 #### Atualizando o servidor
 

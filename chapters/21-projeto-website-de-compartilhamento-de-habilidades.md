@@ -626,7 +626,7 @@ function talkURL(title) {
 }
 ```
 
-A função `deleteTalk` dispara uma requisição DELETE e informa o erro quando isso falhar.
+A função `deleteTalk` dispara uma requisição `DELETE` e informa o erro quando isso falhar.
 
 ```js
 function deleteTalk(title) {
@@ -635,7 +635,7 @@ function deleteTalk(title) {
 }
 ```
 
-Adicionar um comentário requer a construção de uma representação JSON dos comentários e delegar que seja parte de um pedido POST.
+Adicionar um comentário requer a construção de uma representação JSON dos comentários e delegar que ele seja parte de um pedido `POST`.
 
 ```js
 function addComment(title, comment) {
@@ -647,7 +647,7 @@ function addComment(title, comment) {
 }
 ```
 
-A variável `nameField` é usado para definir a propriedade autor de um comentário com referência do campo `<input>` na parte superior da página que permite que o usuário especifique o seu nome. Nós também inserimos o nome no `localStorage` para que ele não tem que ser preenchido novamente a cada vez que a página é recarregada.
+A variável `nameField` é usado para definir a propriedade autor de um comentário com referência no campo `<input>` na parte superior da página que permite que o usuário especifique o seu nome. Nós também inserimos o nome no `localStorage` para que ele não tem que ser preenchido novamente a cada vez que a página é recarregada.
 
 ```js
 var nameField = document.querySelector("#name");
@@ -659,7 +659,7 @@ nameField.addEventListener("change", function() {
 });
 ```
 
-O formulário na parte inferior da página propoe uma nova palestra, ele recebe um manipulador de evento `"submit"`. Este manipulador impede o efeito padrão do evento(o que causaria um recarregamento da página) passando a ter o comportamento de disparar uma solicitação PUT para criar uma palestra e limpar o formulário.
+O formulário na parte inferior da página propoe uma nova palestra, ele recebe um manipulador de evento `"submit"`. Este manipulador impede o efeito padrão do evento (o que causaria um recarregamento da página) passando a ter o comportamento de disparar uma solicitação `PUT` para criar uma palestra e limpar o formulário.
 
 ```js
 var talkForm = document.querySelector("#newtalk");
@@ -678,7 +678,7 @@ talkForm.addEventListener("submit", function(event) {
 
 #### Notificando mudanças
 
-Gostaria de salientar que as várias funções que alteram o estado do pedido de criação, exclusão da palestras ou a adição de um comentário não fazem absolutamente nada para garantir que as mudanças que eles fazem seram visíveis na tela. Eles simplesmente dizem ao servidor que contam com o mecanismo de `long polling` para acionar as atualizações apropriadas para a página.
+Gostaria de salientar que as várias funções que alteram o estado do pedido de criação, exclusão da palestras ou a adição de um comentário não fazem absolutamente nada para garantir que as mudanças que eles fazem sejam visíveis na tela. Eles simplesmente dizem ao servidor que contam com o mecanismo de `long polling` para acionar as atualizações apropriadas para a página.
 
 Dado o mecanismo que implementamos em nosso servidor e da maneira que definimos `displayTalks` para lidar com atualizações das palestras que já estão na página, o `long polling` é surpreendentemente simples.
 
@@ -699,25 +699,25 @@ function waitForChanges() {
 }
 ```
 
-Esta função é chamada uma vez quando o programa inicia e em seguida continua a chamar assegurando que um pedido de `polling` esteja sempre ativo. Quando a solicitação falhar não podemos chamar o método `reportError` pois se o servidor cair a cada chamada uma popup ira aparecer para o usuário deixando nosso programa bem chato de se usar. Em vez disso o `output` do erro deverá aparecer no console(para facilitar a depuração) e uma outra tentativa é feita em dois segundos e meio depois.
+Esta função é chamada uma vez quando o programa inicia e em seguida continua a chamar assegurando que um pedido de `polling` esteja sempre ativo. Quando a solicitação falhar não podemos chamar o método `reportError` pois se o servidor cair a cada chamada uma popup irá aparecer para o usuário deixando nosso programa bem chato de se usar. Em vez disso o `output` do erro deverá aparecer no console (para facilitar a depuração) e uma outra tentativa é feita em dois segundos e meio depois.
 
 Quando o pedido for bem-sucedido os novos dados é colocado na tela e `lastServerTime` é atualizado para refletir o fato de que recebemos dados correspondentes nesse novo momento. O pedido é imediatamente reiniciado para esperar pela próxima atualização.
 
-Se você executar o servidor e abrir duas janelas do navegador em `localhost:8000/` um ao lado do outro você pode ver que as ações que você executa em uma janela são imediatamente visíveis no outro.
+Se você executar o servidor e abrir duas janelas do navegador em `localhost:8000/` um ao lado do outro você vai observar que as ações que você executa em uma janela são imediatamente visíveis no outro.
 
 ## Exercícios
 
-Os exercícios a seguir vai envolver uma modificação definida neste capítulo. Para trabalhar com elas certifique-se de baixar o [código primeiro](http://eloquentjavascript.net/code/skillsharing.zip) e ter instalado Node(nodejs.org).
+Os exercícios a seguir vai envolver uma modificação definida neste capítulo. Para trabalhar com elas certifique-se de baixar o [código primeiro](http://eloquentjavascript.net/code/skillsharing.zip) e ter instalado [Node](http://nodejs.org).
 
 #### Persistência no disco
 
-O servidor de compartilhamento de habilidade mantém seus dados puramente na memória. Isto significa que quando ele travar ou reiniciar por qualquer motivo todas as palestras e comentários serão perdidos.
+O servidor de compartilhamento de habilidade mantém seus dados puramente na memória. Isto significa que quando o servidor travar ou reiniciar por qualquer motivo todas as palestras e comentários serão perdidos.
 
-Estenda o servidor e faça ele armazenar os dados da palestra em disco, e ache uma forma automatica de recarrega os dados quando o servidor for reiniciado. Não se preocupe com performance faça o mais simples possível e que funcione.
+Estenda o servidor e faça ele armazenar os dados da palestra em disco. Ache uma forma automática de recarrega os dados quando o servidor for reiniciado. Não se preocupe com performance faça o mais simples possível e funcional.
 
 **Dica:**
 
-A solução mais simples que posso dar para você é transformar todas as palestras em objeto JSON e coloca-las em um arquivo usando `fs.writeFile`. Já existe uma função(`registerChange`) que é chamada toda vez que temos alterações no servidor. Ele pode ser estendido para escrever os novos dados no disco.
+A solução mais simples que posso dar para você é transformar todas as palestras em objeto `JSON` e coloca-las em um arquivo usando `fs.writeFile`. Já existe uma função (`registerChange`) que é chamada toda vez que temos alterações no servidor. Ela pode ser estendida para escrever os novos dados no disco.
 
 Escolha um nome para o arquivo, por exemplo `./talks.json`. Quando o servidor é iniciado ele pode tentar ler esse arquivo com `fs.readFile` e se isso for bem sucedido o servidor pode usar o conteúdo de arquivo como seus dados iniciais.
 

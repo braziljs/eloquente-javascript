@@ -3,11 +3,11 @@
 > “As pessoas pensam que Ciência da Computação é a arte de gênios. Na realidade é o oposto, são várias pessoas fazendo coisas que dependem uma das outras, como um muro de pequenas pedras.”
 > — Donald Knuth
 
-Você já viu valores de funções como `alert`, e como invocá-las. Funções são essenciais na programação JavaScript. O conceito de encapsular uma parte do programa em um valor tem vários usos. É uma ferramenta usada para estruturar aplicações de larga escala, reduzir repetição de código, associar nomes a subprogramas e isolar esses subprogramas uns dos outros.
+Você já viu valores de funções como `alert`, e como invocá-las. Funções são essenciais na programação JavaScript. O conceito de encapsular uma parte do programa em um valor é muito usado. É uma ferramenta usada para estruturar aplicações de larga escala, reduzir repetição de código, associar nomes a subprogramas e isolar esses subprogramas uns dos outros.
 
 A aplicação mais óbvia das funções é quando queremos definir novos vocabulários. Criar novas palavras no nosso dia a dia geralmente não é uma boa ideia, porém em programação é indispensável.
 
-Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se tem disponível tende a ser bem definido e, por isso, menos flexível do que a linguagem usada pelas pessoas. Por isso, normalmente temos que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
+Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se tem disponível tende a ser bem definido, por isso, menos flexível do que a linguagem usada por humanos. Por isso, normalmente temos que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
 
 ## Definindo Uma Função
 
@@ -22,9 +22,9 @@ console.log(square(12));
 // → 144
 ```
 
-Uma função é criada por meio de uma expressão que se inicia com a palavra-chave `function`. Funções podem receber uma série de parâmetros (nesse caso, somente `x`) e um “corpo”, contendo as declarações que serão executadas quando a função for invocada. O corpo da função deve estar sempre envolvido por chaves, mesmo quando for formado por apenas uma simples declaração (como no exemplo anterior).
+Uma função é criada por meio de uma expressão que se inicia com a palavra-chave `function`. Funções podem receber uma série de parâmetros (nesse caso, somente `x`) e um corpo, contendo as declarações que serão executadas quando a função for invocada. O corpo da função deve estar sempre envolvido por chaves, mesmo quando for formado por apenas uma simples declaração (como no exemplo anterior).
 
-Uma função pode receber múltiplos parâmetros ou até mesmo nenhum parâmetro. No exemplo a seguir, `makeNoise` não recebe nenhum parâmetro, enquanto `power` recebe dois:
+Uma função pode receber múltiplos parâmetros ou nenhum parâmetro. No exemplo a seguir, `makeNoise` não recebe nenhum parâmetro, enquanto `power` recebe dois:
 
 ```js
 var makeNoise = function() {
@@ -45,7 +45,7 @@ console.log(power(2, 10));
 // → 1024
 ```
 
-Algumas funções produzem um valor, como as funções `power` e `square` vistas acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após a mesma irá fazer com que a função retorne  `undefined`.
+Algumas funções produzem um valor, como as funções `power` e `square`  acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após, faz com que o retorno seja  `undefined`.
 
 ## Parâmetros e Escopos
 
@@ -53,9 +53,9 @@ Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor
 
 Uma propriedade importante das funções é que variáveis definidas dentro do corpo delas, incluindo seus parâmetros, são *locais* à própria função. Isso significa, por exemplo, que a variável `result` no exemplo `power` será criada novamente toda vez que a função for invocada, sendo que as diferentes execuções não interferem umas nas outras.
 
-Esse “senso de localidade” das variáveis se aplica somente aos parâmetros e às variáveis que forem declaradas usando a palavra-chave `var` dentro do corpo da função. Variáveis declaradas fora do contexto de alguma função são chamadas de *globais* (não-locais), pois elas são visíveis em qualquer parte da aplicação. É possível acessar variáveis *globais* dentro de qualquer função, contanto que você não tenha declarado uma variável local com o mesmo nome.
+Essa restrição particular das variáveis se aplica somente aos parâmetros e às variáveis que forem declaradas usando a palavra-chave `var` dentro do corpo de uma função. Variáveis declaradas fora do contexto de alguma função são chamadas de *globais* (não-locais), pois elas são visíveis em qualquer parte da aplicação. É possível acessar variáveis *globais* dentro de qualquer função, contanto que você não tenha declarado uma variável local com o mesmo nome.
 
-O código a seguir demonstra esse conceito. Ele define e executa duas funções em que ambas atribuem um valor à variável `x`. A primeira função `f1` declara a variável como local e então muda apenas seu valor. Já a segunda função `f2` não declara `x` localmente, portanto sua referência a `x` está associada à variável global `x` definida no topo do exemplo:
+O código a seguir demonstra esse conceito. Ele define e executa duas funções em que ambas atribuem um valor a variável `x`. A primeira função `f1` declara a variável como local e então muda apenas seu valor. Já a segunda função `f2` não declara `x` localmente, portanto sua referência a `x` está associada à variável global `x` definida no topo do exemplo:
 
 ```js
 var x = "outside";
@@ -75,7 +75,7 @@ console.log(x);
 // → inside f2
 ```
 
-Esse comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis fossem compartilhadas por toda a aplicação, seria muito trabalhoso garantir que o mesmo nome não fosse utilizado em duas situações com propósitos diferentes. Além disso, *se* fosse o caso de reutilizar uma variável com o mesmo nome, talvez você pudesse se deparar com efeitos estranhos de códigos que alteram o valor da sua variável. Assumindo que variáveis locais existem apenas dentro do contexto da função, a linguagem torna possível ler e entender funções como “pequenos universos”, sem termos que nos preocupar com o código da aplicação inteira de uma só vez.
+Esse comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis fossem compartilhadas por toda a aplicação, seria muito trabalhoso garantir que o mesmo nome não fosse utilizado em duas situações com propósitos diferentes. Além disso, se fosse o caso de reutilizar uma variável com o mesmo nome, talvez você pudesse se deparar com efeitos estranhos de códigos que alteram o valor da sua variável. Assumindo que variáveis locais existem apenas dentro do contexto da função, a linguagem torna possível ler e entender funções como pequenos universos, sem termos que nos preocupar com o código da aplicação inteira de uma só vez.
 
 ## Escopo Aninhado
 

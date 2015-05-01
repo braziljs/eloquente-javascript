@@ -14,7 +14,7 @@ Assim como no capítulo anterior, o código neste capítulo é escrito em Node.j
 
 Há uma parte do servidor para este projeto escrito em Node.js e a outra parte do cliente escrito para o browser. O servidor armazena os dados do sistema e fornece para o cliente. Ela também serve os arquivos HTML e JavaScript que implementam o sistema do lado do cliente.
 
-O servidor mantém uma lista de palestras propostas para a próxima reunião e o cliente mostra esta lista. Cada palestra tem um nome do apresentador, um título, um resumo e uma lista de comentários dos participantes. O cliente permite que os usuários proponha novas palestras (adicionando a lista), exclua as palestras e comente sobre as palestras existentes. Sempre que o usuário faz tal mudança o cliente faz uma solicitação HTTP para informar para o servidor o que fazer.
+O servidor mantém uma lista de palestras propostas para a próxima reunião e o cliente mostra esta lista. Cada palestra tem um nome do apresentador, um título, um resumo e uma lista de comentários dos participantes. O cliente permite que os usuários proponha novas palestras (adicionando a lista), exclua as palestras e comente sobre as palestras existentes. Sempre que o usuário faz tal mudança o cliente faz uma solicitação `HTTP` para informar para o servidor o que fazer.
 
 ![Skill Sharing](../img/skillsharing.png)
 
@@ -28,7 +28,7 @@ Para ser capaz de se comunicar imediatamente com um cliente que algo mudou preci
 
 Nós podemos mandar o cliente abrir a conexão e mantê-la de modo que o servidor possa usá-la para enviar informações quando for preciso.
 
-Uma solicitação HTTP permite apenas um fluxo simples de informações, onde o cliente envia a solicitação e o servidor devolve uma única resposta. Há uma tecnologia que chamamos de soquetes web, suportado pelos navegadores modernos, isso torna possível abrir as ligações para a troca de dados arbitrária. É um pouco difícil usá-las corretamente.
+Uma solicitação `HTTP` permite apenas um fluxo simples de informações, onde o cliente envia a solicitação e o servidor devolve uma única resposta. Há uma tecnologia que chamamos de soquetes web, suportado pelos navegadores modernos, isso torna possível abrir as ligações para a troca de dados arbitrária. É um pouco difícil usá-las corretamente.
 
 Neste capítulo vamos utilizar uma técnica relativamente simples, `long polling`, onde os clientes continuamente pedem ao servidor para obter novas informações usando solicitações `HTTP` e o servidor simplesmente barrara sua resposta quando ele não houver nada de novo para relatar.
 
@@ -44,7 +44,7 @@ Antes de começarmos a comunicar servidor e cliente vamos pensar sobre o ponto e
 
 Vamos basear nossa interface em `JSON` e como vimos no servidor de arquivos a partir do capítulo 20 vamos tentar fazer um bom uso dos métodos `HTTP`. A interface é centrado em torno de um path `/talks`. `Paths` que não começam com `/talks` serão usado para servir arquivos estáticos como: código HTML e JavaScript que serão implementados no sistema do lado do cliente.
 
-A solicitação do tipo GET para `/talks` devolve um documento `JSON` como este:
+A solicitação do tipo `GET` para `/talks` devolve um documento `JSON` como este:
 
 ```json
 {"serverTime": 1405438911833,
@@ -56,7 +56,7 @@ A solicitação do tipo GET para `/talks` devolve um documento `JSON` como este:
 
 O campo `serverTime` vai ser usado para fazer a sondagem de `long polling`. Voltarei a explicar isso mais adiante.
 
-Para criar um novo talk é preciso uma solicitação do tipo `PUT` para a URL `/talks/unituning/`, onde após a segunda barra é o título da palestra. O corpo da solicitação `PUT` deve conter um objeto `JSON` que tem o apresentador e o sumário como propriedade do corpo da solicitação.
+Para criar um novo talk é preciso uma solicitação do tipo `PUT` para a `URL` `/talks/unituning/`, onde após a segunda barra é o título da palestra. O corpo da solicitação `PUT` deve conter um objeto `JSON` que tem o apresentador e o sumário como propriedade do corpo da solicitação.
 
 O títulos da palestra pode conter espaços e outros caracteres que podem não aparecerem normalmente em um URL, a `string` do título deve ser codificado com a função `encodeURIComponent` ao construir a URL.
 
@@ -78,7 +78,7 @@ Content-Length: 92
 
 Essas URLs também suportam requisições `GET` para recuperar a representação do `JSON` de uma palestra ou `DELETE` para exclusão de uma palestra.
 
-Para adicionar um comentário a uma palestra é necessário uma solicitação `POST` para uma URL `/talks/Unituning/comments` com um objeto `JSON` contendo o autor e a mensagem como propriedades do corpo da solicitação.
+Para adicionar um comentário a uma palestra é necessário uma solicitação `POST` para uma `URL` `/talks/Unituning/comments` com um objeto `JSON` contendo o autor e a mensagem como propriedades do corpo da solicitação.
 
 ```js
 POST /talks/Unituning/comments HTTP/1.1
@@ -160,7 +160,7 @@ O módulo exporta o construtor de `Router`. Um objeto de `Router` permite que no
 
 Este último irá retornar um `booleano` que indica se um manipulador foi encontrado. Há um método no conjunto de rotas que tenta uma rota de cada vez (na ordem em que elas foram definidos) e retorna a verdadeira quando alguma for correspondida.
 
-As funções de manipulação são chamadas com os objetos de solicitação e resposta. Quando algum grupo da expressão regular corresponder a uma URL, as `string` que correspondem são passadas para o manipulador como argumentos extras. Essas sequências tem que ser uma URL decodificada tendo a URL codificada assim `%20-style code`.
+As funções de manipulação são chamadas com os objetos de solicitação e resposta. Quando algum grupo da expressão regular corresponder a uma URL, as `string` que correspondem são passadas para o manipulador como argumentos extras. Essas sequências tem que ser uma `URL` decodificada tendo a `URL` codificada assim `%20-style code`.
 
 #### Servindo arquivos
 
@@ -317,7 +317,7 @@ function sendTalks(talks, response) {
 }
 ```
 
-O manipulador precisa olhar para os parâmetros de consulta da URL do pedido para ver se o parâmetro `changesSince` foi enviado. Se você entregar a `url` para o módulo da função `parse` teremos um segundo argumento que será `true`; também teremos que analisar parte por parte de uma URL. Se o objeto que ele retornou tem uma propriedade `query` removemos o outro objeto que mapeia os parâmetros de nomes para os valores.
+O manipulador precisa olhar para os parâmetros de consulta da `URL` do pedido para ver se o parâmetro `changesSince` foi enviado. Se você entregar a `url` para o módulo da função `parse` teremos um segundo argumento que será `true`; também teremos que analisar parte por parte de uma URL. Se o objeto que ele retornou tem uma propriedade `query` removemos o outro objeto que mapeia os parâmetros de nomes para os valores.
 
 ```js
 router.add("GET", /^\/talks$/, function(request, response) {
@@ -403,7 +403,7 @@ function getChangedTalks(since) {
 }
 ```
 
-Aqui concluimos o código do servidor. Executando o programa definido até agora você vai ter um servidor rodando na porta `8000` que serve arquivos do subdiretório `public` ao lado de uma interface de gerenciamento de palestras sob a URL `/talks`.
+Aqui concluimos o código do servidor. Executando o programa definido até agora você vai ter um servidor rodando na porta `8000` que serve arquivos do subdiretório `public` ao lado de uma interface de gerenciamento de palestras sob a `URL` `/talks`.
 
 #### O cliente
 
@@ -725,9 +725,9 @@ Porém cuidado, as palestras começam como um protótipo menos como um objeto pa
 
 #### Melhorias nos templates
 
-A maioria dos sistemas de templates fazem mais do que apenas preencher algumas strings. No mínimo permitem a inclusão de condicional em alguma parte do template como `if` ou uma repetição de pedaço de um template semelhante a um `while`.
+A maioria dos sistemas de templates fazem mais do que apenas preencher algumas strings. No mínimo permitem a inclusão de condicional em alguma parte do template como `if` ou uma repetição de um pedaço de template semelhante a um `while`.
 
-Se fomos capazes de repetir um pedaço de template para cada elemento em uma `array` não precisaríamos de um segundo template (`comment`). Em vez disso poderíamos especificar que o template `talk` verifica os conjuntos das propriedade de uma palestra e dos comentários reliazando uma interação para cada comentário que esteja no `array`.
+Se formos capazes de repetir um pedaço de template para cada elemento em um `array` não precisaremos de um segundo template (`comment`). Em vez disso poderíamos especificar que o template `talk` verifica os conjuntos das propriedade de uma palestra e dos comentários realizando uma interação para cada comentário que esteja no `array`.
 
 Ele poderia ser assim:
 
@@ -739,32 +739,32 @@ Ele poderia ser assim:
 </div>
 ```
 
-A idéia é que sempre que um nó com um atributo `template-repeat` é encontrado durante instanciação do template, o código faz um loop sobre a `array` na propriedade chamada por esse atributo. Para cada elemento do `array` ele adiciona um exemplo de nó. O contexto do template(a variável de valores em `instantiateTemplate`) durante este ciclo aponta para o elemento atual do `array` para que `{{author}}` seja o objeto de um comentário e não o contexto original do objeto `talk`.
+A idéia é que sempre que um nó com um atributo `template-repeat` é encontrado durante a instanciação do template, o código faz um loop sobre o `array` na propriedade chamada por esse atributo. Para cada elemento do `array` ele adiciona um exemplo de nó. O contexto do template (a variável com valores em `instantiateTemplate`) durante este ciclo aponta para o elemento atual do `array` para que `{{author}}` seja o objeto de um comentário e não o contexto original do objeto `talk`.
 
-Reescreva `instantiateTemplate` para implementar isso e em seguida altere os templates para usar este recurso e remover a prestação explícita dos comentários da função `drawTalk`.
+Reescreva `instantiateTemplate` para implementar isso e em seguida altere os templates para usar este recurso e remover a prestação explícita dos comentários na função `drawTalk`.
 
-Como você gostaria de acrescentar a instanciação condicional de nós tornando-se possível omitir partes do template quando um determinado valor é verdadeira ou falsa?
+Como você gostaria de acrescentar a instanciação condicional de nós tornando-se possível omitir partes do template quando um determinado valor é falso ou verdadeiro?
 
 **Dica:**
 
-Você poderia mudar `instantiateTemplate` de modo que sua função interna leve ou não apenas um nó mas também um contexto atual como um argumento. Você pode verificar se um loop sobre nós filhos de um nó tem um atributo filho em `template-repeat`. Se isso acontecer não instancie, em vez de um loop sobre o `array` indicada pelo valor do atributo instancie uma vez para cada elemento da `array` passando o elemento do `array` atual como contexto.
+Você poderia mudar `instantiateTemplate` de modo que sua função interna não tenha apenas um nó mas também um contexto atual como um argumento. Você pode verificar se no loop sobre os nós filhos de um nó exista um atributo filho em `template-repeat`. Se isso acontecer não instancie, em vez de um loop sobre o `array` indicado pelo valor do atributo, faça uma instancia para cada elemento do `array` passando o elemento atual como contexto.
 
-Condicionais pode ser implementado de uma forma semelhante com atributos de chamadas, por exemplo `template-when` e `template-unless` quando inserido no template ele ira instanciar ou não um nó dependendo de uma determinada propriedade que pode ser verdadeiro ou falso.
+Condicionais pode ser implementado de uma forma semelhante aos atributos de chamadas, por exemplo `template-when` e `template-unless` quando inserido no template irá instanciar ou não um nó dependendo de uma determinada propriedade que pode ser verdadeiro ou falso.
 
 #### Os unscriptables 
 
-Quando alguém visita o nosso site com um navegador que tenha JavaScript desabilitado ou o navegador que não suporta a execução de JavaScript eles vão conseguir ver uma página inoperável e completamente quebrado. Isso não é bom.
+Quando alguém visita o nosso site com um navegador que tenha JavaScript desabilitado ou o navegador que não suporta a execução de JavaScript eles vão conseguir ver uma página inoperável e completamente quebrada. Isso não é bom.
 
 Alguns tipos de aplicações web realmente não pode ser feito sem JavaScript. Para outros você simplesmente não tem o orçamento ou paciência para se preocupar com os clientes que não podem executar scripts. Mas para páginas com um grande público é uma forma educada apoiar os usuários que não tenha suporte a script.
 
-Tente pensar de uma maneira com que o site de compartilhamento de habilidade poderia ser configurado para preservar a funcionalidade básica quando executado sem JavaScript. As atualizações automáticas não seria mais suportada e as pessoas vão ter que atualizar sua página da maneira antiga. Seria bom sermos capazes de possibilitar esses usuários de ver as palestras existentes, criar novas e apresentar comentários.
+Tente pensar de uma maneira com que o site de compartilhamento de habilidade poderia ser configurado para preservar a funcionalidade básica quando executado sem JavaScript. As atualizações automáticas não seria mais suportada e as pessoas teram que atualizar sua página da maneira antiga. Seria bom sermos capazes de possibilitar esses usuários de ver as palestras existentes, criar novas e apresentar comentários.
 
-Não se sinta obrigado a implementar isso. Esboçar uma solução é o suficiente. Será que a abordagem vista é mais ou menos elegante do que o que fizemos inicialmente?
+Não se sinta obrigado a implementar isso. Esboçar uma solução é o suficiente. Será que a abordagem vista é mais ou menos elegante do que fizemos inicialmente?
 
 **Dica:**
 
-Dois aspectos centrais da abordagem feita neste capítulo como interface HTTP e um `template` do lado do cliente de renderização  não funcionam sem JavaScript. Formulários HTML normais podem enviar solicitações `GET` e `POST`, mas não solicitações `PUT` ou `DELETE` e os dados podem serem enviados apenas por uma URL fixa.
+Dois aspectos centrais da abordagem feita neste capítulo como  a interface `HTTP` e um `template` do lado do cliente de renderização  não funcionam sem JavaScript. Formulários HTML normais podem enviar solicitações `GET` e `POST`, mas não solicitações `PUT` ou `DELETE` e os dados podem serem enviados apenas por uma `URL` fixa.
 
-Assim o servidor teria que ser revisto para aceitar comentários, novas palestras e remover palestras através de solicitações POST, cujos corpos não podem serem JSONs, então devemos converter para o formato codificado em um URL para conseguirmos usar os formulários HTML(ver Capítulo 17). Estes pedidos teria que retornar a nova página inteira para que os usuários vejam os novos estados depois que é feito alguma mudança. Isso não seria muito difícil de fazer e poderia ser aplicado conjuntamente com uma interface HTTP mais "clean".
+Assim o servidor teria que ser revisto para aceitar comentários, novas palestras e remover palestras através de solicitações POST, cujos corpos não podem serem JSONs, então devemos converter para o formato codificado em uma `URL` para conseguirmos usar os formulários HTML (ver Capítulo 17). Estes pedidos teriam que retornar a nova página inteira para que os usuários vejam os novos estados depois que é feito alguma mudança. Isso não seria muito difícil de fazer e poderia ser aplicado conjuntamente com uma interface `HTTP` mais "clean".
 
 O código para mostrar as palestras teria que ser duplicado no servidor. O arquivo `index.html` ao invés de ser um arquivo estático, teria de ser gerado dinamicamente adicionando um manipulador para que o roteador incluia as palestras e comentários atuais quando for servido.

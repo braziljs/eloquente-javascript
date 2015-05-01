@@ -3,11 +3,11 @@
 > “As pessoas pensam que Ciência da Computação é a arte de gênios. Na realidade é o oposto, são várias pessoas fazendo coisas que dependem uma das outras, como um muro de pequenas pedras.”
 > — Donald Knuth
 
-Você já viu valores de funções como `alert`, e como invocá-las. Funções são essenciais na programação JavaScript. O conceito de encapsular uma parte do programa em um valor é muito usado. É uma ferramenta usada para estruturar aplicações de larga escala, reduzir repetição de código, associar nomes a subprogramas e isolar esses subprogramas uns dos outros.
+Você já viu valores de funções como `alert`, e como invocá-las. Funções são essenciais na programação JavaScript. O conceito de encapsular uma parte do programa em um valor tem vários usos. É uma ferramenta usada para estruturar aplicações de larga escala, reduzir repetição de código, associar nomes a subprogramas e isolar esses subprogramas uns dos outros.
 
 A aplicação mais óbvia das funções é quando queremos definir novos vocabulários. Criar novas palavras no nosso dia a dia geralmente não é uma boa ideia, porém em programação é indispensável.
 
-Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se tem disponível tende a ser bem definido, por isso, menos flexível do que a linguagem usada por humanos. Por isso, normalmente temos que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
+Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se tem disponível tende a ser bem definido e, por isso, menos flexível do que a linguagem usada por humanos. Por isso, normalmente temos que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
 
 ## Definindo Uma Função
 
@@ -45,7 +45,7 @@ console.log(power(2, 10));
 // → 1024
 ```
 
-Algumas funções produzem um valor, como as funções `power` e `square`  acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após, faz com que o retorno seja  `undefined`.
+Algumas funções produzem um valor, como as funções `power` e `square`  acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após, irá fazer com que o retorno da função seja `undefined`.
 
 ## Parâmetros e Escopos
 
@@ -55,7 +55,7 @@ Uma propriedade importante das funções é que variáveis definidas dentro do c
 
 Essa restrição particular das variáveis se aplica somente aos parâmetros e às variáveis que forem declaradas usando a palavra-chave `var` dentro do corpo de uma função. Variáveis declaradas fora do contexto de alguma função são chamadas de *globais* (não-locais), pois elas são visíveis em qualquer parte da aplicação. É possível acessar variáveis *globais* dentro de qualquer função, contanto que você não tenha declarado uma variável local com o mesmo nome.
 
-O código a seguir demonstra esse conceito. Ele define e executa duas funções em que ambas atribuem um valor a variável `x`. A primeira função `f1` declara a variável como local e então muda apenas seu valor. Já a segunda função `f2` não declara `x` localmente, portanto sua referência a `x` está associada à variável global `x` definida no topo do exemplo:
+O código a seguir demonstra esse conceito. Ele define e executa duas funções em que ambas atribuem um valor à variável `x`. A primeira função `f1` declara a variável como local e então muda apenas seu valor. Já a segunda função `f2` não declara `x` localmente, portanto sua referência a `x` está associada à variável global `x` definida no topo do exemplo:
 
 ```js
 var x = "outside";

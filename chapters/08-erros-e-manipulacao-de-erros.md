@@ -13,7 +13,7 @@
 
 Um programa são pensamentos cristalizados. Às vezes esses pensamentos são confusos. Outras vezes os erros são introduzidos ao converter esse pensamento em código. De qualquer forma o resultado será um programa falho.
 
-Falhas em um programa são considerados como bugs. Bugs podem ser erros causados pelo programador ou problemas em outros sistemas na qual o programa interage. Alguns erros podem serem detectados facilmente enquanto outros são extremamentes sutis e pode permanecer escondido em um sistema por anos.
+Falhas em um programa são considerados como bugs. Bugs podem ser erros causados pelo programador ou problemas em outros sistemas na qual o programa interage. Alguns erros podem serem detectados facilmente enquanto outros são extremamente sutis e pode permanecer escondido em um sistema por anos.
 
 Muitas vezes os problemas vem a tona apenas quando um programa encontra-se em um estado em que o programador não considerou no desenvolvimento. Às vezes tais situações são inevitáveis. Quando o usuário é solicitado a inserir sua idade e um tipo inválido é inserido, isso colocará o nosso programa em uma situação difícil. Mas essa situação deve ser esperada e manipulada de alguma forma.
 
@@ -21,7 +21,7 @@ Muitas vezes os problemas vem a tona apenas quando um programa encontra-se em um
 
 O nosso objetivo é simples quando se trata de erros do programador. Devemos encontrá-los e corrigi-los. Tais erros podem variar entre erros simples que faz o computador reclamar assim que ele tenta executar o programa ou erros sutis causado por uma compreensão errada da lógica do programa levando a resultados incorretos, podendo ser constante ou em apenas algumas condições específicas. Esse último tipo de erros pode levar semanas para ter um diagnostico correto.
 
-O nível de ajuda que as línguagens oferece para encontrar os erros variam bastante. Isso não é nenhuma surpresa pois o JavaScript está no "quase não ajuda em nada" no final dessa escala. Algumas línguagens exigem os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso da a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma incorreta.
+O nível de ajuda que as linguagens oferece para encontrar os erros variam bastante. Isso não é nenhuma surpresa pois o JavaScript está no "quase não ajuda em nada" no final dessa escala. Algumas linguagens exigem os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso da a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma incorreta.
 JavaScript considera os tipos somente na execução do programa e mesmo assim ele permite que você faça algumas coisas visivelmente absurdas sem dar nenhum tipo de aviso como por exemplo: `x = true "macaco" *`.
 
 Há algumas coisas que o JavaScript não se queixam. Mas escrever um programa que é sintaticamente incorreto faz com que ele nem execute e dispare um erro imediatamente.
@@ -46,7 +46,7 @@ canYouSpotTheProblem();
 // → ReferenceError: counter is not defined
 ````
 
-Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no exemplo, o JavaScript cria uma variável global para utiliza-la, no entando no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
+Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no exemplo, o JavaScript cria uma variável global para utiliza-la, no entanto no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
 
 Outra mudança no modo estrito é que esta ligação tem o valor `undefined` para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referencia do objeto é do escopo global. Então se você acidentalmente chamar um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
 
@@ -59,7 +59,7 @@ console.log(name);
 // → Ferdinand
 ````
 
-Assim, a falsa chamada para `Person` foi bem sucessida, mas retornou um valor indefinido e criou uma variável global. No modo estrito, o resultado é diferente.
+Assim, a falsa chamada para `Person` foi bem sucedida, mas retornou um valor indefinido e criou uma variável global. No modo estrito, o resultado é diferente.
 
 ````js
 "use strict";
@@ -73,11 +73,11 @@ Somos imediatamente informados de que algo está errado. Isso é útil.
 
 Existe mais coisas no modo estrito. Ele não permite dar a uma função vários parâmetros com o mesmo nome e remove totalmente certas características problemáticas da linguagem.
 
-Em suma, colocando um `"use strict"` no topo do seu programa não irá causar frustações mas vai ajudar a detectar problemas.
+Em suma, colocando um `"use strict"` no topo do seu programa não irá causar frustrações mas vai ajudar a detectar problemas.
 
 ## Testando
 
-A linguagem não vai nos ajudar muito a encontrar erros, nós vamos ter que encontrá-los da maneira mais difícil: executando o programa e analisando se o comportamento esta correto.
+A linguagem não vai nos ajudar muito a encontrar erros, nós vamos ter que encontrá-los da maneira mais difícil: executando o programa e analisando se o comportamento está correto.
 
 Fazer sempre testes manualmente é uma maneira insana de conduzir-se. Felizmente é possível muitas das vezes escrever um segundo programa que automatiza o teste do seu programa atual.
 
@@ -94,7 +94,7 @@ Vector.prototype.plus = function(other) {
 };
 ````
 
-Vamos escrever um programa para verificar se a nossa implementação do objeto `Vector` funciona como o esperado. Então cada vez que mudarmos a implementação o programa de teste é executado, de modo que fiquemos razoavelmentes confiantes de que nós não quebramos nada. Quando adicionarmos uma funcionalidade extra(por exemplo, um novo método) no objeto `Vector`, também devemos adicionar testes para o novo recurso.
+Vamos escrever um programa para verificar se a nossa implementação do objeto `Vector` funciona como o esperado. Então cada vez que mudarmos a implementação o programa de teste é executado, de modo que fiquemos razoavelmente confiantes de que nós não quebramos nada. Quando adicionarmos uma funcionalidade extra (por exemplo, um novo método) no objeto `Vector`, também devemos adicionar testes para o novo recurso.
 
 ````js
 function testVector() {
@@ -181,7 +181,7 @@ function promptNumber(question) {
 console.log(promptNumber("How many trees do you see?"));
 ````
 
-Isto é uma boa estratégia. Agora qualquer código que chamar a função `promptNumber` deve verificar se um número real foi lido, e na falha deve de alguma forma recuperar preencheendo um valor padrão ou retornando um valor especial para o seu chamador indicando que ele não conseguiu fazer o que foi solicitado.
+Isto é uma boa estratégia. Agora qualquer código que chamar a função `promptNumber` deve verificar se um número real foi lido, e na falha deve de alguma forma recuperar preenchendo um valor padrão ou retornando um valor especial para o seu chamador indicando que ele não conseguiu fazer o que foi solicitado.
 
 Em muitas situações, principalmente quando os erros são comuns e o chamador deve explicitamente tê-las em conta, retornaremos um valor especial, é uma forma perfeita para indicar um erro. Mas essa maneira no entanto tem suas desvantagens. Em primeiro lugar, como a função pode retornar todos os tipos possíveis de valores? Para tal função é difícil encontrar um valor especial que pode ser distinguido a partir de um resultado válido.
 
@@ -310,11 +310,11 @@ for (;;) {
 
 O `for (;;)` é a construção de um loop infinito de forma intencionalmente que não para sozinho. Nós quebramos o circuito de fora somente quando uma direção válida é fornecida. Mas a mal escrita do `promptDirection` resultará em um erro de "variável indefinida". O bloco `catch` ignora completamente o seu valor de exceção, supondo que ele sabe qual é o problema ele trata equivocadamente o erro de variável como uma indicação de má entrada. Isso não só causa um loop infinito mas também exibi uma mensagem de erro incorretamente sobre a variável que estamos usando.
 
-Como regra geral não capturamos exceções a menos que tenha a finalidade de monitora-las em algum lugar, por exemplo através de softwares externo conectados a nossa aplicação que indica quando nossa aplicação esta caida. E assim mesmo podemos pensar cuidadosamente sobre como você pode estar escondendo alguma informação.
+Como regra geral não capturamos exceções a menos que tenha a finalidade de monitora-las em algum lugar, por exemplo através de softwares externos conectados à nossa aplicação que indica quando nossa aplicação está caída. E assim mesmo podemos pensar cuidadosamente sobre como você pode estar escondendo alguma informação.
 
 E se quisermos pegar um tipo específico de exceção? Podemos fazer isso através da verificação no bloco catch para saber se a exceção que temos é a que queremos, dai então é so lançar a exceção novamente. Mas como que nós reconhecemos uma exceção?
 
-Naturalmente nós poderiamos fazer uma comparação de messagens de errors. Mas isso é uma forma instável de escrever código pois estariamos utilizando informações que são destinados ao consumo humano (a mensagem) para tomar uma decisão programática. Assim que alguém muda (ou traduz) a mensagem o código irá parar de funcionar.
+Naturalmente nós poderíamos fazer uma comparação de mensagens de erros. Mas isso é uma forma instável de escrever código pois estaríamos utilizando informações que são destinadas ao consumo humano (a mensagem) para tomar uma decisão programática. Assim que alguém muda (ou traduz) a mensagem o código irá parar de funcionar.
 
 Em vez disso, vamos definir um novo tipo de erro e usar `instanceof` para identificá-lo.
 
@@ -360,7 +360,7 @@ for (;;) {
 }
 ````
 
-Isso vai pegar apenas os casos de `InputError` e atravéz disso deixa algumas exceções independentes. Se você introduzir um erro de digitação ou um erro de variável indefinida a aplicação nos avisará.
+Isso vai pegar apenas os casos de `InputError` e através disso deixa algumas exceções independentes. Se você introduzir um erro de digitação ou um erro de variável indefinida a aplicação nos avisará.
 
 ## Asserções
 
@@ -426,7 +426,7 @@ console.log(reliableMultiply(8, 8));
 A chamada de `primitiveMultiply` obviamente deve acontecer em um bloco `try`. 
 O bloco `catch` fica responsável para relançar a exceção quando não é uma instância de `MultiplicatorUnitFailure` e garantir que a chamada é repetida quando ele é uma instância de `MultiplicatorUnitFailure`.
 
-Para refazer o processo, você pode usar um `loop` que quebra somente quando a chamada for bem sucedida; veja os exemplos de recursão nos cápitulos anteriores e faça o uso; espero que você não tenha uma grande séries de erros na função `primitiveMultiply` pois isso pode estrapolar o `stack` e entrar em loop infinito.
+Para refazer o processo, você pode usar um `loop` que quebra somente quando a chamada for bem sucedida; veja os exemplos de recursão nos capítulos anteriores e faça o uso; espero que você não tenha uma grande séries de erros na função `primitiveMultiply` pois isso pode extrapolar o `stack` e entrar em loop infinito.
 
 2- A caixa trancada
 
@@ -477,8 +477,8 @@ Para ganhar pontos extras, certifique-se de que chamou `withBoxUnlocked` quando 
 
 **Dica:**
 
-Você provalvemente deve ter adivinhado que este exercício solicita o uso do bloco `finally`. 
+Você provavelmente deve ter adivinhado que este exercício solicita o uso do bloco `finally`. 
 Sua função deve ser destravar a caixa e em seguida chamar a função que vem de argumento dentro da função `withBoxUnlocked`. 
 E no `finally` ele deve travar a caixa novamente.
 
-Para certificar-se de que nós não bloqueamos a caixa quando ela já estava bloqueada verifique no início da função se a mesma verificação é válida para quando a caixa esta desbloqueada e para quando quisermos bloquear ela novamete.
+Para certificar-se de que nós não bloqueamos a caixa quando ela já estava bloqueada verifique no início da função se a mesma verificação é válida para quando a caixa esta desbloqueada e para quando quisermos bloquear ela novamente.

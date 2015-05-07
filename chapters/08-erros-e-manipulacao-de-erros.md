@@ -1,15 +1,10 @@
-# Manipulação de erros
+# Bugs e manipulação de erros
 
-> "A depuração é duas vezes mais difícil do que escrever o código pela primeira vez. Portanto se você escrever um código o quanto inteligentemente  possível, por definição, você não será inteligente o suficiente para depurá-lo."
->
-> `Brian Kernighan e PJ Plauger, Os elementos do estilo de programação`
+> “A depuração é duas vezes mais difícil do que escrever código. Portanto, se você escrever código da maneira mais inteligente possível, por definição, você não é inteligente o suficiente para depurá-lo.”
+> — Brian Kernighan and P.J. Plauger, The Elements of Programming Style
 
-> ---
-
-> "Yuan-Ma havia escrito um pequeno programa onde utilizou muitas variáveis globais e atalhos de má qualidade. Um estudante lendo perguntou: Você nos advertiu contra tais técnicas, mas acabo encontrá-las em seu programa. Como pode isso? O mestre disse: Não há necessidade de se buscar uma mangueira de água quando a casa não está em chamas."
->
-> `Mestre Yuan-Ma, O Livro de Programação`
-
+> Yuan-Ma havia escrito um pequeno programa onde utilizou muitas variáveis globais e atalhos que faziam a qualidade do seu código inferior. Lendo o programa, um estudante perguntou: “Você nos avisou para não usar essas técnicas e mesmo assim as encontro no seu programa. Como pode isso?”. O mestre respondeu: “Não há necessidade de se buscar uma mangueira de água quando a casa não está em chamas.”
+> — Master Yuan-Ma, The Book of Programming
 
 Um programa são pensamentos cristalizados. Às vezes esses pensamentos são confusos. Outras vezes os erros são introduzidos ao converter esse pensamento em código. De qualquer forma o resultado será um programa falho.
 

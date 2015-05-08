@@ -6,11 +6,11 @@
 > Yuan-Ma havia escrito um pequeno programa onde utilizou muitas variáveis globais e atalhos que faziam a qualidade do seu código inferior. Lendo o programa, um estudante perguntou: “Você nos avisou para não usar essas técnicas e mesmo assim as encontro no seu programa. Como pode isso?”. O mestre respondeu: “Não há necessidade de se buscar uma mangueira de água quando a casa não está em chamas.”
 > — Master Yuan-Ma, The Book of Programming
 
-Um programa são pensamentos cristalizados. Às vezes esses pensamentos são confusos. Outras vezes os erros são introduzidos ao converter esse pensamento em código. De qualquer forma o resultado será um programa falho.
+Um programa é um pensamento “cristalizado”. Algumas vezes, esses pensamentos são confusos e erros podem ser inseridos quando convertemos pensamentos em código, resultando em um programa com falhas.
 
-Falhas em um programa são considerados como bugs. Bugs podem ser erros causados pelo programador ou problemas em outros sistemas na qual o programa interage. Alguns erros podem serem detectados facilmente enquanto outros são extremamente sutis e pode permanecer escondido em um sistema por anos.
+Falhas em um programa são normalmente chamadas de “bugs”, e podem ser causadas por erros inseridos pelo programador ou problemas em outros sistemas que a aplicação interage. Alguns *bugs* são imediatamente aparentes, enquanto outros são sutis e podem ficar escondidos em um sistema por anos.
 
-Muitas vezes os problemas vem a tona apenas quando um programa encontra-se em um estado em que o programador não considerou no desenvolvimento. Às vezes tais situações são inevitáveis. Quando o usuário é solicitado a inserir sua idade e um tipo inválido é inserido, isso colocará o nosso programa em uma situação difícil. Mas essa situação deve ser esperada e manipulada de alguma forma.
+Muitas vezes os problemas aparecem quando um programa executa de uma forma que o programador não considerou originalmente. As vezes, tais situações são inevitáveis. Quando o usuário insere um dado inválido, isso faz com que a aplicação fique em uma situação difícil. Tais situações devem ser antecipadas e tratadas de alguma maneira.
 
 ## Erros do programador
 

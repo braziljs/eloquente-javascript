@@ -1,14 +1,14 @@
 # Bugs e manipulação de erros
 
-> “A depuração é duas vezes mais difícil do que escrever código. Portanto, se você escrever código da maneira mais inteligente possível, por definição, você não é inteligente o suficiente para depurá-lo.”
+> “Debugar é duas vezes mais difícil do que escrever código. Portanto, se você escrever código da maneira mais inteligente possível, por definição, você não é inteligente o suficiente para debugá-lo.”
 > — Brian Kernighan and P.J. Plauger, The Elements of Programming Style
 
 > Yuan-Ma havia escrito um pequeno programa onde utilizou muitas variáveis globais e atalhos que faziam a qualidade do seu código inferior. Lendo o programa, um estudante perguntou: “Você nos avisou para não usar essas técnicas e mesmo assim as encontro no seu programa. Como pode isso?”. O mestre respondeu: “Não há necessidade de se buscar uma mangueira de água quando a casa não está em chamas.”
 > — Master Yuan-Ma, The Book of Programming
 
-Um programa é um pensamento “cristalizado”. Algumas vezes, esses pensamentos são confusos e erros podem ser inseridos quando convertemos pensamentos em código, resultando em um programa com falhas.
+Programas são pensamentos “cristalizados”. Algumas vezes, esses pensamentos são confusos e erros podem ser inseridos quando convertemos pensamentos em código, resultando em um programa com falhas.
 
-Falhas em um programa são normalmente chamadas de “bugs”, e podem ser causadas por erros inseridos pelo programador ou problemas em outros sistemas que a aplicação interage. Alguns *bugs* são imediatamente aparentes, enquanto outros são sutis e podem ficar escondidos em um sistema por anos.
+Falhas em um programa são normalmente chamadas de *bugs*, e podem ser causadas por erros inseridos pelo programador ou problemas em outros sistemas que a aplicação interage. Alguns *bugs* são imediatamente aparentes, enquanto outros são sutis e podem ficar escondidos em um sistema por anos.
 
 Muitas vezes os problemas aparecem quando um programa executa de uma forma que o programador não considerou originalmente. As vezes, tais situações são inevitáveis. Quando o usuário insere um dado inválido, isso faz com que a aplicação fique em uma situação difícil. Tais situações devem ser antecipadas e tratadas de alguma maneira.
 

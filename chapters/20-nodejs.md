@@ -636,3 +636,52 @@ npm http GET https://registry.npmjs.org/mime
 npm http 304 https://registry.npmjs.org/mime
 mime@1.2.11 node_modules/mime
 ```
+
+Quando um arquivo requisitado não existe, o código de erro HTTP adequado a ser
+retornado é 404. Nós vamos usar `fs.stat`, que obtém informações sobre um
+arquivo, para saber se o arquivo existe e/ou se é um diretório.
+
+```javascript
+methods.GET = function(path, respond) {
+  fs.stat(path, function(error, stats) {
+    if (error && error.code == "ENOENT")
+      respond(404, "File not found");
+    else if (error)
+      respond(500, error.toString());
+    else if (stats.isDirectory())
+      fs.readdir(path, function(error, files) {
+        if (error)
+          respond(500, error.toString());
+        else
+          respond(200, files.join("\n"));
+      });
+    else
+      respond(200, fs.createReadStream(path),
+              require("mime").lookup(path));
+  });
+};
+```
+
+Como ele pode levar um bom tempo para encontrar o arquivo no disco, `fs.stat` é
+assíncrono. Quando o arquivo não existe, `fs.stat` vai passar um objeto de erro
+com `"ENOENT"` em uma propriedade chamada `code` para o seu _callback_. Isso
+seria muito bom se o Node definisse diferentes subtipos de `Error` para
+diferentes tipos de erros, mas ele não o faz. Ao invés disso, Node coloca um
+código obscuro, inspirado no sistema Unix lá.
+
+Nós vamos reportar qualquer erro que não esperamos com o código de status 500,
+que indica que o problema está no servidor, ao contrário dos códigos que começam
+com 4 (como o 404), que se referem a requisições ruins. Existem algumas
+situações nas quais isso não totalmente preciso, mas para um programa pequeno de
+exemplo como esse, deverá ser bom o suficiente.
+
+O objeto `status` retornado pelo `fs.stat` nos diz uma porção de coisas sobre um
+arquivo, tais como tamanho (propriedade `size`) e sua data de modificação
+(propriedade `mtime`). Nosso interesse aqui é saber se isso é um diretório ou um
+arquivo regular, e quem nos diz isso é o método `isDirectory`.
+
+Nós usamos `fs.readdir` para ler a lista de arquivos em um diretório e, ainda em
+outro callback, retornar o resultado para o usuário. Para arquivos comuns, nós
+criamos uma _stream_ de leitura com o `fs.createReadStream` e passamos ela ao
+`respond`, junto com o tipo de conteúdo que o módulo `"mime"` nos deu para esse
+nome de arquivo.

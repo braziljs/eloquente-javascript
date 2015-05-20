@@ -470,11 +470,11 @@ Level.prototype.animate = function(step, keys) {
 };
 ```
 
-Quando a propriedade `status` do `level` tem um valor não nulo(que é o caso de quando o jogador ganhou ou perdeu) devemos contar para baixo a propriedade `finishDelay` que controla o tempo entre o ponto onde o jogador ganhou ou perdeu e o ponto onde nós paramos de mostrar o `Level`.
+Quando a propriedade `status` do `level` tem um valor não nulo (que é o caso de quando o jogador ganhou ou perdeu), devemos contar para baixo a propriedade `finishDelay` que controla o tempo entre o ponto onde o jogador ganhou ou perdeu e o ponto onde nós paramos de mostrar o `Level`.
 
-O `loop` `while` corta o passo de tempo onde estamos animando em pedaços pequenos. Ele garante que nenhum passo maior do que `maxStep` é tomado. Por exemplo um passo de 0,12 segundo iria ser cortado em dois passos de 0,05 e um segundo passo de 0,02.
+O *loop* `while` corta o passo de tempo onde estamos animando em pedaços pequenos. Ele garante que nenhum passo maior do que `maxStep` é tomado. Por exemplo um passo de 0,12 segundo iria ser cortado em dois passos de 0,05 segundos e um passo de 0,02.
 
-Objetos do ator tem um método `act` que toma como argumentos o tempo do passo, o objeto do `level` que contém as chaves de objeto. Aqui está um exemplo para o tipo de ator(Lava) que ignora as teclas de objeto:
+Objetos do ator tem um método `act` que toma como argumentos o tempo do passo, o objeto do `level` que contém as chaves de objeto. Aqui está um exemplo para o tipo de ator (Lava) que ignora as teclas de objeto:
 
 ```js
 Lava.prototype.act = function(step, level) {
@@ -488,9 +488,9 @@ Lava.prototype.act = function(step, level) {
 };
 ```
 
-Ele calcula uma nova posição através da adição do produto de tempo do passo e a sua velocidade atual para definir sua posição. Se nenhum bloco de obstáculos tem uma nova posição ele se move para lá. Se houver um obstáculo o comportamento depende do tipo da lava: lava e bloco de gotejamento tem uma propriedade `repeatPos` para ele poder saltar para trás quando bater em algo. Saltando a lava simplesmente inverte sua velocidade(multiplica por -1) a fim de começar a se mover em outra direção.
+Ele calcula uma nova posição através da adição do produto do tempo do passo e a sua velocidade atual para sua antiga posição. Se nenhum bloco de obstáculos tem uma nova posição ele se move para lá. Se houver um obstáculo, o comportamento depende do tipo da lava: lava e bloco de gotejamento tem uma propriedade `repeatPos` para ele poder saltar para trás quando bater em algo. Saltando, a lava simplesmente inverte sua velocidade (multiplica por -1) a fim de começar a se mover em outra direção.
 
-Coins usa seu método `act` para se mover. Eles ignoram colisões uma vez que são simplesmente oscilando em torno de dentro de sua própria quadrado e colisões com o jogador será tratado pelo método `act` do jogador.
+As moedas usam seu método `act` para se mover. Elas ignoram colisões uma vez que estão simplesmente oscilando em torno de seu próprio quadrado, e colisões com o jogador serão tratadas pelo método `act` do jogador.
 
 ```js
 var wobbleSpeed = 8, wobbleDist = 0.07;
@@ -502,9 +502,9 @@ Coin.prototype.act = function(step) {
 };
 ```
 
-A propriedade `wobble` é atualizada para controlar o tempo e em seguida utilizado como um argumento para `math.sin` para criar uma onda que é usado para calcular sua nova posição.
+A propriedade `wobble` é atualizada para controlar o tempo e em seguida utilizada como um argumento para `math.sin` para criar uma onda que é usada para calcular sua nova posição.
 
-Isso deixa o próprio jogador. Movimento do jogador é tratado separadamente para cada eixo, porque bater no chão não deve impedir o movimento horizontal, e batendo na parede não deve parar de cair ou o movimento de saltar. Este método implementa a parte horizontal:
+Isso deixa o próprio jogador. O movimento do jogador é tratado separadamente para cada eixo, porque bater no chão não deve impedir o movimento horizontal, e bater na parede não deve parar a queda ou o movimento de saltar. Este método implementa a parte horizontal:
 
 ```js
 var playerXSpeed = 7;
@@ -524,7 +524,7 @@ Player.prototype.moveX = function(step, level, keys) {
 };
 ```
 
-O movimento é calculado com base no estado das teclas de seta esquerda e direita. Quando um movimento faz com que o jogador bata em alguma coisa é o método `playerTouched` que é chamado no `level` que lida com coisas como morrer na lava ou coletar moedas. Caso contrário o objecto atualiza a sua posição.
+O movimento é calculado com base no estado das teclas de seta esquerda e direita. Quando um movimento faz com que o jogador bata em alguma coisa é o método `playerTouched` que é chamado no `level` que lida com coisas como morrer na lava ou coletar moedas. Caso contrário o objeto atualiza a sua posição.
 
 Movimento vertical funciona de forma semelhante, mas tem que simular salto e gravidade.
 
@@ -551,7 +551,7 @@ Player.prototype.moveY = function(step, level, keys) {
 
 No início do método o jogador é acelerado verticalmente para ter em conta a gravidade. Ao saltar a velocidade da gravidade é praticamente igual a todas as outras constantes neste jogo que foram criadas por tentativa e erro. Eu testei vários valores até encontrar uma combinação agradável.
 
-Em seguida é feito uma verificação para identificar se há obstáculos novamente. Se bater em um obstáculo há dois resultados possíveis. Quando a seta para cima é pressionado e estamos nos movendo para baixo(ou seja, a coisa que bater é abaixo de nós) a velocidade é definida como um valor relativamente grande e negativo. Isso faz com que o jogador salte. Se esse não for o caso, nós simplesmente esbarramos em alguma coisa e a velocidade é zerada.
+Em seguida é feito uma verificação para identificar se há obstáculos novamente. Se bater em um obstáculo há dois resultados possíveis. Quando a seta para cima é pressionada e estamos nos movendo para baixo (ou seja, a coisa que bater é abaixo de nós) a velocidade é definida como um valor relativamente grande e negativo. Isso faz com que o jogador salte. Se esse não for o caso, nós simplesmente esbarramos em alguma coisa e a velocidade é zerada.
 
 O método atual parece com isso:
 
@@ -572,9 +572,9 @@ Player.prototype.act = function(step, level, keys) {
 };
 ```
 
-Depois de se mover o método verifica os outros atores que o jogador está colidindo com ele novamente e é chamado o  `playerTouched` quando encontra um. Desta vez ele passa o objeto ator como segundo argumento isto é porque se o outro ator é uma moeda `playerTouched` precisa saber qual moeda está sendo coletada.
+Depois de se mover o método verifica os outros atores que o jogador está colidindo e é chamado o `playerTouched` novamente quando encontra um. Desta vez ele passa o objeto ator como segundo argumento, isto é, porque se o outro ator é uma moeda, `playerTouched` precisa saber qual moeda está sendo coletada.
 
-Finalmente quando o jogador morre(toca lava), montamos uma pequena animação que faz com que ele se "encolha" ou "afunde" reduzindo a altura do objeto jogador.
+Finalmente quando o jogador morre (toca lava), montamos uma pequena animação que faz com que ele se "encolha" ou "afunde" reduzindo a altura do objeto jogador.
 
 E aqui é o método que manipula as colisões entre o jogador e outros objetos:
 
@@ -597,7 +597,7 @@ Level.prototype.playerTouched = function(type, actor) {
 };
 ```
 
-Quando lava é tocado, o status do jogo é definido como `"lost"`. Quando uma moeda é tocada essa moeda é removida do conjunto de atores e se fosse o último o estado do jogo é definido como "ganhou".
+Quando a lava é tocada, o status do jogo é definido como `"lost"`. Quando uma moeda é tocada essa moeda é removida do conjunto de atores e se fosse a última, o estado do jogo é definido como `"won"`.
 
 Isso nos da a opção do `Level` de ser animado. Tudo o que está faltando agora é o código que aciona a animação.
 

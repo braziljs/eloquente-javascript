@@ -603,11 +603,11 @@ Isso nos da a opção do `Level` de ser animado. Tudo o que está faltando agora
 
 ## Rastreamento de teclas
 
-Para um jogo como este nós não queremos que as teclas entre em vigor uma única vez quando presionada. Pelo contrário queremos o seu efeito(movendo a figura do jogador) para continuar movendo o jogador enquanto elas estejam pressionadas.
+Para um jogo como este nós não queremos que as teclas tenham efeito apenas quando presionadas. Pelo contrário, queremos que o seu efeito (movimentar a figura do jogador) continue movendo o jogador enquanto as teclas estiverem pressionadas.
 
 Precisamos criar um manipulador de teclas que armazena o estado atual da esquerda, direita e cima das teclas de seta. Nós também queremos chamar `preventDefault` para essas teclas para não dar rolagem da página.
 
-A função a seguir quando é passado um objeto com o código da tecla e com o nome de propriedade como valores, devemos retornar um objeto que rastreia a posição atual dessas teclas. Ele registra manipuladores de eventos para `"keydown"` e `"Keyup"`, quando o código de tecla para o evento está presente no conjunto de códigos que está sendo rastreado é executado a atualização do objeto.
+A função a seguir, quando dado um objeto com o código da tecla e com o nome de propriedade como valores, vai retornar um objeto que rastreia a posição atual dessas teclas. Ele registra manipuladores de eventos para `"keydown"` e `"keyup"` e, quando o código de tecla no evento está presente no conjunto de códigos que está sendo rastreado, é executada a atualização do objeto.
 
 ```js
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
@@ -627,8 +627,7 @@ function trackKeys(codes) {
 }
 ```
 
-Note como o mesmo manipulador da função é usado para ambos os tipos de eventos. Ele olha para a propriedade `type` do objeto de evento para determinar se o estado da tecla deve ser atualizado para true("keydown") ou falso("keyup").
-
+Note como o mesmo manipulador da função é usado para ambos os tipos de eventos. Ele olha para a propriedade `type` do objeto de evento para determinar se o estado da tecla deve ser atualizado para true ("keydown") ou falso ("keyup").
 
 ## Executar o jogo
 

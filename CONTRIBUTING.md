@@ -107,9 +107,28 @@ Quando estiver em uma situação em que você não sabe exatamente como traduzir
 
 **2.** Adicione um label `[TODO: ref #<número-da-issue-da-discussão>]<palavra/termo não traduzido>[/TODO]` e continue trabalhando no arquivo enquanto não há uma conclusão na _Issue_. Esse processo é importante para facilitar o acesso a itens pendentes e ter uma referência clara onde está ocorrendo a discussão.
 
-**3.** Após a conslusão da discussão na _Issue_, feche a mesma. Em seguida, remova o label adicionado no passo 2 e atualize a palavra/termo não traduzido.
+**3.** Após a conclusão da discussão na _Issue_, feche a mesma. Em seguida, remova o label adicionado no passo 2 e atualize a palavra/termo não traduzido.
 
 **4.** Como mantemos um arquivo de [glossário](https://github.com/braziljs/eloquente-javascript/blob/master/glossario.md), faça um _Pull Request_ adicionando o novo termo, colocando a referência `#<número-da-issue>` no termo/palavra em questão para fácil acesso no futuro.
+
+### Definições para termos em geral
+
+- Delimitação para títulos de obras: Utilizar o travessão para o início da frase, nome do autor e logo após o nome da obra, sem alterar nenhum valor. Exemplo:
+
+> — Master Yuan-Ma, The Book of Programming
+
+- Estrangeirismo: Utilizar o formato itálico. Exemplo: _bug_
+- Sentido Figurado: Sempre destacar com aspas duplas.
+- Citação: Aspas duplas com o sinal de >. Exemplo:
+
+> "Foo bar"
+
+- Marcação para código: Utilizar um apóstrofe (\`) para indicar um pedaço de código no meio de um texto (`var foo = undefined`). Ou três apóstrofe com o nome da linguagem de programação na frente (\`\`\`js), para indicar um bloco de código:
+
+```js
+var foo;
+foo = undefined;
+```
 
 ### Esmagando seus commits
 

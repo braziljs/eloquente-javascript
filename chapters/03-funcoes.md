@@ -75,7 +75,7 @@ console.log(x);
 // → inside f2
 ```
 
-Esse comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis fossem compartilhadas por toda a aplicação, seria muito trabalhoso garantir que o mesmo nome não fosse utilizado em duas situações com propósitos diferentes. Além disso, se fosse o caso de reutilizar uma variável com o mesmo nome, talvez você pudesse se deparar com efeitos estranhos de códigos que alteram o valor da sua variável. Assumindo que variáveis locais existem apenas dentro do contexto da função, a linguagem torna possível ler e entender funções como "pequenos universos", sem termos que nos preocupar com o código da aplicação inteira de uma só vez.
+Esse comportamento ajuda a prevenir interferências acidentais entre funções. Se todas as variáveis fossem compartilhadas por toda a aplicação, seria muito trabalhoso garantir que o mesmo nome não fosse utilizado em duas situações com propósitos diferentes. Além disso, se fosse o caso de reutilizar uma variável com o mesmo nome, talvez você pudesse se deparar com efeitos estranhos de códigos que alteram o valor da sua variável. Assumindo que variáveis locais existem apenas dentro do contexto da função, a linguagem torna possível ler e entender funções como “pequenos universos”, sem termos que nos preocupar com o código da aplicação inteira de uma só vez.
 
 ## Escopo Aninhado
 
@@ -111,9 +111,9 @@ console.log(landscape());
 
 As funções `flat` e `mountain` podem “ver” a variável `result` porque elas estão dentro do mesmo escopo da função que as definiu. Entretanto, elas não conseguem ver a variável `count` uma da outra (somente a sua própria), pois elas estão definidas em escopos diferentes. O ambiente externo à função `landscape` não consegue ver as variáveis definidas dentro de `landscape`.
 
-Em resumo, cada escopo local pode também ver todos os escopos locais que o contêm. O conjunto de variáveis visíveis dentro de uma função é determinado pelo local onde aquela função está escrita na aplicação. Todas as variáveis que estejam em blocos *ao redor* de definições de funções são visíveis aos corpos dessas funções e também àqueles que estão no mesmo nível. Essa abordagem em relação à visibilidade de variáveis é chamada de *escopo léxico*.
+Em resumo, cada escopo local pode também ver todos os escopos locais que o contêm. O conjunto de variáveis visíveis dentro de uma função é determinado pelo local onde aquela função está escrita na aplicação. Todas as variáveis que estejam em blocos ao redor de definições de funções, são visíveis aos corpos dessas funções e também àqueles que estão no mesmo nível. Essa abordagem em relação à visibilidade de variáveis é chamada de *escopo léxico*.
 
-Pessoas com experiência em outras linguagens de programação podem talvez esperar que qualquer bloco de código entre chaves produza um novo “ambiente local”. Entretanto, no JavaScript, as funções são as únicas coisas que podem criar novos escopos. É também permitida a utilização de “blocos livres”:
+Pessoas com experiência em outras linguagens de programação podem talvez esperar que qualquer bloco de código entre chaves produza um novo “ambiente local”. Entretanto, no JavaScript, as funções são as únicas coisas que podem criar novos escopos. Também é permitido a utilização de “blocos livres”:
 
 ```js
 var something = 1;
@@ -130,7 +130,7 @@ Se você acha isso estranho, não se preocupe, pois não está sozinho. A próxi
 
 ## Funções Como Valores
 
-As variáveis de função, normalmente, atuam apenas como nomes para um pedaço específico da aplicação. Tais variáveis são definidas uma vez e nunca se alteram. Isso faz com que seja fácil confundir a função com seu próprio nome. Entretanto, são duas coisas distintas. 
+As variáveis de função, normalmente, atuam apenas como nomes para um pedaço específico da aplicação. Tais variáveis são definidas uma vez e nunca se alteram. Isso faz com que seja fácil confundir a função com seu próprio nome. Entretanto, são duas coisas distintas.
 Um valor de função pode fazer todas as coisas que outros valores podem fazer (você pode usá-lo em qualquer tipo de expressão e não apenas invocá-la). É possível armazenar um valor de função em um novo local, passá-lo como argumento para outra função e por aí vai. Não muito diferente, uma variável que faz referência a uma função continua sendo apenas uma variável regular e pode ser atribuída a um novo valor, como mostra o exemplo abaixo:
 
 ```js

@@ -130,13 +130,15 @@ Se você acha isso estranho, não se preocupe, pois não está sozinho. A próxi
 
 ## Funções Como Valores
 
-As variáveis de função, normalmente, atuam apenas como nomes para um pedaço específico da aplicação. Tais variáveis são definidas uma vez e nunca se alteram. Isso faz com que seja fácil confundir a função com seu próprio nome. Entretanto, são duas coisas distintas.
-Um valor de função pode fazer todas as coisas que outros valores podem fazer (você pode usá-lo em qualquer tipo de expressão e não apenas invocá-la). É possível armazenar um valor de função em um novo local, passá-lo como argumento para outra função e por aí vai. Não muito diferente, uma variável que faz referência a uma função continua sendo apenas uma variável regular e pode ser atribuída a um novo valor, como mostra o exemplo abaixo:
+As variáveis de função, normalmente, atuam apenas como nomes para um pedaço específico de um programa. Tais variáveis são definidas uma vez e nunca se alteram. Isso faz com que seja fácil confundir a função com seu próprio nome.
+
+Entretanto, são duas coisas distintas. Um valor de função pode fazer todas as coisas que outros valores podem fazer - você pode usá-lo em expressões arbitrárias e não apenas invocá-la. É possível armazenar um valor de função em um novo local, passá-lo como argumento para outra função e assim por diante. Não muito diferente, uma variável que faz referência a uma função continua sendo apenas uma variável regular e pode ser atribuída a um novo valor, como mostra o exemplo abaixo:
 
 ```js
 var launchMissiles = function(value) {
   missileSystem.launch("now");
 };
+
 if (safeMode)
   launchMissiles = function(value) {/* do nothing */};
 ```
@@ -153,7 +155,7 @@ function square(x) {
 }
 ```
 
-Isso é uma *declaração de função*. Ela define a variável `square` e faz com que ela referencie a função em questão. Até aí tudo bem, porém existe uma pequena diferença nessa maneira de definir uma função.
+Isso é uma *declaração de função*. Ela define a variável `square` e faz com que ela referencie a função em questão. Até agora tudo bem, porém existe uma pequena diferença nessa maneira de definir uma função.
 
 ```js
 console.log("The future says:", future());
@@ -163,9 +165,9 @@ function future() {
 }
 ```
 
-O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de função não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter liberdade na hora de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
+O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem serem usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
 
-O que acontece quando definimos uma declaração de função dentro de um bloco condicional (`if`) ou um laço de repetição? Bom, não faça isso. Diferentes plataformas JavaScript usadas em diferentes navegadores têm, tradicionalmente, feito coisas diferentes nessas situações, e a última versão basicamente proíbe essa prática. Se você deseja que suas aplicações se comportem de forma consistente, use somente essa forma de definição de função no bloco externo de uma outra função ou programa.
+O que acontece quando definimos uma declaração de função dentro de um bloco condicional (`if`) ou um laço de repetição? Bom, não faça isso. Diferentes plataformas JavaScript usadas em diferentes navegadores têm tradicionalmente feito coisas diferentes nessas situações, e a última versão basicamente proíbe essa prática. Se você deseja que seu programa se comportem de forma consistente, use somente essa forma de definição de função no bloco externo de uma outra função ou programa.
 
 ```js
 function example() {

@@ -262,7 +262,9 @@ console.log("R", 2, "D", 2);
 
 ## Closure
 
-A habilidade de tratar funções como valores, combinada com o fato de que variáveis locais são “recriadas” toda vez que uma função é invocada, traz à tona uma questão interessante. O que acontece com as variáveis locais quando a função que as criou não está mais ativa?
+A habilidade de tratar funções como valores, combinada com o fato de que variáveis locais são recriadas toda vez que uma função é invocada; isso traz à tona uma questão interessante.
+
+O que acontece com as variáveis locais quando a função que as criou não está mais ativa?
 
 O código a seguir mostra um exemplo disso. Ele define uma função `wrapValue` que cria uma variável local e retorna uma função que acessa e retorna essa variável.
 
@@ -280,11 +282,13 @@ console.log(wrap2());
 // → 2
 ```
 
-Isso é permitido e funciona como você esperaria: a variável ainda pode ser acessada. Várias instâncias da variável podem coexistir, o que é uma boa demonstração do conceito de que variáveis locais são realmente recriadas para cada nova chamada, sendo que as chamadas não interferem nas variáveis locais umas das outras.
+Isso é permitido e funciona como você espera: a variável ainda pode ser acessada. Várias instâncias da variável podem coexistir, o que é uma boa demonstração do conceito de que variáveis locais são realmente recriadas para cada nova chamada, sendo que as chamadas não interferem nas variáveis locais umas das outras.
 
-A funcionalidade de ser capaz de referenciar uma instância específica de uma variável local após a execução de uma função é chamada *closure*. Uma função que “closes over” (fecha sobre) variáveis locais é chamada de *closure*. Esse comportamento faz com que você não tenha que se preocupar com o tempo de vida das variáveis, como também permite usos criativos de valores de função.
+A funcionalidade capaz de referenciar uma instância específica de uma variável local após a execução de uma função é chamada de _closure_. Uma função que _closes over_ (fecha sobre) variáveis locais é chamada de _closure_.
 
-Com uma pequena mudança, podemos transformar o exemplo anterior, possibilitando criar funções que multiplicam por um valor arbitrário.
+Esse comportamento faz com que você não tenha que se preocupar com o tempo de vida das variáveis, como também permite usos criativos de valores de função.
+
+Com uma pequena mudança, podemos transformar o exemplo anterior, possibilitando a criação de funções que se multiplicam por uma quantidade arbitrária.
 
 ```js
 function multiplier(factor) {
@@ -298,15 +302,15 @@ console.log(twice(5));
 // → 10
 ```
 
-A variável explícita `localVariable` do exemplo com a função `wrapValue` não é necessária, pois o parâmetro em si já é uma variável local.
+A variável explícita `localVariable` do exemplo na função `wrapValue` não é necessária, pois o parâmetro em si já é uma variável local.
 
-Pensar em programas que funcionam dessa forma requer um pouco de prática. Um bom modelo mental é pensar que a palavra-chave `function` “congela” o código que está em seu corpo e o envolve em um pacote (o valor da função). Quando você ler `return function(...) {...}`, pense como se estivesse retornando um manipulador que possibilita executar instruções computacionais que foram congeladas para um uso posterior.
+Pensar em programas que funcionam dessa forma requer um pouco de prática. Um bom modelo mental é pensar que a palavra-chave `function` "congela" o código que está em seu corpo e o envolve em um pacote (o valor da função). Quando você ler `return function(...) {...}`, pense como se estivesse retornando um manipulador que possibilita executar instruções computacionais que foram "congeladas" para um uso posterior.
 
-No exemplo, `multiplier` retorna um pedaço de código congelado que fica armazenado na variável `twice`. A última linha do exemplo chama o valor armazenado nessa variável, fazendo com que o código congelado (`return number * factor;`) seja executado. Ele continua tendo acesso à variável `factor` que foi criada na chamada de `multiplier` e, além disso, tem acesso ao argumento que foi passado a ele (o valor 5) por meio do parâmetro `number`.
+No exemplo, `multiplier` retorna um pedaço de código "congelado" que fica armazenado na variável `twice`. A última linha do exemplo chama o valor armazenado nessa variável, fazendo com que o código "congelado" (`return number * factor;`) seja executado. Ele continua tendo acesso à variável `factor` que foi criada na chamada de `multiplier` e, além disso, tem acesso ao argumento que foi passado a ele (o valor 5) por meio do parâmetro `number`.
 
 ## Recursão
 
-É perfeitamente aceitável uma função invocar a si mesma, contanto que se tenha cuidado para não sobrecarregar a pilha de chamadas. Uma função que invoca a si mesma é denominada *recursiva*. A recursividade permite que as funções sejam escritas em um estilo diferente. Veja esse exemplo de uma implementação alternativa de `power`:
+É perfeitamente aceitável uma função invocar a si mesma, contanto que se tenha cuidado para não sobrecarregar a pilha de chamadas. Uma função que invoca a si mesma é denominada *recursiva*. A recursividade permite que as funções sejam escritas em um estilo diferente. Veja neste exemplo uma implementação alternativa de `power`:
 
 ```js
 function power(base, exponent) {
@@ -324,13 +328,13 @@ Essa é a maneira mais próxima da forma como os matemáticos definem a exponenc
 
 Entretanto, há um grave problema: em implementações típicas no JavaScript, a versão recursiva é aproximadamente dez vezes mais lenta do que a variação que utiliza um laço de repetição. Percorrer um laço de repetição simples é mais rápido do que invocar uma função múltiplas vezes.
 
-O dilema “velocidade vs. elegância” é bastante interessante. Você pode interpretá-lo como uma forma de transição gradual entre acessibilidade para humanos e máquina. Praticamente todos os programas podem se tornar mais rápidos quando se tornam maiores e mais complexos, cabendo ao desenvolvedor decidir qual o balanço ideal entre ambos.
+O dilema velocidade versus elegância é bastante interessante. Você pode interpretá-lo como uma forma de transição gradual entre acessibilidade para humanos e máquina. Praticamente todos os programas podem se tornar mais rápidos quando se tornam maiores e mais complexos, cabendo ao desenvolvedor decidir qual o balanço ideal entre ambos.
 
-No caso da [TODO: adicionar link]versão anterior[/TODO] da implementação de `power`, a versão menos elegante (usando laço de repetição) é bem simples e fácil de ser lida, não fazendo sentido substituí-la pela versão recursiva. Porém, frequentemente lidamos com aplicações mais complexas e sacrificar um pouco a eficiência para tornar o código mais legível e simples acaba se tornando uma escolha atrativa.
+No caso da [versão anterior](#argumentos-opcionais) da implementação de `power`, a versão menos elegante (usando laço de repetição) é bem simples e fácil de ser lida, não fazendo sentido substituí-la pela versão recursiva. Porém, frequentemente lidamos com aplicações mais complexas e sacrificar um pouco a eficiência para tornar o código mais legível e simples acaba se tornando uma escolha atrativa.
 
-A regra básica, que tem sido repetida por muitos programadores e com a qual eu concordo plenamente, é não se preocupar com eficiência até que você saiba, com certeza, que o programa está muito lento. Quando isso acontecer, encontre quais partes estão consumindo maior tempo de execução e comece a trocar elegância por eficiência nessas partes.
+A regra básica que tem sido repetida por muitos programadores e com a qual eu concordo plenamente, é não se preocupar com eficiência até que você saiba, com certeza, que o programa está muito lento. Quando isso acontecer, encontre quais partes estão consumindo maior tempo de execução e comece a trocar elegância por eficiência nessas partes.
 
-É evidente que essa regra não significa que se deva ignorar a performance completamente. Em muitos casos, como na função `power`, não há muito benefício em usar a abordagem mais “elegante”. Em outros casos, um programador experiente pode identificar, facilmente, que uma abordagem mais simples nunca vai ser rápida o suficiente.
+É evidente que essa regra não significa que se deva ignorar a performance completamente. Em muitos casos, como na função `power`, não há muito benefício em usar a abordagem mais elegante. Em outros casos, um programador experiente pode identificar, facilmente, que uma abordagem mais simples nunca será rápida o suficiente.
 
 A razão pela qual estou enfatizando isso é que, surpreendentemente, muitos programadores iniciantes focam excessivamente em eficiência, até nos menores detalhes. Isso acaba gerando programas maiores, mais complicados e muitas vezes menos corretos, que demoram mais tempo para serem escritos e, normalmente, executam apenas um pouco mais rapidamente do que as variações mais simples e diretas.
 

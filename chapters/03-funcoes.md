@@ -398,16 +398,16 @@ A primeira delas é quando você percebe que está escrevendo o mesmo código v�
 
 A segunda razão é quando você precisa de uma funcionalidade que ainda não foi escrita e que merece ser encapsulada em uma função própria. Você começa dando um nome à função e, em seguida, escreve o seu corpo. Às vezes, você pode até começar escrevendo o código que usa a função antes mesmo de defini-la.
 
-A dificuldade de se encontrar um bom nome para uma função é um bom indicativo de quão claro é o conceito que você está tentando encapsular. Vamos analisar um exemplo.
+A dificuldade de encontrar um bom nome para uma função é um bom indicativo de quão claro é o conceito que você está tentando encapsular. Vamos analisar um exemplo.
 
-Nós queremos escrever um programa que imprima dois números, sendo eles o número de vacas e galinhas em uma fazenda com as palavras `Cows` (vacas) e `Chickens (galinhas) depois deles. Além disso, inserimos algarismos zeros antes de ambos os números para que sejam sempre números de três dígitos.
+Nós queremos escrever um programa que imprima dois números, sendo eles o número de vacas e galinhas em uma fazenda com as palavras _Cows_ (vacas) e _Chickens_ (galinhas) depois deles e algarismos zeros antes de ambos os números para que sejam sempre números de três dígitos.
 
 ```
 007 Cows
 011 Chickens
 ```
 
-Bom, claramente, isso é uma função com dois argumentos. Vamos codar.
+Bom, claramente, isso é uma função que exige dois argumentos. Vamos codar.
 
 ```js
 function printFarmInventory(cows, chickens) {
@@ -423,11 +423,11 @@ function printFarmInventory(cows, chickens) {
 printFarmInventory(7, 11);
 ```
 
-Adicionar `.length` após o valor de uma string nos fornecerá o tamanho (quantidade de caracteres) daquela string. Por isso, o laço de repetição `while` continua adicionando zeros no início da string que representa o número até que a mesma tenha três caracteres.
+Adicionar `.length` após o valor de uma `string` nos fornecerá o tamanho (quantidade de caracteres) daquela `string`. Por isso, o laço de repetição `while` continua adicionando zeros no início da `string` que representa o número até que a mesma tenha três caracteres.
 
-Missão cumprida! Porém, no momento em que iríamos enviar o código ao fazendeiro (juntamente com uma grande cobrança, é claro), ele nos ligou dizendo que começou a criar porcos, e perguntou se poderíamos estender a funcionalidade do software para também imprimir os porcos.
+Missão cumprida! Porém, no momento em que iríamos enviar o código ao fazendeiro (juntamente com uma grande cobrança, é claro), ele nos ligou dizendo que começou a criar porcos, e perguntou, se poderíamos estender a funcionalidade do software para também imprimir os porcos?
 
-É claro que podemos. Antes de entrar no processo de copiar e colar essas mesmas quatro linhas outra vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui, a primeira tentativa:
+É claro que podemos. Antes de entrar no processo de copiar e colar essas mesmas quatro linhas outra vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui está a primeira tentativa:
 
 ```js
 function printZeroPaddedWithLabel(number, label) {
@@ -446,9 +446,9 @@ function printFarmInventory(cows, chickens, pigs) {
 printFarmInventory(7, 11, 3);
 ```
 
-Funcionou! Mas o nome `printZeroPaddedWithLabel` é um pouco estranho. Ele é uma combinação de três coisas (imprimir, adicionar zeros e adicionar a label correta) em uma única função.
+Funcionou! Mas o nome `printZeroPaddedWithLabel` é um pouco estranho. Ele é uma combinação de três coisas - imprimir, adicionar zeros e adicionar a label correta - em uma única função.
 
-Ao invés de tentarmos abstrair a parte repetida do nosso programa como um todo, vamos tentar selecionar apenas um *conceito*.
+Ao invés de tentarmos abstrair a parte repetida do nosso programa como um todo, vamos tentar selecionar apenas um conceito.
 
 ```js
 function zeroPad(number, width) {
@@ -467,11 +467,11 @@ function printFarmInventory(cows, chickens, pigs) {
 printFarmInventory(7, 16, 3);
 ```
 
-Ter uma função com um nome simples, óbvio e descritivo como `zeroPad` torna fácil para qualquer um ler e entender o código. Além disso, ele pode ser útil em outras situações, além desse programa específico. Você pode usá-lo, por exemplo, para imprimir números corretamente alinhados em uma tabela.
+Ter uma função com um bom nome descritivo como `zeroPad` torna fácil para qualquer um ler e entender o código. Além disso, ele pode ser útil em outras situações, além desse programa específico. Você pode usá-lo, por exemplo, para imprimir números corretamente alinhados em uma tabela.
 
 O quão inteligente e versátil as nossas funções deveriam ser? Nós poderíamos escrever funções extremamente simples, que apenas adicionam algarismos para que o número tenha três caracteres, até funções complicadas, para formatação de números fracionários, números negativos, alinhamento de casas decimais, formatação com diferentes caracteres e por aí vai.
 
-Um princípio útil é não adicionar funcionalidades, a menos que você tenha certeza absoluta de que irá precisar delas. Pode ser tentador escrever soluções genéricas para cada funcionalidade com que você se deparar. Resista a essa vontade, pois você não vai ganhar nenhum valor real com isso e vai acabar escrevendo muitas linhas de código que nunca serão usadas.
+Um princípio útil é não adicionar funcionalidades, a menos que você tenha certeza absoluta de que irá precisar delas. Pode ser tentador escrever soluções genéricas para cada funcionalidade com que você se deparar. Resista a essa vontade. Você não vai ganhar nenhum valor real com isso e vai acabar escrevendo muitas linhas de código que nunca serão usadas.
 
 ## Funções e Efeitos Colaterais
 

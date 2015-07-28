@@ -477,11 +477,11 @@ Um princípio útil é não adicionar funcionalidades, a menos que você tenha c
 
 Funções podem ser divididas naquelas que são invocadas para produzir um efeito colateral e naquelas que são invocadas para gerar um valor de retorno (embora também seja possível termos funções que produzam efeitos colaterais e que retornem um valor).
 
-A primeira função auxiliar no exemplo da fazenda, `printZeroPaddedWithLabel`, é invocada para produzir um efeito colateral: imprimir uma linha. A segunda versão, `zeroPad`, é chamada para produzir um valor de retorno. Não é coincidência que a segunda versão é útil em mais situações do que a primeira. Funções que criam valores são mais fáceis de serem combinadas de diferentes maneiras do que funções que produzem diretamente efeitos colaterais.
+A primeira função auxiliar no exemplo da fazenda, `printZeroPaddedWithLabel`, é invocada para produzir um efeito colateral: imprimir uma linha. A segunda versão, `zeroPad`, é chamada para produzir um valor de retorno. Não é coincidência que a segunda versão é útil em mais situações do que a primeira. Funções que criam valores são mais fáceis de serem combinadas de diferentes maneiras do que funções que produzem efeitos colaterais diretamente.
 
-Uma função *pura* é um tipo específico de função que produz valores e que não gera efeitos colaterais, como também não depende de efeitos colaterais de outros códigos — por exemplo, ela não utiliza variáveis globais que podem ser alteradas por outros códigos. Uma função pura tem a característica de, se sempre chamada com os mesmos argumentos, produzir o mesmo valor (e não fará nada além disso). Isso acaba fazendo com que seja fácil entendermos como ela funciona. Uma chamada para tal função pode ser mentalmente substituída pelo seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função pura está funcionando corretamente, você pode testá-la simplesmente invocando-a. Sabendo que ela funciona nesse contexto, funcionará em qualquer outro contexto. Funções que não são puras podem retornar valores diferentes baseados em vários fatores e produzem efeitos colaterais que podem fazer com que seja difícil testar e pensar sobre elas.
+Uma função "pura" é um tipo específico de função que produz valores e que não gera efeitos colaterais, como também não depende de efeitos colaterais de outros códigos — por exemplo, ela não utiliza variáveis globais que podem ser alteradas por outros códigos. Uma função pura tem a característica de, ser sempre chamada com os mesmos argumentos, produzir o mesmo valor (e não fará nada além disso). Isso acaba fazendo com que seja fácil de entendermos como ela funciona. Uma chamada para tal função pode ser mentalmente substituída pelo seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função pura está funcionando corretamente, você pode testá-la simplesmente invocando-a. Sabendo que ela funciona nesse contexto, funcionará em qualquer outro contexto. Funções que não são "puras" podem retornar valores diferentes baseados em vários tipos de fatores e produzem efeitos colaterais que podem fazer com que seja difícil de testar e pensar sobre elas.
 
-Mesmo assim, não há necessidade de se sentir mal ao escrever funções que não são puras ou começar uma “guerra santa” para eliminar códigos impuros. Efeitos colaterais são úteis em algumas situações. Não existe uma versão pura de `console.log`, por exemplo, e ela é certamente útil. Algumas operações são também mais fáceis de se expressar de forma mais eficiente quando usamos efeitos colaterais, portanto a velocidade de computação pode ser uma boa razão para se evitar a “pureza”.
+Mesmo assim, não há necessidade de se sentir mal ao escrever funções que não são "puras" ou começar uma "guerra santa" para eliminar códigos impuros. Efeitos colaterais são úteis em algumas situações. Não existe uma versão "pura" de `console.log`, por exemplo, e `console.log` certamente é útil. Algumas operações são também mais fáceis de se expressar de forma mais eficiente quando usamos efeitos colaterais, portanto a velocidade de computação pode ser uma boa razão para se evitar a "pureza".
 
 ## Resumo
 
@@ -499,15 +499,15 @@ function g(a, b) {
 }
 ```
 
-Um aspecto chave para entender funções é entender como os escopos locais funcionam. Parâmetros e variáveis declaradas dentro de uma função são locais àquela função, recriados toda vez que a função é invocada, e não são acessíveis ao contexto externo à função. Funções declaradas dentro de outras têm acesso ao escopo local das funções mais externas que as envolvem.
+Um aspecto chave para entender funções, é entender como os escopos locais funcionam. Parâmetros e variáveis declaradas dentro de uma função são locais àquela função, recriados toda vez que a função é invocada, e não são acessíveis do contexto externo à função. Funções declaradas dentro de outras têm acesso ao escopo local das funções mais externas que as envolvem.
 
-Separar as tarefas que a sua aplicação executa em diferentes funções é bastante útil. Você evita repetir o código e faz com que ele seja mais legível, pois funções possibilitam agrupar o código em blocos com conceitos similares, da mesma forma que capítulos e seções ajudam a organizar textos.
+Separar as tarefas que a sua aplicação executa em diferentes funções, é bastante útil. Você não terá que repetir o código e as funções fazem um programa mais legível, agrupando o código em pedaços conceituais, da mesma forma que os capítulos e as seções ajudam a organizar um texto.
 
 ## Exercícios
 
 ### Mínimo
 
-O [TODO: adicionar link]capítulo anterior[/TODO] introduziu a função `Math.min` que retorna o seu menor argumento. Nós podemos reproduzir essa funcionalidade agora. Escreva uma função `min` que recebe dois argumentos e retorna o menor deles.
+O [capítulo anterior](./02-estrutura-do-programa.md) introduziu a função `Math.min` que retorna o seu menor argumento. Nós podemos reproduzir essa funcionalidade agora. Escreva uma função `min` que recebe dois argumentos e retorna o menor deles.
 
 ```js
 // Your code here.
@@ -518,7 +518,7 @@ console.log(min(0, -10));
 // → -10
 ```
 
-Dica: Se estiver tendo problemas para colocar as chaves e os parênteses nos seus lugares corretos para ter uma definição de função válida, comece copiando um dos exemplos desse capítulo e modificando-o. Uma função pode conter várias declarações de retorno (`return`).
+**Dica:** Se estiver tendo problemas para colocar as chaves e os parênteses nos seus lugares corretos, para ter uma definição de uma função válida, comece copiando um dos exemplos desse capítulo e modificando-o. Uma função pode conter várias declarações de retorno (`return`).
 
 ### Recursão
 
@@ -528,9 +528,9 @@ Nós vimos que o `%` (operador resto) pode ser usado para testar se um número �
 - Um é ímpar.
 - Para todo outro número *N*, sua paridade é a mesma de *N - 2*.
 
-Defina uma função recursiva `isEven` que satisfaça as condições descritas acima. A função deve aceitar um número (`number`) como parâmetro e retornar um valor Booleano.
+Defina uma função recursiva `isEven` que satisfaça as condições descritas acima. A função deve aceitar um número como parâmetro e retornar um valor Booleano.
 
-Teste-a com os valores 50 e 75. Observe como ela se comporta com o valor -1. Por quê? Você consegue pensar em uma maneira de consertar isso?
+Teste-a com os valores 50 e 75. Observe como ela se comporta com o valor -1. Por quê? Você consegue pensar em uma maneira de arrumar isso?
 
 ```js
 // Your code here.
@@ -543,7 +543,7 @@ console.log(isEven(-1));
 // → ??
 ```
 
-Dica: Sua função será semelhante à função interna `find` do exemplo recursivo `findSolution` neste capítulo, com uma cadeia de declarações `if`/`else if`/`else` que testam qual dos três casos se aplica. O `else` final, correspondente ao terceiro caso, é responsável por fazer a chamada recursiva. Cada uma das ramificações deverá conter uma declaração de retorno (`return`) ou retornar um valor específico.
+**Dica:** Sua função será semelhante à função interna `find` do exemplo recursivo `findSolution` neste capítulo, com uma cadeia de declarações `if`/`else if`/`else` que testam qual dos três casos se aplica. O `else` final, correspondente ao terceiro caso, é responsável por fazer a chamada recursiva. Cada uma das ramificações deverá conter uma declaração de retorno ou retornar um valor específico.
 
 Quando o argumento recebido for um número negativo, a função será chamada recursivamente várias vezes, passando para si mesma um número cada vez mais negativo, afastando-se cada vez mais de retornar um resultado. Ela, eventualmente, consumirá todo o espaço em memória da pilha de chamadas e abortar.
 

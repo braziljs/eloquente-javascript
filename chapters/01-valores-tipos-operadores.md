@@ -240,6 +240,8 @@ console.log(true && true);
 
 O operador `||` denota ao **ou** lógico. Ele produz `true` se algum dos valores fornecidos for `true`:
 
+```javascript
+
 console.log(false || true);
 // → true
 

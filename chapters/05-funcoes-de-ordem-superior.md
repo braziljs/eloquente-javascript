@@ -8,7 +8,7 @@
 >
 > - C.A.R. Hoare, _1980 ACM Turing Award Lecture_
 
-Um programa grande é um programa dispendioso. Não necessariamente devido ao tempo que leva para construir. Tamanho quase sempre envolve uma complexidade e complexidade confunde os programadores. Programadores confusos tem um efeito negativo sobre um programa - eles tendem a criar erros (bugs). Um programa grande tem a possibilidade de esconder bugs que são difíceis de serem encontrados.
+Um programa grande é um programa custoso, e não necessariamente devido ao tempo que leva para construir. Tamanho quase sempre envolve uma complexidade e complexidade confunde os programadores. Programadores confusos tendem a criar erros (bugs) no programa. Um programa grande tem a possibilidade de esconder bugs que são difíceis de serem encontrados.
 
 Vamos rapidamente abordar dois exemplos que foram citados na introdução.
 O primeiro contém um total de 6 linhas.
@@ -28,15 +28,15 @@ O segundo necessita de duas funções externas e é escrito em apenas uma linha.
 
 Qual é mais propenso a erros?
 
-Se juntarmos as definições de `sum` e `range` o tamanho do segundo código será bem maior do que o primeiro, mas eu diria que ele é o mais correto.
+Se medirmos o tamanho das definições de `sum` e `range`, o segundo programa também será grande - até maior do que o primeiro. Mesmo assim, eu diria que ele é o mais provável a estar correto.
 
-A razão dele ser o mais correto é que primeiramente ele constrói uma linguagem que expressa o problema e resolve em seu próprio domínio com uma solução clara. Somar uma sequência de números não se trata de um laço com contadores mas sim de somas e sequências de números.
+A razão dele possivelmente ser o mais correto, é que a solução é expressa em um vocabulário que corresponde ao problema que está sendo resolvido. Somar um intervalo de números não se trata de laços de repetição e contadores. Trata-se de intervalos e somas.
 
-A definição do vocabulário (funções `sum` e `range`) terão que lidar com laços, contadores e outros detalhes não muito interessante. Mas por causa deles expressarem conceitos mais simples fica mais fácil de entender.
+As definições desse vocabulário (as funções `sum` e `range`) ainda assim terão que lidar com laços de repetição, contadores e outros detalhes secundários. No entanto, devido ao fato de representarem conceitos mais simples, elas acabam sendo mais fáceis de se entender.
 
 ## Abstração
 
-No contexto da programação esse tipo de vocabulário é geralmente expressado pelo termo _abstrações_. Abstrações escondem detalhes e nos dá a habilidade de falar em um alto nível (mais abstrato).
+No contexto da programação esse tipo de vocabulário é geralmente expressado pelo termo abstrações. Abstrações escondem detalhes e nos dá a habilidade de falar sobre problemas em alto nível (mais abstrato).
 
 Isto é uma analogia que compara duas receitas de sopa de ervilha:
 
@@ -47,17 +47,17 @@ E a segunda receita:
 > "Para uma pessoa: 1 copo de ervilha, meia cebola, um talo de aipo e uma cenoura."
 Embeba as ervilhas por 12 horas, ferva por 2 horas em 4 copos de água (por pessoa). Pique e adicione os vegetais. Deixe cozinhar por mais 10 minutos".
 
-A segunda é bem menor e mais fácil de interpretar. Mas ela necessita de um maior conhecimento sobre algumas palavras relacionadas à cozinhar como: "embeber", "ferva", "pique" e "vegetais".
+A segunda é bem menor e mais fácil de interpretar. Mas ela necessita de um conhecimento maior sobre algumas palavras relacionadas à cozinhar como: embeber, ferva, pique e vegetais.
 
-Quando programamos não podemos contar com todas as palavras do dicionário para expressar o que precisamos. Assim cairemos no primeiro padrão de receita - onde damos cada comando que o computador tem que realizar, um a um, ocultando os conceitos de alto níveis que se expressam.
+Quando programamos não podemos contar com todas as palavras do dicionário para expressar o que precisamos. Assim cairemos no primeiro padrão de receita - onde damos cada comando que o computador tem que realizar, um por um, ocultando os conceitos de alto níveis que se expressam.
 
 Perceber quando um conceito implora para ser abstraído em uma nova palavra é um costume que tem de virar algo natural quando programamos.
 
-## Abstraindo a travessia de um `Array`
+## Abstraindo `Array` transversal
 
-Funções, como vimos anteriormente, são boas maneiras para se criar abstrações. Mas algumas vezes elas caem por terra.
+Funções, como vimos anteriormente, são boas maneiras para se criar abstrações. Mas algumas vezes elas ficam aquém.
 
-No capítulo anterior, esse tipo de `loop` apareceu várias vezes:
+No [capítulo anterior](./04-estrutura-de-ordem-superior), esse tipo de `loop` apareceu várias vezes:
 
 ```js
 var array = [1, 2, 3];
@@ -67,11 +67,11 @@ for (var i = 0; i < array.length; i++) {
 }
 ```
 
-O que ele diz é: "para cada elemento do array, faça isso". Mas utiliza um jeito redundante que envolve uma variável contadora, uma checagem do tamanho do array e a declaração de uma variável extra para pegar o elemento atual. Deixando de lado a monstruosidade do código, ele também nos dá espaço para possíveis erros: reúso da variável `i`, escrever o método `lenght` errado, confundir as variáveis `i` e `current` e por aí vai...
+O que ele diz é: "Para cada elemento do array, registre no `console`". Mas utiliza um jeito redundante que envolve uma variável contadora, uma checagem do tamanho do `array` e a declaração de uma variável extra para pegar o elemento atual. Deixando de lado a monstruosidade do código, ele também nos dá espaço para possíveis erros: Podemos reusar a variável `i`, digitar errado `length` como `lenght`, confundir as variáveis `i` e `current` e por aí vai.
 
 Então vamos tentar abstrair isso em uma nova função. Consegue pensar em alguma forma?
 
-É trivial escrever uma função que passa sobre um array e chama `console.log` para cada elemento:
+É trivial escrever uma função que passa sobre um `array` e chama `console.log` para cada elemento:
 
 ```js
 function logEach(array) {
@@ -105,13 +105,13 @@ console.log(sum);
 // → 15
 ```
 
-O exemplo acima se parece muito com um `loop` clássico, o corpo esta escrito como um bloco. No entanto o corpo está dentro do valor da função, bem como esta dentro dos parênteses da chamada de `forEach`. É por isso que precisamos fechar com chave e parêntese.
+Isso parece muito com um `loop` clássico, com o seu corpo escrito como um bloco logo abaixo. No entanto o corpo está dentro do valor da função, bem como esta dentro dos parênteses da chamada de `forEach`. É por isso que precisamos fechar com chave e parêntese.
 
-Nesse padrão, podemos simplificar o nome da variável (`number`) pelo elemento atual que chega como argumento da função ao invés de simplesmente pegar o `array` manualmente.
+Nesse padrão, podemos simplificar o nome da variável (`number`) pelo elemento atual, ao invés de simplesmente ter que buscá-lo fora do `array` manualmente.
 
-Não precisamos definir um método `forEach`. Ele esta disponível como um método padrão em `arrays`. Quando um `array` é fornecido para o método agir sobre ele, o `forEach` espera apenas um argumento obrigatório: a função a ser executada para cada elemento.
+De fato, não precisamos definir um método `forEach`. Ele esta disponível como um método padrão em `arrays`. Quando um `array` é fornecido para o método agir sobre ele, o `forEach` espera apenas um argumento obrigatório: a função a ser executada para cada elemento.
 
-Para ilustrar o quão útil isso é, vamos lembrar da função que vimos no capítulo anterior, onde continha dois `arrays` transversais.
+Para ilustrar o quão útil isso é, vamos lembrar da função que vimos no [capítulo anterior](./04-estrutura-de-ordem-superior), onde continha dois `arrays` transversais.
 
 ```js
 function gatherCorrelations(journal) {
@@ -220,7 +220,7 @@ function transparentWrapping(f) {
     return f.apply(null, arguments);
   };
 }
-``` 
+```
 
 Particularmente essa função é inútil, mas nos mostra o padrão que estamos interessados, a função que retorna irá passar todos os argumentos dados para `f`. Ela faz isso apenas passando seus próprios argumentos para o `apply`. O primeiro argumento do `apply` definimos como `null` mas isto pode ser usado para simular uma chamada de método. Iremos voltar a ver isto novamente no próximo capítulo.
 
@@ -271,7 +271,7 @@ console.log(ancestry.length);
 
 ## Filtrando um array
 
-Para encontrar um conjunto de pessoas nos dados ancestrais que eram  jovens em 1924 a seguinte função pode ser útil. Ele filtra os elementos em uma matriz que não passa de apenas um teste condicional. 
+Para encontrar um conjunto de pessoas nos dados ancestrais que eram  jovens em 1924 a seguinte função pode ser útil. Ele filtra os elementos em uma matriz que não passa de apenas um teste condicional.
 
 ```js
 function filter(array, test) {

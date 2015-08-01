@@ -196,7 +196,7 @@ As regras de escopo léxico que discutimos no [capítulo 3](./03-funcoes.md) tra
 
 ## Passando argumentos
 
-A função `noisy` declarada abaixo envolve seu argumento em outra função, isso gera uma grave deficiência.
+A função `noisy` declarada abaixo, envolve seu argumento em outra função, isso gera uma grave deficiência.
 
 ```js
 function noisy(f) {
@@ -209,9 +209,9 @@ function noisy(f) {
 }
 ```
 
-Se `f` receber mais de um parâmetro, apenas o primeiro parâmetro será passado para ele. Podemos adicionar outros argumentos para a função interna (`arg1`, `arg2`, assim por diante) e passar elas para `f`, mas mesmo assim isso não deixaria explícito uma quantidade de parâmetros exatos. Essa solução limita algumas informações de `f` como por exemplo `arguments.length`. Nunca saberemos a quantidade exata de argumentos que foi passada.
+Se `f` receber mais de um parâmetro, ele recebe apenas o primeiro. Poderiámos acrescentar vários argumentos para a função interna (`arg1`, `arg2`, e assim por diante) e passar elas para `f`, mas mesmo assim isso não deixaria explícito quantos seriam suficientes. Essa solução limita algumas informações de `f` como por exemplo `arguments.length`. Sempre passaremos a mesma quantidade de argumentos, mas nunca saberemos a quantidade exata de argumentos que foi passada.
 
-Para esse tipo de situação, funções em Javascript possuem um método chamado `apply`. O método `apply` recebe um array (ou um `array` de `objeto`) de argumentos que é enviado para função que esta sendo chamada.
+Para esse tipo de situação, funções em JavaScript possuem um método chamado `apply`. Você passa um `array` (ou um `array` como `objeto`) como argumento, e ele irá chamar a função com estes argumentos.
 
 ```js
 function transparentWrapping(f) {
@@ -221,13 +221,13 @@ function transparentWrapping(f) {
 }
 ```
 
-Particularmente essa função é inútil, mas nos mostra o padrão que estamos interessados, a função que retorna irá passar todos os argumentos dados para `f`. Ela faz isso apenas passando seus próprios argumentos para o `apply`. O primeiro argumento do `apply` definimos como `null` mas isto pode ser usado para simular uma chamada de método. Iremos voltar a ver isto novamente no próximo capítulo.
+Essa função é inútil, mas nos mostra o padrão que estamos interessados, a função passa todos os argumentos dados para `f` e retorna, apenas estes argumentos, para `f`. Ela faz isso passando seus próprios argumentos para o objeto `apply`. O primeiro argumento do `apply`, estamos passando `null`, isto pode ser usado para simular uma chamada de método. Iremos voltar a ver isto novamente no [próximo capítulo](/06-a-vida-secreta-dos-objetos.md).
 
 ## JSON
 
-Funções de ordem superior que aplicam uma função de alguma forma para os elementos de um `array` são bastante usadas em JavaScript. O método`forEach` é uma função mais primitiva. Existe outras variantes disponíveis como métodos em `arrays`. Para acostumarmos com eles vamos brincar com um outro conjunto de dados.
+Funções de ordem superior que aplicam uma função para os elementos de um `array` são bastante usadas em JavaScript. O método`forEach` é uma função mais primitiva. Existe outras variantes disponíveis como métodos em `arrays`. Para acostumarmos com eles vamos brincar com um outro conjunto de dados.
 
-Há alguns anos alguém juntou um monte de arquivos e montou um livro sobre a história do nome da minha família (Haverbeke que significa Oatbrook). Abri-o na esperança de encontrar cavaleiros, piratas, e alquimistas mas o livro acaba por ser principalmente de agricultores de flamengos. Para minha diversão extrai uma informação sobre os meus antepassados e coloquei em um formato legível por um computador.
+Há alguns anos, alguém juntou um monte de arquivos e montou um livro sobre a história do nome da minha família (Haverbeke que significa Oatbrook). Eu abri na esperança de encontrar cavaleiros, piratas, e alquimistas... mas o livro acaba por ser principalmente de agricultores de Flamengos. Para minha diversão extrai uma informação sobre os meus antepassados e coloquei em um formato legível por um computador.
 
 O arquivo que eu criei se parece mais ou menos assim:
 
@@ -245,12 +245,12 @@ O arquivo que eu criei se parece mais ou menos assim:
 ]
 ```
 
-Este formato é chamado de JSON (pronuncia-se "Jason") que significa JavaScript Object Notation. Json é amplamente utilizado como armazenamento de dados e como um formato de comunicação na Web.
+Este formato é chamado de `JSON` (pronuncia-se "Jason") que significa _JavaScript Object Notation_. `JSON` é amplamente utilizado como armazenamento de dados e formato de comunicação na _Web_.
 
-Json se escreve semelhatemente como `arrays` e objetos em Javascript mas com algumas restrições.
-Todos os nomes das propriedades devem ficar entre aspas e serem apenas expressões de dados simples; é permitido chamadas de funções, variáveis ou qualquer coisa que envolva um cálculo real. Comentários não são permitidos.
+`JSON` se escreve semelhatemente como `arrays` e objetos em JavaScript, mas com algumas restrições.
+Todos os nomes das propriedades devem ficar entre aspas duplas e apenas expressões de dados simples são permitidos, não é permitido chamadas de funções, variáveis ou qualquer coisa que envolva cálculo real. Comentários não são permitidos em `JSON`.
 
-JavaScript nos fornece duas funções `JSON.stringify` e `JSON.parse`, que convertem dados para outro formato. O primeiro recebe um valor em JavaScript e retorna um string codificada em JSON. A segunda obtém uma `string` e converte-a para um valor de código.
+JavaScript nos fornece duas funções `JSON.stringify` e `JSON.parse`, que convertem dados para este formato. O primeiro recebe um valor em JavaScript e retorna uma string codificada em `JSON`. A segunda obtém uma `string` e converte-a para um valor que ele códifica.
 
 ```js
 var string = JSON.stringify({name: "X", born: 1980});
@@ -260,7 +260,7 @@ console.log(JSON.parse(string).born);
 // → 1980
 ```
 
-O variável `ANCESTRY_FILE` esta disponível na `sandbox` neste capítulo para download no site, onde contém o conteúdo do meu arquivo `JSON` como uma `string`. Vamos decodificá-lo e ver quantas pessoas contém.
+O variável `ANCESTRY_FILE` está disponível na `sandbox` deste capítulo para download no site, onde está o conteúdo do meu arquivo `JSON` como uma `string`. Vamos decodificá-lo e ver quantas pessoas contém.
 
 ```js
 var ancestry = JSON.parse(ANCESTRY_FILE);

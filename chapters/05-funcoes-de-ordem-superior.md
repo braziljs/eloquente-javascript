@@ -157,8 +157,7 @@ var greaterThan10 = greaterThan(10);
 console.log(greaterThan10(11));
 // → true
 ```
-
-Ou funções que mudam outras funções.
+E você pode ter funções que alteram outras funções.
 
 ```js
 function noisy(f) {
@@ -174,7 +173,7 @@ noisy(Boolean)(0);
 // → called with 0 - got false
 ```
 
-Ou ainda criar funções que implementão seus próprios fluxos de controles.
+Você pode até escrever funções que fornecem novos tipos de fluxos de controles.
 
 ```js
 function unless(test, then) {
@@ -193,7 +192,7 @@ repeat(3, function(n) {
 // → 2 is even
 ```
 
-As regras de "escopo léxico" que discutimos no Capítulo 3 trabalham a nosso favor quando usamos funções dessa maneira. No exemplo acima, a variável `n` é um parâmetro da função de fora mas como as funções internas vivem dentro do ambiente externo, podemos usar a variável. Ainda os corpos de tais funções podem usar livremente as variáveis ao seu redor e ter um papel similar aos blocos `{}` usados em `loops` e expressões codicionais. Uma diferença importante é que variáveis declaradas dentro delas não podem serem acessadas fora da função. Isso normalmente é algo bom.
+As regras de escopo léxico que discutimos no [capítulo 3](./03-funcoes.md) trabalham a nosso favor quando usamos funções dessa maneira. No exemplo acima, a variável `n` é um parâmetro da função externa. Mas como as funções internas estão dentro do ambiente externo, podemos usar a variável `n`. Os "corpos" de tais funções internas podem acessar as variáveis que estão em torno delas. Eles podem desempenhar um papel similar aos blocos `{}` usados em `loops` e expressões codicionais. Uma diferença importante é que variáveis declaradas dentro das funções internas não podem ser acessadas fora da função. Isso geralmente é algo bom.
 
 ## Passando argumentos
 

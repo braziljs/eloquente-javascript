@@ -1,12 +1,12 @@
 # Funções de ordem superior
 
-> "Tzu-li e Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. _Duzentas mil linhas_, disse Tzu-li, _sem contar os comentários!_ Tzu-ssu repondeu, _Pss, o meu já é quase um milhão de linhas_. Mestre Yuan-Ma disse, _Meu melhor programa tinha quinhentas linhas_. Ouvindo isso os alunos ficaram admirados."
+> "Tzu-li e Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. 'Duzentas mil linhas sem contar os comentários!', disse Tzu-li. Tzu-ssu respondeu: 'Pssh, o meu já tem quase um milhão de linhas'. Mestre Yuan-Ma disse: 'Meu melhor programa tem quinhentas linhas'. Ouvindo isso, Tzu-li e Tzu-ssu ficaram esclarecidos."
 >
-> - Mestre Yuan-Ma, _The Book of Programming_
+> — Master Yuan-Ma, The Book of Programming
 
->"Existem duas maneiras de construir o design de um software: um jeito é deixá-lo tão simples de tal forma que não há nenhuma deficiência e a outra maneira é tão complicada que obviamente não haverá deficiências óbvias."
+> "Existem duas maneiras de construir o design de um software: uma maneira é deixá-lo tão simples de tal forma em que obviamente não há deficiências, e a outra é torná-lo tão complicado que não haverá deficiências óbvias."
 >
-> - C.A.R. Hoare, _1980 ACM Turing Award Lecture_
+> — C.A.R. Hoare, 1980 ACM Turing Award Lecture
 
 Um programa grande é um programa custoso, e não necessariamente devido ao tempo que leva para construir. Tamanho quase sempre envolve uma complexidade e complexidade confunde os programadores. Programadores confusos tendem a criar erros (bugs) no programa. Um programa grande tem a possibilidade de esconder bugs que são difíceis de serem encontrados.
 

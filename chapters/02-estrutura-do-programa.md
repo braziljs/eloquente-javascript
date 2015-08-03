@@ -186,7 +186,7 @@ Aqui podemos ver uma representação bem trivial do fluxo de controle em linha r
 
 ## Execução Condicional
 
-Executando declarações em ordem linear não é a única opção que temos. Uma requisição comum é a execução condicional, onde nós escolhemos entre duas rotas diferentes baseado em um valor booleano.
+Executar declarações em ordem linear não é a única opção que temos. Uma alternativa é a _execução condicional_, onde escolhemos entre duas rotas diferentes baseado em um valor booleano, como ilustra a seguir:
 
 ![Fluxo de Controle If](../img/controlflow_if.png)
 

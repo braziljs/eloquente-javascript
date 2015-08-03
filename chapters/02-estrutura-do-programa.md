@@ -190,15 +190,13 @@ Executar declarações em ordem linear não é a única opção que temos. Uma a
 
 ![Fluxo de Controle If](../img/controlflow_if.png)
 
-A execução condicional é escrita em JavaScript com a palavra-chave `if`. De forma simplificada, nós somente queremos que algum código seja executado se (`if`), e somente se, uma certa condição existir. Por exemplo, no programa anterior, nós poderíamos querer mostrar o quadrado da entrada somente se a entrada for realmente um número.
+A execução condicional é escrita, em JavaScript, com a palavra-chave `if`. No caso mais simples, nós queremos que algum código seja executado se, e somente se, uma certa condição existir. No programa anterior, por exemplo, podemos mostrar o quadrado do dado fornecido como entrada apenas se ele for realmente um número.
 
-```javascript
-
-var theNumber = Number(prompt("Digite um número", ""));
+```js
+var theNumber = Number(prompt("Pick a number", ""));
 if (!isNaN(theNumber))
-	alert("Seu número é a raiz quadrada de " + 
-			theNumber * theNumber);
-
+  alert("Your number is the square root of " +
+        theNumber * theNumber);
 ```
 
 Com essa modificação, se você entrar com "queijo" - ou não digitar nada - nenhuma saída será retornada.

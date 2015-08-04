@@ -199,39 +199,34 @@ if (!isNaN(theNumber))
         theNumber * theNumber);
 ```
 
-Com essa modificação, se você entrar com "queijo" - ou não digitar nada - nenhuma saída será retornada.
+Com essa modificação, se você fornecer "queijo" como argumento de entrada, nenhuma saída será retornada.
 
-A palavra chave `if` é usada para executar ou pular uma declaração dependendo do valor da expressão booleana. Ela é sempre seguida por uma expressão entre parênteses, e então uma declaração.
+A palavra-chave `if` executa ou não uma declaração baseada no resultado de uma expressão Booleana. Tal expressão é escrita entre parênteses logo após a palavra-chave e seguida por uma declaração a ser executada.
 
-A função `isNaN` é uma função padrão que retorna `true` se o argumento dado a ela é `NaN`. A função `Number` retorna `NaN` quando você fornece a ela uma string que não representa um número válido. Então, a condição expressa "salvo que `theNumber` não seja um número, faça isso".
+A função `isNaN` é uma função padrão do JavaScript que retorna `true` apenas se o argumento fornecido for `NaN`. A função `Number` retorna `NaN` quando você fornece a ela uma string que não representa um número válido. Por isso, a condição se traduz a "a não ser que `theNumber` não seja um número, faça isso".
 
-Frequentemente você tem não apenas código que deve ser executado quando uma certa condição é verificada, mas também código que manipula outros casos, quando a condição não confere. A palavra-chave `else` pode ser usada, juntamente com `if`, para criar dois caminhos separados e paralelos que executam de acordo com suas condições:
+Você frequentemente não terá código que executa apenas quando uma condição for verdadeira, mas também código que lida com o outro caso. Esse caminho alternativo é representado pela segunda seta no diagrama. A palavra-chave `else` pode ser usada, juntamente com `if`, para criar dois caminhos distintos de execução.
 
-```javascript
-
-var theNumber = Number(prompt("Digite um número", ""));
+```js
+var theNumber = Number(prompt("Pick a number", ""));
 if (!isNaN(theNumber))
-	alert("Seu número é a raiz quadrada de " + 
-			theNumber * theNumber);
+  alert("Your number is the square root of " +
+        theNumber * theNumber);
 else
-	alert("Ei! Por que você não me deu um número?");
-	
-
+  alert("Hey. Why didn't you give me a number?");
 ```
 
-Se nós tivermos mais que dois caminhos que queremos escolher, múltiplos pares de `if`/`else` podem ser "encadeados" conjuntamente. Aqui temos um exemplo:
+Se tivermos mais que dois caminhos a escolher, múltiplos pares de `if`/`else` podem ser "encadeados". Aqui temos um exemplo:
 
-```javascript
+```js
+var num = Number(prompt("Pick a number", "0"));
 
-var num = Number(prompt("Digite um número", "0"));
-
-if (num < 0)
-	alert("Pequeno");
+if (num < 10)
+  alert("Small");
 else if (num < 100)
-	alert("Médio");
+  alert("Medium");
 else
-	alert("Grande");
-
+  alert("Large");
 ```
 
 Este programa vai primeiramente checar se `num` é menor que 10. Se ele for, ele escolhe essa ramificação, e mostra "Pequeno", e pronto. Se não for, ele pega a ramificação `else`, que contém o segundo `if`. Se a segunda condição (`< 100`) for verdadeira, isso significa que o número está entre 10 e 100, e `Médio` será mostrado. Se não, o segundo e último `else` será escolhido.

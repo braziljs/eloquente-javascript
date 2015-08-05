@@ -21,7 +21,7 @@ O tipo mais simples de afirmação é uma expressão com um ponto e vírgula dep
 
 ## Ponto e vírgula
 
-Em alguns casos, o JavaScript permite que você omita o ponto e vírgula no fim de uma declaração. Em outros casos, ele deve estar lá, ou coisas estranhas irão acontecer. As regras para quando ele pode ser seguramente omitido são um pouco complexas e propensas a erro. Neste livro, todas as declarações que precisam de ponto e vírgula vão sempre terminar com um. Eu recomendo a você fazer o mesmo em seus programas, ao menos até que você aprenda mais sobre as sutilezas envolvidas em retirar o ponto e vírgula.
+Em alguns casos, o JavaScript permite que você omita o ponto e vírgula (`;`) no fim de uma declaração. Em outros casos ele deve estar lá ou coisas estranhas irão acontecer. As regras para quando ele pode ser seguramente omitido são um pouco complexas e propensas a erro. Neste livro todas as declarações que precisam de ponto e vírgula vão sempre terminar com um. Eu recomendo a você fazer o mesmo em seus programas, ao menos até você aprender mais sobre as sutilezas envolvidas em retirar o ponto e vírgula.
 
 ## Variáveis
 

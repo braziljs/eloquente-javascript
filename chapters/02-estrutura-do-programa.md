@@ -229,7 +229,7 @@ else
   alert("Large");
 ```
 
-Este programa vai primeiramente checar se `num` é menor que 10. Se ele for, ele escolhe essa ramificação, e mostra "Pequeno", e pronto. Se não for, ele pega a ramificação `else`, que contém o segundo `if`. Se a segunda condição (`< 100`) for verdadeira, isso significa que o número está entre 10 e 100, e `Médio` será mostrado. Se não, o segundo e último `else` será escolhido.
+O programa irá primeiramente verificar se `num` é menor que 10. Se for, ele escolhe esse caminho, mostra "Small" e termina sua execução. Se não for, ele escolhe o caminho `else`, que contém o segundo `if`. Se a segunda condição (< 100) for verdadeira, o número está entre 10 e 100, e "Medium" será mostrado. Caso contrário, o segundo e último `else` será escolhido.
 
 O esquema de setas para este programa parece com algo assim:
 
@@ -237,10 +237,9 @@ O esquema de setas para este programa parece com algo assim:
 
 ## Loops While e Do
 
-Considere um programa que imprimi todos os numéros pares de 0 a 12. Uma forma de se escrever isto é a seguinte:
+Considere um programa que imprime todos os números pares de 0 a 12. Uma forma de escrever isso é:
 
-```javascript
-
+```js
 console.log(0);
 console.log(2);
 console.log(4);
@@ -248,26 +247,23 @@ console.log(6);
 console.log(8);
 console.log(10);
 console.log(12);
-
 ```
 
-Isto funciona, mas a ideia de escrever um programa é a de fazer algo ser *menos* trabalhoso, e não mais. Se nós precisarmos de todos os números pares menores que 1.000, o programa anterior se torna impraticável. O que nós precisamos é de uma forma de repetir código - um *loop*.
+Isso funciona, mas a ideia de escrever um programa é fazer com que algo seja _menos_ trabalhoso, e não o contrário. Se precisarmos de todos os números pares menores do que 1.000, essa abordagem seria inviável. O que precisamos é de uma maneira de repetir código. Essa forma de fluxo de controle é chamada de _laço de repetição_ (loop).
 
 ![Fluxo de Controle do Loop](../img/controlflow_loop.png)
 
-O fluxo de controle do loop nos permite voltar a um mesmo ponto do programa onde estávamos anteriormente, e repetí-lo no contexto da nossa declaração atual do programa. Se nós combinarmos isso com uma variável que conta, nós podemos fazer isso:
+O fluxo de controle do loop nos permite voltar a um mesmo ponto no programa onde estávamos anteriormente e repetí-lo no estado atual do programa. Se combinarmos isso a uma variável contadora, conseguimos fazer algo assim:
 
-```javascript
-
+```js
 var number = 0;
 while (number <= 12) {
-	console.log(number);
-	number = number + 2;
+  console.log(number);
+  number = number + 2;
 }
-// 0
-// 2 
-// etc...
-
+// → 0
+// → 2
+//   … etcetera
 ```
 
 Uma declaração iniciando com a palavra `while` cria um loop. A palavra `while` é seguida por uma expressão em parênteses e então uma declaração, como um `if`. O loop age continuando a executar a declaração enquanto a expressão produzir um valor que é `true`, quando convertido para o tipo booleano.

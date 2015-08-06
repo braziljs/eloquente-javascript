@@ -4,17 +4,17 @@ Capítulo 10
 
 Um programador iniciante escreve seus programas como uma formiga constrói seu formigueiro, um pedaço de cada vez, sem pensar na estrutura maior. Seus programas irão parecer como areia solta. Eles podem durar um tempo, mas se crescem demais, desmoronam.
 
-Percebendo esse problema, o programador começará a gastar muito tempo pensando sobre a estrutura. Seus programas serão rígidamente estruturados, como esculturas em pedra. Eles são sólidos, mas quando precisam mudar, devem ser quebrados.
+Percebendo esse problema, o programador começará a gastar muito tempo pensando sobre a estrutura. Seus programas serão rigidamente estruturados, como esculturas em pedra. Eles são sólidos, mas quando precisam mudar, devem ser quebrados.
 
-O programador experiente sabe quando aplicar uma estrutura equando deixar as coisas mais simples. Seus programas são como argila, solido mas ainda maleáveis.
+O programador experiente sabe quando aplicar uma estrutura e quando deixar as coisas mais simples. Seus programas são como argila, solido mas ainda maleáveis.
 
 Mestre Yuan-Ma, O livro da Programação
 
-Todo programa possui uma forma. Em menor escala, essa forma é determinada pela divisão em funções e os blocos são o código dentro delas. Programadores tem muita liberdade na forma que dão aos seus programas. É determinado mais pelo bom (ou mau) gosto, do que pela funcionalidade planejada.
+Todo programa possui uma forma. Em menor escala, essa forma é determinada pela divisão em funções e os blocos são o código dentro delas. Programadores têm muita liberdade na forma que dão aos seus programas. É determinado mais pelo bom (ou mau) gosto, do que pela funcionalidade planejada.
 
 Quando olhamos um programa grande em seu todo, funções individuais começam a se misturar e seria bom possuir uma unidade maior de organização.
 
-Módulos dividem programas em blocos de código que, por algum critério, pertemcem a uma mesma unidade. este capítulo explora alguns dos benefícios que estes agrupamentos fornecem e mostra algumas técnicas para construção de módulos em Javascript.
+Módulos dividem programas em blocos de código que, por algum critério, pertencem a uma mesma unidade. Este capítulo explora alguns dos benefícios que estes agrupamentos fornecem e mostra algumas técnicas para construção de módulos em Javascript.
 
 ## Organização
 
@@ -22,17 +22,17 @@ Existem algumas razões porque autores dividem seus livros em capítulos e seç�
 
 Os benefícios de dividir um programa em vários arquivos ou módulos são semelhantes, ajudam as pessoas que não estão familiarizadas com o código a achar o que elas buscam, e ajudam o programador a colocar coisas semelhantes juntas.
 
-Alguns programas são organizados seguindo modelo de um texto tradicional, com uma ordem bem definida que encoraja o leitor a percorrer o programa, e muito falatório (comentários) fornecendo uma descrição coerente do código. Isso faz o programa muito menos intimidador (ler código desconhecido é intimidador, geralmente). Mas existe um lado ruim que é a maior quantidade de trabalho a fazer e dificulta um pouco as alteraçoes, porque os comentários tendem a ser mais interligados do que o código em si.
+Alguns programas são organizados seguindo modelo de um texto tradicional, com uma ordem bem definida que encoraja o leitor a percorrer o programa, e muito falatório (comentários) fornecendo uma descrição coerente do código. Isso faz o programa muito menos intimidador (ler código desconhecido é intimidador, geralmente). Mas existe um lado ruim que é a maior quantidade de trabalho a fazer e dificulta um pouco as alterações, porque os comentários tendem a ser mais interligados do que o código em si.
 
-Como regra geral, organização tem um custo, e é nos estágios iniciais do projeto, quando não sabemos com certeza aonde vamos e que tipo de módulos o programa precisará. Eu defendo uma estrutura minimalista, com pouca estrutura. Apenas coloque tudo em um simples arquivo até que o código estabiliza. Dessa maneira, você não não estará se sobreccaregando pensando em organização enquanto tem pouca informação, não perderá tempo fazendo e desfazendo coisas, e não irá acidentalmente travar-se em uma estrutura que não serve realmente para seu programa.
+Como regra geral, organização tem um custo, e é nos estágios iniciais do projeto, quando não sabemos com certeza aonde vamos e que tipo de módulos o programa precisará. Eu defendo uma estrutura minimalista, com pouca estrutura. Apenas coloque tudo em um simples arquivo até que o código esteja estabilizado. Dessa maneira, você não não estará se sobrecarregando pensando em organização enquanto tem pouca informação, não perderá tempo fazendo e desfazendo coisas, e não irá acidentalmente travar-se em uma estrutura que não serve realmente para seu programa.
 
 ## Namespaces
 
-Most modern programming languages have a scope level between “global” (everyone can see it) and “local” (only this function can see it). JavaScript does not. Thus, by default, everything that needs to be visible outside of the small scope of the current function is visible everywhere.
+A maioria das linguagens modernas de programação têm um nível de escopo entre "global" (todos podem ver) e "local" (só esta função pode vê isto). JavaScript não. Assim, por padrão, tudo o que precisa ser visível fora do pequeno escopo da função atual é visível em todos os lugares.
 
-Namespace pollution, the problem of a lot of unrelated code having to share a single set of global variable names, was mentioned in chapter 4, where the Math object was given as an example of an object that acts sort of like a module by grouping a lot of math-related functionality.
+Namespace pollution, o problema de um monte de código não relacionado ter que compartilhar um único conjunto de nomes de variáveis globais, foi mencionado no capítulo 4, onde o objeto Math foi dado como um exemplo de um objeto que age como uma espécie de módulo por um agrupamento série de funcionalidades relacionadas com a matemática..
 
-Though JavaScript provides no actual module construct yet, objects can be used to create publicly accessible sub-namespaces, and functions can be used to create an isolated, private namespace inside of a module. Later in this chapter, I will demonstrate some techniques that allow us to fake reasonably convenient, namespace-isolating modules.
+Embora javascript nao possua a criação de modulos nativa ainda, objetos podem ser usados para criar sub-namespaces publicamente acessíveis, e funções podem ser usadas para criar um  'namespace' privado dentro de um módulo. vou demonstrar algumad técnicas que nos permitirão a falsificar módulos isolados de namespace bem convenientes.
 
 ## Reuse
 

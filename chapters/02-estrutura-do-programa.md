@@ -266,43 +266,39 @@ while (number <= 12) {
 //   … etcetera
 ```
 
-Uma declaração iniciando com a palavra `while` cria um loop. A palavra `while` é seguida por uma expressão em parênteses e então uma declaração, como um `if`. O loop age continuando a executar a declaração enquanto a expressão produzir um valor que é `true`, quando convertido para o tipo booleano.
+Uma declaração que inicia com a palavra-chave `while` cria um loop. A palavra `while` é acompanhada por uma expressão entre parênteses e seguida por uma declaração, similar ao `if`. O loop continua executando a declaração enquanto a expressão produzir um valor que, após convertido para o tipo Booleano, seja `true`.
 
+Nesse loop, queremos imprimir o número atual e somar dois em nossa variável. Sempre que precisarmos executar múltiplas declarações dentro de um loop, nós as envolvemos com chaves (`{` e `}`). As chaves, para declarações, são similares aos parênteses para as expressões, agrupando e fazendo com que sejam tratadas como uma única declaração. Uma sequência de declarações envolvidas por chaves é chamada de _bloco_.
 
-Por causa de querermos fazer duas coisas dentro do loop, imprimir o número atual e adicionar 2 a nossa variável, nós envolvemos as duas declarações com chaves `{}`. Chaves, para declarações, são similares aos parênteses para expressões, elas as agrupam, fazendo que sejam vistas como uma simples declaração.
+Muitos programadores JavaScript envolvem os `if` e os loops com chaves. Eles fazem isso tanto para manter a consistência quanto para evitar que seja necessário adicionar ou remover chaves quando houver alterações no número de declarações. Nesse livro, para sermos mais breves, iremos escrever sem chaves a maioria das declarações compostas por uma única linha. Fique a vontade para escolher o estilo que preferir.
 
-Então, a variável `number` demonstra o caminho que a variável pode tomar no progresso do programa. Toda hora que o loop se repete, ele é incrementado por 2. Então, no início de toda repetição, ele é comparado com o número 12 para decidir se o programa terminou todo o trabalho que era pretendido a se fazer.
+A variável `number` demonstra uma maneira na qual variáveis podem verificar o progresso de um programa. Toda vez que o loop se repete, `number` é incrementado por `2`. No início de cada repetição, ele é comparado com o número `12` para decidir se o programa terminou de executar todo o trabalho esperado.
 
-Como exemplo de algo realmente útil, podemos agora escrever um programa que calcula e mostra o valor de 2¹⁰ (2 elevado a décima potência). Nós usamos duas variáveis: uma para manter o registro do nosso resultado e uma para contar quantas vezes multiplicamos este resultado por 2. O loop teste se a segunda variável já atingiu 10 e então atualiza ambas variáveis.
+Como um exemplo de algo que seja útil, podemos escrever um programa que calcula e mostra o valor de 2¹⁰ (2 elevado à décima potência). Nós usamos duas variáveis: uma para armazenar o resultado e outra para contar quantas vezes multiplicamos esse resultado por 2. O loop testa se a segunda variável já atingiu o valor 10 e então atualiza ambas as variáveis.
 
-```javascript
-
+```js
 var result = 1;
 var counter = 0;
 while (counter < 10) {
-	result = result * 2;
-	counter = counter + 1;
+  result = result * 2;
+  counter = counter + 1;
 }
 console.log(result);
-// 1024
-
+// → 1024
 ```
 
-O contador pode também iniciar com 1 e checar por `<= 10`, mas, por razões que vamos ver mais a frente, é uma boa ideia usar a contagem iniciando com 0.
+O contador pode também iniciar com `1` e checar o valor com `<= 10`, mas por razões que iremos ver no [Capítulo 4](./04-estruturas-de-dados.md) [TODO:] Adicionar link correto com âncora para a sessão mencionada no texto original: http://eloquentjavascript.net/04_data.html#array_indexing [/TODO], é uma boa ideia se acostumar a usar a contagem iniciando com zero.
 
-Uma estrutura muito similar é o loop `do`. Ele difere somente em um ponto do loop `while`: ele sempre vai executar este a declaração uma vez, e somente então vai iniciar o teste e verificar se precisa pausar. Para demonstrar, o teste é escrito abaixo do corpo do loop:
+O loop `do` é uma estrutura de controle similar ao `while`. A única diferença entre eles é que o `do` sempre executa suas declarações ao menos uma vez e inicia o teste para verificar se deve parar ou não apenas após a primeira execução. Para demonstrar isso, o teste aparece após o corpo do loop:
 
-```javascript
-
+```js
 do {
-	var name = prompt("Who are you?");
-} while (!name) {
-	console.log(name);
-}
-
+  var name = prompt("Who are you?");
+} while (!name);
+console.log(name);
 ```
 
-Isto vai forçar você a entrar com um nome, perguntando de novo e de novo até que pegue algo que não é uma string vazia. (Aplicando o operador `!` vamos converter o valor para o tipo booleano negando o mesmo, e todas as strings exceto `""` convertem em `true`).
+Esse programa irá forçar você a informar um nome. Ele continuará pedindo até que seja fornecido um valor que não seja uma string vazia. Aplicar o operador `!` faz com que o valor seja convertido para o tipo Booleano antes de negá-lo, e todas as strings exceto `""` convertem para `true`.
 
 ## Indentando Código
 

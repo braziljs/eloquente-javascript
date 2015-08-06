@@ -367,14 +367,12 @@ Se a declaração `break` faltar, ou acidentalmente tivermos uma condição que 
 
 Se você criar um loop infinito em algum dos exemplos desta página, você vai ser perguntando se quer parar o script após alguns segundos. Se isso falhar, você terá que fechar a aba que você está trabalhando, ou em alguns navegadores você terá que fechar todo ele, a fim de recuperá-lo.
 
-## Atualizando variáveis Suscintamente
+## Atualizando variáveis suscintamente
 
-Um programa, especialmente quando em loop, frequentemente precisa de "atualizar" uma variável com um valor que é baseado no valor anterior.
+Um programa, especialmente quando em loop, muita vezes precisa de atualizar uma variável para armazenar um valor baseado no valor anterior dessa variável.
 
 ```javascript
-
 counter = counter + 1;
-
 ```
 
 O JavaScript fornece um atalho para isso:
@@ -385,70 +383,62 @@ counter += 1;
 
 ```
 
-Isto também funciona para várias outras operações, como `result *= 2` para dobrar `result`, ou `counter -= 1` para contar abaixo.
+Atalhos similares funcionam para outros operadore, como `result *= 2` para dobrar o `result` ou `counter -= 1` para diminuir um.
 
 Isto nos permite encurtar nosso exemplo de contagem um pouco mais:
 
 ```javascript
-
 for (var number = 0; number <= 12; number += 2)
 	console.log(number);
-
 ```
 
-Para `counter += 1` e `counter -= 1`, sempre temos um equivalente mais curto: `counter++` e `counter--`
+Para `counter += 1` e `counter -= 1`, existem equivalentes mais curtos: `counter++` e `counter--`
 
-## Enviando um Valor com `switch`
+## Resolvendo um valor com `switch`
 
-É comum para um código se parecer com algo assim:
+É comum que o código fique assim:
 
 ```javascript
-
 if (variable == "value1") action1();
 else if (variable == "value2") action2();
 else if (variable == "value3") action3();
 else defaultAction();
-
 ```
 
-Há um construtor chamado `switch` que visa resolver o "envio" de valores de forma mais direta. Infelizmente, a sintaxe JavaScript usada para isso (que é herdada da linha de linguagens de programação C e Java) é um pouco estranha - frequentemente uma cadeia de declarações `if` continua parecendo melhor. Aqui um exemplo:
+Há um construtor chamado `switch` que se destina a resolver o envio de valores de uma forma mais direta. Infelizmente, a sintaxe JavaScript usada para isso (que foi herdada na mesma linha de linguagens de programação, C e Java) é um pouco estranha - frequentemente uma cadeia de declarações `if` continua parecendo melhor. Aqui está um exemplo:
 
 ```javascript
-
-switch (prompt("Como está o tempo?")) {
-	case "rainy":
-		console.log("Lembre-se de trazer um guarda-chuva!");
-		break;
-	case "ensolarado":
-		console.log("Vista roupas leves!");
-	case "nublado":
-		console.log("Vá lá fora!");
-		break;
-	default:
-		console.log("Tempo desconhecido.");
-		break;
+switch (prompt("What is the weather like?")) {
+  case "rainy":
+    console.log("Remember to bring an umbrella.");
+    break;
+  case "sunny":
+    console.log("Dress lightly.");
+  case "cloudy":
+    console.log("Go outside.");
+    break;
+  default:
+    console.log("Unknown weather type!");
+    break;
 }
-
 ```
 
-Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulos `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações aqui, e continuar a passar pelos rótulos, até que encontra uma declaração `break`. Em alguns casos, como o caso `"ensolarado"` do exemplo, podemos usá-lo para compartilhar algum código entre casos (ele recomenda *ir lá fora* para ambos os tempos "ensolarado" e "nublado"). Mas cuidado, é muito fácil se esquecer de um `break`, que vai causar ao programa a execução de código que você não gostaria de executar.
+Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulo no `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações, e continua a passar pelos rótulos, até encontrar uma declaração `break`. Em alguns casos, como no exemplo `case "sunny"`, pode ser usado para compartilhar algum código entre os `cases` (ele recomenda "ir lá fora" para ambos os tempos `sunny` e `cloudy`). Mas tenha cuidado: é fácil esquecer de um `break`, o que fará com que o programa execute código que você não gostaria de executar.
 
 ## Capitalização
 
-Nomes de variáveis não podem conter espaços, no entanto é muito útil usar múltiplas palavras para descrever claramente o quê a variável representa. Suas escolhas para escrever nomes de variáveis com muitas palavras são como estas:
+Nomes de variáveis não podem conter espaços, no entanto é muito útil usar múltiplas palavras para descrever claramente o quê a variável representa. Estas são praticamente suas escolhas para escrever nomes de variáveis com várias palavras:
 
 ```
-
 fuzzylittleturtle
 fuzzy_little_turtle
 FuzzyLittleTurtle
 fuzzyLittleTurtle
-
 ```
 
-O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar underscores `_`, embora seja um pouco doloroso de escrever. Entretanto, o padrão das funções JavaScript, e da maioria dos programadores JavaScript, é o de seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Isso não é difícil se acostumar com pequenas coisas assim, e o código com os estilos de nomes mistos pode se tornar desagrádavel para leitura, então vamos seguir esta convenção.
+O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar sublinhados, embora esse estilo seja um pouco doloroso de escrever. O padrão das funções em JavaScript, e o da maioria dos programadores JavaScript, é seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Não é difícil se acostumar com coisas pequenas assim, e o código com estilos de nomenclaturas mistas pode se tornar desagrádavel para leitura, então vamos seguir esta convenção.
 
-Em poucos casos, como a função `Number`, a primeira letra da variável é também capitalizada. Isso é feito para marcar a função como um construtor. O que um construtor é vai ser esclarecido no capítulo 6. Por agora, o importante é não ser incomodado com esta aparente falta de consistência.
+Em alguns casos, como a função `Number`, a primeira letra da variável é capitalizada também. Isso é feito para marcar a função como um construtor. O que é um construtor será esclarecido no [capítulo 6](./06-a-vida-secreta-dos-objetos.md). Por enquanto, o importante é não ser incomodado por esta aparente falta de consistência.
 
 ## Comentários
 

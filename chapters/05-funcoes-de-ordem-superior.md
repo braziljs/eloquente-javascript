@@ -270,7 +270,7 @@ console.log(ancestry.length);
 
 ## Filtrando um array
 
-Para encontrar um conjunto de pessoas nos dados ancestrais que eram  jovens em 1924 a seguinte função pode ser útil. Ele filtra os elementos em uma matriz que não passa de apenas um teste condicional.
+Para encontrar as pessoas no conjunto de dados dos ancestrais que eram jovens em 1924, a seguinte função pode ser útil. Ele filtra os elementos em uma matriz que não passa pelo teste.
 
 ```js
 function filter(array, test) {
@@ -288,13 +288,13 @@ console.log(filter(ancestry, function(person) {
 // → [{name: "Philibert Haverbeke", …}, …]
 ```
 
-Este utiliza o argumento chamado de `test` como um valor de função para preencher uma "lacuna" na computação. A função de `test` é chamado para cada elemento e o seu valor de retorno determina se um elemento é incluído na matriz retornada.
+Este utiliza um argumento chamado de `test`, com um valor de função, para preencher uma lacuna na computação. A função `test` é chamada para cada elemento, e o seu valor de retorno determina se um elemento é incluído na matriz retornada.
 
 Três pessoas no arquivo estavam vivas e jovens em 1924: meu avô, minha avó e minha tia-avó.
 
-Observe que a função `filter` em vez de apagar os elementos do `array` ela constrói um novo com apenas os elementos que passaram no teste. Esta função é primitiva e não modifica o `array` dado.
+Observe como a função `filter`, em vez de excluir os elementos do `array`, constrói um novo com apenas os elementos que passaram no teste. Esta função é primitiva. Não modifica o `array` que foi dado.
 
-Assim como `forEach`, `filter` é um método padrão de `arrays`. O exemplo abaixo define uma função só para mostrar o que ele faz internamente. A partir de agora vamos utiliza-la assim:
+Assim como `forEach`, `filter` é um método padrão de `arrays`. O exemplo define uma função só para mostrar o que ela faz internamente. A partir de agora vamos usá-lo assim:
 
 ```js
 console.log(ancestry.filter(function(person) {
@@ -305,10 +305,9 @@ console.log(ancestry.filter(function(person) {
 
 ## Transformando com map
 
-Digamos que temos um `array` de objetos que representam pessoas produzidos atravéz da filtragem do `array` de ancestrais. Mas queremos um `array` com os nomes o que é mais fácil de ler.
+Digamos que temos um `array` de objetos que representam pessoas. Mas queremos um `array` com os nomes o que é mais fácil de ler.
 
-A método `map` transforma um `array` atravez da aplicação de uma função para todos os seus elementos e constrói um novo `array`
-através dos valores devolvidos. O novo `array` terá o mesmo tamanho do `array` enviado mas seu conteúdo vai ser mapeado para um novo formato através da função.
+O método `map` transforma um `array` aplicaçando uma função para todos os elementos e constrói um novo `array` que é retornado como valor. O novo `array` terá o mesmo tamanho do `array` enviado, mas seu conteúdo é mapeado para um novo formato através da função.
 
 ```js
 function map(array, transform) {
@@ -328,7 +327,7 @@ console.log(map(overNinety, function(person) {
 //    "Maria Haverbeke"]
 ```
 
-Curiosamente as pessoas que eram jovens na década de 1920 e que viveram pelo menos até aos 90 anos de idade são as mesmas três pessoas que vimos antes, o que acaba de ser a geração mais recente do meu conjunto de dados. Eu acho que a medicina já percorreu um longo caminho.
+Curiosamente, as pessoas que viveram pelo menos 90 anos de idade são as mesmas três que vimos antes, as pessoas que eram jovens em 1920, que passam a ser a geração mais recente no meu conjunto de dados. Eu acho que a medicina já percorreu um longo caminho.
 
 Assim como `forEach` e `filter`, `map` também é um método padrão de `arrays`.
 

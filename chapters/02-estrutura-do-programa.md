@@ -268,7 +268,7 @@ Uma declaração que inicia com a palavra-chave `while` cria um loop. A palavra 
 
 Nesse loop, queremos imprimir o número atual e somar dois em nossa variável. Sempre que precisarmos executar múltiplas declarações dentro de um loop, nós as envolvemos com chaves (`{` e `}`). As chaves, para declarações, são similares aos parênteses para as expressões, agrupando e fazendo com que sejam tratadas como uma única declaração. Uma sequência de declarações envolvidas por chaves é chamada de _bloco_.
 
-Muitos programadores JavaScript envolvem os `if` e os loops com chaves. Eles fazem isso tanto para manter a consistência quanto para evitar que seja necessário adicionar ou remover chaves quando houver alterações no número de declarações. Nesse livro, para sermos mais breves, iremos escrever sem chaves a maioria das declarações compostas por uma única linha. Fique a vontade para escolher o estilo que preferir.
+Muitos programadores JavaScript envolvem cada `if` e loop com chaves. Eles fazem isso tanto para manter a consistência quanto para evitar que seja necessário adicionar ou remover chaves quando houver alterações posteriores no número de declarações. Nesse livro, para sermos mais breves, iremos escrever sem chaves a maioria das declarações compostas por uma única linha. Fique a vontade para escolher o estilo que preferir.
 
 A variável `number` demonstra uma maneira na qual variáveis podem verificar o progresso de um programa. Toda vez que o loop se repete, `number` é incrementado por `2`. No início de cada repetição, ele é comparado com o número `12` para decidir se o programa terminou de executar todo o trabalho esperado.
 

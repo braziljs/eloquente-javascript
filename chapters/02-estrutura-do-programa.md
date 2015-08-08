@@ -436,9 +436,9 @@ Em alguns casos, como a função `Number`, a primeira letra da variável é capi
 
 ## Comentários
 
-Frequentemente, o código puro não transmite todas as informações necessárias que você gostaria que tivessem para leitores humanos, ou ele se transmite de uma forma tão enigmática que as pessoas realmente não consegue entendê-lo. Em outras ocasiões, você está apenas se sentindo poético ou quer anotar alguns pensamentos como parte de seu programa. Os comentários são para isto.
+Frequentemente, o código puro não transmite todas as informações necessárias que você gostaria que tivessem para leitores humanos, ou ele se transmite de uma forma tão enigmática que as pessoas realmente não conseguem entendê-lo. Em outras ocasiões, você está apenas se sentindo poético ou quer anotar alguns pensamentos como parte de seu programa. Os comentários são para isto.
 
-O comentário é um pedaço de texto que é parte de um programa mas é completamente ignorado pelo computador. No JavaScript temos duas maneiras de escrever os comentários. Para escrever uma única linha de comentário, você pode usar dois caracteres barra ( `//` ) e então o comentário após.
+O comentário é um pedaço de texto que é parte de um programa mas é completamente ignorado pelo computador. No JavaScript temos duas maneiras de escrever os comentários. Para escrever em uma única linha de comentário, você pode usar dois caracteres barra ( `//` ) e então o comentário após.
 
 ```javascript
 var accountBalance = calculateBalance(account);
@@ -469,17 +469,17 @@ var theNumber = 11213;
 
 Você agora sabe que um programa é construído de declarações, que as vezes contém mais declarações. Declarações tendem a conter expressões, que podem ser feitas de pequenas expressões.
 
-Colocar declarações uma embaixo da outra nos dá um programa que é executado de cima para baixo. Você pode causar transtorno no fluxo de controle usando declarações condicionais (`ìf`, `else` e `switch`) e loops (`while`, `do` e `for`).
+Colocar declarações uma após a outra nos dá um programa que é executado de cima para baixo. Você pode causar transtornos no fluxo de controle usando declarações condicionais (`ìf`, `else` e `switch`) e loops (`while`, `do` e `for`).
 
-As variáveis podem ser usadas para arquivar um pedaços de dados sob um nome, e são úteis para rastrear o estado de um programa. O ambiente é um conjunto de variáveis que são definidas. O sistema JavaScript sempre coloca um número padrão de variáveis úteis dentro do seu ambiente.
+As variáveis podem ser usadas para arquivar pedaços de dados sob um nome, e são úteis para rastrear o estado de um programa. O ambiente é um conjunto de variáveis que são definidas. O sistema JavaScript sempre coloca um número padrão de variáveis úteis dentro do seu ambiente.
 
 Funções são valores especiais que encapsulam um pedaço do programa. Você pode invocá-las escrevendo `function Name (argument1, argument2) {}`. Essa chamada de função é uma expressão, que pode produzir um valor.
 
 ## Exercícios
 
-Se você está inseguro sobre como testar suas soluções para os exercícios, consulte a introdução.
+Se você está inseguro sobre como testar suas soluções para os exercícios, consulte a [introdução](./00-introducao.md).
 
-Cada exercício começa com a descrição de um problema. Leia e tente resolvê-lo. Se você tiver dificuldades, considere a leitura das dicas abaixo do exercício. As soluções completas para os exercícios não estão inclusas neste livro, mas você pode procurar elas onlines em [eloquentjavascript.net/code](http://eloquentjavascript.net/code/). Se você quer aprender algo, eu recomendo que veja as soluções somente após ter resolvido o exercício, ou pelo menos, depois que tentou por um periódo longo e duro mas o suficiente para dar uma pequena dor de cabeça.
+Cada exercício começa com a descrição de um problema. Leia e tente resolvê-lo. Se você tiver dificuldades, considere a leitura das dicas abaixo do exercício. As soluções completas para os exercícios não estão inclusas neste livro, mas você pode procurar elas onlines em [eloquentjavascript.net/code](http://eloquentjavascript.net/code/). Se você quer aprender algo, eu recomendo que veja as soluções somente após ter resolvido o exercício, ou pelo menos, depois que tentou por um periódo longo e duro o suficiente para dar uma pequena dor de cabeça.
 
 ### Triângulo com Loop
 
@@ -493,7 +493,7 @@ Escreva um programa que faça sete chamadas a `console.log()` para retornar o se
 	######
 	#######
 
-Uma maneira interessante para saber o comprimento de uma `string` é escrevento `.length` após ela.
+Uma maneira interessante para saber o comprimento de uma `string` é escrevendo `.length` após ela.
 
 ```javascript
 var abc = "abc";
@@ -515,29 +515,49 @@ Agora, considere a equivalência entre números e cadeias em um `hash` de caract
 
 ### FizzBuzz
 
-Escreva um programa que imprima (usando `console.log()`) todos os números de 1 a 100, exceto que, para números divisíveis por 3, ele imprima `Fizz` ao invés do número, e para números divisíveis por 5 (e não 3), ele imprima `Buzz`.
+Escreva um programa que imprima usando `console.log()` todos os números de 1 a 100 com duas exceções. Para números divisíveis por 3, imprima `Fizz` ao invés do número, e para números divisíveis por 5 (e não 3), imprima `Buzz`.
 
-Quando você tiver o programa funcionando, modifique-o para imprimir `FizzBuzz` para números que são divisíveis por ambos os números 3 e 5.
+Quando o programa estiver funcionando, modifique-o para imprimir `FizzBuzz` para números que são divisíveis por ambos 3 e 5 (e continue imprimindo `Fizz` e `Buzz` para números divisíveis por apenas um deles).
 
-(Isto é na verdade uma pergunta de entrevista usada para eliminar uma porcentagem significativa de candidatos programadores. Então, se você resolvê-la, você está autorizado de se sentir bem consigo mesmo).
+(Isto é na verdade uma pergunta de entrevista usada para eliminar uma porcentagem significativa de candidatos programadores. Então se você resolvê-la, você está autorizado de se sentir bem consigo mesmo).
 
-> Confira uma dica de como resolver [aqui](https://gist.github.com/ericdouglas/8750252) e a resolução [aqui](https://gist.github.com/ericdouglas/8750259).
+**Dica:**
+
+Interar sobre os números é trabalho claro de um loop, e selecionar o que imprimir é uma questão de execução condicional. Lembre-se do truque de usar o operador restante (`%`) para verificar se um número é divisível por outro número (terá zero de resto).
+
+Na primeira versão, existem três resultados possíveis para cada número, então você irá criar uma cadeia de `if/else if/else`.
+
+Na segunda versão o programa tem uma solução simples e uma inteligente. A maneira mais simples é adicionar um outro "ramo" para um teste preciso da condição dada. Para o método inteligente é construir uma sequência de caracteres contendo palavra ou palavras para a saída, que imprima a palavra ou o número, caso não há palavra, fazendo o uso do elegante operador `||`.
 
 ### Tabuleiro de Xadrez
 
-Escreva um programa que cria uma string que representa uma grade 8x8, usando novas linhas para separar os caracteres. A cada posição da grade existe ou um espaço ou um caracter "#", de forma que estes caracteres formem um tabuleiro de xadrez.
+Escreva um programa que cria uma `string` que representa uma grade 8x8, usando novas linhas para separar os caracteres. A cada posição da grade existe um espaço ou um caracter "#". Esses caracteres formam um tabuleiro de xadrez.
 
-Passando esta string para `console.log`, ela deverá se parecer com isso:
+Passando esta `string` para o `console.log` deve mostrar algo como isto:
 
-	# # # #
-	 # # # #
-	# # # #
-	 # # # #
-	# # # #
-	 # # # #
-	# # # #
-	 # # # #
+  # # # #
+   # # # #
+  # # # #
+   # # # #
+  # # # #
+   # # # #
+  # # # #
+   # # # #
 
-Quando isso funcionar, defina uma variável `tamanho = 8`, e mude o programa para que o mesmo funciona para qualquer `tamanho`, retornando uma grade com a largura e altura fornecida.
+Quando você tiver o programa que gere este padrão, defina a variável `size = 8` e altere programa para que ele funcione para qualquer `size`, a saída da grade de largura e altura.
 
-> Confira uma dica de como resolver [aqui](https://gist.github.com/ericdouglas/8805647) e a resolução [aqui](https://gist.github.com/ericdouglas/8781354).
+```
+// Your code here.
+```
+
+**Dica:**
+
+A sequência pode ser contruida iniciando vazia ("") e repetidamente adicionando caracateres. O caracter para uma nova linha é escrito assim `\n`.
+
+Utilize `console.log` para visualizar a saída do seu programa.
+
+Para trabalhar com duas dimensões, vou vai precisar de um loop dentro de outro loop. Coloque entre chaves os "corpos" dos loops para se tornar mais fácil de visualizar quando inicia e quando termina. Tente recuar adequadamente esses "corpos". A ordem dos loops deve seguir a ordem que usamos para construir a string (linha por linha, esquerda para direita, cima para baixo). Então o loop mais externo manipula as linhas e o loop interno manipula os caracteres por linha.
+
+Você vai precisar de duas variáveis para acompanhar seu progresso. Para saber se coloca um espaço ou um "#" em uma determinada posição, você pode testar se a soma dos dois contadores ainda é divisível por (`% 2`).
+
+Encerrando uma linha com um caracter de nova linha acontece após a linha de cima ser construída, faça isso após o loop interno, mas dentro do loop externo.

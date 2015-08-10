@@ -300,7 +300,7 @@ Esse programa irá forçar você a informar um nome. Ele continuará pedindo at�
 
 ## Indentando Código
 
-Você deve ter notado os espaços que coloco na frente das declarações. Eles não são necessários - o computador vai aceitar o programa muito bem sem eles. De fato, as quebras de linhas nos programas também são opcionais. Você pode escrevê-las como uma linha simples se quiser. O papel da indentação dentro dos blocos é fazer com que se destaque a estrutura do código. Por causa de novos blocos poderem ser abertos dentro de outros blocos, em códigos complexos isto pode se tornar difícil de se ver onde um bloco terminar e outro inicia. Com uma indentação correta, o formato visual de um programa corresponde a forma do bloco dentro dele. Eu gosto de usar 2 espaços para cada bloco aberto, mas gostos são diferentes - algumas pessoas usam quatro espaços, e algumas usam caracteres tab.
+Você deve ter reparado nos espaços que coloco em algumas declarações. No JavaScript, eles não são necessários e o computador irá aceitar o programa sem eles. De fato, até as quebras de linhas são opcionais. Se você quiser, pode escrever um programa inteiro em uma única linha. O papel da indentação dentro dos blocos é fazer com que a estrutura do código se destaque. Em códigos complexos, onde temos blocos dentro de blocos, pode se tornar extremamente difícil distinguir onde um bloco começa e o outro termina. Com a indentação adequada, o formato visual do programa corresponde ao formato dos blocos contidos nele. Gosto de usar dois espaços para cada bloco, mas essa preferência pode variar — algumas pessoas usam quatro espaços e outras usam caracteres "tab".
 
 ## Loops For
 

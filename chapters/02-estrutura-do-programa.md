@@ -298,18 +298,16 @@ Você deve ter reparado nos espaços que coloco em algumas declarações. No Jav
 
 ## Loops For
 
-Loops sempre seguem o mesmo padrão, como visto nos exemplos acima do `while`. Primeiro, uma variável "contadora" é criada. Esta variável registra o progresso do loop. Então, vem o loop `while`, que testa a expressão geralmente checando se o contador alcançou algum limite. No fim do corpo do loop, o contador é atualizado para o registro do progresso.
+Vários loops seguem o padrão visto nos exemplos anteriores do `while`. Primeiramente uma variável "contadora" é criada para monitorar o progresso do loop. Em seguida, temos o loop `while` que contém uma expressão de teste que normalmente checa se o contador alcançou algum limite. O contador é atualizado no final do corpo do loop, permitindo acompanhar o progresso.
 
-Por este padrão ser muito comum, o JavaScript e linguagens similares oferecem uma forma ligeiramente mais curta e compreensiva:
+Por esse padrão ser muito comum, o JavaScript e linguagens similares fornecem uma forma um pouco mais curta e compreensiva chamada de loop `for`.
 
-```javascript
-
+```js
 for (var number = 0; number <= 12; number = number + 2)
-	console.log(number);
-// 0
-// 2
-// etc
-
+  console.log(number);
+// → 0
+// → 2
+//   … etcetera
 ```
 
 Este programa é exatamente o equivalente ao exemplo anterior de *número-sempre-impresso*. A única alteração é que todas as declarações que estão relacionadas ao "estado" do loop estão agora em somente uma linha.

@@ -310,23 +310,21 @@ for (var number = 0; number <= 12; number = number + 2)
 //   … etcetera
 ```
 
-Este programa é exatamente o equivalente ao exemplo anterior de *número-sempre-impresso*. A única alteração é que todas as declarações que estão relacionadas ao "estado" do loop estão agora em somente uma linha.
+Esse programa é equivalente ao exemplo anterior que imprime números pares. A única diferença é que todas as declarações relacionadas ao "estado" do loop estão agora agrupadas.
 
-O parênteses após a palavra-chave `for` é obrigado a conter dois "ponto e vírgula" (`;`). A parte antes do primeiro ponto e vírgula *inicializa* o loop, normalmente definindo uma variável. A segunda parte é a expressão que *checa* se o loop vai continuar. A parte final *atualiza* o estado do loop após cada interação. Na maioria dos casos, isto é mais enxuto e limpo que uma construção `while`.
+Os parênteses após a palavra-chave `for` devem conter dois pontos e vírgulas. A parte anterior ao primeiro ponto e vírgula _inicializa_ o loop, normalmente definindo uma variável. A segunda parte é a expressão que _verifica_ se o loop deve continuar ou não. A parte final _atualiza_ o estado do loop após cada iteração. Na maioria dos casos, essa construção é menor e mais clara que a do `while`.
 
-Aqui temos o código que computa 2¹⁰, usando `for` ao invés de `while`:
+Aqui está o código que calcula 2¹⁰ usando `for` ao invés de `while`:
 
-```javascript
-
+```js
 var result = 1;
 for (var counter = 0; counter < 10; counter = counter + 1)
   result = result * 2;
 console.log(result);
-//1024
-
+// → 1024
 ```
 
-Note que mesmo se não abrirmos um bloco com `{`, a declaração no loop continua indentada com dois espaços para deixar claro que ela "pertence" a linha anterior a ela.
+Repare que mesmo não abrindo o bloco com `{`, a declaração no loop continua indentada com dois espaços para deixar claro que ela "pertence" à linha anterior a ela.
 
 ## Saindo de um Loop
 

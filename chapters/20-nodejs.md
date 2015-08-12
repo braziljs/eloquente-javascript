@@ -792,3 +792,138 @@ O que acontece quando alguma coisa _joga_ uma exceção em seu sistema? Como nã
 estamos usando nenhum bloco `try`, a exceção vai propagar para o topo da pilha
 de chamada. No Node, isso aborta o programa e escreve informações sobre a
 exceção (incluindo um rastro da pilha) no programa padrão de _stream_ de erros.
+
+Isso significa que nosso servidor vai colidir sempre que um problema for
+encontrado no código do próprio servidor, ao contrário dos problemas
+assíncronos, que são passados como argumentos para os _callbacks_. Se nós
+quisermos tratar todas as exceções _levantadas_ durante o tratamento de uma
+requisição, para ter certeza que enviamos uma resposta, precisamos adicionar
+blocos de `try/catch` para todos os _callbacks_.
+
+Isso é impraticável. Muitos programas em Node são escritos para fazer o menor
+uso possível de exceções, assumindo que se uma exceção for _levantada_,
+aconteceu algo que o programa não conseguiu resolver, e colidir é a resposta
+certa.
+
+Outra abordagem é usar promessas, que foram introduzidas no Capítulo 17.
+Promessas capturam as exceções _levantadas_ por funções de _callback_ e propagam
+elas como falhas. É possível carregar uma biblioteca de promessa no Node e
+usá-la para administrar seu controle assíncrono. Algumas bibliotecas Node
+fazem integração com as promessas, mas as vezes é trivial envolvê-las. O
+excelente módulo `"promise"` do NPM contém uma função chamada `denodeify`, que
+converte uma função assíncrona como a `fs.readFile` para uma função de retorno
+de promessa.
+
+```javascript
+var Promise = require("promise");
+var fs = require("fs");
+
+var readFile = Promise.denodeify(fs.readFile);
+readFile("file.txt", "utf8").then(function(content) {
+  console.log("The file contained: " + content);
+}, function(error) {
+  console.log("Failed to read file: " + error);
+});
+```
+
+A título de comparação, eu escrevi uma outra versão do servidor de arquivos
+baseado em promessas, que você pode encontrar em
+[eloquentjavascript.net/code/file_server_promises.js](http://eloquentjavascript.net/code/file_server_promises.js).
+Essa versão é um pouco mais clara pois as funções podem retornar seus
+resultados, ao invés de ter que chamar _callbacks_, e a rota de exceções está
+implícito, ao invés de explícito.
+
+Eu vou mostrar algumas linhas do servidor de arquivos baseado em promessas para
+ilustrar a diferença no estilo de programação.
+
+O objeto `fsp` que é usado por esse código contém estilos de promessas variáveis
+para determinado número de funções `fs`, envolvidas por `Promise.denodeify`. O
+objeto retornado, com propriedades `code` e `body`, vai se tornar o resultado
+final de uma cadeia de promessas, e vai ser usado para determinar que tipo de
+resposta vamos mandar pro cliente.
+
+```javascript
+methods.GET = function(path) {
+  return inspectPath(path).then(function(stats) {
+    if (!stats) // Does not exist
+      return {code: 404, body: "File not found"};
+    else if (stats.isDirectory())
+      return fsp.readdir(path).then(function(files) {
+        return {code: 200, body: files.join("\n")};
+      });
+    else
+      return {code: 200,
+              type: require("mime").lookup(path),
+              body: fs.createReadStream(path)};
+  });
+};
+
+function inspectPath(path) {
+  return fsp.stat(path).then(null, function(error) {
+    if (error.code == "ENOENT") return null;
+    else throw error;
+  });
+}
+```
+
+A função `inspectPath` simplesmente envolve o `fs.stat`, que trata o caso de
+arquivo não encontrado. Nesse caso, nós vamos substituir a falha por um sucesso
+que representa `null`. Todos os outros erros são permitidos a propagar. Quando a
+promessa retornada desses manipuladores falha, o servidor HTTP responde com um
+status 500.
+
+## Resumo
+Node é um sistema bem íntegro e legal que permite rodar JavaScript em um
+contexto fora do navegador. Ele foi originalmente concebido para tarefas de rede
+para desempenhar o papel de um _nó_ na rede. Mas ele se permite a realizar todas
+as tarefas de script, e se escrever JavaScript é algo que você gosta,
+automatizar tarefas de rede com Node funciona de forma maravilhosa.
+
+O NPM disponibiliza bibliotecas para tudo que você possa imaginar (e algumas
+outras coisas que você provavelmente nunca pensou), e permite que você atualize
+e instale essas bibliotecas rodando um simples comando. Node também vêm com um
+bom número de módulos embutidos, incluindo o módulo `"fs"`, para trabalhar com
+sistema de arquivos e o `"http"`, para rodar servidores HTTP e fazer requisições
+HTTP.
+
+Toda entrada e saída no Node é feita de forma assíncrona, a menos que você
+explicitamente use uma variante síncrona da função, como a `fs.readFileSync`.
+Você fornece as funções de _callback_ e o Node vai chamá-las no tempo certo,
+quando o _I/O_ que você solicitou tenha terminado.
+
+## Exercícios
+No Capítulo 17, o primeiro exercício era fazer várias requisições para
+[eloquentjavascript.net/author](http://eloquentjavascript.net/author), pedindo
+por tipos diferentes de conteúdo passando cabeçalhos `Accept` diferentes.
+
+Faá isso novamente usando a função `http.request` do Node. Solicite pelo menos
+os tipos de mídia `text/plain`, `text/html` e `application/json`. Lembre-se que
+os cabeçalhos para uma requisição podem ser passados como objetos, na
+propriedade `headers` do primeiro argumento da `http.request`.
+
+Escreva o conteúdo das respostas para cada requisição.
+
+**Dica:**
+Não se esqueça de chamar o método `end` no objeto retornado pela `http.request`
+para de fato disparar a requisição.
+
+O objeto de resposta passado ao _callback_ da `http.request` é um _stream_ de
+leitura. Isso significa que ele não é muito trivial pegar todo o corpo da
+resposta dele. A função a seguir lê todo o _stream_ e chama uma função de
+_callback_ com o resultado, usando o padrão comum de passar qualquer erro
+encontrado como o primeiro argumento do _callback_:
+
+```javascript
+function readStreamAsString(stream, callback) {
+  var data = "";
+  stream.on("data", function(chunk) {
+    data += chunk.toString();
+  });
+  stream.on("end", function() {
+    callback(null, data);
+  });
+  stream.on("error", function(error) {
+    callback(error);
+  });
+}
+```

@@ -685,3 +685,110 @@ outro callback, retornar o resultado para o usuário. Para arquivos comuns, nós
 criamos uma _stream_ de leitura com o `fs.createReadStream` e passamos ela ao
 `respond`, junto com o tipo de conteúdo que o módulo `"mime"` nos deu para esse
 nome de arquivo.
+
+O código que trata as requisições de `DELETE` é um pouco mais simples.
+
+```javascript
+methods.DELETE = function(path, respond) {
+  fs.stat(path, function(error, stats) {
+    if (error && error.code == "ENOENT")
+      respond(204);
+    else if (error)
+      respond(500, error.toString());
+    else if (stats.isDirectory())
+      fs.rmdir(path, respondErrorOrNothing(respond));
+    else
+      fs.unlink(path, respondErrorOrNothing(respond));
+  });
+};
+```
+
+Você deve estar se perguntando porque tentar deletar um arquivo inexistente
+retornar um status 204, e não um erro. Quando o arquivo que será deletado não
+existe, você pode dizer que o objetivo da requisição já foi cumprido. O padrão
+HTTP recomenda que as pessoas façam requisições _idempotent_, o que significa
+que indepedente da quantidade de requisições, elas não devem produzir um
+resultado diferente.
+
+```javascript
+function respondErrorOrNothing(respond) {
+  return function(error) {
+    if (error)
+      respond(500, error.toString());
+    else
+      respond(204);
+  };
+}
+```
+
+Quando uma resposta HTTP não contém nenhum dado, o status 204 ("_no content_")
+pode ser usado para indicar isso. Tendo em vista que a gente precisa construir
+_callbacks_ que reportam um erro ou retornam uma resposta 204 em diferentes
+situações, eu escrevi uma função chamada `respondErrorOrNothing` que cria esse
+_callback_.
+
+Aqui está a função que trata as requisições `PUT`:
+
+```javascript
+methods.PUT = function(path, respond, request) {
+  var outStream = fs.createWriteStream(path);
+  outStream.on("error", function(error) {
+    respond(500, error.toString());
+  });
+  outStream.on("finish", function() {
+    respond(204);
+  });
+  request.pipe(outStream);
+};
+```
+
+Aqui, nós não precisamos checar se o arquivo existe - se ele existe, nós
+simplesmente sobrescrevemos ele. Novamente nós usamos `pipe` para mover a
+informação de um _stream_ de leitura para um de escrita, nesse caso de uma
+requisição para um arquivo. Se a criação do _stream_ falhar, um evento `"error"`
+é disparado e reportado na nossa resposta. Quando a informação for transferida
+com sucesso, `pipe` vai fechar ambos _streams_, o que vai disparar o evento
+`"finish"` no _stream_ de escrita. Quando isso acontecer, nós podemos reportar
+sucesso na nossa resposta para o cliente com um status 204.
+
+O script completo para o servidor está disponível em
+[eloquentjavascript.net/code/file_server.js](http://eloquentjavascript.net/code/file_server.js).
+Você pode fazer o download e rodá-lo com Node pra começar seu próprio servidor
+de arquivos. E é claro, você pode modificá-lo e extendê-lo para resolver os
+exercícios desse capítulo ou para experimentar.
+
+A ferramente de linha de comando `curl`, amplamente disponível em sistemas Unix,
+pode ser usada para fazer requisições HTTP. A sessão a seguir é um rápido teste
+do nosso servidor. Note que `-X` é usado para para escolher o método da
+requisição e `-d` é usado para incluir o corpo da requisição.
+
+```bash
+$ curl http://localhost:8000/file.txt
+File not found
+$ curl -X PUT -d hello http://localhost:8000/file.txt
+$ curl http://localhost:8000/file.txt
+hello
+$ curl -X DELETE http://localhost:8000/file.txt
+$ curl http://localhost:8000/file.txt
+File not found
+
+```
+
+A primeira requisição feita para o arquivo `file.txt` falha pois o arquivo ainda
+não existe. A requisição `PUT` cria o arquivo, para que então a próxima
+requisição consiga encontrá-lo com sucesso. Depois de deletar o arquivo com uma
+requisição `DELETE`, o arquivo passa a não ser encontrado novamente.
+
+## Tratamento de erros
+No código para o servidor de arquivos, existem seis lugares aonde nós estamos
+explicitando exceções de rota que nós não sabemos como tratá-los como respostas
+de erro. Como exceções são passadas como argumentos e, portanto, não são
+automaticamente propagadas para os _callbacks_, elas precisam ser tratadas a
+todo momento de forma explícita. Isso acaba completamente com a vantagem de
+tratamento de exceções, isto é, a habilidade de centralizar o tratamento das
+condições de falha.
+
+O que acontece quando alguma coisa _joga_ uma exceção em seu sistema? Como não
+estamos usando nenhum bloco `try`, a exceção vai propagar para o topo da pilha
+de chamada. No Node, isso aborta o programa e escreve informações sobre a
+exceção (incluindo um rastro da pilha) no programa padrão de _stream_ de erros.

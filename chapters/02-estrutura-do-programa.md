@@ -31,7 +31,7 @@ Como um programa mantém um estado interno? Como ele se lembra das coisas? Nós 
 var caught = 5 * 5;
 ```
 
-E isso nos dá um segundo tipo de declaração. A palavra especial (*palavra-chave*) `var` indica que esta sentença vai definir uma variável. Ela é seguida pelo nome da variável e, se nós quisermos dá-la imediatamente um valor, por um operador `=` e uma expressão.
+E isso nos dá um segundo tipo de declaração. A palavra especial (palavra-chave) `var` indica que esta sentença vai definir uma variável. Ela é seguida pelo nome da variável e, se nós quisermos dá-la imediatamente um valor, por um operador `=` e uma expressão.
 
 A declaração anterior criou uma variável chamada `caught` e a usou para armazenar o valor que foi produzido pela multiplicação 5 por 5.
 
@@ -75,7 +75,7 @@ console.log(luigisDebt);
 
 ## Palavras-chave e Palavras Reservadas
 
-Nomes que tem um significado especial, como `var`, não podem ser usados como nomes de variáveis. Estas são chamados *keywords* (palavras-chave). Existe também algumas palavras que são "reservadas para uso" em futuras versões do JavaScript. Estas também não são oficialmente autorizadas a serem utilizadas como nomes de variáveis, embora alguns ambientes JavaScript as permitam. A lista completa de palavras-chave e palavras reservadas é bastante longa:
+Palavras que tem um significado especial, como `var`, não podem ser usadas como nomes de variáveis. Estas são chamadas *keywords* (palavras-chave). Existe também algumas palavras que são reservadas para uso em futuras versões do JavaScript. Estas também não são oficialmente autorizadas a serem utilizadas como nomes de variáveis, embora alguns ambientes JavaScript as permitam. A lista completa de palavras-chave e palavras reservadas é um pouco longa:
 
 `break` `case` `catch` `continue` `debugger` `default` `delete` `do` `else` `false` `finally` `for` `function` `if` `implements` `in` `instanceof` `interface` `let` `new` `null` `package` `private` `protected` `public` `return` `static` `switch` `throw` `true` `try` `typeof` `var` `void` `while` `with` `yield` `this`
 
@@ -87,30 +87,24 @@ A coleção de variáveis e seus valores que existem em um determinado tempo é 
 
 ## Funções
 
-Muitos dos valores fornecidos no ambiente padrão são do tipo *function* (função). Uma função é um pedaço de programa envolvido por um valor. Este valor pode ser aplicado, a fim de executar o programa envolvido. Por exemplo, no ambiente do navegador, a variável `alert` detém uma função que mostra uma pequena caixa de diálogo com uma mensagem. É usada assim:
+Muitos dos valores fornecidos no ambiente padrão são do tipo `function` (função). Uma função é um pedaço de programa envolvido por um valor. Este valor pode ser aplicado a fim de executar o programa envolvido. Por exemplo, no ambiente do navegador, a variável `alert` detém uma função que mostra uma pequena caixa de diálogo com uma mensagem. É usada da seguinte forma:
 
 ```javascript
-
-alert("Bom dia!");
-
+alert("Good morning!");
 ```
 
-[JSFiddle](http://jsfiddle.net/K3Fe3/)
-
-Executar uma função é denominado *invocando*, *chamando* ou *aplicando* uma função. A notação para fazer isso é colocar um parênteses depois de uma expressão que produza um valor de uma função. Normalmente você vai referenciar diretamente a uma variável que detém uma função. Os valores entre os parênteses são dados ao programa dentro da função. No exemplo, a função `alert` usou a string que foi dada como o texto para ser mostrado na caixa de diálogo. Valores dados a funções são chamados *argumentos*. A função `alert` precisa somente de um, mas outras funções podem precisar de diferentes quantidades ou tipos de argumentos.
+Executar uma função é denominado *invocar*, *chamar* ou *aplicar* uma função. Você pode chamar uma função colocando os parênteses depois da expressão que produz um valor de função. Normalmente você irá usar o nome da variável que contém uma função diretamente. Os valores entre os parênteses são passados ao programa dentro da função. No exemplo, a função `alert` usou a `string` que foi passada como o texto a ser mostrado na caixa de diálogo. Os valores passados para funções são chamados de `arguments` (argumentos). A função `alert` precisa somente de um deles, mas outras funções podem precisar de diferentes quantidades ou tipos de argumentos.
 
 ## A Função `console.log`
 
-A função `alert` pode ser útil como saída do dispositivo quando experimentada, mas clicar sempre em todas estas pequenas janelas vai lhe irritar. Nos exemplos passados, nós usamos `console.log` para retornar valores. A maioria dos sistemas JavaScript (incluindo todos os navegadores modernos e o node.js), fornecem uma função `console.log` que escrevem seus argumentos em algum texto na saída do dispositivo. Nos navegadores, a saída fica no console JavaScript, que é uma parte da interface do usuário escondida por padrão, mas que pode ser encontrada navegando no menu e encontrando um item do tipo "web console" ou "developer tools" (ferramenta do desenvolvedor), usualmente dentro do sub-menu "Tools" (ferramentas) ou "Developer" (desenvolvedor).
+A função `alert` pode ser útil como saída do dispositivo quando experimentada, mas clicar sempre em todas estas pequenas janelas vai lhe irritar. Nos exemplos passados, nós usamos `console.log` para saída de valores. A maioria dos sistemas JavaScript (incluindo todos os navegadores modernos e o Node.js), fornecem uma função `console.log` que escreve seus argumentos como texto na saída do dispositivo. Nos navegadores, a saída fica no console JavaScript. Esta parte da interface do `browser` fica oculta por padrão, mas muitos browsers abrem quando você pressiona `F12`, ou no Mac, quando você pressiona `Command + option + I`. Se isso não funcionar, busque no menu algum item pelo nome de *web console* ou *developer tools*.
 
-Quando rodamos os exemplos, ou seu próprio código, nas páginas deste livro, o `console.log` vai mostrar embaixo o exemplo, ao invés de ser no console JavaScript.
+Quando rodarmos os exemplos ou seu próprio código nas páginas deste livro, o `console.log` vai mostrar embaixo o exemplo, ao invés de ser no console JavaScript.
 
 ```javascript
-
 var x = 30;
 console.log("o valor de x é ", x);
 // o valor de x é 30
-
 ```
 
 Embora eu tenha afirmado que nomes de variáveis não podem conter pontos, `console.log` claramente contém um ponto. Eu não tinha mentido para você. Esta não é uma simples variável, mas na verdade uma expressão que retorna o campo `log` do valor contido na variável `console`. Nós vamos entender o que isso significa no capítulo 4.

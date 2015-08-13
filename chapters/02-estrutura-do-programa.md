@@ -90,16 +90,14 @@ A coleção de variáveis e seus valores que existem em um determinado tempo é 
 Muitos dos valores fornecidos no ambiente padrão são do tipo `function` (função). Uma função é um pedaço de programa envolvido por um valor. Este valor pode ser aplicado a fim de executar o programa envolvido. Por exemplo, no ambiente do navegador, a variável `alert` detém uma função que mostra uma pequena caixa de diálogo com uma mensagem. É usada da seguinte forma:
 
 ```javascript
-alert("Bom dia!");
+alert("Good morning!");
 ```
 
-[JSFiddle](http://jsfiddle.net/K3Fe3/)
-
-Executar uma função é denominado *invocar*, *chamar* ou *aplicar* uma função. A notação para fazer isso é colocar um parênteses depois de uma expressão que produza um valor de uma função. Normalmente você vai referenciar diretamente uma variável que detenha uma função. Os valores entre os parênteses são dados ao programa dentro da função. No exemplo, a função `alert` usou a string que foi passada como o texto a ser mostrado na caixa de diálogo. Os valores passados para funções são chamados de *argumentos*. A função `alert` precisa somente de um deles, mas outras funções podem precisar de diferentes quantidades ou tipos de argumentos.
+Executar uma função é denominado *invocar*, *chamar* ou *aplicar* uma função. Você pode chamar uma função colocando os parênteses depois da expressão que produz um valor de função. Normalmente você irá usar o nome da variável que contém uma função diretamente. Os valores entre os parênteses são passados ao programa dentro da função. No exemplo, a função `alert` usou a `string` que foi passada como o texto a ser mostrado na caixa de diálogo. Os valores passados para funções são chamados de `arguments` (argumentos). A função `alert` precisa somente de um deles, mas outras funções podem precisar de diferentes quantidades ou tipos de argumentos.
 
 ## A Função `console.log`
 
-A função `alert` pode ser útil como saída do dispositivo quando experimentada, mas clicar sempre em todas estas pequenas janelas vai lhe irritar. Nos exemplos passados, nós usamos `console.log` para retornar valores. A maioria dos sistemas JavaScript (incluindo todos os navegadores modernos e o Node.js), fornecem uma função `console.log` que escreve seus argumentos como texto na saída do dispositivo. Nos navegadores, a saída fica no console JavaScript, que é uma parte da interface do usuário escondida por padrão, mas que pode ser encontrada navegando no menu e encontrando um item do tipo "web console" ou "developer tools" (ferramenta do desenvolvedor), usualmente dentro do sub-menu "Tools" (ferramentas) ou "Developer" (desenvolvedor).
+A função `alert` pode ser útil como saída do dispositivo quando experimentada, mas clicar sempre em todas estas pequenas janelas vai lhe irritar. Nos exemplos passados, nós usamos `console.log` para saída de valores. A maioria dos sistemas JavaScript (incluindo todos os navegadores modernos e o Node.js), fornecem uma função `console.log` que escreve seus argumentos como texto na saída do dispositivo. Nos navegadores, a saída fica no console JavaScript. Esta parte da interface do `browser` fica oculta por padrão, mas muitos browsers abrem quando você pressiona `F12`, ou no Mac, quando você pressiona `Command + option + I`. Se isso não funcionar, busque no menu algum item pelo nome de *web console* ou *developer tools*.
 
 Quando rodarmos os exemplos ou seu próprio código nas páginas deste livro, o `console.log` vai mostrar embaixo o exemplo, ao invés de ser no console JavaScript.
 

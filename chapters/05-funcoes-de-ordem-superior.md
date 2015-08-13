@@ -365,9 +365,9 @@ console.log(ancestry.reduce(function(min, cur) {
 // → {name: "Pauwels van Haverbeke", born: 1535, …}
 ```
 
-## Composição
+## Componibilidade
 
-Considere como escreveriamos o exemplo anterior (encontrar a pessoa mais velha) caso não existisse a função `reduce` em ordem superior. O código não ficaria tão ruim.
+Considere como escreveríamos o exemplo anterior (encontrar a pessoa mais velha) sem funções de ordem superior. O código não ficaria tão ruim.
 
 ```js
 var min = ancestry[0];
@@ -377,12 +377,12 @@ for (var i = 1; i < ancestry.length; i++) {
     min = cur;
 }
 console.log(min);
-// → {name: "Pauwels van Haverbeke", born: 1535, …}
+// → {name: "Pauwels van Haverbeke", born: 1535, ...}
 ```
 
-Existem algumas variáveis sendo criadas e atribuídas e no fim o código tem duas linhas a mais, se tornando um código mas fácil de entender.
+Existem mais variáveis, e o programa está com duas linhas a mais, mesmo assim continuou bem fácil de entender.
 
-Funções de ordem superior começa ser útil quando você precisa compor funções. Como exemplo vamos escrever um código que encontra a média de idade para os homens e para as mulheres no conjunto de dados.
+Funções de ordem superior são úteis quando você precisa compor funções. Como exemplo, vamos escrever um código que encontra a idade média para homens e mulheres no conjunto de dados.
 
 ```js
 function average(array) {
@@ -399,17 +399,17 @@ console.log(average(ancestry.filter(female).map(age)));
 // → 54.56
 ```
 
-É um pouco bobo termos que definir `plus`("mais" da matemática) como uma função. Operadores em JavaScript são diferentes de funções, não são valores, então não podemos passar nenhum argumento.)
+(É um pouco bobo termos que definir `plus` como uma função, mas os operadores em JavaScript, diferentemente das funções, não são valores, então não podemos passar nenhum argumento.)
 
-Ao invés de juntar toda a lógica requerida num `loop` gigante, podemos decompor em conceitos que estamos interessados como: sexo, idade calculada e média de números. Podemos aplicá-las uma por uma para obter o resultado que estamos procurando.
+Ao invés de juntar toda a lógica em um `loop` gigante, ele está bem composto nos conceitos que interessamos como - determinando sexo, calculando a idade e a média dos números. Podemos aplicá-las uma de cada vez para obtermos o resultado que estamos procurando.
 
 Escrever um código limpo é fabuloso. Infelizmente essa clareza tem um custo.
 
 ## O Custo
 
-No mundo dos códigos elegantes e lindos arco-íris, vive um monstro mal que estraga os prazeres chamado de ineficiência.
+No mundo dos códigos elegantes e lindos arco-íris, vive um monstro que estraga os prazeres chamado de ineficiência.
 
-Um programa que processa um `array` é mais elegante e expressa em uma seqüência de etapas que são separadas para que cada processo faça algo com o `array` e produza um novo `array`. Mas a construção de todos esses `arrays` intermediários é um pouco custoso.
+Um programa que processa um `array` é mais elegante expresso em uma sequência separada onde cada passo pode fazer algo com o `array` e produzir um novo `array`. Mas a construção de todos esses `arrays` intermediários é um pouco custoso.
 
 Passar uma função para `forEach` e deixar que o método cuide da iteração para os nós é conveniente e fácil de ler. Porém chamadas de funções em JavaScript são custosas comparadas com blocos simples de `loop`.
 

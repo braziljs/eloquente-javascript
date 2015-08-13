@@ -706,7 +706,7 @@ methods.DELETE = function(path, respond) {
 Você deve estar se perguntando porque tentar deletar um arquivo inexistente
 retornar um status 204, e não um erro. Quando o arquivo que será deletado não
 existe, você pode dizer que o objetivo da requisição já foi cumprido. O padrão
-HTTP recomenda que as pessoas façam requisições _idempotent_, o que significa
+HTTP recomenda que as pessoas façam requisições _idempotentes_, o que significa
 que indepedente da quantidade de requisições, elas não devem produzir um
 resultado diferente.
 
@@ -792,3 +792,268 @@ O que acontece quando alguma coisa _joga_ uma exceção em seu sistema? Como nã
 estamos usando nenhum bloco `try`, a exceção vai propagar para o topo da pilha
 de chamada. No Node, isso aborta o programa e escreve informações sobre a
 exceção (incluindo um rastro da pilha) no programa padrão de _stream_ de erros.
+
+Isso significa que nosso servidor vai colidir sempre que um problema for
+encontrado no código do próprio servidor, ao contrário dos problemas
+assíncronos, que são passados como argumentos para os _callbacks_. Se nós
+quisermos tratar todas as exceções _levantadas_ durante o tratamento de uma
+requisição, para ter certeza que enviamos uma resposta, precisamos adicionar
+blocos de `try/catch` para todos os _callbacks_.
+
+Isso é impraticável. Muitos programas em Node são escritos para fazer o menor
+uso possível de exceções, assumindo que se uma exceção for _levantada_,
+aconteceu algo que o programa não conseguiu resolver, e colidir é a resposta
+certa.
+
+Outra abordagem é usar promessas, que foram introduzidas no Capítulo 17.
+Promessas capturam as exceções _levantadas_ por funções de _callback_ e propagam
+elas como falhas. É possível carregar uma biblioteca de promessa no Node e
+usá-la para administrar seu controle assíncrono. Algumas bibliotecas Node
+fazem integração com as promessas, mas as vezes é trivial envolvê-las. O
+excelente módulo `"promise"` do NPM contém uma função chamada `denodeify`, que
+converte uma função assíncrona como a `fs.readFile` para uma função de retorno
+de promessa.
+
+```javascript
+var Promise = require("promise");
+var fs = require("fs");
+
+var readFile = Promise.denodeify(fs.readFile);
+readFile("file.txt", "utf8").then(function(content) {
+  console.log("The file contained: " + content);
+}, function(error) {
+  console.log("Failed to read file: " + error);
+});
+```
+
+A título de comparação, eu escrevi uma outra versão do servidor de arquivos
+baseado em promessas, que você pode encontrar em
+[eloquentjavascript.net/code/file_server_promises.js](http://eloquentjavascript.net/code/file_server_promises.js).
+Essa versão é um pouco mais clara pois as funções podem retornar seus
+resultados, ao invés de ter que chamar _callbacks_, e a rota de exceções está
+implícito, ao invés de explícito.
+
+Eu vou mostrar algumas linhas do servidor de arquivos baseado em promessas para
+ilustrar a diferença no estilo de programação.
+
+O objeto `fsp` que é usado por esse código contém estilos de promessas variáveis
+para determinado número de funções `fs`, envolvidas por `Promise.denodeify`. O
+objeto retornado, com propriedades `code` e `body`, vai se tornar o resultado
+final de uma cadeia de promessas, e vai ser usado para determinar que tipo de
+resposta vamos mandar pro cliente.
+
+```javascript
+methods.GET = function(path) {
+  return inspectPath(path).then(function(stats) {
+    if (!stats) // Does not exist
+      return {code: 404, body: "File not found"};
+    else if (stats.isDirectory())
+      return fsp.readdir(path).then(function(files) {
+        return {code: 200, body: files.join("\n")};
+      });
+    else
+      return {code: 200,
+              type: require("mime").lookup(path),
+              body: fs.createReadStream(path)};
+  });
+};
+
+function inspectPath(path) {
+  return fsp.stat(path).then(null, function(error) {
+    if (error.code == "ENOENT") return null;
+    else throw error;
+  });
+}
+```
+
+A função `inspectPath` simplesmente envolve o `fs.stat`, que trata o caso de
+arquivo não encontrado. Nesse caso, nós vamos substituir a falha por um sucesso
+que representa `null`. Todos os outros erros são permitidos a propagar. Quando a
+promessa retornada desses manipuladores falha, o servidor HTTP responde com um
+status 500.
+
+## Resumo
+Node é um sistema bem íntegro e legal que permite rodar JavaScript em um
+contexto fora do navegador. Ele foi originalmente concebido para tarefas de rede
+para desempenhar o papel de um _nó_ na rede. Mas ele se permite a realizar todas
+as tarefas de script, e se escrever JavaScript é algo que você gosta,
+automatizar tarefas de rede com Node funciona de forma maravilhosa.
+
+O NPM disponibiliza bibliotecas para tudo que você possa imaginar (e algumas
+outras coisas que você provavelmente nunca pensou), e permite que você atualize
+e instale essas bibliotecas rodando um simples comando. Node também vêm com um
+bom número de módulos embutidos, incluindo o módulo `"fs"`, para trabalhar com
+sistema de arquivos e o `"http"`, para rodar servidores HTTP e fazer requisições
+HTTP.
+
+Toda entrada e saída no Node é feita de forma assíncrona, a menos que você
+explicitamente use uma variante síncrona da função, como a `fs.readFileSync`.
+Você fornece as funções de _callback_ e o Node vai chamá-las no tempo certo,
+quando o _I/O_ que você solicitou tenha terminado.
+
+## Exercícios
+No Capítulo 17, o primeiro exercício era fazer várias requisições para
+[eloquentjavascript.net/author](http://eloquentjavascript.net/author), pedindo
+por tipos diferentes de conteúdo passando cabeçalhos `Accept` diferentes.
+
+Faá isso novamente usando a função `http.request` do Node. Solicite pelo menos
+os tipos de mídia `text/plain`, `text/html` e `application/json`. Lembre-se que
+os cabeçalhos para uma requisição podem ser passados como objetos, na
+propriedade `headers` do primeiro argumento da `http.request`.
+
+Escreva o conteúdo das respostas para cada requisição.
+
+**Dica:**
+Não se esqueça de chamar o método `end` no objeto retornado pela `http.request`
+para de fato disparar a requisição.
+
+O objeto de resposta passado ao _callback_ da `http.request` é um _stream_ de
+leitura. Isso significa que ele não é muito trivial pegar todo o corpo da
+resposta dele. A função a seguir lê todo o _stream_ e chama uma função de
+_callback_ com o resultado, usando o padrão comum de passar qualquer erro
+encontrado como o primeiro argumento do _callback_:
+
+```javascript
+function readStreamAsString(stream, callback) {
+  var data = "";
+  stream.on("data", function(chunk) {
+    data += chunk.toString();
+  });
+  stream.on("end", function() {
+    callback(null, data);
+  });
+  stream.on("error", function(error) {
+    callback(error);
+  });
+}
+```
+
+## Corrigindo uma falha
+Para um fácil acesso remoto aos arquivos, eu poderia adquirir o hábito de ter o
+servidor de arquivos definido nesse capítulo na minha máquina, no diretório
+`/home/braziljs/public/`. E então, um dia, eu encontro alguém que tenha
+conseguido acesso a todos as senhas que eu gravei no navegador.
+
+O que aconteceu?
+
+Se ainda não está claro para você, pense novamente na função `urlToPath`
+definida dessa forma:
+
+```javascript
+function urlToPath(url) {
+  var path = require("url").parse(url).pathname;
+  return "." + decodeURIComponent(path);
+}
+```
+
+Agora considere o fato de que os caminhos para as funções `"fs"` podem ser
+relativos-eles podem conter "../" para voltar a um diretório acima. O que
+acontece quando um cliente envia uma requisição para uma dessas URLs abaixo?
+
+```
+http://myhostname:8000/../.config/config/google-chrome/Default/Web%20Data
+http://myhostname:8000/../.ssh/id_dsa
+http://myhostname:8000/../../../etc/passwd
+```
+
+Mudar o `urlToPath` corrige esse problema. Levando em conta o fato de que o Node
+no Windows permite tanto barras quanto contra-barras para separar diretórios.
+
+Além disso, pense no fato de que assim que você expor algum sistema _meia boca_
+na internet, os _bugs_ nesse sistema podem ser usado para fazer coisas ruins
+para sua máquina.
+
+**Dicas**
+Basta remover todas as recorrências de dois pontos que tenham uma barra, uma
+contra-barra ou as extremidades da _string_. Usando o método `replace` com uma
+expressão regular é a maneira mais fácil de fazer isso. Não se esqueça da _flag_
+`g` na expressão, ou o `replace` vai substituir somente uma única instância e
+as pessoas ainda poderiam incluir pontos duplos no caminho da URL a partir dessa
+medida de segurança! Também tenha certeza de substituir _depois_ de decodificar
+a _string_, ou seria possível despistar o seu controle que codifica pontos e
+barras.
+
+Outro caso de preocupação potencial é quando os caminhos começam com barra, que
+são interpretados como caminhos absolutos. Mas por conta do `urlToPath` colocar
+um ponto na frente do caminho, é impossível criar requisições que resultam em
+tal caminho. Múltiplas barras numa linha, dentro do caminho, são estranhas mas
+serão tratadas como uma única barra pelo sistema de arquivos.
+
+## Criando diretórios
+Embora o método `DELETE` esteja envolvido em apagar diretórios (usando
+`fs.rmdir`), o servidor de arquivos não disponibiliza atualmente nenhuma maneira
+de _criar_ diretórios.
+
+Adicione suporte para o método `MKCOL`, que deve criar um diretório chamando
+`fs.mkdir`. `MKCOL` não é um método básico do HTTP, mas ele existe nas normas
+da _WebDAV_, que especifica um conjunto de extensões para o HTTP, tornando-o
+adequado para escrever recursos, além de os ler.
+
+**Dicas**
+Você pode usar a função que implementa o método `DELETE` como uma planta baixa
+para o método `MKCOL`. Quando nenhum arquivo é encontrado, tente criar um
+diretório com `fs.mkdir`. Quando um diretório existe naquele caminho, você pode
+retornar uma resposta 204, então as requisições de criação de diretório serão
+_idempotentes_. Se nenhum diretório de arquivo existe, retorne um código de
+erro. O código 400 ("_bad request_") seria o mais adequado nessa situação.
+
+## Um espaço público na rede
+Uma vez que o servidor de arquivos serve qualquer tipo de arquivo e ainda inclui
+o cabeçalho `Content-Type`, você pode usá-lo para servir um website. Mas uma vez
+que seu servidor de arquivos permita que qualquer um delete e sobescreva
+arquivos, seria um tipo interessante de website: que pode ser modificado,
+vandalizado e destruído por qualquer um que gaste um tempo para criar a
+requisição HTTP correta. Mas ainda assim, seria um website.
+
+Escreva uma página HTML básica que inclui um simples arquivo JavaScript. Coloque
+os arquivos num diretório servido pelo servidor de arquivos e abra isso no seu
+navegador.
+
+Em seguida, como um exercício avançado ou como um projeto de fim de semana,
+combine todo o conhecimento que você adquiriu desse livro para construir uma
+interface mais amigável pra modificar o website de dentro do website.
+
+Use um formulário HTML (Capítulo 18) para editar os conteúdos dos arquivos que
+fazer parte do website, permitindo que o usuário atualize eles no servidor
+fazendo requisições HTTP como vimos no Capítulo 17.
+
+Comece fazendo somente um único arquivo editável. Então faça de uma maneira que
+o usuário escolha o arquivo que quer editar. Use o fato de que nosso servidor de
+arquivos retornar uma lista de arquivos durante a leitura de um diretório.
+
+Não trabalhe diretamente no código do servidor de arquivos, tendo em vista que
+se você cometer um engano você vai afetar diretamente os arquivos que estão lá.
+Ao invés disso, mantenha seu trabalho em um diretório sem acessibilidade pública
+e copie ele pra lá enquanto testa.
+
+Se seu computador está diretamente ligado a internet, sem um _firewall_,
+roteador, ou outro dispositivo interferindo, você pode ser capaz de convidar um
+amigo para user seu website. Para checar, vá até
+[whatismyip.com](http://www.whatismyip.com/), copie e cole o endereço de IP que
+ele te deu na barra de endereço do seu navegador, e adicione `:8000` depois dele
+para selecionar a porta correta. Se isso te levar ao seu website, está online
+para qualquer um que quiser ver.
+
+**Dicas**
+Você pode criar um elemento `<textarea>` para conter o conteúdo do arquivo que
+está sendo editado. Uma requisição `GET`, usando `XMLHttpRequest`, pode ser
+usada para pegar o atual conteúdo do arquivo. Você pode usar URLs relativas como
+_index.html_, ao invés de _http://localhost:8000/index.html_, para referir-se
+aos arquivos do mesmo servidor que está rodando o script.
+
+Então, quando o usuário clicar num botão (você pode usar um elemento `<form>` e
+um evento `"submit"` ou um simples manipulador `"click"`), faça uma requisição
+`PUT` para a mesma URL, com o conteúdo do `<textarea>` no corpo da requisição
+para salvar o arquivo.
+
+Você pode então adicionar um elemento `<select>` que contenha todos os arquivos
+na raiz do servidor adicionando elementos `<option>` contendo as linhas
+retornadas pela requisição `GET` para a URL /. Quando um usuário selectio outro
+arquivo (um evento `"change"` nesse campo), o script deve buscar e mostrar o
+arquivo. Também tenha certeza que quando salvar um arquivo, você esteja usando
+o nome do arquivo selecionado.
+
+Infelizmente, o servidor é muito simplista para ser capaz de ler arquivos de
+subdiretórios de forma confiável, uma vez que ele não nos diz se a coisa que
+está sendo buscado com uma requisição `GET` é um arquivo ou um diretório. Você
+consegue pensar em uma maneira de extender o servidor para solucionar isso?

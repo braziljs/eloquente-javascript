@@ -288,7 +288,7 @@ console.log(filter(ancestry, function(person) {
 // → [{name: "Philibert Haverbeke", …}, …]
 ```
 
-Este utiliza um argumento chamado de `test`, com um valor de função, para preencher uma lacuna na computação. A função `test` é chamada para cada elemento, e o seu valor de retorno determina se um elemento é incluído na matriz retornada.
+Este utiliza um argumento chamado de `test`, com um valor de função, para preencher uma lacuna na computação. A função `test` é chamada para cada elemento, e o seu valor de retorno determina se um elemento é incluído no `array` retornado.
 
 Três pessoas no arquivo estavam vivas e jovens em 1924: meu avô, minha avó e minha tia-avó.
 
@@ -305,9 +305,9 @@ console.log(ancestry.filter(function(person) {
 
 ## Transformando com map
 
-Digamos que temos um `array` de objetos que representam pessoas. Mas queremos um `array` com os nomes o que é mais fácil de ler.
+Digamos que temos um `array` de objetos que representam pessoas, produzido através do `array` de ancestrais de alguma forma. Mas queremos um `array` de nomes o que é mais fácil para ler.
 
-O método `map` transforma um `array` aplicaçando uma função para todos os elementos e constrói um novo `array` que é retornado como valor. O novo `array` terá o mesmo tamanho do `array` enviado, mas seu conteúdo é mapeado para um novo formato através da função.
+O método `map` transforma um `array` aplicando uma função para todos os elementos e constrói um novo `array` a partir dos valores retornados. O novo `array` terá o mesmo tamanho do `array` enviado, mas seu conteúdo é mapeado para um novo formato através da função.
 
 ```js
 function map(array, transform) {
@@ -327,17 +327,17 @@ console.log(map(overNinety, function(person) {
 //    "Maria Haverbeke"]
 ```
 
-Curiosamente, as pessoas que viveram pelo menos 90 anos de idade são as mesmas três que vimos antes, as pessoas que eram jovens em 1920, que passam a ser a geração mais recente no meu conjunto de dados. Eu acho que a medicina já percorreu um longo caminho.
+Curiosamente, as pessoas que viveram pelo menos 90 anos de idade são as mesmas três que vimos antes, as pessoas que eram jovens em 1920, passam a ser a geração mais recente no meu conjunto de dados. Eu acho que a medicina já percorreu um longo caminho.
 
 Assim como `forEach` e `filter`, `map` também é um método padrão de `arrays`.
 
 ## Resumindo com reduce
 
-Outro padrão na computação em `arrays` é calcular todos elementos e trasforma-los em apenas um. No nosso exemplo atual a soma do nosso intervalo de números é um exemplo disso. Se quisermos encontrar uma pessoa pelo ano de nascimento no conjunto dos nossos dados teremos que usar esse padrão.
+Outro padrão na computação em `arrays` é calcular todos elementos e trasformá-los em apenas um. No nosso exemplo atual, a soma do nosso intervalo de números, é um exemplo disso. Outro exemplo seria encontrar uma pessoa com um ano de vida no conjunto de dados.
 
-`Reduce` representa uma operação de ordem superior (diminui o tamanho do `array`). A redução do `array` é relizado atravez da interação de cada elemento. A soma começa com zero e a cada elemento é combinado a soma atual adicionado com o novo valor.
+Uma operação de ordem superior que representa este padrão é chamada de _reduce_ (diminui o tamanho do `array`). Você pode pensar nisso como dobrar a matriz, um elemento por vez. Quando somado os números, você inicia com o número zero e, para cada elemento, combina-o com a soma atual adicionando os dois.
 
-Os parâmetros que a função `reduce` necessita são: o `array`, um valor inicial e uma função para combinação. Esta função é menos simples do que o `filter` e `map` por isso observe com muita atenção.
+Os parâmetros para a função `reduce` são, além do `array`, uma função para combinação e um valor inicial. Esta função é menos simples do que o `filter` e `map` por isso observe com muita atenção.
 
 ```js
 function reduce(array, combine, start) {
@@ -353,7 +353,7 @@ console.log(reduce([1, 2, 3, 4], function(a, b) {
 // → 10
 ```
 
-O padrão do método `reduce` corresponde a uma função e tem uma conveniência adicional. Se o `array` conter apenas um elemento você não precisa enviar um valor inicial, o método irá pegar o primeiro elemento do array como valor inicial, começando a redução a partir do segundo.
+O `array` padrão do método `reduce` que corresponde a esta função tem uma maior comodidade. Se o seu `array` contém apenas um elemento, você não precisa enviar um valor inicial. O método irá pegar o primeiro elemento do `array` como valor inicial, começando a redução a partir do segundo.
 
 Para usar o `reduce` e encontrar o meu mais antigo ancestral, podemos escrever algo parecido com isto:
 
@@ -365,9 +365,9 @@ console.log(ancestry.reduce(function(min, cur) {
 // → {name: "Pauwels van Haverbeke", born: 1535, …}
 ```
 
-## Composição
+## Componibilidade
 
-Considere como escreveriamos o exemplo anterior (encontrar a pessoa mais velha) caso não existisse a função `reduce` em ordem superior. O código não ficaria tão ruim.
+Considere como escreveríamos o exemplo anterior (encontrar a pessoa mais velha) sem funções de ordem superior. O código não ficaria tão ruim.
 
 ```js
 var min = ancestry[0];
@@ -377,12 +377,12 @@ for (var i = 1; i < ancestry.length; i++) {
     min = cur;
 }
 console.log(min);
-// → {name: "Pauwels van Haverbeke", born: 1535, …}
+// → {name: "Pauwels van Haverbeke", born: 1535, ...}
 ```
 
-Existem algumas variáveis sendo criadas e atribuídas e no fim o código tem duas linhas a mais, se tornando um código mas fácil de entender.
+Existem mais variáveis, e o programa está com duas linhas a mais, mesmo assim continuou bem fácil de entender.
 
-Funções de ordem superior começa ser útil quando você precisa compor funções. Como exemplo vamos escrever um código que encontra a média de idade para os homens e para as mulheres no conjunto de dados.
+Funções de ordem superior são úteis quando você precisa compor funções. Como exemplo, vamos escrever um código que encontra a idade média para homens e mulheres no conjunto de dados.
 
 ```js
 function average(array) {
@@ -399,17 +399,17 @@ console.log(average(ancestry.filter(female).map(age)));
 // → 54.56
 ```
 
-É um pouco bobo termos que definir `plus`("mais" da matemática) como uma função. Operadores em JavaScript são diferentes de funções, não são valores, então não podemos passar nenhum argumento.)
+(É um pouco bobo termos que definir `plus` como uma função, mas os operadores em JavaScript, diferentemente das funções, não são valores, então não podemos passar nenhum argumento.)
 
-Ao invés de juntar toda a lógica requerida num `loop` gigante, podemos decompor em conceitos que estamos interessados como: sexo, idade calculada e média de números. Podemos aplicá-las uma por uma para obter o resultado que estamos procurando.
+Ao invés de juntar toda a lógica em um `loop` gigante, ele está bem composto nos conceitos que interessamos como - determinando sexo, calculando a idade e a média dos números. Podemos aplicá-las uma de cada vez para obtermos o resultado que estamos procurando.
 
 Escrever um código limpo é fabuloso. Infelizmente essa clareza tem um custo.
 
 ## O Custo
 
-No mundo dos códigos elegantes e lindos arco-íris, vive um monstro mal que estraga os prazeres chamado de ineficiência.
+No mundo dos códigos elegantes e lindos arco-íris, vive um monstro que estraga os prazeres chamado de ineficiência.
 
-Um programa que processa um `array` é mais elegante e expressa em uma seqüência de etapas que são separadas para que cada processo faça algo com o `array` e produza um novo `array`. Mas a construção de todos esses `arrays` intermediários é um pouco custoso.
+Um programa que processa um `array` é mais elegante expresso em uma sequência separada onde cada passo pode fazer algo com o `array` e produzir um novo `array`. Mas a construção de todos esses `arrays` intermediários é um pouco custoso.
 
 Passar uma função para `forEach` e deixar que o método cuide da iteração para os nós é conveniente e fácil de ler. Porém chamadas de funções em JavaScript são custosas comparadas com blocos simples de `loop`.
 

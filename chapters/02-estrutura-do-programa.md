@@ -345,9 +345,11 @@ Usar o operador resto (`%`) é uma maneira fácil de testar se um número é div
 
 A construção do `for` nesse exemplo não contém a parte que checa pelo fim do loop. Isso significa que o loop não vai parar de executar até que a declaração `break` contida nele seja executada.
 
-Se a declaração `break` faltar, ou acidentalmente tivermos uma condição que sempre produza `true`, você terá o chamado *loop infinito*. Um programa rodando um loop infinito nunca vai parar de rodar, que é normalmente uma coisa ruim.
+Se você não incluir a declaração `break` ou acidentalmente escrever uma condição que sempre produza um resultado `true`, seu programa ficará preso em um _loop infinito_. Um programa preso em um loop infinito nunca vai terminar sua execução, o que normalmente é uma coisa ruim.
 
-Se você criar um loop infinito em algum dos exemplos desta página, você vai ser perguntando se quer parar o script após alguns segundos. Se isso falhar, você terá que fechar a aba que você está trabalhando, ou em alguns navegadores você terá que fechar todo ele, a fim de recuperá-lo.
+Se você criar um loop infinito em algum dos exemplos destas páginas, você normalmente será perguntado se deseja interromper a execução do script após alguns segundos. Se isso não funcionar, você deverá fechar a aba que está trabalhando, ou em alguns casos, fechar o navegador para recuperá-lo.
+
+A palavra-chave `continue` é similar ao `break`, de modo que também influencia o progresso de um loop. Quando `continue` é encontrado no corpo de um loop, o controle de execução pula para fora do corpo e continua executando a próxima iteração do loop.
 
 ## Atualizando variáveis suscintamente
 

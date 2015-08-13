@@ -322,26 +322,24 @@ console.log(result);
 
 Repare que mesmo não abrindo o bloco com `{`, a declaração no loop continua indentada com dois espaços para deixar claro que ela "pertence" à linha anterior a ela.
 
-## Saindo de um Loop
+## Quebrando a execução de um Loop
 
-Ter uma condição que produzaa `false` não é a única maneira que um loop pode parar. Existe uma declaração especial, `break`, que tem o efeito de pular imediatamente fora do loop em questão.
+Ter uma condição que produza um resultado `false` não é a única maneira que um loop pode parar. Existe uma declaração especial chamada `break` que tem o efeito de parar a execução e sair do loop em questão.
 
-Este programa encontra o primeiro número que é maior ou igual a 20, e divisível por 7:
+Esse programa ilustra o uso da declaração `break`. Ele encontra o primeiro número que é, ao mesmo tempo, maior ou igual a 20 e divisível por 7.
 
-```javascript
-
+```js
 for (var current = 20; ; current++) {
-	if (current % 7 == 0)
-		break;
+  if (current % 7 == 0)
+    break;
 }
 console.log(current);
-// 21
-
+// → 21
 ```
 
-O truque com o operador de resto `%` é uma maneira fácil de testar se um número é divisível por outro número. Se for, o resto da divisão é zero.
+Usar o operador resto (`%`) é uma maneira fácil de testar se um número é divisível por outro. Se for, o resto da divisão entre eles é zero.
 
-A construção `for` neste exemplo não tem uma parte que checa pelo fim do loop. Isso significa que essa tarefa depende da declaração `break` dentro dela para a fazer parar.
+A construção do `for` nesse exemplo não contém a parte que checa pelo fim do loop. Isso significa que o loop não vai parar de executar até que a declaração `break` contida nele seja executada.
 
 Se a declaração `break` faltar, ou acidentalmente tivermos uma condição que sempre produza `true`, você terá o chamado *loop infinito*. Um programa rodando um loop infinito nunca vai parar de rodar, que é normalmente uma coisa ruim.
 

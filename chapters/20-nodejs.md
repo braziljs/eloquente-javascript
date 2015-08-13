@@ -706,7 +706,7 @@ methods.DELETE = function(path, respond) {
 Você deve estar se perguntando porque tentar deletar um arquivo inexistente
 retornar um status 204, e não um erro. Quando o arquivo que será deletado não
 existe, você pode dizer que o objetivo da requisição já foi cumprido. O padrão
-HTTP recomenda que as pessoas façam requisições _idempotent_, o que significa
+HTTP recomenda que as pessoas façam requisições _idempotentes_, o que significa
 que indepedente da quantidade de requisições, elas não devem produzir um
 resultado diferente.
 
@@ -927,3 +927,133 @@ function readStreamAsString(stream, callback) {
   });
 }
 ```
+
+## Corrigindo uma falha
+Para um fácil acesso remoto aos arquivos, eu poderia adquirir o hábito de ter o
+servidor de arquivos definido nesse capítulo na minha máquina, no diretório
+`/home/braziljs/public/`. E então, um dia, eu encontro alguém que tenha
+conseguido acesso a todos as senhas que eu gravei no navegador.
+
+O que aconteceu?
+
+Se ainda não está claro para você, pense novamente na função `urlToPath`
+definida dessa forma:
+
+```javascript
+function urlToPath(url) {
+  var path = require("url").parse(url).pathname;
+  return "." + decodeURIComponent(path);
+}
+```
+
+Agora considere o fato de que os caminhos para as funções `"fs"` podem ser
+relativos-eles podem conter "../" para voltar a um diretório acima. O que
+acontece quando um cliente envia uma requisição para uma dessas URLs abaixo?
+
+```
+http://myhostname:8000/../.config/config/google-chrome/Default/Web%20Data
+http://myhostname:8000/../.ssh/id_dsa
+http://myhostname:8000/../../../etc/passwd
+```
+
+Mudar o `urlToPath` corrige esse problema. Levando em conta o fato de que o Node
+no Windows permite tanto barras quanto contra-barras para separar diretórios.
+
+Além disso, pense no fato de que assim que você expor algum sistema _meia boca_
+na internet, os _bugs_ nesse sistema podem ser usado para fazer coisas ruins
+para sua máquina.
+
+**Dicas**
+Basta remover todas as recorrências de dois pontos que tenham uma barra, uma
+contra-barra ou as extremidades da _string_. Usando o método `replace` com uma
+expressão regular é a maneira mais fácil de fazer isso. Não se esqueça da _flag_
+`g` na expressão, ou o `replace` vai substituir somente uma única instância e
+as pessoas ainda poderiam incluir pontos duplos no caminho da URL a partir dessa
+medida de segurança! Também tenha certeza de substituir _depois_ de decodificar
+a _string_, ou seria possível despistar o seu controle que codifica pontos e
+barras.
+
+Outro caso de preocupação potencial é quando os caminhos começam com barra, que
+são interpretados como caminhos absolutos. Mas por conta do `urlToPath` colocar
+um ponto na frente do caminho, é impossível criar requisições que resultam em
+tal caminho. Múltiplas barras numa linha, dentro do caminho, são estranhas mas
+serão tratadas como uma única barra pelo sistema de arquivos.
+
+## Criando diretórios
+Embora o método `DELETE` esteja envolvido em apagar diretórios (usando
+`fs.rmdir`), o servidor de arquivos não disponibiliza atualmente nenhuma maneira
+de _criar_ diretórios.
+
+Adicione suporte para o método `MKCOL`, que deve criar um diretório chamando
+`fs.mkdir`. `MKCOL` não é um método básico do HTTP, mas ele existe nas normas
+da _WebDAV_, que especifica um conjunto de extensões para o HTTP, tornando-o
+adequado para escrever recursos, além de os ler.
+
+**Dicas**
+Você pode usar a função que implementa o método `DELETE` como uma planta baixa
+para o método `MKCOL`. Quando nenhum arquivo é encontrado, tente criar um
+diretório com `fs.mkdir`. Quando um diretório existe naquele caminho, você pode
+retornar uma resposta 204, então as requisições de criação de diretório serão
+_idempotentes_. Se nenhum diretório de arquivo existe, retorne um código de
+erro. O código 400 ("_bad request_") seria o mais adequado nessa situação.
+
+## Um espaço público na rede
+Uma vez que o servidor de arquivos serve qualquer tipo de arquivo e ainda inclui
+o cabeçalho `Content-Type`, você pode usá-lo para servir um website. Mas uma vez
+que seu servidor de arquivos permita que qualquer um delete e sobescreva
+arquivos, seria um tipo interessante de website: que pode ser modificado,
+vandalizado e destruído por qualquer um que gaste um tempo para criar a
+requisição HTTP correta. Mas ainda assim, seria um website.
+
+Escreva uma página HTML básica que inclui um simples arquivo JavaScript. Coloque
+os arquivos num diretório servido pelo servidor de arquivos e abra isso no seu
+navegador.
+
+Em seguida, como um exercício avançado ou como um projeto de fim de semana,
+combine todo o conhecimento que você adquiriu desse livro para construir uma
+interface mais amigável pra modificar o website de dentro do website.
+
+Use um formulário HTML (Capítulo 18) para editar os conteúdos dos arquivos que
+fazer parte do website, permitindo que o usuário atualize eles no servidor
+fazendo requisições HTTP como vimos no Capítulo 17.
+
+Comece fazendo somente um único arquivo editável. Então faça de uma maneira que
+o usuário escolha o arquivo que quer editar. Use o fato de que nosso servidor de
+arquivos retornar uma lista de arquivos durante a leitura de um diretório.
+
+Não trabalhe diretamente no código do servidor de arquivos, tendo em vista que
+se você cometer um engano você vai afetar diretamente os arquivos que estão lá.
+Ao invés disso, mantenha seu trabalho em um diretório sem acessibilidade pública
+e copie ele pra lá enquanto testa.
+
+Se seu computador está diretamente ligado a internet, sem um _firewall_,
+roteador, ou outro dispositivo interferindo, você pode ser capaz de convidar um
+amigo para user seu website. Para checar, vá até
+[whatismyip.com](http://www.whatismyip.com/), copie e cole o endereço de IP que
+ele te deu na barra de endereço do seu navegador, e adicione `:8000` depois dele
+para selecionar a porta correta. Se isso te levar ao seu website, está online
+para qualquer um que quiser ver.
+
+**Dicas**
+Você pode criar um elemento `<textarea>` para conter o conteúdo do arquivo que
+está sendo editado. Uma requisição `GET`, usando `XMLHttpRequest`, pode ser
+usada para pegar o atual conteúdo do arquivo. Você pode usar URLs relativas como
+_index.html_, ao invés de _http://localhost:8000/index.html_, para referir-se
+aos arquivos do mesmo servidor que está rodando o script.
+
+Então, quando o usuário clicar num botão (você pode usar um elemento `<form>` e
+um evento `"submit"` ou um simples manipulador `"click"`), faça uma requisição
+`PUT` para a mesma URL, com o conteúdo do `<textarea>` no corpo da requisição
+para salvar o arquivo.
+
+Você pode então adicionar um elemento `<select>` que contenha todos os arquivos
+na raiz do servidor adicionando elementos `<option>` contendo as linhas
+retornadas pela requisição `GET` para a URL /. Quando um usuário selectio outro
+arquivo (um evento `"change"` nesse campo), o script deve buscar e mostrar o
+arquivo. Também tenha certeza que quando salvar um arquivo, você esteja usando
+o nome do arquivo selecionado.
+
+Infelizmente, o servidor é muito simplista para ser capaz de ler arquivos de
+subdiretórios de forma confiável, uma vez que ele não nos diz se a coisa que
+está sendo buscado com uma requisição `GET` é um arquivo ou um diretório. Você
+consegue pensar em uma maneira de extender o servidor para solucionar isso?

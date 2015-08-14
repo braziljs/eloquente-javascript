@@ -6,7 +6,7 @@ Um dos "brinquedos" que um programa em JavaScript possui disponível em sua caix
 
 ## Estrutura do Documento
 
-Você pode imaginar um documento HTML como um conjunto de caixas aninhadas. Tags como <body> e </body> encapsulam outras tags, as quais, por sua vez, contêm outras tags ou texto. Aqui está o documento de exemplo do último capítulo:	
+Você pode imaginar um documento HTML como um conjunto de caixas aninhadas. Tags como <body> e </body> encapsulam outras tags, as quais, por sua vez, contêm outras tags ou texto. Aqui está o documento de exemplo do último capítulo:
 
 ```html
 <html>
@@ -425,7 +425,7 @@ A notação `p > a {...}` aplica os estilos passados para todas as tags `<a>` qu
 ## Seletores de Busca
 
 Nós não iremos usar muitas folhas de estilo neste livro. Ainda assim, entendê-las é crucial para programar no navegador, explicar todas as propriedades que elas suportam de maneira correta e a interação entre essas propriedades levaria dois ou três livros somente para isso.
-	
+
 A razão principal pela qual eu introduzi a sintaxe de *seletores*—a notação usada em folhas de estilo para definir a qual elemento um conjunto de regras se aplica—é que nós podemos usar essa mesma mini-linguagem para definir uma maneira eficaz de encontrar elementos do DOM.
 
 O método querySelectorAll, que é definido em tanto no objeto `document` quanto nos nós de elementos, leva apenas uma string seletora e retorna um objeto parecido um array, contendo todos os elementos que encontra.
@@ -556,7 +556,7 @@ Uma vez que você fez a parte básica funcionar, alinhe as células que contêm 
 </script>
 ```
 
-#### Dicas
+**Dicas**
 
 Use `document.createElement` para criar novos nós de elementos, `document.createTextNode` para criar nós de texto e  o método `appendChild` para colocar nós dentro de outros nós.
 

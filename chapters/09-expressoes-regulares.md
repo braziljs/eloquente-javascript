@@ -120,7 +120,7 @@ console.log( /'\d*'/.test("''") );
 
 O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Então, algo com um asterisco depois não impede um padrão de ser achado, apenas retornando zero resultados.
 
-Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou mais vezes. Neste exemplo, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente. 
+Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou mais vezes. Neste exemplo, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente.
 
 ```js
 var neighbor = /neighbou?r/;
@@ -172,7 +172,7 @@ Valores _string_possuem um método que se comporta de maneira semelhante.
 
 ```js
 console.log("one two 100".match(/\d+/));
-// → ["100", index: 8, input: "one two 100"] 
+// → ["100", index: 8, input: "one two 100"]
 ```
 
 Um objeto retornado pelo método exec ou match possui um index de propriedades que informa aonde na _string_o resultado encontrado se inicia. Além disso, o objeto se parece (e de fato é) um array de strings, onde o primeiro elemento é a _string_que foi achada, no exemplo acima, a sequência de dígitos numéricos.
@@ -182,7 +182,7 @@ Quando uma expressão regular contém expressões agrupadas entre parênteses, o
 ```js
 var textoCitado = /'([^']*)'/;
 console.log( textoCitado.exec("'ela disse adeus'") );
-// → ["'ela disse adeus'", "ela disse adeus", index: 0, input: "'ela disse adeus'"] 
+// → ["'ela disse adeus'", "ela disse adeus", index: 0, input: "'ela disse adeus'"]
 ```
 
 Quando um grupo não termina sendo achado (se por exemplo, possui um sinal de interrogação depois dele), seu valor no array de resultado será undefined. Do mesmo modo, quando um grupo é achado várias vezes, apenas o último resultado encontrado estará no array.
@@ -211,9 +211,9 @@ Também é possível criar um objeto para uma hora específica
 
 ```js
 console.log( new Date(2014, 6, 29) );
-// → Tue Jul 29 2014 00:00:00 GMT-0300 (BRT) 
+// → Tue Jul 29 2014 00:00:00 GMT-0300 (BRT)
 console.log( new Date(1981, 6, 29, 18, 30, 50) );
-// → Wed Jul 29 1981 18:30:50 GMT-0300 (BRT) 
+// → Wed Jul 29 1981 18:30:50 GMT-0300 (BRT)
 ```
 
 O JavaScript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias iniciam-se em um. É bem confuso, então, tenha cuidado.
@@ -224,9 +224,9 @@ Internamente, objetos do tipo data são armazenados como o número de milissegun
 
 ```js
 console.log( new Date(2014, 2, 21).getTime() );
-// → 1395370800000 
+// → 1395370800000
 console.log( new Date( 1395370800000 ) );
-// → Fri Mar 21 2014 00:00:00 GMT-0300 (BRT) 
+// → Fri Mar 21 2014 00:00:00 GMT-0300 (BRT)
 ```
 
 Quando fornecemos apenas um argumento ao construtor do _Date_, ele é tratado como se fosse um número de milissegundos.
@@ -242,7 +242,7 @@ function buscaData(string) {
   return new Date( Number(match[3]), Number(match[2] ), Number(match[1]) );
 }
 console.log( buscaData("21/1/2014") );
-// → Fri Feb 21 2014 00:00:00 GMT-0300 (BRT) 
+// → Fri Feb 21 2014 00:00:00 GMT-0300 (BRT)
 ```
 
 ## Limites de palavra e _string_
@@ -629,7 +629,7 @@ Escreva uma expressão regular que testa quando qualquer das _sub-strings_ dadas
 	"pop" e "prop"
 	"ferret", "ferry", e "ferrari"
 	Qualquer palavra terminando em "ious"
-	Um espaço em branco seguido por um ponto, vírgula, dois-pontos, ou ponto-e-vírgula 
+	Um espaço em branco seguido por um ponto, vírgula, dois-pontos, ou ponto-e-vírgula
 	Uma palavra com mais de seis letras
 	Uma palavra sem a letra "e"
 
@@ -684,7 +684,7 @@ function verify(regexp, yes, no) {
 
 ## Estilo de aspas
 
-Imagine que você escreveu um texto e usou aspas simples por toda parte. Agora você deseja substituir todas que realmente possuem algum texto com aspas duplas, mas não as usadas em contrações de texto com _aren't). 
+Imagine que você escreveu um texto e usou aspas simples por toda parte. Agora você deseja substituir todas que realmente possuem algum texto com aspas duplas, mas não as usadas em contrações de texto com _aren't).
 
 Pense em um padrão que faça distinção entre esses dois usos de aspas e faça uma chamada que substitua apenas nos lugares apropriados.
 
@@ -695,7 +695,7 @@ console.log(text.replace(/A/, "B"));
 // → "I'm the cook," he said, "it's my job."
 ```
 
-Dicas
+**Dicas**
 
 A solução mais óbvia é substituir apenas as aspas que não estão cercadas de caracteres de palavra. A primeira expressão vem à mente é _/\W'\W/_, mas é preciso cuidado para lidar com o início da _string_ corretamente. Isso pode ser feito usando os marcadores "_ˆ_" e "_$_", como em _/(\W|^)'(\W|$)/_.
 

@@ -401,7 +401,7 @@ Se nada lhe vem a mente, relembre `position: absolute` discutito no [Capítulo 1
 </body>
 ```
 
-####Exibir Dicas
+**Dicas**
 
 Você pode utilizar `relativePos` para encontrar o canto correspondente ao início do arrasto do mouse. Descobrir aonde as extremidades de arrasto termina pode ser com `trackDrag` ou registrando seu próprio manipulador de eventos.
 

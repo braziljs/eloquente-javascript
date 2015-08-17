@@ -117,7 +117,7 @@ Mostrar uma caixa de diálogo ou escrever texto na tela é um efeito colateral. 
 console.log(Math.max(2, 4));
 ```
 
-Quando uma função produz um valor, é dito que ela *retorna* (`return`) ele. Por coisas que produzem valores serem sempre expressões no JavaScript, chamadas de função podem ser usadas como parte de uma grande expressão:
+Quando uma função produz um valor, é dito que ela *retorna* (`return`) ele. Em JavaScript, tudo que produz um valor é uma expressão em JavaScript, o que significa que chamadas de função podem ser usadas dentro de expressões maiores. Por exemplo , a função `Math.max` recebe qualquer quantidade de valores númericos e retorna o mario deles.
 
 ```javascript
 console.log(Math.min(2, 4) + 100);
@@ -125,9 +125,9 @@ console.log(Math.min(2, 4) + 100);
 
 O próximo capítulo explica como nós podemos escrever nossas próprias funções.
 
-## Solicitar e Confirmar
+## `prompt` e `confirm`
 
-O ambiente fornecido pelos navegadores contém algumas outras funções para mostrar janelas. Você pode perguntar a um usuário uma questão Ok/Cancel usando `confirm`. Isto retorna um valor booleano: `true` se o usuário clica em OK e `false` se o usuário clica em Cancel.
+O ambiente fornecido pelos navegadores contém algumas outras funções para mostrar janelas. Você pode perguntar a um usuário uma questão Ok/Cancel usando `confirm`. Isto retorna um valor booleano: `true` se o usuário clica em OK e `false` se o usuário clica em *Cancel*.
 
 ```javascript
 confirm("Shall we, then?");

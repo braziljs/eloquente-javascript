@@ -93,6 +93,8 @@ Muitos dos valores fornecidos no ambiente padrão são do tipo `function` (funç
 alert("Good morning!");
 ```
 
+![Alert](img/alert.png)
+
 Executar uma função é denominado *invocar*, *chamar* ou *aplicar* uma função. Você pode chamar uma função colocando os parênteses depois da expressão que produz um valor de função. Normalmente você irá usar o nome da variável que contém uma função diretamente. Os valores entre os parênteses são passados ao programa dentro da função. No exemplo, a função `alert` usou a `string` que foi passada como o texto a ser mostrado na caixa de diálogo. Os valores passados para funções são chamados de `arguments` (argumentos). A função `alert` precisa somente de um deles, mas outras funções podem precisar de diferentes quantidades ou tipos de argumentos.
 
 ## A Função `console.log`
@@ -133,11 +135,15 @@ O ambiente fornecido pelos navegadores contém algumas outras funções para mos
 confirm("Shall we, then?");
 ```
 
+![confirm](img/confirm.png)
+
 `prompt` pode ser usado para criar uma questão "aberta". O primeiro argumento é a questão; o segundo é o texto que o usuário inicia. Uma linha do texto pode ser escrita dentro da janela de diálogo, e a função vai retornar isso como uma string.
 
 ```javascript
 prompt("Tell me everything you know.", "...");
 ```
+
+![prompt](img/prompt.png)
 
 Estas duas funções não são muito usadas na programação moderna para web, principalmente porque você não tem controle sobre o modo que a janela vai aparecer, mas elas são úteis para experimentos.
 

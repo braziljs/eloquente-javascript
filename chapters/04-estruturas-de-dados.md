@@ -10,17 +10,17 @@ Os programas que construímos até agora têm sido seriamente dificultados pelo 
 
 O capítulo vai funcionar mais ou menos de um exemplo realista de programação, introduzindo conceitos que se aplicam ao problema em questão. O código de exemplo, muitas vezes, será construído sobre as funções e variáveis ​​que foram introduzidas no início do texto.
 
-## O weresquirrel (O esquilo-lobo)
+## O esquilo-lobo
 
 De vez em quando, geralmente entre oito e dez da noite, Jaques transforma-se em um pequeno roedor peludo com uma cauda espessa.
 
-Por um lado, Jaques está bastante contente que ele não tem licantropia clássica. Transformando-se em um esquilo tende a causar menos problemas do que se transformando em um lobo. Em vez de ter de se preocupar em comer acidentalmente o vizinho (que seria estranho), ele se preocupa com o que está sendo comido pelo gato do vizinho. Depois de duas ocasiões em que ele acordou em um galho fino precariamente na copa de um carvalho, nu e desorientado, ele tomou a trancar as portas e janelas de seu quarto à noite, e colocar algumas nozes no chão para manter-se ocupado.
+Por um lado, Jaques está bastante contente que ele não tem licantropia clássica. Transformando-se em um esquilo tende a causar menos problemas do que se transformando em um lobo. Em vez de ter de se preocupar em comer acidentalmente o vizinho (que seria estranho), ele se preocupa em ser comido pelo gato do vizinho. Depois de duas ocasiões em que ele acordou em um galho fino precariamente na copa de um carvalho, nu e desorientado, ele resolveu trancar as portas e janelas de seu quarto à noite, e colocar algumas nozes no chão para manter-se ocupado.
 
-![The weresquirrel](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/weresquirrel.svg)
+![The weresquirrel](../img/weresquirrel.png)
 
 Isto cuida dos problemas do gato e do carvalho. Mas Jaques ainda sofre com sua condição. As ocorrências irregulares da transformação fazem-no suspeitar de que pode haver algum gatilho que faz com que elas aconteçam. Por um tempo, ele acreditava que isso só acontecia nos dias em que ele havia tocado em árvores. Então ele parou de fazer isso por completo, e evitando até mesmo passar perto delas. Mas o problema persistiu.
 
-Mudando para uma abordagem mais científica, Jaques quer começar a manter um registo diário das coisas que ele fez naquele dia, e se ele acabou mudando de forma. Usando esses dados em sua própria vida, ele espera ser capaz de diminuir as condições que desencadeiam as transformações.
+Mudando para uma abordagem mais científica, Jaques quer começar a manter um registo diário das coisas que ele faz e se ele acabou mudando de forma. Com esses dados ele espera ser capaz de diminuir as condições que desencadeiam as transformações.
 
 A primeira coisa que ele fará será criar um conjunto de dados para armazenar essas informações.
 

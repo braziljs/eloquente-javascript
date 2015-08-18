@@ -93,6 +93,8 @@ Muitos dos valores fornecidos no ambiente padrão são do tipo `function` (funç
 alert("Good morning!");
 ```
 
+![Alert](../img/alert.png)
+
 Executar uma função é denominado *invocar*, *chamar* ou *aplicar* uma função. Você pode chamar uma função colocando os parênteses depois da expressão que produz um valor de função. Normalmente você irá usar o nome da variável que contém uma função diretamente. Os valores entre os parênteses são passados ao programa dentro da função. No exemplo, a função `alert` usou a `string` que foi passada como o texto a ser mostrado na caixa de diálogo. Os valores passados para funções são chamados de `arguments` (argumentos). A função `alert` precisa somente de um deles, mas outras funções podem precisar de diferentes quantidades ou tipos de argumentos.
 
 ## A Função `console.log`
@@ -111,60 +113,50 @@ Embora eu tenha afirmado que nomes de variáveis não podem conter pontos, `cons
 
 ## Retornando Valores
 
-Mostrar uma caixa de diálogo ou escrever texto na tela é um efeito colateral. Muitas funções são úteis por causa dos efeitos que elas produzem. É também possível para uma função produzir um valor, no caso dela não ser necessário um efeito colateral. Por exemplo, temos a função `Math.max`, que pega dois números e retorna o maior entre eles:
+Mostrar uma caixa de diálogo ou escrever texto na tela é um efeito colateral. Muitas funções são úteis por causa dos efeitos que elas produzem. É também possível para uma função produzir um valor, no caso de não ser necessário um efeito colateral. Por exemplo, temos a função `Math.max`, que pega dois números e retorna o maior entre eles:
 
 ```javascript
-
 console.log(Math.max(2, 4));
-
 ```
 
-Quando uma função produz um valor, é dito que ela *retorna* (return) ele. Por coisas que produzem valores sempre serem expressões no JavaScript, funções chamadas podem ser usadas como parte de uma grande expressão:
+Quando uma função produz um valor, é dito que ela *retorna* (`return`) ele. Em JavaScript, tudo que produz um valor é uma expressão em JavaScript, o que significa que chamadas de função podem ser usadas dentro de expressões maiores. Por exemplo , a função `Math.max` recebe qualquer quantidade de valores númericos e retorna o mario deles.
 
 ```javascript
-
 console.log(Math.min(2, 4) + 100);
-
 ```
 
 O próximo capítulo explica como nós podemos escrever nossas próprias funções.
 
-## Solicitar e Confirmar
+## `prompt` e `confirm`
 
-O ambiente fornecido pelos navegadores contém algumas outras funções para mostrar janelas. Você pode perguntar a um usuário uma questão "Ok/Cancel" usando `confirm`. Isto retorna um booleano: `true` se o usuário clica em OK e `false` se o usuário clica em Cancel.
+O ambiente fornecido pelos navegadores contém algumas outras funções para mostrar janelas. Você pode perguntar a um usuário uma questão Ok/Cancel usando `confirm`. Isto retorna um valor booleano: `true` se o usuário clica em OK e `false` se o usuário clica em *Cancel*.
 
 ```javascript
-
-confirm("");
-
+confirm("Shall we, then?");
 ```
 
-[JSFiddle](http://jsfiddle.net/4gX5m/)
+![confirm](../img/confirm.png)
 
 `prompt` pode ser usado para criar uma questão "aberta". O primeiro argumento é a questão; o segundo é o texto que o usuário inicia. Uma linha do texto pode ser escrita dentro da janela de diálogo, e a função vai retornar isso como uma string.
 
 ```javascript
-
-prompt("Diga-me algo que você saiba.", "...");
-
+prompt("Tell me everything you know.", "...");
 ```
 
-[JSFiddle](http://jsfiddle.net/bsfxA/)
+![prompt](../img/prompt.png)
 
-Estas duas funções não são muito usadas na programação moderna para web, principalmente porque você não tem controle sobre o modo que a janela vai aparecer, mas ela são úteis para programas para brincar e experimentos.
+Estas duas funções não são muito usadas na programação moderna para web, principalmente porque você não tem controle sobre o modo que a janela vai aparecer, mas elas são úteis para experimentos.
 
 ## Fluxo de Controle
 
 Quando seu programa contém mais que uma declaração, as declarações são executadas, previsivelmente, de cima para baixo. Como um exemplo básico, este programa tem duas declarações. A primeira pergunta ao usuário por um número, e a segunda, que é executada posteriormente, mostra o quadrado deste número:
 
 ```javascript
-
 var theNumber = Number(prompt("Pick a number", ""));
-alert("Your number is the square root de " + theNumber * theNumber);
-
+alert("Your number is the square root of " + theNumber * theNumber);
 ```
 
-A função `Number` converte o valor para um número, que nós usamos porque o resultado de `prompt` é um valor `string`, e nós queremos um número. Existem funções similares chamadas `String` e `Boolean` que convertem valores para estes tipos.
+A função `Number` converte o valor para um número. Nós precisamos dessa conversão pois o resultado de `prompt` é um valor do tipo `string`, e nós queremos um número. Existem funções similares chamadas `String` e `Boolean` que convertem valores para estes tipos.
 
 Aqui podemos ver uma representação bem trivial do fluxo de controle em linha reta:
 

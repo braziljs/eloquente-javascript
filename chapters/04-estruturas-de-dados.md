@@ -1,14 +1,14 @@
 # Estrutura de dados: Object e Array
 
-> Em duas ocasiões, me perguntaram, "Ora, Mr. Babbage, se você colocar em uma calculadora números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão.
+> Em duas ocasiões, me perguntaram, "Ora, Mr. Babbage, se você colocar em uma máquina números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão.
 
-> - Charles Babbage, Passages from the Life of a Philosopher (Passagens da vida de um filósofo) (1864)
+> - Charles Babbage, Passages from the Life of a Philosopher (1864)
 
-Números, Booleanos e strings são os tijolos usados para construir as estruturas de dados. Mas você não pode construir uma casa com um único tijolo. Objetos nos permitem agrupar valores -- incluindo outros objetos --, e assim construir estruturas mais complexas.
+Números, Booleanos e `strings` são os tijolos usados para construir as estruturas de dados. Mas você não pode construir uma casa com um único tijolo. Objetos nos permitem agrupar valores - incluindo outros objetos - juntos, e assim construir estruturas mais complexas.
 
-Os programas que construímos até agora têm sido seriamente dificultados pelo fato de que eles só estavam operando com tipos de dados simples. Este capítulo irá adicionar uma compreensão básica de estruturas de dados para o seu kit de ferramentas. Ao final dele, você vai conhecer programação o suficiente para começar a escrever programas significativos.
+Os programas que construímos até agora têm sido seriamente dificultados pelo fato de que eles só estavam operando com tipos de dados simples. Este capítulo irá adicionar uma compreensão básica de estruturas de dados para o seu kit de ferramentas. Ao final dele, você vai saber o suficiente para começar a escrever programas úteis.
 
-O capítulo vai funcionar mais ou menos como um exemplo realista de programação, introduzindo conceitos que se aplicam ao problema em questão. O código de exemplo, muitas vezes, será construído sobre as funções e variáveis ​​que foram introduzidas no início do texto.
+O capítulo vai funcionar mais ou menos de um exemplo realista de programação, introduzindo conceitos que se aplicam ao problema em questão. O código de exemplo, muitas vezes, será construído sobre as funções e variáveis ​​que foram introduzidas no início do texto.
 
 ## O weresquirrel (O esquilo-lobo)
 

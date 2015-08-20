@@ -230,7 +230,7 @@ Uma vez que ele tem pontos de dados suficientes, ele pretende calcular a correla
 
 Correlação é uma medida de dependência entre variáveis ("variáveis", no sentido estatístico, e não o sentido JavaScript). É geralmente expressa em um coeficiente que varia de -1 a 1. Zero correlação significa que as variáveis não estão relacionadas, enquanto uma correlação de um indica que os dois são perfeitamente relacionados - se você conhece um, você também conhecer o outro. Menos um significa também que as variáveis são perfeitamente ligadas, mas que são opostas uma à outra, quando um deles é verdadeiro, o outro é falso.
 
-Para variáveis binárias (boolean), o coeficiente phi fornece uma boa medida de correlação, e é relativamente fácil de calcular. Primeiro temos uma matriz n, que indica o número de vezes que foram observadas as várias combinações das duas variáveis. Por exemplo, poderíamos tomar o evento de comer pizza, e colocar isso em uma tabela como esta:
+Para variáveis binárias (boolean), o coeficiente phi (ϕ) fornece uma boa medida de correlação, e é relativamente fácil de calcular. Primeiro temos uma matriz n, que indica o número de vezes que foram observadas as várias combinações das duas variáveis. Por exemplo, poderíamos tomar o evento de comer pizza, e colocar isso em uma tabela como esta:
 
 ![Comendo Pizza x transformar-se em esquilo](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/pizza-squirrel.svg)
 
@@ -241,3 +241,60 @@ A partir de uma tal tabela (n), o coeficiente de phi (φ) pode ser calculado pel
 n11n00 - n10n01
 √ n1•n0•n•1n•0
 ```
+
+A notação n01 indica o número de ocorrências na qual a primeira variável (squirrelness) é falsa (0) e a segunda variável (pizza) é verdadeira (1). Nesse exemplo, n01 é igual a 9.
+
+O valor n1• se refere à soma de todas as ocorrências em que a primeira variável é verdadeira, que no caso do exemplo da tabela é 5. Da mesma forma, n•0 se refere à soma de todas as ocorrências na qual a segunda variável é falsa.
+
+Portanto, para a tabela de pizzas, a parte de cima da divisão da linha (o dividendo) seria 1×76 - 4×9 = 40, e a parte de baixo (o divisor) seria a raiz quadrada de 5×85×10×80, ou √340000. Esse cálculo nos resulta em ϕ ≈ 0.069, o que é um valor bem pequeno. Comer pizza parece não ter influência nas transformações.
+
+## Correlação em computação
+
+No JavaScript, podemos representar uma tabela dois por dois usando um array com quatro elementos (`[76, 9, 4, 1]`). Podemos também usar outras formas de representações, como por exemplo um array contendo dois arrays com dois elementos cada (`[[76, 9], [4, 1]]`) ou até um objeto com propriedades nomeadas de `"11"` e `"01"`. Entretanto, a maneira mais simples e que faz com que seja mais fácil acessar os dados é utilizando um array com quatro elementos. Nós iremos interpretar os índices do array como elementos binários de dois bits, onde o dígito a esquerda (mais significativo) se refere à variável do esquilo, e o dígito a direita (menos significativo) se refere à variável do evento. Por exemplo, o número binário `10` se refere ao caso no qual Jacques se tornou um esquilo, mas o evento não ocorreu (por exemplo "pizza"). Isso aconteceu quatro vezes, e já que o número binário `10` é equivalente ao número 2 na notação decimal, iremos armazenar esse valor no índice 2 do array.
+
+Essa é a função que calcula o coeficiente ϕ de um array desse tipo:
+
+```js
+function phi(table) {
+  return (table[3] * table[0] - table[2] * table[1]) /
+    Math.sqrt((table[2] + table[3]) *
+              (table[0] + table[1]) *
+              (table[1] + table[3]) *
+              (table[0] + table[2]));
+}
+
+console.log(phi([76, 9, 4, 1]));
+// → 0.068599434
+```
+
+Essa é simplesmente uma tradução direta da fórmula de ϕ para o JavaScript. `Math.sqrt` é a função que calcula a raiz quadrada, fornecida pelo objeto `Math` que é padrão do JavaScript. Temos que somar dois campos da tabela para encontrar valores como n1•, pois a soma das linhas ou colunas não são armazenadas diretamente em nossa estrutura de dados.
+
+Jacques manteve seu diário por três meses. O conjunto de dados resultante está disponível no ambiente de código desse capítulo e está armazenado na variável `JOURNAL` e em um [arquivo](http://eloquentjavascript.net/code/jacques_journal.js) que pode ser baixado.
+
+Para extrair uma tabela dois por dois de um evento específico desse diário, devemos usar um loop para percorrer todas as entradas e ir adicionando quantas vezes o evento ocorreu em relação às transformações de esquilo.
+
+```js
+function hasEvent(event, entry) {
+  return entry.events.indexOf(event) != -1;
+}
+
+function tableFor(event, journal) {
+  var table = [0, 0, 0, 0];
+  for (var i = 0; i < journal.length; i++) {
+    var entry = journal[i], index = 0;
+    if (hasEvent(event, entry)) index += 1;
+    if (entry.squirrel) index += 2;
+    table[index] += 1;
+  }
+  return table;
+}
+
+console.log(tableFor("pizza", JOURNAL));
+// → [76, 9, 4, 1]
+```
+
+A função `hasEvent` testa se uma entrada contém ou não o evento em questão. Os arrays possuem um método `indexOf` que procura o valor informado no array (nesse exemplo o nome do evento), e retorna o índice onde ele foi encontrado ou -1 se não for. Portanto, se a chamada de `indexOf` não retornar -1, sabemos que o evento foi encontrado.
+
+O corpo do loop em `tableFor`, descobre qual caixa da tabela cada entrada do diário pertence, verificando se essa entrada contém o evento específico e se o evento ocorreu juntamente com um incidente de esquilo. O loop adiciona uma unidade no número contido no array que corresponde a essa caixa na tabela.
+
+Agora temos as ferramentas necessárias para calcular correlações individuais. O único passo que falta é encontrar a correlação para cada tipo de evento que foi armazenado e verificar se algo se sobressai. Como podemos armazenar essas correlações assim que as calculamos?

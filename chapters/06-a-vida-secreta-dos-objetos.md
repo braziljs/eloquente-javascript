@@ -70,3 +70,23 @@ Normalmente um método precisa fazer alguma coisa com o objeto pelo qual ele
 foi chamado. Quando uma função é chamada como um método-visualizada como uma
 propriedade e imediatamente chamada, como em `objeto.metodo()`-a variável
 especial `this` no seu conteúdo vai apontar para o objeto pelo qual foi chamada.
+
+## Definindo uma tabela
+
+Eu vou trabalhar sobre um exemplo ou pouco mais envolvido na tentativa de dar a você uma melhor ideia de polimorfismo, assim como de programação orientada a objetos em geral. O projeto é este: nós vamos escrever um programa que, dado um array de arrays de células de uma tabela, cria uma string que contém uma tabela bem formatada - significando que colunas são retas e linhas estão alinhadas. Algo dessa forma:
+
+```
+name         height country
+------------ ------ -------------
+Kilimanjaro    5895 Tanzania
+Everest        8848 Nepal
+Mount Fuji     3776 Japan
+Mont Blanc     4808 Italy/France
+Vaalserberg     323 Netherlands
+Denali         6168 United States
+Popocatepetl   5465 Mexico
+```
+
+A forma que nosso sistema de construir tabelas vai funcionar é que a função construtora vai perguntar para cada célula quanto de altura e largura ela vai querer ter e então usar essa informação para determinar a largura das colunas e a altura das linhas. A função construtora vai então pedir para as células se desenharem no tamanho correto e montar o resultado dentro de uma string.
+
+http://eloquentjavascript.net/06_object.html#p_AbogVAH0Wj

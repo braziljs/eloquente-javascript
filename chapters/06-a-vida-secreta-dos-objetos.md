@@ -89,4 +89,14 @@ Popocatepetl   5465 Mexico
 
 A forma que nosso sistema de construir tabelas vai funcionar é que a função construtora vai perguntar para cada célula quanto de altura e largura ela vai querer ter e então usar essa informação para determinar a largura das colunas e a altura das linhas. A função construtora vai então pedir para as células se desenharem no tamanho correto e montar o resultado dentro de uma string.
 
-http://eloquentjavascript.net/06_object.html#p_AbogVAH0Wj
+O programa de *layout* vai comunicar com os objetos células através de uma interface bem definida. Dessa forma, os tipos de células que o programa suporta não está definida antecipadamente. Nós podemos adicionar novas células de estilo depois — por exemplo, células sublinhadas para cabeçalho — e se eles suportarem nossa interface, isso vai simplesmente, funcionar, sem exigir alterações no layout do programa.
+
+Esta é a interface:
+
+- `minHeight()` retorna um número indicando a altura mínima que esta célula necessita (em linhas).
+- `minWidth()` retorna um número indicando a largura mínima da célula (em caracteres).
+- `draw(width, height)` retorna um array de tamanho `height`, que contém uma série de strings que contém `width` caracteres de tamanho. Isso representa o conteúdo da célula.
+
+Irei fazer forte uso de métodos de ordem superior de array neste exemplo uma vez que isso é apropriado para essa abordagem.
+
+http://eloquentjavascript.net/06_object.html#p_GckWQ2f1q/

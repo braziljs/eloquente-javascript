@@ -71,6 +71,76 @@ foi chamado. Quando uma função é chamada como um método-visualizada como uma
 propriedade e imediatamente chamada, como em `objeto.metodo()`-a variável
 especial `this` no seu conteúdo vai apontar para o objeto pelo qual foi chamada.
 
+```javascript
+function speak(line) {
+  console.log("The " + this.type + " rabbit says '" +
+              line + "'");
+}
+var whiteRabbit = {type: "white", speak: speak};
+var fatRabbit = {type: "fat", speak: speak};
+
+whiteRabbit.speak("Oh my ears and whiskers, " +
+                  "how late it's getting!");
+// → The white rabbit says 'Oh my ears and whiskers, how
+//   late it's getting!'
+fatRabbit.speak("I could sure use a carrot right now.");
+// → The fat rabbit says 'I could sure use a carrot
+//   right now.'
+```
+
+O código acima usa a palavra chava `this` para dar a saída do tipo de coelho que
+está falando. Lembrando que ambos os métodos `apply` e `bind` podem user o
+primeiro argumento para simular chamadas de métodos. Esse primeiro argumento, é
+na verdade, usado para passar um valor ao `this`.
+
+Existe um método parecido ao `apply` chamado `call`. Ele também chama a função
+na qual ele é um método e aceita argumentos normalmente, ao invés de um array.
+Assim como `apply` e `bind`, o `call` pode ser passado com um valor específico
+no `this`.
+
+```javascript
+speak.apply(fatRabbit, ["Burp!"]);
+// → The fat rabbit says 'Burp!'
+speak.call({type: "old"}, "Oh my.");
+// → The old rabbit says 'Oh my.'
+```
+
+## Prototypes
+Observe com atenção.
+
+```javascript
+var empty = {};
+console.log(empty.toString);
+// → function toString(){…}
+console.log(empty.toString());
+// → [object Object]
+```
+
+Eu acabei de sacar uma propriedade de um objeto vazio. Mágica!
+
+Só que não. Eu venho ocultando algumas informações sobre como os objetos
+funcionam no JavaScript. Além de sua lista de propriedades, quase todos os
+objetos também possuem um _protótipo_, ou _prototype_. Um _prototype_ é outro objeto que é usado
+como fonte de _fallback_ para as propriedades. Quando um objeto recebe uma
+chamada em uma propriedade que ele não possui, seu _prototype_ designado para
+aquela propriedade será buscado, e então o _prototype_ daquele _prototype_ e
+assim por diante.
+
+Então quem é o _prototype_ de um objeto vazio? É o ancestral de todos os
+_prototypes_, a entidade por trás de quase todos os objetos, `Object.prototype`.
+
+```javascript
+console.log(Object.getPrototypeOf({}) ==
+            Object.prototype);
+// → true
+console.log(Object.getPrototypeOf(Object.prototype));
+// → null
+```
+
+Assim como você poderia prever, a função `Object.getPrototypeOf` retorna o
+_prototype_ de um objeto.
+
+
 ## Definindo uma tabela
 
 Eu vou trabalhar sobre um exemplo ou pouco mais envolvido na tentativa de dar a você uma melhor ideia de polimorfismo, assim como de programação orientada a objetos em geral. O projeto é este: nós vamos escrever um programa que, dado um array de arrays de células de uma tabela, cria uma string que contém uma tabela bem formatada - significando que colunas são retas e linhas estão alinhadas. Algo dessa forma:

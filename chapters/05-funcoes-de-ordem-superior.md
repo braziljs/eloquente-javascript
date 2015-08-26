@@ -473,16 +473,16 @@ console.log(reduceAncestors(ph, sharedDNA, 0) / 4);
 // → 0.00049
 ```
 
-A pessoa com o nome Pauwels van Haverbeke obviamente compartilhada 100 por cento de seu DNA com Pauwels van Haverbeke (não existem pessoas que compartilham o mesmo nome no conjunto de dados), então a função retorna 1 para ele. Todas as outras pessoas compartilham a média dos montantes que os seus pais possuem.
+A pessoa com o nome Pauwels van Haverbeke obviamente compartilhada 100 por cento de seu DNA com Pauwels van Haverbeke (não existem pessoas que compartilham o mesmo nome no conjunto de dados), então a função retorna 1 para ele. Todas as outras pessoas compartilham a média do montante que os seus pais compartilham.
 
-Assim estatisticamente falando, eu compartilho cerca de 0,05 por cento do DNA de uma pessoa do século 16. Deve-se notar que este é só uma aproximação estatística e não uma quantidade exata. É um número bastante pequeno mas dado a quantidade de material genético que carregamos (cerca de 3 bilhões de pares de bases), ainda existe algum aspecto na minha máquina biológica que se originou de Pauwels.
+Assim estatisticamente falando, eu compartilho cerca de 0,05 por cento do DNA de uma pessoa do século 16. Deve-se notar que este é só uma aproximação estatística e, não uma quantidade exata. Este é um número bastante pequeno mas dada a quantidade de material genético que carregamos (cerca de 3 bilhões de pares de bases), provavelmente ainda há algum aspecto na máquina biológica que se originou de Pauwels.
 
-Nós também poderiamos ter calculado esse número sem depender de `reduceAncestors`. Mas separando a abordagem geral (condensação de uma árvore de família) a partir do caso específico (computação do DNA compartilhado) podemos melhorar a clareza do código permitindo reutilizar a parte abstrata do programa para outros casos. Por exemplo, o seguinte código encontra a porcentagem de antepassados ​​conhecidos para uma determinada pessoa que viveu no século 70:
+Nós também podemos calcular esse número sem depender de `reduceAncestors`. Mas separando a abordagem geral (condensação de uma árvore genealógica) a partir do caso específico (computação do DNA compartilhado) podemos melhorar a clareza do código permitindo reutilizar a parte abstrata do programa para outros casos. Por exemplo, o código a seguir encontra a porcentagem de antepassados ​​conhecidos para uma determinada pessoa que viveu mais de 70 anos (por linhagem, para que as pessoas possam ser contadas várias vezes).
 
 ```js
 function countAncestors(person, test) {
-  function combine(person, fromMother, fromFather) {
-    var thisOneCounts = test(person);
+  function combine(current, fromMother, fromFather) {
+    var thisOneCounts = current != person && test(current);
     return fromMother + fromFather + (thisOneCounts ? 1 : 0);
   }
   return reduceAncestors(person, combine, 0);
@@ -497,10 +497,10 @@ function longLivingPercentage(person) {
   return longLiving / all;
 }
 console.log(longLivingPercentage(byName["Emile Haverbeke"]));
-// → 0.145
+// → 0.129
 ```
 
-Tais números não são levados muito a sério, uma vez que o nosso conjunto de dados contém uma coleção bastante arbitrária de pessoas. Mas o código ilustra o fato de que `reduceAncestors` dá-nos uma peça útil para trabalhar o vocabulário da estrutura de dados de uma árvore genealógica.
+Tais números não são levados muito a sério, uma vez que o nosso conjunto de dados contém uma coleção bastante arbitrária de pessoas. Mas o código ilustra o fato de que `reduceAncestors` dá-nos uma peça útil para trabalhar com o vocabulário da estrutura de dados de uma árvore genealógica.
 
 ## Binding
 

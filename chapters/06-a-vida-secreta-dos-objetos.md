@@ -169,4 +169,56 @@ Esta é a interface:
 
 Irei fazer forte uso de métodos de ordem superior de array neste exemplo uma vez que isso é apropriado para essa abordagem.
 
-http://eloquentjavascript.net/06_object.html#p_GckWQ2f1q/
+A primeira parte do programa calcula matrizes de largura e altura mínima para uma grade de células.
+
+```js
+function rowHeights(rows) {
+  return rows.map(function(row) {
+    return row.reduce(function(max, cell) {
+      return Math.max(max, cell.minHeight());
+    }, 0);
+  });
+}
+
+function colWidths(rows) {
+  return rows[0].map(function(_, i) {
+    return rows.reduce(function(max, row) {
+      return Math.max(max, row[i].minWidth());
+    }, 0);
+  });
+}
+```
+
+Usar um nome de variável que se inicia com um *underscore* (`_`) ou consistir inteiramente em um simples underscore é uma forma de indicar (para leitores humanos) que este argumento não será usado.
+
+A função `rowHeights` não deve ser tão difícil de ser seguida. Ela usa `reduce` para computar a altura máxima de um array de células e envolve isso em um `map` para fazer isso em todas as linhas no array `rows`.
+
+As coisas são um pouco mais difíceis na função `colWidths` porque o array externo é um array de linhas, não de colunas. Não mencionei até agora que `map` (assim como `forEach`, `filter` e métodos de array similares) passam um segundo argumento à função fornecida: o índice do elemento atual. Mapeando os elementos da primeira linha e somente usando o segundo argumento da função de mapeamento, `colWidths` constrói um array com um elemento para cada índice da coluna. A chamada à `reduce` roda sobre o array `rows` exterior para cada índice e pega a largura da célula mais larga nesse índice.
+
+Aqui está o código para desenhar a tabela:
+
+```js
+function drawTable(rows) {
+  var heights = rowHeights(rows);
+  var widths = colWidths(rows);
+
+  function drawLine(blocks, lineNo) {
+    return blocks.map(function(block) {
+      return block[lineNo];
+    }).join(" ");
+  }
+
+  function drawRow(row, rowNum) {
+    var blocks = row.map(function(cell, colNum) {
+      return cell.draw(widths[colNum], heights[rowNum]);
+    });
+    return blocks[0].map(function(_, lineNo) {
+      return drawLine(blocks, lineNo);
+    }).join("\n");
+  }
+
+  return rows.map(drawRow).join("\n");
+}
+```
+
+http://eloquentjavascript.net/06_object.html#p_QSCDyHczZF

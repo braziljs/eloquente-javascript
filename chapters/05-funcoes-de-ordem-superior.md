@@ -504,9 +504,9 @@ Tais números não são levados muito a sério, uma vez que o nosso conjunto de 
 
 ## Binding
 
-O método `bind` esta disponível em todas as funções, ele basicamente insiste em criar uma nova função que irá chamar a função original mas com alguns dos argumentos já fixados.
+O método `bind`, está presente em todas as funções, ele cria uma nova função que chama a função original mas com alguns argumentos já fixados.
 
-O código a seguir mostra um exemplo de `bind` em uso. Ele define uma função `isInSet` que nos diz se uma pessoa está em um determinado conjunto de `string`. Ao chamar `filer` ele seleciona os objetos pessoa cujos nomes estão em um conjunto específico. Ele pode escrever uma expressão de função que faz  chamada para `isInSet` enviando nosso conjunto como primeiro argumento parcial da função `isInSet`.
+O código a seguir mostra um exemplo de uso do `bind`. Ele define uma função `isInSet`, que nos diz se uma pessoa está em um determinado conjunto de `string`. Ao chamar `filter` a fim de selecionar os objetos pessoa cujos nomes estão em um conjunto específico. Nós podemos escrever uma expressão de função que faz a chamada para `isInSet` enviando nosso conjunto como primeiro argumento ou parcialmente aplicar a função `isInSet`.
 
 ```js
 var theSet = ["Carel Haverbeke", "Maria van Brussel",
@@ -524,9 +524,9 @@ console.log(ancestry.filter(isInSet.bind(null, theSet)));
 // → … same result
 ```
 
-A chamada usando `bind` retorna uma função que chama `isInSet` com `theset` sendo o primeiro argumento seguido por todos os demais argumentos indicados pela função vinculada.
+A chamada usando `bind` retorna uma função que chama `isInSet` com `theset` sendo o primeiro argumento, seguido por todos os demais argumentos indicados pela função vinculada.
 
-O primeiro argumento onde o exemplo passa `null` é utilizado para as chamadas de método semelhante ao primeiro argumento aplicado. Eu vou descrever isso com mais detalhes no próximo capítulo.
+O primeiro argumento onde o exemplo passa `null`, é utilizado para as chamadas de método, semelhante ao primeiro argumento do `apply`. Eu vou descrever isso com mais detalhes no [próximo capítulo](./06-a-vida-secreta-dos-objetos.md).
 
 ## Sumário
 

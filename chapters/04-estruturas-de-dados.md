@@ -298,3 +298,92 @@ A função `hasEvent` testa se uma entrada contém ou não o evento em questão.
 O corpo do loop em `tableFor`, descobre qual caixa da tabela cada entrada do diário pertence, verificando se essa entrada contém o evento específico e se o evento ocorreu juntamente com um incidente de esquilo. O loop adiciona uma unidade no número contido no array que corresponde a essa caixa na tabela.
 
 Agora temos as ferramentas necessárias para calcular correlações individuais. O único passo que falta é encontrar a correlação para cada tipo de evento que foi armazenado e verificar se algo se sobressai. Como podemos armazenar essas correlações assim que as calculamos?
+
+## Objetos como mapas
+
+Uma maneira possível é armazenar todas as correlações em um array, usando objetos com propriedades `name` (nome) e `value` (valor). Porém, isso faz com que o acesso às correlações de um evento seja bastante trabalhoso: você teria que percorrer por todo o array para achar o objeto com o `name` certo. Poderíamos encapsular esse processo de busca em uma função e mesmo assim iríamos escrever mais código e o computador iria trabalhar mais do que o necessário.
+
+Uma maneira melhor seria usar as propriedades do objeto nomeadas com o tipo do evento. Podemos usar a notação de colchetes para acessar e ler as propriedades e, além disso, usar o operador `in` para testar se tal propriedade existe.
+
+```js
+var map = {};
+function storePhi(event, phi) {
+  map[event] = phi;
+}
+
+storePhi("pizza", 0.069);
+storePhi("touched tree", -0.081);
+console.log("pizza" in map);
+// → true
+console.log(map["touched tree"]);
+// → -0.081
+```
+
+Um _mapa_ é uma maneira de associar valores de um domínio (nesse caso nomes de eventos) com seus valores correspondentes em outro domínio (nesse caso coeficientes ϕ).
+
+Existem alguns problemas que podem ser gerados usando objetos dessa forma, os quais serão discutidos no [capítulo 6](./06-a-vida-secreta-dos-objetos.md). Por enquanto, não iremos nos preocupar com eles.
+
+E se quiséssemos apenas encontrar os eventos nos quais armazenamos um coeficiente? Diferentemente de um array, as propriedades não formam uma sequência previsível, impossibilitando o uso de um `for` loop normal. Entretanto, o JavaScript fornece uma construção de loop específica para percorrer as propriedades de um objeto. Esse loop é parecido com o loop `for` e se distingue pelo fato de utilizar a palavra `in`.
+
+```js
+for (var event in map)
+  console.log(“The correlation for ‘” + event +
+              “’ is “ + map[event]);
+// → The correlation for ‘pizza’ is 0.069
+// → The correlation for ‘touched tree’ is -0.081
+```
+
+## A análise final
+
+Para achar todos os tipos de eventos que estão presentes no conjunto de dados, nós simplesmente processamos cada entrada e percorremos usando um loop por todos os eventos presentes. Mantemos um objeto chamado `phis` que contém os coeficientes de correlações para todos os tipos de eventos que nós vimos até agora. A partir do momento em que encontramos um tipo que ainda não está presente no objeto `phis`, calculamos o valor de sua correlação e então adicionamos ao objeto.
+
+```js
+function gatherCorrelations(journal) {
+  var phis = {};
+  for (var entry = 0; entry < journal.length; entry++) {
+    var events = journal[entry].events;
+    for (var i = 0; i < events.length; i++) {
+      var event = events[i];
+      if (!(event in phis))
+        phis[event] = phi(tableFor(event, journal));
+    }
+  }
+  return phis;
+}
+
+var correlations = gatherCorrelations(JOURNAL);
+console.log(correlations.pizza);
+// → 0.068599434
+```
+
+Vamos ver o que retorna.
+
+```js
+for (var event in correlations)
+  console.log(event + ": " + correlations[event]);
+// → carrot:   0.0140970969
+// → exercise: 0.0685994341
+// → weekend:  0.1371988681
+// → bread:   -0.0757554019
+// → pudding: -0.0648203724
+// and so on...
+```
+
+A grande maioria das correlações tendem a zero. Comer cenouras, pão ou pudim aparentemente não ativam a transformação de esquilo-lobo. Entretanto, acontecem mais frequentemente aos finais de semana. Vamos filtrar os resultados para mostrar apenas as correlações que são maiores do que 0.1 ou menores do que -0.1.
+
+```js
+for (var event in correlations) {
+  var correlation = correlations[event];
+  if (correlation > 0.1 || correlation < -0.1)
+    console.log(event + ": " + correlation);
+}
+// → weekend:        0.1371988681
+// → brushed teeth: -0.3805211953
+// → candy:          0.1296407447
+// → work:          -0.1371988681
+// → spaghetti:      0.2425356250
+// → reading:        0.1106828054
+// → peanuts:        0.5902679812
+```
+
+http://eloquentjavascript.net/04_data.html#p_V2ZEhvkhz3

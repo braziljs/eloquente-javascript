@@ -530,9 +530,9 @@ O primeiro argumento onde o exemplo passa `null`, é utilizado para as chamadas 
 
 ## Sumário
 
-A possibilidade de passar funções como argumento para outras funções não é apenas um artifício aleatório, mas sim um aspecto muito útil em JavaScript. Ela nos permitem escrever cálculos com "lacunas" sendo ela uma função e permite ao código que execute essa função para preencher as lacunas providenciando os valores que faltam para descreverem os cálculos.
+A possibilidade de passar funções como argumento para outras funções não é apenas um artifício mas sim um aspecto muito útil em JavaScript. Ela nos permitem escrever cálculos com intervalos como funções, e chamar estas funções para preencher estes intervalos, forncendo os valores para função que descrevem os cálculos que faltam.
 
-`Arrays` fornece um grande número de funções de ordem superior como o método `forEach` para fazer algo com cada elemento de um array, `map` para construir um novo array onde cada elemento é colocado através de uma função e `reduce` para combinar todos os elementos de um array em um valor único.
+`Arrays` fornece uma grande quantidade de funções de ordem superior - `forEach` faz algo com cada elemento de um `array`, `filter` para contruir um novo `array` com valores filtrados, `map` para construir um novo array onde cada elemento é colocado através de uma função e `reduce` para combinar todos os elementos de um `array` em um valor único.
 
 Funções têm o método `apply` que pode ser usado para chamar um `array` especificando seus argumentos. Elas também possuem um método `bind` que é usado para criar uma versão parcial da função que foi aplicada.
 
@@ -550,9 +550,9 @@ var arrays = [[1, 2, 3], [4, 5], [6]];
 
 ### Diferença de idade entre mãe e filho
 
-Usando os dados de exemplo definidos neste capítulo calcule a diferença de idade média entre mães e filhos (a idade da mãe quando a criança nasce). Você pode usar a função `average` definida anteriormente neste capítulo.
+Usando os dados de exemplo definidos neste capítulo, calcule a diferença de idade média entre mães e filhos (a idade da mãe quando a criança nasce). Você pode usar a função `average` definida anteriormente neste capítulo.
 
-Note que nem todas as mães mencionadas no conjunto de dados estão presentes no `array`. O objeto `byName` facilita a busca por um objeto pessoa através de seu nome. Esse método pode ser útil agora.
+Note que nem todas as mães mencionadas no conjunto de dados estão presentes no `array`. O objeto `byName` facilita a busca por um objeto pessoa através do nome. Esse método pode ser útil aqui.
 
 ```js
 function average(array) {
@@ -572,7 +572,7 @@ ancestry.forEach(function(person) {
 
 **Dica:**
 
-Como nem todos os elementos do `array` de ascendência produz dados úteis (não podemos calcular a diferença de idade, a menos que saibamos a data de nascimento da mãe) teremos de aplicar de alguma maneira um filtro antes de chamarmos o `average`. Você pode fazer isso como primeiro passo, basta definir uma função `hasKnownMother` para uma primeira filtragem. Alternativamente você pode começar a chamar o `map` e na função de mapeamento retornar a diferença de idade ou nulo se mãe for desconhecida. Em seguida você pode chamar o `filter` para remover os elementos nulos antes de passar o `array` para o método `average`.
+Como nem todos os elementos do `array` de ascendência produz dados úteis (não podemos calcular a diferença de idade, a menos que saibamos a data de nascimento da mãe) teremos que aplicar de alguma maneira um filtro antes de chamarmos o `average`. Você pode fazer isso no primeiro passo, basta definir uma função `hasKnownMother` para a primeira filtragem. Alternativamente você pode começar a chamar o `map` e na função de mapeamento retornar a diferença de idade ou nulo se mãe for desconhecida. Em seguida você pode chamar o `filter` para remover os elementos nulos antes de passar o `array` para o método `average`.
 
 ### O Histórico da expectativa de vida
 

@@ -273,4 +273,67 @@ function drawTable(rows) {
 }
 ```
 
-http://eloquentjavascript.net/06_object.html#p_QSCDyHczZF
+A função `drawTable` usa a função interna `drawRow` para desenhar todas as linhas e então as junta com caracteres *newline* (nova linha).
+
+A função `drawRow` primeiro converte os objetos célula na linha em *blocos*, que são arrays representando o conteúdo das células, divididos por linha. Uma célula simples contendo simplesmente o número 3776 deve ser representada por um array com um simples elementos como `["3776"]`, onde uma célula sublinhada deve conter duas linhas e ser representada pelo array `["name", "----"]`.
+
+Os blocos para uma linha, que devem todos ter a mesma largura, devem aparecer próximos um ao outro na saída final. A segunda chamada a `map` em `drawRow` constrói essa saída linha por linha mapeando sobre as linhas do bloco mais à esquerda e, para cada uma delas, coletando uma linha que expande a tabela para sua largura máxima. Essas linhas são então juntadas com caracteres *newline* para fornecer a linha completa e ser o valor retornado de `drawRow`.
+
+A função `drawLine` extrai linhas que devem aparecer próximas uma a outra a partir de um array de blocos e as junta com um caracter espaço para criar o espaço de um caracter entre as colunas da tabela.
+
+Agora vamos escrever o construtor para células que contenham texto, implementando a interface para as células da tabela. O construtor divide a linha em um array de linhas usando o método string `split`, que corta uma string em cada ocorrência do seu argumento e retorna um array com as partes. O método `minWidth` encontra a linha com maior largura nesse array.
+
+```js
+function repeat(string, times) {
+  var result = "";
+  for (var i = 0; i < times; i++)
+    result += string;
+  return result;
+}
+
+function TextCell(text) {
+  this.text = text.split("\n");
+}
+TextCell.prototype.minWidth = function() {
+  return this.text.reduce(function(width, line) {
+    return Math.max(width, line.length);
+  }, 0);
+};
+TextCell.prototype.minHeight = function() {
+  return this.text.length;
+};
+TextCell.prototype.draw = function(width, height) {
+  var result = [];
+  for (var i = 0; i < height; i++) {
+    var line = this.text[i] || "";
+    result.push(line + repeat(" ", width - line.length));
+  }
+  return result;
+};
+```
+
+O código usa uma função auxiliar chamada `repeat`, que constrói uma linha na qual o valor é um argumento `string` repetido `times` número de vezes. O método `draw` usa isso e adiciona "preenchimento" para as linhas assim todas vão ter o tamanho requerido.
+
+Vamos testar tudo que construímos e criar um tabuleiro de damas 5 x 5.
+
+```js
+var rows = [];
+for (var i = 0; i < 5; i++) {
+   var row = [];
+   for (var j = 0; j < 5; j++) {
+     if ((j + i) % 2 == 0)
+       row.push(new TextCell("##"));
+     else
+       row.push(new TextCell("  "));
+   }
+   rows.push(row);
+}
+console.log(drawTable(rows));
+// → ##    ##    ##
+//      ##    ##
+//   ##    ##    ##
+//      ##    ##
+//   ##    ##    ##
+```
+
+http://eloquentjavascript.net/06_object.html#p_ZlgwbD41JK

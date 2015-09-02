@@ -386,4 +386,79 @@ for (var event in correlations) {
 // → peanuts:        0.5902679812
 ```
 
-http://eloquentjavascript.net/04_data.html#p_V2ZEhvkhz3
+A-ha! Existem dois fatores nos quais a correlação é mais forte que a dos outros. Comer amendoins tem um forte efeito positivo na chance de se transformar em um esquilo, enquanto escovar os dentes tem um significante efeito negativo.
+
+Interessante. Vamos tentar uma coisa.
+
+```js
+for (var i = 0; i < JOURNAL.length; i++) {
+  var entry = JOURNAL[i];
+  if (hasEvent("peanuts", entry) &&
+     !hasEvent("brushed teeth", entry))
+    entry.events.push("peanut teeth");
+}
+console.log(phi(tableFor("peanut teeth", JOURNAL)));
+// → 1
+```
+
+Está bem evidente! O fenômeno ocorre precisamente quando Jacques come amendoins e não escova os dentes. Se ele não fosse preguiçoso em relação à higiene bucal, ele não sequer teria reparado nesse problema que o aflige.
+
+Sabendo disso, Jacques simplesmente para de comer amendoins e descobre que isso coloca um fim em suas transformações.
+
+Tudo ficou bem com Jacques por um tempo. Entretanto, alguns anos depois ele perdeu seu emprego e eventualmente foi forçado a trabalhar em um circo, onde suas performances como _O Incrível Homem-Esquilo_ se baseavam em encher sua boca com pasta de amendoim antes de cada apresentação. Em um dia de sua pobre existência, Jacques não conseguiu se transformar de volta em sua forma humana e fugiu do circo, desapareceu pela floresta e nunca mais foi visto.
+
+## Further arrayology
+
+Antes de finalizar esse capítulo, gostaria de introduzir alguns outros conceitos relacionados a objetos. Começaremos com alguns métodos geralmente úteis dos arrays.
+
+Vimos no [início do capítulo](http://eloquentjavascript.net/04_data.html#array_methods) os métodos `push` e `pop`, os quais adicionam e removem elementos no final do array. Os métodos correspondentes para adicionar e remover itens no início do array são chamados `unshift` e `shift`.
+
+```js
+var todoList = [];
+function rememberTo(task) {
+  todoList.push(task);
+}
+function whatIsNext() {
+  return todoList.shift();
+}
+function urgentlyRememberTo(task) {
+  todoList.unshift(task);
+}
+```
+
+O programa anterior gerencia uma lista de tarefas. Você pode adicionar tarefas no final da lista chamando `rememberTo("eat")` e, quando estiver preparado para realizar alguma tarefa, você chama `whatIsNext()` para pegar (e remover) o primeiro item da lista. A função `urgentlyRememberTo` também adiciona uma tarefa, porém, ao invés de adicionar no final da lista, a adiciona no início.
+
+O método `indexOf` tem um irmão chamado `lastIndexOf`, que começa a pesquisa de um dado elemento pelo final do array ao invés de começar pelo início.
+
+```js
+console.log([1, 2, 3, 2, 1].indexOf(2));
+// → 1
+console.log([1, 2, 3, 2, 1].lastIndexOf(2));
+// → 3
+```
+
+Ambos `indexOf` e `lastIndexOf` recebem um segundo argumento opcional que indica onde iniciar a pesquisa.
+
+Outro método fundamental é o `slice`, que recebe um índice de início e outro de parada, retornando um array que contém apenas os elementos contidos no intervalo desses índices. O índice de início é inclusivo e o de parada é exclusivo.
+
+```js
+console.log([0, 1, 2, 3, 4].slice(2, 4));
+// → [2, 3]
+console.log([0, 1, 2, 3, 4].slice(2));
+// → [2, 3, 4]
+```
+
+Quando o índice de parada não é informado, o `slice` irá pegar todos os elementos após o índice de início. Strings também possuem o método `slice` com um comportamento similar.
+
+O método `concat` pode ser usado para juntar arrays, parecido com o que o operador `+` faz com as strings. O exemplo a seguir mostra ambos `concat` e `slice` em ação, recebendo um array e um índice como argumento e retornando um novo array que é uma cópia do array original, exceto pelo fato de que o elemento no índice informado foi removido.
+
+```js
+function remove(array, index) {
+  return array.slice(0, index)
+    .concat(array.slice(index + 1));
+}
+console.log(remove(["a", "b", "c", "d", "e"], 2));
+// → ["a", "b", "d", "e"]
+```
+
+http://eloquentjavascript.net/04_data.html#p_1mS9LYSSFD

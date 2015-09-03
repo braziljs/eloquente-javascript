@@ -275,7 +275,7 @@ function drawTable(rows) {
 
 A função `drawTable` usa a função interna `drawRow` para desenhar todas as linhas e então as junta com caracteres *newline* (nova linha).
 
-A função `drawRow` primeiro converte os objetos célula na linha em *blocos*, que são arrays representando o conteúdo das células, divididos por linha. Uma célula simples contendo simplesmente o número 3776 deve ser representada por um array com um simples elementos como `["3776"]`, onde uma célula sublinhada deve conter duas linhas e ser representada pelo array `["name", "----"]`.
+A função `drawRow` primeiro converte os objetos célula na linha em *blocos*, que são arrays representando o conteúdo das células, divididos por linha. Uma célula simples contendo apenas o número 3776 deve ser representada por um array com um único elemento como `["3776"]`, onde uma célula sublinhada deve conter duas linhas e ser representada pelo array `["name", "----"]`.
 
 Os blocos para uma linha, que devem todos ter a mesma largura, devem aparecer próximos um ao outro na saída final. A segunda chamada a `map` em `drawRow` constrói essa saída linha por linha mapeando sobre as linhas do bloco mais à esquerda e, para cada uma delas, coletando uma linha que expande a tabela para sua largura máxima. Essas linhas são então juntadas com caracteres *newline* para fornecer a linha completa e ser o valor retornado de `drawRow`.
 
@@ -336,4 +336,53 @@ console.log(drawTable(rows));
 //   ##    ##    ##
 ```
 
-http://eloquentjavascript.net/06_object.html#p_ZlgwbD41JK
+Funciona! Mas apesar de todas as células terem o mesmo tamanho, o código do layout da tabela não faz nada realmente interessante.
+
+Os dados fonte para a tabela de montanhas que estamos tentando construir estão disponíveis na variável `MOUNTAINS` na *sandbox* e também [neste arquivo](http://eloquentjavascript.net/code/mountains.js) em nosso website.
+
+Vamos querer destacar a linha do topo, que contém o nome das colunas, sublinhando as células com uma série de caracteres *traço*. Sem problemas — nós simplesmente escrevemos um tipo de célula que manipula o sublinhado.
+
+```js
+function UnderlinedCell(inner) {
+  this.inner = inner;
+};
+UnderlinedCell.prototype.minWidth = function() {
+  return this.inner.minWidth();
+};
+UnderlinedCell.prototype.minHeight = function() {
+  return this.inner.minHeight() + 1;
+};
+UnderlinedCell.prototype.draw = function(width, height) {
+  return this.inner.draw(width, height - 1)
+    .concat([repeat("-", width)]);
+};
+```
+
+Uma célula sublinhada *contém* outra célula. Ela reporta seu tamanho mínimo sendo o mesmo que da sua célula interna (chamando os métodos `minWidth` e `minHeight` desta célula) mas adicionando um à largura para contar o espaço usado pelo sublinhado.
+
+Desenhar essa célula é bem simples - nós pegamos o conteúdo da célula interna e concatenamos uma simples linha preenchida com traços a ela.
+
+Tendo um mecanismo de sublinhamento, nós podemos agora escrever uma função que constrói uma grade de células a partir do conjunto de dados.
+
+```js
+function dataTable(data) {
+  var keys = Object.keys(data[0]);
+  var headers = keys.map(function(name) {
+    return new UnderlinedCell(new TextCell(name));
+  });
+  var body = data.map(function(row) {
+    return keys.map(function(name) {
+      return new TextCell(String(row[name]));
+    });
+  });
+  return [headers].concat(body);
+}
+
+console.log(drawTable(dataTable(MOUNTAINS)));
+// → name         height country
+//   ------------ ------ -------------
+//   Kilimanjaro  5895   Tanzania
+//   … etcetera
+```
+
+http://eloquentjavascript.net/06_object.html#p_cv0EdFlmx8

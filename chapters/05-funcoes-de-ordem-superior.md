@@ -530,7 +530,7 @@ O primeiro argumento onde o exemplo passa `null`, é utilizado para as chamadas 
 
 ## Sumário
 
-A possibilidade de passar funções como argumento para outras funções não é apenas um artifício mas sim um aspecto muito útil em JavaScript. Ela nos permitem escrever cálculos com intervalos como funções, e chamar estas funções para preencher estes intervalos, forncendo os valores para função que descrevem os cálculos que faltam.
+A possibilidade de passar funções como argumento para outras funções não é apenas um artifício mas sim um aspecto muito útil em JavaScript. Ela nos permitem escrever cálculos com intervalos como funções, e chamar estas funções para preencher estes intervalos, fornecendo os valores para função que descrevem os cálculos que faltam.
 
 `Arrays` fornece uma grande quantidade de funções de ordem superior - `forEach` faz algo com cada elemento de um `array`, `filter` para contruir um novo `array` com valores filtrados, `map` para construir um novo array onde cada elemento é colocado através de uma função e `reduce` para combinar todos os elementos de um `array` em um valor único.
 
@@ -576,9 +576,9 @@ Como nem todos os elementos do `array` de ascendência produz dados úteis (não
 
 ### O Histórico da expectativa de vida
 
-Quando olhamos para todas as pessoas que viveram mais de 90 anos no conjunto de dados; só a última geração dos dados saiu. Vamos observar mais de perto esse fenômeno.
+Quando olhamos para todas as pessoas no nosso conjunto de dados que viveram mais de 90 anos. só a última geração dos dados que retornou. Vamos observar mais de perto esse fenômeno.
 
-Calcule o resultado da média das pessoas no conjunto de dados ancestrais definidos por século. Uma pessoa é atribuída a um século pegando o ano da sua morte, dividindo por 100 e arredondando para cima com `Math.ceil(person.died / 100)`.
+Calcule o resultado da idade média das pessoas no conjunto de dados definidos por século. Uma pessoa é atribuída a um século pegando o ano da sua morte, dividindo por 100 e arredondando para cima com `Math.ceil(person.died / 100)`.
 
 ```js
 function average(array) {
@@ -596,22 +596,21 @@ function average(array) {
 //   21: 94
 ```
 
-Para ganhar um ponto extra escreva uma função `groupBy` que abstrai a operação de agrupamento. Ele deve aceitar como argumentos um `array` e uma função que calcula o grupo para um elemento do `array` e retorna um objeto que mapeia nomes dos grupos de `arrays` e membros do grupo.
+Para ganhar um ponto extra escreva uma função `groupBy` que abstrai a operação de agrupamento. Ele deve aceitar um  `array` como argumento e uma função que calcula cada elemento do grupo de `array` e retorna um objeto que mapeia os nomes dos grupos de `arrays` e os membros do grupo.
 
 **Dica:**
 
-A essência desse exemplo encontra-se no agrupamento dos elementos de um conjunto por aspectos de divisões do `array` de ancestrais em pequenos `arrays` com os ancestrais de cada século.
+A essência desse exemplo encontra-se no agrupamento dos elementos em um conjunto por alguns aspectos - a divisões do `array` de ancestrais em pequenos `arrays` com os ancestrais de cada século.
 
-Durante o processo de agrupamento deixe um objeto que associa os nomes dos séculos (números) com os `arrays` de objetos de pessoas por idades. Já que não sabemos quais categorias iremos encontrarmos então teremos que criá-los em tempo real. Para cada pessoa depois de encontrar seu século, vamos testar se o século já foi encontrado, se não adicione um array para ele. Em seguida adicione a pessoa (ou idade) para o `array` no século apropriado.
+Durante o processo de agrupamento, mantenha um objeto que associa os nomes dos séculos (números) com os `arrays` de objetos de pessoas ou idades. Já que não sabemos quais agrupamentos que encontraremos, teremos que criá-los em tempo real. Depois de calcular o século para cada pessoa, vamos testar para saber se o século já existe. Se não existir adicione um `array` para ele. Em seguida adicione a pessoa (ou idade) no `array` de acordo com o século apropriado.
 
-Finalmente um `loop` `for/in` pode ser usado para escrever a média de idades para os séculos individuais.
+Finalmente um `loop` `for/in` pode ser usado para escrever a média de idades para cada século individualmente.
 
 ### Todos e alguns
 
-`Arrays` também vêm com os métodos padrões `every` (todos) e `some` (alguns). Ambos recebem uma função predicada que quando chamada com um `array` como argumento retorna `true` ou `false`. Assim como `&&` apenas retorna um valor `true` quando as expressões de ambos os lados forem verdadeiras; `every` retorna `true` quando a função predicada retorna verdadeiro para cada elemento. Eles não processam mais elementos que o necessário, como o `for` por exemplo, se algum encontrar um predicado no primeiro elemento do `array` ele não percorrerá os outros elementos após isso.
+`Arrays` também vêm com os métodos padrões `every` (todos) e `some` (alguns). Ambos recebem uma função predicada que quando chamada com um `array` como argumento retorna `true` ou `false`. Assim como o operador `&&` retorna apenas `true` como valor quando as expressões de ambos os lados forem  `true`; `every` retorna `true` quando a função predicada retorna `true` para cada elemento do `array`. Sendo assim, a função predicada `some` retorna quando algum elemento do `array` tiver um valor como `true`. Ele não processa mais elementos do que o necessário - por exemplo, se o predicado `some` encontrar o que precisa no primeiro elemento do `array` ele não percorrerá os outros elementos.
 
-Faça duas funções, `every` and `some`, que se comporte como esses métodos, exceto se eles receberem um `array` como seu primeiro argumento ao invés de um método.
-
+Escreva duas funções, que se comporte como esses métodos, `every` e `some`, exceto se eles receberem um `array` como seu primeiro argumento ao invés de um método.
 
 ```js
 // Your code here.
@@ -628,4 +627,4 @@ console.log(some([2, 3, 4], isNaN));
 
 **Dica:**
 
-As funções podem seguir um padrão semelhante à definição de `forEach` que foi mostrado no início do capítulo a única exceção é que eles devem retornar imediatamente (com o valor à direita) quando a função predicada retorna falso ou verdadeiro. Não se esqueça de colocar uma outra instrução de retorno após o `loop`; para que a função retorne um valor correto quando atingir o final do `array`.
+As funções podem seguir um padrão semelhante à definição de `forEach` que foi mostrado no início do capítulo, a única exceção é que eles devem retornar imediatamente (com o valor à direita) quando a função predicada retorna `true` ou `false`. Não se esqueça de colocar uma outra instrução de `return` após o `loop`; para que a função retorne um valor correto quando atingir o final do `array`.

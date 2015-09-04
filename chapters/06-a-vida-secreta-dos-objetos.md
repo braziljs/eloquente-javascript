@@ -385,4 +385,10 @@ console.log(drawTable(dataTable(MOUNTAINS)));
 //   … etcetera
 ```
 
+A função padrão `Object.keys` retorna um array com nomes de propriedades de um objeto. A linha do topo da tabela deve conter células sublinhadas que dão os nomes das colunas. Abaixo disso, os valores de todos os objetos no conjuto de dados aparecem como células normais - nós os extraímos mapeando sobre o array `keys` de modo que tenhamos certeza que a ordem das células é a mesma em todas as linhas.
+
+O tabela resultante se assemelha ao exemplo mostrado anteriormente, exceto que ela não alinha os números à direita na coluna `height`. Vamos chegar nessa parte em um instante.
+
+## Getters and Setters
+
 http://eloquentjavascript.net/06_object.html#p_cv0EdFlmx8

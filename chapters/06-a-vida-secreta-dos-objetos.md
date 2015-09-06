@@ -414,4 +414,23 @@ pile.height = 100;
 // → Ignoring attempt to set height to 100
 ```
 
-http://eloquentjavascript.net/06_object.html#p_av+X6VQ/sQ
+Em um objeto literal, a notação `get` ou  `set` para propriedades permite que você especifique uma função a ser executada quando a propriedade for lida ou escrita. Você pode também adicionar tal propriedade em um objeto existente, por exemplo um protótipo, usando a função `Object.defineProperty` (que nós previamente usamos para criar propriedades não enumeráveis).
+
+```js
+Object.defineProperty(TextCell.prototype, "heightProp", {
+  get: function() { return this.text.length; }
+});
+
+var cell = new TextCell("no\nway");
+console.log(cell.heightProp);
+// → 2
+cell.heightProp = 100;
+console.log(cell.heightProp);
+// → 2
+```
+
+Você pode usar a propriedade similar `set`, no objeto passado à `defineProperty`, para especificar um método *setter*. Quando um *getter* é definido mas um *setter* não, escrever nessa propriedade é algo simplesmente ignorado.
+
+## Herança
+
+http://eloquentjavascript.net/06_object.html#h_/a3bnONnws

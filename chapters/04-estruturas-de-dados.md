@@ -407,7 +407,7 @@ Sabendo disso, Jacques simplesmente para de comer amendoins e descobre que isso 
 
 Tudo ficou bem com Jacques por um tempo. Entretanto, alguns anos depois ele perdeu seu emprego e eventualmente foi forçado a trabalhar em um circo, onde suas performances como _O Incrível Homem-Esquilo_ se baseavam em encher sua boca com pasta de amendoim antes de cada apresentação. Em um dia de sua pobre existência, Jacques não conseguiu se transformar de volta em sua forma humana e fugiu do circo, desapareceu pela floresta e nunca mais foi visto.
 
-## Further arrayology
+## Further arrayology [TODO]
 
 Antes de finalizar esse capítulo, gostaria de introduzir alguns outros conceitos relacionados a objetos. Começaremos com alguns métodos geralmente úteis dos arrays.
 
@@ -461,4 +461,101 @@ console.log(remove(["a", "b", "c", "d", "e"], 2));
 // → ["a", "b", "d", "e"]
 ```
 
-http://eloquentjavascript.net/04_data.html#p_1mS9LYSSFD
+# Strings e suas propriedades
+
+Podemos ler propriedades como `length` e `toUpperCase` de strings. Porém, caso tente adicionar uma nova propriedade, ela não será adicionada.
+
+```js
+var myString = "Fido";
+myString.myProperty = "value";
+console.log(myString.myProperty);
+// → undefined
+```
+
+Valores do tipo string, number e Boolean não são objetos e por isso, mesmo com o fato da linguagem não reclamar, quando tentamos adicionar novas propriedades, elas não são armazenadas. Os valores são imutáveis e não podem ser alterados.
+
+Mesmo assim, esses tipos possuem propriedades "nativas". Toda string possui uma série de métodos. Provavelmente, alguns dos mais úteis são `slice` e `indexOf`, os quais são parecidos com os métodos de array que possuem o mesmo nome.
+
+```js
+console.log("coconuts".slice(4, 7));
+// → nut
+console.log("coconut".indexOf("u"));
+// → 5
+```
+
+Uma diferença é que o `indexOf` das strings pode receber uma string contendo mais de um caractere, enquanto o método correspondente no array procura apenas por um único elemento.
+
+```js
+console.log("one two three".indexOf("ee"));
+// → 11
+```
+
+O método `trim` remove todos os espaços vazios (espaços, linhas, tabs e caracteres similares) do começo e do fim de uma string.
+
+```js
+console.log("  okay \n ".trim());
+// → okay
+```
+
+Já vimos a propriedade `length` das strings. Para acessar caracteres individuais de uma string, podemos usar o método `charAt` recebendo propriedades numéricas, da mesma forma que você faria com um array.
+
+```js
+var string = "abc";
+console.log(string.length);
+// → 3
+console.log(string.charAt(0));
+// → a
+console.log(string[1]);
+// → b
+```
+
+## O Objeto Arguments
+
+Sempre que uma função é invocada, uma variável especial chamada `arguments` é adicionada ao ambiente no qual o corpo da função executa. Essa variável se refere a um objeto que contém todos os argumentos passados à função. Lembre-se de que no JavaScript você pode passar mais (ou menos) argumentos para uma função, independentemente do número de parâmetros que foi declarado.
+
+```js
+function noArguments() {}
+noArguments(1, 2, 3); // This is okay
+function threeArguments(a, b, c) {}
+threeArguments(); // And so is this
+```
+
+O objeto `arguments` possui a propriedade `length` que nos informa o número de argumentos que realmente foi passado à função. Além disso, contém uma propriedade (0, 1, 2, etc) para cada argumento.
+
+Se isso soa como um array para você, você está certo. Esse objeto é muito parecido com um array, porém, infelizmente, ele não possui nenhum dos métodos de array (como `slice` ou `indexOf`). Portanto, é um pouco mais difícil de se usar do que um array de verdade.
+
+```js
+function argumentCounter() {
+  console.log(“You gave me”, arguments.length, “arguments.”);
+}
+argumentCounter(“Straw man”, “Tautology”, “Ad hominem”);
+// → You gave me 3 arguments.
+```
+
+Algumas funções podem receber qualquer número de argumentos, como no caso de `console.log`. Esses tipos de funções normalmente percorrem por todos os valores em seu objeto `arguments`, e podem ser usadas para criar interfaces extremamente agradáveis. Por exemplo, lembre-se quando criamos as entradas no diário do Jacques.
+
+```js
+addEntry([“work”, “touched tree”, “pizza”, “running”,
+          “television”], false);
+```
+
+Devido ao fato de que essa função irá ser executada muitas vezes, poderíamos criar uma alternativa mais simples.
+
+```js
+function addEntry(squirrel) {
+  var entry = {events: [], squirrel: squirrel};
+  for (var i = 1; i < arguments.length; i++)
+    entry.events.push(arguments[i]);
+  journal.push(entry);
+}
+addEntry(true, “work”, “touched tree”, “pizza”,
+         “running”, “television”);
+```
+
+Essa versão lê o primeiro argumento (`squirrel`) da forma normal e depois percorre o resto dos argumentos (o loop pula o primeiro argumento, iniciando no índice 1) juntando-os em um array.
+
+## O Objeto Math
+
+Como vimos anteriormente, `Math` é uma caixa de ferramentas com funções relacionadas a números, tais como `Math.max` (máximo), `Math.min` (mínimo) e `Math.sqrt` (raiz quadrada).
+
+http://eloquentjavascript.net/04_data.html#p_9S5JZybGFD

@@ -198,7 +198,7 @@ coelhoPreto.fala("Doom...");
 Eu vou trabalhar sobre um exemplo ou pouco mais envolvido na tentativa de dar a você uma melhor ideia de polimorfismo, assim como de programação orientada a objetos em geral. O projeto é este: nós vamos escrever um programa que, dado um array de arrays de células de uma tabela, cria uma string que contém uma tabela bem formatada - significando que colunas são retas e linhas estão alinhadas. Algo dessa forma:
 
 ```
-name         height <country></country>
+name         height country
 ------------ ------ -------------
 Kilimanjaro    5895 Tanzania
 Everest        8848 Nepal

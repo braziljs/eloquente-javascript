@@ -1,10 +1,10 @@
 # Estrutura de dados: Object e Array
 
-> Em duas ocasiões, me perguntaram, "Ora, Mr. Babbage, se você colocar em uma máquina números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão.
+> Em duas ocasiões me perguntaram, "Ora, Mr. Babbage, se você colocar em uma máquina números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão.
 
 > - Charles Babbage, Passages from the Life of a Philosopher (1864)
 
-Números, Booleanos e `strings` são os tijolos usados para construir as estruturas de dados. Mas você não pode construir uma casa com um único tijolo. Objetos nos permitem agrupar valores - incluindo outros objetos - juntos, e assim construir estruturas mais complexas.
+Números, Booleanos e _strings_ são os tijolos usados para construir as estruturas de dados. Mas você não pode construir uma casa com um único tijolo. Objetos nos permitem agrupar valores - incluindo outros objetos - juntos e assim construir estruturas mais complexas.
 
 Os programas que construímos até agora têm sido seriamente dificultados pelo fato de que eles só estavam operando com tipos de dados simples. Este capítulo irá adicionar uma compreensão básica de estruturas de dados para o seu kit de ferramentas. Ao final dele, você vai saber o suficiente para começar a escrever programas úteis.
 
@@ -12,9 +12,9 @@ O capítulo vai funcionar mais ou menos de um exemplo realista de programação,
 
 ## O esquilo-lobo
 
-De vez em quando, geralmente entre oito e dez da noite, Jaques transforma-se em um pequeno roedor peludo com uma cauda espessa.
+De vez em quando, geralmente entre às oito e dez da noite, Jaques se transforma em um pequeno roedor peludo com uma cauda espessa.
 
-Por um lado, Jaques está bastante contente que ele não tem licantropia clássica. Transformando-se em um esquilo tende a causar menos problemas do que se transformando em um lobo. Em vez de ter de se preocupar em comer acidentalmente o vizinho (que seria estranho), ele se preocupa em ser comido pelo gato do vizinho. Depois de duas ocasiões em que ele acordou em um galho fino precariamente na copa de um carvalho, nu e desorientado, ele resolveu trancar as portas e janelas de seu quarto à noite, e colocar algumas nozes no chão para manter-se ocupado.
+Por um lado, Jaques está tão contente que ele não tem licantropia clássica. Transformando-se em um esquilo tende a causar menos problemas do que se transformando em um lobo. Em vez de ter de se preocupar em comer acidentalmente o vizinho (que seria estranho), ele se preocupa em ser comido pelo gato do vizinho. Depois de duas ocasiões em que ele acordou em um galho fino precariamente na copa de um carvalho, nu e desorientado, ele resolveu trancar as portas e janelas de seu quarto à noite, e colocar algumas nozes no chão para manter-se ocupado.
 
 ![The weresquirrel](../img/weresquirrel.png)
 
@@ -26,11 +26,11 @@ A primeira coisa que ele fará será criar um conjunto de dados para armazenar e
 
 ## Conjuntos de dados
 
-Para trabalhar com um trecho de dados digitais, primeiro teremos que encontrar uma maneira de representá-los na memória de nossa máquina. Dizer, como um exemplo muito simples, que queremos para representar uma coleção de números.
+Para trabalhar com um pedaço de dados digitais, teremos primeiro que encontrar uma maneira de representá-los na memória de nossa máquina. Dizer, como um exemplo muito simples, que queremos representar uma coleção de números: 2, 3, 5, 7 e 11.
 
-Poderíamos ser criativos com *strings* - strings podem ter qualquer comprimento, assim você pode usar muitos dados em uma - e usar o "2 3 5 7 11" como a nossa representação. Mas isso é estranho. Você teria que, de alguma forma, extrair os dígitos e convertê-los de volta para número para acessá-los.
+Poderíamos ser criativos com _strings_ - afinal, _strings_ podem ter qualquer comprimento, assim você pode colocar muitos dados nelas - e usar o "2 3 5 7 11" como a nossa representação. Mas isso é estranho. Você teria que, de alguma forma, extrair os dígitos e convertê-los de volta para número para acessá-los.
 
-Felizmente, JavaScript fornece um tipo de dados especificamente para armazenar sequências de valores. Ele é chamado de *array*, e está escrito como uma lista de valores entre colchetes, separados por vírgulas.
+Felizmente, JavaScript fornece um tipo de dados especificamente para armazenar sequências de valores. Ele é chamado de _array_, e é escrito como uma lista de valores entre colchetes, separados por vírgulas.
 
 ```js
 var listOfNumbers = [2, 3, 5, 7, 11];
@@ -40,9 +40,9 @@ console.log(listOfNumbers[1 - 1]);
 // → 2
 ```
 
-A notação para a obtenção de elementos dentro de uma matriz também usa colchetes. Um par de colchetes, imediatamente após uma expressão, com uma expressão dentro deles, vai procurar o elemento da expressão à esquerda que corresponde ao índice determinado pela expressão entre parênteses.
+A notação para a obtenção de elementos dentro de uma matriz também usa colchetes. Um par de colchetes, imediatamente após uma expressão, com uma expressão dentro deles, vai procurar o elemento da expressão à esquerda que corresponde ao índice determinado pela expressão entre colchetes.
 
-Estes índices começam em zero, não um. Assim, o primeiro elemento pode ser lido com `ListOfNumbers[0]`. Se você não tem um *background* de programação, isso pode levar algum tempo para se acostumar. Contagem baseada em zero tem uma longa tradição em tecnologia, e desde que essa convenção é constantemente seguida (o que ela é, em JavaScript), ela funciona muito bem.
+O primeiro índice de um _array_ é o zero, e não um. Assim, o primeiro elemento pode ser lido como: `listOfNumbers[0]`. Se você não tem experiência com a programação, isso pode levar algum tempo para se acostumar. Contagem baseada em zero tem uma longa tradição na tecnologia, e desde que essa convenção é constantemente seguida (o que ela é, em JavaScript), ela funciona muito bem.
 
 ## Propriedades
 

@@ -451,3 +451,5 @@ RTextCell.prototype.draw = function(width, height) {
   return result;
 };
 ```
+
+http://eloquentjavascript.net/06_object.html#p_+8Q1+4H5LI

@@ -433,4 +433,21 @@ Você pode usar a propriedade similar `set`, no objeto passado à `definePropert
 
 ## Herança
 
-http://eloquentjavascript.net/06_object.html#h_/a3bnONnws
+Nós não estamos prontos com nosso exercício de layout de tabela. Ela deve ajudar na leitura de números alinhados à direita em colunas. Nós devemos criar outra tipo de célula como `TextCell`, mas ao invés de dar espaço nas linhas do lado direito, vamos espaçá-las do lado esquerdo que irá alinhas à direita.
+
+Podemos simplesmente construir um novo construtor com todos os três métodos em seu protótipo. Mas protótipos podem ter seus próprios protótipos, e isso nos permite fazer algo inteligente.
+
+```js
+function RTextCell(text) {
+  TextCell.call(this, text);
+}
+RTextCell.prototype = Object.create(TextCell.prototype);
+RTextCell.prototype.draw = function(width, height) {
+  var result = [];
+  for (var i = 0; i < height; i++) {
+    var line = this.text[i] || "";
+    result.push(repeat(" ", width - line.length) + line);
+  }
+  return result;
+};
+```

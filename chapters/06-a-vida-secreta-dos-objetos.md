@@ -452,4 +452,33 @@ RTextCell.prototype.draw = function(width, height) {
 };
 ```
 
-http://eloquentjavascript.net/06_object.html#p_+8Q1+4H5LI
+Nós reusamos o construtor e os métodos `minHeight` e `minWidth` de `TextCell`. Um `RTextCell` é agora basicamente equivalente a `TextCell`, exceto que seu método `draw` contém uma função diferente.
+
+Este padrão é chamado *herança*. Isso nos permite construir tipos de dados levemente diferentes a partir de tipos de dados existentes com relativamente pouco esforço. Tipicamente, o novo construtor vai chamar o antigo construtor (usando o método `call` para ser capaz de dar a ele o novo objeto assim como o seu valor `this`). Uma vez que esse construtor tenha sido chamado, nós podemos assumir que todos os campos que o tipo do antigo objeto supostamente contém foram adicionados. Nós organizamos para que o protótipo do construtor derive do antigo protótipo, então as instâncias deste tipo também vão acesso às propriedades deste protótipo. Finalmente, nós podemos sobrescrever algumas das propriedades adicionando-as ao nosso novo protótipo.
+
+Agora, se nós ajustarmos sutilmente a função `dataTable` para usar `RTextCell` para as células cujo valor é um número, vamos obter a tabela que estávamos buscando.
+
+```js
+function dataTable(data) {
+  var keys = Object.keys(data[0]);
+  var headers = keys.map(function(name) {
+    return new UnderlinedCell(new TextCell(name));
+  });
+  var body = data.map(function(row) {
+    return keys.map(function(name) {
+      var value = row[name];
+      // This was changed:
+      if (typeof value == "number")
+        return new RTextCell(String(value));
+      else
+        return new TextCell(String(value));
+    });
+  });
+  return [headers].concat(body);
+}
+
+console.log(drawTable(dataTable(MOUNTAINS)));
+// → … beautifully aligned table
+```
+
+http://eloquentjavascript.net/06_object.html#p_XiWor+mk9j

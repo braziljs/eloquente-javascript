@@ -481,4 +481,10 @@ console.log(drawTable(dataTable(MOUNTAINS)));
 // → … beautifully aligned table
 ```
 
-http://eloquentjavascript.net/06_object.html#p_XiWor+mk9j
+Herança é uma parte fundamental da orientação a objetos tradicional, ao lado de encapsulamento e polimorfismo. Mas enquanto os dois últimos sejam agora geralmente considerados como ideias brilhantes, herança é algo controverso.
+
+A principal razão para isso é que este tópico é geralmente confundido com polimorfismo, vendido como uma ferramenta mais poderosa do que realmente é, e subsequentemente usado em excesso de diversas horríveis formas. Onde encapsulamento e polimorfismo podem ser usados para *separar* pedaços de código de cada um, reduzindo o emaranhamento de todo o programa, herança fundamentalmente vincula os tipos, criando *mais* emaranhados.
+
+Você pode ter polimorfismo sem herança, como nós vimos. Eu não vou dizer para você evitar herança completamente. Eu a uso regularmente em meus programas. Mas você deve vê-la como um leve truque desonesto que vai ajudá-lo a definir novos tipos com menos código, não como um grande princípio de organização de código. Uma forma mais apropriada de extender tipos é através da composição, como `UnderlinedCell` constrói em outra célula simplesmente armazenando-a em uma propriedade e um método posterior a chama nos seus próprios métodos.
+
+http://eloquentjavascript.net/06_object.html#h_Fdk67dJHwg

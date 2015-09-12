@@ -503,3 +503,19 @@ console.log([1] instanceof Array);
 ```
 
 O operador vai olhar através dos tipos herdados. Um `RTextCell` é uma instância de `TextCell` porque `RTextCell.prototype` deriva de `TextCell.prototype`. O operador pode ser aplicado a construtores padrão como `Array`. Praticamente todos os objetos são uma instância de `Object`.
+
+## Resumo
+
+Então objetos são mais complicados do que inicialmente eu os retratei. Eles tem protótipos, que são outros objetos, e vão agir como se tivessem propriedades que eles não tem caso seu protótipo tenha essa propriedade. Objetos simples tem `Object.prototype` como seus protótipos.
+
+Construtores, que são funções cujos nomes usualmente iniciam com uma letra maiúscula, podem ser usador com o operador `new` para criar objetos. O protótipo do novo objeto será o objeto encontrado na propriedade `prototype` da função construtora. Você pode fazer bom uso disso adicionando propriedades que todos os valores de um tipo  compartilham em seus protótipos. O operador `instanceof` pode, dado um objeto e um construtor, dizer se o objeto é uma instância deste construtor.
+
+Algo útil a se fazer com objetos é especificar uma interface para eles e dizer para todos quer irão supostamente conversar com seu objeto a fazer isso somente por essa interface. O resto dos detalhes que constroem seu objeto estão agora *encapsulados*, escondidos atrás da interface.
+
+Uma vez que você esteja conversando em termos de interfaces, quem diz que apenas um tipo de objeto pode implementar essa interface? Ter diferentes objetos expondo a mesma interface é chamado de *polimorfismo*. Isso é muito útil.
+
+Quando implementando vários tipos que diferem apenas em alguns detalhes, pode ser útil simplesmente criar o protótipo do seu novo tipo derivando do protótipo do seu antigo tipo e ter seu novo construtor chamando o antigo. Isso lhe dá um tipo similar de objeto ao antigo mas que permite que você adicione ou sobrescreva propriedades quando necessário.
+
+## Exercícios
+
+http://eloquentjavascript.net/06_object.html#h_zO8FRQBMAy

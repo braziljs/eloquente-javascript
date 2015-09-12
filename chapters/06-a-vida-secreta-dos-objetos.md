@@ -487,4 +487,19 @@ A principal razão para isso é que este tópico é geralmente confundido com po
 
 Você pode ter polimorfismo sem herança, como nós vimos. Eu não vou dizer para você evitar herança completamente. Eu a uso regularmente em meus programas. Mas você deve vê-la como um leve truque desonesto que vai ajudá-lo a definir novos tipos com menos código, não como um grande princípio de organização de código. Uma forma mais apropriada de extender tipos é através da composição, como `UnderlinedCell` constrói em outra célula simplesmente armazenando-a em uma propriedade e um método posterior a chama nos seus próprios métodos.
 
-http://eloquentjavascript.net/06_object.html#h_Fdk67dJHwg
+## O operador `instanceof`
+
+Ocasionalmente é útil saber se um objeto foi derivado de um construtor em específico. Para isso, o JavaScript fornece um operador binário chamado `instaceof`.
+
+```js
+console.log(new RTextCell("A") instanceof RTextCell);
+// → true
+console.log(new RTextCell("A") instanceof TextCell);
+// → true
+console.log(new TextCell("A") instanceof RTextCell);
+// → false
+console.log([1] instanceof Array);
+// → true
+```
+
+O operador vai olhar através dos tipos herdados. Um `RTextCell` é uma instância de `TextCell` porque `RTextCell.prototype` deriva de `TextCell.prototype`. O operador pode ser aplicado a construtores padrão como `Array`. Praticamente todos os objetos são uma instância de `Object`.

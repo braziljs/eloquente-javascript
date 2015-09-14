@@ -558,4 +558,72 @@ Essa versão lê o primeiro argumento (`squirrel`) da forma normal e depois perc
 
 Como vimos anteriormente, `Math` é uma caixa de ferramentas com funções relacionadas a números, tais como `Math.max` (máximo), `Math.min` (mínimo) e `Math.sqrt` (raiz quadrada).
 
-http://eloquentjavascript.net/04_data.html#p_9S5JZybGFD
+O objeto `Math` é usado como um _container_ para agrupar uma série de funcionalidades relacionadas. Existe apenas um único objeto `Math` e, na maioria das vezes, ele não é útil quando usado como valor. Mais precisamente, ele fornece um _namespace_ (espaço nominal) para que todas essas funções e valores não precisem ser declaradas como variáveis globais.
+
+Possuir muitas variáveis globais "polui" o _namespace_. Quanto mais nomes são usados, mais prováveis são as chances de acidentalmente sobrescrever o valor de uma variável. Por exemplo, é provável que você queira chamar algo de `max` em um de seus programas. Sabendo que no JavaScript a função nativa `max` está contida de forma segura dentro do objeto `Math`, não precisamos nos preocupar em sobrescrevê-la.
+
+Muitas linguagens irão parar você ou, ao menos, avisá-lo quando tentar definir uma variável com um nome que já está sendo usado.  Como o JavaScript não faz isso, tenha cuidado.
+
+De volta ao objeto `Math`. Caso precise realizar cálculos trigonométricos, `Math` pode ajudá-lo. Ele contém `cos` (coseno), `sin` (seno) e `tan` (tangente), tanto quanto suas funções inversas `aos`, `asin` e `atan` respectivamente. O número π (pi), ou pelo menos a aproximação que é possível ser representada através de um número no JavaScript, está disponível como `Math.PI`. (Existe uma tradição antiga na programação de escrever os nomes de valores constantes em caixa alta).
+
+```js
+function randomPointOnCircle(radius) {
+  var angle = Math.random() * 2 * Math.PI;
+  return {x: radius * Math.cos(angle),
+          y: radius * Math.sin(angle)};
+}
+console.log(randomPointOnCircle(2));
+// → {x: 0.3667, y: 1.966}
+```
+
+Se senos e cosenos não são algo que seja muito familiar para você, não se preocupe. Quando eles forem usados no [Capítulo 13](./13-document-object-model.md) desse livro, eu lhe explicarei.
+
+O exemplo anterior usa `Math.random`. Essa é uma função que retorna um número "pseudo-aleatório" entre zero (incluído) e um (excluído) toda vez que você a chama.
+
+```js
+console.log(Math.random());
+// → 0.36993729369714856
+console.log(Math.random());
+// → 0.727367032552138
+console.log(Math.random());
+// → 0.40180766698904335
+```
+
+Embora os computadores sejam deterministas (sempre reagem da mesma maneira quando são usados os mesmos dados de entrada), é possível fazer com que produzam números que pareçam ser aleatórios. Para fazer isso, a máquina mantém um número (ou uma variedade deles) armazenado em seu estado interno. Toda vez que um número aleatório é requisitado, ela executa algumas complicadas computações deterministas nesse estado interno e então retorna parte do resultado dessas computações. A máquina também utiliza os resultados para mudar o seu próprio estado interno, fazendo com que seja produzido um próximo número “aleatório” diferente.
+
+Se quisermos um número aleatório inteiro, ao invés de um número fracionário, podemos usar `Math.floor` (que arredonda o número para o menor valor inteiro mais próximo) no resultado de `Math.random`.
+
+```js
+console.log(Math.floor(Math.random() * 10));
+// → 2
+```
+
+Multiplicar o número aleatório por dez resulta em um número que seja maior ou igual a zero e menor do que dez. Devido ao fato de que `Math.floor` arredonda o valor para baixo, essa expressão irá produzir, com chances iguais, qualquer número de zero a nove.
+
+Também existem as funções `Math.ceil` (para arredondar o valor para o maior número inteiro mais próximo) e `Math.round` (para arredondar o valor para o número inteiro mais próximo).
+
+## O objeto global
+
+O escopo global (o espaço no qual as variáveis globais residem), também pode ser abordado como um objeto no JavaScript. Cada variável global é representada como uma propriedade desse objeto. Nos navegadores, o objeto do escopo global é armazenado na variável `window`.
+
+```js
+var myVar = 10;
+console.log("myVar" in window);
+// → true
+console.log(window.myVar);
+// → 10
+```
+
+## Resumo
+
+Objetos e arrays (que são tipos específicos de objeto) fornecem maneiras de agrupar uma conjunto de valores em um único valor. Conceitualmente, ao invés de tentar carregar e manter todas as coisas individualmente em nossos braços, eles nos permitem colocar todas as coisas relacionadas dentro de uma bolsa e carregá-las.
+
+Com excessão de `null` e `undefined`, a maioria dos valores no JavaScript possuem propriedades e são acessadas usando `value.propName` ou `value["propName"]`. Objetos tendem a usar nomes para suas propriedades e armazenam mais o menos uma quantidade fixa delas. Por outro lado, os Arrays normalmente contêm quantidades variáveis de valores conceitualmente iguais e usam números (iniciando do zero) como os nomes de suas propriedades.
+
+Existem algumas propriedades nos arrays, como `length` e uma série de métodos. Métodos são funções que são armazenadas em propriedades e, normalmente, atuam no valor nas quais elas são propriedade.
+
+Objetos podem também ser usados como mapas, associando valores com seus nomes. O operador `in` pode ser usado para verificar se um objeto contém a propriedade com o nome informado. A mesma palavra-chave pode ser usada em um loop `for` (`for (var name in object)`) para percorrer todas as propriedades do objeto.
+
+### Exercícios
+
+http://eloquentjavascript.net/04_data.html#h_TcUD2vzyMe

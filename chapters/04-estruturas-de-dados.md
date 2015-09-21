@@ -562,7 +562,7 @@ O objeto `Math` é usado como um _container_ para agrupar uma série de funciona
 
 Possuir muitas variáveis globais "polui" o _namespace_. Quanto mais nomes são usados, mais prováveis são as chances de acidentalmente sobrescrever o valor de uma variável. Por exemplo, é provável que você queira chamar algo de `max` em um de seus programas. Sabendo que no JavaScript a função nativa `max` está contida de forma segura dentro do objeto `Math`, não precisamos nos preocupar em sobrescrevê-la.
 
-Muitas linguagens irão parar você ou, ao menos, avisá-lo quando tentar definir uma variável com um nome que já está sendo usado.  Como o JavaScript não faz isso, tenha cuidado.
+Muitas linguagens irão parar você ou, ao menos, avisá-lo quando tentar definir uma variável com um nome que já está sendo usado. Como o JavaScript não faz isso, tenha cuidado.
 
 De volta ao objeto `Math`. Caso precise realizar cálculos trigonométricos, `Math` pode ajudá-lo. Ele contém `cos` (coseno), `sin` (seno) e `tan` (tangente), tanto quanto suas funções inversas `aos`, `asin` e `atan` respectivamente. O número π (pi), ou pelo menos a aproximação que é possível ser representada através de um número no JavaScript, está disponível como `Math.PI`. (Existe uma tradição antiga na programação de escrever os nomes de valores constantes em caixa alta).
 
@@ -576,7 +576,7 @@ console.log(randomPointOnCircle(2));
 // → {x: 0.3667, y: 1.966}
 ```
 
-Se senos e cosenos não são algo que seja muito familiar para você, não se preocupe. Quando eles forem usados no [Capítulo 13](./13-document-object-model.md) desse livro, eu lhe explicarei.
+Se senos e cosenos não são muito familiares para você, não se preocupe. Quando eles forem usados no [Capítulo 13](./13-document-object-model.md) desse livro, eu lhe explicarei.
 
 O exemplo anterior usa `Math.random`. Essa é uma função que retorna um número "pseudo-aleatório" entre zero (incluído) e um (excluído) toda vez que você a chama.
 
@@ -624,6 +624,45 @@ Existem algumas propriedades nos arrays, como `length` e uma série de métodos.
 
 Objetos podem também ser usados como mapas, associando valores com seus nomes. O operador `in` pode ser usado para verificar se um objeto contém a propriedade com o nome informado. A mesma palavra-chave pode ser usada em um loop `for` (`for (var name in object)`) para percorrer todas as propriedades do objeto.
 
-### Exercícios
+## Exercícios
 
-http://eloquentjavascript.net/04_data.html#h_TcUD2vzyMe
+### A soma de um intervalo
+
+A [introdução](./00-introdução.md) desse livro mencionou a seguinte maneira como uma boa alternativa para somar um intervalo de números:
+
+```js
+console.log(sum(range(1, 10)));
+```
+
+Escreva uma função chamada `range` que recebe dois argumentos, `start` (início) e `end` (fim), e retorna um array contendo todos os números a partir do valor `start` até o valor `end` (incluindo-o).
+
+Em seguida, escreva a função `sum` que recebe um array de números como argumento e retorna a soma desses números. Execute o programa anterior e veja se o resultado retornado é de fato 55.
+
+Como um exercício bônus, modifique a sua função `range` para aceitar um terceiro argumento opcional que indica o tamanho do "incremento" usado para construir o array. Se nenhum valor for atribuído ao tamanho do incremento, o array de elementos será percorrido em incrementos de um, correspondendo ao comportamento antigo. A chamada à função `range(1, 10, 2)` deve retornar `[1, 3, 5, 7, 9]`. Certifique-se que funcione também com valores negativos, fazendo com que `range(5, 2, -1)` produza `[5, 4, 3, 2]`.
+
+```js
+// Your code here.
+
+console.log(sum(range(1, 10)));
+// → 55
+console.log(range(5, 2, -1));
+// → [5, 4, 3, 2]
+```
+
+**Dicas**
+
+A maneira mais fácil de construir um array é primeiramente inicializar uma variável para `[]` (um novo array vazio) e, em seguida, chamar várias vezes o seu método `push` para adicionar os valores. Não se esqueça de retornar o array no final da função.
+
+Devido ao fato de que o limite final é inclusivo, ao invés de usar um simples operador `<`, você deverá usar o operador `<=` para checar o final do seu loop.
+
+Para verificar se o argumento de incremento foi fornecido, você pode verificar o `arguments.length` ou comparar o valor do argumento com `undefined`. Caso não tenha sido informado, apenas configure o seu valor padrão (1) no topo da função.
+
+Fazer com que `range` entenda incrementos negativos é provavelmente mais fácil de ser feito escrevendo dois loops separados, um para contar valores crescentes e outro para valores decrescentes. Isso se dá pelo fato de que, quando estamos contando valores decrescentes, o operador que compara e verifica se o loop terminou precisa ser `>=` ao invés de `<=`.
+
+Pode ser útil usar um valor de incremento diferente do valor padrão (por exemplo -1) quando o valor final do intervalo for menor do que o valor de início. Dessa forma, ao invés de ficar preso em um loop infinito, `range(5, 2)` retorna algo relevante.
+
+### Invertendo um array
+
+Os arrays possuem o método `reverse`, que modifica o array invertendo a ordem que os elementos aparecem. Para esse exercício, escreva duas funções: `reverseArray` e `reverseArrayInPlace`. A primeira (`reverseArray`) recebe um array como argumento e produz um _novo_ array que tem os mesmos elementos com ordem inversa. A segunda (`reverseArrayInPlace`) funciona da mesma forma que o método `reverse`, invertendo seus elementos apenas modificando o array que foi fornecido como argumento. Ambas as funções não devem usar o método padrão `reverse`.
+
+http://eloquentjavascript.net/04_data.html#p_0ysB6LgssH

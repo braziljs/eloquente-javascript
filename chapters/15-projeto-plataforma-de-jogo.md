@@ -714,6 +714,8 @@ Veja se você pode vencer. Aqui eu espero vários `Level` construídos.
 
 ## Exercício
 
+### Fim do Jogo
+
 É tradicional para jogos de plataforma ter o início do jogador com um número limitado de vidas e subtrair uma vida cada vez que ele morre. Quando o jogador está sem vidas, o jogo será reiniciado desde o início.
 Ajuste `runGame` para implementar as três vidas ao iniciar.
 

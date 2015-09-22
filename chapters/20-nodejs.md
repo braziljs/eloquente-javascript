@@ -892,6 +892,9 @@ Você fornece as funções de _callback_ e o Node vai chamá-las no tempo certo,
 quando o _I/O_ que você solicitou tenha terminado.
 
 ## Exercícios
+
+### Negociação de Conteúdo, novamente
+
 No Capítulo 17, o primeiro exercício era fazer várias requisições para
 [eloquentjavascript.net/author](http://eloquentjavascript.net/author), pedindo
 por tipos diferentes de conteúdo passando cabeçalhos `Accept` diferentes.

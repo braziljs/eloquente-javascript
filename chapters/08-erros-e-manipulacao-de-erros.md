@@ -392,7 +392,7 @@ Lançar uma exceção faz com que `stack` de chamadas se desencadeie o bloco `tr
 
 ## Exercícios
 
-1- Tente outra vez...
+### Tente outra vez...
 
 Digamos que você tenha uma função `primitiveMultiply` que em 50 por cento dos casos multiplica dois números e em outros 50 por cento levanta uma exceção do tipo `MultiplicatorUnitFailure`. Escreva uma função que envolva esta função `MultiplicatorUnitFailure` e simplesmente tente até que uma chamada seja bem-sucedido retornando o resultado.
 
@@ -423,7 +423,7 @@ O bloco `catch` fica responsável para relançar a exceção quando não é uma 
 
 Para refazer o processo, você pode usar um `loop` que quebra somente quando a chamada for bem sucedida; veja os exemplos de recursão nos capítulos anteriores e faça o uso; espero que você não tenha uma grande séries de erros na função `primitiveMultiply` pois isso pode extrapolar o `stack` e entrar em loop infinito.
 
-2- A caixa trancada
+### A caixa trancada
 
 Considere o seguinte objeto:
 

@@ -60,7 +60,7 @@ orientação a objetos.
 Métodos são propriedades simples que comportam valores de funções. Isso é um
 método simples:
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 var coelho = {};
 coelho.diz = function(linha) {
   console.log("O coelho diz '" + linha + "'");
@@ -75,7 +75,7 @@ foi chamado. Quando uma função é chamada como um método-visualizada como uma
 propriedade e imediatamente chamada, como em `objeto.metodo()`-a variável
 especial `this` no seu conteúdo vai apontar para o objeto pelo qual foi chamada.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function speak(line) {
   console.log("The " + this.type + " rabbit says '" +
               line + "'");
@@ -101,7 +101,7 @@ na qual ele é um método e aceita argumentos normalmente, ao invés de um array
 Assim como `apply` e `bind`, o `call` pode ser passado com um valor específico
 no `this`.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 speak.apply(fatRabbit, ["Burp!"]);
 // → The fat rabbit says 'Burp!'
 speak.call({type: "old"}, "Oh my.");
@@ -111,7 +111,7 @@ speak.call({type: "old"}, "Oh my.");
 ## Prototypes
 Observe com atenção.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 var empty = {};
 console.log(empty.toString);
 // → function toString(){…}
@@ -128,7 +128,7 @@ objetos também possuem um _protótipo_, ou _prototype_. Um _prototype_ é outro
 Então quem é o _prototype_ de um objeto vazio? É o ancestral de todos os
 _prototypes_, a entidade por trás de quase todos os objetos, `Object.prototype`.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 console.log(Object.getPrototypeOf({}) ==
             Object.prototype);
 // → true
@@ -142,7 +142,7 @@ As relações dos objetos JavaScript formam uma estrutura em forma de árvore, e
 
 Muitos objetos não possuem o `Object.prototype` diretamente em seu _prototype_. Ao invés disso eles têm outro objeto que fornece suas propriedades padrão. Funções derivam do `Function.prototype`, e _arrays_ derivam do `Array.prototype`.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 console.log(Object.getPrototypeOf(isNaN) ==
             Function.prototype);
 // → true
@@ -155,7 +155,7 @@ Por diversas vezes, o _prototype_ de um objeto também terá um _prototype_, des
 
 A função `Object.getPrototypeOf` obviamente retornarão o _prototype_ de um objeto. Você pode usar `Object.create` para criar um objeto com um _prototype_ específico.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 var protoCoelho = {
   fala: function(linha) {
     console.log("O coelho " + this.tipo + " fala '" +
@@ -176,7 +176,7 @@ Um objeto criado com `new` é chamado de _instância_ do construtor.
 
 Aqui está um construtor simples para coelhos. É uma conveção iniciar o nome de um construtor com letra maiúscula para que seja fácil destinguí-los das outras funções.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function Coelho(tipo) {
   this.tipo = tipo;
 }
@@ -189,7 +189,7 @@ console.log(coelhoPreto.tipo);
 
 Construtores (todas as funções, na verdade) pegam automaticamente uma propriedade chamada `prototype`, que por padrão possui um objeto vazio que deriva do `Object.prototype`. Toda instância criada com esse construtor terá esse objeto assim como seu _prototype_. Então, para adicionar um método `fala` aos coelhos criados com o construtor `Coelho`, nós podemos simplesmente fazer isso:
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 Coelho.prototype.fala = function(linha) {
   console.log("O coelho " + this.tipo + " fala '" +
               linha + "'");
@@ -230,7 +230,7 @@ Irei fazer forte uso de métodos de ordem superior de array neste exemplo uma ve
 
 A primeira parte do programa calcula matrizes de largura e altura mínima para uma grade de células.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function rowHeights(rows) {
   return rows.map(function(row) {
     return row.reduce(function(max, cell) {
@@ -256,7 +256,7 @@ As coisas são um pouco mais difíceis na função `colWidths` porque o array ex
 
 Aqui está o código para desenhar a tabela:
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function drawTable(rows) {
   var heights = rowHeights(rows);
   var widths = colWidths(rows);
@@ -290,7 +290,7 @@ A função `drawLine` extrai linhas que devem aparecer próximas uma a outra a p
 
 Agora vamos escrever o construtor para células que contenham texto, implementando a interface para as células da tabela. O construtor divide a linha em um array de linhas usando o método string `split`, que corta uma string em cada ocorrência do seu argumento e retorna um array com as partes. O método `minWidth` encontra a linha com maior largura nesse array.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function repeat(string, times) {
   var result = "";
   for (var i = 0; i < times; i++)
@@ -323,7 +323,7 @@ O código usa uma função auxiliar chamada `repeat`, que constrói uma linha na
 
 Vamos testar tudo que construímos e criar um tabuleiro de damas 5 x 5.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 var rows = [];
 for (var i = 0; i < 5; i++) {
    var row = [];
@@ -349,7 +349,7 @@ Os dados fonte para a tabela de montanhas que estamos tentando construir estão 
 
 Vamos querer destacar a linha do topo, que contém o nome das colunas, sublinhando as células com uma série de caracteres *traço*. Sem problemas — nós simplesmente escrevemos um tipo de célula que manipula o sublinhado.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function UnderlinedCell(inner) {
   this.inner = inner;
 };
@@ -371,7 +371,7 @@ Desenhar essa célula é bem simples - nós pegamos o conteúdo da célula inter
 
 Tendo um mecanismo de sublinhamento, nós podemos agora escrever uma função que constrói uma grade de células a partir do conjunto de dados.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function dataTable(data) {
   var keys = Object.keys(data[0]);
   var headers = keys.map(function(name) {
@@ -404,7 +404,7 @@ Isso tem levado algumas pessoas a adotarem um princípio de nunca incluirem prop
 
 Felizmente, o JavaScript fornece uma técnica que fornece o melhor de ambos os mundos. Nós podemos especificar propriedades que, do lado de fora, parecem propriedades normais mas secretamente tem métodos associados a elas.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 var pile = {
   elements: ["eggshell", "orange peel", "worm"],
   get height() {
@@ -423,7 +423,7 @@ pile.height = 100;
 
 Em um objeto literal, a notação `get` ou  `set` para propriedades permite que você especifique uma função a ser executada quando a propriedade for lida ou escrita. Você pode também adicionar tal propriedade em um objeto existente, por exemplo um protótipo, usando a função `Object.defineProperty` (que nós previamente usamos para criar propriedades não enumeráveis).
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 Object.defineProperty(TextCell.prototype, "heightProp", {
   get: function() { return this.text.length; }
 });
@@ -444,7 +444,7 @@ Nós não estamos prontos com nosso exercício de layout de tabela. Ela deve aju
 
 Podemos simplesmente construir um novo construtor com todos os três métodos em seu protótipo. Mas protótipos podem ter seus próprios protótipos, e isso nos permite fazer algo inteligente.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function RTextCell(text) {
   TextCell.call(this, text);
 }
@@ -465,7 +465,7 @@ Este padrão é chamado *herança*. Isso nos permite construir tipos de dados le
 
 Agora, se nós ajustarmos sutilmente a função `dataTable` para usar `RTextCell` para as células cujo valor é um número, vamos obter a tabela que estávamos buscando.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 function dataTable(data) {
   var keys = Object.keys(data[0]);
   var headers = keys.map(function(name) {
@@ -498,7 +498,7 @@ Você pode ter polimorfismo sem herança, como nós vimos. Eu não vou dizer par
 
 Ocasionalmente é útil saber se um objeto foi derivado de um construtor em específico. Para isso, o JavaScript fornece um operador binário chamado `instaceof`.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 console.log(new RTextCell("A") instanceof RTextCell);
 // → true
 console.log(new RTextCell("A") instanceof TextCell);
@@ -533,7 +533,7 @@ Dê ao protótipo de `Vector` dois métodos, `plus` e `minus`, que pegam outro v
 
 Adicione uma propriedade getter `length` ao protótipo que calcula o tamanho do vetor - isto é, a distância do ponto (`x, y`) até a origem (0,0).
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 // Your code here.
 
 console.log(new Vector(1, 2).plus(new Vector(2, 3)));
@@ -554,7 +554,7 @@ Adicionar uma propriedade getter ao construtor pode ser feita com a função `Ob
 
 Implemente uma célula do tipo `StretchCell(inner, width, height)` que se adeque a [interface da célula da tabela](#definindo-uma-tabela) descrita anteriormente neste capítulo. Ela deve envolver outra célula (como `UnderlinedCell` faz) e assegurar que a célula resultante tem pelo menos a largura (`width`) e altura (`height`) especificada, mesmo se a célula interior for naturalmente menor.
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 // Your code here.
 
 var sc = new StretchCell(new TextCell("abc"), 1, 2);
@@ -580,7 +580,7 @@ Quando você tiver especificado sua interface, tente escrever uma função `logF
 
 Então implemente um tipo de objeto `ArraySeq` que envolve um array e permite interação sobre o array usando a interface que você desenvolveu. Implemente outro tipo de objeto `RangeSeq` que itera sobre um intervalo de inteiros (recebendo os argumentos `from` e `to` em seu construtor).
 
-<pre data-language="text/plain" class="snippet cm-s-default">
+<pre data-language="javascript" class="snippet cm-s-default">
 // Your code here.
 
 logFive(new ArraySeq([1, 2]));

@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="373.32001"
+   height="247.56035"
+   id="svg2"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="image.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="777"
+     id="namedview208"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.5007306"
+     inkscape:cx="185.25429"
+     inkscape:cy="122.5"
+     inkscape:window-x="0"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g12" />
+  <defs
+     id="defs4">
+    <style
+       type="text/css"
+       id="style6">svg {
+  background-color: #fff;
+}
+
+text, tspan {
+  font: 12px Arial;
+}
+
+path {
+  fill-opacity: 0;
+  stroke-width: 2px;
+  stroke: #000;
+}
+
+circle {
+  fill: #6b6659;
+  stroke-width: 2px;
+  stroke: #000;
+}
+
+.anchor text, .any-character text {
+  fill: #fff;
+}
+
+.anchor rect, .any-character rect {
+  fill: #6b6659;
+}
+
+.escape text, .charset-escape text, .literal text {
+  fill: #000;
+}
+
+.escape rect, .charset-escape rect {
+  fill: #bada55;
+}
+
+.literal rect {
+  fill: #dae9e5;
+}
+
+.charset .charset-box {
+  fill: #cbcbba;
+}
+
+.subexp .subexp-label tspan,
+.charset .charset-label tspan,
+.match-fragment .repeat-label tspan {
+  font-size: 10px;
+}
+
+.subexp .subexp-label tspan,
+.charset .charset-label tspan {
+  dominant-baseline: text-after-edge;
+}
+
+.subexp .subexp-box {
+  stroke: #908c82;
+  stroke-dasharray: 6,2;
+  stroke-width: 2px;
+  fill-opacity: 0;
+}
+
+.quote {
+  fill: #908c82;
+}
+
+/*# sourceMappingURL=svg.css.map */
+</style>
+  </defs>
+  <metadata
+     id="metadata8">
+    <rdf:rdf>
+      <cc:license
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:license>
+    </rdf:rdf>
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <desc
+     id="desc10">Created with Snap</desc>
+  <g
+     transform="translate(-18.972277,3.5603504)"
+     class="root"
+     id="g12">
+    <path
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px"
+       inkscape:connector-curvature="0"
+       id="path16"
+       d="M 99.390625,127 H 119.3906 m 169.67187,0 h 20.00003" />
+    <g
+       id="g3533"
+       transform="translate(25.443452,0)">
+      <rect
+         width="64.41835"
+         height="24"
+         rx="2.1619163"
+         ry="3"
+         id="rect22"
+         x="10"
+         y="115"
+         style="fill:#bada55" />
+      <text
+         sodipodi:linespacing="125%"
+         x="13.1153"
+         y="132"
+         id="text24"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;font-family:Sans;-inkscape-font-specification:Sans">
+        <tspan
+           y="132"
+           x="13.1153"
+           id="tspan3531"
+           sodipodi:role="line">boundary</tspan>
+      </text>
+    </g>
+    <rect
+       rx="3"
+       ry="3"
+       width="189.67188"
+       height="232"
+       class="subexp-box"
+       id="rect30"
+       x="109.3906"
+       y="11"
+       style="fill-opacity:0;stroke:#908c82;stroke-width:2px;stroke-dasharray:6, 2" />
+    <text
+       x="109.3906"
+       y="5.3458996"
+       class="subexp-label"
+       id="text32"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+       sodipodi:linespacing="125%">
+      <tspan
+         sodipodi:role="line"
+         id="tspan3628"
+         x="109.3906"
+         y="5.3458996">Group #1</tspan>
+    </text>
+    <path
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px"
+       inkscape:connector-curvature="0"
+       id="path38"
+       d="m 129.3906,73.5 q 0,-10 10,-10 m 139.67187,10 q 0,-10 -10,-10 M 119.3906,127 c 10,0 10,-5 20,-5 m 149.67187,5 c -10,0 -10,-5 -20,-5 M 129.3906,181.5 q 0,10 10,10 m 139.67187,-10 q 0,10 -10,10 M 119.3906,127 q 10,0 10,-10 V 73.5 M 289.06247,127 q -10,0 -10,-10 V 73.5 M 119.3906,127 q 10,0 10,10 v 44.5 M 289.06247,127 q -10,0 -10,10 v 44.5" />
+    <path
+       d="m 139.3906,63.5 h 27.6641 m 84.34378,0 h 17.66399 M 139.3906,122 h 46.3281 m 32.01562,0 h 51.32815 M 139.3906,191.5 h 10 m 119.67187,0 h 0"
+       id="path42"
+       inkscape:connector-curvature="0"
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px" />
+    <path
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px"
+       inkscape:connector-curvature="0"
+       id="path46"
+       d="M 201.72657,63.5 H 226.7266" />
+    <path
+       d="m 167.0547,63.5 q -10,0 -10,10 V 95 q 0,10 10,10 h 34.67187 q 10,0 10,-10 V 73.5 q 0,-10 -10,-10 m 10,15 5,-5 m -5,5 -5,-5"
+       id="path50"
+       inkscape:connector-curvature="0"
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px" />
+    <rect
+       style="fill:#cbcbba"
+       y="32"
+       x="167.0547"
+       id="rect54"
+       class="charset-box"
+       height="63"
+       width="34.671875"
+       ry="3"
+       rx="3" />
+    <text
+       id="text56"
+       class="charset-label"
+       y="32"
+       x="167.0547">
+      <tspan
+         style="font-size:10px"
+         id="tspan58">One of:</tspan>
+    </text>
+    <rect
+       width="24.671875"
+       height="24"
+       rx="3"
+       ry="3"
+       id="rect66"
+       x="172.0547"
+       y="37"
+       style="fill:#dae9e5" />
+    <text
+       x="174.69882"
+       y="54"
+       id="text68"
+       style="fill:#000000">
+      <tspan
+         class="quote"
+         id="tspan70"
+         style="fill:#908c82">“</tspan>
+      <tspan
+         id="tspan72">0</tspan>
+      <tspan
+         class="quote"
+         id="tspan74"
+         style="fill:#908c82">”</tspan>
+    </text>
+    <rect
+       width="24.671875"
+       height="24"
+       rx="3"
+       ry="3"
+       id="rect80"
+       x="172.0547"
+       y="66"
+       style="fill:#dae9e5" />
+    <text
+       x="174.69882"
+       y="83"
+       id="text82"
+       style="fill:#000000">
+      <tspan
+         class="quote"
+         id="tspan84"
+         style="fill:#908c82">“</tspan>
+      <tspan
+         id="tspan86">1</tspan>
+      <tspan
+         class="quote"
+         id="tspan88"
+         style="fill:#908c82">”</tspan>
+    </text>
+    <rect
+       style="fill:#dae9e5"
+       y="51.5"
+       x="226.72659"
+       id="rect94"
+       ry="3"
+       rx="3"
+       height="24"
+       width="24.671875" />
+    <text
+       style="fill:#000000"
+       id="text96"
+       y="68.5"
+       x="229.37071">
+      <tspan
+         style="fill:#908c82"
+         id="tspan98"
+         class="quote">“</tspan>
+      <tspan
+         id="tspan100">b</tspan>
+      <tspan
+         style="fill:#908c82"
+         id="tspan102"
+         class="quote">”</tspan>
+    </text>
+    <path
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px"
+       inkscape:connector-curvature="0"
+       id="path106"
+       d="m 185.7187,122 q -10,0 -10,10 v 2 q 0,10 10,10 h 32.01562 q 10,0 10,-10 v -2 q 0,-10 -10,-10 m 10,15 5,-5 m -5,5 -5,-5" />
+    <rect
+       style="fill:#bada55"
+       y="110"
+       x="185.7187"
+       id="rect112"
+       ry="3"
+       rx="3"
+       height="24"
+       width="32.015625" />
+    <text
+       style="fill:#000000"
+       id="text114"
+       y="127"
+       x="188.36282">
+      <tspan
+         id="tspan116">digit</tspan>
+    </text>
+    <path
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px"
+       inkscape:connector-curvature="0"
+       id="path120"
+       d="M 219.39063,191.5 H 244.3906" />
+    <path
+       d="m 149.3906,191.5 q -10,0 -10,10 V 223 q 0,10 10,10 h 70.00003 q 10,0 10,-10 v -21.5 q 0,-10 -10,-10 m 10,15 5,-5 m -5,5 -5,-5"
+       id="path124"
+       inkscape:connector-curvature="0"
+       style="fill-opacity:0;stroke:#000000;stroke-width:2px" />
+    <rect
+       style="fill:#cbcbba"
+       y="160"
+       x="149.39059"
+       id="rect128"
+       class="charset-box"
+       height="63"
+       width="70.000031"
+       ry="3"
+       rx="3" />
+    <text
+       id="text130"
+       class="charset-label"
+       y="157.17294"
+       x="149.39059">
+      <tspan
+         style="font-size:10px"
+         id="tspan132">One of:</tspan>
+    </text>
+    <rect
+       width="32.015625"
+       height="24"
+       rx="3"
+       ry="3"
+       id="rect140"
+       x="168.3828"
+       y="165"
+       style="fill:#bada55" />
+    <text
+       x="171.02692"
+       y="182"
+       id="text142"
+       style="fill:#000000">
+      <tspan
+         id="tspan144">digit</tspan>
+    </text>
+    <text
+       id="text148"
+       y="210"
+       x="184.0625">-</text>
+    <rect
+       style="fill:#dae9e5"
+       y="194"
+       x="154.39059"
+       id="rect154"
+       ry="3"
+       rx="3"
+       height="24"
+       width="24.671875" />
+    <text
+       style="fill:#000000"
+       id="text156"
+       y="211"
+       x="156.56354">
+      <tspan
+         style="fill:#908c82"
+         id="tspan158"
+         class="quote">“</tspan>
+      <tspan
+         id="tspan160">a</tspan>
+      <tspan
+         style="fill:#908c82"
+         id="tspan162"
+         class="quote">”</tspan>
+    </text>
+    <rect
+       style="fill:#dae9e5"
+       y="194"
+       x="193.0625"
+       id="rect168"
+       ry="3"
+       rx="3"
+       height="24"
+       width="21.328125" />
+    <text
+       style="fill:#000000"
+       id="text170"
+       y="211"
+       x="196.1778">
+      <tspan
+         style="fill:#908c82"
+         id="tspan172"
+         class="quote">“</tspan>
+      <tspan
+         id="tspan174">f</tspan>
+      <tspan
+         style="fill:#908c82"
+         id="tspan176"
+         class="quote">”</tspan>
+    </text>
+    <rect
+       style="fill:#dae9e5"
+       y="179.5"
+       x="244.39059"
+       id="rect182"
+       ry="3"
+       rx="3"
+       height="24"
+       width="24.671875" />
+    <text
+       style="fill:#000000"
+       id="text184"
+       y="196.5"
+       x="247.03471">
+      <tspan
+         style="fill:#908c82"
+         id="tspan186"
+         class="quote">“</tspan>
+      <tspan
+         id="tspan188">h</tspan>
+      <tspan
+         style="fill:#908c82"
+         id="tspan190"
+         class="quote">”</tspan>
+    </text>
+    <rect
+       style="fill:#bada55"
+       y="115"
+       x="309.0625"
+       id="rect196"
+       ry="3"
+       rx="2.2409806"
+       height="24"
+       width="66.774223" />
+    <text
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;font-family:Sans;-inkscape-font-specification:Sans"
+       id="text198"
+       y="132"
+       x="314.0625"
+       sodipodi:linespacing="125%">
+      <tspan
+         sodipodi:role="line"
+         id="tspan3545"
+         x="314.0625"
+         y="132">boundary</tspan>
+    </text>
+    <path
+       d="m 35.078758,127 h -8.75724 m 348.934962,0 h 8.75724"
+       id="path202"
+       inkscape:connector-curvature="0"
+       style="fill-opacity:0;stroke:#000000;stroke-width:1.87160254px" />
+    <circle
+       cx="0"
+       cy="127"
+       r="5"
+       id="circle204"
+       d="m 5,127 c 0,2.76142 -2.2385763,5 -5,5 -2.7614237,0 -5,-2.23858 -5,-5 0,-2.76142 2.2385763,-5 5,-5 2.7614237,0 5,2.23858 5,5 z"
+       sodipodi:cx="0"
+       sodipodi:cy="127"
+       sodipodi:rx="5"
+       sodipodi:ry="5"
+       transform="translate(24.972277,0)"
+       style="fill:#6b6659;stroke:#000000;stroke-width:2px" />
+    <circle
+       cx="408.45312"
+       cy="127"
+       r="5"
+       id="circle206"
+       d="m 413.45312,127 c 0,2.76142 -2.23857,5 -5,5 -2.76142,0 -5,-2.23858 -5,-5 0,-2.76142 2.23858,-5 5,-5 2.76143,0 5,2.23858 5,5 z"
+       sodipodi:cx="408.45312"
+       sodipodi:cy="127"
+       sodipodi:rx="5"
+       sodipodi:ry="5"
+       transform="translate(-22.145227,0)"
+       style="fill:#6b6659;stroke:#000000;stroke-width:2px" />
+  </g>
+</svg>

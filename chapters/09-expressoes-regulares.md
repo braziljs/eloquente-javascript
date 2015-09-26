@@ -2,11 +2,13 @@ Capítulo 9
 
 # Expressões Regulares
 
-Algumas pessoas, quando confrontadas com um problema, pensam "Eu sei, terei que usar expressões regulares." Agora elas têm dois problemas.
-Jamie Zawinski
+> "Algumas pessoas, quando confrontadas com um problema, pensam "Eu sei, terei que usar expressões regulares." Agora elas têm dois problemas.
+>
+> — Jamie Zawinski
 
-Yuan-Ma disse, "Quando você serra contra o sentido da madeira, muita força será necessária. Quando você programa contra o sentido do problema, muito código será necessário"
-Mestre Yuan-Ma, The Book of Programming
+> "Yuan-Ma disse, 'Quando você serra contra o sentido da madeira, muita força será necessária. Quando você programa contra o sentido do problema, muito código será necessário'
+>
+> — Mestre Yuan-Ma, The Book of Programming
 
 A maneira como técnicas e convenções de programação sobrevivem e se disseminam, ocorrem de um modo caótico, evolucionário. Não é comum que a mais agradável e brilhante vença, mas sim aquelas que combinam bem com o trabalho e o nicho, por exemplo, sendo integradas com outra tecnologia de sucesso.
 

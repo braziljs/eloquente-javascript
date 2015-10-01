@@ -1,5 +1,9 @@
 # Valores, Tipos e Operadores
 
+>  Abaixo da parte superficial da máquina, existem um programa que desloca-se. Sem esforço, ele se expande e se contrai. Com grande harmonia, os elétrons se espalham e se reagrupam. As formas no monitor são como ondulações na água. A essência permanece invisível por baixo.
+
+> - Master Yuan-Ma, The Book of Programming
+
 Dentro do mundo do computador, há somente dados. Nós podemos ler dados, modificar dados, criar dados - mas coisas que não são representadas por dados simplesmente não existem. Todos estes dados são armazenados em longas sequências de bits, e isso portanto é fundamentalmente parecido.
 
 Bits podem ser qualquer tipo de coisa com 2 valores, usualmente descrito como 0 e 1. Dentro do computador, eles tomam formas como uma carga elétrica alta ou baixa, um forte ou fraco sinal, ou um ponto brilhante ou sem brilho na superfície de um CD. Qualquer pedaço de uma discreta informação, pode ser reduzida para uma sequência de 0 e 1, e então representanda por bits.

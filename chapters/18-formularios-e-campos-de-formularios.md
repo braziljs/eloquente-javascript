@@ -21,28 +21,15 @@ de formulários suportados um número de propriedades e eventos que não são pr
 Um formulário web consiste em qualquer número de campos `input` agrupados em uma tag `<form>`. O HTML permite que um número de diferentes estilos de campos, que vão desde simples on/off checkboxes para drop-down menus e campos de texto. Este livro não vai tentar discutir de forma abrangente todos os tipos de campos, mas nós podemos iniciar com a visão geral.
 
 Muitos tipos de campos usam a tag `<input>`. Essa tag é um tipo de atributo usado para estilos do campo. Estes são alguns tipos de `<input>` comumente usados:
-<table>
-<tr>
-  <td> <b>text</b> </td> 
-  <td>Um campo de texto em uma única linha  </td>
-</tr>
-<tr>
-  <td> <b>password</b> </td> 
-  <td> O mesmo que o campo de texto, mas esconde o texto que é digitado  </td>
-</tr>
-<tr>
-  <td> <b>checkbox</b> </td> 
-  <td>  Um modificador on/off   </td>
-</tr>
-<tr>
-  <td> <b>radio</b>  </td> 
-  <td> Campo de múltipla escolha  </td>
-</tr>
-<tr>
-  <td> <b>file</b> </td> 
-  <td>   Permite que o usuário escolha um arquivo de seu computador </td>
-</tr>
-</table>
+
+|||
+|:--|:--|
+| **text** | Um campo de texto em uma única linha |
+| **password** | O mesmo que o campo de texto, mas esconde o texto que é digitado |
+| **checkbox** | Um modificador on/off |
+| **radio** | Campo de múltipla escolha |
+| **file** | Permite que o usuário escolha um arquivo de seu computador |
+
 Os campos de formulários não aparecem necessariamente em uma tag `<form>`. Você pode colocá-los em qualquer lugar. Esses campos não podem ser apresentados (somente em um formulário como um todo), mas ao retornar para o _input_ com JavaScript, muitas vezes não querem submeter campos de qualquer maneira.
 
 ```html

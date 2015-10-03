@@ -6,7 +6,8 @@ prev: /chapters/estrutura-do-programa
 next: /chapters/estrutura-de-dados
 ---
 
-> “As pessoas pensam que Ciência da Computação é a arte de gênios. Na realidade é o oposto, são várias pessoas fazendo coisas que dependem uma das outras, como um muro de pequenas pedras.”
+> As pessoas pensam que Ciência da Computação é a arte de gênios. Na realidade é o oposto, são várias pessoas fazendo coisas que dependem uma das outras, como um muro de pequenas pedras.”
+>
 > — Donald Knuth
 
 Você já viu valores de funções como `alert`, e como invocá-las. Funções são essenciais na programação JavaScript. O conceito de encapsular uma parte do programa em um valor tem vários usos. É uma ferramenta usada para estruturar aplicações de larga escala, reduzir repetição de código, associar nomes a subprogramas e isolar esses subprogramas uns dos outros.

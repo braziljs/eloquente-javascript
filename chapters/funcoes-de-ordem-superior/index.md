@@ -6,11 +6,11 @@ prev: /chapters/estrutura-de-dados
 next: /chapters/a-vida-secreta-dos-objetos
 ---
 
-> "Tzu-li e Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. 'Duzentas mil linhas sem contar os comentários!', disse Tzu-li. Tzu-ssu respondeu: 'Pssh, o meu já tem quase um milhão de linhas'. Mestre Yuan-Ma disse: 'Meu melhor programa tem quinhentas linhas'. Ouvindo isso, Tzu-li e Tzu-ssu ficaram esclarecidos."
+> Tzu-li e Tzu-ssu estavam se gabando do tamanho dos seus últimos programas. 'Duzentas mil linhas sem contar os comentários!', disse Tzu-li. Tzu-ssu respondeu: 'Pssh, o meu já tem quase um milhão de linhas'. Mestre Yuan-Ma disse: 'Meu melhor programa tem quinhentas linhas'. Ouvindo isso, Tzu-li e Tzu-ssu ficaram esclarecidos."
 >
 > — Master Yuan-Ma, The Book of Programming
 
-> "Existem duas maneiras de construir o design de um software: uma maneira é deixá-lo tão simples de tal forma em que obviamente não há deficiências, e a outra é torná-lo tão complicado que não haverá deficiências óbvias."
+> Existem duas maneiras de construir o design de um software: uma maneira é deixá-lo tão simples de tal forma em que obviamente não há deficiências, e a outra é torná-lo tão complicado que não haverá deficiências óbvias."
 >
 > — C.A.R. Hoare, 1980 ACM Turing Award Lecture
 

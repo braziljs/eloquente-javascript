@@ -6,7 +6,7 @@ prev: /chapters/manipulando-eventos
 next: /chapters/desenhando-com-canvas
 ---
 
-> Toda realidade é um jogo.
+> Toda realidade é um jogo."
 >
 > — Iain Banks, The Player of Games
 

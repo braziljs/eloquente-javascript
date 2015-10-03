@@ -8,11 +8,11 @@ next: /chapters/expressoes-regulares
 
 > A depuração é duas vezes mais difícil do que escrever o código pela primeiro vez. Portanto, se você escrever um código o quanto inteligentemente  possível, por definição, você não é inteligente o suficiente para depurá-lo."
 >
-> `Brian Kernighan e PJ Plauger, Os elementos do estilo de programação`
+> — Brian Kernighan e PJ Plauger, Os elementos do estilo de programação
 
 > Yuan-Ma havia escrito um pequeno programa onde utilizou muitas variáveis globais e atalhos de má qualidade. Um estudante lendo perguntou: Você nos advertiu contra tais técnicas, mas acabo encontrá-las em seu programa. Como pode isso? O mestre disse: Não há necessidade de se buscar uma mangueira de água, quando a casa não está em chamas."
 >
-> `Mestre Yuan-Ma, O Livro de Programação`
+> — Mestre Yuan-Ma, O Livro de Programação
 
 
 Um programa são pensamentos cristalizadas. Às vezes, esses pensamentos estão confusos. Outras vezes os erros são introduzidos ao converter esse pensamento em código. De qualquer forma o resultado será um programa falho.

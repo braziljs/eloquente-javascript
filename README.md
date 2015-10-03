@@ -36,6 +36,8 @@
 
 Veja nosso guia de contribuição [aqui](https://github.com/braziljs/eloquente-javascript/blob/master/CONTRIBUTING.md).
 
+Confira também o glossário de termos técnicos em inglês e suas respectivas traduções [aqui](https://github.com/braziljs/eloquente-javascript/blob/master/glossario.md).
+
 ## Informações Importantes
 
 - Autor: **Marijn Haverbeke**

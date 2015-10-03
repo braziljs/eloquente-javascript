@@ -6,6 +6,10 @@ next: /chapters/funcoes
 prev: /chapters/valores-tipos-operadores
 ---
 
+> O meu coração vermelho brilha nítidamente sob minha pele e ele têm que administrar 10cc de JavaScript para fazer com que eu volte (Eu respondi bem a toxinas no sangue). Cara, esse negócio vai chutar os pêssegos de direita para fora!"
+>
+> — _why, Why's (Poignant) Guide to Ruby
+
 Este é o ponto onde nós começamos a fazer coisas que podem realmente ser chamadas *programação*. Nós vamos expandir nosso domínio da linguagem JavaScript, para além dos substantivos e fragmentos de sentenças que nós vimos anteriormente, para o ponto onde poderemos realmente expressar algo mais significativo.
 
 ## Expressões e Afirmações

@@ -6,7 +6,7 @@ prev: /chapters/o-document-object-model
 next: /chapters/projeto-plataforma-de-jogo
 ---
 
-> Você tem o poder sobre sua mente e não sobre eventos externos. Perceba isso e você encontrara resistência.
+> Você tem o poder sobre sua mente e não sobre eventos externos. Perceba isso e você encontrara resistência."
 >
 > — Marcus Aurelius, Meditations
 

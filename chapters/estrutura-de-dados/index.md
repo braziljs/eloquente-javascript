@@ -6,8 +6,8 @@ prev: /chapters/funcoes
 next: /chapters/funcoes-de-ordem-superior
 ---
 
-> Em duas ocasiões me perguntaram, "Ora, Mr. Babbage, se você colocar em uma máquina números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão.
-
+> Em duas ocasiões me perguntaram, "Ora, Mr. Babbage, se você colocar em uma máquina números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão."
+>
 > — Charles Babbage, Passages from the Life of a Philosopher (1864)
 
 Números, Booleanos e _strings_ são os tijolos usados para construir as estruturas de dados. Mas você não pode construir uma casa com um único tijolo. Objetos nos permitem agrupar valores - incluindo outros objetos - juntos e assim construir estruturas mais complexas.

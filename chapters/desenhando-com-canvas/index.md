@@ -6,7 +6,7 @@ prev: /chapters/projeto-plataforma-de-jogo
 next: /chapters/http
 ---
 
-> Desenhar é uma decepção.
+> Desenhar é uma decepção."
 >
 > — M.C. Escher, citado por Bruno Ernst em The Magic Mirror of M.C. Escher.
 

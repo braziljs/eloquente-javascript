@@ -6,7 +6,7 @@ prev: /chapters/a-vida-secreta-dos-objetos
 next: /chapters/manipulacao-de-erros
 ---
 
-> [...] A questão da máquinas poder pensar [...] é tão relevante quanto a questão dos submarinos poderem nadar.
+> [...] A questão da máquinas poder pensar [...] é tão relevante quanto a questão dos submarinos poderem nadar."
 >
 > — Edsger Dijkstra, The Threats to Computing Science
 

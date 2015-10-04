@@ -6,7 +6,7 @@ prev: /chapters/introducao
 chapter: 1
 ---
 
->  Abaixo da parte superficial da máquina, existem um programa que desloca-se. Sem esforço, ele se expande e se contrai. Com grande harmonia, os elétrons se espalham e se reagrupam. As formas no monitor são como ondulações na água. A essência permanece invisível por baixo."
+>  Abaixo da parte superficial da máquina, existe um programa que desloca-se. Sem esforço, ele se expande e se contrai. Com grande harmonia, os elétrons se espalham e se reagrupam. As formas no monitor são como ondulações na água. A essência permanece invisível por baixo."
 >
 > — Master Yuan-Ma, The Book of Programming
 
@@ -94,7 +94,7 @@ Quando operadores aparecem juntos sem parênteses, a ordem que eles vão ser apl
 
 Estas regras de precedência não é algo que você deva se preocupar. Quando em dúvida, somente adicione parênteses.
 
-Há mais um operador aritmético, que possivelmente é menos familiar. O símbolo `%` é usado para representar o *restante* da operação. `X % Y` é o restante da divisão de `X por Y`. Por exemplo, `314 % 100` produz `14`, e `144 % 12` nos dá `0`. A precedência deste operador é igual a da multiplicação e divisão. Você também pode ver este operador sendo referido como "modulo" (porém tecnicamente "restante" é mais preciso).
+Há mais um operador aritmético, que possivelmente é menos familiar. O símbolo `%` é usado para representar o *restante* da operação. `X % Y` é o restante da divisão de `X por Y`. Por exemplo, `314 % 100` produz `14`, e `144 % 12` nos dá `0`. A precedência deste operador é igual a da multiplicação e divisão. Você também pode ver este operador sendo referido como "módulo" (porém tecnicamente "restante" é mais preciso).
 
 ## Números Especiais
 
@@ -250,7 +250,7 @@ Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fác
 
 A última parte do comportamento é frequentemente muito útil. Quando você quer testar se um valor tem um valor real, em vez de ser `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
 
-Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de conversão de strings e números para valores booleanos afirmam que `0`, `NaN` e empty strings contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro teste se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como experado.
+Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de conversão de strings e números para valores booleanos afirmam que `0`, `NaN` e empty strings contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro teste se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como esperado.
 
 Usar os operadores de comparação de três caracteres defensivamente, para prevenir inesperadas conversões de tipo que o farão tropeçar, é algo que eu recomendo. Mas quando você tem certeza de que os tipos de ambos os lados serão iguais, ou que eles vão ser ambos `null`/`undefined`, não há problemas em usar os operadores curtos.
 

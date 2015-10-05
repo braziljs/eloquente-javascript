@@ -6,7 +6,7 @@ next: /chapters/funcoes
 prev: /chapters/valores-tipos-operadores
 ---
 
-> O meu coração vermelho brilha nítidamente sob minha pele e ele têm que administrar 10cc de JavaScript para fazer com que eu volte (Eu respondi bem a toxinas no sangue). Cara, esse negócio vai chutar os pêssegos de direita para fora!"
+> O meu coração vermelho brilha nitidamente sob minha pele e ele têm que administrar 10cc de JavaScript para fazer com que eu volte (Eu respondi bem a toxinas no sangue). Cara, esse negócio vai chutar os pêssegos de direita para fora!"
 >
 > — _why, Why's (Poignant) Guide to Ruby
 
@@ -16,7 +16,7 @@ Este é o ponto onde nós começamos a fazer coisas que podem realmente ser cham
 
 No capítulo anterior, nós criamos alguns valores e então aplicamos operadores para então obter novos valores. Criar valores desta forma é uma parte essencial de todo programa JavaScript, mas isso é somente uma parte. Um fragmento de código que produz um valor é chamado de *expressão*. Todo valor que é escrito literalmente ( como `22` ou `"psychoanalysis"` ) é uma expressão. Uma expressão entre parênteses é também uma expressão, e também um operador binário aplicado a duas expressões, ou um unário aplicado a uma.
 
-Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma muito semelhante das sub-frases usadas na liguagem humana - uma sub-frase pode conter sua própria sub-frase, e assim por diante. Isto nos permite combinar expressões para expressar arbitrariamente computações complexas.
+Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma muito semelhante das sub-frases usadas na linguagem humana - uma sub-frase pode conter sua própria sub-frase, e assim por diante. Isto nos permite combinar expressões para expressar arbitrariamente computações complexas.
 
 Se uma expressão corresponde a um fragmento de sentença, uma *afirmação*, no JavaScript, corresponde a uma frase completa em linguagem humana. Um programa é simplesmente uma lista de afirmações.
 
@@ -35,7 +35,7 @@ Em alguns casos, o JavaScript permite que você omita o ponto e vírgula no fim 
 
 ## Variáveis
 
-Como um programa mantém um estado interno? Como ele se lembra das coisas? Nós vimos como produzir novos valores com valores antigos, mas isso não altera os valores antigos, e o valor novo deve ser imediatamente usado ou vai ser dissipado. Para pegar e guardar valores, o JavaScript fornece um coisa chamada *variável*.
+Como um programa mantém um estado interno? Como ele se lembra das coisas? Nós vimos como produzir novos valores com valores antigos, mas isso não altera os valores antigos, e o valor novo deve ser imediatamente usado ou vai ser dissipado. Para pegar e guardar valores, o JavaScript fornece uma coisa chamada *variável*.
 
 <pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 var caught = 5 * 5;
@@ -65,7 +65,7 @@ mood = "dark";
 console.log(mood); // dark
 </pre>
 
-Você deve imaginar variáveis como tentáculos, ao invés de caixas. Elas não *contém* valores; elas os *agarram* - duas variáveis podem referenciar o mesmo valor. Somente os valores que o programa mantém tem o poder de ser acessado por ele. Quando você precisa de lembrar de algo, você aumenta o tentáculo para segurar ou recoloca um de seus tentáculos existentes para fazer isso.
+Você deve imaginar variáveis como tentáculos, ao invés de caixas. Elas não *contêm* valores; elas os *agarram* - duas variáveis podem referenciar o mesmo valor. Somente os valores que o programa mantém tem o poder de ser acessado por ele. Quando você precisa de lembrar de algo, você aumenta o tentáculo para segurar ou recoloca um de seus tentáculos existentes para fazer isso.
 
 Quando você define uma variável sem fornecer um valor a ela, o tentáculo fica conceitualmente no ar - ele não tem nada para segurar. Quando você pergunta por um valor em um lugar vazio, você recebe o valor `undefined`.
 
@@ -400,7 +400,7 @@ fuzzy_little_turtle
 FuzzyLittleTurtle
 fuzzyLittleTurtle
 
-O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar underscores `_`, embora seja um pouco doloroso de escrever. Entretanto, o padrão das funções JavaScript, e da maioria dos programadores JavaScript, é o de seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Isso não é difícil se acostumar com pequenas coisas assim, e o código com os estilos de nomes mistos pode se tornar desagrádavel para leitura, então vamos seguir esta convenção.
+O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar underscores `_`, embora seja um pouco doloroso de escrever. Entretanto, o padrão das funções JavaScript, e da maioria dos programadores JavaScript, é o de seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Isso não é difícil se acostumar com pequenas coisas assim, e o código com os estilos de nomes mistos pode se tornar desagradável para leitura, então vamos seguir esta convenção.
 
 Em poucos casos, como a função `Number`, a primeira letra da variável é também capitalizada. Isso é feito para marcar a função como um construtor. O que um construtor é vai ser esclarecido no capítulo 6. Por agora, o importante é não ser incomodado com esta aparente falta de consistência.
 

@@ -1,6 +1,6 @@
 # Estrutura do Programa
 
-> O meu coração vermelho brilha nítidamente sob minha pele e ele têm que administrar 10cc de JavaScript para fazer com que eu volte (Eu respondi bem a toxinas no sangue). Cara, esse negócio vai chutar os pêssegos de direita para fora!
+> O meu coração vermelho brilha nitidamente sob minha pele e ele têm que administrar 10cc de JavaScript para fazer com que eu volte (Eu respondi bem a toxinas no sangue). Cara, esse negócio vai chutar os pêssegos de direita para fora!
 
 > - _why, Why's (Poignant) Guide to Ruby
 
@@ -10,7 +10,7 @@ Este é o ponto onde nós começamos a fazer coisas que podem realmente ser cham
 
 No [Capítulo 1](./01-valores-tipos-operadores.md) nós criamos alguns valores e então aplicamos operadores para obter novos valores. Criar valores desta forma é uma parte essencial de todo programa JavaScript, mas isso é somente uma parte. Um fragmento de código que produz um valor é chamado de *expressão*. Todo valor que é escrito literalmente (como `22` ou `"psychoanalysis"`) é uma expressão. Uma expressão entre parênteses é também uma expressão, e também um operador binário aplicado a duas expressões, ou um unário aplicado a uma.
 
-Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma semelhante às sub-frases usadas na liguagem humana - uma sub-frase pode conter sua própria sub-frase, e assim por diante. Isto nos permite combinar expressões para expressar computações complexas arbitrariamente.
+Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma semelhante às sub-frases usadas na linguagem humana - uma sub-frase pode conter sua própria sub-frase, e assim por diante. Isto nos permite combinar expressões para expressar computações complexas arbitrariamente.
 
 Se uma expressão corresponde a um fragmento de sentença, uma *afirmação*, no JavaScript, corresponde a uma frase completa em linguagem humana. Um programa é simplesmente uma lista de afirmações.
 
@@ -29,7 +29,7 @@ Em alguns casos, o JavaScript permite que você omita o ponto e vírgula no fim 
 
 ## Variáveis
 
-Como um programa mantém um estado interno? Como ele se lembra das coisas? Nós vimos como produzir novos valores com valores antigos, mas isso não altera os valores antigos, e o valor novo deve ser imediatamente usado ou vai ser dissipado. Para pegar e guardar valores, o JavaScript fornece um coisa chamada *variável*.
+Como um programa mantém um estado interno? Como ele se lembra das coisas? Nós vimos como produzir novos valores com valores antigos, mas isso não altera os valores antigos, e o valor novo deve ser imediatamente usado ou vai ser dissipado. Para pegar e guardar valores, o JavaScript fornece uma coisa chamada *variável*.
 
 ```javascript
 var caught = 5 * 5;
@@ -60,7 +60,7 @@ console.log(mood);
 // dark
 ```
 
-Você deve imaginar variáveis como tentáculos, ao invés de caixas. Elas não *contém* valores; elas os *agarram* - duas variáveis podem referenciar o mesmo valor. Somente os valores que o programa mantém tem o poder de ser acessado por ele. Quando você precisa se lembrar de algo, você aumenta o tentáculo para segurar ou recoloca um de seus tentáculos existentes para fazer isso.
+Você deve imaginar variáveis como tentáculos, ao invés de caixas. Elas não *contêm* valores; elas os *agarram* - duas variáveis podem referenciar o mesmo valor. Somente os valores que o programa mantém tem o poder de ser acessado por ele. Quando você precisa se lembrar de algo, você aumenta o tentáculo para segurar ou recoloca um de seus tentáculos existentes para fazer isso.
 
 Quando você define uma variável sem fornecer um valor a ela, o tentáculo fica conceitualmente no ar - ele não tem nada para segurar. Quando você pergunta por um valor em um lugar vazio, você recebe o valor `undefined`.
 
@@ -123,7 +123,7 @@ Mostrar uma caixa de diálogo ou escrever texto na tela é um efeito colateral. 
 console.log(Math.max(2, 4));
 ```
 
-Quando uma função produz um valor, é dito que ela *retorna* (`return`) ele. Em JavaScript, tudo que produz um valor é uma expressão em JavaScript, o que significa que chamadas de função podem ser usadas dentro de expressões maiores. Por exemplo , a função `Math.max` recebe qualquer quantidade de valores númericos e retorna o maior deles.
+Quando uma função produz um valor, é dito que ela *retorna* (`return`) ele. Em JavaScript, tudo que produz um valor é uma expressão em JavaScript, o que significa que chamadas de função podem ser usadas dentro de expressões maiores. Por exemplo, a função `Math.max` recebe qualquer quantidade de valores numéricos e retorna o maior deles.
 
 ```javascript
 console.log(Math.min(2, 4) + 100);
@@ -357,7 +357,7 @@ counter += 1;
 
 ```
 
-Atalhos similares funcionam para outros operadore, como `result *= 2` para dobrar o `result` ou `counter -= 1` para diminuir um.
+Atalhos similares funcionam para outros operadores, como `result *= 2` para dobrar o `result` ou `counter -= 1` para diminuir um.
 
 Isto nos permite encurtar nosso exemplo de contagem um pouco mais:
 
@@ -410,7 +410,7 @@ FuzzyLittleTurtle
 fuzzyLittleTurtle
 ```
 
-O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar sublinhados, embora esse estilo seja um pouco doloroso de escrever. O padrão das funções em JavaScript, e o da maioria dos programadores JavaScript, é seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Não é difícil se acostumar com coisas pequenas assim, e o código com estilos de nomenclaturas mistas pode se tornar desagrádavel para leitura, então vamos seguir esta convenção.
+O primeiro estilo é difícil de ler. Pessoalmente, eu gosto de usar sublinhados, embora esse estilo seja um pouco doloroso de escrever. O padrão das funções em JavaScript, e o da maioria dos programadores JavaScript, é seguir o último estilo - eles capitalizam toda palavra exceto a primeira. Não é difícil se acostumar com coisas pequenas assim, e o código com estilos de nomenclaturas mistas pode se tornar desagradável para leitura, então vamos seguir esta convenção.
 
 Em alguns casos, como a função `Number`, a primeira letra da variável é capitalizada também. Isso é feito para marcar a função como um construtor. O que é um construtor será esclarecido no [capítulo 6](./06-a-vida-secreta-dos-objetos.md). Por enquanto, o importante é não ser incomodado por esta aparente falta de consistência.
 
@@ -459,7 +459,7 @@ Funções são valores especiais que encapsulam um pedaço do programa. Você po
 
 Se você está inseguro sobre como testar suas soluções para os exercícios, consulte a [introdução](./00-introducao.md).
 
-Cada exercício começa com a descrição de um problema. Leia e tente resolvê-lo. Se você tiver dificuldades, considere a leitura das dicas abaixo do exercício. As soluções completas para os exercícios não estão inclusas neste livro, mas você pode procurar elas onlines em [eloquentjavascript.net/code](http://eloquentjavascript.net/code/). Se você quer aprender algo, eu recomendo que veja as soluções somente após ter resolvido o exercício, ou pelo menos, depois que tentou por um periódo longo e duro o suficiente para dar uma pequena dor de cabeça.
+Cada exercício começa com a descrição de um problema. Leia e tente resolvê-lo. Se você tiver dificuldades, considere a leitura das dicas abaixo do exercício. As soluções completas para os exercícios não estão inclusas neste livro, mas você pode procurar elas onlines em [eloquentjavascript.net/code](http://eloquentjavascript.net/code/). Se você quer aprender algo, eu recomendo que veja as soluções somente após ter resolvido o exercício, ou pelo menos, depois que tentou por um período longo e duro o suficiente para dar uma pequena dor de cabeça.
 
 ### Triângulo com Loop
 
@@ -533,7 +533,7 @@ Quando você tiver o programa que gere este padrão, defina a variável `size = 
 
 **Dica:**
 
-A sequência pode ser contruida iniciando vazia ("") e repetidamente adicionando caracateres. O caracter para uma nova linha é escrito assim `\n`.
+A sequência pode ser construída iniciando vazia ("") e repetidamente adicionando caracateres. O caracter para uma nova linha é escrito assim `\n`.
 
 Utilize `console.log` para visualizar a saída do seu programa.
 

@@ -200,7 +200,7 @@ repeat(3, function(n) {
 // → 2 is even
 </pre>
 
-As regras de escopo léxico que discutimos no [capítulo 3](./03-funcoes.md) trabalham a nosso favor quando usamos funções dessa maneira. No exemplo acima, a variável `n` é um parâmetro da função externa. Mas como as funções internas estão dentro do ambiente externo, podemos usar a variável `n`. Os "corpos" de tais funções internas podem acessar as variáveis que estão em torno delas. Eles podem desempenhar um papel similar aos blocos `{}` usados em `loops` e expressões codicionais. Uma diferença importante é que variáveis declaradas dentro das funções internas não podem ser acessadas fora da função. Isso geralmente é algo bom.
+As regras de escopo léxico que discutimos no [capítulo 3](./03-funcoes.md) trabalham a nosso favor quando usamos funções dessa maneira. No exemplo acima, a variável `n` é um parâmetro da função externa. Mas como as funções internas estão dentro do ambiente externo, podemos usar a variável `n`. Os "corpos" de tais funções internas podem acessar as variáveis que estão em torno delas. Eles podem desempenhar um papel similar aos blocos `{}` usados em `loops` e expressões condicionais. Uma diferença importante é que variáveis declaradas dentro das funções internas não podem ser acessadas fora da função. Isso geralmente é algo bom.
 
 ## Passando argumentos
 
@@ -217,7 +217,7 @@ function noisy(f) {
 }
 </pre>
 
-Se `f` receber mais de um parâmetro, ele recebe apenas o primeiro. Poderiámos acrescentar vários argumentos para a função interna (`arg1`, `arg2`, e assim por diante) e passar elas para `f`, mas mesmo assim isso não deixaria explícito quantos seriam suficientes. Essa solução limita algumas informações de `f` como por exemplo `arguments.length`. Sempre passaremos a mesma quantidade de argumentos, mas nunca saberemos a quantidade exata de argumentos que foi passada.
+Se `f` receber mais de um parâmetro, ele recebe apenas o primeiro. Poderíamos acrescentar vários argumentos para a função interna (`arg1`, `arg2`, e assim por diante) e passar elas para `f`, mas mesmo assim isso não deixaria explícito quantos seriam suficientes. Essa solução limita algumas informações de `f` como por exemplo `arguments.length`. Sempre passaremos a mesma quantidade de argumentos, mas nunca saberemos a quantidade exata de argumentos que foi passada.
 
 Para esse tipo de situação, funções em JavaScript possuem um método chamado `apply`. Você passa um `array` (ou um `array` como `objeto`) como argumento, e ele irá chamar a função com estes argumentos.
 
@@ -255,10 +255,10 @@ O arquivo que eu criei se parece mais ou menos assim:
 
 Este formato é chamado de `JSON` (pronuncia-se "Jason") que significa _JavaScript Object Notation_. `JSON` é amplamente utilizado como armazenamento de dados e formato de comunicação na _Web_.
 
-`JSON` se escreve semelhatemente como `arrays` e objetos em JavaScript, mas com algumas restrições.
+`JSON` se escreve semelhantemente como `arrays` e objetos em JavaScript, mas com algumas restrições.
 Todos os nomes das propriedades devem ficar entre aspas duplas e apenas expressões de dados simples são permitidos, não é permitido chamadas de funções, variáveis ou qualquer coisa que envolva cálculo real. Comentários não são permitidos em `JSON`.
 
-JavaScript nos fornece duas funções `JSON.stringify` e `JSON.parse`, que convertem dados para este formato. O primeiro recebe um valor em JavaScript e retorna uma string codificada em `JSON`. A segunda obtém uma `string` e converte-a para um valor que ele códifica.
+JavaScript nos fornece duas funções `JSON.stringify` e `JSON.parse`, que convertem dados para este formato. O primeiro recebe um valor em JavaScript e retorna uma string codificada em `JSON`. A segunda obtém uma `string` e converte-a para um valor que ele codifica.
 
 <pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 var string = JSON.stringify({name: "X", born: 1980});
@@ -341,7 +341,7 @@ Assim como `forEach` e `filter`, `map` também é um método padrão de `arrays`
 
 ## Resumindo com reduce
 
-Outro padrão na computação em `arrays` é calcular todos elementos e trasformá-los em apenas um. No nosso exemplo atual, a soma do nosso intervalo de números, é um exemplo disso. Outro exemplo seria encontrar uma pessoa com um ano de vida no conjunto de dados.
+Outro padrão na computação em `arrays` é calcular todos elementos e transformá-los em apenas um. No nosso exemplo atual, a soma do nosso intervalo de números, é um exemplo disso. Outro exemplo seria encontrar uma pessoa com um ano de vida no conjunto de dados.
 
 Uma operação de ordem superior que representa este padrão é chamada de _reduce_ (diminui o tamanho do `array`). Você pode pensar nisso como dobrar a matriz, um elemento por vez. Quando somado os números, você inicia com o número zero e, para cada elemento, combina-o com a soma atual adicionando os dois.
 
@@ -421,11 +421,11 @@ Um programa que processa um `array` é mais elegante expresso em uma sequência 
 
 Passar uma função para `forEach` e deixar que o método cuide da iteração para os nós é conveniente e fácil de ler. Mas chamadas de funções em JavaScript são custosas comparadas com os simples blocos de repetição.
 
-E assim existem várias técnicas que ajudam a melhorar a clareza de um programa. Abstrações adiciona uma camada a mais entre as coisas cruas que o computador faz e o conceito que estamos trabalhando, sendo assim a máquina realiza mais trabalho. Esta não é uma lei de ferro, exitem linguagens de programação que tem um suporte melhor para a construção de abstração sem adição de ineficiências, até mesmo em JavaScript, um programador experiente pode encontrar maneiras de escrever um código abstrato e rápido. Mas é um problema que é muito comum.
+E assim existem várias técnicas que ajudam a melhorar a clareza de um programa. Abstrações adiciona uma camada a mais entre as coisas cruas que o computador faz e o conceito que estamos trabalhando, sendo assim a máquina realiza mais trabalho. Esta não é uma lei de ferro, existem linguagens de programação que tem um suporte melhor para a construção de abstração sem adição de ineficiências, até mesmo em JavaScript, um programador experiente pode encontrar maneiras de escrever um código abstrato e rápido. Mas é um problema que é muito comum.
 
 Existem várias técnicas que ajudam a esclarecer o código. Elas adicionam camadas entre as coisas cruas que o computador está fazendo com os conceitos que estamos trabalhando e faz com que a máquina trabalhe mais rápido. Isso não é uma lei inescapável -- existem linguagens de programação que possuem um melhor suporte para construir aplicações sem adicionar ineficiências e, ainda em JavaScript, um programador experiente pode encontrar jeitos de escrever códigos relativamente abstratos que ainda são rápidos, porém é um problema frequente.
 
-Felizmente muitos computadores são extremamente rápidos. Se você estiver processando uma modesta coleção de dados ou fazendo alguma coisa que tem de acontecer apenas em uma escala de tempo humano (digamos, toda vez que o usuário clica em um botão), então não importa se você escreveu aquela solução maravilhosa que leva meio milissegundo ou uma super solução otimizada que leva um décimo de um milisegundo.
+Felizmente muitos computadores são extremamente rápidos. Se você estiver processando uma modesta coleção de dados ou fazendo alguma coisa que tem de acontecer apenas em uma escala de tempo humano (digamos, toda vez que o usuário clica em um botão), então não importa se você escreveu aquela solução maravilhosa que leva meio milissegundo ou uma super solução otimizada que leva um décimo de um milissegundo.
 
 É útil saber quanto tempo mais ou menos leva um trecho de código para executar. Se vocês têm um `loop` dentro de um `loop` (diretamente, ou através de um `loop` externo chamando uma função que executa um `loop` interno), o código dentro do `loop` interno acaba rodando `NxM` vezes, onde `N` é o número de vezes que o `loop` de fora se repete e `M` é o número de vezes que o `loop` interno se repete dentro de cada interação do `loop` externo. Se esse `loop` interno tiver outro `loop` que realize `P` voltas, seu bloco rodará `M x N x P` vezes e assim por diante. Isto pode adicionar muitas operações. Quando um programa é lento o problema muitas das vezes pode estar atribuída a apenas uma pequena parte do código que fica dentro de um `loop` interno.
 

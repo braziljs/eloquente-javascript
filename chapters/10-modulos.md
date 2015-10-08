@@ -3,12 +3,12 @@ Capítulo 10
 # Módulos
 
 > Um programador iniciante escreve seus programas como uma formiga constrói seu formigueiro, um pedaço de cada vez, sem pensar na estrutura maior. Seus programas irão parecer como areia solta. Eles podem durar um tempo, mas se crescem demais, desmoronam.
-
+>
 > Percebendo esse problema, o programador começará a gastar muito tempo pensando sobre a estrutura. Seus programas serão rigidamente estruturados, como esculturas em pedra. Eles são sólidos, mas quando precisam mudar, devem ser quebrados.
 
 > O programador experiente sabe quando aplicar uma estrutura e quando deixar as coisas mais simples. Seus programas são como argila, sólidos mas ainda maleáveis.
 
-> Master Yuan-Ma, The Book of Programming
+> —Master Yuan-Ma, The Book of Programming
 
 Todo programa possui uma forma. Em menor escala essa forma é determinada pela divisão em funções e os blocos dentro destas funções. Programadores têm muita liberdade na forma que dão aos seus programas. É determinado mais pelo bom (ou mau) gosto, do que pela funcionalidade planejada.
 
@@ -28,15 +28,17 @@ Como regra geral, organização tem um custo, e é nos estágios iniciais do pro
 
 ## Namespaces
 
-A maioria das linguagens modernas de programação têm um nível de escopo entre "global" (todos podem ver) e "local" (só esta função pode vê isto). JavaScript não. Assim, por padrão, tudo o que precisa ser visível fora do pequeno escopo da função atual é visível em todos os lugares.
+A maioria das linguagens modernas de programação têm um nível de escopo entre "global" (todos podem ver) e "local" (só esta função pode ver isto). JavaScript não. Assim, por padrão, tudo o que precisa ser visível fora do pequeno escopo da função atual é visível em todos os lugares.
 
-Namespace pollution, o problema de um monte de código não relacionado ter que compartilhar um único conjunto de nomes de variáveis globais, foi mencionado no capítulo 4, onde o objeto `Math` foi dado como um exemplo de um objeto que age como uma espécie de módulo por um agrupamento série de funcionalidades relacionadas com a matemática.
+Poluição de Namespace, o problema de um monte de código não relacionado ter que compartilhar um único conjunto de nomes de variáveis globais, foi mencionado no capítulo 4, onde o objeto `Math` foi dado como um exemplo de um objeto que age como uma espécie de módulo por um agrupamento série de funcionalidades relacionadas com a matemática.
 
-Embora Javascript nao possua a criação de modulos nativo, objetos podem ser usados para criar sub-namespaces publicamente acessíveis, e funções podem ser usadas para criar um  'namespace' privado dentro de um módulo. vou demonstrar algumas técnicas que nos permitirão a falsificar módulos isolados de namespace bem convenientes.
+Embora Javascript não possua a criação de módulos nativamente, objetos podem ser usados para criar sub-namespaces publicamente acessíveis, e funções podem ser usadas para criar um namespace privado dentro de um módulo. Vou demonstrar algumas técnicas que nos permitirão construir módulos namespace isolados bem convenientes.
 
-## Reuse
+## Reuso
 
 In a “flat” project, it is not apparent which parts of the code are needed to use a particular function. If, in my program for spying on my enemies, I wrote a function for reading configuration files, and now I want to use that function again in another project, I must go and copy out the part of the old program that look like they are relevant to the functionality that I need, and paste them into my new program. Then, if I find a mistake in that code, I will fix it in the program that I was working with at the time, and forget to also fix it in the other program.
+
+
 
 Once you have lots of such shared, duplicated pieces of code, you will find yourself wasting a lot of time and energy on moving them around and keeping them up to date.
 

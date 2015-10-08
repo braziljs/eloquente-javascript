@@ -36,6 +36,7 @@ Os campos de formulários não aparecem necessariamente em uma tag `<form>`. Voc
    &lt;input type=&quot;radio&quot; value=&quot;C&quot; name=&quot;choice&quot;&gt;(radio)&lt;/p&gt;
 &lt;p&gt;&lt;input type=&quot;file&quot; checked&gt; (file)&lt;/p&gt;
 </pre>
+
 A interface JavaScript de tais elementos se diferem com o tipo dos elementos. Nós vamos passar por cima de cada um deles no final do capítulo.
 
 Campos de texto de várias linhas têm a sua própria tag `<textarea>`, principalmente porque quando é usando um atributo para especificar um valor de várias linhas poderia ser inicialmente estranho. A tag `<textarea>` requer um texto que é usado entre as duas tags `</textarea>`, ao invés de utilizar o texto no atributo value.
@@ -106,9 +107,9 @@ O atributo `name` de um campo de formulário determina como seu valor será iden
   Password: &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;br&gt;
   &lt;button type=&quot;submit&quot;&gt;Log in&lt;/button&gt;
 &lt;/form&gt;
-</pre>  
+</pre>
 
-<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">  
+<pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 var form = document.querySelector("form");
 console.log(form.elements[1].type);
 // → password

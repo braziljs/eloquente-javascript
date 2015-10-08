@@ -4,7 +4,6 @@
 
 @import "normalize.scss";
 @import "fonts.scss";
-@import "paint.scss";
 @import "game.scss";
 @import "codemirror.scss";
 
@@ -53,6 +52,10 @@ pre {
         margin-right: -30px;
         padding-right: 30px;
     }
+}
+
+pre.prettyprint {
+    border: none !important;
 }
 
 p:hover a.p_ident:after, pre:hover a.c_ident:after {
@@ -448,4 +451,8 @@ table {
 	img {
 		width: 100%;
 	}
+}
+
+iframe {
+    width: 100%
 }

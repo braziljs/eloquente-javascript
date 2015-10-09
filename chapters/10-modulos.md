@@ -36,19 +36,17 @@ Embora Javascript não possua a criação de módulos nativamente, objetos podem
 
 ## Reuso
 
-In a “flat” project, it is not apparent which parts of the code are needed to use a particular function. If, in my program for spying on my enemies, I wrote a function for reading configuration files, and now I want to use that function again in another project, I must go and copy out the part of the old program that look like they are relevant to the functionality that I need, and paste them into my new program. Then, if I find a mistake in that code, I will fix it in the program that I was working with at the time, and forget to also fix it in the other program.
+Em um projeto "flat" (plano), não é claro quais partes do código são necessárias para se usar uma função em particular. Se, no meu programa para espionar inimigos (*spying on enemies*), eu escrever uma função para ler os arquivos de  configuração, e agora eu uso essa função novamente em outro projeto, eu devo ir e copiar as partes do programa antigo que são relevantes para a funcionalidade que eu preciso, e colá-las no meu novo programa. Então, se eu encontrar um erro nesse código, eu vou consertar isso neste programa que eu estava trabalhando no momento, e esquecer de também consertar no outro programa.
 
+Uma vez que você tenha muitos pedaços de código compartilhados e duplicados, você vai se encontrar perdendo uma grande quantidade de tempo e energia organizá-los e mantê-los atualizados.
 
+Quando partes de funcionalidades que são independentes são colocadas em arquivos e módulos separados, elas podem ser rastreiadas mais facilmente, atualizadas quando uma nova versão for criada, ou até mesmo compartilhadas, tendo várias partes do código que desejam usá-las carregando o mesmo arquivo.
 
-Once you have lots of such shared, duplicated pieces of code, you will find yourself wasting a lot of time and energy on moving them around and keeping them up to date.
+Essa idea fica ainda mais poderosa quando as relações entre os módulos - onde outros módulos cada módulo depende - são explicitamente especificados. Você pode então automatizar o processo de instalação e atualização de módulos externos.
 
-When pieces of functionality that stand on their own are put into separate files and modules, they can be easily kept track of, updated when a new version is created, or even shared, by having the various pieces of code that want to use them load the same actual file.
+E, levando isso ainda mais longe, imagine um serviço online que rastreia e distribui centenas de milhares destes módulos, permitindo a você buscar pela funcionalidade que deseja, e, uma vez que você a encontre, configure-a no seu projeto para ser baixada automaticamente.
 
-This idea gets even more powerful when the relations between modules—which other modules each module depends on—are explicitly stated. You can then automate the process of installing and upgrading external modules.
-
-And, taking this even further, imagine an online service that tracks and distributes hundreds of thousands of such modules, allowing you to search for the functionality you need, and, once you find it, set up your project to automatically download it.
-
-This service exists. It is called NPM (npmjs.org). NPM consists of an online database of modules, and a tool for downloading and upgrading the modules your program depends on. It grew out of node.js, the browser-less JavaScript environment discussed in chapter FIXME, but can also be useful when programming for the browser.
+Este serviço existe. É chamado NPM (npmjs.org). NPM consiste em um banco de dados online de módulos, e uma ferramenta para download e atualização dos módulos que seu programa depende. Ele cresceu com o Node.js. o ambiente JavaScript *browser-less* (que não depende do navegador), discutido no capítulo 20, mas também pode ser usado quando programando para o navegador.
 
 ## Decoupling
 

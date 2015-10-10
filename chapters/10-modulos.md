@@ -48,15 +48,15 @@ E, levando isso ainda mais longe, imagine um serviço online que rastreia e dist
 
 Este serviço existe. É chamado NPM (npmjs.org). NPM consiste em um banco de dados online de módulos, e uma ferramenta para download e atualização dos módulos que seu programa depende. Ele cresceu com o Node.js. o ambiente JavaScript *browser-less* (que não depende do navegador), discutido no capítulo 20, mas também pode ser usado quando programando para o navegador.
 
-## Decoupling
+## Desacoplamento
 
-Another important role of modules is isolating pieces of code from each other, in the same way that the object interfaces from Chapter 6 do. A well-designed module will provide an interface for external code to use, and as the module is further worked on (bugs are fixed, functionality is added) the existing interface stays stable, so that other modules can use a new, improved version without any changes to themselves.
+Outro importante papel dos módulos é os de isolar partes de código um do outro, da mesma forma que as interfaces dos objetos no capítulo 6 fazem. Um módulo bem desenvolvido fornece uma interface para uso de códigos externos, e mesmo que o módulo continue sendo trabalhado (bugs consertados, funcionalidades adicionadas) a interface existente permanece estável, assim outro módulos podem usar uma nova e melhorada versão sem qualquer alteração neles mesmos.
 
-Note that a stable interface does not mean no new elements are added. It just means that the existing elements aren’t removed or their meaning changed.
+Note que uma interface estável não significa que novos elementos não são adicionados. Isso apenas significa que elementos existentes não serão removidos ou seus significados não serão alterados.
 
-Building a module interface that allows the module to grow without breaking the old interface means finding a good trade-off between exposing as little internal concepts as possible to the outside world, and yet making the “language” that the interface exposes powerful and flexible enough to be applicable in a wide range of situations.
+Construir a interface de um módulo que permite que este cresça sem quebras na antiga interface significa encontrar um balanço entre expor a menor quantidade de conceitos internos ao mundo exterior quanto possível, e ainda assim criar uma "linguagem" exposta pela interface que seja poderosa e flexível o suficiente para ser aplicada em uma vasta variedade de situações.
 
-For interfaces that expose a single, focused concept, like a configuration file reader, this comes naturally. For others, like a text editor component, where external code needs access to lots of different concepts, it requires careful design.
+Para interfaces que expões um único e focado conceito, como um arquivo leitor de configuração, isso é natural. Para as outras interfaces, como um componente editor de texto, onde código externo precisa acessar vários conceitos diferentes, isso requer cuidado no projeto.
 
 ## Functions as namespaces
 

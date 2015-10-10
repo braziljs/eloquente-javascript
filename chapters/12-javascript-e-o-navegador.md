@@ -1,25 +1,16 @@
 # Chapter 12 - JavaScript and the Browser
-# Capítulo 12 - JavaScript e o Navegador
+# JavaScript e o Navegador
 
-> "The browser is a really hostile programming environment."
 > "O navegador é um ambiente realmente hostil de programação."
 >
 > - Douglas Crockford, The JavaScript Programming Language (video lecture)
-> - Douglas Crockford, The JavaScript Programming Language (palestra)
 
-The next part of this book will talk about web browsers. Without web browsers, there would be no JavaScript. And even if there were, no one would ever have paid any attention to it.
+A próxima parte deste livro vai falar sobre os navegadores web. Sem os navegadores, não existiria JavaScript. E mesmo se existisse, ninguém daria atenção a ele.
 
-A próxima parte deste livro vai falar sobre navegadores web. Sem os navegadores, não existiria JavaScript. E mesmo se existisse, ninguém daria atenção a ele.
+A tecnologia web, desde de o início, é descentralizada não apenas tecnicamente mas também na maneira que se evolui. Vários fornecedores de navegador tem adicionado funcionalidades *ad-hoc* e muita das vezes tem sido de maneiras mal pensadas, que acabam sendo adotadas por outros e finalmente viram um padrão.  
 
-Web technology has, from the start, been decentralized, not just technically but also in the way it has evolved. Various browser vendors have added new functionality in ad-hoc and sometimes poorly thought out ways, which then sometimes ended up being adopted by others and finally set down as a standard.
+Isso é igualmente a uma benção e uma maldição. Por outro lado, isso reforça a não existência de uma particição central controlando um sistema mas o mesmo vem sendo melhorado por várias partes trabalhando com pouca colaboração (ou, ocasionalmente com franca hostilidade). Sendo assim a forma casual que a Web foi desenvolvida significa que o sistema resultante não é exatamente um brilhante exemplo interno de consistência. De fato, algumas partes são completamente bagunçadas e confusas.
 
-A tecnologia web, desde o início, é descentralizada, não apenas tecnicamente mas também na forma que evolui. Vários fornecedores de navegador tem adicionado funcionalidades *ad-hoc* e as vezes maneiras mal pensadas, que então são adotadas por outros e finalmente viram um padrão.  
-
-This is both a blessing and a curse. On the one hand, it is empowering to not have a central party control a system but have it be improved by various parties working in loose collaboration (or, occasionally, open hostility). On the other hand, the haphazard way in which the Web was developed means that the resulting system is not exactly a shining example of internal consistency. In fact, some parts of it are downright messy and confusing.
-
-Isso é igualmente uma benção e uma maldição. Por um lado, isso reforça a não existência de uma particição central controlando um sistema mas tendo este sendo melhorado por várias partes trabalhando com pouca colaboração (ou, ocasionalmente, franca hostilidade). Por outro lado, a forma casual que a Web foi desenvolvida significa que o sistema resultante não é exatamente um brilhante exemplo interno de consistência. De fato, algumas partes são completamente bagunçadas e confusas.
-
-## Networks and the Internet
 ## Redes e a Internet
 
 Computer networks have been around since the 1950s. If you put cables between two or more computers and allow them to send data back and forth through these cables, you can do all kinds of wonderful things.

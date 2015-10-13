@@ -198,7 +198,7 @@ console.log(object3.value);
 
 object1 e object2 são duas variáveis que recebem o mesmo valor. Há apenas um objeto real, é por isso que quando o valor de object1 é mudado o valor de object2 também será alterado. A variável object3 aponta para um outro objeto, que inicialmente contém as mesmas propriedades que object1 mas vive uma vida separada.
 
-O operador `==` de JavaScript, quando se comparamos objetos, retornará verdadeiro somente se ambos os valores que lhe são atribuídas são o mesmo valor preciso. Comparando diferentes objetos com conteúdos idênticos retornará false. Não há nenhuma operação de comparação "profunda" construída em JavaScript, mas é possível você mesmo escrevê-la (que será um dos [exercícios](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/04-estruturas-de-dados.md#deep-comparison) no final deste capítulo).
+O operador `==` de JavaScript, quando se comparamos objetos, retornará verdadeiro somente se ambos os valores que lhe são atribuídas são o mesmo valor preciso. Comparando diferentes objetos com conteúdos idênticos retornará false. Não há nenhuma operação de comparação "profunda" construída em JavaScript, mas é possível você mesmo escrevê-la (que será um dos [exercícios](https://github.com/YuriStyl3/eloquente-javascript/blob/master/chapters/04-estruturas-de-dados.md#comparação-profunda) no final deste capítulo).
 
 ## O log do lobisomem
 

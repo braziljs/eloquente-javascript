@@ -1,38 +1,38 @@
-#Capítulo 17
-##HTTP
+# HTTP
 
-<blockquote>O sonho por trás da web é o de um espaço comum de informações no qual nós comunicamos através do compartilhamento de informações. Sua universalidade é essencial: O fato que um link de hipertexto pode apontar para qualquer coisa, seja esta pessoal, local ou global, seja um rascunho ou algo profissional. </blockquote>
+> O sonho por trás da Web é o de um espaço comum de informações no qual podemos nos comunicar compartilhando informações. Sua universalidade é essencial. O fato de que um link pode apontar para qualquer coisa, seja ela pessoal, local ou global, seja ela um rascunho ou algo refinado.
 
-<strong>Tim Berners-Lee</strong>,<i> The World Wide Web: A very short personal history</i>
+> — Tim Berners-Lee, The World Wide Web: A very short personal history
 
-O Hypertext Transfer Protocol (HTTP), já mencionado no capítulo 12, é o mecanismo pelo qual dados são requeridos e entregues na internet. Este capítulo descreve o protocolo em mais detalhes e explica como o javascript de um navegador tem acesso a ele.
+O _Hypertext Transfer Protocol_, já mencionado no [capítulo 12](./12-javascript-e-o-navegador.md), é o mecanismo no qual dados são requisitados e entregues na _World Wide Web_. Esse capítulo descreve o protocolo com mais detalhes e explica como o JavaScript executado no navegador tem acesso a ele.
 
-###O Protocolo
+## O Protocolo
 
-Se você digitar eloquentjavascript.net/17_http.html na barra de endereços do seu navegador, este irá, primeiramente, procurar o endereço do servidor associado ao domínio eloquentjavascript.net e tentar abrir uma conexão de TCP com ele na porta 80, a porta padrão para tráfego de HTTP. Se o servidor existir e aceitar a conexão, o navegador enviará algo como isso:
+Se você digitar _eloquentjavascript.net/17_http.html_ na barra de endereços do seu navegador, ele irá, primeiramente, procurar o endereço do servidor associado ao domínio _eloquentjavascript.net_ e, em seguida, tentar abrir uma conexão TCP com ele na porta 80, a porta padrão para tráfego HTTP. Se o servidor existir e aceitar a conexão, o navegador enviará algo parecido com:
 
-```sh
-
+```
 GET /17_http.html HTTP/1.1
 Host: eloquentjavascript.net
-User-Agent:O nome do seu navegador
-Então o navegador responde, pela mesma conexão.
+User-Agent: Your browser's name
+```
 
+Então, por meio da mesma conexão, o servidor responde.
+
+```
 HTTP/1.1 200 OK
 Content-Length: 65585
 Content-Type: text/html
 Last-Modified: Wed, 09 Apr 2014 10:48:09 GMT
 
 <!doctype html>
-... Resto do documento
-
+... the rest of the document
 ```
 
-O navegador então participa da resposta após a linha em branco e a mostra como um documento HTML.
+O navegador participa da resposta após a linha em branco e a mostra como um documento HTML.
 
-A informação enviado pelo cliente (no caso, o navegador) é chamada de 'request'. Ela começa com essa linha:
+A informação enviada pelo cliente é chamada de requisição (_request_) e inicia com essa linha:
 
-```sh
+```
 GET /17_http.html HTTP/1.1
 ```
 
@@ -75,7 +75,7 @@ Como vimos no exemplo, o navegador irá fazer um 'request' quando submetermos um
 
 Um website moderadamente complicado pode ter fácilmente algo em torno de 10 a 200 recursos. Para conseguir pegar estes recursos rápidamente, os navegadores irão realizar diversos 'requests' simultaneamente, ao invés de esperar pelo retorno da resposta de cada 'request' feito. Tais documentos são sempre pegos utilizando o método GET para os pedidos.
 
-###Páginas de HTML 
+###Páginas de HTML
 
 Páginas de HTML podem incluir formulários, que permitem que o usuário preencha informações e as envie para o servidor. Este é um exemplo de formulário:
 
@@ -105,7 +105,7 @@ console.log(decodeURIComponent("Hello%20%26%20goodbye"));
 // → Hello & goodbye
 
 ```
-Se nós mudarmos o método do atributo do formulário de HTML no exemplo que vimos antes para POST, o 'request' de HTTP feito para enviar o formulário irá usar POST e usará a 'String' de pesquisa no corpo do 'request', ao inves de adicioná-lo a URL. 
+Se nós mudarmos o método do atributo do formulário de HTML no exemplo que vimos antes para POST, o 'request' de HTTP feito para enviar o formulário irá usar POST e usará a 'String' de pesquisa no corpo do 'request', ao inves de adicioná-lo a URL.
 
 ```sh
 POST /example/message.html HTTP/1.1
@@ -115,7 +115,7 @@ Content-type: application/x-www-form-urlencoded
 name=Jean&message=Yes%3F
 ```
 
-Por convenção, o método GET é usado para 'requests' que não possuem efeitos colateriais, como ao fazer pesquisas.'Requests' que mudam algo no servidor, como aqueles que criam uma nova conta ou postam uma mensagem, devem ser expressados com outros métodos, como o POST. Softwares do lado do cliente, como navegadores, sabem que não devem fazer 'requests' POST cegamente, mas farão, implicitamente, 'requests' GET para, por exemplo, pré-carregar recursos que acreditam ser necessários no curto-prazo. 
+Por convenção, o método GET é usado para 'requests' que não possuem efeitos colateriais, como ao fazer pesquisas.'Requests' que mudam algo no servidor, como aqueles que criam uma nova conta ou postam uma mensagem, devem ser expressados com outros métodos, como o POST. Softwares do lado do cliente, como navegadores, sabem que não devem fazer 'requests' POST cegamente, mas farão, implicitamente, 'requests' GET para, por exemplo, pré-carregar recursos que acreditam ser necessários no curto-prazo.
 
 O próximo capítulo irá retornar a formulários e irá abordar como nós podemos desenvolve-los com JavaScript.
 

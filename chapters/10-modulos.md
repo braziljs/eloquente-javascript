@@ -110,9 +110,9 @@ Este código simplesmente imprime o quadrado de cem (no mundo real, este poderia
 
 Por que a função namespace está encapsulada em uma par de parênteses? Isso tem relação com um truque da sintaxe JavaScript. Se uma expressão começa com a palavra-chave `function`, ela é uma expressão de função. Entretanto, se uma declaração inicia com esta palavra-chave, será uma declaração de função, que requer um nome e não pode ser chamada imediatamente. Mesmo que uma declaração comece com uma expressão, a segunda regra tem precedência, e se os parênteses extras foram esquecidos no exemplo acima, isso irá produzir um erro de sintaxe. Você pode imaginá-los como um truco para forçar a linguagem a enteder que nós queremos escrever uma expressão.
 
-## Objects as namespaces
+## Objetos como namespaces
 
-Now imagine that the day-of-the-week module needs to provide not one, but two functions, because we add a dayNumber function that goes from a name to a number. We can’t simply return the function anymore, but must wrap the two functions in an object.
+Agora imagine que o módulo dia-da-semana (*day-of-the-week*) precise fornecer não uma, mas duas funções, porque nós adicionamos uma função `dayNumber` que vai de um nome para um número. Nós podemos mais simplesmente retornar a função, mas devemos encapsular as duas funções em um objeto.
 
 ```
 var weekDay = function() {
@@ -128,7 +128,7 @@ console.log(weekDay.name(weekDay.number("Sunday")));
 // → Sunday
 ```
 
-For bigger modules, gathering all the exported values into an object at the end of the function becomes awkward, and often requires us to repeat ourselves. This can be improved by declaring an object, usually named exports, and adding properties to that whenever we are defining something that needs to be exported. This object can then be returned, or accepted as a parameter and stored somewhere by the code outside the module.
+Para módulos maiores, juntar todos os módulos exportados em um objeto no fim da função se torna algo incômodo, e geralmente requer que façamos algo repetido. Isso pode ser melhorado declarando um objeto, usualmente nomeado `exports`, e adicionando propriedades a este objeto sempre que nós definirmos algo que precise ser exportado. Este objeto pode então ser retornado, ou aceito como um parâmetro armazenado em algum lugar pelo código exterior ao módulo.
 
 ```
 (function(exports) {

@@ -58,11 +58,11 @@ Construir a interface de um módulo que permite que este cresça sem quebras na 
 
 Para interfaces que expões um único e focado conceito, como um arquivo leitor de configuração, isso é natural. Para as outras interfaces, como um componente editor de texto, onde código externo precisa acessar vários conceitos diferentes, isso requer cuidado no projeto.
 
-## Functions as namespaces
+## Funções como namespaces
 
-Functions are the only construct in JavaScript that creates a new scope. So if we want our modules to have their own scope, we will have to base them on functions somehow.
+Funções são o único construtor em JavaScript que criam um novo escopo. Então se nós desejamos que nossos módulos tenham um escopo próprio, teremos que colocá-los em funções de alguma forma.
 
-Consider this trivial module for associating names with the day-of-the-week numbers returned by a date object’s getDay method:
+Considere este módulo trivial que associa nomes com o número dos dias da semana retornado pelo método `getDay` de um objeto *date*.
 
 ```
 var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
@@ -75,9 +75,9 @@ console.log(dayName(1));
 // → Monday
 ```
 
-The dayName function is part of its interface, but the names variable is not. We would prefer not to spill it into the global scope.
+A função `dayName` é parte desta interface, mas a variável `names` não. Nós prefirimos não deixá-la no escopo global.
 
-We can do this:
+Podemos fazer isso:
 
 ```
 var dayName = function() {
@@ -92,9 +92,9 @@ console.log(dayName(3));
 // → Wednesday
 ```
 
-Now names is a local variable in an (anonymous) function. This function is created and immediately called, and its return value (the actual dayName function) is stored in a variable. We could have pages and pages of code in this function, creating a hundred local variables. They would all be internal to our module, visible to the module itself, but not to outside code.
+Agora `names` é uma variável local dentro de uma função (anônima). Esta função é criada e chamada imediatamente, e seu valor retornado (a função `dayName`) é armazenada em uma variável. Podemos ter páginas e mais páginas de código nessa função, criando centenas de variáveis locais. Elas serão todas internas ao módulo, visíveis ao próprio módulo, mas não visível a códigos externos.
 
-A similar pattern is used to isolate code from the outside world entirely. The module below just has some effect, but does not actually provide any values for other modules to use.
+Um padrão similar é usado para isolar inteiramente código do mundo exterior. O módulo abaixo tem algum efeito, mas não fornece qualquer valor para outros módulos usarem.
 
 ```
 (function() {
@@ -106,9 +106,9 @@ A similar pattern is used to isolate code from the outside world entirely. The m
 // → 10000
 ```
 
-This code simply outputs the square of one hundred (in the real world, it could be a module that adds a method to some prototype, or sets up some widget on a web page). It wraps its code in a function to, again, prevent the variables it uses internally from sitting in the global scope.
+Este código simplesmente imprime o quadrado de cem (no mundo real, este poderia ser um módulo que adiciona um método a algum prototype, ou configura algum *widget* em uma página da web). Ele encapsula seu código em uma função para, novamente, prevenir que as variáveis que ele usa internamente estejam no escopo global.
 
-Why is the namespace function wrapped in a pair of parentheses? This has to do with a quirk in JavaScript’s syntax. If an expression starts with the keyword function, it is a function expression. However, if a statement starts with that keyword, it is a function declaration, which requires a name and cannot be immediately called. Even though a statement may start with an expression, the second rule takes precedence, and if the extra parentheses were left out in the example above, it would produce a syntax error. You can think of them as a trick to force the language to understand that we are writing an expression.
+Por que a função namespace está encapsulada em uma par de parênteses? Isso tem relação com um truque da sintaxe JavaScript. Se uma expressão começa com a palavra-chave `function`, ela é uma expressão de função. Entretanto, se uma declaração inicia com esta palavra-chave, será uma declaração de função, que requer um nome e não pode ser chamada imediatamente. Mesmo que uma declaração comece com uma expressão, a segunda regra tem precedência, e se os parênteses extras foram esquecidos no exemplo acima, isso irá produzir um erro de sintaxe. Você pode imaginá-los como um truco para forçar a linguagem a enteder que nós queremos escrever uma expressão.
 
 ## Objects as namespaces
 

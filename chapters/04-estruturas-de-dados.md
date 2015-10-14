@@ -1,36 +1,36 @@
 # Estrutura de dados: Object e Array
 
-> Em duas ocasiões me perguntaram, "Ora, Mr. Babbage, se você colocar em uma máquina números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão.
+> Em duas ocasiões me perguntaram, "Ora, sr. Babbage, se você colocar em uma máquina números errados, poderá trazer resultados corretos?" [...] Eu não sou capaz de compreender o tipo de confusão de ideias que poderia provocar tal questão.
 
 > - Charles Babbage, Passages from the Life of a Philosopher (1864)
 
-Números, Booleanos e _strings_ são os tijolos usados para construir as estruturas de dados. Mas você não pode construir uma casa com um único tijolo. Objetos nos permitem agrupar valores - incluindo outros objetos - juntos e assim construir estruturas mais complexas.
+Números, booleanos e linhas de texto (_strings_) são os tijolos usados para construir as estruturas de dados. Mas você não pode construir uma casa com um único tijolo. Objetos nos permitem agrupar valores - incluindo outros objetos - juntos e assim construir estruturas mais complexas.
 
 Os programas que construímos até agora têm sido seriamente dificultados pelo fato de que eles só estavam operando com tipos de dados simples. Este capítulo irá adicionar uma compreensão básica de estruturas de dados para o seu kit de ferramentas. Ao final dele, você vai saber o suficiente para começar a escrever programas úteis.
 
-O capítulo vai funcionar mais ou menos de um exemplo realista de programação, introduzindo conceitos que se aplicam ao problema em questão. O código de exemplo, muitas vezes, será construído sobre as funções e variáveis ​​que foram introduzidas no início do texto.
+O capítulo vai trabalhar mais ou menos através de um exemplo realista de programação, introduzindo conceitos que se aplicam ao problema em questão. O código de exemplo, muitas vezes, será construído sobre as funções e variáveis ​​que foram introduzidas no início do texto.
 
 ## O esquilo-lobo
 
 De vez em quando, geralmente entre às oito e dez da noite, Jaques se transforma em um pequeno roedor peludo com uma cauda espessa.
 
-Por um lado, Jaques está tão contente que ele não tem licantropia clássica. Transformando-se em um esquilo tende a causar menos problemas do que se transformando em um lobo. Em vez de ter de se preocupar em comer acidentalmente o vizinho (que seria estranho), ele se preocupa em ser comido pelo gato do vizinho. Depois de duas ocasiões em que ele acordou em um galho fino precariamente na copa de um carvalho, nu e desorientado, ele resolveu trancar as portas e janelas de seu quarto à noite, e colocar algumas nozes no chão para manter-se ocupado.
+Por um lado, Jaques está muito contente por não ter licantropia clássica. Transformando-se em um esquilo tende a causar menos problemas do que se transformando em um lobo. Em vez de ter de se preocupar em comer acidentalmente o vizinho (o que seria estranho), ele se preocupa em ser comido pelo gato do vizinho. Após duas ocasiões em que ele acordou em um precário galho fino na copa de um carvalho, nu e desorientado, ele resolveu trancar as portas e janelas de seu quarto à noite e colocar algumas nozes no chão para manter-se ocupado.
 
 ![The weresquirrel](../img/weresquirrel.png)
 
-Isto cuida dos problemas do gato e do carvalho. Mas Jaques ainda sofre com sua condição. As ocorrências irregulares da transformação fazem-no suspeitar de que pode haver algum gatilho que faz com que elas aconteçam. Por um tempo, ele acreditava que isso só acontecia nos dias em que ele havia tocado em árvores. Então ele parou de fazer isso por completo, e evitando até mesmo passar perto delas. Mas o problema persistiu.
+Isto cuida dos problemas do gato e do carvalho. Mas Jaques ainda sofre com sua condição. As ocorrências irregulares da transformação fazem-no suspeitar de que pode haver algum gatilho que faz com que elas aconteçam. Por um tempo, ele acreditava que isso só acontecia nos dias em que ele havia tocado em árvores. Então ele parou de fazer isso por completo, evitando até mesmo passar perto delas. Mas o problema persistiu.
 
-Mudando para uma abordagem mais científica, Jaques quer começar a manter um registo diário das coisas que ele faz e se ele acabou mudando de forma. Com esses dados ele espera ser capaz de diminuir as condições que desencadeiam as transformações.
+Mudando para uma abordagem mais científica, Jaques quer começar a manter um registo diário das coisas que ele faz ou se ele acabou mudando de forma. Com esses dados ele espera ser capaz de diminuir as condições que desencadeiam as transformações.
 
 A primeira coisa que ele fará será criar um conjunto de dados para armazenar essas informações.
 
 ## Conjuntos de dados
 
-Para trabalhar com um pedaço de dados digitais, teremos primeiro que encontrar uma maneira de representá-los na memória de nossa máquina. Dizer, como um exemplo muito simples, que queremos representar uma coleção de números: 2, 3, 5, 7 e 11.
+Para trabalhar com um pedaço de dados digitais, teremos primeiro que encontrar uma maneira de representá-los na memória de nossa máquina. Dizer, como um exemplo simples, que queremos representar uma coleção de números: 2, 3, 5, 7 e 11.
 
-Poderíamos ser criativos com _strings_ - afinal, _strings_ podem ter qualquer comprimento, assim você pode colocar muitos dados nelas - e usar o "2 3 5 7 11" como a nossa representação. Mas isso é estranho. Você teria que, de alguma forma, extrair os dígitos e convertê-los de volta para número para acessá-los.
+Poderíamos ser criativos com linhas de texto - afinal, _strings_ podem ter qualquer comprimento, assim você pode colocar muitos dados nelas - e usar o "2 3 5 7 11" como a nossa representação. Mas isso é estranho. Você teria que, de alguma forma, extrair os dígitos e convertê-los de volta para número para acessá-los.
 
-Felizmente, JavaScript fornece um tipo de dados especificamente para armazenar sequências de valores. Ele é chamado de _array_, e é escrito como uma lista de valores entre colchetes, separados por vírgulas.
+Felizmente, JavaScript fornece um tipo de dado especificamente para armazenar sequências de valores. Ele é chamado de matriz (_array_) e é escrito como uma lista de valores entre colchetes, separados por vírgulas.
 
 ```js
 var listOfNumbers = [2, 3, 5, 7, 11];
@@ -42,26 +42,26 @@ console.log(listOfNumbers[1 - 1]);
 
 A notação para a obtenção de elementos dentro de uma matriz também usa colchetes. Um par de colchetes, imediatamente após uma expressão, com uma expressão dentro deles, vai procurar o elemento da expressão à esquerda que corresponde ao índice determinado pela expressão entre colchetes.
 
-O primeiro índice de um _array_ é o zero, e não um. Assim, o primeiro elemento pode ser lido como: `listOfNumbers[0]`. Se você não tem experiência com a programação, isso pode levar algum tempo para se acostumar. Contagem baseada em zero tem uma longa tradição na tecnologia, e desde que essa convenção é constantemente seguida (o que ela é, em JavaScript), ela funciona muito bem.
+O primeiro índice de um _array_ é o zero, e não um. Assim, o primeiro elemento pode ser lido como: `listOfNumbers[0]`. Se você não tem experiência com a programação, isso pode levar algum tempo para se acostumar. Contagem baseada em zero tem uma longa tradição na tecnologia e, desde que essa convenção é constantemente seguida (o que ela é, em JavaScript), ela funciona muito bem.
 
 ## Propriedades
 
-Nós vimos algumas expressões de aparência suspeita, como myString.length (para obter o comprimento de uma string) e Math.max (a função máxima) em exemplos passados. Estas acessam propriedades de outros valores. No primeiro caso, a propriedade length do valor em myString. Na segunda, a propriedade nomeada max no objeto Math (que é um conjunto de funções e valores relacionados com a matemática).
+Nós vimos algumas expressões de aparência suspeita, como myString.length (para obter o comprimento de uma string) e Math.max (a função máxima) em exemplos passados. Estas acessam propriedades de outros valores. No primeiro caso, a propriedade _length_ do valor em _myString_. Na segunda, a propriedade nomeada _max_ no objeto _Math_ (que é um conjunto de funções e valores relacionados com a matemática).
 
-Quase todos os valores de JavaScript têm propriedades. As exceções são null  e undefined. Se você tentar acessar uma propriedade em um desses _non-values_ (propriedades sem valor), você receberá um erro.
+Quase todos os valores de JavaScript têm propriedades. As exceções são _null_  e _undefined_. Se você tentar acessar uma propriedade destes tipos sem valor (_nonvalues_), você receberá um erro.
 
 ```js
 null.length;
 // → TypeError: Cannot read property 'length' of null
 ```
 
-Arrays também tem uma propriedade length, mantendo a quantidade de elementos no array. Na verdade, os elementos no array também são acessados por meio de propriedades. Ambos value.index e value[index] acessam uma propriedade em value. A diferença está em como _index_ é interpretada. Ao usar um ponto, a parte após o ponto (que deve ser um nome de variável válido) acessa diretamente o nome da propriedade. Ao usar colchetes, o índex é tratado como uma expressão que é avaliada para obter o nome da propriedade. Considerando que value.index busca a propriedade chamada "index", value[index] tenta obter o valor da variável chamada índex, e usa isso como o nome da propriedade.
+Os dois modos mais comuns de acessar propriedades em JavaScript são com ponto e colchetes. Ambos _value.index_ e _value[index]_ acessam uma propriedade em _value_, mas não necessariamente a mesma propriedade. A diferença está em como _index_ é interpretada. Ao usar um ponto, a parte após o ponto (que deve ser um nome de variável válido) acessa diretamente o nome da propriedade. Ao usar colchetes, o _índex_ é tratado como uma expressão que é avaliada para obter o nome da propriedade. Considerando que _value.index_ busca a propriedade chamada _"index"_, o _value[index]_ tenta obter o valor da variável chamada _índex_ e então usa isso como o nome da propriedade.
 
-Então, se você sabe que a propriedade que você está interessado se chama "length", você diz value.length. Se você deseja extrair a propriedade nomeada pelo valor mantido na variável i, você diz value[i]. E, finalmente, se você quiser acessar uma propriedade denominada "0" ou "John Doe" (nomes de propriedade pode ser qualquer string), estes não são os nomes de variáveis válidos, então você é forçado a usar colchetes, como em value[0] ou value["John Doe"], mesmo que você saiba o nome preciso da propriedade com antecedência.
+Então, se você sabe que a propriedade que você está interessado se chama "length", você diz value.length. Se você deseja extrair a propriedade nomeada pelo valor mantido na variável _i_, você diz _value[i]_. E, finalmente, se você quiser acessar uma propriedade denominada _"0"_ ou _"John Doe"_ (nomes de propriedade pode ser qualquer string), estes não são os nomes de variáveis válidos, então você é forçado a usar colchetes, como em _value[0]_ ou _value["John Doe"]_, mesmo que você saiba o nome preciso da propriedade com antecedência.
 
 ## Métodos
 
-Objetos dos tipos `String` ou `Array` contém, além da propriedade `length`, um número de propriedades que se referem à valores de função.
+Objetos dos tipos _String_ ou _Array_ contém, além da propriedade _length_, um número de propriedades que se referem à valores de função.
 
 ```js
 var doh = "Doh";
@@ -71,11 +71,11 @@ console.log(doh.toUpperCase());
 // → DOH
 ```
 
-Toda string têm uma propriedade `toUpperCase`. Quando chamada, ela irá retornar uma cópia da string, onde todas as letras serão convertidas em maiúsculas. Existe também a `toLowerCase`. Você pode adivinhar o que ela faz.
+Toda string têm uma propriedade _toUpperCase_ (para caixa alta). Quando chamada, ela irá retornar uma cópia da string, onde todas as letras serão convertidas em maiúsculas. Existe também a _toLowerCase_ (para caixa baixa). Você pode adivinhar o que ela faz.
 
-Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma têm acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no [Capítulo 6](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/06-a-vida-secreta-dos-objetos.md).
+Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma tem acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no [Capítulo 6](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/06-a-vida-secreta-dos-objetos.md).
 
-As propriedades que contêm funções são geralmente chamados _métodos_ do valor a que pertencem. Tal como em "toUpperCase é um método de uma string".
+As propriedades que contêm funções são geralmente chamadas _métodos_ do valor a que pertencem. Tal como toUpperCase é um método de uma string.
 
 Este exemplo demonstra alguns métodos que os objetos do tipo array contém:
 

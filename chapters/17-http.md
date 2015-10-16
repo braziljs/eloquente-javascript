@@ -121,29 +121,32 @@ O próximo capítulo irá retornar a formulários e irá abordar como nós podem
 
 ###XMLHttpRequest
 
-The interface through which browser JavaScript can make HTTP requests is called XMLHttpRequest (note the inconsistent capitalization). It was designed by Microsoft, for its Internet Explorer browser, in the late 1990s. During this time, the XML file format was very popular in the world of business software, a world where Microsoft has always been at home. In fact, it was so popular that the acronym XML was tacked onto the front of the name of an interface for HTTP, which is in no way tied to XML.
+A interface através da qual o Javascript pode fazer requisições HTTP é chamada <i>XMLHttpRequest</i> (note a capitalização inconsistente). Ela foi elaborada pela Microsoft, para seu browser Internet Explorer, no final da decada de 90. Naquele tempo, o formato de arquivo XML era muito popular no mundo de softwares corporativos, um mundo no qual a Microsoft se sentia em casa. De fato, tal formato era tão popular que o acrônimo XML foi acrescentado no inicio do nome de uma interface para HTTP, a qual não tinha nenhuma relação com o XMh
 
-The name isn’t completely nonsensical, though. The interface allows you to parse response documents as XML if you want. Confusing two distinct concepts (making a request and parsing the response) into a single thing is terrible design, of course, but so it goes.
+O nome não é completamente sem sentido, porém. A interface permite você analisar documentos de resposta como XML, caso queira. Misturar dois conceitos distintos (fazer a requisição e analizar a resposta) em uma unica coisa é uma terrível abordagem, naturalmente, mas aceitável.
 
-When the XMLHttpRequest interface was added to Internet Explorer, it allowed people to do things with JavaScript that had been very hard before. For example, websites started showing lists of suggestions when the user was typing something into a text field. The script would send the text to the server over HTTP as the user typed. The server, which had some database of possible inputs, would match the database entries against the partial input and send back possible completions to show the user. This was considered spectacular—people were used to waiting for a full page reload for every interaction with a website.
+Quando a interface <i>XMLHttpRequest</i> foi adicionada ao Internet Explorer, foi permitido às pessoas fazerem coisas com Javascript que eram bem complicadas anteriormente. Por exemplo, websites comecaram a mostrar lista de sugestões enquanto o usuário digitava algo em um campo de texto. O Script mandaria o texto para o servidor através de HTTP enquanto o usuário digitava. O servidor, que possuia um banco de dados com possiveis entradas, compararia as entradas do banco com as entradas parciais digitadas e enviaria de volta possiveis combinacoes para mostrar ao usuário. Isso era considerado espetacular - pessoas estavam acostumadas a aguardar por um completo carregamento de pagina para cada interação com o website.
 
-The other significant browser at that time, Mozilla (later Firefox), did not want to be left behind. To allow people to do similarly neat things in its browser, Mozilla copied the interface, including the bogus name. The next generation of browsers followed this example, and today XMLHttpRequest is a de facto standard interface.
+O outro browser significante daquela epoca, Mozilla (depois Firefox), não queria ser deixado para trás. Para permitir aos usuários fazer tarefas de forma similar em seu browser, Mozilla copiou a interface, incluindo o controverso nome. A proxima geracao de browsers seguiu este exemplo, e atualmente <i>XMLHttpRequest</i> e a interface padrão <i>de facto</i>.
 
-Sending a request
+Enviando uma requisição
 
-To make a simple request, we create a request object with the XMLHttpRequest constructor and call its open and send methods.
+Para fazer uma simples requisição, criamos um objeto de requisição com o construtor <i>XMLHttpRequest</i> e chamamos seus métodos open e send.
 
+```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/data.txt", false);
 req.send(null);
-console.log(req.responseText);
-// → This is the content of data.txt
-The open method configures the request. In this case, we choose to make a GET request for the example/data.txt file. URLs that don’t start with a protocol name (such as http:) are relative, which means that they are interpreted relative to the current document. When they start with a slash (/), they replace the current path, which is the part after the server name. When they do not, the part of the current path up to and including its last slash character is put in front of the relative URL.
+console.log(req.responseText);// → Esse é o conteudo de data.txt
+```
 
-After opening the request, we can send it with the send method. The argument to send is the request body. For GET requests, we can pass null. If the third argument to open was false, send will return only after the response to our request was received. We can read the request object’s responseText property to get the response body.
+O método open configura a requisição. Neste caso, nós escolhemos fazer uma requisição GET para o arquivo example/data.txt. URLs que não começam com um nome de protocolo (como http:) são relativos, o que significa que elas são interpretados relativamente ao documento corrente. Quando as URLs começam com uma barra (/), elas substituem o caminho corrente, que e a parte depois do nome do servidor. Quando não, a parte anterior ao caminho corrente e incluindo sua última barra são colocados em frente à URL relativa.
 
-The other information included in the response can also be extracted from this object. The status code is accessible through the status property, and the human-readable status text is accessible through statusText. Headers can be read with getResponseHeader.
+Após abrir a requisição, pode-se mandar ela com o método send. O argumento para o envio é o corpo do request. Para requisições GET, pode-se passar null. Se o terceiro argumento para o open foi falso, o método send irá retornar apenas após a resposta de nossa requisição ser recebida. Podemos ler a propriedade responseText do objeto request para compreender o corpo da resposta.
 
+A outra informação incluída na resposta pode também ser extraída deste objeto. O código de status é acessível através da propriedade status, e o texto legível é acessível através da propriedade statusText. Cabeçalhos podem ser lidos com getResponseHeader.
+
+```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/data.txt", false);
 req.send(null);
@@ -151,64 +154,73 @@ console.log(req.status, req.statusText);
 // → 200 OK
 console.log(req.getResponseHeader("content-type"));
 // → text/plain
-Header names are case-insensitive. They are usually written with a capital letter at the start of each word, such as “Content-Type”, but “content-type” and “cOnTeNt-TyPe” refer to the same header.
+```
 
-The browser will automatically add some request headers, such as “Host” and those needed for the server to figure out the size of the body. But you can add your own headers with the setRequestHeader method. This is needed only for advanced uses and requires the cooperation of the server you are talking to—a server is free to ignore headers it does not know how to handle.
+O browser irá automaticamente adicionar alguns cabeçalhos do request como "Host" e aqueles necessários para o servidor descobrir o tamanho do corpo. Mas você pode adicionar seus próprios cabeçalhos com o método setRequestHeader. Isto é necessário apenas para usos avançados e requer a cooperação do servidor o qual você está comunicando - Um servidor é livre para ignorar cabeçalhos que ele não saiba manusear.
 
-Asynchronous Requests
+Requisições Assíncronas
 
-In the examples we saw, the request has finished when the call to send returns. This is convenient because it means properties such as responseText are available immediately. But it does mean that our program is suspended as long as the browser and server are communicating. When the connection is bad, the server is slow, or the file is big, that might take quite a while. Worse, because no event handlers can fire while our program is suspended, the whole document will become unresponsive.
+Nos exemplos que nós vimos, a requisição finaliza quando a chamada ao método send retorna. Isto é conveniente pois significa que propriedades como responseText são disponibilizadas imediatamente. Mas também significa que nosso programa é suspenso enquanto o browser e o servidor estão comunicando. Quando a conexão é ruim, o servidor lento ou o arquivo é muito grande, o processo pode demorar um bom tempo. Em um cenário pior, como nenhum manipulador de evento pode ser disparado enquanto nosso programa está suspenso, todo o documento ficará irresponsível.
 
-If we pass true as the third argument to open, the request is asynchronous. This means that when we call send, the only thing that happens right away is that the request gets scheduled to be sent. Our program can continue, and the browser will take care of the sending and receiving of data in the background.
+Se passarmos true como terceiro argumento para o método open, a requisição é assíncrona. Isto significa que podemos chamar o método send, a única coisa que acontece imediatamente é que a requisição fica agendada para ser enviada. Nosso programa pode continuar e o browser cuidará do envio e do recebimento dos dados em segundo plano.
 
-But as long as the request is running, we won’t be able to access the response. We need a mechanism that will notify us when the data is available.
+Mas enquanto a requisição está sendo executada, nós não podemos acessar a resposta. É necessário um mecanismo que notifique o usuário quando os dados estiverem disponíveis.
 
-For this, we must listen for the "load" event on the request object.
+Para isso, precisamos ouvir o evento "load" na requisição do objeto.
 
+```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/data.txt", true);
 req.addEventListener("load", function() {
   console.log("Done:", req.status);
 });
 req.send(null);
-Just like the use of requestAnimationFrame in Chapter 15, this forces us to use an asynchronous style of programming, wrapping the things that have to be done after the request in a function and arranging for that to be called at the appropriate time. We will come back to this later.
+```
 
-Fetching XML Data
+Assim como o uso do <i>requestAnimationFrame</i> no Capítulo 15, isto força a utilização de um estilo assíncrono de programação, encapsulando as coisas que precisam ser feitas após a requisição em uma função e preparando para que ela seja chamada no momento apropriado. Nós voltaremos nesse assunto posteriormente.
 
-When the resource retrieved by an XMLHttpRequest object is an XML document, the object’s responseXML property will hold a parsed representation of this document. This representation works much like the DOM discussed in Chapter 13, except that it doesn’t have HTML-specific functionality like the style property. The object that responseXML holds corresponds to the document object. Its documentElement property refers to the outer tag of the XML document. In the following document (example/fruit.xml), that would would be the <fruits> tag:
+Recuperando Dados XML
+
+Quando o recurso recuperado por um objeto <i>XMLHttpRequest</i> é um documento XML, a propriedade responseXML do objeto terá uma representação recuperada deste documento XML. Esta representação funciona de forma parecida ao DOM discutido no Capitulo 13, exceto que a representação não possui funcionalidades específicas de HTML como a propriedade style. O objeto que responseXML se referencia corresponde ao objeto documento. Sua propriedade documentElement se refere a tag externa do documento XML. No seguinte documento (example/fruit.xml), tal propriedade seria a tag <fruit>:
 
 <fruits>
   <fruit name="banana" color="yellow"/>
   <fruit name="lemon" color="yellow"/>
   <fruit name="cherry" color="red"/>
 </fruits>
-We can retrieve such a file like this:
+Podemos recuperar tal arquivo da seguinte forma:
 
+```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/fruit.xml", false);
 req.send(null);
 console.log(req.responseXML.querySelectorAll("fruit").length);
 // → 3
-XML documents can be used to exchange structured information with the server. Their form—tags nested inside other tags—lends itself well to storing most types of data, or at least better than flat text files. The DOM interface is rather clumsy for extracting information, though, and XML documents tend to be verbose. It is often a better idea to communicate using JSON data, which is easier to read and write, both for programs and for humans.
+```
+Documentos XML podem ser usados para trocar informação estruturada com o servidor. Suas tags-formulário aninhadas dentro de outras tags específicas capaz de armazenar a maioria dos tipos de dados, ou ao menos melhor que em arquivos de texto puro. A interface DOM é um pouco trabalhosa para extrair informação e, documentos XML tendem a ser verbosos. Normalmente é uma idéia melhor comunicar usando dados JSON, o qual é muito mais fácil de ler e escrever, tanto para programas quanto para humanos. 
 
+```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/fruit.json", false);
 req.send(null);
 console.log(JSON.parse(req.responseText));
 // → {banana: "yellow", lemon: "yellow", cherry: "red"}
-HTTP sandboxing
+```
 
-Making HTTP requests in web page scripts once again raises concerns about security. The person who controls the script might not have the same interests as the person on whose computer it is running. More specifically, if I visit themafia.org, I do not want its scripts to be able to make a request to mybank.com, using identifying information from my browser, with instructions to transfer all my money to some random mafia account.
+HTTP <i>sandboxing</i>
+Executar requisições HTTP através de scripts em uma página web levanta mais uma vez questões sobre segurança. A pessoa que controla o script pode não ter os mesmos interesses que a pessoa do computador o qual o script está executando. Mais especificamente, se eu visitar themafia.org, eu não quero que seus scripts façam uma requisição para mybank.com, utilizando informações de identificação do browser, com instruções para transferir todo meu dinheiro para alguma conta da máfia.
 
-It is possible for websites to protect themselves against such attacks, but that requires effort, and many websites fail to do it. For this reason, browsers protect us by disallowing scripts to make HTTP requests to other domains (names such as themafia.org and mybank.com).
+É possível para websites se protegerem eles mesmos contra tais ataques, mas isso requer esforço, e muitos websites falham neste ponto. Por esta razão, browsers protegem o usuário desabilitando scripts de fazerem requisições HTTP para outro domínio (nomes como themafia.org e mybank.com).
 
-This can be an annoying problem when building systems that want to access several domains for legitimate reasons. Fortunately, servers can include a header like this in their response to explicitly indicate to browsers that it is okay for the request to come from other domains:
+Isto pode ser um problema irritante quando criando sistemas que querem acessar vários domínios por razões legitimas. Felizmente, servidores podem incluir um cabeçalho como esse em sua resposta para explicitamente indicar aos browsers que é permitido requisições de outro domínio:
 
 Access-Control-Allow-Origin: *
-Abstracting requests
 
-In Chapter 10, in our implementation of the AMD module system, we used a hypothetical function called backgroundReadFile. It took a filename and a function and called that function with the contents of the file when it had finished fetching it. Here’s a simple implementation of that function:
+Abstraindo Requisições
 
+No Capítulo 10, em nossa implementação do módulo AMD, nós usamos uma função hipotética chamada <i>backgroundReadFile</i>. Ela recebeu um caminho de arquivo e uma função e chamou esta função com o conteúdo do arquivo quando ele acabou de ser recuperado. Aqui um exemplo de uma implementação desta função:
+
+```js
 function backgroundReadFile(url, callback) {
   var req = new XMLHttpRequest();
   req.open("GET", url, true);
@@ -218,18 +230,22 @@ function backgroundReadFile(url, callback) {
   });
   req.send(null);
 }
-This simple abstraction makes it easier to use XMLHttpRequest for simple GET requests. If you are writing a program that has to make HTTP requests, it is a good idea to use a helper function so that you don’t end up repeating the ugly XMLHttpRequest pattern all through your code.
+```
 
-The function argument’s name, callback, is a term that is often used to describe functions like this. A callback function is given to other code to provide that code with a way to “call us back” later.
+Essa simples abstração torna mais fácil usar <i>XMLHttpRequest</i> para simples requisições GET. Se você está escrevendo um programa que precisa fazer requisições HTTP, é uma boa idéia usar uma função helper para que você não acabe repetindo o esquisito padrão <i>XMLHttpRequest</i> por todo o código.
 
-It is not hard to write your HTTP utility function, tailored to what your application is doing. The previous one does only GET requests and doesn’t give us control over the headers or the request body. You could write another variant for POST requests or a more generic one that supports various kinds of requests. Many JavaScript libraries also provide wrappers for XMLHttpRequest.
+O nome da função argumento, <i>callback</i>, é um termo normalmente usado para descrever funções como essa. Uma função <i>callback</i> é fornecida a outro código para prover a este código uma forma de "ser chamado" mais tarde.
 
-The main problem with the previous wrapper is its handling of failure. When the request returns a status code that indicates an error (400 and up), it does nothing. This might be okay, in some circumstances, but imagine we put a “loading” indicator on the page to indicate that we are fetching information. If the request fails because the server crashed or the connection is briefly interrupted, the page will just sit there, misleadingly looking like it is doing something. The user will wait for a while, get impatient, and consider the site uselessly flaky.
+Não é difícil escrever sua função de utilidades HTTP, adaptada a o que sua aplicação está fazendo. A função anterior apenas faz requisições GET e não nos dá controle sobre os cabeçalhos ou o corpo da requisição. Você pode escrever outra variação da função para requisições POST ou uma mais genérica que suporta vários tipos de requisição. Muitas bibliotecas Javascript também fornecem funções <i>wrappers</i> para <i>XMLHttpRequest</i>.
 
-We should also have an option to be notified when the request fails so that we can take appropriate action. For example, we could remove the “loading” message and inform the user that something went wrong.
+O principal problema com a função <i>wrapper</i> anterior é sua manipulação de falhas. Quando a requisição retorna um código de status que indica um erro (400 para cima), a função não faz nada. Isso pode ser admitido, em algumas circunstâncias, mas imagine nós colocarmos um indicador de "carregando" na página para demonstrar que estamos recuperando informação. Se a requisição falhar por causa de queda do servidor ou a conexão ser interrompida, a página simplesmente permanecerá em seu estado, demonstrando de forma errada como se estivesse executando algo. O usuário irá esperar por algum instante, ficar impaciente, e por fim considerar o site problemático.
 
-Error handling in asynchronous code is even trickier than error handling in synchronous code. Because we often need to defer part of our work, putting it in a callback function, the scope of a try block becomes meaningless. In the following code, the exception will not be caught because the call to backgroundReadFile returns immediately. Control then leaves the try block, and the function it was given won’t be called until later.
+Nós também devemos ter uma opção de ser notificado quando a requisição falhar para que possamos tomar uma ação apropriada. Por exemplo, podemos remover a mensagem "carregando" e informar ao usuário que algo errado aconteceu.
 
+Manusear erro em código assíncrono é ainda mais traiçoeiro que manusear erro em código síncrono. O motivo é que 
+normalmente temos que procrastinar parte de nosso trabalho o colocando em uma função <i>callback</i>, o escopo de um bloco try se torna sem sentido. No seguinte código, a exceção não será pega porque a chamada para backgroundReadFile retorna imediatamente. O controle então deixa o bloco <i>try</i>, e a função que foi determinada não será chamada até mais tarde.
+
+```js
 try {
   backgroundReadFile("example/data.txt", function(text) {
     if (text != "expected")
@@ -238,8 +254,12 @@ try {
 } catch (e) {
   console.log("Hello from the catch block");
 }
-To handle failing requests, we have to allow an additional function to be passed to our wrapper and call that when a request goes wrong. Alternatively, we can use the convention that if the request fails, an additional argument describing the problem is passed to the regular callback function. Here’s an example:
+```
 
+Para manusear requisições que falharam, temos que permitir uma função adicional para ser passada para nosso <i>wrapper</i>
+e o chamar quando a requisição falhar. Alternativamente, podemos usar a convenção de que caso a requisição falhe, um argumento adicional descrevendo o problema é passado à chamada regular da função <i>callback</i>. Segue um exemplo:
+
+```js
 function getURL(url, callback) {
   var req = new XMLHttpRequest();
   req.open("GET", url, true);
@@ -255,9 +275,11 @@ function getURL(url, callback) {
   });
   req.send(null);
 }
-We have added a handler for the "error" event, which will be signaled when the request fails entirely. We also call the callback function with an error argument when the request completes with a status code that indicates an error.
+```
 
-Code using getURL must then check whether an error was given and, if it finds one, handle it.
+Nós adicionamos uma função manipuladora para o evento "error", o qual será sinalizado quando a requisição falhar por completo. Nós também chamamos a função de <i>callback </i> com um argumento de erro quando a requisição completa com um código de status que indica um erro.
+
+O código usando getURL deve então checar se um erro aconteceu e, caso encontre um, tratá-lo.
 
 getURL("data/nonsense.txt", function(content, error) {
   if (error != null)
@@ -265,20 +287,22 @@ getURL("data/nonsense.txt", function(content, error) {
   else
     console.log("nonsense.txt: " + content);
 });
-This does not help when it comes to exceptions. When chaining several asynchronous actions together, an exception at any point of the chain will still (unless you wrap each handling function in its own try/catch block) land at the top level and abort your chain of actions.
+
+Isto não funciona quando se trata de exceções. Ao encadear várias ações assíncronas, uma exceção em qualquer ponto da cadeia permanecerá (ao menos que você encapsule cada função de tratamento em seu próprio bloco try/catch) no topo da cadeia e abortará a sequencia de ações.
 
 Promises
 
-For complicated projects, writing asynchronous code in plain callback style is hard to do correctly. It is easy to forget to check for an error or to allow an unexpected exception to cut the program short in a crude way. Additionally, arranging for correct error handling when the error has to flow through multiple callback functions and catch blocks is tedious.
+Para projetos complexos, escrever código assíncrono no tradicional estilo de <i>callbacks</i> é difícil de ser feito corretamente. É fácil de esquecer a checagem de um erro ou permitir uma exceção não esperada para encerrar o programa de forma abrupta. Além disso, alterações para corrigir tratamento de erros precisam fluir através de múltiplas funções <i>callbacks</i> e blocos <i>catch</i> são tediosos de se criar.
 
-There have been a lot of attempts to solve this with extra abstractions. One of the more successful ones is called promises. Promises wrap an asynchronous action in an object, which can be passed around and told to do certain things when the action finishes or fails. This interface is set to become part of the next version of the JavaScript language but can already be used as a library.
+Várias tentativas de solucionar esse problema têm sido feitas com abstrações extras. Uma das mais bem sucedidas é chamada de <i>promises</i>. <i>Promises</i> encapsulam uma ação assíncrona em um objeto, que pode ser passado e instruído a fazer algo quando a ação finalizar ou falhar. Essa interface está definida para ser parte da próxima versão da linguagem Javascript mas já pode ser usada em forma de biblioteca.
 
-The interface for promises isn’t entirely intuitive, but it is powerful. This chapter will only roughly describe it. You can find a more thorough treatment at www.promisejs.org.
+A interface de <i>promises</i> não pode ser chamada de intuitiva, mas ela é poderosa. Esse capítulo irá apenas brevemente o descrever. Você pode encontrar uma documentação mais minunciosa em www.promisejs.org.
 
-To create a promise object, we call the Promise constructor, giving it a function that initializes the asynchronous action. The constructor calls that function, passing it two arguments, which are themselves functions. The first should be called when the action finishes successfully, and the second should be called when it fails.
+Para criar um objeto <i>promise</i>, nós chamamos um construtor <i>Promise</i>, passando uma função que inicia a ação assíncrona. O construtor chama esta função, passando dois argumentos, os quais são tambem funções. A primeira deve ser chamada quando a ação terminar com sucesso, e a segunda quando ela falhar.
 
-Once again, here is our wrapper for GET requests, this time returning a promise. We’ll simply call it get this time.
+Mais uma vez, segue nosso <i>wrapper</i> para requisições GET, dessa vez retornando uma <i>promise</i>. Nos simplesmente a chamaremos de <i>get</i> desta vez.
 
+```js
 function get(url) {
   return new Promise(function(succeed, fail) {
     var req = new XMLHttpRequest();
@@ -295,27 +319,35 @@ function get(url) {
     req.send(null);
   });
 }
-Note that the interface to the function itself is now a lot simpler. You give it a URL, and it returns a promise. That promise acts as a handle to the request’s outcome. It has a then method that you can call with two functions: one to handle success and one to handle failure.
+```
 
+Note que a interface da função em si é agora bem mais simples. Você passa uma URL, e ela retorna uma <i>promise</i>. Essa <i>promise</i> age como um manipulador. Ela agora tem um método <i>then</i> que pode ser chamado com duas funções: uma para o caso de sucesso e outra para o caso de falha.
+
+```js
 get("example/data.txt").then(function(text) {
   console.log("data.txt: " + text);
 }, function(error) {
   console.log("Failed to fetch data.txt: " + error);
 });
-So far, this is just another way to express the same thing we already expressed. It is only when you need to chain actions together that promises make a significant difference.
+```
 
-Calling then produces a new promise, whose result (the value passed to success handlers) depends on the return value of the first function we passed to then. This function may return another promise to indicate that more asynchronous work is being done. In this case, the promise returned by then itself will wait for the promise returned by the handler function, succeeding or failing with the same value when it is resolved. When the handler function returns a nonpromise value, the promise returned by then immediately succeeds with that value as its result.
+No entanto, essa é apenas outra forma de expressar a mesma coisa que já haviamos expressado. E apenas quando você precisa encadear ações juntas que as <i>promises</i> fazem uma diferenca significante.
 
-This means you can use then to transform the result of a promise. For example, this returns a promise whose result is the content of the given URL, parsed as JSON:
+A chamada ao método <i>then</i> produz uma nova <i>promise</i>, a qual o resultado (o valor passado para o manipulador em caso de sucesso) depende do valor de retorno da primeira função que passamos para o <i>then</i>. Essa função pode retornar outra <i>promise</i> para indicar que mais tarefas assincronas estão sendo executadas. Neste caso, a própria<i>promise</i> retornado pelo <i>then</i> IRA esperar pela <i>promise</i> retornada pela função manipuladora, obtendo sucesso ou falhando com o mesmo valor quando for resolvida. Quando a função manipuladora retornar um valor que não seja uma <i>promise</i>, a <i>promise</i> retornada pelo <i>then</i> imediatamente retorna com sucesso com tal valor como seu resultado.
 
+Isso significa que você pode usar <i>then</i> para transformar o resultado de uma <i>promise</i>. Por exemplo, o codigo a seguir retorna uma <i>promise</i> a qual o resultado é o conteudo de uma dada URL, montado como JSON:
+
+```js
 function getJSON(url) {
   return get(url).then(JSON.parse);
 }
-That last call to then did not specify a failure handler. This is allowed. The error will be passed to the promise returned by then, which is exactly what we want—getJSON does not know what to do when something goes wrong, but hopefully its caller does.
+```
 
-As an example that shows the use of promises, we will build a program that fetches a number of JSON files from the server and, while it is doing that, shows the word loading. The JSON files contain information about people, with links to files that represent other people in properties such as father, mother, or spouse.
+A última chamada ao <i>then</i> não especificou um manipulador de falhas. Isso é permitido. O erro sera passado para a <i>promise</i> retornada pelo <i>then</i>, a qual é exatamente o que nós queremos - <i>getJSON</i> não sabe o que fazer quando algo acontece errado, mas provavelmente seu chamador sabe.
 
-We want to get the name of the mother of the spouse of example/bert.json. And if something goes wrong, we want to remove the loading text and show an error message instead. Here is how that might be done with promises:
+Como um exemplo que demonstra o uso de <i>promises</i>, nós iremos construir um programa que carrega um numero de arquivos JSON do servidor e, enquanto isso é feito, mostra o carregamento de palavras. Os arquivos JSON contem informações sobre pessoas, com links para arquivos que representam outras pessoas em propriedades como pai, mãe ou esposa.
+
+Nós queremos recuperar o nome da mãe da esposa de example/bert.json. E caso algo errado ocorra, nós queremos remover o texto de carregamento e mostrar uma mensagem de erro no lugar. Segue um exemplo de como isso é feito com <i>promises</i>:
 
 <script>
   function showMessage(msg) {
@@ -337,76 +369,80 @@ We want to get the name of the mother of the spouse of example/bert.json. And if
     document.body.removeChild(loading);
   });
 </script>
-The resulting program is relatively compact and readable. The catch method is similar to then, except that it only expects a failure handler and will pass through the result unmodified in case of success. Much like with the catch clause for the try statement, control will continue as normal after the failure is caught. That way, the final then, which removes the loading message, is always executed, even if something went wrong.
+O programa acima é relativamente compacto e legivel. O método <i>catch</i> é similar ao <i>then</i>, exceto que ele apenas espera um manipulador de falha e entao passa pelo resultado não modificado em caso de sucesso. Assim como a clausula <i>catch</i> para uma bloco <i>try</i>, o controle seguirá seu fluxo normal após a falha ser capturada. Desta forma, o derradeiro <i>then</i>, o qual remove a mensagem de carregamento, será sempre executado, mesmo que algum erro ocorra.
 
-You can think of the promise interface as implementing its own language for asynchronous control flow. The extra method calls and function expressions needed to achieve this make the code look somewhat awkward but not remotely as awkward as it would look if we took care of all the error handling ourselves.
+Você pode pensar na interface de <i>promise</i> como uma implementacao de sua própria linguagem para controle de fluxo assincrono. As chamadas extras de métodos e funções de expressão necessarias para atingir a tarefa fazem o codigo parecer meio esquisito mas não mais esquisito se fosse necessario tratar todas excecoes na forma tradicional.
 
-Appreciating HTTP
+Apreciando o HTTP
 
-When building a system that requires communication between a JavaScript program running in the browser (client-side) and a program on a server (server-side), there are several different ways to model this communication.
+Ao construir um sistema que requer comunicação entre um Javascript rodando no browser (lado cliente) e um programa em um servidor (lado servidor), existem varias maneiras diferentes de modelar essa comunicação.
 
-A commonly used model is that of remote procedure calls. In this model, communication follows the patterns of normal function calls, except that the function is actually running on another machine. Calling it involves making a request to the server that includes the function’s name and arguments. The response to that request contains the returned value.
+Um modelo comumente usado é o de chamadas de procedimentos remotos. Neste modelo, a comunicação segue o padrão de chamadas normais de função, exceto pelo fato de que a função esta sendo executada em outra máquina. Esta chamada envolve a execução de uma requisão para o servidor que inclui o nome da função e seus argumentos. A resposta para essa requisição contém o valor retornado.
 
-When thinking in terms of remote procedure calls, HTTP is just a vehicle for communication, and you will most likely write an abstraction layer that hides it entirely.
+Ao pensar em termos de chamadas de procedimentos remotos, HTTP é apenas o veículo da comunicação, e você provavelmente escreverá uma camada de abstração que o esconda completamente.
 
-Another approach is to build your communication around the concept of resources and HTTP methods. Instead of a remote procedure called addUser, you use a PUT request to /users/larry. Instead of encoding that user’s properties in function arguments, you define a document format or use an existing format that represents a user. The body of the PUT request to create a new resource is then simply such a document. A resource is fetched by making a GET request to the resource’s URL (for example /user/larry), which returns the document representing the resource.
+Outra abordagem é estruturar sua comunicação em torno do conceito de recursos e métodos HTTP. Ao invés de um procedimento remoto chamado <i>addUser</i>, utilizar uma requisição PUT para /users/larry. Ao invés de codificar tais propriedades do usuário nos argumentos da função, você define um formato de documento ou usa um formato existente que represente um usuário. O corpo da requisição PUT para criar um novo recurso é, em seguida, simplesmente como um documento. Um recurso é preenchido por requisições GET à URL do recurso (por exemplo /user/larry), o qual retorna o documento que representa o recurso.
 
-This second approach makes it easier to use some of the features that HTTP provides, such as support for caching resources (keeping a copy on the client side). It can also help the coherence of your interface since resources are easier to reason about than a jumble of functions.
+Esta segunda abordagem torna mais fácil utilizar os recursos providos pelo HTTP, como suporte para recursos de <i>caching</i> (mantendo uma cópia no lado do cliente). Isso também ajuda na coerência de sua interface uma vez que recursos são mais fáceis de serem compreendidos que um punhado de funções.
 
-Security and HTTPS
+Segurança e HTTPS
 
-Data traveling over the Internet tends to follow a long, dangerous road. To get to its destination, it must hop through anything from coffee-shop wifi networks to networks controlled by various companies and states. At any point along its route it may be inspected or even modified.
+Envio de dados pela Internet tendem a seguir uma longa, perigosa estrada. Para chegar ao seu destino, a informação pode viajar por variados ambientes desde redes wifi de cafeterias até redes controladas por várias empresas e estados. Em qualquer ponto, a informação pode ser inspecionada ou até modificada.
 
-If it is important that something remain secret, such as the password to your email account, or that it arrive at its destination unmodified, such as the account number you transfer money to from your bank’s website, plain HTTP is not good enough.
+Se for importante que algo se mantenha secreto, como a senha de sua conta de email, ou que chegue ao seu destino de forma inalterada, como o número da conta que você irá transferir dinheiro através do site de seu banco, o simples protocolo HTTP não é bom o suficiente.
 
-The secure HTTP protocol, whose URLs start with https://, wraps HTTP traffic in a way that makes it harder to read and tamper with. First, the client verifies that the server is who it claims to be by requiring that server to prove that it has a cryptographic certificate issued by a certificate authority that the browser recognizes. Next, all data going over the connection is encrypted in a way that should prevent eavesdropping and tampering.
+O protocolo HTTP seguro, o qual as URLS começam com https://, encapsula o tráfego HTTP de forma que dificulta sua leitura e alteração. Primeiramente, o cliente verifica se o servidor é quem ele diz ser solicitando que o servidor prove que possui um certificado criptografico concedido por uma autoridade certificadora que o browser reconheça. Posteriormente, toda informação a ser trafegada pela conexão é criptografada de forma que ela seja protegida de espionagem e violação.
 
-Thus, when it works right, HTTPS prevents both the situation where someone impersonates the website you were trying to talk to and the situation where someone is snooping on your communication. It is not perfect, and there have been various incidents where HTTPS failed because of forged or stolen certificates and broken software. Still, plain HTTP is trivial to mess with, whereas breaking HTTPS requires the kind of effort that only states or sophisticated criminal organizations can hope to make.
+Desta forma, quando funciona corretamente, HTTPS previne ambas situações onde alguem se passa pelo website que você estava tentando se comunicar e quando alguem está vigiando sua comunicação. O protocolo não é perfeito, e vários incidentes foram causados onde o HTTPS falhou por causa de certificado forjado ou roubado e software corrompido. Mesmo assim, HTTP simples é fácil de ser burlado enquanto que burlar HTTPS requer um certo esforço que apenas grandes entidades como empresas governamentais ou sofisticadas organizações criminosas estão dispostas a gastar.
 
-Summary
+Sumário
 
-In this chapter, we saw that HTTP is a protocol for accessing resources over the Internet. A client sends a request, which contains a method (usually GET) and a path that identifies a resource. The server then decides what to do with the request and responds with a status code and a response body. Both requests and responses may contain headers, providing additional information.
+Neste capítulo nós vimos que o HTTP é um protocolo para acessar recursos através da Internet. Um cliente envia uma requisição, a qual contém um método (normalmente GET) e um caminho que identifica um recurso. O servidor então decide o que fazer com a requisição e responde com um código de status e um corpo de resposta. Ambos requisição e resposta podem conter cabeçalhos, provendo informação adicional.
 
-Browsers make GET requests to fetch the resources needed to display a web page. A web page may also contain forms, which allow information entered by the user to be sent along in the request made when the form is submitted. You will learn more about that in the next chapter.
+Browsers fazem requisições GET para recuperar o recurso necessário para montar uma página. Uma página pode conter formulários, o que permite que informações inseridas pelo usuário sejam enviadas juntas com a requisição quando o formulário é submetido. Você aprenderá mais sobre este assunto no próximo capítulo.
 
-The interface through which browser JavaScript can make HTTP requests is called XMLHttpRequest. You can usually ignore the “XML” part of that name (but you still have to type it). There are two ways in which it can be used—synchronous, which blocks everything until the request finishes, and asynchronous, which requires an event handler to notice that the response came in. In almost all cases, asynchronous is preferable. Making a request looks like this:
+A interface na qual o Javascript do browser pode fazer requisições HTTP é chamado <i>XMLHttpRequest</i>. Você pode ignorar o "XML" do nome (mas mesmo assim precisa digitá-lo). Existem duas formas nas quais ele pode ser usado - síncrono, onde o processo bloqueia tudo até que a requisição termine, e assíncrono, o qual requer um manuseador de evento para avisar que a resposta chegou. Em quase todos os casos, assíncrono é preferido. Fazer uma requisição é algo parecido com o código a seguir:
 
+```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/data.txt", true);
 req.addEventListener("load", function() {
   console.log(req.statusCode);
 });
 req.send(null);
-Asynchronous programming is tricky. Promises are an interface that makes it slightly easier by helping route error conditions and exceptions to the right handler and abstracting away some of the more repetitive and error-prone elements in this style of programming.
+```
 
-Exercises
+Programação assíncrona é traiçoeira. <i>Promises</i> são interfaces que tornam a programação assíncrona mais fácil ajudando 
+a rotear condições de erro e exceções para o manuseador correto e abstraindo alguns elementos repetitivos e tendentes a erro neste estilo de programação.
 
-Content negotiation
+Exercícios
 
-One of the things that HTTP can do but that we have not discussed in this chapter yet is called content negotiation. The Accept header for a request can be used to tell the server what type of document the client would like to get. Many servers ignore this header, but when a server knows of various ways to encode a resource, it can look at this header and send the one that the client prefers.
+Negociação de conteúdo
 
-The URL eloquentjavascript.net/author is configured to respond with either plain text, HTML, or JSON, depending on what the client asks for. These formats are identified by the standardized media types text/plain, text/html, and application/json.
+Uma das coisas que HTTP pode fazer mas que não discutimos neste capítulo ainda é chamada negociação de conteúdo. O cabeçalho <i>Accept</i> de uma requisição pode ser usado para dizer ao servidor que tipo de documento o cliente gostaria de receber. Muitos servidores ignoram este cabeçalho, mas quando um servidor sabe de várias maneiras como codificar um recurso, ele pode olhar este cabeçalho e enviar aquele que o cliente prefere.
 
-Send requests to fetch all three formats of this resource. Use the setRequestHeader method of your XMLHttpRequest object to set the header named Accept to one of the media types given earlier. Make sure you set the header after calling open but before calling send.
+A URL eloquentjavascript.net/author é configurada para responder tanto como texto plano, HTML ou JSON, dependendo de como o cliente solicita. Estes formatos são identificados pelos tipos de mídia padronizados text/plain, text/html e application/json.
 
-Finally, try asking for the media type application/rainbows+unicorns and see what happens.
+Envie requisições para recuperar os tres formatos deste recurso. Use o método <i>setRequestHeader</i> de seu objeto <i>XMLHttpRequest</i> para definir o valor do cabeçalho chamado <i>Accept</i> para um dos tipos de mídia fornecidos anteriormente. Certifique-se de definir o valor do cabeçalho após chamar o método <i>open</i> mas antes de chamar o método <i>send</i>.
 
-// Your code here.
-Waiting for multiple promises
+Por último, tente recuperar o tipo de mídia application/rainbows+unicorns e veja o que acontece.
 
-The Promise constructor has an all method that, given an array of promises, returns a promise that waits for all of the promises in the array to finish. It then succeeds, yielding an array of result values. If any of the promises in the array fail, the promise returned by all fails too (with the failure value from the failing promise).
+// Seu código aqui
 
-Try to implement something like this yourself as a regular function called all.
+Para trabalhar com múltiplos promises utilizamos um método chamado <i>all</i> que, dado um array de <i>promises</i>, retorna uma <i>promise</i> que espera por todos os <i>promises</i> do array acabarem. Se obtiver sucesso, resultará em um array com os valores resultantes. Se qualquer das <i>promises</i> do array falhar, a <i>promise</i> retornada pelo <i>all</i> falhará também (com o valor de falha da <i>promise</i> que falhou).
 
-Note that after a promise is resolved (has succeeded or failed), it can’t succeed or fail again, and further calls to the functions that resolve it are ignored. This can simplify the way you handle failure of your promise.
+Tente implementar algo assim por sua conta com uma função chamada <i>all</i>.
 
+Observe que após um <i>promise</i> ser resolvida (tendo sucesso ou mesmo falhado), ela pode ter sucesso ou falhar de novo, e outras chamadas para as funções que resolvem isso são ignoradas. Isto pode simplificar a maneira que você manuseia falhas em sua <i>promise</i>.
+
+```js
 function all(promises) {
   return new Promise(function(success, fail) {
     // Your code here.
   });
 }
 
-// Test code.
+// Testar código
 all([]).then(function(array) {
   console.log("This should be []:", array);
 });
@@ -430,8 +466,12 @@ all([soon(1), fail(), soon(3)]).then(function(array) {
   if (error.message != "boom")
     console.log("Unexpected failure:", error);
 });
-The function passed to the Promise constructor will have to call then on each of the promises in the given array. When one of them succeeds, two things need to happen. The resulting value needs to be stored in the correct position of a result array, and we must check whether this was the last pending promise and finish our own promise if it was.
+```
 
-The latter can be done with a counter, which is initialized to the length of the input array and from which we subtract 1 every time a promise succeeds. When it reaches 0, we are done. Make sure you take the situation where the input array is empty (and thus no promise will ever resolve) into account.
+Dicas
 
-Handling failure requires some thought but turns out to be extremely simple. Just pass the failure function of the wrapping promise to each of the promises in the array so that a failure in one of them triggers the failure of the whole wrapper.
+A função passada ao construtor <i>Promise</i> terá que chamar <i>then</i> em cada dos <i>promises</i> do array dado. Quando um deles obtêm sucesso, duas coisas precisam acontecer: O valor resultante precisa ser armazenado na posição correta de um array resultante, e devemos checar se este foi o ultimo <i>promise</i> pendente e terminar nossa própria <i>promise</i> caso tenha sido.
+
+O último pode ser resolvido com um contador, o qual é iniciado com a largura do array de entrada do qual nos subtraimos 1 toda vez que um <i>promise</i> obtem sucesso. Quando o contador atingir 0, encerramos. Garanta que o array de entrada esteja vazio (e portanto, nenhuma <i>promise</i> jamais irá resolver) em conta.
+
+Manusear falhas requer alguns esforços mas se torna extremamente simples. Apenas passe a função de falha para o <i>promise</i> responsável por encapsular aos <i>promises</i> do array de forma que uma falha em um deles dispare a falha para o <i>promise</i> encapsulador.

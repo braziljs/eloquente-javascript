@@ -147,19 +147,19 @@ console.log(weekDay.name(weekDay.number("Saturday")));
 // → Saturday
 ```
 
-## Detaching from the global scope
+## Removendo do escopo global
 
-The above pattern is commonly used by JavaScript modules intended for the browser. They will claim a single, known global name, and wrap their code in a function in order to have their own private namespace.
+O padrão acima é usado normalmente em módulos JavaScript criados para o navegador. Eles requerem um simples e conhecido nome global, e encapsular seu código em uma função para ter seu namespace privado próprio.
 
-There is still a problem when multiple modules happen to claim the same name, or when you want, for whatever reason, to load two versions of a module alongside each other.
+Ainda existe um problema quando múltiplos módulos reivindicam o mesmo nome, ou quando você quer, por qualquer motivo, carregar duas versões do mesmo módulo de forma conjunta.
 
-With a little plumbing, we can create a system that allows modules to directly ask for the interface objects of other modules they need access to, without going through the global scope. This solves the problems mentioned above, and has the added benefit of being explicit about those dependencies, making it harder to accidentally use some module without stating that you need it.
+Com um pequeno encanamento, nós podemos criar um sistema que permite que aos módulos requerirem diretamente por interfaces de objetos de outros módulos que eles precisem de acessar, sem precisarmos usar o escopo global. Isso resolve os problemas mencionados acima e tem um benefício adicional de ser explícito sobre suas dependências, tornando difícil usar acidentalmente algum módulo sem declarar que você precisa dele.
 
-Our goal is a function require which, when given a module name, will load that file (from disk or the web, depending on the platform we are running on), and return the appropriate interface value.
+Nosso objetivo é uma função 'require' que, quando dado o nome de um módulo, vai carregar esse arquivo (do disco ou da web, dependendo da plataforma que estivermos rodando), e retornar o valor apropriado da interface.
 
-For this we need at least two things. Firstly, we will imagine that we have a function readFile (which is not present in standard JavaScript), which returns the content of the file with the given name. There are ways to access the web from JavaScript in the browser, and to access the hard disk from other JavaScript platforms, but they are more involved. For now, we just pretend we have this simple function.
+Para isso nós precisamos de pelo menos duas coisas. Primeiramente, nós vamos imaginar que temos uma função `readFile` (que não está presente por padrão no JavaScript), que retorna o conteúdo do arquivo com um nome fornecido. Existem formas de acessar a web com JavaScript no navegador, e acessar o disco rígido com outras plataformas JavaScript, mas elas são mais envolvidas. Por agora, nós apenas pretendemos desta simples função.
 
-Secondly, we need to be able, when we have a string containing code (as read from the file), to actually execute this code as a JavaScript program.
+Em segundo lugar, nós precisamos de ser capazes, quando tivermos uma string contendo o código (lida do arquivo), de realmente executar o código como um programa JavaScript.
 
 ## Evaluating data as code
 

@@ -13,45 +13,25 @@ Isso é igualmente a uma benção e uma maldição. Por outro lado, isso reforç
 
 ## Redes e a Internet
 
-Computer networks have been around since the 1950s. If you put cables between two or more computers and allow them to send data back and forth through these cables, you can do all kinds of wonderful things.
-
 Redes de computador existem desde 1950. Se você colocar cabos entre dois ou mais computadores e permitir que eles enviem dados um para o outro por estes cabos, você pode fazer todo tipo de coisas maravilhosas.
-
-If connecting two machines in the same building allows us to do wonderful things, connecting machines all over the planet should be even better. The technology to start implementing this vision was developed in the 1980s, and the resulting network is called the *Internet*. It has lived up to its promise.
 
 Se conectando duas máquinas no mesmo prédio permite que nós façamos coisas incríveis, conectando máquinas por todo o planeta deve ser ainda melhor. A tecnologia para começar a implementação desta visão foi desenvolvida em meados de 1980, e a rede resultante é chamada de *Internet*. Ela tem vivido desde a sua promessa.
 
-A computer can use this network to spew bits at another computer. For any effective communication to arise out of this bit-spewing, the computers at both ends must know what the bits are supposed to represent. The meaning of any given sequence of bits depends entirely on the kind of thing that it is trying to express and on the encoding mechanism used.
+Um computador pode usar essa rede para enviar bits para outro computador. Para qualquer comunicação efetiva nascida desse envio de bits, os computadores em ambas as pontas devem conhecer qual a representação de cada bit. O significado de cada sequência de bits depende inteiramente do tipo de coisa que está tentando se expressar e o mecanismo de codificação usado.
 
-Um computador pode usar essa rede para lançar bits para outro computador. Para qualquer comunicação efetiva nascida desse lançamento de bits, os computadores em ambas as pontas devem conhecer qual a representação de cada bit. O significado de cada sequência de bits depende inteiramente do tipo de coisa que está tentando se expressar e o mecanismo de codificação usado.
+Um *protocolo de rede* descreve um estilo de comunicação em uma rede. Existem protocolos para mandar email, para receber email, para transferir arquivos, e até mesmo para controlar computadores que foram infectados por softwares maliciosos.
 
-A *network protocol* describes a style of communication over a network. There are protocols for sending email, for fetching email, for sharing files, or even for controlling computers that happen to be infected by malicious software.
+Por exemplo, um simples protocolo de chat deve consistir em um computador enviando os bits que representam o texto "CHAT?" para outra máquina, e o outro respondendo "OK!" para confirmar que o protocolo foi entendido. Eles podem então proceder e enviar um para o outro `strings` de texto, ler o texto enviado um para o outro pela rede, e mostrar o que eles receberam nas suas telas.
 
-Um *protocolo de rede* descreve um estilo de comunicação em uma rede. Existem protocolos para mandar email, para receber email, para transferir arquivos, e até para controlar computadores que foram infectados por softwares maliciosos.
+A maioria dos protocolos são feitos em cima de outros protocolos. Nosso exemplo de protocolo de chat considera a rede como um tipo de dispositivo de *stream*, no qual você pode enviar bits e recebe-lôs com destino correto e na ordem correta. Assegurar essas coisas atualmente é um problema técnico bastante difícil.
 
-For example, a simple chat protocol might consist of one computer sending the bits that represent the text “CHAT?” to another machine and the other responding with “OK!” to confirm that it understands the protocol. They can then proceed to send each other strings of text, read the text sent by the other from the network, and display whatever they receive on their screens.
+O TCP (Protocolo de Controle de Transmissão) é um protocolo que resolve este problema. Todos os aparelhos conectados na Internet "falam" ele, e a maioria da comunicação na Internet é feita através dele.
 
-Por exemplo, um simples protocolo de chat deve consistir em um computador enviando os bits que representam o texto "CHAT?" para outra máquina, e o outro respondendo "OK!" para confirmar que o protocolo foi entendido. Eles podem então proceder e enviar um para o outro strings de texto, ler o texto enviado um para o outro pela rede, e mostrar o que eles receberam nas suas telas.
+Uma conexão TCP funciona da seguinte maneira: um computador deve estar esperando, ou *ouvindo*, outros computadores que irão começar a falar com ele. Para ser capaz de escutar por diferentes tipos de comunicação ao mesmo tempo em uma única máquina, cada *ouvinte* tem um número (chamado de **porta**) associado a ele. A maioria dos protocolos especificam qual porta deve ser usada por padrão. Por exemplo, quando nós queremos mandar um email usando o protocolo SMTP, a máquina pelo qual enviaremos deve estar escutando na porta 25.
 
-Most protocols are built on top of other protocols. Our example chat protocol treats the network as a streamlike device into which you can put bits and have them arrive at the correct destination in the correct order. Ensuring those things is already a rather difficult technical problem.
+Outro computador pode então estabelecer uma conexão se conectando na máquina alvo usando o número correto da porta. Se a máquina alvo pode ser encontrada e estiver escutando esta porta, a conexão vai ser criada com sucesso. O computador ouvinte é chamado de servidor, e o computador que está se conectando é chamado de cliente.
 
-A maioria dos protocolos são feitas em cima de outros protocolos. Nosso exemplo de protocolo de chat considera a rede como um tipo de dispositivo de *stream*, no qual você pode mandar bits e enviá-los para o destino correto na ordem correta. Assegurar essas coisas atualmente é um problema técnico bastante difícil.
-
-The *Transmission Control Protocol* (TCP) is a protocol that solves this problem. All Internet-connected devices “speak” it, and most communication on the Internet is built on top of it.
-
-O TCP (Transmission Control Protocol) é um protocolo que resolve este problema. Todos os aparelhos conectados na Internet "falam" ele, e a maioria da comunicação na Internet é feita sobre ele.
-
-A TCP connection works as follows: one computer must be waiting, or *listening*, for other computers to start talking to it. To be able to listen for different kinds of communication at the same time on a single machine, each listener has a number (called a *port*) associated with it. Most protocols specify which port should be used by default. For example, when we want to send an email using the SMTP protocol, the machine through which we send it is expected to be listening on port 25.
-
-Uma conexão TCP funciona da seguinte maneira: um computador deve estar esperando, ou *ouvindo*, por outros computadores que irão começar a falar com ele. Para ser capaz de escutar por diferentes tipos de comunicação ao mesmo tempo em uma simples máquina, cada *ouvinte* tem um número associado a ele, chamado *port* ou *porta*. A maioria dos protocolos especificam qual porta deve ser usada por padrão. Por exemplo, quando nós queremos mandar um email usando o protocolo SMTP, a máquina que enviaremos isso deve estar escutando na porta 25.
-
-Another computer can then establish a connection by connecting to the target machine using the correct port number. If the target machine can be reached and is listening on that port, the connection is successfully created. The listening computer is called the *server*, and the connecting computer is called the *client*.
-
-Outro computador pode então estabelecer uma conexão se conectando a máquina alvo usando o número correto da porta. Se a máquina alvo pode ser encontrada e estiver escutando nessa porta, a conexão vai ser criada com sucesso. O computador ouvinte é chamado de *server*, ou servidor, e o computador que está se conectando é chamado *client*, ou cliente.
-
-Such a connection acts as a two-way pipe through which bits can flow—the machines on both ends can put data into it. Once the bits are successfully transmitted, they can be read out again by the machine on the other side. This is a convenient model. You could say that TCP provides an abstraction of the network.
-
-Uma conexão atua como um encanamento de via dupla pelo qual bits podem ser enviados às máquinas nas duas extremidades contendo dados. Uma vez que os bits tenham sido transmitidos com sucesso, eles podem ser lidos novamente pela máquina do outro lado. Isso é um modelo conveniente. Você pode dizer que o TCP fornece uma abstração de uma rede.
+Uma conexão atua como um encanamento de via dupla pelo qual bits podem ser transitados às máquinas nas duas extremidades contendo dados. Uma vez que os bits tenham sido transmitidos com sucesso, eles podem ser lidos novamente pela máquina do outro lado. Isso é um modelo conveniente. Você pode dizer que o TCP fornece uma abstração de uma rede.
 
 ## The Web
 ## A Web

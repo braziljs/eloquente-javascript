@@ -36,33 +36,29 @@ A informação enviada pelo cliente é chamada de requisição (_request_) e ini
 GET /17_http.html HTTP/1.1
 ```
 
-A primeira palavra é o metodo do 'request'. GET significa que nós queremos obter o uma determinada informação. Outros metodos comuns são DELETE, para deletar alguma informação, PUT para substitui-la e POST para enviar uma informação. Fique atento para o fato de que o servidor não precisa, necessáriamente, executar todo pedido que recebe. Se você for for a um site qualquer e executar um 'request' de DELETE de sua página principal, este 'request' provavelmente será recusado.
+A primeira palavra é o _método_ da requisição. `GET` significa que queremos acessar o recurso em questão. Outros métodos comuns são `DELETE` para deletar um recurso, `PUT` para substituí-lo e `POST` para enviar uma informação. Note que o servidor não é obrigado a processar todas as requisições que receber. Se você acessar um website aleatório e fizer uma requisição `DELETE` em sua página principal, ele provavelmente irá recusar essa ação.
 
-A parte após o nome do metodo é o caminho do recurso que o 'request' se aplica. Na hipótese mais simples, o recurso é simplesmente um arquivo no servidor, mas o protocolo (HTTP) não requer que o recurso seja necessáriamente um arquivo. Um recurso pode ser qualquer coisa passível de ser transferida como um arquivo. Muitos servidores geram respostas na medida em que são solicitados. Por exemplo, se você abrir twitter.com/marinjnjh, o servidor irá procurar em sua base de dados por um usuário chamado marijnjh, e se achar um, irá gerar a página de perfil para esse usuário.
+A parte após o nome do método é o caminho do recurso ao qual a requisição está sendo aplicada. No caso mais simples, um recurso é simplesmente um arquivo no servidor, entretanto, o protocolo não requer que o recurso seja necessariamente um arquivo. Um recurso pode ser qualquer coisa que possa ser transferida _como se fosse_ um arquivo. Muitos servidores geram as respostas na medida em que são solicitados. Por exemplo, se você acessar [twitter.com/marijnjh](https://twitter.com/marijnjh), o servidor irá procurar em seu banco de dados por um usuário chamado _marijnjh_ e, se encontrá-lo, irá gerar a página de perfil desse usuário.
 
-Após o caminho do recurso, a primeira linha do 'request' menciona o HTTP/1.1 para indicar a versão do protocolo HTTP que está sendo usada.
+Após o caminho do recurso, a primeira linha da requisição menciona `HTTP/1.1` para indicar a versão do protocolo HTTP que está sendo usada.
 
-A resposta do servidor começará com a versão sendo usada também, seguida pelo status da resposta do servidor,primeiro na forma de um código de status da resposta e em seguda por um texto legível.
-
-```sh
-
-HTTP/1.1 200 OK
+A resposta do servidor irá iniciar também com a versão, seguida pelo _status_ da resposta, representado primeiramente por um código de três dígitos e, em seguida, por um texto legível.
 
 ```
+HTTP/1.1 200 OK
+```
 
-Códigos de Status começando com 2 indicam que o 'request' foi bem sucedido. Códigos que começam com 4 significam que alguma coisa deu errado com o 'request'. 404 é provavelmente o código de resposta HTTP mais famoso e significa que o recurso procurado não foi encontrado. Códigos que começam 5 significam que um erro aconteceu no servidor e que a culpa não é do 'request'.
+Os _status code_ (códigos de _status_) que iniciam com o número 2 indicam que a requisição foi bem-sucedida. Códigos que começam com 4, indicam que houve algum problema com a requisição. O código de resposta HTTP provavelmente mais famoso é o 404, que significa que o recurso solicitado não foi encontrado. Códigos que começam com 5 indicam que houve um erro no servidor e que a culpa não é da requisição.
 
-A primeira linha do 'request' ou da resposta pode ser seguida por qualquer número de cabeçalhos. Estas são as linhas no formulário "nome:valor" que especificam informações extras sobre o 'request' ou sobre a resposta. Estes cabeçalhos são parte do exemplo de resposta a seguir:
+A primeira linha de uma requisição ou resposta pode ser seguida por qualquer quantidade de _headers_ (cabeçalhos). Eles são representados por linhas na forma de "nome: valor" que especificam informações extra sobre a requisição ou resposta. Os _headers_ abaixo fazem parte do exemplo de resposta usado anteriormente:
 
-```sh
-
+```
 Content-Length: 65585
 Content-Type: text/html
 Last-Modified: Wed, 09 Apr 2014 10:48:09 GMT
-
 ```
 
-Este trecho nos mostra o tamanho e o tipo da resposta. Neste caso, é um cocumento de HTML com 65.585 bytes. Ele mostra também quando foi a última vez que o documento foi modificado.
+Eles nos informam o tamanho e o tipo do documento da resposta. Nesse caso, é um documento HTML com 65.585 bytes. Além disso, ele nos mostra quando foi a última vez que o documento foi modificado.
 
 Na maior parta, o cliente ou servidor decidem quais cabeçalhos incluir em um 'request' ou resposta, apesar de alguns serem obrigatórios. Por exemplo, o cabeçalho do Host, que especifica o hostname, deve ser incluído em um 'request' porque um servidor pode estar servindo múltiplos hostnams em um mesmo endereço de IP, e sem este cabeçalho, o servidor não saberá qual host o cliente está tentando conversar.
 
@@ -197,7 +193,7 @@ req.send(null);
 console.log(req.responseXML.querySelectorAll("fruit").length);
 // → 3
 ```
-Documentos XML podem ser usados para trocar informação estruturada com o servidor. Suas tags-formulário aninhadas dentro de outras tags específicas capaz de armazenar a maioria dos tipos de dados, ou ao menos melhor que em arquivos de texto puro. A interface DOM é um pouco trabalhosa para extrair informação e, documentos XML tendem a ser verbosos. Normalmente é uma idéia melhor comunicar usando dados JSON, o qual é muito mais fácil de ler e escrever, tanto para programas quanto para humanos. 
+Documentos XML podem ser usados para trocar informação estruturada com o servidor. Suas tags-formulário aninhadas dentro de outras tags específicas capaz de armazenar a maioria dos tipos de dados, ou ao menos melhor que em arquivos de texto puro. A interface DOM é um pouco trabalhosa para extrair informação e, documentos XML tendem a ser verbosos. Normalmente é uma idéia melhor comunicar usando dados JSON, o qual é muito mais fácil de ler e escrever, tanto para programas quanto para humanos.
 
 ```js
 var req = new XMLHttpRequest();
@@ -242,7 +238,7 @@ O principal problema com a função <i>wrapper</i> anterior é sua manipulação
 
 Nós também devemos ter uma opção de ser notificado quando a requisição falhar para que possamos tomar uma ação apropriada. Por exemplo, podemos remover a mensagem "carregando" e informar ao usuário que algo errado aconteceu.
 
-Manusear erro em código assíncrono é ainda mais traiçoeiro que manusear erro em código síncrono. O motivo é que 
+Manusear erro em código assíncrono é ainda mais traiçoeiro que manusear erro em código síncrono. O motivo é que
 normalmente temos que procrastinar parte de nosso trabalho o colocando em uma função <i>callback</i>, o escopo de um bloco try se torna sem sentido. No seguinte código, a exceção não será pega porque a chamada para backgroundReadFile retorna imediatamente. O controle então deixa o bloco <i>try</i>, e a função que foi determinada não será chamada até mais tarde.
 
 ```js
@@ -412,7 +408,7 @@ req.addEventListener("load", function() {
 req.send(null);
 ```
 
-Programação assíncrona é traiçoeira. <i>Promises</i> são interfaces que tornam a programação assíncrona mais fácil ajudando 
+Programação assíncrona é traiçoeira. <i>Promises</i> são interfaces que tornam a programação assíncrona mais fácil ajudando
 a rotear condições de erro e exceções para o manuseador correto e abstraindo alguns elementos repetitivos e tendentes a erro neste estilo de programação.
 
 Exercícios

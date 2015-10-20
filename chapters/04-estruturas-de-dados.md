@@ -176,7 +176,6 @@ var journal = [
 ## Mutabilidade
 
 Nós iremos chegar a programação real em breve, eu prometo. Mas primeiro há ainda uma última parte de teoria a se compreender.
-We've seen that object
 
 Nós vimos que valores de objetos podem ser modificados. Os tipos de valores discutidos em capítulos anteriores, como _numbers_, _strings_ e _booleanos_, são todos imutáveis - é impossível mudar o valor existente desses tipos. Você pode combiná-los e criar novos valores deles, mas quando você pega um valor específico de string, esse valor irá sempre continuar o mesmo. O texto dentro não pode ser modificado. Se você tem a referência a uma string que contém 'cat', não é possível outro código mudar um caractere naquela string para fazê-la ser ser 'rat'.
 

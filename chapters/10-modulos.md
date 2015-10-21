@@ -161,11 +161,11 @@ Para isso nós precisamos de pelo menos duas coisas. Primeiramente, nós vamos i
 
 Em segundo lugar, nós precisamos de ser capazes, quando tivermos uma string contendo o código (lida do arquivo), de realmente executar o código como um programa JavaScript.
 
-## Evaluating data as code
+## Avaliando dados como código
 
-There are several ways to take data (a string of code) and run it in the context of the current program.
+Existem várias formas de se pegar dados (uma `string` de código) e rodá-los no contexto do programa atual.
 
-The most obvious is the special standard operator eval, which will execute a string of code in the current scope. That is usually a rather bad idea, because it breaks some of the sane properties that scopes normally have (being isolated from the outside world, most notably).
+A mais óbvia maneira é o operador padrão especial `eval`, que vai executar a string de código no escopo atual. Isso usualmente é uma ideia muito ruim, porque quebra algumas propriedades que escopos normalmente tem (ser isolado do mundo externo é a mais notável).
 
 ```
 function evalAndReturnX(code) {
@@ -177,7 +177,7 @@ console.log(evalAndReturnX("var x = 2"));
 // → 2
 ```
 
-A better way of converting data into program is to use the Function constructor. This takes as arguments first a string containing a comma-separated list of argument names, and then a string containing the function’s body.
+A melhor forma de converter dados dentro do programa é usar uma função construtora. Ela recebe como argumentos uma lista de nomes de argumentos separados por vírgula, e então uma string contendo o corpo da função.
 
 ```
 var plusOne = new Function("n", "return n + 1;");
@@ -185,7 +185,7 @@ console.log(plusOne(4));
 // → 5
 ```
 
-This is precisely what we need—we can wrap the code for a module in a function, with that function’s scope becoming our module scope.
+Isso é precisamente o que precisamos - podemos encapsular o código para um módulo em uma função, com este escopo de função se tornando nosso escopo de módulo.
 
 ## Require
 

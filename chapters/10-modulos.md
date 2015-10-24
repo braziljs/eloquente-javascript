@@ -189,7 +189,7 @@ Isso é precisamente o que precisamos - podemos encapsular o código para um mó
 
 ## Require
 
-If the new Function constructor, used by our module loader, wraps the code in a function anyway, we can omit the actual wrapping namespace function from the files itself. We will also make exports an argument to the module function, so that the module does not have to declare it. That removes a lot of the superfluous noise from our example module:
+Se a nova função construtora, usada pelo nosso módulo de carregamento, encapsula o código em uma função de qualquer forma, nós podemos omitir a função *namespace* encapsuladora atual dos arquivos. Nós também vamos fazer `exports` um argumento à função módulo, então o módulo não precisará de declarar isso. Isso remove um monte de barulho supérfluo do nosso módulo de exemplo:
 
 ```
 var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
@@ -203,7 +203,7 @@ exports.number = function(name) {
 };
 ```
 
-The following is a very minimal implementation of require:
+Essa é uma implementação mínima de `require`:
 
 ```
 function require(name) {
@@ -217,7 +217,7 @@ console.log(require("weekDay").name(1));
 // → Monday
 ```
 
-When using this system, a module typically starts with a few variable declarations that load the modules it depends on.
+Quando usando este sistema, um módulo tipicamente começa com pequenas declarações de variáveis que carregam os módulos que ele precisa.
 
 ```
 var weekDay = require("weekDay");
@@ -226,13 +226,13 @@ var today = require("today");
 console.log(weekDay.name(today.dayNumber()));
 ```
 
-The simplistic implementation of require given above has several problems. For one, it will load and run a module every time it is require-d, so if several modules have the same dependency, or a require call is put inside of a function that will be called multiple times, time and energy will be wasted.
+A implementação de require acima tem diversos problemas. Primeiro, ela vai carregar e rodar um módulo todas as vezes que este for "require-d" (requisitado), então se diversos módulos têm a mesma dependência, ou uma chamada require é colocada dentro de uma função que vai ser chamada múltiplas vezes, tempo e energia serão disperdiçados.
 
-This can be solved by storing the modules that have already been loaded in an object, and simply returning the existing value if they are loaded again.
+Isso pode ser resolvido armazenando os módulos que já tenham sido carregados em um objeto, e simplesmente retornando o valor existente se eles forem carregados novamente.
 
-The second problem is that it is not possible for a module to directly export a single value. For example, a module might want to only export the constructor of the object type it defines. Right now, it can not do that, because require always uses the exports object it creates as the exported value.
+O segundo problema é que não é possível para um módulo expor diretamente um valor simples. Por exemplo, um módulo pode querer exportar apenas o construtor do tipo do objeto que ele define. Por agora, isso não pode ser feito, porque `require` sempre vai usar o objeto `exports` que ele cria como o valor exportado.
 
-The traditional solution for this is to provide another variable, module, which is an object that has a property exports. This property initially points at the empty object created by require, but can be overwritten with another value in order to export something else.
+A solução tradicional para isso é fornecer outra variável, `module`, que é um objeto que tem a propriedade `exports`. Essa propriedade inicialmente aponta para o objeto vazio criado por require, mas pode ser sobrescrita com outro valor para exportar algo a mais.
 
 ```
 function require(name) {
@@ -249,9 +249,9 @@ function require(name) {
 require.cache = Object.create(null);
 ```
 
-We now have a module system that uses a single global variable (require) to allow modules to find and use each other without going through the global scope.
+Agora temos um sistema de módulo que usa uma simples variável global (`require`) para permitir que módulos encontrem e usem um ao outro sem ter que ir para o escopo global.
 
-This style of module system is called CommonJS Modules, after the pseudo-standard that first specified it. It is built into the node.js system. Real implementations do a lot more than the example I showed. Most importantly, they have a much more intelligent way of going from a module name to an actual piece of code, allowing both relative paths and “globally” registered module names.
+Este estilo de sistema de módulos é chamado "Módulos CommonJS", após o pseudo-padrão que o implementou pela primeira vez. Ele também é feito dentro do Node.js. Implementações reais fazem bem mais do que o exemplo que eu mostrei. Mais importante, eles tem uma forma muito mais inteligente de ir de um nome de módulo para uma parte de código real, permitindo ambos caminhos relativos e nomes de módulos registrados "globalmente".
 
 ## Slow-loading modules
 

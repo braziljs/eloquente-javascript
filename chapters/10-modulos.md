@@ -253,9 +253,9 @@ Agora temos um sistema de módulo que usa uma simples variável global (`require
 
 Este estilo de sistema de módulos é chamado "Módulos CommonJS", após o pseudo-padrão que o implementou pela primeira vez. Ele também é feito dentro do Node.js. Implementações reais fazem bem mais do que o exemplo que eu mostrei. Mais importante, eles tem uma forma muito mais inteligente de ir de um nome de módulo para uma parte de código real, permitindo ambos caminhos relativos e nomes de módulos registrados "globalmente".
 
-## Slow-loading modules
+## Carregando módulos lentamente
 
-Though it is possible to use the style above in JavaScript written for the browser, it is somewhat involved. The reason for this is that reading a file (module) from the web is a lot slower than reading it from your hard disk. Browser JavaScript is required to behave in such a way that, while a script is running, nothing else can happen to the web site in which it runs. This means that if every require call would go and load something from some far-away web server, the page would freeze for a painfully long time during startup.
+Embora seja possível usar a técnica acima para carregar JavaScript no navegador, isso é um pouco complicado. A razão para isso é que ler um arquivo (módulo) na web é muito mais lento que ler este mesmo arquivo do seu disco rígido. JavaScript no navegador é obrigado a se comportar de tal forma que, enquanto um script esteja rodando, nada mais pode acontecer no site que ele está rodando. Isso significa que se todas as chamadas `require` carregarem algo em algum servidor web distante, a página vai ficar congelada por um doloroso longo período durante sua inicialização.
 
 There are ways to work around this, for example by running another program (such as Browserify) on your program in advance, which would gather all the dependencies by looking for calls to require, and put everything together in a big file.
 

@@ -257,11 +257,11 @@ Este estilo de sistema de módulos é chamado "Módulos CommonJS", após o pseud
 
 Embora seja possível usar a técnica acima para carregar JavaScript no navegador, isso é um pouco complicado. A razão para isso é que ler um arquivo (módulo) na web é muito mais lento que ler este mesmo arquivo do seu disco rígido. JavaScript no navegador é obrigado a se comportar de tal forma que, enquanto um script esteja rodando, nada mais pode acontecer no site que ele está rodando. Isso significa que se todas as chamadas `require` carregarem algo em algum servidor web distante, a página vai ficar congelada por um doloroso longo período durante sua inicialização.
 
-There are ways to work around this, for example by running another program (such as Browserify) on your program in advance, which would gather all the dependencies by looking for calls to require, and put everything together in a big file.
+Existem maneiras de se trabalhar isso, por exemplo, rodando outro programa (como o Browserify) em seu programa antes, que irá concatenar todas as dependências olhando todas as chamadas `require`, e colocando-as em juntas em um grande arquivo.
 
-Another solution to wrap your module in a function, load the modules it depends on in the background, and only run this function when all its dependencies have been loaded. That is what the “Asynchronous Module Definition” (AMD) style of module system does.
+Outra solução é encapsular seu módulo em uma função, carregar os módulos que ela depende em segundo plano, e apenas rodas essa função quando todas suas dependências forem carregadas. Isso é o que o sistema de módulos AMD ("Asynchronous Module Definition") faz.
 
-Our trivial program with dependencies, in AMD, would looks like this:
+Nosso programa trivial com dependências, em AMD, se parece com isso:
 
 ```
 define(["weekDay", "today"], function(weekDay, today) {
@@ -269,9 +269,9 @@ define(["weekDay", "today"], function(weekDay, today) {
 });
 ```
 
-The define function is the central concept in this approach. It takes first an array of module names, and then a function that takes one argument for each dependency. It will load the dependencies (if they haven’t already been loaded) in the background, allowing the page to continue working while it is waiting. Once all dependencies are loaded, it will call the function it was given, with the interfaces of those dependencies as arguments.
+A função `define` é o conceito central nessa abordagem. Ela primeiro recebe um array com nomes de módulos, e então uma função que recebe um argumento para cada dependência. Ela vai carregar as dependências (se elas ainda não tiverem sido carregadas) em segundo plano, permitindo que a página continue a trabalhar em quanto está esperando. Uma vez que todas as dependências estejam carregadas, ela vai carregar a função que foi passada, com as interfaces das dependências como argumentos.
 
-The modules that are loaded this way must themselves contain a call to define. The value used as their interface is whatever was returned by the function that is the second argument in this call. Here is the weekDay module again.
+Os módulos que são carregados dessa forma devem conter uma chamada a `define`. O valor usado para sua interface é qualquer valor retornado pela função que é o segundo argumento passado nessa chamada. Aqui está o módulo `weekDay` de novo.
 
 ```
 define([], function() {

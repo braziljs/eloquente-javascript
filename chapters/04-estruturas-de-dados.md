@@ -40,7 +40,7 @@ console.log(listOfNumbers[1 - 1]);
 // → 2
 ```
 
-A notação para a obtenção de elementos dentro de uma matriz também usa colchetes. Um par de colchetes, imediatamente após uma expressão, com uma expressão dentro deles, vai procurar o elemento da expressão à esquerda que corresponde ao índice determinado pela expressão entre colchetes.
+A notação para a obtenção de elementos dentro de uma _array_ também usa colchetes. Um par de colchetes, imediatamente após uma expressão, com uma expressão dentro deles, vai procurar o elemento da expressão à esquerda que corresponde ao índice determinado pela expressão entre colchetes.
 
 O primeiro índice de um _array_ é o zero, e não um. Assim, o primeiro elemento pode ser lido como: `listOfNumbers[0]`. Se você não tem experiência com a programação, isso pode levar algum tempo para se acostumar. Contagem baseada em zero tem uma longa tradição na tecnologia e, desde que essa convenção é constantemente seguida (o que ela é, em JavaScript), ela funciona muito bem.
 
@@ -55,7 +55,7 @@ null.length;
 // → TypeError: Cannot read property 'length' of null
 ```
 
-Os dois modos mais comuns de acessar propriedades em JavaScript são com ponto e colchetes. Ambos _value.index_ e _value[index]_ acessam uma propriedade em _value_, mas não necessariamente a mesma propriedade. A diferença está em como _index_ é interpretada. Ao usar um ponto, a parte após o ponto (que deve ser um nome de variável válido) acessa diretamente o nome da propriedade. Ao usar colchetes, o _índex_ é tratado como uma expressão que é avaliada para obter o nome da propriedade. Considerando que _value.index_ busca a propriedade chamada _"index"_, o _value[index]_ tenta obter o valor da variável chamada _índex_ e então usa isso como o nome da propriedade.
+_Arrays_ também tem uma propriedade length, mantendo a quantidade de elementos no _array_. Na verdade, os elementos no _array_ também são acessados por meio de propriedades. Ambos `value.index` e `value[index]` acessam uma propriedade em value. A diferença está em como _index_ é interpretada. Ao usar um ponto, a parte após o ponto (que deve ser um nome de variável válido) acessa diretamente o nome da propriedade. Ao usar colchetes, o _index_ é tratado como uma expressão que é avaliada para obter o nome da propriedade. Considerando que `value.index` busca a propriedade chamada "index", `value[index]` tenta obter o valor da variável chamada _index_, e usa isso como o nome da propriedade.
 
 Então, se você sabe que a propriedade que você está interessado se chama "length", você diz value.length. Se você deseja extrair a propriedade nomeada pelo valor mantido na variável _i_, você diz _value[i]_. E, finalmente, se você quiser acessar uma propriedade denominada _"0"_ ou _"John Doe"_ (nomes de propriedade pode ser qualquer string), estes não são os nomes de variáveis válidos, então você é forçado a usar colchetes, como em _value[0]_ ou _value["John Doe"]_, mesmo que você saiba o nome preciso da propriedade com antecedência.
 
@@ -71,7 +71,7 @@ console.log(doh.toUpperCase());
 // → DOH
 ```
 
-Toda string têm uma propriedade _toUpperCase_ (para caixa alta). Quando chamada, ela irá retornar uma cópia da string, onde todas as letras serão convertidas em maiúsculas. Existe também a _toLowerCase_ (para caixa baixa). Você pode adivinhar o que ela faz.
+Toda _string_ tem uma propriedade `toUpperCase`. Quando chamada, ela irá retornar uma cópia da _string_, onde todas as letras serão convertidas em maiúsculas. Existe também a `toLowerCase`. Você pode adivinhar o que ela faz.
 
 Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma tem acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no [Capítulo 6](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/06-a-vida-secreta-dos-objetos.md).
 
@@ -97,7 +97,7 @@ O método `push` pode ser usado para adicionar valores ao final de um array. O m
 
 ## Objetos
 
-Voltamos ao _esquilo-lobo_. Um conjunto de entradas de log diários pode ser representado como um array. Mas as entradas não são compostas por apenas um número ou uma sequência de cada entrada, precisa armazenar uma lista de atividades e um valor booleano que indica se Jaques transformou-se em um esquilo. A representação prática precisa agrupar esses valores juntos em um único valor, e em seguida, colocar esses valores agrupados em um array de entradas.
+Voltamos ao _esquilo-lobo_. Um conjunto de entradas de log diários pode ser representado como um _array_. Mas as entradas não são compostas por apenas um número ou uma sequência de cada entrada, é preciso armazenar uma lista de atividades e um valor booleano que indica se Jaques transformou-se em um esquilo. A representação prática precisa agrupar esses valores juntos em um único valor e, em seguida, colocar esses valores agrupados em um _array_ de entradas.
 
 Valores do tipo _objeto_ são coleções arbitrárias de propriedades, que podem  adicionar propriedades a (e remover propriedades de) o que quisermos. Uma maneira de criar um objeto é usando uma notação com chaves:
 
@@ -129,7 +129,7 @@ var descriptions = {
 
 Lendo uma propriedade que não existe irá produzir o valor undefined.
 
-Voltando brevemente ao nosso modelo "tentáculo" de associações de variáveis - associações de propriedades são semelhantes. Eles recebem valores, mas outras variáveis e propriedades podem estar recebendo os mesmos valores. Então, agora você pode começar a pensar em objetos como polvos com qualquer número de tentáculos, cada um dos quais tem um nome inscrito nele.
+Voltando brevemente ao nosso modelo "tentáculo" de associações de variáveis - associações de propriedades são semelhantes. Eles recebem valores, mas outras variáveis e propriedades podem estar recebendo os mesmos valores. Então, agora você pode começar a pensar em objetos como polvos, com qualquer número de tentáculos, cada um dos quais tem um nome inscrito nele.
 
 ![A representação artística de um objeto](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/octopus-object.jpg)
 
@@ -148,7 +148,7 @@ console.log("right" in anObject);
 // → true
 ```
 
-O operador binário `in`, quando aplicado à uma string e um objeto, retorna um valor booleano que indica se aquele objeto tem aquela propriedade. A diferença entre configurar uma propriedade para `undefined` e realmente excluí-la, é que, no primeiro caso, o objeto continua com a propriedade (ela simplesmente não tem um valor muito interessante), enquanto que, no segundo caso a propriedade não está mais presente e retornará `false`.
+O operador binário `in`, quando aplicado à uma _string_ e a um objeto, retorna um valor booleano que indica se aquele objeto tem aquela propriedade. A diferença entre configurar uma propriedade para `undefined` e realmente excluí-la, é que, no primeiro caso, o objeto continua com a propriedade (ela simplesmente não tem um valor muito interessante), enquanto que, no segundo caso a propriedade não está mais presente e retornará `false`.
 
 Arrays, então, são apenas um tipo de objeto especializado para armazenar sequência de coisas. Se você avaliar `typeof [1, 2]`, isto retorna `object`.  Eu acho que você pode vê-los como tentáculos longos e planos, com todas as suas armas em linha, rotuladas com números.
 
@@ -177,7 +177,7 @@ Nós iremos chegar a programação real em breve, eu prometo. Mas, primeiro, um 
 
 Temos visto que os valores de objeto podem ser modificados. Os tipos de valores discutidos nos capítulos anteriores são todos imutáveis, é impossível alterar um valor existente desses tipos. Você pode combiná-los e obter novos valores a partir deles, mas quando você toma um valor específico de string, esse valor será sempre o mesmo. O texto dentro dele não pode ser alterado. Com objetos, por outro lado, o conteúdo de um valor pode ser modificado alterando as suas propriedades.
 
-Quando temos dois números, 120 e 120, que podem, se eles se referem aos mesmos bits físicos ou não, serem considerados os mesmos números precisos. Com objetos, existe uma diferença entre ter duas referências para o mesmo objeto e tendo dois objetos diferentes que contêm as mesmas propriedades. Considere o seguinte código:
+Quando temos dois números, 120 e 120, que podem ser considerados os mesmos números precisos, querendo ou não, eles se referem aos mesmos bits físicos. Com objetos, existe uma diferença entre ter duas referências para o mesmo objeto e ter dois objetos diferentes que contêm as mesmas propriedades. Considere o seguinte código:
 
 ```js
 var object1 = {value: 10};
@@ -196,9 +196,9 @@ console.log(object3.value);
 // → 10
 ```
 
-object1 e object2 são duas variáveis que recebem o mesmo valor. Há apenas um objeto real, por que mudar object1 também altera o valor de object2. A variável object3 aponta para um outro objeto, que inicialmente contém as mesmas propriedades que object1 mas vive uma vida separada.
+object1 e object2 são duas variáveis que recebem o mesmo valor. Há apenas um objeto real, é por isso que quando o valor de object1 é mudado o valor de object2 também será alterado. A variável object3 aponta para um outro objeto, que inicialmente contém as mesmas propriedades que object1 mas vive uma vida separada.
 
-O operador `==` de JavaScript, quando se comparamos objetos, retornará verdadeiro somente se ambos os valores que lhe são atribuídas são o mesmo valor preciso. Comparando diferentes objetos com conteúdos idênticos retornará false. Não há nenhuma operação de comparação "profunda" construída em JavaScript, mas é possível você mesmo escrevê-la (que será um dos [exercícios - @TODO - ADICIONAR LINK]() no final deste capítulo).
+O operador `==` de JavaScript, quando se comparamos objetos, retornará verdadeiro somente se ambos os valores que lhe são atribuídas são o mesmo valor preciso. Comparando diferentes objetos com conteúdos idênticos retornará `false`. Não há nenhuma operação de comparação "profunda" construída em JavaScript, mas é possível você mesmo escrevê-la (que será um dos [exercícios](#comparação-profunda) no final deste capítulo).
 
 ## O log do lobisomem
 
@@ -244,7 +244,7 @@ n11n00 - n10n01
 
 A notação n01 indica o número de ocorrências na qual a primeira variável (squirrelness) é falsa (0) e a segunda variável (pizza) é verdadeira (1). Nesse exemplo, n01 é igual a 9.
 
-O valor n1• se refere à soma de todas as ocorrências em que a primeira variável é verdadeira, que no caso do exemplo da tabela é 5. Da mesma forma, n•0 se refere à soma de todas as ocorrências na qual a segunda variável é falsa.
+O valor n1• se refere à soma de todas as ocorrências em que a primeira variável é verdadeira, que no caso do exemplo da tabela é 5. Da mesma forma, `n•0` se refere à soma de todas as ocorrências na qual a segunda variável é falsa.
 
 Portanto, para a tabela de pizzas, a parte de cima da divisão da linha (o dividendo) seria 1×76 - 4×9 = 40, e a parte de baixo (o divisor) seria a raiz quadrada de 5×85×10×80, ou √340000. Esse cálculo nos resulta em ϕ ≈ 0.069, o que é um valor bem pequeno. Comer pizza parece não ter influência nas transformações.
 

@@ -71,11 +71,11 @@ console.log(doh.toUpperCase());
 // → DOH
 ```
 
-Toda string têm uma propriedade _toUpperCase_ (para caixa alta). Quando chamada, ela irá retornar uma cópia da string, onde todas as letras serão convertidas em maiúsculas. Existe também a _toLowerCase_ (para caixa baixa). Você pode adivinhar o que ela faz.
+Toda string têm uma propriedade `toUpperCase` (para caixa alta). Quando chamada, ela irá retornar uma cópia da string, onde todas as letras serão convertidas em maiúsculas. Existe também a `toLowerCase` (para caixa baixa). Você pode adivinhar o que ela faz.
 
-Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma tem acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no [Capítulo 6](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/06-a-vida-secreta-dos-objetos.md).
+Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma tem acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no [Capítulo 6](./06-a-vida-secreta-dos-objetos).
 
-As propriedades que contêm funções são geralmente chamadas _métodos_ do valor a que pertencem. Tal como toUpperCase é um método de uma string.
+As propriedades que contêm funções são geralmente chamadas _métodos_ do valor a que pertencem. Tal como `toUpperCase()` é um método de uma string.
 
 Este exemplo demonstra alguns métodos que os objetos do tipo array contém:
 
@@ -97,9 +97,9 @@ O método `push` pode ser usado para adicionar valores ao final de um array. O m
 
 ## Objetos
 
-Voltamos ao _esquilo-lobo_. Um conjunto de entradas de log diários pode ser representado como um array. Mas as entradas não são compostas por apenas um número ou uma sequência de cada entrada, precisa armazenar uma lista de atividades e um valor booleano que indica se Jaques transformou-se em um esquilo. A representação prática precisa agrupar esses valores juntos em um único valor, e em seguida, colocar esses valores agrupados em um array de entradas.
+De volta ao esquilo-lobo. Um conjunto de entradas de log diários pode ser representado como um array. Mas as entradas não são compostas por apenas um número ou uma sequência de cada entrada, precisa armazenar uma lista de atividades e um valor booleano que indica se Jaques se transformou em um esquilo. A representação prática precisa agrupar esses valores juntos em um único valor e, em seguida, colocar esses valores agrupados em um array de entradas.
 
-Valores do tipo _objeto_ são coleções arbitrárias de propriedades, que podem  adicionar propriedades a (e remover propriedades de) o que quisermos. Uma maneira de criar um objeto é usando uma notação com chaves:
+Valores do tipo objeto (_object_) são coleções arbitrárias de propriedades, e nós podemos adicionar ou remover estas propriedades como quisermos. Uma maneira de criar um objeto é usando uma notação com chaves:
 
 ```js
 var day1 = {
@@ -116,7 +116,7 @@ console.log(day1.wolf);
 // → false
 ```
 
-Dentro das chaves, podemos passar uma lista de propriedades, escrito como um nome seguido por dois pontos e uma expressão que fornece um valor para a propriedade. Os espaços e quebras de linha não são novamente significativos. Quando um objeto se estende por várias linhas, indentá-lo como temos vindo a indentar blocos de código ajuda na legibilidade. Propriedades cujos nomes não são válidos, nomes de variáveis ou números válidos têm de ser colocados entre aspas.
+Dentro das chaves, podemos passar uma lista de propriedades, escrito como um nome seguido por dois pontos e uma expressão que fornece um valor para a propriedade. Os espaços e quebras de linha não são significativos. Quando um objeto se estende por várias linhas, indentá-lo como temos vindo a indentar blocos de código ajuda na legibilidade. Propriedades cujos nomes não são nomes de variáveis válidos ou numéros têm de ser escritas entre aspas.
 
 ```js
 var descriptions = {
@@ -125,15 +125,17 @@ var descriptions = {
 };
 ```
 
-É possível atribuir um valor a uma expressão de propriedade com o operador '='. Isso irá substituir o valor da propriedade, se ele já existia, ou criar uma nova propriedade sobre o objeto se ele não o fez.
+Isso significa que chaves têm dois significados em JavaScript. No começo de um comando eles iniciam um bloco de comandos. Em qualquer outra posição, descrevem um objeto.
 
-Lendo uma propriedade que não existe irá produzir o valor undefined.
+Lendo uma propriedade que não existe irá produzir valor indefinido (_undefined_), o que acontece se tentarmos acessar a propriedade `wolf` no último exemplo.
 
-Voltando brevemente ao nosso modelo "tentáculo" de associações de variáveis - associações de propriedades são semelhantes. Eles recebem valores, mas outras variáveis e propriedades podem estar recebendo os mesmos valores. Então, agora você pode começar a pensar em objetos como polvos com qualquer número de tentáculos, cada um dos quais tem um nome inscrito nele.
+É possível atribuir um valor a uma expressão de propriedade com o operador "=". Eles vão substituir o valor da propriedade se o valor já existir ou criar uma nova propriedade em caso contrário.
+
+Para voltar brevemente ao nosso modelo "tentáculo" de associações de variáveis, as associações de propriedades são semelhantes. Eles recebem valores, mas outras variáveis e propriedades podem estar recebendo os mesmos valores. Então, agora você pode começar a pensar em objetos como polvos com qualquer número de tentáculos, cada um dos quais tem um nome escrito nele.
 
 ![A representação artística de um objeto](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/octopus-object.jpg)
 
-Para cortar uma tal perna - removendo uma propriedade de um objeto - o operador `delete` pode ser usado. Este é um operador unário que, quando aplicado a uma expressão de acesso a propriedade, irá remover a propriedade nomeada a partir do objeto. (O que não é uma coisa muito comum de se fazer na prática, mas é permitido.)
+O operador `delete` corta um tentáculo de nosso polvo. Ele é um operador unário que, quando aplicado a uma expressão de acesso a propriedade, irá remover a dita propriedade do objeto. Não é algo comum de ser feito, mas é possível.
 
 ```js
 var anObject = {left: 1, right: 2};
@@ -148,13 +150,13 @@ console.log("right" in anObject);
 // → true
 ```
 
-O operador binário `in`, quando aplicado à uma string e um objeto, retorna um valor booleano que indica se aquele objeto tem aquela propriedade. A diferença entre configurar uma propriedade para `undefined` e realmente excluí-la, é que, no primeiro caso, o objeto continua com a propriedade (ela simplesmente não tem um valor muito interessante), enquanto que, no segundo caso a propriedade não está mais presente e retornará `false`.
+O operador binário `in`, quando aplicado a uma string e um objeto, retorna um valor booleano indicando se aquele objeto tem aquela propriedade. A diferença entre configurar uma propriedade para `undefined` e realmente excluí-la é que, no primeiro caso, o objeto continua com a propriedade (ela simplesmente não tem um valor muito interessante), enquanto que, no segundo caso, a propriedade não está mais presente e retornará `false`.
 
-Arrays, então, são apenas um tipo de objeto especializado para armazenar sequência de coisas. Se você avaliar `typeof [1, 2]`, isto retorna `object`.  Eu acho que você pode vê-los como tentáculos longos e planos, com todas as suas armas em linha, rotuladas com números.
+Arrays, então, são apenas um tipo de objeto especializado para armazenar sequência de coisas. Se você avaliar `typeof [1, 2]`, isto retorna `object`.  Eu acho que você pode vê-los como tentáculos longos e planos, com todos os seus braços em linha, rotuladas com números.
 
 ![A representação artística de um array](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/octopus-array.jpg)
 
-A representação desejada do jornal de Jaques é, portanto, um array de objetos.
+Então nós podemos representar o diário de Jaques como um array de objetos.
 
 ```js
 var journal = [
@@ -173,9 +175,11 @@ var journal = [
 
 ## Mutabilidade
 
-Nós iremos chegar a programação real em breve, eu prometo. Mas, primeiro, um pouco mais de teoria.
+Nós iremos chegar a programação real em breve, eu prometo. Mas primeiro há ainda uma última parte de teoria a se compreender.
 
-Temos visto que os valores de objeto podem ser modificados. Os tipos de valores discutidos nos capítulos anteriores são todos imutáveis, é impossível alterar um valor existente desses tipos. Você pode combiná-los e obter novos valores a partir deles, mas quando você toma um valor específico de string, esse valor será sempre o mesmo. O texto dentro dele não pode ser alterado. Com objetos, por outro lado, o conteúdo de um valor pode ser modificado alterando as suas propriedades.
+Nós vimos que valores de objetos podem ser modificados. Os tipos de valores discutidos em capítulos anteriores, como _numbers_, _strings_ e _booleanos_, são todos imutáveis - é impossível mudar o valor existente desses tipos. Você pode combiná-los e criar novos valores deles, mas quando você pega um valor específico de string, esse valor irá sempre continuar o mesmo. O texto dentro não pode ser modificado. Se você tem a referência a uma string que contém 'cat', não é possível outro código mudar um caractere naquela string para fazê-la ser ser 'rat'.
+
+Com _object_, por outro lado, o conteúdo de um valor pode ser modificado ao alterar suas propriedades.
 
 Quando temos dois números, 120 e 120, que podem, se eles se referem aos mesmos bits físicos ou não, serem considerados os mesmos números precisos. Com objetos, existe uma diferença entre ter duas referências para o mesmo objeto e tendo dois objetos diferentes que contêm as mesmas propriedades. Considere o seguinte código:
 

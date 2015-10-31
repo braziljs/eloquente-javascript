@@ -73,7 +73,7 @@ console.log(doh.toUpperCase());
 
 Toda string têm uma propriedade `toUpperCase` (para caixa alta). Quando chamada, ela irá retornar uma cópia da string, onde todas as letras serão convertidas em maiúsculas. Existe também a `toLowerCase` (para caixa baixa). Você pode adivinhar o que ela faz.
 
-Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma tem acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no <a href="06-a-vida-secreta-dos-objetos.md">Capítulo 6</a>.
+Curiosamente, mesmo que a chamada para toUpperCase não passe nenhum argumento, a função de alguma forma tem acesso à string "Doh", cujo valor é uma propriedade. Como isso funciona exatamente é descrito no [Capítulo 6](./06-a-vida-secreta-dos-objetos).
 
 As propriedades que contêm funções são geralmente chamadas _métodos_ do valor a que pertencem. Tal como `toUpperCase()` é um método de uma string.
 
@@ -127,7 +127,7 @@ var descriptions = {
 
 Isso significa que chaves têm dois significados em JavaScript. No começo de um comando eles iniciam um bloco de comandos. Em qualquer outra posição, descrevem um objeto.
 
-Lendo uma propriedade que não existe irá produzir o valor _undefined_, o que acontece se tentarmos acessar a propriedade 'wolf' no último exemplo.
+Lendo uma propriedade que não existe irá produzir valor indefinido (_undefined_), o que acontece se tentarmos acessar a propriedade `wolf` no último exemplo.
 
 É possível atribuir um valor a uma expressão de propriedade com o operador "=". Eles vão substituir o valor da propriedade se o valor já existir ou criar uma nova propriedade em caso contrário.
 

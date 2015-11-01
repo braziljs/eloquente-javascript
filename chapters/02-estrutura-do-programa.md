@@ -123,7 +123,7 @@ Mostrar uma caixa de diálogo ou escrever texto na tela é um efeito colateral. 
 console.log(Math.max(2, 4));
 ```
 
-Quando uma função produz um valor, é dito que ela *retorna* (`return`) ele. Em JavaScript, tudo que produz um valor é uma expressão em JavaScript, o que significa que chamadas de função podem ser usadas dentro de expressões maiores. Por exemplo, a função `Math.max` recebe qualquer quantidade de valores numéricos e retorna o maior deles.
+Quando uma função produz um valor, é dito que ela _retorna_ (`return`) ele. Em JavaScript, tudo que produz um valor é uma expressão, o que significa que chamadas de função podem ser usadas dentro de expressões maiores. No exemplo abaixo, uma chamada para a função `Math.min`, que é o oposto de `Math.max`, é usada como uma das entradas para o operador de soma:
 
 ```javascript
 console.log(Math.min(2, 4) + 100);

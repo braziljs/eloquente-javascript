@@ -157,11 +157,11 @@ O navegador irá automaticamente adicionar alguns cabeçalhos da requisição, t
 
 Nos exemplos que vimos, a requisição finaliza quando a chamada ao método `send` retorna. Isso é conveniente pois significa que as propriedades como `responseText` ficam disponíveis imediatamente. Por outro lado, o nosso programa fica aguardando enquanto o navegador e o servidor estão se comunicando. Quando a conexão é ruim, o servidor lento ou o arquivo é muito grande, o processo pode demorar um bom tempo. Ainda pior, devido ao fato de que nenhum manipulador de evento pode ser disparado enquanto nosso programa está aguardando, todo o documento ficará não responsivo.
 
-Se passarmos true como terceiro argumento para o método open, a requisição é assíncrona. Isto significa que podemos chamar o método send, a única coisa que acontece imediatamente é que a requisição fica agendada para ser enviada. Nosso programa pode continuar e o browser cuidará do envio e do recebimento dos dados em segundo plano.
+Se passarmos `true` como terceiro argumento para `open`, a requisição é _assíncrona_. Isso significa que quando chamar o método `send`, a única coisa que irá acontecer imediatamente é o agendamento da requisição que será enviada. Nosso programa pode continuar a execução e o navegador irá ser responsável por enviar e receber os dados em segundo plano.
 
-Mas enquanto a requisição está sendo executada, nós não podemos acessar a resposta. É necessário um mecanismo que notifique o usuário quando os dados estiverem disponíveis.
+Entretanto, enquanto a requisição estiver sendo executada, nós não podemos acessar a resposta. É necessário um mecanismo que nos avise quando os dados estiverem disponíveis.
 
-Para isso, precisamos ouvir o evento "load" na requisição do objeto.
+Para isso, precisamos escutar o evento `"load"` no objeto da requisição.
 
 ```js
 var req = new XMLHttpRequest();
@@ -172,18 +172,21 @@ req.addEventListener("load", function() {
 req.send(null);
 ```
 
-Assim como o uso do <i>requestAnimationFrame</i> no Capítulo 15, isto força a utilização de um estilo assíncrono de programação, encapsulando as coisas que precisam ser feitas após a requisição em uma função e preparando para que ela seja chamada no momento apropriado. Nós voltaremos nesse assunto posteriormente.
+Assim como o uso de `requestAnimationFrame` no [Capítulo 15](./15-projeto-plataforma-de-jogo), essa situação nos obriga a usar um estilo assíncrono de programação, encapsulando as coisas que precisam ser executadas após a requisição em uma função e preparando-a para que possa ser chamada no momento apropriado. Voltaremos nesse assunto [mais a frente](@TODO:adicionar-link).
 
-Recuperando Dados XML
+## Recuperando Dados XML
 
-Quando o recurso recuperado por um objeto <i>XMLHttpRequest</i> é um documento XML, a propriedade responseXML do objeto terá uma representação recuperada deste documento XML. Esta representação funciona de forma parecida ao DOM discutido no Capitulo 13, exceto que a representação não possui funcionalidades específicas de HTML como a propriedade style. O objeto que responseXML se referencia corresponde ao objeto documento. Sua propriedade documentElement se refere a tag externa do documento XML. No seguinte documento (example/fruit.xml), tal propriedade seria a tag <fruit>:
+Quando o recurso recebido pelo objeto `XMLHttpRequest` é um documento XML, a propriedade `responseXML` do objeto irá conter uma representação desse documento. Essa representação funciona de forma parecida com o DOM, discutida no [Capítulo 13](./13-document-object-model.md), exceto que ela não contém funcionalidades específicas do HTML, como por exemplo a propriedade `style`. O objeto contido em `responseXML` corresponde ao objeto do documento. Sua propriedade `documentElement` se refere à _tag_ mais externa do documento XML. No documento a seguir (_example/fruit.xml_), essa propriedade seria a _tag_ `<fruits>`:
 
+```html
 <fruits>
   <fruit name="banana" color="yellow"/>
   <fruit name="lemon" color="yellow"/>
   <fruit name="cherry" color="red"/>
 </fruits>
-Podemos recuperar tal arquivo da seguinte forma:
+```
+
+Podemos recuperar esse arquivo da seguinte forma:
 
 ```js
 var req = new XMLHttpRequest();
@@ -192,7 +195,8 @@ req.send(null);
 console.log(req.responseXML.querySelectorAll("fruit").length);
 // → 3
 ```
-Documentos XML podem ser usados para trocar informação estruturada com o servidor. Suas tags-formulário aninhadas dentro de outras tags específicas capaz de armazenar a maioria dos tipos de dados, ou ao menos melhor que em arquivos de texto puro. A interface DOM é um pouco trabalhosa para extrair informação e, documentos XML tendem a ser verbosos. Normalmente é uma idéia melhor comunicar usando dados JSON, o qual é muito mais fácil de ler e escrever, tanto para programas quanto para humanos.
+
+Documentos XML podem ser usados para trocar informações estruturadas com o servidor. Sua forma (_tags_ dentro de outras _tags_) faz com que seja fácil armazenar a maioria dos tipos de dados, sendo uma alternativa melhor do que usar um simples arquivo de texto. Entretanto, extrair informações da interface DOM é um pouco trabalhoso e os documentos XML tendem a ser verbosos. Normalmente é uma ideia melhor se comunicar usando dados JSON, os quais são mais fáceis de ler e escrever tanto para programas quanto para humanos.
 
 ```js
 var req = new XMLHttpRequest();
@@ -202,7 +206,8 @@ console.log(JSON.parse(req.responseText));
 // → {banana: "yellow", lemon: "yellow", cherry: "red"}
 ```
 
-HTTP <i>sandboxing</i>
+## HTTP _Sandboxing_
+
 Executar requisições HTTP através de scripts em uma página web levanta mais uma vez questões sobre segurança. A pessoa que controla o script pode não ter os mesmos interesses que a pessoa do computador o qual o script está executando. Mais especificamente, se eu visitar themafia.org, eu não quero que seus scripts façam uma requisição para mybank.com, utilizando informações de identificação do browser, com instruções para transferir todo meu dinheiro para alguma conta da máfia.
 
 É possível para websites se protegerem eles mesmos contra tais ataques, mas isso requer esforço, e muitos websites falham neste ponto. Por esta razão, browsers protegem o usuário desabilitando scripts de fazerem requisições HTTP para outro domínio (nomes como themafia.org e mybank.com).

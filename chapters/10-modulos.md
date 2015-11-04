@@ -284,7 +284,7 @@ define([], function() {
 });
 ```
 
-In order to show a simple implementation of define, let us pretend we also have a backgroundReadFile function, which takes a file name and a function, and will call the function with the content of the file as soon as it has finished loading it.
+Para mostrar uma simples implementação de `define`, vamos supor que também temos uma função `backgroundReadFile`, que pega o nome do arquivo e uma função, e vai chamar a função com o conteúdo do arquivo assim que este for carregado.
 
 ```
 function define(depNames, moduleFunction) {
@@ -325,17 +325,17 @@ function define(depNames, moduleFunction) {
 define.cache = Object.create(null);
 ```
 
-This is a lot harder to follow than the require function. Its execution does not follow a simple, predictable path. Instead, multiple operations are set up to happen at some unspecified time in the future (when modules finish loading), which obscures the way the code executes.
+Isso é muito mais difícil de seguir que a função `require`. Sua execução não segue um caminho simples e previsível. Ao invés disso, múltiplas operações são definidas para acontecerem em algum tempo não especificado no futuro (quando o módulo for carregado), que obscurece a forma que o código é executado.
 
-The main problem this code deals with is gathering the interface values for the module’s dependencies. To track modules, and their state, an object is created for each module that is loaded by define. This object stores the module’s exported value, a boolean indicating whether the module has fully loaded already, and an array of function to call when the module does finish loading.
+O maior problema que este código lida é coletar os valores das interfaces das dependências do módulo. Para rastrear os módulos, e seus estados, um objeto é criado para cada módulo que é carregado por `define`. Este objeto armazena o valor exportado pelo módulo, um booleano indicando se o módulo já foi completamente carregado e um array de funções para ser chamado quando o módulo tiver sido carregado.
 
-A cache is used to prevent loading modules multiple time, just like we did for require. When define is called, we first build up an array of module objects that represent the dependencies of this module. If the name of a dependency corresponds to a cached module, we use the existing object. Otherwise, we create a new object (with loaded set to false) and store that in the cache. We also start loading the module, using the backgroundReadFile function. Once the file has loaded, its content is run using the Function constructor.
+Um *cache* é usado para prevenir o carregamento de módulos múltiplas vezes, assim como fizemos para o `require`. Quando `define` é chamada, nós primeiro construímos um array de módulos de objetos que representam as dependências deste módulo. Se o nome da dependência corresponde com o nome de um módulo *cacheado*, nós usamos o objeto existente. Caso contrário, nós criamos um novo objeto (com o valor de `loaded` igual a `false`) e armazenamos isso em cache. Nós também começamos a carregar o módulo, usando a função `backgroundReadFile`. Uma vez que o arquivo tenha sido carregado, seu conteúdo é rodado usando o construtor `Function`.
 
-It is assumed that this file also contains a (single) call to define. The define.currentModule property is used to tell this call about the module object that is currently being loaded, so that we can update it once it finishes loading.
+É assumido que este arquivo também contenha uma (única) chamada a `define`. A propriedade `define.currentModule` é usada para informar a esta chamada sobre o módulo objeto que está sendo carregado atualmente, dessa forma podemos atualizá-lo umas vez e terminar o carregamento.
 
-This is handled in the runIfDepsLoaded function, which is called once immediately (in case no dependencies need to be loaded) and once for every dependency that finishes loading. When all dependencies are there, we call the moduleFunction, passing it the appropriate exported values. If there is a current module object, the return value from the function is stored in there, the object is marked as loaded, and the functions in its onLoad array are called. This will notify any modules that are waiting for this one that their dependency has finished loading.
+Isso é manipulado na função `runIfDepsLoaded`, que é chamada uma vez imediatamente (no caso de não ser necessário carregar nenhuma dependência) e uma vez para cada dependência que termina seu carregamento. Quando todas as dependências estão lá, nós chamamos `moduleFunction`, passando para ela os valores exportados apropriados. Se existe um módulo objeto, o valor retornado da função é armazenado, o objeto é marcado como carregado (*loaded*), e as funções em seu array `onLoad` são chamadas. Isso vai notificar qualquer módulo que esteja esperando que suas dependências sejam carregadas completamente.
 
-A real AMD implementation is, again, quite a lot more clever about resolving module names to actual URLs, and generally more robust. The RequireJS (http://requirejs.org) project provides a popular implementation of this style of module loader.
+Uma implementação real do AMD é, novamente, bem mais inteligente em relação a resolução dos nomes e suas URLs, e genericamente mais robusta. O projeto RequireJS (http://requirejs.org) fornece uma implementação popular deste estilo que carregamento de módulos.
 
 ## Interface design
 

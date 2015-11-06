@@ -337,17 +337,17 @@ Isso é manipulado na função `runIfDepsLoaded`, que é chamada uma vez imediat
 
 Uma implementação real do AMD é, novamente, bem mais inteligente em relação a resolução dos nomes e suas URLs, e genericamente mais robusta. O projeto RequireJS (http://requirejs.org) fornece uma implementação popular deste estilo que carregamento de módulos.
 
-## Interface design
+## Projeto de interfaces
 
-Designing interfaces for modules and object types is one of the subtler aspects of programming. Any non-trivial piece functionality can be modeled in different ways. Finding a way that works well requires insight and foresight.
+Projetar interfaces para módulos e tipos de objeto é um dos aspectos sutis da programação. Qualquer pedaço não-trivial de funcionalidade pode ser modelada de formas diferentes. Encontrar um caminho que funciona bem requer perspicácia e previdência.
 
-The best way to learn the value of good interface design is to use lots of interfaces, some good, some horrible. Experience will teach you what works and what doesn’t. Never assume that a painful interface is “just the way it is”. Fix it, or wrap it in a new interface that works better for you.
+A melhor forma de aprender o valor de um bom projeto de interface é usar várias interfaces, algumas boas, algumas horríveis. Experiência vai ensinar a você o que funciona e o que não funciona. Nunca assuma que uma interface dolorosa de se usar é "da forma que ela deve ser". Conserte-a, ou encapsule-a em uma nova interface de forma que funcione melhor para você.
 
-### Predictability
+### Previsilibidade
 
-If programmers can predict the way your interface works, they (or you) won’t get sidetracked as often by the need to look up how to work with it. Thus, try to follow conventions (for example when it comes to capitalization of names). When there is another module or part of the standard JavaScript environment that does something similar to what you are implementing, it might be a good idea to make your interface resemble the existing interface. That way, people who know the existing interface will feel right at home.
+Se programadores podem prever a forma que a interface vai funcionar, eles (ou você) não vão ser desviados frequentemente pela necessidade de checar como trabalhar com esta interface. Portanto, tente seguir convenções (por exemplo, quando se trata da capitalização de nomes). Quando existe outro módulo ou parte do ambiente padrão JavaScript que faz algo similar ao que você está implementando, é uma boa ideia fazer sua interface se assemelhar a interface existente. Dessa forma, as pessoas que conhecem a interface existente vão se sentir em casa.
 
-Another area where predictability is important is the actual behavior of your code. It can be tempting to pile up cleverness with the justification that it makes the interface convenient to use. For example, by accepting all kinds of different types and combinations of arguments, and doing “the right thing” for all of them, or providing dozens of specialized “convenience” functions that provide slightly different flavors of your module’s functionality. These might make code that builds on your interface slightly shorter, but they will also make it much harder for people to keep a mental model of the module’s behavior in their head.
+Outra área que previsibilidade é importante é no comportamento do seu código. Pode ser tentador "empilhar inteligência" com a justificativa que isso torna a interface fácil de ser utilizada. Por exemplo, aceitando todos os diferentes tipos e combinações de argumentos, e fazendo "a coisa certa" para todos eles, ou fornecendo dezenas de diferentes funções especializadas por "conveniência" que fornecem pequenas alterações do sabor da funcionalidade do seu módulo. Isso pode tornar o código construído em cima da sua interface um pouco menor, mas isso vai também tornar o código muito mais difícil para as pessoas manterem um modelo mental do comportamento do módulo em suas cabeças.
 
 ### Composability
 

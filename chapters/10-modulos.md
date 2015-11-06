@@ -349,13 +349,13 @@ Se programadores podem prever a forma que a interface vai funcionar, eles (ou vo
 
 Outra área que previsibilidade é importante é no comportamento do seu código. Pode ser tentador "empilhar inteligência" com a justificativa que isso torna a interface fácil de ser utilizada. Por exemplo, aceitando todos os diferentes tipos e combinações de argumentos, e fazendo "a coisa certa" para todos eles, ou fornecendo dezenas de diferentes funções especializadas por "conveniência" que fornecem pequenas alterações do sabor da funcionalidade do seu módulo. Isso pode tornar o código construído em cima da sua interface um pouco menor, mas isso vai também tornar o código muito mais difícil para as pessoas manterem um modelo mental do comportamento do módulo em suas cabeças.
 
-### Composability
+### "Componibilidade"
 
-In your interfaces, try to use the simplest data structures that work and make functions do a single, clear thing—whenever practical, make them pure functions (see Chapter 3).
+Em suas interfaces, tente usar as estruturas de dados mais simples que funcionem e crie funções que façam algo simples e claro - sempre que possível, crie funções puras (veja capítulo 3).
 
-For example, it is not uncommon for modules to provide their own array-like collection objects, with their own interface for counting and extracting elements. Such objects won’t have map or forEach methods, and any existing function that expects a real array won’t be able to work with them. This is an example of bad composability—the module cannot be easily composed with other code.
+Por exemplo, não é comum para módulos fornecerem suas próprias coleções de objetos similares a arrays, com sua própria interface para contar e extrair elementos. Tais objetos não terão os métodos `map` e `forEach`, e qualquer função existente que espere um array real não será capaz de trabalhar com estas coleções. Este é um exemplo de componibilidade (*composability*) ruim - o módulo não pode ser facilmente composto com outro código.
 
-Another example would be a module for spell-checking text, which we might need when we want to write a text editor. The spell-checker could be made to operate directly on whichever complicated data structures the editor uses, and directly call internal functions in the editor to have the user choose between spelling suggestions. If we go that way, the module cannot be used with any other programs. On the other hand, if we define the spell-checking interface so that you can pass it a simple string and it will return the position in the string where it found a possible misspelling, along with an array of suggested corrections, then we have an interface that could also be composed with other systems, because strings and arrays are always available.
+Outro exemplo seria um módulo verificação ortográfica de texto, que podemos necessitar se quisermos escrever um editor de texto. O verificador pode ser construído para funcionar diretamente em qualquer tipo complexo de estrutura de dados que o editor usa, e chamar funções internas diretamente no editor para que o usuário possa escolher entre as sugestões de ortografia. Se formos por esse caminho, o módulo não poderá ser usado com outros programas. De outra forma, se nós definirmos a interface do verificador ortográfico para que possamos passar simples strings e retornar a possível localização do erro, juntamente com um array de correções sugeridas, nós teremos uma interface que pode ser composta com outros sistemas, porque strings e arrays estarão sempre disponíveis.
 
 ### Layered interfaces
 

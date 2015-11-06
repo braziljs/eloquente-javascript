@@ -60,50 +60,46 @@ Last-Modified: Wed, 09 Apr 2014 10:48:09 GMT
 
 Eles nos informam o tamanho e o tipo do documento da resposta. Nesse caso, é um documento HTML com 65.585 bytes. Além disso, ele nos mostra quando foi a última vez que o documento foi modificado.
 
-Na maior parta, o cliente ou servidor decidem quais cabeçalhos incluir em um 'request' ou resposta, apesar de alguns serem obrigatórios. Por exemplo, o cabeçalho do Host, que especifica o hostname, deve ser incluído em um 'request' porque um servidor pode estar servindo múltiplos hostnams em um mesmo endereço de IP, e sem este cabeçalho, o servidor não saberá qual host o cliente está tentando conversar.
+Na maioria das vezes, o cliente ou o servidor decidem quais _headers_ serão incluídos em uma requisição ou resposta, apesar de alguns serem obrigatórios. Por exemplo, o _header_ `Host`, que especifica o _hostname_, deve ser incluído na requisição pois o servidor pode estar servindo múltiplos _hostnames_ em um mesmo endereço IP e, sem esse _header_, o servidor não saberá qual _host_ o cliente está tentando se comunicar.
 
-Após os cabeçalhos, ambos 'requests' e respostas podem incluir uma linha em branco, seguida pelo corpo, que contém os dados que estão sendo enviados.Os métodos GET e DELETE não enviam qualquer tipo de dado, mas PUT e POST enviam. De maneira semelhante, alguns tipos de resposta, como respostas de erro, também não precisam de um corpo.
+Após os _headers_, tanto as requisições quanto as respostas podem incluir uma linha em branco seguida por um _body_ (corpo), que contém os dados que estão sendo enviados. As requisições `GET` e `DELETE` não enviam nenhum tipo dado, mas `PUT` e `POST` enviam. De maneira similar, alguns tipos de resposta, como respostas de erro, não precisam de um _body_.
 
+## Navegadores e o HTTP
 
-###Navegadores e o HTTP
+Como vimos no exemplo anterior, o navegador irá fazer uma requisição quando submetermos uma URL na barra de endereços. Quando a página HTML resultante faz referências a outros arquivos como imagens e arquivos JavaScript, eles também são requisitados.
 
-Como vimos no exemplo, o navegador irá fazer um 'request' quando submetermos uma URL na barra de endereços. Quando a página de HTML  originada faz referências a outros arquivos, como imagens ou arquivos de Javascript, estes são buscados também.
+Um website razoavelmente complicado pode facilmente ter algo em torno de dez a duzentos recursos. Para ser capaz de buscá-los rapidamente, ao invés de esperar pelo retorno das respostas de cada requisição feita, os navegadores fazem várias requisições simultaneamente. Tais documentos são sempre requisitados usando requisições `GET`.
 
-Um website moderadamente complicado pode ter fácilmente algo em torno de 10 a 200 recursos. Para conseguir pegar estes recursos rápidamente, os navegadores irão realizar diversos 'requests' simultaneamente, ao invés de esperar pelo retorno da resposta de cada 'request' feito. Tais documentos são sempre pegos utilizando o método GET para os pedidos.
-
-###Páginas de HTML
-
-Páginas de HTML podem incluir formulários, que permitem que o usuário preencha informações e as envie para o servidor. Este é um exemplo de formulário:
+Páginas HTML podem incluir _formulários_, que permitem ao usuário preencher e enviar informações para o servidor. Esse é um exemplo de um formulário:
 
 ```html
 <form method="GET" action="example/message.html">
-  <p>Nome: <input type="text" name="name"></p>
-  <p>Mensagem:<br><textarea name="message"></textarea></p>
-  <p><button type="submit">Enviar</button></p>
+  <p>Name: <input type="text" name="name"></p>
+  <p>Message:<br><textarea name="message"></textarea></p>
+  <p><button type="submit">Send</button></p>
 </form>
+```
+
+Esse código descreve um formulário com dois campos: um campo menor que solicita um nome e um campo maior que solicita que o usuário escreva uma mensagem. Quando você clicar no botão _Send_ (enviar), a informação contida nos campos serão convertidas em uma _query string_. Quando o método do atributo do elemento `<form>` for `GET` (ou o método for omitido), a _query string_ é associada à URL contida em `action` e o navegador executa a requisição `GET` para essa URL.
 
 ```
-Este código descreve um formulário com dois campos:um pequeno, que solicita um nome, e um maior, que solicita que o usuário escreva uma mensagem. Quando você clica no botão  'Enviar', a informação nestes campos será codificada em uma "String" de pesquisa. Quando o método do elemento é GET (ou o método é omitido), esta "String" de pesquisa é colocada em uma URL de ação e o navegador fará um 'request' com esta URL.
-
-
-```sh
 GET /example/message.html?name=Jean&message=Yes%3F HTTP/1.1
 ```
-O começo desta 'String' de pesquisa é indicado por um ponto de interrogação. Após este ponto, seguem os pares nomes e valores, que correspondem ao campo 'Nome' nos elementos do  formulário e o conteúdo destes elementos, respectivamente. Um caractere de concatenação ('&') é usado para separar os pares.
 
-A mensagem codificada na URL anterior é "Yes?", mesmo que o ponto de exclamação seja substituído por um código estranho. Alguns caracteres em "Strings" de pesquisa precisam ser escapados. O ponto de interrogação é um um destes e é representado como "%3F". Parace ser uma regra não escrita que cada formato precisa de sua própria maneira de escapar caracteres. Este formato, chamado de Codificação de URL, usa um caractere de percentual (%) seguido por dois digítos hexadecimais para codificar o código do caractere. Neste caso, o 3F, que significa 63 em notação decimal, é o código que referencia o ponto de exclamação. O JavaScript confere as funções encodeURIComponent e decodeURIComponent para codificar e decodificar este formato.
+O início de uma _query string_ é indicado por um ponto de interrogação seguido por pares de nomes e valores, correspondendo ao atributo `name` de cada campo do formulário e seus respectivos valores. O caractere `&` é usado para separar os pares.
+
+A mensagem codificada na URL anterior é "Yes?", mesmo que o ponto de interrogação tenha sido substituído por um código estranho. Alguns caracteres nas _query strings_ precisam ser escapados. O ponto de interrogação, representado como `%3F`, é um desses casos. Parece haver uma regra não escrita de que cada formato necessita ter sua própria forma de escapar caracteres. Esse formato que está sendo usado é chamado de _URL encoding_ e utiliza o sinal de porcentagem seguido por dois dígitos hexadecimais que representam o código daquele caractere. Nesse caso, o 3F significa 63 na notação decimal, que é o código do caractere de interrogação. O JavaScript fornece as funções `encodeURIComponent` e `decodeURIComponent` para codificar e decodificar esse formato.
 
 ```js
-
 console.log(encodeURIComponent("Hello & goodbye"));
 // → Hello%20%26%20goodbye
 console.log(decodeURIComponent("Hello%20%26%20goodbye"));
 // → Hello & goodbye
+```
+
+Se alterarmos o método do atributo do formulário HTML no exemplo anterior para `POST`, a requisição HTTP que será feita para enviar o formulário irá usar o método `POST` e a _query string_ será adicionada ao corpo da requisição, ao invés de ser colocada diretamente na URL.
 
 ```
-Se nós mudarmos o método do atributo do formulário de HTML no exemplo que vimos antes para POST, o 'request' de HTTP feito para enviar o formulário irá usar POST e usará a 'String' de pesquisa no corpo do 'request', ao inves de adicioná-lo a URL.
-
-```sh
 POST /example/message.html HTTP/1.1
 Content-length: 24
 Content-type: application/x-www-form-urlencoded
@@ -111,36 +107,37 @@ Content-type: application/x-www-form-urlencoded
 name=Jean&message=Yes%3F
 ```
 
-Por convenção, o método GET é usado para 'requests' que não possuem efeitos colateriais, como ao fazer pesquisas.'Requests' que mudam algo no servidor, como aqueles que criam uma nova conta ou postam uma mensagem, devem ser expressados com outros métodos, como o POST. Softwares do lado do cliente, como navegadores, sabem que não devem fazer 'requests' POST cegamente, mas farão, implicitamente, 'requests' GET para, por exemplo, pré-carregar recursos que acreditam ser necessários no curto-prazo.
+Por convenção, o método `GET` é usado para requisições que não produzem efeitos colaterais, tais como fazer uma pesquisa. Requisições que alteram alguma coisa no servidor, como criar uma nova conta ou postar uma nova mensagem, devem ser expressadas usando outros métodos, como `POST`. Aplicações _client-side_, como os navegadores, sabem que não devem fazer requisições `POST` cegamente, mas frequentemente farão requisições `GET` implícitas para, por exemplo, pré-carregar um recurso que ele acredita que o usuário irá precisar no curto-prazo.
 
-O próximo capítulo irá retornar a formulários e irá abordar como nós podemos desenvolve-los com JavaScript.
+O [próximo capítulo](./18-formularios-e-campos-de-formularios.md) irá retomar o assunto formulários e explicará como podemos desenvolve-los usando JavaScript.
 
-###XMLHttpRequest
+## XMLHttpRequest
 
-A interface através da qual o Javascript pode fazer requisições HTTP é chamada <i>XMLHttpRequest</i> (note a capitalização inconsistente). Ela foi elaborada pela Microsoft, para seu browser Internet Explorer, no final da decada de 90. Naquele tempo, o formato de arquivo XML era muito popular no mundo de softwares corporativos, um mundo no qual a Microsoft se sentia em casa. De fato, tal formato era tão popular que o acrônimo XML foi acrescentado no inicio do nome de uma interface para HTTP, a qual não tinha nenhuma relação com o XMh
+A interface pela qual o JavaScript do navegador pode fazer requisições HTTP é chamada de `XMLHttpRequest` (observe a forma inconsistente de capitalização). Ela foi elaborada pela Microsoft, para o seu navegador Internet Explorer, no final dos anos 90. Naquela época, o formato de arquivo XML era _muito_ popular no contexto dos softwares corporativos, um mundo no qual sempre foi a casa da Microsoft. O formato era tão popular que o acrônimo XML foi adicionado ao início do nome de uma interface para o HTTP, a qual não tinha nenhuma relação com o XML.
 
-O nome não é completamente sem sentido, porém. A interface permite você analisar documentos de resposta como XML, caso queira. Misturar dois conceitos distintos (fazer a requisição e analizar a resposta) em uma unica coisa é uma terrível abordagem, naturalmente, mas aceitável.
+Mesmo assim, o nome não é completamente sem sentido. A interface permite que você analise os documentos de resposta como XML, caso queira. Combinar dois conceitos distintos (fazer uma requisição e analisar a resposta) em uma única coisa é com certeza um péssimo design.
 
-Quando a interface <i>XMLHttpRequest</i> foi adicionada ao Internet Explorer, foi permitido às pessoas fazerem coisas com Javascript que eram bem complicadas anteriormente. Por exemplo, websites comecaram a mostrar lista de sugestões enquanto o usuário digitava algo em um campo de texto. O Script mandaria o texto para o servidor através de HTTP enquanto o usuário digitava. O servidor, que possuia um banco de dados com possiveis entradas, compararia as entradas do banco com as entradas parciais digitadas e enviaria de volta possiveis combinacoes para mostrar ao usuário. Isso era considerado espetacular - pessoas estavam acostumadas a aguardar por um completo carregamento de pagina para cada interação com o website.
+Quando a interface `XMLHttpRequest` foi adicionada ao Internet Explorer, foi permitido às pessoas fazerem coisas com JavaScript que eram bem difíceis anteriormente. Por exemplo, websites começaram a mostrar listas de sugestões enquanto o usuário digitava algo em um campo de texto. O script mandava o texto para o servidor usando HTTP enquanto o usuário estivesse digitando. O servidor, que tinha um banco de dados com possíveis entradas, comparava as possíveis entradas com a entrada parcial digitada pelo usuário, enviando de volta possíveis combinações de resultados para mostrar ao usuário. Isso era considerado espetacular, pois as pessoas estavam acostumadas a aguardar por uma atualização completa da página para cada interação com o website.
 
-O outro browser significante daquela epoca, Mozilla (depois Firefox), não queria ser deixado para trás. Para permitir aos usuários fazer tarefas de forma similar em seu browser, Mozilla copiou a interface, incluindo o controverso nome. A proxima geracao de browsers seguiu este exemplo, e atualmente <i>XMLHttpRequest</i> e a interface padrão <i>de facto</i>.
+O outro navegador relevante naquela época, chamado Mozilla (mais tarde Firefox), não queria ficar para trás. Para permitir que as pessoas pudessem fazer coisas similares em seu navegador, eles copiaram a interface, incluindo o controverso nome. A próxima geração de navegadores seguiram esse exemplo e, por isso, a interface `XMLHttpRequest` é um padrão atualmente.
 
-Enviando uma requisição
+## Enviando uma requisição
 
-Para fazer uma simples requisição, criamos um objeto de requisição com o construtor <i>XMLHttpRequest</i> e chamamos seus métodos open e send.
+Para fazer uma simples requisição, criamos um objeto de requisição com o construtor `XMLHttpRequest` e chamamos os seus métodos `open` e `send`.
 
 ```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/data.txt", false);
 req.send(null);
-console.log(req.responseText);// → Esse é o conteudo de data.txt
+console.log(req.responseText);
+// → This is the content of data.txt
 ```
 
-O método open configura a requisição. Neste caso, nós escolhemos fazer uma requisição GET para o arquivo example/data.txt. URLs que não começam com um nome de protocolo (como http:) são relativos, o que significa que elas são interpretados relativamente ao documento corrente. Quando as URLs começam com uma barra (/), elas substituem o caminho corrente, que e a parte depois do nome do servidor. Quando não, a parte anterior ao caminho corrente e incluindo sua última barra são colocados em frente à URL relativa.
+O método `open` configura a requisição. Nesse caso, escolhemos fazer uma requisição `GET` para o arquivo _example/data.txt_. As URLs que não começam com um nome de protocolo (como por exemplo _http:_) são relativas, ou seja, são interpretadas em relação ao documento atual. Quando elas iniciam com uma barra (/), elas substituem o caminho atual, que é a parte após o nome do servidor. No caso de não iniciarem com uma barra, a parte do caminho em questão até (e incluindo) a ultima barra é colocada em frente à URL relativa.
 
-Após abrir a requisição, pode-se mandar ela com o método send. O argumento para o envio é o corpo do request. Para requisições GET, pode-se passar null. Se o terceiro argumento para o open foi falso, o método send irá retornar apenas após a resposta de nossa requisição ser recebida. Podemos ler a propriedade responseText do objeto request para compreender o corpo da resposta.
+Após abrir a requisição, podemos enviá-la usando o método `send`. O argumento a ser enviado é o corpo da requisição. Para requisições `GET`, podemos passar `null`. Se o terceiro argumento passado para `open` for `false`, o método `send` irá retornar apenas depois que a resposta da nossa requisição for recebida. Podemos ler a propriedade `responseText` do objeto da requisição para acessar o corpo da resposta.
 
-A outra informação incluída na resposta pode também ser extraída deste objeto. O código de status é acessível através da propriedade status, e o texto legível é acessível através da propriedade statusText. Cabeçalhos podem ser lidos com getResponseHeader.
+As outras informações incluídas na resposta também podem ser extraídas desse objeto. O _status code_ (código de status) pode ser acessado por meio da propriedade `status` e a versão legível em texto do _status_ pode ser acessada por meio da propriedade `statusText`. Além disso, os cabeçalhos podem ser lidos com `getResponseHeader`.
 
 ```js
 var req = new XMLHttpRequest();
@@ -152,11 +149,13 @@ console.log(req.getResponseHeader("content-type"));
 // → text/plain
 ```
 
-O browser irá automaticamente adicionar alguns cabeçalhos do request como "Host" e aqueles necessários para o servidor descobrir o tamanho do corpo. Mas você pode adicionar seus próprios cabeçalhos com o método setRequestHeader. Isto é necessário apenas para usos avançados e requer a cooperação do servidor o qual você está comunicando - Um servidor é livre para ignorar cabeçalhos que ele não saiba manusear.
+Os nomes dos cabeçalhos são _case-insensitive_ (não faz diferença entre letras maiúsculas e minúsculas). Eles são normalmente escritos com letra maíuscula no início de cada palavra, como por exemplo "Content-Type". Entretanto, as respectivas variações "content-type" e "cOnTeNt-TyPe" fazem referência ao mesmo cabeçalho.
 
-Requisições Assíncronas
+O navegador irá automaticamente adicionar alguns cabeçalhos da requisição, tais como "Host" e outros necessários para o servidor descobrir o tamanho do corpo da requisição. Mesmo assim, você pode adicionar os seus próprios cabeçalhos usando o método `setRequestHeader`. Isso é necessário apenas para usos avançados e requer a cooperação do servidor ao qual você está se comunicando (o servidor é livre para ignorar cabeçalhos que ele não sabe lidar).
 
-Nos exemplos que nós vimos, a requisição finaliza quando a chamada ao método send retorna. Isto é conveniente pois significa que propriedades como responseText são disponibilizadas imediatamente. Mas também significa que nosso programa é suspenso enquanto o browser e o servidor estão comunicando. Quando a conexão é ruim, o servidor lento ou o arquivo é muito grande, o processo pode demorar um bom tempo. Em um cenário pior, como nenhum manipulador de evento pode ser disparado enquanto nosso programa está suspenso, todo o documento ficará irresponsível.
+## Requisições Assíncronas
+
+Nos exemplos que vimos, a requisição finaliza quando a chamada ao método `send` retorna. Isso é conveniente pois significa que as propriedades como `responseText` ficam disponíveis imediatamente. Por outro lado, o nosso programa fica aguardando enquanto o navegador e o servidor estão se comunicando. Quando a conexão é ruim, o servidor lento ou o arquivo é muito grande, o processo pode demorar um bom tempo. Ainda pior, devido ao fato de que nenhum manipulador de evento pode ser disparado enquanto nosso programa está aguardando, todo o documento ficará não responsivo.
 
 Se passarmos true como terceiro argumento para o método open, a requisição é assíncrona. Isto significa que podemos chamar o método send, a única coisa que acontece imediatamente é que a requisição fica agendada para ser enviada. Nosso programa pode continuar e o browser cuidará do envio e do recebimento dos dados em segundo plano.
 

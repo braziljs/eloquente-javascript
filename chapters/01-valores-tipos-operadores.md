@@ -69,7 +69,7 @@ Para grandes números ou números pequenos, podemos usar a notação científica
 
 Isto é 2.998 x 10⁸ = 299800000.
 
-Cálculos com números inteiros (também chamados *integers*) menores que os mencionados 9 quadrilhões são garantidos de sempre serem precisos. Infelizmente cálculos com números fracionários não são, geralmente. Como π (pi) não pode ser precisamente expresso por uma quantidade finita de dígitos decimais, vários números perdem a precisão quando somente 64 bits estão disponíveis para armazená-los. Isto é uma vergonha, porém causa problemas somente em situações muito específicas. A coisa importante é estar ciente disto e tratar números fracionários digitais como aproximações, não como valores precisos.
+Cálculos com números inteiros (também chamados *integers*) menores que os mencionados 9 quadrilhões são garantidos de sempre serem precisos. Infelizmente cálculos com números fracionários não são, geralmente. Como π (pi) não pode ser precisamente expresso por uma quantidade finita de dígitos decimais, vários números perdem a precisão quando somente 64 bits estão disponíveis para armazená-los. Isto é uma vergonha, porém causa problemas somente em situações muito específicas. A coisa mais importante é estar ciente disto e tratar números fracionários digitais como aproximações, não como valores precisos.
 
 ## Aritmética
 
@@ -118,7 +118,7 @@ O próximo tipo básico de dado é a *string*. Strings são usadas para represen
 
 ```
 
-Ambas as aspas simples e duplas podem ser usadas para marcar strings - contato que as aspas no início e no fim da string combinem.
+Ambas as aspas simples e duplas podem ser usadas para marcar strings - contanto que as aspas no início e no fim da string combinem.
 
 Quase tudo pode ser colocado entre aspas, e o JavaScript vai fazer um valor de string com isso. Mas alguns caracteres são difíceis. Você pode imaginar como colocar aspas entre aspas deve ser difícil. Novas linhas, as coisas que você obtém quando pressiona `enter`, também não podem ser colocadas entre aspas - a string tem que estar em uma linha única.
 

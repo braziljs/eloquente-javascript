@@ -357,19 +357,19 @@ Por exemplo, não é comum para módulos fornecerem suas próprias coleções de
 
 Outro exemplo seria um módulo verificação ortográfica de texto, que podemos necessitar se quisermos escrever um editor de texto. O verificador pode ser construído para funcionar diretamente em qualquer tipo complexo de estrutura de dados que o editor usa, e chamar funções internas diretamente no editor para que o usuário possa escolher entre as sugestões de ortografia. Se formos por esse caminho, o módulo não poderá ser usado com outros programas. De outra forma, se nós definirmos a interface do verificador ortográfico para que possamos passar simples strings e retornar a possível localização do erro, juntamente com um array de correções sugeridas, nós teremos uma interface que pode ser composta com outros sistemas, porque strings e arrays estarão sempre disponíveis.
 
-### Layered interfaces
+### Interfaces em camadas
 
-When designing an interface for a complex piece of functionality—say, sending email—you often run into something of a dilemma. On the one hand, you do not want to overload the user of your interface with details. They shouldn’t have to study your interface for 20 minutes before they can send an email. On the other hand, you do not want to hide all the details either—when people need to do complicated things with your module, that should also be possible.
+Quando projetando uma interface para uma complexa parte de funcionalidade - digo, enviar email - você geralmente se depara com um dilema. Em uma mão, você não quer sobrecarregar o usuário da sua interface com detalhes. Ele não deve estudar sua interface por 20 minutos antes de ser capaz de enviar um email. Na outra mão, você não quer esconder todos os detalhes - quando pessoas precisam fazer coisas complicadas com seu moulo, eles também devem ser capazes.
 
-Often the solution is to provide two interfaces: a detailed “low-level” one for complex situations and a simple “high-level” one for routine use. The second one can usually be built very easily using the tools provided by the first one. In the email module, the high-level interface could just be a function that takes a message, a sender address, and a receiver address, and sends the email. The low-level interface would allow full control over email headers, attachments, sending HTML mail, and so on.
+Normalmente a solução é oferecer duas interfaces: uma de "baixo nível" detalhada para situações complexas e uma de "alto nível" simples para uso rotineiro. A segunda pode ser construída de forma simples utilizando as ferramentas fornecidas pela primeira camada. No módulo de email, a interface de alto nível pode simplesmente ser uma função que recebe uma mensagem, um endereço de remetente, um endereço de destinatário e envia o email. A interface de baixo nível deve permitir um controle completo sobre os cabeçalhos do email, anexos, envio de email HTML, e por ai vai.
 
-## Summary
+## Resumo
 
-Modules provide such structure to bigger programs, by separating the code into different files and namespaces. Giving these modules well-defined interfaces makes it easier to use them, reuse them in different contexts, and keep using them as the module itself evolves.
+Módulos fornecem estrutura para programas grandes, separando o código em diferentes arquivos e *namespaces*. Dando a estes módulos interfaces bem definidas os tornam fáceis de se utilizar, reusando-os em contextos diferentes, e continuando os usando mesmo quando evoluem.
 
-Though the JavaScript language itself is characteristically unhelpful when it comes to modules, the flexible functions and objects it provides make it possible to define rather nice module systems. Function scopes can be used as internal namespaces for the module, and objects can be used to store sets of exported values.
+Mesmo que a linguagem JavaScript não auxilie muito quando se trata de módulos, as flexíveis funções e objetos que ela fornece fazem que seja possível definir úteis sistemas de módulo. Escopo de função pode ser utilizado como namespace interno para o módulo, e objetos podem ser usados para armazenar blocos de valores exportados.
 
-There are two popular, well-defined approaches to such modules. One is called “CommonJS Modules”, and revolves around a require function that fetches a module by name and returns its interface. The other is called “AMD”, and uses an asynchronous define function that takes an array of module names and a function, and, after loading the modules, runs the function with their interfaces as arguments.
+Existem duas abordagens populares para tais módulos. Uma é chamada "Módulos CommonJS", e funciona em torno da função `require` que busca um módulo pelo seu nome e retorna sua interface. A outra abordagem é chamada "AMD", e usa a função assíncrona `define` que recebe um array de nome de módulos e uma função, e depois de carregar os módulos, roda a função com suas interfaces e argumentos.
 
 ## Exercises
 

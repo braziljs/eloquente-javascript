@@ -10,7 +10,7 @@
 
 ### Fluxo
 
-É muito fácil contribuir para o projeto. Qualquer tipo de ajuda (seja ela grande ou pequena) é bem-vinda. Se encontrar qualquer parte do livro que possa ser melhorada, essa é uma grande oportunidade para participar. Caso não saiba por onde começar:
+É muito fácil contribuir para o projeto. Qualquer tipo de ajuda (seja ela grande ou pequena) é bem-vinda. Se encontrar qualquer parte do livro que possa ser melhorada, essa é uma grande oportunidade para participar ([aqui](https://github.com/braziljs/eloquente-javascript/issues?q=is%3Aopen+is%3Aissue+label%3Amelhorias) é um ótimo lugar para achar coisas que possam ser melhoradas). Caso não saiba por onde começar:
 
 **1.** Faça referência ao repositório oficial após o _fork_
 

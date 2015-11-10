@@ -371,11 +371,11 @@ Mesmo que a linguagem JavaScript não auxilie muito quando se trata de módulos,
 
 Existem duas abordagens populares para tais módulos. Uma é chamada "Módulos CommonJS", e funciona em torno da função `require` que busca um módulo pelo seu nome e retorna sua interface. A outra abordagem é chamada "AMD", e usa a função assíncrona `define` que recebe um array de nome de módulos e uma função, e depois de carregar os módulos, roda a função com suas interfaces e argumentos.
 
-## Exercises
+## Exercícios
 
-### Month names
+### Nomes dos meses
 
-Write a simple module similar to the weekDay module, which can convert month numbers (zero-based, as in the Date type) to names, and names back to numbers. Give it its own namespace, since it will need an internal array of month names, but use plain JavaScript, without any module loader system.
+Escreva um simples módulo similar ao módulo `weekDay`, que pode converter os números dos meses (*zero-based*, assim como o tipo `Date`) para nomes, e nomes para números. Dê a este módulo seu próprio namespace, pois ele vai precisar de um array interno com o nome dos meses, mas use JavaScript puro, sem nenhum sistema de carregamento de módulos.
 
 ```
 // Your code here.
@@ -386,7 +386,7 @@ console.log(month.number("November"));
 // → 10
 ```
 
-This follows the weekDay module almost exactly. An anonymous function, called immediately, wraps the variable that holds the array of names, along with the two functions that must be exported. The functions are put in an object, and returned. The returned interface object is stored in the month variable.
+Ele vai seguir o módulo weekDay praticamente por inteiro. Uma função anônima, chamada imediatamente, encapsula a variável que contém o array de nomes, assim como as duas funções que precisam ser exportadas. As funções são colocadas em um objeto. A interface de objeto retornada é armazenada na variável `month`.
 
 ### Circular dependencies
 

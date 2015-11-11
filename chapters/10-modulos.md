@@ -388,15 +388,15 @@ console.log(month.number("November"));
 
 Ele vai seguir o módulo weekDay praticamente por inteiro. Uma função anônima, chamada imediatamente, encapsula a variável que contém o array de nomes, assim como as duas funções que precisam ser exportadas. As funções são colocadas em um objeto. A interface de objeto retornada é armazenada na variável `month`.
 
-### Circular dependencies
+### Dependências circulares
 
-A tricky subject in dependency management is circular dependencies, where module A depends on B, and B also depends on A. Many module systems simply forbid this. CommonJS allows a limited form of this, where it works as long as the modules do not replace their default exports object with another value, and only start accessing each other’s interface after they finish loading.
+Um assunto complicado na gestão de dependências é o de dependências circulares, onde módulo A depende do módulo B, e B também depende do módulo A. Muitos sistemas simplesmente proibem isso. CommonJS permite uma forma limitada disso, onde isso funciona se os módulos não trocarem seus objetos exportados por padrão com outro valor, e somente começam a acessar a interface um do outro após terem finalizados seus carregamentos.
 
-Can you think of a way in which support for this feature could be implemented? Look back to the definition of require, and consider what the could would have to do to allow this.
+Você pode pensar em algo que dê suporte para essa funcionalidade ser implementada? Olhe anteriormente a definição de `require`, e considere o quê você deve fazer para permitir isso.
 
-The trick is to add the exports object created for a module to require's cache before actually running the module. This means the module will not yet have had a chance to override module.exports, so we do not know whether it may want to export some other value. After loading, the cache object is overridden with module.exports, which may be a different value.
+O segredo é adicionar o objeto `exports` criado por um módulo para requisitar o cache antes de rodar o módulo de fato. Isso significa que o módulo não teria tido ainda uma chance de sobrescrever `module.exports`, então não sabemos se ele deseja exportar outro valor. Depois de carregar, o objeto cache é sobrescrito com `module.exports`, que pode ser um valor diferente.
 
-But if, in the course of loading the module, a second module is loaded that asks for the first module, its default exports object, likely still empty at this point, will be in the cache, and the second module will receive a reference to it. If it doesn’t try to do anything with the object until the first module has finished loading, things will work.
+Mas se, no curso de carregar o módulo, um segundo módulo é carregado e solicita o primeiro módulo, seu objeto `exports` padrão, ainda vazio até este ponto, vai estar no cache, e o segundo módulo vai receber uma referência dele. Se ele não tentar fazer nada com o objeto até que o segundo módulo tenha terminado seu carregamento, as coisas vão funcionar.
 
 ### A return to electronic life
 

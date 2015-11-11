@@ -398,9 +398,9 @@ O segredo é adicionar o objeto `exports` criado por um módulo para requisitar 
 
 Mas se, no curso de carregar o módulo, um segundo módulo é carregado e solicita o primeiro módulo, seu objeto `exports` padrão, ainda vazio até este ponto, vai estar no cache, e o segundo módulo vai receber uma referência dele. Se ele não tentar fazer nada com o objeto até que o segundo módulo tenha terminado seu carregamento, as coisas vão funcionar.
 
-### A return to electronic life
+### Um retorno a vida eletrônica
 
-Hoping that Chapter 7 is still somewhat fresh in your mind, think back to the system designed in that chapter and come up with a separation into modules of the code. To refresh your memory, these are the functions and types defined in that chapter, in order of appearance.
+Esperando que o capítulo 7 ainda esteja um pouco fresco em sua mente, pense novamente no sistema projetado neste capítulo e elabore um separação em módulo para o código. Para refrescar sua memória, essas são as funções e tipos definidos naquele capítulo, em ordem de aparição.
 
 - Point
 - Grid
@@ -421,13 +421,13 @@ Hoping that Chapter 7 is still somewhat fresh in your mind, think back to the sy
 - SmartPlantEater
 - Tiger
 
-Do not exaggerate and create too many modules. A book that starts a new chapter for every page would probably get on your nerves, if only because of all the space wasted on titles. Similarly, having to open ten files to read a tiny project isn’t helpful. Aim for three to five modules.
+Não exagere em criar muitos módulos. Um livro que começa um novo capítulo para cada página provavelmente vai te deixar nervoso, por todo espaço perdido com os títulos. De forma similar, ter que abrir dez arquivos para ler um pequeno projeto não é útil. Vise por três ou cinco módulos.
 
-You can choose to have some functions become internal to their module, and thus inaccessible to other modules.
+Você pode escolher ter algumas funções internas ao módulo, e então inacessíveis a outros módulos.
 
-There is no single correct solution here. Module organization is largely a matter of taste.
+Não existe uma única solução correta aqui. Organização de módulos é meramente uma questão de gosto.
 
-Here is what I came up with. I’ve put parentheses around internal functions.
+Aqui está o que eu fiz. Coloquei parenteses em torno de funções internas.
 
 - Module "grid"
 	+ Point
@@ -455,8 +455,6 @@ Here is what I came up with. I’ve put parentheses around internal functions.
 	+ SmartPlantEater
 	+ Tiger
 
-I have re-exported the directions array from the grid module from world, so that modules built on that (the ecosystems) don’t have to know or worry about the existence of the grid module.
+Eu reexportei o array `directions` do módulo `grid` para `world`, então módulos criados com eles (`ecosystems`) não precisam de saber ou se preocupar da existência do módulo `grid`.
 
-I also duplicated two generic and tiny helper values (randomElement and Wall) since they are used as internal details in different contexts, and do not belong in the interfaces for these modules.
-
-
+Eu também dupliquei dois valores minúsculos e genéricos (`randomElement` e `Wall`) pois eles são usados como detalhes internos em contextos diferentes, e não pertencem nas interfaces destes módulos.

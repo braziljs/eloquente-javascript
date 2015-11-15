@@ -208,17 +208,19 @@ console.log(JSON.parse(req.responseText));
 
 ## HTTP _Sandboxing_
 
-Executar requisições HTTP através de scripts em uma página web levanta mais uma vez questões sobre segurança. A pessoa que controla o script pode não ter os mesmos interesses que a pessoa do computador o qual o script está executando. Mais especificamente, se eu visitar themafia.org, eu não quero que seus scripts façam uma requisição para mybank.com, utilizando informações de identificação do browser, com instruções para transferir todo meu dinheiro para alguma conta da máfia.
+Fazer requisições HTTP usando _scripts_ em uma página web levanta preocupações em relação à segurança. A pessoa que controla o _script_ pode não ter os mesmos interesses que a pessoa do computador o qual o _script_ está executando. Mais especificamente, se eu visitar _themafia.org_, eu não quero que seus _scripts_ possam fazer requisições para _mybank.com_, usando informações de identificação do meu navegador, com instruções para transferir todo meu dinheiro para alguma conta da máfia.
 
-É possível para websites se protegerem eles mesmos contra tais ataques, mas isso requer esforço, e muitos websites falham neste ponto. Por esta razão, browsers protegem o usuário desabilitando scripts de fazerem requisições HTTP para outro domínio (nomes como themafia.org e mybank.com).
+É possível que websites se protejam desses tipos de ataques, porém, é preciso muito esforço e muitos websites falham ao fazê-lo. Por essa razão, os navegadores nos protegem não permitindo que _scripts_ façam requisições HTTP para outros domínios (nomes como _themafia.org_ e _mybank.com_).
 
-Isto pode ser um problema irritante quando criando sistemas que querem acessar vários domínios por razões legitimas. Felizmente, servidores podem incluir um cabeçalho como esse em sua resposta para explicitamente indicar aos browsers que é permitido requisições de outro domínio:
+Isso pode ser um problema irritante quando construímos sistemas que queiram acessar diferentes domínios por razões legítimas. Felizmente, servidores podem incluir um cabeçalho como esse em sua resposta para indicar explicitamente aos navegadores que é permitido requisições que venham de outros domínios:
 
+```
 Access-Control-Allow-Origin: *
+```
 
-Abstraindo Requisições
+## Abstraindo Requisições
 
-No Capítulo 10, em nossa implementação do módulo AMD, nós usamos uma função hipotética chamada <i>backgroundReadFile</i>. Ela recebeu um caminho de arquivo e uma função e chamou esta função com o conteúdo do arquivo quando ele acabou de ser recuperado. Aqui um exemplo de uma implementação desta função:
+No [Capítulo 10](./10-modulos.md), em nossa implementação do módulo AMD, usamos uma função hipotética chamada `backgroundReadFile`. Ela recebia um nome de arquivo e uma função e, após o carregamento do arquivo, chamava a função com o conteúdo recuperado. Aqui está uma implementação simples dessa função:
 
 ```js
 function backgroundReadFile(url, callback) {

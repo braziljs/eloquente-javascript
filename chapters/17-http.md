@@ -234,18 +234,17 @@ function backgroundReadFile(url, callback) {
 }
 ```
 
-Essa simples abstração torna mais fácil usar <i>XMLHttpRequest</i> para simples requisições GET. Se você está escrevendo um programa que precisa fazer requisições HTTP, é uma boa idéia usar uma função helper para que você não acabe repetindo o esquisito padrão <i>XMLHttpRequest</i> por todo o código.
+Essa simples abstração torna mais fácil usar `XMLHttpRequest` para fazer simples requisições `GET`. Se você está escrevendo um programa que precisa fazer requisições HTTP, é uma boa ideia usar uma função auxiliar para que você não acabe repetindo o esquisito padrão `XMLHttpRequest` por todo o seu código.
 
-O nome da função argumento, <i>callback</i>, é um termo normalmente usado para descrever funções como essa. Uma função <i>callback</i> é fornecida a outro código para prover a este código uma forma de "ser chamado" mais tarde.
+O nome da função argumento (`callback`) é um termo frequentemente usado para descrever funções como essa. Uma função _callback_ é fornecida para outro código de forma que possa "ser chamada" mais tarde.
 
-Não é difícil escrever sua função de utilidades HTTP, adaptada a o que sua aplicação está fazendo. A função anterior apenas faz requisições GET e não nos dá controle sobre os cabeçalhos ou o corpo da requisição. Você pode escrever outra variação da função para requisições POST ou uma mais genérica que suporta vários tipos de requisição. Muitas bibliotecas Javascript também fornecem funções <i>wrappers</i> para <i>XMLHttpRequest</i>.
+Não é difícil escrever uma função utilitária HTTP adaptada para o que sua aplicação está fazendo. A função anterior apenas faz requisições `GET` e não nos dá controle sobre os cabeçalhos ou sobre o corpo da requisição. Você pode escrever outra variação da função para requisições `POST` ou uma versão genérica que suporte vários tipos de requisições. Muitas bibliotecas JavaScript também fornecem funções _wrappers_ para `XMLHttpRequest`.
 
-O principal problema com a função <i>wrapper</i> anterior é sua manipulação de falhas. Quando a requisição retorna um código de status que indica um erro (400 para cima), a função não faz nada. Isso pode ser admitido, em algumas circunstâncias, mas imagine nós colocarmos um indicador de "carregando" na página para demonstrar que estamos recuperando informação. Se a requisição falhar por causa de queda do servidor ou a conexão ser interrompida, a página simplesmente permanecerá em seu estado, demonstrando de forma errada como se estivesse executando algo. O usuário irá esperar por algum instante, ficar impaciente, e por fim considerar o site problemático.
+O principal problema com a função _wrapper_ anterior é sua capacidade de lidar com falhas. Quando a requisição retorna um código de _status_ que indica um erro (400 para cima), ela não faz nada. Isso pode ser aceitável em algumas circunstâncias, mas imagine que colocamos na página um indicador de "carregando" para dizer que estamos carregando informação. Se a requisição falhar por causa de queda do servidor ou a conexão for interrompida, a página irá apenas manter o seu estado, parecendo que está fazendo alguma coisa. O usuário irá esperar um tempo, ficar impaciente e, por fim, considerar que o site é problemático.
 
 Nós também devemos ter uma opção de ser notificado quando a requisição falhar para que possamos tomar uma ação apropriada. Por exemplo, podemos remover a mensagem "carregando" e informar ao usuário que algo errado aconteceu.
 
-Manusear erro em código assíncrono é ainda mais traiçoeiro que manusear erro em código síncrono. O motivo é que
-normalmente temos que procrastinar parte de nosso trabalho o colocando em uma função <i>callback</i>, o escopo de um bloco try se torna sem sentido. No seguinte código, a exceção não será pega porque a chamada para backgroundReadFile retorna imediatamente. O controle então deixa o bloco <i>try</i>, e a função que foi determinada não será chamada até mais tarde.
+Manipular erros em código assíncrono é ainda mais trabalhoso do que manipulá-los em código síncrono. Frequentemente, adiamos parte do nosso trabalho colocando-o em uma função _callback_ e, por isso, o escopo de um bloco `try` acaba não fazendo sentido. No código a seguir, a exceção _não_ será capturada pois a chamada à função `backgroundReadFile` retorna imediatamente. O controle de execução então sai do bloco `try` e a função que foi fornecida não será chamada até um momento posterior.
 
 ```js
 try {
@@ -258,8 +257,7 @@ try {
 }
 ```
 
-Para manusear requisições que falharam, temos que permitir uma função adicional para ser passada para nosso <i>wrapper</i>
-e o chamar quando a requisição falhar. Alternativamente, podemos usar a convenção de que caso a requisição falhe, um argumento adicional descrevendo o problema é passado à chamada regular da função <i>callback</i>. Segue um exemplo:
+Para lidar com requisições que falharam, precisamos permitir que uma função adicional seja passada para nosso _wrapper_ e chamá-la quando ocorrer algo errado. Alternativamente, podemos usar a convenção de que, caso a requisição falhar, um argumento adicional descrevendo o problema é passado para a chamada regular da função _callback_. Segue um exemplo:
 
 ```js
 function getURL(url, callback) {
@@ -279,30 +277,32 @@ function getURL(url, callback) {
 }
 ```
 
-Nós adicionamos uma função manipuladora para o evento "error", o qual será sinalizado quando a requisição falhar por completo. Nós também chamamos a função de <i>callback </i> com um argumento de erro quando a requisição completa com um código de status que indica um erro.
+Adicionamos um manipulador para o evento de `"error"` (erro), o qual será sinalizado quando a requisição falhar por completo. Também chamamos a função _callback_ com um argumento de erro quando a requisição finaliza com um código de _status_ que indica um erro.
 
-O código usando getURL deve então checar se um erro aconteceu e, caso encontre um, tratá-lo.
+O código que utiliza `getUrl` deve, então, verificar se um erro foi fornecido e, caso tenha sido, tratá-lo.
 
+```js
 getURL("data/nonsense.txt", function(content, error) {
   if (error != null)
     console.log("Failed to fetch nonsense.txt: " + error);
   else
     console.log("nonsense.txt: " + content);
 });
+```
 
-Isto não funciona quando se trata de exceções. Ao encadear várias ações assíncronas, uma exceção em qualquer ponto da cadeia permanecerá (ao menos que você encapsule cada função de tratamento em seu próprio bloco try/catch) no topo da cadeia e abortará a sequencia de ações.
+Isso não funciona quando se trata de exceções. Ao encadear várias ações assíncronas, uma exceção em qualquer ponto da cadeia ainda irá (a não ser que você envolva cada função em seu próprio bloco `try`/`catch`) chegar ao topo e abortar a sequência de ações.
 
-Promises
+## _Promises_
 
-Para projetos complexos, escrever código assíncrono no tradicional estilo de <i>callbacks</i> é difícil de ser feito corretamente. É fácil de esquecer a checagem de um erro ou permitir uma exceção não esperada para encerrar o programa de forma abrupta. Além disso, alterações para corrigir tratamento de erros precisam fluir através de múltiplas funções <i>callbacks</i> e blocos <i>catch</i> são tediosos de se criar.
+Para projetos complicados, escrever código assíncrono usando o estilo de _callbacks_ é difícil de ser feito corretamente. É fácil esquecer de verificar um erro ou permitir que uma exceção inesperada encerre a execução do programa. Além disso, lidar com erros quando os mesmos devem ser passados por um fluxo de múltiplas funções _callback_ e blocos _catch_ é tedioso.
 
-Várias tentativas de solucionar esse problema têm sido feitas com abstrações extras. Uma das mais bem sucedidas é chamada de <i>promises</i>. <i>Promises</i> encapsulam uma ação assíncrona em um objeto, que pode ser passado e instruído a fazer algo quando a ação finalizar ou falhar. Essa interface está definida para ser parte da próxima versão da linguagem Javascript mas já pode ser usada em forma de biblioteca.
+Já foram feitas várias tentativas para resolver esse problema usando abstrações adicionais. Uma das mais bem-sucedidas é chamada de _promises_. _Promises_ encapsulam uma ação assíncrona em um objeto, que pode ser passado e instruído a fazer certas coisas quando a ação finalizar ou falhar. Essa interface está definida para ser parte da próxima versão da linguagem JavaScript, mas já pode ser usada em forma de biblioteca.
 
-A interface de <i>promises</i> não pode ser chamada de intuitiva, mas ela é poderosa. Esse capítulo irá apenas brevemente o descrever. Você pode encontrar uma documentação mais minunciosa em www.promisejs.org.
+A interface para usar _promises_ não é muito intuitiva, mas é poderosa. Esse capítulo irá brevemente descrevê-la. Você pode encontrar mais informações em [www.promisejs.org](www.promisejs.org)
 
-Para criar um objeto <i>promise</i>, nós chamamos um construtor <i>Promise</i>, passando uma função que inicia a ação assíncrona. O construtor chama esta função, passando dois argumentos, os quais são tambem funções. A primeira deve ser chamada quando a ação terminar com sucesso, e a segunda quando ela falhar.
+Para criar um objeto _promise_, chamamos o construtor `Promise` passando uma função que inicia a ação assíncrona. O construtor chama essa função passando dois argumentos, os quais também são funções. A primeira função deve ser chamada quando a ação terminar com sucesso e a segunda quando ela falhar.
 
-Mais uma vez, segue nosso <i>wrapper</i> para requisições GET, dessa vez retornando uma <i>promise</i>. Nos simplesmente a chamaremos de <i>get</i> desta vez.
+Mais uma vez, segue nosso _wrapper_ para requisições `GET`, dessa vez retornando uma _promise_. Nós vamos apenas chamá-lo de `get` dessa vez.
 
 ```js
 function get(url) {
@@ -323,7 +323,7 @@ function get(url) {
 }
 ```
 
-Note que a interface da função em si é agora bem mais simples. Você passa uma URL, e ela retorna uma <i>promise</i>. Essa <i>promise</i> age como um manipulador. Ela agora tem um método <i>then</i> que pode ser chamado com duas funções: uma para o caso de sucesso e outra para o caso de falha.
+Note que a interface da função em si é bem mais simples. Você passa uma URL e ela retorna uma _promise_. Essa _promise_ atua como um manipulador do resultado da requisição. Ela possui um método `then` que pode ser chamado com duas funções: uma para tratar o sucesso e outra para tratar a falha.
 
 ```js
 get("example/data.txt").then(function(text) {
@@ -333,11 +333,11 @@ get("example/data.txt").then(function(text) {
 });
 ```
 
-No entanto, essa é apenas outra forma de expressar a mesma coisa que já haviamos expressado. E apenas quando você precisa encadear ações juntas que as <i>promises</i> fazem uma diferenca significante.
+Até agora, isso é apenas outra forma de expressar a mesma coisa que já havíamos expressado. É apenas quando você precisa encadear ações que as _promises_ fazem uma diferença significativa.
 
-A chamada ao método <i>then</i> produz uma nova <i>promise</i>, a qual o resultado (o valor passado para o manipulador em caso de sucesso) depende do valor de retorno da primeira função que passamos para o <i>then</i>. Essa função pode retornar outra <i>promise</i> para indicar que mais tarefas assincronas estão sendo executadas. Neste caso, a própria<i>promise</i> retornado pelo <i>then</i> IRA esperar pela <i>promise</i> retornada pela função manipuladora, obtendo sucesso ou falhando com o mesmo valor quando for resolvida. Quando a função manipuladora retornar um valor que não seja uma <i>promise</i>, a <i>promise</i> retornada pelo <i>then</i> imediatamente retorna com sucesso com tal valor como seu resultado.
+Chamar o método `then` produz uma nova _promise_, a qual o resultado (o valor passado ao manipulador em caso de sucesso) depende do valor de retorno da primeira função fornecida ao `then`. Essa função pode retornar outra _promise_ para indicar que mais tarefas assíncronas estão sendo executadas. Nesse caso, a _promise_ retornada pelo `then` irá esperar pela _promise_ retornada pela função manipuladora, obtendo sucesso ou falhando com o mesmo valor quando for resolvida. Quando a função manipuladora retornar uma valor que não seja uma _promise_, a _promise_ retornada pelo `then` imediatamente retorna com sucesso usando esse valor como seu resultado.
 
-Isso significa que você pode usar <i>then</i> para transformar o resultado de uma <i>promise</i>. Por exemplo, o codigo a seguir retorna uma <i>promise</i> a qual o resultado é o conteudo de uma dada URL, montado como JSON:
+Isso significa que você pode usar `then` para transformar o resultado de uma _promise_. Por exemplo, o código a seguir retorna uma _promise_ a qual o resultado é o conteúdo de uma dada URL representada como JSON:
 
 ```js
 function getJSON(url) {
@@ -345,12 +345,13 @@ function getJSON(url) {
 }
 ```
 
-A última chamada ao <i>then</i> não especificou um manipulador de falhas. Isso é permitido. O erro sera passado para a <i>promise</i> retornada pelo <i>then</i>, a qual é exatamente o que nós queremos - <i>getJSON</i> não sabe o que fazer quando algo acontece errado, mas provavelmente seu chamador sabe.
+A última chamada ao `then` não especificou um manipulador para falhas. Isso é permitido. O erro será passado para a _promise_ retornada pelo `then`, que é exatamente o que queremos — `getJSON` não sabe o que fazer quando algo der errado mas, esperançosamente, a função que o chamou sabe.
 
-Como um exemplo que demonstra o uso de <i>promises</i>, nós iremos construir um programa que carrega um numero de arquivos JSON do servidor e, enquanto isso é feito, mostra o carregamento de palavras. Os arquivos JSON contem informações sobre pessoas, com links para arquivos que representam outras pessoas em propriedades como pai, mãe ou esposa.
+Como um exemplo que demonstra o uso de _promises_, iremos construir um programa que carrega um número de arquivos JSON do servidor e, enquanto isso é feito, mostra a palavra "carregando". Os arquivos JSON contêm informações sobre pessoas, com links para arquivos que representam outras pessoas em condições como `father`, `mother` ou `spouse` (pai, mãe ou cônjuge).
 
-Nós queremos recuperar o nome da mãe da esposa de example/bert.json. E caso algo errado ocorra, nós queremos remover o texto de carregamento e mostrar uma mensagem de erro no lugar. Segue um exemplo de como isso é feito com <i>promises</i>:
+Nós queremos recuperar o nome da mãe do cônjuge de _example/bert.json_ e, se algo der errado, remover o texto "carregando" e mostrar uma mensagem de erro. Segue uma forma de como isso pode ser feito usando _promises_:
 
+```js
 <script>
   function showMessage(msg) {
     var elt = document.createElement("div");
@@ -371,51 +372,52 @@ Nós queremos recuperar o nome da mãe da esposa de example/bert.json. E caso al
     document.body.removeChild(loading);
   });
 </script>
-O programa acima é relativamente compacto e legivel. O método <i>catch</i> é similar ao <i>then</i>, exceto que ele apenas espera um manipulador de falha e entao passa pelo resultado não modificado em caso de sucesso. Assim como a clausula <i>catch</i> para uma bloco <i>try</i>, o controle seguirá seu fluxo normal após a falha ser capturada. Desta forma, o derradeiro <i>then</i>, o qual remove a mensagem de carregamento, será sempre executado, mesmo que algum erro ocorra.
+```
 
-Você pode pensar na interface de <i>promise</i> como uma implementacao de sua própria linguagem para controle de fluxo assincrono. As chamadas extras de métodos e funções de expressão necessarias para atingir a tarefa fazem o codigo parecer meio esquisito mas não mais esquisito se fosse necessario tratar todas excecoes na forma tradicional.
+O programa acima é relativamente compacto e legível. O método `catch` é similar ao `then`, exceto que ele espera um manipulador de erro como argumento e passará pelo resultado sem alterá-lo em caso de sucesso. Muito parecido com o `catch` em um bloco `try`, o controle de execução irá continuar normalmente depois que a falha é capturada. Dessa forma, o `then` que executa ao final e é responsável por remover a mensagem de "carregando", é sempre executado, mesmo se algo der errado.
 
-Apreciando o HTTP
+Você pode pensar na interface de _promise_ como uma implementação de uma linguagem própria para o controle de fluxo assíncrono. As chamadas adicionais de métodos e expressões de funções fazem com que o código pareça um pouco estranho, mas não tão estranhos quanto se tivéssemos que lidar com todos os erros nós mesmos.
 
-Ao construir um sistema que requer comunicação entre um Javascript rodando no browser (lado cliente) e um programa em um servidor (lado servidor), existem varias maneiras diferentes de modelar essa comunicação.
+## Apreciando o HTTP
 
-Um modelo comumente usado é o de chamadas de procedimentos remotos. Neste modelo, a comunicação segue o padrão de chamadas normais de função, exceto pelo fato de que a função esta sendo executada em outra máquina. Esta chamada envolve a execução de uma requisão para o servidor que inclui o nome da função e seus argumentos. A resposta para essa requisição contém o valor retornado.
+Quando estamos construindo um sistema que requer comunicação entre um programa executando JavaScript no navegador (_client-side_) e um programa em um servidor (_server-side_), existem várias maneiras diferentes de modelar essa comunicação.
 
-Ao pensar em termos de chamadas de procedimentos remotos, HTTP é apenas o veículo da comunicação, e você provavelmente escreverá uma camada de abstração que o esconda completamente.
+Um modelo bastante usado é o de _chamadas de procedimentos remotos_. Nesse modelo, a comunicação segue o padrão de chamadas normais de função, exceto pelo fato de que a função está sendo executada em outra máquina. Essa chamada envolve fazer uma requisição ao servidor, incluindo o nome da função e seus argumentos. A resposta para essa requisição contém o valor retornado.
 
-Outra abordagem é estruturar sua comunicação em torno do conceito de recursos e métodos HTTP. Ao invés de um procedimento remoto chamado <i>addUser</i>, utilizar uma requisição PUT para /users/larry. Ao invés de codificar tais propriedades do usuário nos argumentos da função, você define um formato de documento ou usa um formato existente que represente um usuário. O corpo da requisição PUT para criar um novo recurso é, em seguida, simplesmente como um documento. Um recurso é preenchido por requisições GET à URL do recurso (por exemplo /user/larry), o qual retorna o documento que representa o recurso.
+Quando estiver pensando sobre chamadas de procedimentos remotos, o HTTP é apenas um veículo para a comunicação, e você provavelmente escreverá uma camada de abstração para escondê-la.
 
-Esta segunda abordagem torna mais fácil utilizar os recursos providos pelo HTTP, como suporte para recursos de <i>caching</i> (mantendo uma cópia no lado do cliente). Isso também ajuda na coerência de sua interface uma vez que recursos são mais fáceis de serem compreendidos que um punhado de funções.
+Outra abordagem é construir sua comunicação em torno do conceito de recursos e métodos HTTP. Ao invés de um procedimento remoto chamado `addUser`, utilizar uma requisição `PUT` para `/users/larry`. Ao invés de passar as propriedades daquele usuário como argumentos da função, você define um formato de documento ou usa um formato existente que represente um usuário. O corpo da requisição `PUT` para criar um novo recurso é simplesmente tal documento. Um recurso pode ser acessado por meio de uma requisição `GET` para a URL do recurso (por exemplo, `/user/larry`), o qual retorna o documento que representa tal recurso.
 
-Segurança e HTTPS
+Essa segunda abordagem torna mais fácil utilizar as funcionalidades que o HTTP fornece, como suporte para _cache_ de recursos (mantendo uma cópia no lado do cliente). Além disso, ajuda na coerência de sua interface, visto que os recursos são mais fáceis de serem compreendidos do que um monte de funções.
 
-Envio de dados pela Internet tendem a seguir uma longa, perigosa estrada. Para chegar ao seu destino, a informação pode viajar por variados ambientes desde redes wifi de cafeterias até redes controladas por várias empresas e estados. Em qualquer ponto, a informação pode ser inspecionada ou até modificada.
+## Segurança e HTTPS
 
-Se for importante que algo se mantenha secreto, como a senha de sua conta de email, ou que chegue ao seu destino de forma inalterada, como o número da conta que você irá transferir dinheiro através do site de seu banco, o simples protocolo HTTP não é bom o suficiente.
+Dados que trafegam pela Internet tendem a seguir uma longa e perigosa estrada. Para chegar ao seu destino, a informação passa por vários ambientes desde redes Wi-Fi em cafeterias até redes controladas por várias empresas e estados. Em qualquer ponto dessa rota, os dados podem ser inspecionados e, até mesmo, modificados.
 
-O protocolo HTTP seguro, o qual as URLS começam com https://, encapsula o tráfego HTTP de forma que dificulta sua leitura e alteração. Primeiramente, o cliente verifica se o servidor é quem ele diz ser solicitando que o servidor prove que possui um certificado criptografico concedido por uma autoridade certificadora que o browser reconheça. Posteriormente, toda informação a ser trafegada pela conexão é criptografada de forma que ela seja protegida de espionagem e violação.
+Se for importante que algo seja secreto, como a senha da sua conta de email, ou que chegue ao destino final sem ser modificado, como o número da conta que você irá transferir dinheiro por meio do site do seu banco, usar simplesmente HTTP não é bom o suficiente.
 
-Desta forma, quando funciona corretamente, HTTPS previne ambas situações onde alguem se passa pelo website que você estava tentando se comunicar e quando alguem está vigiando sua comunicação. O protocolo não é perfeito, e vários incidentes foram causados onde o HTTPS falhou por causa de certificado forjado ou roubado e software corrompido. Mesmo assim, HTTP simples é fácil de ser burlado enquanto que burlar HTTPS requer um certo esforço que apenas grandes entidades como empresas governamentais ou sofisticadas organizações criminosas estão dispostas a gastar.
+O protocolo HTTP seguro, o qual as URLs começam com _https://_, encapsula o tráfego HTTP de forma que dificulta a leitura e alteração. Primeiramente, o cliente verifica se o servidor é de fato quem ele diz ser, obrigando-o a provar que possui um certificado criptográfico emitido por uma autoridade certificadora que o navegador reconheça. Por fim, todos os dados que trafegam pela conexão são criptografados de forma que assegure que eles estejam protegidos contra espionagem e violação.
 
-Sumário
+Por isso, quando funciona corretamente, o HTTPs previne ambas situações onde alguém finja ser o website ao qual você estava tentando se comunicar e quando alguém está vigiando sua comunicação. O protocolo não é perfeito e já houveram vários incidentes onde o HTTPs falhou por causa de certificados forjados, roubados e software corrompido. Mesmo assim, é trivial burlar o HTTP simples, enquanto que burlar o HTTPs requer um certo nível de esforço que apenas estados ou organizações criminosas sofisticadas estão dispostas a fazer.
 
-Neste capítulo nós vimos que o HTTP é um protocolo para acessar recursos através da Internet. Um cliente envia uma requisição, a qual contém um método (normalmente GET) e um caminho que identifica um recurso. O servidor então decide o que fazer com a requisição e responde com um código de status e um corpo de resposta. Ambos requisição e resposta podem conter cabeçalhos, provendo informação adicional.
+## Resumo
 
-Browsers fazem requisições GET para recuperar o recurso necessário para montar uma página. Uma página pode conter formulários, o que permite que informações inseridas pelo usuário sejam enviadas juntas com a requisição quando o formulário é submetido. Você aprenderá mais sobre este assunto no próximo capítulo.
+Vimos nesse capítulo que o HTTP é um protocolo para acessar recursos usando a Internet. O _cliente_ envia uma requisição, a qual contém um método (normalmente `GET`) e um caminho que identifica o recurso. O _servidor_ então decide o que fazer com a requisição e responde com um código de _status_ e o corpo da resposta. Tanto requisições quanto respostas podem conter _headers_ (cabeçalhos) que fornecem informação adicional.
 
-A interface na qual o Javascript do browser pode fazer requisições HTTP é chamado <i>XMLHttpRequest</i>. Você pode ignorar o "XML" do nome (mas mesmo assim precisa digitá-lo). Existem duas formas nas quais ele pode ser usado - síncrono, onde o processo bloqueia tudo até que a requisição termine, e assíncrono, o qual requer um manuseador de evento para avisar que a resposta chegou. Em quase todos os casos, assíncrono é preferido. Fazer uma requisição é algo parecido com o código a seguir:
+Navegadores fazem requisições `GET` para acessar recursos necessários para mostrar uma página web. Uma página pode também conter formulários, os quais permitem que informações inseridas pelo usuário sejam enviadas juntas com a requisição quando o formulário é submetido. Você aprenderá mais sobre esse assunto no [próximo capítulo](./18-formularios-e-campos-de-formularios.md).
+
+A interface na qual o JavaScript do navegador pode fazer requisições HTTP é chamada `XMLHttpRequest`. Você normalmente pode ignorar o "XML" do nome (mas mesmo assim precisa digitá-lo). Existem duas formas em que a interface pode ser usada. A primeira forma é síncrona, bloqueando toda a execução até que a requisição finalize. A segunda é assíncrona, precisando usar um manipulador de eventos para avisar que a resposta chegou. Em quase todos os casos é preferível usar a forma assíncrona. Fazer uma requisição é algo parecido com o código a seguir:
 
 ```js
 var req = new XMLHttpRequest();
 req.open("GET", "example/data.txt", true);
 req.addEventListener("load", function() {
-  console.log(req.statusCode);
+  console.log(req.status);
 });
 req.send(null);
 ```
 
-Programação assíncrona é traiçoeira. <i>Promises</i> são interfaces que tornam a programação assíncrona mais fácil ajudando
-a rotear condições de erro e exceções para o manuseador correto e abstraindo alguns elementos repetitivos e tendentes a erro neste estilo de programação.
+Programação assíncrona é traiçoeira. _Promises_ são interfaces que tornam a programação assíncrona um pouco mais fácil, ajudando a rotear condições de erro e exceções para os manipuladores corretos e abstraindo muitos elementos repetitivos e suscetíveis a erro presentes nesse estilo de programação.
 
 Exercícios
 

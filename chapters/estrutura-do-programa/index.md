@@ -375,7 +375,7 @@ Há um construtor chamado `switch` que visa resolver o "envio" de valores de for
 
 <pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 switch (prompt("Como está o tempo?")) {
-    case "rainy":
+    case "chuvoso":
         console.log("Lembre-se de trazer um guarda-chuva!");
         break;
     case "ensolarado":

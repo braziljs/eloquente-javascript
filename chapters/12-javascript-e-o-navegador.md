@@ -1,4 +1,3 @@
-# Chapter 12 - JavaScript and the Browser
 # JavaScript e o Navegador
 
 > "O navegador é um ambiente realmente hostil de programação."

@@ -419,25 +419,35 @@ req.send(null);
 
 Programação assíncrona é traiçoeira. _Promises_ são interfaces que tornam a programação assíncrona um pouco mais fácil, ajudando a rotear condições de erro e exceções para os manipuladores corretos e abstraindo muitos elementos repetitivos e suscetíveis a erro presentes nesse estilo de programação.
 
-Exercícios
+## Exercícios
 
-Negociação de conteúdo
+### Negociação de conteúdo
 
-Uma das coisas que HTTP pode fazer mas que não discutimos neste capítulo ainda é chamada negociação de conteúdo. O cabeçalho <i>Accept</i> de uma requisição pode ser usado para dizer ao servidor que tipo de documento o cliente gostaria de receber. Muitos servidores ignoram este cabeçalho, mas quando um servidor sabe de várias maneiras como codificar um recurso, ele pode olhar este cabeçalho e enviar aquele que o cliente prefere.
+Uma das coisas que o HTTP pode fazer, mas que não discutimos nesse capítulo, é chamada de _negociação de conteúdo_. O cabeçalho `Accept` de uma requisição pode ser usado para dizer ao servidor qual o tipo de documento que o cliente gostaria de receber. Muitos servidores ignoram esse cabeçalho, mas quando o servidor sabe como converter um recurso de várias formas, ele pode olhar esse cabeçalho e enviar a forma que o cliente prefere.
 
-A URL eloquentjavascript.net/author é configurada para responder tanto como texto plano, HTML ou JSON, dependendo de como o cliente solicita. Estes formatos são identificados pelos tipos de mídia padronizados text/plain, text/html e application/json.
+A URL [_eloquentjavascript.net/author_](eloquentjavascript.net/author) é configurada para responder tanto com formato simples de texto quanto com HTML ou JSON, dependendo de como o cliente solicita. Esses formatos são identificados pelos _tipos de mídia_ `text/plain`, `text/html` e `application/json`.
 
-Envie requisições para recuperar os tres formatos deste recurso. Use o método <i>setRequestHeader</i> de seu objeto <i>XMLHttpRequest</i> para definir o valor do cabeçalho chamado <i>Accept</i> para um dos tipos de mídia fornecidos anteriormente. Certifique-se de definir o valor do cabeçalho após chamar o método <i>open</i> mas antes de chamar o método <i>send</i>.
+Envie requisições para recuperar todos os três formatos desse recurso. Use o método `setRequestHeader` do seu objeto `XMLHttpRequest` para definir o valor do cabeçalho chamado `Accept` para um dos tipos de mídia descritos acima. Certifique-se de configurar o cabeçalho _após_ chamar o método `open` e antes de chamar o método `send`.
 
-Por último, tente recuperar o tipo de mídia application/rainbows+unicorns e veja o que acontece.
+Por fim, tente solicitar pelo tipo de mídia `application/rainbows+unicorns` e veja o que acontece.
 
-// Seu código aqui
+```js
+// Your code here.
+```
 
-Para trabalhar com múltiplos promises utilizamos um método chamado <i>all</i> que, dado um array de <i>promises</i>, retorna uma <i>promise</i> que espera por todos os <i>promises</i> do array acabarem. Se obtiver sucesso, resultará em um array com os valores resultantes. Se qualquer das <i>promises</i> do array falhar, a <i>promise</i> retornada pelo <i>all</i> falhará também (com o valor de falha da <i>promise</i> que falhou).
+**Dicas:**
 
-Tente implementar algo assim por sua conta com uma função chamada <i>all</i>.
+Veja os vários exemplos que usam `XMLHttpRequest` nesse capítulo, para ter uma ideia de como são as chamadas de métodos que envolvem fazer uma requisição. Você pode usar uma requisição síncrona (informando `false` como o terceiro parâmetro para `open`), se preferir.
 
-Observe que após um <i>promise</i> ser resolvida (tendo sucesso ou mesmo falhado), ela pode ter sucesso ou falhar de novo, e outras chamadas para as funções que resolvem isso são ignoradas. Isto pode simplificar a maneira que você manuseia falhas em sua <i>promise</i>.
+Solicitar por um tipo de mídia inexistente, fará com que a resposta seja retornada com o código 406, _"Not acceptable"_ (Não aceitável), que é o código que o servidor deve retornar quando ele não pode satisfazer o cabeçalho `Accept`.
+
+### Esperando por múltiplas _promises_
+
+O construtor _Promise_, possui um método chamado `all` que, quando fornecido um _array_ de _promises_, retorna uma _promise_ que aguarda a finalização de todas as _promises_ do array. O método `all`, então, finaliza com sucesso, gerando um _array_ com os valores dos resultados. Se qualquer uma das _promises_ do _array_ falhar, a _promise_ retornada pelo `all` também falha, recebendo o valor de falha da _promise_ que falhou inicialmente.
+
+Tente implementar algo parecido com isso usando uma função normal chamada `all`.
+
+Observe que depois que a _promise_ é resolvida (obtendo sucesso ou falhado), ela não pode ter sucesso ou falhar novamente, ignorando as chamadas às funções posteriores que tentam resolvê-la. Isso pode facilitar a maneira que você manipula as falhas em sua _promise_.
 
 ```js
 function all(promises) {
@@ -446,7 +456,7 @@ function all(promises) {
   });
 }
 
-// Testar código
+// Test code.
 all([]).then(function(array) {
   console.log("This should be []:", array);
 });
@@ -472,10 +482,10 @@ all([soon(1), fail(), soon(3)]).then(function(array) {
 });
 ```
 
-Dicas
+**Dicas:**
 
-A função passada ao construtor <i>Promise</i> terá que chamar <i>then</i> em cada dos <i>promises</i> do array dado. Quando um deles obtêm sucesso, duas coisas precisam acontecer: O valor resultante precisa ser armazenado na posição correta de um array resultante, e devemos checar se este foi o ultimo <i>promise</i> pendente e terminar nossa própria <i>promise</i> caso tenha sido.
+A função passada ao construtor `Promise` terá que chamar o método `then` para cada uma das _promises_ do _array_ fornecido. Quando uma delas obtiver sucesso, duas coisas precisam acontecer. O valor resultante precisa ser armazenado na posição correta em um _array_ de resultados e devemos, também, verificar se essa foi a última _promise_ pendente, finalizando nossa própria _promise_ caso tenha sido.
 
-O último pode ser resolvido com um contador, o qual é iniciado com a largura do array de entrada do qual nos subtraimos 1 toda vez que um <i>promise</i> obtem sucesso. Quando o contador atingir 0, encerramos. Garanta que o array de entrada esteja vazio (e portanto, nenhuma <i>promise</i> jamais irá resolver) em conta.
+O último pode ser feito usando um contador, que é inicializado com o valor do tamanho do _array_ fornecido e do qual subtraímos uma unidade cada vez que uma _promise_ for bem-sucedida. No momento em que o contador chega ao valor zero, terminamos. Certifique-se de lidar com a situação em que o _array_ fornecido é vazio e, consequentemente, nenhuma _promise_ será resolvida.
 
-Manusear falhas requer alguns esforços mas se torna extremamente simples. Apenas passe a função de falha para o <i>promise</i> responsável por encapsular aos <i>promises</i> do array de forma que uma falha em um deles dispare a falha para o <i>promise</i> encapsulador.
+Tratar falhas requer um pouco mais de esforço, mas acaba sendo extremamente simples. Basta passar, para cada _promise_ do _array_, a função que lida com a falha da _promise_ responsável por encapsular as _promises_ do array, de forma que uma falha em qualquer uma delas, irá disparar a falha para a _promise_ encapsuladora.

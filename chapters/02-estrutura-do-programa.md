@@ -54,7 +54,7 @@ Quando uma variável aponta para um valor, isso não significa que estará ligad
 ```javascript
 var mood = "light";
 console.log(mood);
-// ligth
+// light 
 mood = "dark";
 console.log(mood);
 // dark

@@ -607,7 +607,7 @@ Também existem as funções `Math.ceil` (para arredondar o valor para o maior n
 
 ## O objeto global
 
-O escopo global (o espaço no qual as variáveis globais residem), também pode ser abordado como um objeto no JavaScript. Cada variável global é representada como uma propriedade desse objeto. Nos navegadores, o objeto do escopo global é armazenado na variável `window`.
+O escopo global, que é o espaço no qual as variáveis globais residem, também pode ser abordado como um objeto no JavaScript. Cada variável global está presente como uma propriedade desse objeto. Nos navegadores, o objeto do escopo global é armazenado na variável `window`.
 
 ```js
 var myVar = 10;
@@ -619,11 +619,11 @@ console.log(window.myVar);
 
 ## Resumo
 
-Objetos e arrays (que são tipos específicos de objeto) fornecem maneiras de agrupar uma conjunto de valores em um único valor. Conceitualmente, ao invés de tentar carregar e manter todas as coisas individualmente em nossos braços, eles nos permitem colocar todas as coisas relacionadas dentro de uma bolsa e carregá-las.
+Objetos e _arrays_ (que são tipos específicos de objetos) fornecem maneiras de agrupar uma conjunto de valores em um único valor. Conceitualmente, ao invés de tentar carregar e manter todas as coisas individualmente em nossos braços, eles nos permitem colocar e carregar todas as coisas relacionadas dentro de uma bolsa.
 
-Com excessão de `null` e `undefined`, a maioria dos valores no JavaScript possuem propriedades e são acessadas usando `value.propName` ou `value["propName"]`. Objetos tendem a usar nomes para suas propriedades e armazenam mais o menos uma quantidade fixa delas. Por outro lado, os Arrays normalmente contêm quantidades variáveis de valores conceitualmente iguais e usam números (iniciando do zero) como os nomes de suas propriedades.
+Com excessão de `null` e `undefined`, a maioria dos valores no JavaScript possuem propriedades e são acessados usando `value.propName` ou `value["propName"]`. Objetos tendem a usar nomes para suas propriedades e armazenam mais o menos uma quantidade fixa delas. Por outro lado, os _Arrays_ normalmente contêm quantidades variáveis de valores conceitualmente iguais e usam números (iniciando do zero) como os nomes de suas propriedades.
 
-Existem algumas propriedades nos arrays, como `length` e uma série de métodos. Métodos são funções que são armazenadas em propriedades e, normalmente, atuam no valor nas quais elas são propriedade.
+Existem algumas propriedades com nomes específicos nos _arrays_, como `length` e uma série de métodos. Métodos são funções que são armazenadas em propriedades e, normalmente, atuam no valor nas quais elas são propriedade.
 
 Objetos podem também ser usados como mapas, associando valores com seus nomes. O operador `in` pode ser usado para verificar se um objeto contém a propriedade com o nome informado. A mesma palavra-chave pode ser usada em um loop `for` (`for (var name in object)`) para percorrer todas as propriedades do objeto.
 
@@ -637,38 +637,40 @@ A [introdução](./00-introdução.md) desse livro mencionou a seguinte maneira 
 console.log(sum(range(1, 10)));
 ```
 
-Escreva uma função chamada `range` que recebe dois argumentos, `start` (início) e `end` (fim), e retorna um array contendo todos os números a partir do valor `start` até o valor `end` (incluindo-o).
+Escreva uma função chamada `range` que recebe dois argumentos, `start` (início) e `end` (fim), e retorna um _array_ contendo todos os números a partir do valor `start` até o valor `end` (incluindo-o).
 
-Em seguida, escreva a função `sum` que recebe um array de números como argumento e retorna a soma desses números. Execute o programa anterior e veja se o resultado retornado é de fato 55.
+Em seguida, escreva a função `sum` que recebe um _array_ de números como argumento e retorna a soma desses números. Execute o programa anterior e veja se o resultado retornado é de fato 55.
 
-Como um exercício bônus, modifique a sua função `range` para aceitar um terceiro argumento opcional que indica o tamanho do "incremento" usado para construir o array. Se nenhum valor for atribuído ao tamanho do incremento, o array de elementos será percorrido em incrementos de um, correspondendo ao comportamento antigo. A chamada à função `range(1, 10, 2)` deve retornar `[1, 3, 5, 7, 9]`. Certifique-se que funcione também com valores negativos, fazendo com que `range(5, 2, -1)` produza `[5, 4, 3, 2]`.
+Como exercício bônus, modifique a sua função `range` para aceitar um terceiro argumento opcional que indica o tamanho do "incremento" usado para construir o _array_. Se nenhum valor for atribuído ao tamanho do incremento, o _array_ de elementos será percorrido em incrementos de um, correspondendo ao comportamento original. A chamada à função `range(1, 10, 2)` deve retornar `[1, 3, 5, 7, 9]`. Certifique-se de que funcione também com valores negativos, fazendo com que `range(5, 2, -1)` produza `[5, 4, 3, 2]`.
 
 ```js
 // Your code here.
 
-console.log(sum(range(1, 10)));
-// → 55
+console.log(range(1, 10));
+// → [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 console.log(range(5, 2, -1));
 // → [5, 4, 3, 2]
+console.log(sum(range(1, 10)));
+// → 55
 ```
 
 **Dicas**
 
-A maneira mais fácil de construir um array é primeiramente inicializar uma variável para `[]` (um novo array vazio) e, em seguida, chamar várias vezes o seu método `push` para adicionar os valores. Não se esqueça de retornar o array no final da função.
+A maneira mais fácil de construir um _array_ é primeiramente inicializar uma variável usando `[]` (um novo _array_ vazio) e, em seguida, chamar várias vezes o seu método `push` para adicionar os valores. Não se esqueça de retornar o _array_ no final da função.
 
 Devido ao fato de que o limite final é inclusivo, ao invés de usar um simples operador `<`, você deverá usar o operador `<=` para checar o final do seu loop.
 
-Para verificar se o argumento de incremento foi fornecido, você pode verificar o `arguments.length` ou comparar o valor do argumento com `undefined`. Caso não tenha sido informado, apenas configure o seu valor padrão (1) no topo da função.
+Para verificar se o argumento opcional de incremento foi fornecido, você pode verificar o `arguments.length` ou comparar o valor do argumento com `undefined`. Caso não tenha sido informado, apenas configure o seu valor padrão (1) no início da função.
 
-Fazer com que `range` entenda incrementos negativos é provavelmente mais fácil de ser feito escrevendo dois loops separados, um para contar valores crescentes e outro para valores decrescentes. Isso se dá pelo fato de que, quando estamos contando valores decrescentes, o operador que compara e verifica se o loop terminou precisa ser `>=` ao invés de `<=`.
+Fazer com que `range` entenda incrementos negativos é provavelmente mais fácil de ser feito escrevendo dois loops distintos, um para contar valores crescentes e outro para valores decrescentes. Isso se dá pelo fato de que, quando estamos contando valores decrescentes, o operador que compara e verifica se o loop terminou precisa ser `>=` ao invés de `<=`.
 
 Pode ser útil usar um valor de incremento diferente do valor padrão (por exemplo -1) quando o valor final do intervalo for menor do que o valor de início. Dessa forma, ao invés de ficar preso em um loop infinito, `range(5, 2)` retorna algo relevante.
 
-### Invertendo um array
+### Invertendo um _array_
 
-Os arrays possuem o método `reverse`, que modifica o array invertendo a ordem que os elementos aparecem. Para esse exercício, escreva duas funções: `reverseArray` e `reverseArrayInPlace`. A primeira (`reverseArray`) recebe um array como argumento e produz um _novo_ array que tem os mesmos elementos com ordem inversa. A segunda (`reverseArrayInPlace`) funciona da mesma forma que o método `reverse`, invertendo seus elementos apenas modificando o array que foi fornecido como argumento. Ambas as funções não devem usar o método padrão `reverse`.
+Os _arrays_ possuem o método `reverse`, que modifica o _array_ invertendo a ordem em que os elementos aparecem. Para esse exercício, escreva duas funções: `reverseArray` e `reverseArrayInPlace`. A primeira (`reverseArray`) recebe um _array_ como argumento e produz um _novo array_ que tem os mesmos elementos com ordem inversa. A segunda (`reverseArrayInPlace`) funciona da mesma forma que o método `reverse`, só que nesse caso, invertendo os elementos do próprio _array_ que foi fornecido como argumento. Ambas as funções não devem usar o método padrão `reverse`.
 
-Levando em consideração as notas sobre efeitos colaterais e funções puras do [capítulo anterior](./03-funcoes.md), qual variante você espera que seja útil em mais situações? Qual delas é mais eficiente?
+Levando em consideração as notas sobre efeitos colaterais e funções puras do [capítulo anterior](./03-funcoes.md), qual versão você espera que seja útil em mais situações? Qual delas é mais eficiente?
 
 ```js
 // Your code here.
@@ -683,15 +685,15 @@ console.log(arrayValue);
 
 **Dicas**
 
-Existem duas maneiras óbvias de implementar `reverseArray`. A primeira é simplesmente iterar o array fornecido do início ao fim e usar o método `unshift` para inserir cada elemento no início do novo array. A segunda é iterar o array fornecido do fim ao início e usar o método `push`. Iterar um array de trás para frente faz com que seja necessário usar uma notação `for` um pouco estranha (`var i = array.length - 1; i >= 0; i--`).
+Existem duas maneiras óbvias de implementar `reverseArray`. A primeira é simplesmente iterar o _array_ fornecido do início ao fim e usar o método `unshift` para inserir cada elemento no início do novo _array_. A segunda é iterar o _array_ fornecido começando pelo fim e terminando no início, usando o método `push`. Iterar um _array_ de trás para frente faz com que seja necessário usar uma notação `for` um pouco estranha (`var i = array.length - 1; i >= 0; i--`).
 
-Inverter o array em questão (`reverseArrayInPlace`) é mais difícil. Você deve ter cuidado para não sobrescrever elementos que você precisará posteriormente. Usar `reverseArray` ou até mesmo copiar o array inteiro (`array.slice(0)` é uma boa forma de se copiar um array) funciona mas é considerado trapaça.
+Inverter o _array_ em questão (`reverseArrayInPlace`) é mais difícil. Você deve ter cuidado para não sobrescrever elementos que você precisará posteriormente. Usar `reverseArray` ou até mesmo copiar o _array_ inteiro (`array.slice(0)` é uma boa forma de se copiar um _array_) funciona, mas é considerado trapaça.
 
-O truque é _inverter_ o primeiro e o último elemento, depois o segundo e o penúltimo e assim por diante. Você pode fazer isso percorrendo até a metade do valor de `length` do array (use `Math.floor` para arredondar o valor para baixo — você não precisa usar o elemento do meio de um array com tamanho ímpar) e substituir o elemento na posição `i` com o elemento na posição `array.length - 1 - i`. Você pode usar uma variável local para armazenar temporariamente um dos elementos, sobrescrever o seu valor com o valor do elemento espelhado (elemento que deseja substituir), e por fim, colocar o valor da variável local no lugar onde o elemento espelhado estava originalmente.
+O truque é _inverter_ o primeiro e o último elemento, depois o segundo e o penúltimo e assim por diante. Você pode fazer isso percorrendo até a metade do valor de `length` do _array_ (use `Math.floor` para arredondar o valor para baixo, pois você não precisa lidar com o elemento do meio de um _array_ com tamanho ímpar) e substituir o elemento na posição `i` com o elemento na posição `array.length - 1 - i`. Você pode usar uma variável local para armazenar temporariamente um dos elementos, sobrescrever o seu valor com o valor do elemento espelhado (elemento que deseja substituir) e, por fim, colocar o valor da variável local no lugar onde o elemento espelhado estava originalmente.
 
 ### A lista
 
-Objetos como agrupamentos genéricos de valores, podem ser usados para construir diversos tipos de estrutura de dados. Uma estrutura de dado comum é a _lista_ (não se confunda com o array). A lista é um conjunto de objetos, sendo que o primeiro objeto contém uma referência para o segundo, o segundo para o terceiro, e assim por diante.
+Objetos tratados como agrupamentos genéricos de valores, podem ser usados para construir diversos tipos de estrutura de dados. Uma estrutura de dados comum é a _lista_ (não se confunda com o _array_). A lista é um conjunto de objetos, sendo que o primeiro objeto contém uma referência para o segundo, o segundo para o terceiro, e assim por diante.
 
 ```js
 var list = {
@@ -706,15 +708,15 @@ var list = {
 };
 ```
 
-O resultado desses objetos forma uma corrente, como representado abaixo:
+O resultado é uma cadeia de objetos conectados, como mostrado abaixo:
 
 ![Linked List](http://eloquentjavascript.net/img/linked-list.svg)
 
 Uma das vantagens das listas é que elas podem compartilhar partes de sua estrutura. Por exemplo, se eu criasse dois novos valores `{value: 0, rest: list}` e `{value: -1, rest: list}` (sendo que `list` é uma referência à variável definida anteriormente), ambas serão listas independentes que compartilham a mesma estrutura que foi usada para criar os três últimos elementos. Além disso, a lista original ainda é uma lista válida com três elementos.
 
-Escreva a função `arrayToList` que constrói uma estrutura de dados similar à estrutura anterior quando fornecido `[1, 2, 3]` como argumento e, escreva também, a função `listToArray` que produz um array quando dado uma lista. Além disso, implemente uma função auxiliar `prepend` que receberá um elemento e uma lista e será responsável por criar uma nova lista com esse novo elemento adicionado ao início da lista original e, por fim, crie a função `nth` que recebe uma lista e um número como argumentos e retorna o elemento que está na posição informada pelo número ou `undefined` caso não exista elemento em tal posição.
+Escreva a função `arrayToList` que constrói uma estrutura de dados similar à estrutura anterior quando fornecido `[1, 2, 3]` como argumento e, escreva também, a função `listToArray` que produz um _array_ a partir de uma lista. Além disso, implemente uma função auxiliar `prepend` que receberá um elemento e uma lista e será responsável por criar uma nova lista com esse novo elemento adicionado ao início da lista original e, por fim, crie a função `nth` que recebe uma lista e um número como argumentos e retorna o elemento que está na posição informada pelo número ou `undefined` caso não exista elemento em tal posição.
 
-Caso não tenha feito, implemente a versão recursiva da função `nth`.
+Caso não tenha feito ainda, implemente a versão recursiva da função `nth`.
 
 ```js
 // Your code here.
@@ -731,7 +733,7 @@ console.log(nth(arrayToList([10, 20, 30]), 1));
 
 **Dicas**
 
-Construir uma lista é mais fácil de ser feito de trás para frente. Portanto, `arrayToList` poderia percorrer o array de trás para frente (veja o exercício anterior) e, para cada elemento, adicionar um objeto à lista. Você pode usar uma variável local para armazenar a parte da lista que foi criada e usar um padrão similar a `list = {value: X, rest: list}` para adicionar um elemento.
+Construir uma lista é mais fácil de ser feito de trás para frente. Portanto, `arrayToList` poderia percorrer o _array_ de trás para frente (veja o exercício anterior) e, para cada elemento, adicionar um objeto à lista. Você pode usar uma variável local para armazenar a parte da lista que foi criada e usar um padrão parecido com `list = {value: X, rest: list}` para adicionar um elemento.
 
 Para percorrer uma lista (no caso de `listToArray` e `nth`), o seguinte loop `for` pode ser usado:
 
@@ -739,17 +741,19 @@ Para percorrer uma lista (no caso de `listToArray` e `nth`), o seguinte loop `fo
 for (var node = list; node; node = node.rest) {}
 ```
 
-Você consegue ver como funciona? A cada iteração do loop, `node` aponta para a próxima sublista e, por isso, o corpo da função pode acessar a propriedade `value` para pegar o elemento atual. Ao final de cada iteração, `node` é atualizado apontando para a próxima sublista. Quando seu valor é `null`, nós chegamos ao final da lista e o loop é finalizado.
+Você consegue ver como isso funcionaria? A cada iteração do loop, `node` aponta para a próxima sublista e, por isso, o corpo da função pode acessar a propriedade `value` para pegar o elemento atual. Ao final de cada iteração, `node` é atualizado apontando para a próxima sublista. Quando seu valor é `null`, nós chegamos ao final da lista e o loop é finalizado.
 
-A versão recursiva de `nth` irá, similarmente, olhar para uma parte ainda menor do _tail_ (final) da lista e, ao mesmo tempo, fazer a contagem do índice até que chegue a zero, significando que é o ponto no qual pode retornar a propriedade `value` do nó que está sendo verificado. Para pegar o elemento na posição zero de uma lista, você pode simplesmente acessar a propriedade `value` do seu nó _head_ (inicial). Para pegar o elemento `N + 1`, você pega o n-ésimo elemento da lista que está contido na propriedade `rest` da lista em questão.
+A versão recursiva de `nth` irá, similarmente, olhar para uma parte ainda menor do _tail_ (final) da lista e, ao mesmo tempo, fazer a contagem regressiva do índice até que chegue ao zero, significando que é o ponto no qual ela pode retornar a propriedade `value` do nó que está sendo verificado. Para acessar o elemento na posição zero de uma lista, você pode simplesmente acessar a propriedade `value` do seu nó _head_ (inicial). Para acessar o elemento `N + 1`, você pega o n-ésimo elemento da lista que está contido na propriedade `rest` da lista em questão.
 
-### Deep comparison
+### Comparação "profunda"
 
-O operador `==` compara objetos pelas suas identidades. Entretanto, algumas vezes você pode preferir comparar os valores das suas propriedades de fato.
+O operador `==` compara objetos pelas suas identidades. Entretanto, algumas vezes, você pode preferir comparar os valores das suas propriedades de fato.
 
 Escreva a função `deepEqual` que recebe dois valores e retorna `true` apenas se os valores forem iguais ou se forem objetos que possuem propriedades e valores iguais quando comparados usando uma chamada recursiva de `deepEqual`.
 
-Para saber se a comparação entre duas coisas deve ser feita pela identidade (use o operador `===` para isso) ou pela verificação de suas propriedades, você pode usar o operador `typeof`. Se ele produzir `object` para ambos os valores, você deverá fazer uma comparação "profunda". Entretanto, você deve levar em consideração uma excessão: devido a um acidente histórico, `typeof null` também produz `object`.
+To find out whether to compare two things by identity (use the === operator for that) or by looking at their properties, you can use the typeof operator. If it produces "object" for both values, you should do a deep comparison. But you have to take one silly exception into account: by a historical accident, typeof null also produces "object".
+
+Para saber se a comparação entre duas coisas deve ser feita pela identidade (use o operador `===` para isso) ou pela verificação de suas propriedades, você pode usar o operador `typeof`. Se ele produzir `"object"` para ambos os valores, você deverá fazer uma comparação "profunda". Entretanto, você deve levar em consideração uma excessão: devido a um acidente histórico, `typeof null` também produz `"object"`.
 
 ```js
 // Your code here.
@@ -765,8 +769,8 @@ console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
 
 **Dicas**
 
-O teste para saber se está lidando com um objeto real deverá ser parecido com `typeof x == "object" && x != null`. Tome cuidado para comparar as propriedades apenas quando ambos argumentos forem objetos. Em todos os outros casos, você pode simplesmente retornar imediatamente o resultado da aplicação de `===`.
+O teste para saber se está lidando com um objeto real deverá ser parecido com `typeof x == "object" && x != null`. Tome cuidado para comparar as propriedades apenas quando ambos argumentos forem objetos. Em todos os outros casos, você pode simplesmente retornar imediatamente o resultado da aplicação do operador `===`.
 
-Use um loop `for/in` para percorrer todas as propriedades. Você precisa verificar se ambos os objetos possuem o mesmo conjunto de propriedades e se essas propriedades têm valores idênticos. O primeiro teste pode ser feito contando a quantidade de propriedades em cada objeto e retornar `false` se forem diferentes. Caso seja o mesmo, percorra todas as propriedades de um objeto e, para cada uma delas, verifique se o outro objeto também a possui. Os valores das propriedades são comparados usando uma chamada recursiva para `deepEqual`.
+Use um loop `for/in` para percorrer todas as propriedades. Você precisa verificar se ambos os objetos possuem o mesmo conjunto de propriedades e se essas propriedades têm valores idênticos. O primeiro teste pode ser feito contando a quantidade de propriedades em cada objeto e retornar `false` se forem diferentes. Caso seja o mesmo, então, percorra todas as propriedades de um objeto e, para cada uma delas, verifique se o outro objeto também a possui. Os valores das propriedades são comparados usando uma chamada recursiva para `deepEqual`.
 
-Para retornar o valor correto da função, é mais fácil retornar imediatamente `false` quando qualquer diferença for encontrada e retornar apenas `true` ao final da função.
+Para retornar o valor correto da função, é mais fácil retornar imediatamente `false` quando qualquer diferença for encontrada e retornar `true` apenas ao final da função.

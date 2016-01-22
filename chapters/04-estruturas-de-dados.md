@@ -204,9 +204,9 @@ As variáveis `object1` e `object2` estão associadas ao _mesmo objeto_ e, por i
 
 Quando comparamos objetos, o operador `==` do JavaScript irá retornar `true` apenas se ambos os objetos possuem exatamente o mesmo valor. Comparar objetos diferentes irá retornar `false` mesmo se eles tiverem conteúdos idênticos. Não existe uma operação nativa no JavaScript de _"deep" comparison_ (comparação "profunda"), onde se verifica o conteúdo de um objeto, mas é possível escrevê-la você mesmo (que será um dos [exercícios](#deep-comparison) ao final desse capítulo).
 
-## O log do lobisomem
+## O _log_ da licantropia
 
-Então Jaques inicia seu interpretador de JavaScript, e configura o ambiente que ele precisa para manter seu diário.
+Jacques inicia seu interpretador de JavaScript e configura o ambiente que ele precisa para manter o seu diário.
 
 ```js
 var journal = [];
@@ -219,7 +219,7 @@ function addEntry(events, didITurnIntoASquirrel) {
 }
 ```
 
-E então, todas as noites às dez ou às vezes na manhã seguinte, - depois de descer da prateleira de cima de sua estante - o seu dia é gravado.
+E então, todas as noites às dez ou as vezes na manhã seguinte após descer do topo de sua estante de livros, ele faz o registro do dia.
 
 ```js
 addEntry(["work", "touched tree", "pizza", "running",
@@ -230,33 +230,32 @@ addEntry(["weekend", "cycling", "break", "peanuts",
           "beer"], true);
 ```
 
-Uma vez que ele tem pontos de dados suficientes, ele pretende calcular a correlação entre a esquiloficação e cada um dos eventos do dia que ele gravou, e espera aprender algo útil a partir dessas correlações.
+Uma vez que ele tem dados suficientes, ele pretende calcular a correlação entre sua transformação em esquilo e cada um dos eventos do dia e espera aprender algo útil a partir dessas correlações.
 
-Correlação é uma medida de dependência entre variáveis ("variáveis", no sentido estatístico, e não o sentido JavaScript). É geralmente expressa em um coeficiente que varia de -1 a 1. Zero correlação significa que as variáveis não estão relacionadas, enquanto uma correlação de um indica que os dois são perfeitamente relacionados - se você conhece um, você também conhecer o outro. Menos um significa também que as variáveis são perfeitamente ligadas, mas que são opostas uma à outra, quando um deles é verdadeiro, o outro é falso.
+A _correlação_ é uma medida de dependência entre variáveis ("variáveis" no sentido estatístico e não no sentido do JavaScript). Ela é geralmente expressa em um coeficiente que varia de -1 a 1. Zero correlação significa que as variáveis não são relacionadas, enquanto que a correlação de um indica que as variáveis são perfeitamente relacionadas (se você conhece uma, você também conhece a outra). A correlação negativa de um também indica que as variáveis são perfeitamente relacionadas, mas são opostas (quando uma é verdadeira, a outra é falsa).
 
-Para variáveis binárias (boolean), o coeficiente phi (ϕ) fornece uma boa medida de correlação, e é relativamente fácil de calcular. Primeiro temos uma matriz n, que indica o número de vezes que foram observadas as várias combinações das duas variáveis. Por exemplo, poderíamos tomar o evento de comer pizza, e colocar isso em uma tabela como esta:
+Para variáveis binárias (booleanos), o coeficiente _phi_ (_ϕ_) fornece uma boa forma de medir a correlação e é relativamente fácil de ser calculado. Para calcular _ϕ_, precisamos de uma tabela _n_ que contêm o número de vezes que as diversas combinações das duas variáveis foram observadas. Por exemplo, podemos considerar o evento de "comer pizza" e colocá-lo nessa tabela da seguinte maneira:
 
-![Comendo Pizza x transformar-se em esquilo](https://rawgit.com/ericdouglas/eloquente-javascript/master/img/pizza-squirrel.svg)
+![Comendo Pizza x transformar-se em esquilo](../img/pizza-squirrel.svg)
 
-A partir de uma tal tabela (n), o coeficiente de phi (φ) pode ser calculado pela seguinte fórmula.
+_ϕ_ pode ser calculado usando a seguinte fórmula, onde _n_ se refere à tabela:
 
 ```math
-ϕ =
-n11n00 - n10n01
-√ n1•n0•n•1n•0
+ϕ = (n11n00 - n10n01) / √ n1•n0•n•1n•0
+[TODO: Adicionar formatação correta da fórmula após converter em asciidoc]
 ```
 
-A notação n01 indica o número de ocorrências na qual a primeira variável (squirrelness) é falsa (0) e a segunda variável (pizza) é verdadeira (1). Nesse exemplo, n01 é igual a 9.
+A notação _n01_ indica o número de ocorrências nas quais a primeira variável (transformar-se em esquilo) é falsa (0) e a segunda variável (pizza) é verdadeira (1). Nesse exemplo, _n01_ é igual a 9.
 
-O valor n1• se refere à soma de todas as ocorrências em que a primeira variável é verdadeira, que no caso do exemplo da tabela é 5. Da mesma forma, n•0 se refere à soma de todas as ocorrências na qual a segunda variável é falsa.
+O valor n1• se refere à soma de todas as medidas nas quais a primeira variável é verdadeira, que no caso do exemplo da tabela é 5. Da mesma forma, n•0 se refere à soma de todas as medidas nas quais a segunda variável é falsa.
 
-Portanto, para a tabela de pizzas, a parte de cima da divisão da linha (o dividendo) seria 1×76 - 4×9 = 40, e a parte de baixo (o divisor) seria a raiz quadrada de 5×85×10×80, ou √340000. Esse cálculo nos resulta em ϕ ≈ 0.069, o que é um valor bem pequeno. Comer pizza parece não ter influência nas transformações.
+Portanto, para a tabela de pizza, a parte de cima da linha (o dividendo) seria 1x76 - 4x9 = 40, e a parte de baixo (o divisor) seria a raiz quadrada de 5x85x10x80, ou √340000. Esse cálculo resulta em _ϕ_ ≈ 0.069, o que é um valor bem pequeno. Comer pizza parece não ter influência nas transformações.
 
-## Correlação em computação
+## Calculando a correlação
 
-No JavaScript, podemos representar uma tabela dois por dois usando um array com quatro elementos (`[76, 9, 4, 1]`). Podemos também usar outras formas de representações, como por exemplo um array contendo dois arrays com dois elementos cada (`[[76, 9], [4, 1]]`) ou até um objeto com propriedades nomeadas de `"11"` e `"01"`. Entretanto, a maneira mais simples e que faz com que seja mais fácil acessar os dados é utilizando um array com quatro elementos. Nós iremos interpretar os índices do array como elementos binários de dois bits, onde o dígito a esquerda (mais significativo) se refere à variável do esquilo, e o dígito a direita (menos significativo) se refere à variável do evento. Por exemplo, o número binário `10` se refere ao caso no qual Jacques se tornou um esquilo, mas o evento não ocorreu (por exemplo "pizza"). Isso aconteceu quatro vezes, e já que o número binário `10` é equivalente ao número 2 na notação decimal, iremos armazenar esse valor no índice 2 do array.
+No JavaScript, podemos representar uma tabela dois por dois usando um _array_ com quatro elementos (`[76, 9, 4, 1]`). Podemos também usar outras formas de representações, como por exemplo um _array_ contendo dois _arrays_ com dois elementos cada (`[[76, 9], [4, 1]]`), ou até mesmo um objeto com propriedades nomeadas de `"11"` e `"01"`. Entretanto, a maneira mais simples e que faz com que seja mais fácil acessar os dados é utilizando um _array_ com quatro elementos. Nós iremos interpretar os índices do _array_ como elementos binários de dois bits, onde o dígito a esquerda (mais significativo) se refere à variável do esquilo, e o dígito a direita (menos significativo) se refere à variável do evento. Por exemplo, o número binário `10` se refere ao caso no qual Jacques se tornou um esquilo, mas o evento não ocorreu (por exemplo "pizza"). Isso aconteceu quatro vezes, e já que o número binário `10` é equivalente ao número 2 na notação decimal, iremos armazenar esse valor no índice 2 do _array_.
 
-Essa é a função que calcula o coeficiente ϕ de um array desse tipo:
+Essa é a função que calcula o coeficiente _ϕ_ de um _array_ desse tipo:
 
 ```js
 function phi(table) {
@@ -271,9 +270,9 @@ console.log(phi([76, 9, 4, 1]));
 // → 0.068599434
 ```
 
-Essa é simplesmente uma tradução direta da fórmula de ϕ para o JavaScript. `Math.sqrt` é a função que calcula a raiz quadrada, fornecida pelo objeto `Math` que é padrão do JavaScript. Temos que somar dois campos da tabela para encontrar valores como n1•, pois a soma das linhas ou colunas não são armazenadas diretamente em nossa estrutura de dados.
+Essa é simplesmente uma tradução direta da fórmula de _ϕ_ para o JavaScript. `Math.sqrt` é a função que calcula a raiz quadrada, fornecida pelo objeto `Math` que é padrão do JavaScript. Temos que somar dois campos da tabela para encontrar valores como n1•, pois a soma das linhas ou colunas não são armazenadas diretamente em nossa estrutura de dados.
 
-Jacques manteve seu diário por três meses. O conjunto de dados resultante está disponível no ambiente de código desse capítulo e está armazenado na variável `JOURNAL` e em um [arquivo](http://eloquentjavascript.net/code/jacques_journal.js) que pode ser baixado.
+Jacques manteve seu diário por três meses. O conjunto de dados resultante está disponível no ambiente de código desse capítulo, armazenado na variável `JOURNAL` e em um [arquivo](http://eloquentjavascript.net/code/jacques_journal.js) que pode ser baixado.
 
 Para extrair uma tabela dois por dois de um evento específico desse diário, devemos usar um loop para percorrer todas as entradas e ir adicionando quantas vezes o evento ocorreu em relação às transformações de esquilo.
 
@@ -297,17 +296,17 @@ console.log(tableFor("pizza", JOURNAL));
 // → [76, 9, 4, 1]
 ```
 
-A função `hasEvent` testa se uma entrada contém ou não o evento em questão. Os arrays possuem um método `indexOf` que procura o valor informado no array (nesse exemplo o nome do evento), e retorna o índice onde ele foi encontrado ou -1 se não for. Portanto, se a chamada de `indexOf` não retornar -1, sabemos que o evento foi encontrado.
+A função `hasEvent` testa se uma entrada contém ou não o evento em questão. Os _arrays_ possuem um método `indexOf` que procura pelo valor informado no _array_ (nesse exemplo o nome do evento), e retorna o índice onde ele foi encontrado ou -1 se não for. Portanto, se a chamada de `indexOf` não retornar -1, sabemos que o evento foi encontrado.
 
-O corpo do loop em `tableFor`, descobre qual caixa da tabela cada entrada do diário pertence, verificando se essa entrada contém o evento específico e se o evento ocorreu juntamente com um incidente de esquilo. O loop adiciona uma unidade no número contido no array que corresponde a essa caixa na tabela.
+O corpo do loop presente na função `tableFor`, descobre qual caixa da tabela cada entrada do diário pertence, verificando se essa entrada contém o evento específico e se o evento ocorreu juntamente com um incidente de transformação em esquilo. O loop adiciona uma unidade no número contido no _array_ que corresponde a essa caixa na tabela.
 
 Agora temos as ferramentas necessárias para calcular correlações individuais. O único passo que falta é encontrar a correlação para cada tipo de evento que foi armazenado e verificar se algo se sobressai. Como podemos armazenar essas correlações assim que as calculamos?
 
 ## Objetos como mapas
 
-Uma maneira possível é armazenar todas as correlações em um array, usando objetos com propriedades `name` (nome) e `value` (valor). Porém, isso faz com que o acesso às correlações de um evento seja bastante trabalhoso: você teria que percorrer por todo o array para achar o objeto com o `name` certo. Poderíamos encapsular esse processo de busca em uma função e mesmo assim iríamos escrever mais código e o computador iria trabalhar mais do que o necessário.
+Uma maneira possível é armazenar todas as correlações em um _array_, usando objetos com as propriedades `name` (nome) e `value` (valor). Porém, isso faz com que o acesso às correlações de um evento seja bastante trabalhoso, pois você teria que percorrer por todo o _array_ para achar o objeto com o `name` certo. Poderíamos encapsular esse processo de busca em uma função e, mesmo assim, iríamos escrever mais código e o computador iria trabalhar mais do que o necessário.
 
-Uma maneira melhor seria usar as propriedades do objeto nomeadas com o tipo do evento. Podemos usar a notação de colchetes para acessar e ler as propriedades e, além disso, usar o operador `in` para testar se tal propriedade existe.
+Uma maneira melhor seria usar as propriedades do objeto nomeadas de acordo com o tipo do evento. Podemos usar a notação de colchetes para acessar e ler as propriedades e, além disso, usar o operador `in` para testar se tal propriedade existe.
 
 ```js
 var map = {};
@@ -323,23 +322,23 @@ console.log(map["touched tree"]);
 // → -0.081
 ```
 
-Um _mapa_ é uma maneira de associar valores de um domínio (nesse caso nomes de eventos) com seus valores correspondentes em outro domínio (nesse caso coeficientes ϕ).
+Um _map_ é uma maneira de associar valores de um domínio (nesse caso nomes de eventos) com seus valores correspondentes em outro domínio (nesse caso coeficientes _ϕ_).
 
 Existem alguns problemas que podem ser gerados usando objetos dessa forma, os quais serão discutidos no [capítulo 6](./06-a-vida-secreta-dos-objetos.md). Por enquanto, não iremos nos preocupar com eles.
 
-E se quiséssemos apenas encontrar os eventos nos quais armazenamos um coeficiente? Diferentemente de um array, as propriedades não formam uma sequência previsível, impossibilitando o uso de um `for` loop normal. Entretanto, o JavaScript fornece uma construção de loop específica para percorrer as propriedades de um objeto. Esse loop é parecido com o loop `for` e se distingue pelo fato de utilizar a palavra `in`.
+E se quiséssemos encontrar todos os eventos nos quais armazenamos um coeficiente? Diferentemente de um _array_, as propriedades não formam uma sequência previsível, impossibilitando o uso de um loop `for` normal. Entretanto, o JavaScript fornece uma construção de loop específica para percorrer as propriedades de um objeto. Esse loop é parecido com o loop `for` e se distingue pelo fato de utilizar a palavra `in`.
 
 ```js
 for (var event in map)
-  console.log(“The correlation for ‘” + event +
-              “’ is “ + map[event]);
-// → The correlation for ‘pizza’ is 0.069
-// → The correlation for ‘touched tree’ is -0.081
+  console.log("The correlation for '" + event +
+              "' is " + map[event]);
+// → The correlation for 'pizza' is 0.069
+// → The correlation for 'touched tree' is -0.081
 ```
 
 ## A análise final
 
-Para achar todos os tipos de eventos que estão presentes no conjunto de dados, nós simplesmente processamos cada entrada e percorremos usando um loop por todos os eventos presentes. Mantemos um objeto chamado `phis` que contém os coeficientes de correlações para todos os tipos de eventos que nós vimos até agora. A partir do momento em que encontramos um tipo que ainda não está presente no objeto `phis`, calculamos o valor de sua correlação e então adicionamos ao objeto.
+Para achar todos os tipos de eventos que estão presentes no conjunto de dados, nós simplesmente processamos cada entrada e percorremos por todos os eventos presentes usando um loop. Mantemos um objeto chamado `phis` que contém os coeficientes das correlações de todos os tipos de eventos que foram vistos até agora. A partir do momento em que encontramos um tipo que não está presente no objeto `phis`, calculamos o valor de sua correlação e então adicionamos ao objeto.
 
 ```js
 function gatherCorrelations(journal) {
@@ -360,7 +359,7 @@ console.log(correlations.pizza);
 // → 0.068599434
 ```
 
-Vamos ver o que retorna.
+Vamos ver o resultado.
 
 ```js
 for (var event in correlations)
@@ -373,7 +372,7 @@ for (var event in correlations)
 // and so on...
 ```
 
-A grande maioria das correlações tendem a zero. Comer cenouras, pão ou pudim aparentemente não ativam a transformação de esquilo-lobo. Entretanto, acontecem mais frequentemente aos finais de semana. Vamos filtrar os resultados para mostrar apenas as correlações que são maiores do que 0.1 ou menores do que -0.1.
+A grande maioria das correlações tendem a zero. Comer cenouras, pão ou pudim aparentemente não ativam a transformação em esquilo. Entretanto, elas parecem acontecer com mais frequência aos finais de semana. Vamos filtrar os resultados para mostrar apenas as correlações que são maiores do que 0.1 ou menores do que -0.1.
 
 ```js
 for (var event in correlations) {
@@ -390,7 +389,7 @@ for (var event in correlations) {
 // → peanuts:        0.5902679812
 ```
 
-A-ha! Existem dois fatores nos quais a correlação é mais forte que a dos outros. Comer amendoins tem um forte efeito positivo na chance de se transformar em um esquilo, enquanto escovar os dentes tem um significante efeito negativo.
+A-ha! Existem dois fatores nos quais a correlação é claramente mais forte que a das outras. Comer amendoins tem um forte efeito positivo na chance de se transformar em um esquilo, enquanto que escovar os dentes tem um significante efeito negativo.
 
 Interessante. Vamos tentar uma coisa.
 
@@ -409,13 +408,13 @@ Está bem evidente! O fenômeno ocorre precisamente quando Jacques come amendoin
 
 Sabendo disso, Jacques simplesmente para de comer amendoins e descobre que isso coloca um fim em suas transformações.
 
-Tudo ficou bem com Jacques por um tempo. Entretanto, alguns anos depois ele perdeu seu emprego e eventualmente foi forçado a trabalhar em um circo, onde suas performances como _O Incrível Homem-Esquilo_ se baseavam em encher sua boca com pasta de amendoim antes de cada apresentação. Em um dia de sua pobre existência, Jacques não conseguiu se transformar de volta em sua forma humana e fugiu do circo, desapareceu pela floresta e nunca mais foi visto.
+Tudo ficou bem com Jacques por um tempo. Entretanto, alguns anos depois, ele perdeu seu emprego e eventualmente foi forçado a trabalhar em um circo, onde suas performances como _O Incrível Homem-Esquilo_ se baseavam em encher sua boca com pasta de amendoim antes de cada apresentação. Em um dia de sua pobre existência, Jacques não conseguiu se transformar de volta em sua forma humana e fugiu do circo, desapareceu pela floresta e nunca mais foi visto.
 
-## Further arrayology [TODO]
+## Estudo aprofundado de _Arrays_
 
-Antes de finalizar esse capítulo, gostaria de introduzir alguns outros conceitos relacionados a objetos. Começaremos com alguns métodos geralmente úteis dos arrays.
+Antes de finalizar esse capítulo, gostaria de introduzir alguns outros conceitos relacionados a objetos. Começaremos com alguns métodos normalmente úteis dos _arrays_.
 
-Vimos no [início do capítulo](http://eloquentjavascript.net/04_data.html#array_methods) os métodos `push` e `pop`, os quais adicionam e removem elementos no final do array. Os métodos correspondentes para adicionar e remover itens no início do array são chamados `unshift` e `shift`.
+Vimos no [início do capítulo](http://eloquentjavascript.net/04_data.html#array_methods) [TODO: fix final link] os métodos `push` e `pop`, que adicionam e removem elementos no final de um _array_. Os métodos correspondentes para adicionar e remover itens no início de um _array_ são chamados `unshift` e `shift`.
 
 ```js
 var todoList = [];
@@ -430,9 +429,9 @@ function urgentlyRememberTo(task) {
 }
 ```
 
-O programa anterior gerencia uma lista de tarefas. Você pode adicionar tarefas no final da lista chamando `rememberTo("eat")` e, quando estiver preparado para realizar alguma tarefa, você chama `whatIsNext()` para pegar (e remover) o primeiro item da lista. A função `urgentlyRememberTo` também adiciona uma tarefa, porém, ao invés de adicionar no final da lista, a adiciona no início.
+O programa anterior gerencia uma lista de tarefas. Você pode adicionar tarefas no final da lista chamando `rememberTo("eat")` e, quando estiver preparado para realizar alguma tarefa, você chama `whatIsNext()` para acessar e remover o primeiro item da lista. A função `urgentlyRememberTo` também adiciona uma tarefa, porém, ao invés de adicionar ao final da lista, a adiciona no início.
 
-O método `indexOf` tem um irmão chamado `lastIndexOf`, que começa a pesquisa de um dado elemento pelo final do array ao invés de começar pelo início.
+O método `indexOf` tem um irmão chamado `lastIndexOf`, que começa a pesquisa de um dado elemento pelo final do _array_ ao invés de começar pelo início.
 
 ```js
 console.log([1, 2, 3, 2, 1].indexOf(2));
@@ -443,7 +442,7 @@ console.log([1, 2, 3, 2, 1].lastIndexOf(2));
 
 Ambos `indexOf` e `lastIndexOf` recebem um segundo argumento opcional que indica onde iniciar a pesquisa.
 
-Outro método fundamental é o `slice`, que recebe um índice de início e outro de parada, retornando um array que contém apenas os elementos contidos no intervalo desses índices. O índice de início é inclusivo e o de parada é exclusivo.
+Outro método fundamental é o `slice`, que recebe um índice de início e outro de parada, retornando um _array_ que contém apenas os elementos presentes entre esses índices. O índice de início é inclusivo e o de parada é exclusivo.
 
 ```js
 console.log([0, 1, 2, 3, 4].slice(2, 4));
@@ -452,9 +451,9 @@ console.log([0, 1, 2, 3, 4].slice(2));
 // → [2, 3, 4]
 ```
 
-Quando o índice de parada não é informado, o `slice` irá pegar todos os elementos após o índice de início. Strings também possuem o método `slice` com um comportamento similar.
+Quando o índice de parada não é informado, o `slice` irá pegar todos os elementos após o índice de início. _Strings_ também possuem o método `slice` com um comportamento similar.
 
-O método `concat` pode ser usado para juntar arrays, parecido com o que o operador `+` faz com as strings. O exemplo a seguir mostra ambos `concat` e `slice` em ação, recebendo um array e um índice como argumento e retornando um novo array que é uma cópia do array original, exceto pelo fato de que o elemento no índice informado foi removido.
+O método `concat` pode ser usado para unir _arrays_, parecido com o que o operador `+` faz com as _strings_. O exemplo a seguir mostra ambos `concat` e `slice` em ação. Ele recebe um _array_ e um índice como argumento, retornando um novo _array_ que é uma cópia do _array_ original, exceto pelo fato de que o elemento no índice informado foi removido.
 
 ```js
 function remove(array, index) {
@@ -465,9 +464,9 @@ console.log(remove(["a", "b", "c", "d", "e"], 2));
 // → ["a", "b", "d", "e"]
 ```
 
-# Strings e suas propriedades
+# _Strings_ e suas propriedades
 
-Podemos ler propriedades como `length` e `toUpperCase` de strings. Porém, caso tente adicionar uma nova propriedade, ela não será adicionada.
+Podemos ler propriedades como `length` e `toUpperCase` de _strings_. Porém, caso tente adicionar uma nova propriedade, ela não será adicionada.
 
 ```js
 var myString = "Fido";
@@ -476,9 +475,9 @@ console.log(myString.myProperty);
 // → undefined
 ```
 
-Valores do tipo string, number e Boolean não são objetos e por isso, mesmo com o fato da linguagem não reclamar, quando tentamos adicionar novas propriedades, elas não são armazenadas. Os valores são imutáveis e não podem ser alterados.
+Valores do tipo _string_, _number_ e _Boolean_ não são objetos e, mesmo pelo fato da linguagem não reclamar quando tentamos adicionar novas propriedades neles, elas não são armazenadas. Esses valores são imutáveis e não podem ser alterados.
 
-Mesmo assim, esses tipos possuem propriedades "nativas". Toda string possui uma série de métodos. Provavelmente, alguns dos mais úteis são `slice` e `indexOf`, os quais são parecidos com os métodos de array que possuem o mesmo nome.
+Mesmo assim, esses tipos possuem propriedades nativas. Toda _string_ possui uma série de métodos. Provavelmente, alguns dos mais úteis são `slice` e `indexOf`, que são parecidos com os métodos de _array_ que possuem o mesmo nome.
 
 ```js
 console.log("coconuts".slice(4, 7));
@@ -487,21 +486,21 @@ console.log("coconut".indexOf("u"));
 // → 5
 ```
 
-Uma diferença é que o `indexOf` das strings pode receber uma string contendo mais de um caractere, enquanto o método correspondente no array procura apenas por um único elemento.
+Uma diferença é que o `indexOf` das _strings_ pode receber uma _string_ contendo mais de um caractere, enquanto que o método correspondente no _array_ procura apenas por um único elemento.
 
 ```js
 console.log("one two three".indexOf("ee"));
 // → 11
 ```
 
-O método `trim` remove todos os espaços vazios (espaços, linhas, tabs e caracteres similares) do começo e do fim de uma string.
+O método `trim` remove todos os espaços vazios (espaços, linhas, tabs e caracteres similares) do começo e do final de uma _string_.
 
 ```js
 console.log("  okay \n ".trim());
 // → okay
 ```
 
-Já vimos a propriedade `length` das strings. Para acessar caracteres individuais de uma string, podemos usar o método `charAt` recebendo propriedades numéricas, da mesma forma que você faria com um array.
+Já vimos a propriedade `length` das _strings_. Para acessar caracteres individuais de uma _string_, podemos usar o método `charAt` ou simplesmente ler suas propriedades numéricas, da mesma forma que você faria em um _array_.
 
 ```js
 var string = "abc";
@@ -513,7 +512,7 @@ console.log(string[1]);
 // → b
 ```
 
-## O Objeto Arguments
+## O Objeto _Arguments_
 
 Sempre que uma função é invocada, uma variável especial chamada `arguments` é adicionada ao ambiente no qual o corpo da função executa. Essa variável se refere a um objeto que contém todos os argumentos passados à função. Lembre-se de que no JavaScript você pode passar mais (ou menos) argumentos para uma função, independentemente do número de parâmetros que foi declarado.
 
@@ -524,23 +523,23 @@ function threeArguments(a, b, c) {}
 threeArguments(); // And so is this
 ```
 
-O objeto `arguments` possui a propriedade `length` que nos informa o número de argumentos que realmente foi passado à função. Além disso, contém uma propriedade (0, 1, 2, etc) para cada argumento.
+O objeto `arguments` possui a propriedade `length` que nos informa o número de argumentos que realmente foi passado à função. Além disso, contém uma propriedade para cada argumento, chamadas 0, 1, 2, etc.
 
-Se isso soa como um array para você, você está certo. Esse objeto é muito parecido com um array, porém, infelizmente, ele não possui nenhum dos métodos de array (como `slice` ou `indexOf`). Portanto, é um pouco mais difícil de se usar do que um array de verdade.
+Se isso soa muito parecido como um _array_ para você, você está certo. Esse objeto é muito parecido com um _array_. Porém, ele não possui nenhum dos métodos de _array_ (como `slice` ou `indexOf`), fazendo com que seja um pouco mais difícil de se usar do que um _array_ de verdade.
 
 ```js
 function argumentCounter() {
-  console.log(“You gave me”, arguments.length, “arguments.”);
+  console.log("You gave me", arguments.length, "arguments.");
 }
-argumentCounter(“Straw man”, “Tautology”, “Ad hominem”);
+argumentCounter("Straw man", "Tautology", "Ad hominem");
 // → You gave me 3 arguments.
 ```
 
-Algumas funções podem receber qualquer número de argumentos, como no caso de `console.log`. Esses tipos de funções normalmente percorrem por todos os valores em seu objeto `arguments`, e podem ser usadas para criar interfaces extremamente agradáveis. Por exemplo, lembre-se quando criamos as entradas no diário do Jacques.
+Algumas funções podem receber qualquer número de argumentos, como no caso de `console.log`. Essas funções normalmente percorrem por todos os valores em seu objeto `arguments` e podem ser usadas para criar interfaces extremamente agradáveis. Por exemplo, lembre-se de como criamos as entradas no diário do Jacques.
 
 ```js
-addEntry([“work”, “touched tree”, “pizza”, “running”,
-          “television”], false);
+addEntry(["work", "touched tree", "pizza", "running",
+          "television"], false);
 ```
 
 Devido ao fato de que essa função irá ser executada muitas vezes, poderíamos criar uma alternativa mais simples.
@@ -552,23 +551,23 @@ function addEntry(squirrel) {
     entry.events.push(arguments[i]);
   journal.push(entry);
 }
-addEntry(true, “work”, “touched tree”, “pizza”,
-         “running”, “television”);
+addEntry(true, "work", "touched tree", "pizza",
+         "running", "television");
 ```
 
-Essa versão lê o primeiro argumento (`squirrel`) da forma normal e depois percorre o resto dos argumentos (o loop pula o primeiro argumento, iniciando no índice 1) juntando-os em um array.
+Essa versão lê o primeiro argumento (`squirrel`) da forma normal e depois percorre o resto dos argumentos (o loop pula o primeiro argumento, iniciando no índice 1) juntando-os em um _array_.
 
-## O Objeto Math
+## O Objeto _Math_
 
 Como vimos anteriormente, `Math` é uma caixa de ferramentas com funções relacionadas a números, tais como `Math.max` (máximo), `Math.min` (mínimo) e `Math.sqrt` (raiz quadrada).
 
-O objeto `Math` é usado como um _container_ para agrupar uma série de funcionalidades relacionadas. Existe apenas um único objeto `Math` e, na maioria das vezes, ele não é útil quando usado como valor. Mais precisamente, ele fornece um _namespace_ (espaço nominal) para que todas essas funções e valores não precisem ser declaradas como variáveis globais.
+O objeto `Math` é usado como um _container_ para agrupar uma série de funcionalidades relacionadas. Existe apenas um único objeto `Math` e, na maioria das vezes, ele não é útil quando usado como um valor. Mais precisamente, ele fornece um _namespace_ (espaço nominal) para que todas essas funções e valores não precisem ser declaradas como variáveis globais.
 
 Possuir muitas variáveis globais "polui" o _namespace_. Quanto mais nomes são usados, mais prováveis são as chances de acidentalmente sobrescrever o valor de uma variável. Por exemplo, é provável que você queira chamar algo de `max` em um de seus programas. Sabendo que no JavaScript a função nativa `max` está contida de forma segura dentro do objeto `Math`, não precisamos nos preocupar em sobrescrevê-la.
 
 Muitas linguagens irão parar você ou, ao menos, avisá-lo quando tentar definir uma variável com um nome que já está sendo usado. Como o JavaScript não faz isso, tenha cuidado.
 
-De volta ao objeto `Math`. Caso precise realizar cálculos trigonométricos, `Math` pode ajudá-lo. Ele contém `cos` (coseno), `sin` (seno) e `tan` (tangente), tanto quanto suas funções inversas `aos`, `asin` e `atan` respectivamente. O número π (pi), ou pelo menos a aproximação que é possível ser representada através de um número no JavaScript, está disponível como `Math.PI`. (Existe uma tradição antiga na programação de escrever os nomes de valores constantes em caixa alta).
+De volta ao objeto `Math`, caso precise realizar cálculos trigonométricos, `Math` pode ajudá-lo. Ele contém `cos` (coseno), `sin` (seno) e `tan` (tangente), tanto quanto suas funções inversas `aos`, `asin` e `atan` respectivamente. O número π (pi), ou pelo menos a aproximação que é possível ser representada através de um número no JavaScript, está disponível como `Math.PI`. (Existe uma tradição antiga na programação de escrever os nomes de valores constantes em caixa alta).
 
 ```js
 function randomPointOnCircle(radius) {
@@ -593,9 +592,9 @@ console.log(Math.random());
 // → 0.40180766698904335
 ```
 
-Embora os computadores sejam deterministas (sempre reagem da mesma maneira quando são usados os mesmos dados de entrada), é possível fazer com que produzam números que pareçam ser aleatórios. Para fazer isso, a máquina mantém um número (ou uma variedade deles) armazenado em seu estado interno. Toda vez que um número aleatório é requisitado, ela executa algumas complicadas computações deterministas nesse estado interno e então retorna parte do resultado dessas computações. A máquina também utiliza os resultados para mudar o seu próprio estado interno, fazendo com que seja produzido um próximo número “aleatório” diferente.
+Embora os computadores sejam deterministas (sempre reagem da mesma maneira quando são usados os mesmos dados de entrada), é possível fazer com que eles produzam números que pareçam ser aleatórios. Para fazer isso, a máquina mantém um número (ou uma quantidade deles) armazenado em seu estado interno. Assim, toda vez que um número aleatório é requisitado, ela executa alguns cálculos complicados e deterministas usando esse estado interno e, então, retorna parte do resultado desses cáculos. A máquina também utiliza esses resultados para mudar o seu estado interno, fazendo com que o próximo número "aleatório" produzido seja diferente.
 
-Se quisermos um número aleatório inteiro, ao invés de um número fracionário, podemos usar `Math.floor` (que arredonda o número para o menor valor inteiro mais próximo) no resultado de `Math.random`.
+Se ao invés de um número fracionário, quisermos um número aleatório inteiro, podemos usar `Math.floor` (que arredonda o número para o menor valor inteiro mais próximo) no resultado de `Math.random`.
 
 ```js
 console.log(Math.floor(Math.random() * 10));

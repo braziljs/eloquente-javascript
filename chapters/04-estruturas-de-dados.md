@@ -751,8 +751,6 @@ O operador `==` compara objetos pelas suas identidades. Entretanto, algumas veze
 
 Escreva a função `deepEqual` que recebe dois valores e retorna `true` apenas se os valores forem iguais ou se forem objetos que possuem propriedades e valores iguais quando comparados usando uma chamada recursiva de `deepEqual`.
 
-To find out whether to compare two things by identity (use the === operator for that) or by looking at their properties, you can use the typeof operator. If it produces "object" for both values, you should do a deep comparison. But you have to take one silly exception into account: by a historical accident, typeof null also produces "object".
-
 Para saber se a comparação entre duas coisas deve ser feita pela identidade (use o operador `===` para isso) ou pela verificação de suas propriedades, você pode usar o operador `typeof`. Se ele produzir `"object"` para ambos os valores, você deverá fazer uma comparação "profunda". Entretanto, você deve levar em consideração uma excessão: devido a um acidente histórico, `typeof null` também produz `"object"`.
 
 ```js

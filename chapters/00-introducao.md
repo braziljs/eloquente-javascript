@@ -22,25 +22,29 @@ Esse livro tem o objetivo de familiarizá-lo o suficiente com essa linguagem par
 
 Antes de explicar o JavaScript, irei introduzir também os princípios básicos de programação. Programação é de fato difícil. As regras fundamentais são geralmente simples e claras. Entretanto, programas construídos em cima dessas regras tendem a se tornar complexos, introduzindo suas próprias regras e complexidades adicionais. De certa forma, você estará construindo o seu próprio labirinto e, talvez, possa acabar se perdendo nele.
 
-Para tirar algum proveito deste livro, mais do que apenas uma leitura passiva é necessário. Trate de ficar atento, faça um esforço para entender o exemplo de código, e somente continue quando você estiver razoavelmente seguro que você entendeu o material que veio antes.
+Haverá momentos de frustração quando estiver lendo esse livro e, se você é novo em programação, haverá uma grande quantidade de material para ser digerido. Durante a leitura, muitos desses conceitos serão _combinados_ de várias formas, forçando-o a fazer novas conexões.
 
-> O programador de computadores é um criador de universos no qual ele é o único responsável. Universos de complexidade virtualmente ilimitada podem ser criados sob a forma de programas de computador. **Joseph Weizenbaum, Computer Power and Human Reason**
+Fica a seu critério saber qual o nível de esforço necessário. Quando estiver passando por dificuldades para acompanhar o livro, não tire conclusões imediatas sobre sua própria capacidade. Você estará bem, apenas não desista. Tire um tempo de descanso, releia algum material anterior e _sempre_ certifique-se de que leu e entendeu os programas apresentados nos exemplos e nos exercícios. Aprender é um trabalho árduo, mas tudo o que for aprendido será completamente seu e ajudará com que o aprendizado posterior seja ainda mais fácil.
 
-Um programa é muitas coisas. É um pedaço de texto digitado por um programador, que é a força direta que faz que o computador faça o que faz, são dados na memória do computador, mas ele controla as ações realizadas nesta mesma memória. Analogias que tentam comparar programas com objetos que somos familiares tendem a ser insuficientes. Uma conexão superficial é a com uma máquina - muitas partes separadas tendem a ser envolvidas, e para fazer o conjunto todo precisamos considerar as maneiras que estas partes se interconectam e contribuam para a operação do todo.
+> O programador é um criador de universos nos quais ele é o único responsável. Universos com complexidades totalmente ilimitadas podem ser criados na forma de programas de computador.
+>
+> — Joseph Weizenbaum, Computer Power and Human Reason
 
-Um computador é uma máquina feita para atuar como um hospedeiro para estas máquinas imateriais. Computadores por si próprios podem somente fazer coisas estúpidas e simples. A razão deles serem tão úteis é que eles fazem coisas em uma velocidade incrível. Um programa pode ingenuamente combinar enormes números de simples ações ao invés de fazer coisas complicadas.
+Um programa pode ser considerado muitas coisas. Ele é um pedaço de texto digitado por um programador, a força que direciona o computador a fazer o que ele faz e, também, os dados contidos na memória do computador, controlando as ações executadas nessa mesma memória. Analogias que tentam comparar programas aos objetos que conhecemos, normalmente tendem a ser insuficientes. Uma dessas comparações superficiais é com uma máquina, com várias partes separadas que normalmente estão relacionadas e, para fazer com que a máquina toda funcione, precisamos considerar a maneira nas quais essas partes estão conectadas e como cada uma contribui para a operação da máquina como um todo.
 
-Para muitos de nós, escrever programas de computador é um fascinante jogo. Um programa é uma construção do pensamento. Não tem custos de construção, é leve e cresce facilmente ante nossas digitações.
+Um computador é uma máquina construída para atuar como um hospedeiro para essas máquinas imateriais. Os computadores por si sós, conseguem apenas fazer coisas fáceis e pouco complicadas. A razão deles serem tão úteis, é que eles conseguem executar essas coisas em uma velocidade incrivelmente rápida. Um programa pode combinar uma grande quantidade dessas coisas simples a fim de executar coisas mais complicadas.
 
-Se não formos cuidadosos, seu tamanho e complexidade vão aumentar fora de controle, confundindo até a pessoa que o criou. Este é o principal problema da programação: manter os programas sobre controle. Quando um programa funciona, ele é lindo. A arte de programar é a habilidade de controlar a complexidade. Um grande programa é suave, é simples em sua complexidade.
+Para alguns de nós, escrever programas de computador é um fascinante jogo. Um programa é uma construção do pensamento. Não possui custos de construção, é leve e cresce facilmente com a digitação feita por nossas mãos.
 
-Alguns programadores acreditam que esta complexidade é melhor gerenciada usando somente um pequeno conjunto de técnicas bem entendidas em seus programas. Eles compõe regras rígidas (*"boas práticas"*) prescrevendo a forma que programas devem ter, e os mais zelosos sobre isso vão considerar aqueles que saem desta pequena zona de segurança *maus programadores*.
+Entretanto, se não formos cuidadosos, o tamanho e a complexidade de um programa pode crescer e ficar fora de controle, confundindo, até mesmo, a pessoa que o criou. Manter os programas sob controle é o maior desafio da programação. Quando um programa funciona, é lindo. A arte de programar é, basicamente, a habilidade de controlar a complexidade. Um ótimo programa é suave e simples em sua própria complexidade.
 
-Quanta hostilidade perante a riqueza da programação - tentar reduzir a algo simples e previsível, colocando um tabu em todos os lindos e misteriosos programas! A paisagem das técnicas de programação é enorme, fascinante em sua diversidade, e permanece largamente inexplorada. É sem dúvida perigoso ir neste caminho, atraindo o programador inexperiente em todo tipo de confusão, mas isso só significa que você deve proceder com cautela e manter o juízo. Conforme você aprende, sempre haverá novos desafios e novos territórios a serem explorados. Programadores que recusam de manter-se explorando vão estagnar, esquecer sua alegria, e ficar entediado com seu trabalho.
+Muitos programadores acreditam que essa complexidade é melhor gerenciada usando, em seus programas, apenas um pequeno conjunto de técnicas bem entendidas. Eles criaram uma série de regras rígidas ("boas práticas") recomendando a forma que os programas deveriam ter. Os mais zelosos entre eles, vão considerar como _maus programadores_ aqueles que saem dessa pequena zona de segurança.
+
+Quanta hostilidade em relação à riqueza da programação, tentar reduzi-lá a algo simples e previsível, colocando um tabu em todos os estranhos e bonitos programas. A dimensão das técnicas de programação é enorme e fascinante em sua diversidade e, ainda assim, amplamente inexplorada. É certamente muito perigoso atrair programadores inexperientes nesses tipos de confusões, entretanto, você deve seguir com cautela e manter o seu senso comum em relação a elas. Conforme você aprende, sempre haverá novos territórios e desafios a serem explorados. Programadores que se recusam a continuar explorando irão estagnar, esquecer da alegria que é programar e acabarão ficando entediados com as coisas que constroem.
 
 ## Porque linguagens importam?
 
-No começo, no nascimento da programação, não havia linguagens de programação. Programas pareciam algo desta forma:
+No início, quando a computação nasceu, não haviam linguagens de programação. Os programas eram parecidos com algo assim:
 
 ```
 00110001 00000000 00000000
@@ -54,9 +58,9 @@ No começo, no nascimento da programação, não havia linguagens de programaç�
 01100010 00000000 00000000
 ```
 
-Este é um programa que soma os números do 1 ao 10 e imprimi o resultado (1 + 2 + ... 10 = 55). Isso pode rodar em uma máquina hipotética muito simples. Para programar os primeiros computadores, era necessário configurar grandes arrays de chaves na posição certa, ou fazer furos em cartões e alimentá-los no computador. Você pode imaginar como isso era tedioso, e um procedimento propenso ao erro. Mesmo escrever simples programas requeriam muita habilidade e disciplina. Os complexos eram quase inconcebíveis.
+Esse é um programa que soma os números de 1 a 10 e imprime o resultado: `1 + 2 + … + 10 = 55`. Ele poderia ser executado em qualquer máquina simples. Para programar os computadores antigos, era necessário configurar longos conjuntos de chaves na posição correta ou, então, fazer perfurações em cartões que eram usados para alimentar o computador. Você provavelmente deve estar imaginando como tedioso e propenso a erros esse procedimento era. Até para escrever programas simples precisava de muita habilidade e disciplina. Os programas mais complexos eram praticamente inimagináveis de serem criados.
 
-Claro, inserindo manualmente estes padrões misteriosos de bits (1 e 0) fez que o programador tivesse uma profunda sensação de ser um poderoso feiticeiro. E isto tem que valer alguma coisa em termos de satisfação no trabalho.
+É claro que inserir esses padrões "arcanos" de bits (zeros e uns) dava ao programador a profunda sensação de ser um poderoso mago, e isso devia significar alguma coisa em relação ao sentimento de satisfação em seu trabalho.
 
 Cada linha do programa contém uma simples instrução. Isto pode ser escrito assim:
 

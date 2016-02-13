@@ -10,7 +10,7 @@ next: /chapters/formularios-e-campos-de-formularios
 >
 > — Tim Berners-Lee, The World Wide Web: A very short personal history
 
-O _Hypertext Transfer Protocol_, já mencionado no [capítulo 12](/chapters/javascript-e-o-navegador), é o mecanismo no qual dados são requisitados e entregues na _World Wide Web_. Esse capítulo descreve o protocolo com mais detalhes e explica como o JavaScript executado no navegador tem acesso a ele.
+O _Hypertext Transfer Protocol_, já mencionado no [capítulo 12](/eloquente-javascript/chapters/javascript-e-o-navegador), é o mecanismo no qual dados são requisitados e entregues na _World Wide Web_. Esse capítulo descreve o protocolo com mais detalhes e explica como o JavaScript executado no navegador tem acesso a ele.
 
 ## O Protocolo
 
@@ -115,7 +115,7 @@ name=Jean&message=Yes%3F
 
 Por convenção, o método `GET` é usado para requisições que não produzem efeitos colaterais, tais como fazer uma pesquisa. Requisições que alteram alguma coisa no servidor, como criar uma nova conta ou postar uma nova mensagem, devem ser expressadas usando outros métodos, como `POST`. Aplicações _client-side_, como os navegadores, sabem que não devem fazer requisições `POST` cegamente, mas frequentemente farão requisições `GET` implícitas para, por exemplo, pré-carregar um recurso que ele acredita que o usuário irá precisar no curto-prazo.
 
-O [próximo capítulo](/chapters/formularios-e-campos-de-formularios) irá retomar o assunto formulários e explicará como podemos desenvolve-los usando JavaScript.
+O [próximo capítulo](/eloquente-javascript/chapters/formularios-e-campos-de-formularios) irá retomar o assunto formulários e explicará como podemos desenvolve-los usando JavaScript.
 
 ## XMLHttpRequest
 
@@ -226,7 +226,7 @@ Access-Control-Allow-Origin: *
 
 ## Abstraindo Requisições
 
-No [Capítulo 10](/chapters/modulos), em nossa implementação do módulo AMD, nós usamos uma função hipotética chamada `backgroundReadFile`. Ela recebeu um caminho de arquivo e uma função e chamou esta função com o conteúdo do arquivo quando ele acabou de ser recuperado. Aqui um exemplo de uma implementação desta função:
+No [Capítulo 10](/eloquente-javascript/chapters/modulos), em nossa implementação do módulo AMD, nós usamos uma função hipotética chamada `backgroundReadFile`. Ela recebeu um caminho de arquivo e uma função e chamou esta função com o conteúdo do arquivo quando ele acabou de ser recuperado. Aqui um exemplo de uma implementação desta função:
 
 <pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 function backgroundReadFile(url, callback) {

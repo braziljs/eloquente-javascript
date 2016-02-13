@@ -73,7 +73,7 @@ console.log(doh.toUpperCase());
 
 Toda _string_ possui uma propriedade `toUpperCase`. Quando chamada, ela retornará uma cópia da string com todas as letras convertidas para maiúsculas. Existe também a propriedade `toLowerCase`, que você já pode imaginar o que faz.
 
-Curiosamente, mesmo que a chamada para `toUpperCase` não passe nenhum argumento, de alguma forma a função tem acesso à _string_ `"Doh"`, que é o valor em que a propriedade foi chamada. Como isso funciona exatamente é descrito no [Capítulo 6](./06-a-vida-secreta-dos-objetos).
+Curiosamente, mesmo que a chamada para `toUpperCase` não passe nenhum argumento, de alguma forma a função tem acesso à _string_ `"Doh"`, que é o valor em que a propriedade foi chamada. Como isso funciona exatamente é descrito no [Capítulo 6](./06-a-vida-secreta-dos-objetos.md).
 
 As propriedades que contêm funções são geralmente chamadas de _métodos_ do valor a que pertencem. Como por exemplo, "`toUpperCase` é um método de uma _string_".
 

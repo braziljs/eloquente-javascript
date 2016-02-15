@@ -514,7 +514,7 @@ Separar as tarefas que a sua aplicação executa em diferentes funções, é bas
 
 ### Mínimo
 
-O [capítulo anterior](http://eloquentjavascript.com.br/chapters/estrutura-do-programa) introduziu a função `Math.min` que retorna o seu menor argumento. Nós podemos reproduzir essa funcionalidade agora. Escreva uma função `min` que recebe dois argumentos e retorna o menor deles.
+O [capítulo anterior](/eloquente-javascript/chapters/estrutura-do-programa) introduziu a função `Math.min` que retorna o seu menor argumento. Nós podemos reproduzir essa funcionalidade agora. Escreva uma função `min` que recebe dois argumentos e retorna o menor deles.
 
 <pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 // Your code here.

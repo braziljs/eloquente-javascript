@@ -6,7 +6,7 @@ prev: /chapters/javascript-e-o-navegador
 next: /chapters/manipulando-eventos
 ---
 
-Quando você abre uma página web em seu navegador, ele resgata o texto em HTML da página e o interpreta, de maneira semelhante ao que nosso interpretador do [Capítulo 11](/chapters/projeto-a-linguagem) fazia. O navegador constrói um modelo da estrutura do documento e depois usa esse modelo para desenhar a página na tela.
+Quando você abre uma página web em seu navegador, ele resgata o texto em HTML da página e o interpreta, de maneira semelhante ao que nosso interpretador do [Capítulo 11](/eloquente-javascript/chapters/projeto-a-linguagem) fazia. O navegador constrói um modelo da estrutura do documento e depois usa esse modelo para desenhar a página na tela.
 
 Um dos "brinquedos" que um programa em JavaScript possui disponível em sua caixa de ferramentas é essa representação do documento. Você pode lê-la e também alterá-la. Essa representação age como uma estrutura viva de dados: quando modificada, a página na tela é atualizada para refletir as mudanças.
 
@@ -38,13 +38,13 @@ A variável global `document` nos dá acesso à esses objetos. Sua propriedade `
 
 ## Árvores
 
-Relembre-se da sintaxe das árvores do [Capítulo 11](/chapters/projeto-a-linguagem) por um momento. A estrutura delas é incrivelmente similar a estrutura de um documento do navegador. Cada nó pode se referir a outros nós, "filhos", os quais podem ter, por sua vez, seus próprios "filhos". Esse formato é típico de estruturas aninhadas, nas quais os elementos podem conter sub-elementos que são similares à eles mesmos.
+Relembre-se da sintaxe das árvores do [Capítulo 11](/eloquente-javascript/chapters/projeto-a-linguagem) por um momento. A estrutura delas é incrivelmente similar a estrutura de um documento do navegador. Cada nó pode se referir a outros nós, "filhos", os quais podem ter, por sua vez, seus próprios "filhos". Esse formato é típico de estruturas aninhadas, nas quais os elementos podem conter sub-elementos que são similares à eles mesmos.
 
 Nós chamamos uma estrutura de dados de uma *árvore* quando ela possui uma estrutura de galhos, sem ciclos (um nó não deve conter ele mesmo, direta ou indiretamente) e possui uma única, bem definida, raíz. No caso do DOM, document.documentElement representa a raíz.
 
 Árvores aparecem muito em Ciências da Computação. Além de representar estruturas recursivas como documentos HTML ou programas, elas também são comumente usadas para manter conjuntos ordenados de dados, pois elementos podem ser típicamente encontrados ou inseridos de maneira mais eficiente em uma árvore ordenada do que em um conjunto (ou "array") plano ordenado.
 
-Uma árvore típica possui diferentes tipos de nós. A árvore de sintaxe para a [Egg Language](/chapters/projeto-a-linguagem) continha variáveis, valores e nós de aplicação. Nós de aplicação sempre têm filhos, diferentemente das variáveis e valores, que eram *folhas*, ou seja, nós sem filhos.
+Uma árvore típica possui diferentes tipos de nós. A árvore de sintaxe para a [Egg Language](/eloquente-javascript/chapters/projeto-a-linguagem) continha variáveis, valores e nós de aplicação. Nós de aplicação sempre têm filhos, diferentemente das variáveis e valores, que eram *folhas*, ou seja, nós sem filhos.
 
 O mesmo vale para o DOM. Nós de elementos comuns, os quais representam tags HTML, determinam a estrutura do documento. Esses podem possuir nós filhos. Um exemplo de um desses nós é o `document.body`. Alguns desses nós filhos podem ser folhas, assim como fragmentos de texto ou comentários (os quais são escritos entre `<!--` e `-->` em HTML).
 

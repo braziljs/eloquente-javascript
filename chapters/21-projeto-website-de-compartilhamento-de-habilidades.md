@@ -76,7 +76,7 @@ Content-Length: 92
  "summary": "Standing still on a unicycle"}
 ```
 
-Essas URLs também suportam requisições `GET` para recuperar a representação do `JSON` de uma palestra ou `DELETE` para exclusão de uma palestra.
+Estas URLs também suportam requisições `GET` para recuperar a representação do `JSON` de uma palestra ou `DELETE` para exclusão de uma palestra.
 
 Para adicionar um comentário a uma palestra é necessário uma solicitação `POST` para uma `URL` `/talks/Unituning/comments` com um objeto `JSON` contendo o autor e a mensagem como propriedades do corpo da solicitação.
 
@@ -198,7 +198,7 @@ function respondJSON(response, status, data) {
 }
 ```
 
-#### Recursos da palestras
+#### Recursos das palestras
 
 O servidor mantém as palestras que têm sido propostas em um objeto chamado `talks`, cujos os títulos são propriedades de nomes de uma palestra. Estes serão expostos como recursos `HTTP` sob `/talks/[title]` e por isso precisamos adicionar manipuladores ao nosso roteador que implementaram vários métodos que podem serem utilizados pelo o cliente.
 
@@ -751,7 +751,7 @@ Você poderia mudar `instantiateTemplate` de modo que sua função interna não 
 
 Condicionais pode ser implementado de uma forma semelhante aos atributos de chamadas, por exemplo `template-when` e `template-unless` quando inserido no template irá instanciar ou não um nó dependendo de uma determinada propriedade que pode ser verdadeiro ou falso.
 
-#### Os unscriptables 
+#### Os unscriptables
 
 Quando alguém visita o nosso site com um navegador que tenha JavaScript desabilitado ou o navegador que não suporta a execução de JavaScript eles vão conseguir ver uma página inoperável e completamente quebrada. Isso não é bom.
 

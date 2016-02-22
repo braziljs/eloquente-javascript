@@ -159,20 +159,20 @@ Após o [primeiro projeto](./chapters/07-pratica-vida-eletronica.md), a primeira
 
 ## Convenções Tipográficas
 
-Neste livro, texto escrito em fonte `monoespaçada` deve ser entendido por representações de elementos dos programas - algumas vezes são fragmentos auto-suficientes, e algumas vezes eles somente referenciam para alguma parte de um programa próximo. Programas (que você já viu um pouco), são escritos assim:
+Nesse livro, os textos escritos em fonte `mono-espaçada` representarão elementos de programas. Algumas vezes serão fragmentos auto-suficientes e em outras, apenas referências para alguma parte de um programa próximo. Programas (os quais você já viu alguns) são escritos assim:
 
-```javascript
+```js
 function fac(n) {
-	if (n == 0)
-		return 1;
-	else
-		return fac(n - 1) * n;
+  if (n == 0)
+    return 1;
+  else
+    return fac(n - 1) * n;
 }
 ```
 
-Algumas vezes, para mostrar a saída que o programa produz, a mesma será escrita abaixo dele, com duas barras e uma seta na frente:
+Algumas vezes, para mostrar a saída que um programa produz, o resultado esperado será escrito após o mesmo, com duas barras e uma seta na frente.
 
-```javascript
+```js
 console.log(fac(8));
 // → 40320
 ```

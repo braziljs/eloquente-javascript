@@ -1,21 +1,25 @@
 # Valores, Tipos e Operadores
 
->  Abaixo da parte superficial da máquina, existe um programa que desloca-se. Sem esforço, ele se expande e se contrai. Com grande harmonia, os elétrons se espalham e se reagrupam. As formas no monitor são como ondulações na água. A essência permanece invisível por baixo.
+> Abaixo da parte superficial da máquina, o programa se movimenta. Sem esforço, ele se expande e se contrai. Com grande harmonia, os elétrons se espalham e se reagrupam. As formas no monitor são como ondulações na água. A essência permanece invisível por baixo.
+>
+> — Master Yuan-Ma, The Book of Programming
 
-> - Master Yuan-Ma, The Book of Programming
+Dentro do mundo do computador, há somente dados. Você pode ler, modificar e criar novos dados, entretanto, qualquer coisa que não seja um dado simplesmente não existe. Todos os dados são armazenados em longas sequências de bits e são, fundamentalmente, parecidos.
 
-Dentro do mundo do computador, há somente dados. Nós podemos ler dados, modificar dados, criar dados - mas coisas que não são representadas por dados simplesmente não existem. Todos estes dados são armazenados em longas sequências de bits, e isso portanto é fundamentalmente parecido.
-
-Bits podem ser qualquer tipo de coisa com 2 valores, usualmente descrito como 0 e 1. Dentro do computador, eles tomam formas como uma carga elétrica alta ou baixa, um forte ou fraco sinal, ou um ponto brilhante ou sem brilho na superfície de um CD. Qualquer pedaço de uma discreta informação, pode ser reduzida para uma sequência de 0 e 1, e então representanda por bits.
+Bits podem ser qualquer tipo de coisa representada por dois valores, normalmente descritos como zeros e uns. Dentro do computador, eles representam formas tais como uma carga elétrica alta ou baixa, um sinal forte ou fraco ou até um ponto na superfície de um CD que possui ou não brilho. Qualquer pedaço de informação pode ser reduzido a uma sequência de zeros e uns e, então, representados por bits.
 
 Como um exemplo, pense sobre a maneira que o número 13 pode ser armazenado em bits. A forma usual de se fazer esta analogia é a forma de escrevermos números decimais, mas ao invés de 10 dígitos, temos apenas 2. E, ao invés de o valor de um dígito aumentar dez vezes sobre o dígito após ele, o valor aumenta por um fator 2. Estes são os bits que compõem o número treze, com o valor dos dígitos mostrados abaixo deles:
+
+Como um exemplo, pense em como você poderia mostrar o número 13 em bits. Isso funciona da mesma forma na qual você escreve números decimais, mas ao invés de usar 10 dígitos diferentes, você possui apenas dois dígitos, sendo que o peso de cada bit aumenta em um fator de 2, começando da direita para a esquerda. Estes são os bits que compõem o número 13, com os pesos de cada dígito mostrados abaixo deles:
 
 ```
   0   0   0   0   1   1   0   1
 128  64  32  16   8   4   2   1
 ```
 
-Então este é o 00001101, ou 8 + 4 + 1, que equivale a 13.
+
+
+Então, este é o número binário 00001101, ou 8 + 4 + 1, que equivale a 13.
 
 ## Valores
 

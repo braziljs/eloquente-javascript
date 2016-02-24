@@ -17,23 +17,17 @@ Como um exemplo, pense em como você poderia mostrar o número 13 em bits. Isso 
 128  64  32  16   8   4   2   1
 ```
 
-
-
 Então, este é o número binário 00001101, ou 8 + 4 + 1, que equivale a 13.
 
 ## Valores
 
-Imagine um mar de bits. Um oceano deles. Um computador moderno tem mais de trinta bilhões de bits em seu armazenamento volátil (memória RAM). De armazenamento não-volátil (o disco rígido ou equivalente) tende a ter uma ordem de magnitude ainda maior.
+Imagine um mar de bits, um oceano deles. Um computador moderno possui mais de trinta bilhões de bits em seu armazenamento volátil de dados. Já em armazenamento de dados não voláteis, sendo eles o disco rígido ou algo equivalente, tende a ter uma ordem de magnitude ainda maior.
 
 ![Bit Sea](../img/bit-sea.png)
 
-Para trabalhar com estes sem se perder, nós temos que estruturá-los de alguma forma. Uma forma de fazer é agrupá-los dentro de pedaços que representam uma simples parte de informação. Em um ambiente JavaScript, todo os dados são separados em coisas chamadas *valores*, grupos de bits que representam um pedaço de dado coerente.
+Para que seja possível trabalhar com tais quantidades de bits sem ficar perdido, você pode separá-los em partes que representam pedaços de informação. No ambiente JavaScript, essas partes são chamadas de _valores_. Embora todos os valores sejam compostos por bits, cada valor exerce um papel diferente e todo valor possui um tipo que determina o seu papel. Existem seis tipos básicos de valores no JavaScript: números, strings, Booleanos, objetos, funções e valores indefinidos.
 
-Embora todos os valores sejam feitos da mesma coisa uniforme, eles desempenham papéis diferentes. Todo valor tem um tipo, que determina o tipo de papel que desempenha. Temos seis tipos básicos de valores no JavaScript: números, strings, booleans, objetos, funções e valores indefinidos.
-
-> Em inglês: [number, string, boolean, object, function, undefined]
-
-Para criar um valor, deve-se simplesmente invocar seu nome. Isto é muito conveniente. Você não tem que recolher material para construir seus valores ou pagar por eles; você só chama por um, e pronto, você o tem. Eles não são criados com ar, obviamente. Todo valor tem que ser armazenado em algum lugar, e se você quer usar uma quantidade gigante deles, ao mesmo tempo você deve rodar sobre os bits. Felizmente, este é um problema somente se você os quiser simultaneamente. Assim que você não usar mais um valor, ele será dissipado, deixando para trás os bits para serem reciclados e se tornarem materiais para a próxima geração de valores.
+Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do ar. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. A medida que você não utiliza um valor, ele será dissipado, fazendo que que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
 
 Este capítulo introduz os elementos atômicos dos programas JavaScript: Simples tipos de valores, e operadores que podem atuar em cada valor.
 

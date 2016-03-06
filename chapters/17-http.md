@@ -298,7 +298,7 @@ Para projetos complicados, escrever código assíncrono usando o estilo de _call
 
 Já foram feitas várias tentativas para resolver esse problema usando abstrações adicionais. Uma das mais bem-sucedidas é chamada de _promises_. _Promises_ encapsulam uma ação assíncrona em um objeto, que pode ser passado e instruído a fazer certas coisas quando a ação finalizar ou falhar. Essa interface está definida para ser parte da próxima versão da linguagem JavaScript, mas já pode ser usada em forma de biblioteca.
 
-A interface para usar _promises_ não é muito intuitiva, mas é poderosa. Esse capítulo irá brevemente descrevê-la. Você pode encontrar mais informações em [www.promisejs.org](www.promisejs.org)
+A interface para usar _promises_ não é muito intuitiva, mas é poderosa. Esse capítulo irá brevemente descrevê-la. Você pode encontrar mais informações em [promisejs.org](http://www.promisejs.org)
 
 Para criar um objeto _promise_, chamamos o construtor `Promise` passando uma função que inicia a ação assíncrona. O construtor chama essa função passando dois argumentos, os quais também são funções. A primeira função deve ser chamada quando a ação terminar com sucesso e a segunda quando ela falhar.
 

@@ -6,18 +6,16 @@
 
 Dentro do mundo do computador, há somente dados. Você pode ler, modificar e criar novos dados, entretanto, qualquer coisa que não seja um dado simplesmente não existe. Todos os dados são armazenados em longas sequências de bits e são, fundamentalmente, parecidos.
 
-Bits podem ser qualquer tipo de coisa representada por dois valores, normalmente descritos como zeros e uns. Dentro do computador, eles representam formas tais como uma carga elétrica alta ou baixa, um sinal forte ou fraco ou até um ponto na superfície de um CD que possui ou não brilho. Qualquer pedaço de informação pode ser reduzido a uma sequência de zeros e uns e, então, representados por bits.
+Bits podem ser qualquer tipo de coisa representada por dois valores, normalmente descritos como zeros e uns. Dentro do computador, eles representam formas tais como uma carga elétrica alta ou baixa, um sinal forte ou fraco ou até um ponto na superfície de um CD que possui brilho ou não. Qualquer pedaço de informação pode ser reduzido a uma sequência de zeros e uns e, então, representados por bits.
 
-Como um exemplo, pense sobre a maneira que o número 13 pode ser armazenado em bits. A forma usual de se fazer esta analogia é a forma de escrevermos números decimais, mas ao invés de 10 dígitos, temos apenas 2. E, ao invés de o valor de um dígito aumentar dez vezes sobre o dígito após ele, o valor aumenta por um fator 2. Estes são os bits que compõem o número treze, com o valor dos dígitos mostrados abaixo deles:
-
-Como um exemplo, pense em como você poderia mostrar o número 13 em bits. Isso funciona da mesma forma na qual você escreve números decimais, mas ao invés de usar 10 dígitos diferentes, você possui apenas dois dígitos, sendo que o peso de cada bit aumenta em um fator de 2, começando da direita para a esquerda. Estes são os bits que compõem o número 13, com os pesos de cada dígito mostrados abaixo deles:
+Como um exemplo, pense sobre a maneira que o número 13 pode ser armazenado em bits. A forma usual de se fazer esta analogia é a forma de escrevermos números decimais, mas ao invés de 10 dígitos, temos apenas 2. E, ao invés de o valor de um dígito aumentar dez vezes sobre o dígito após ele, o valor aumenta por um fator de 2. Estes são os bits que compõem o número treze, com o valor dos dígitos mostrados abaixo deles:
 
 ```
   0   0   0   0   1   1   0   1
 128  64  32  16   8   4   2   1
 ```
 
-Então, este é o número binário 00001101, ou 8 + 4 + 1, que equivale a 13.
+Assim, este é o número binário 00001101, ou 8 + 4 + 1, que equivale a 13.
 
 ## Valores
 
@@ -27,7 +25,7 @@ Imagine um mar de bits, um oceano deles. Um computador moderno possui mais de tr
 
 Para que seja possível trabalhar com tais quantidades de bits sem ficar perdido, você pode separá-los em partes que representam pedaços de informação. No ambiente JavaScript, essas partes são chamadas de _valores_. Embora todos os valores sejam compostos por bits, cada valor exerce um papel diferente e todo valor possui um tipo que determina o seu papel. Existem seis tipos básicos de valores no JavaScript: números, strings, Booleanos, objetos, funções e valores indefinidos.
 
-Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do ar. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. A medida que você não utiliza um valor, ele será dissipado, fazendo que que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
+Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do ar. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. A medida que você não utiliza um valor, ele será dissipado, fazendo com que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
 
 Esse capítulo introduz os elementos que representam os átomos dos programas JavaScript, que são os simples tipos de valores e os operadores que podem atuar sobre eles.
 
@@ -71,21 +69,21 @@ A principal coisa para se fazer com números são cálculos aritméticos. As ope
 100 + 4 * 11
 ```
 
-Os símbolos `+` e `*` são chamados de _operadores_. O primeiro é referente à adição e o segundo à multiplicação. Colocar um operador entre dois valores irá aplicá-lo a esses valores e produzir um novo valor.
+Os símbolos `+` e `*` são chamados de _operadores_. O primeiro é referente à adição e o segundo à multiplicação. Colocar um operador entre dois valores irá aplicá-lo a esses valores e produzirá um novo valor.
 
-O significado do exemplo anterior é “adiciona 4 e 100 e, depois, multiplica o resultado por 11” ou a multiplicação é realizada antes da adição? Como você deve ter pensado, a multiplicação acontece primeiro. Entretanto, como na matemática, você pode mudar esse comportamento envolvendo a adição com parênteses.
+O significado do exemplo anterior é “adicione 4 e 100 e, em seguida, multiplique esse resultado por 11” ou a multiplicação é realizada antes da adição? Como você deve ter pensado, a multiplicação acontece primeiro. Entretanto, como na matemática, você pode mudar esse comportamento envolvendo a adição com parênteses.
 
 ```javascript
 (100 + 4) * 11
 ```
 
-Para subtração, este é o operador `-`, e para a divisão usamos este operador `/`.
+Para subtração existe o operador `-` e para a divisão usamos o operador `/`.
 
-Quando operadores aparecem juntos sem parênteses, a ordem que eles vão ser aplicados é determinada pela *precedência* dos operadores. O exemplo mostra que a multiplicação vem antes da adição. `/` tem a mesma precedência de `*`. Igualmente para `+` e `-`. Quando múltiplos operadores com a mesma precedência estão próximos uns aos outros (como em `1 - 2 + 1`), eles são aplicados da esquerda para a direita.
+Quando os operadores aparecem juntos sem parêntesis, a ordem que eles serão aplicados é determinada pela _precedência_ deles. O exemplo mostra que a multiplicação ocorre antes da adição. O operador `/` possui a mesma precedência que `*` e, de forma similar, os operadores `+` e `-` possuem a mesma precedência entre si. Quando vários operadores de mesma precedência aparecem próximos uns aos outros, como por exemplo `1 - 2 + 1`, eles são aplicados da esquerda para a direita: `(1 - 2) + 1`.
 
-Estas regras de precedência não é algo que você deva se preocupar. Quando em dúvida, somente adicione parênteses.
+Essas regras de precedência não são algo que você deve se preocupar. Quando estiver em dúvida, apenas adicione os parênteses.
 
-Há mais um operador aritmético, que possivelmente é menos familiar. O símbolo `%` é usado para representar o *restante* da operação. `X % Y` é o restante da divisão de `X por Y`. Por exemplo, `314 % 100` produz `14`, e `144 % 12` nos dá `0`. A precedência deste operador é igual a da multiplicação e divisão. Você também pode ver este operador sendo referido como "módulo" (porém tecnicamente "restante" é mais preciso).
+Existe mais um operador aritmético que você talvez não reconheça imediatamente. O símbolo `%` é usado para representar a operação de _resto_. `X % Y` é o resto da divisão de `X` por `Y`. Por exemplo, `314 % 100` produz `14` e `144 % 12` produz `0`. A precedência do operador resto é a mesma da multiplicação e divisão. Você ouvirá com frequência esse operador ser chamado de _modulo_ mas, tecnicamente falando, _resto_ é o termo mais preciso.
 
 ## Números Especiais
 

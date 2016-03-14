@@ -25,7 +25,7 @@ Imagine um mar de bits, um oceano deles. Um computador moderno possui mais de tr
 
 Para que seja possível trabalhar com tais quantidades de bits sem ficar perdido, você pode separá-los em partes que representam pedaços de informação. No ambiente JavaScript, essas partes são chamadas de _valores_. Embora todos os valores sejam compostos por bits, cada valor exerce um papel diferente e todo valor possui um tipo que determina o seu papel. Existem seis tipos básicos de valores no JavaScript: números, strings, Booleanos, objetos, funções e valores indefinidos.
 
-Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do ar. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. A medida que você não utiliza um valor, ele será dissipado, fazendo com que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
+Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do nada. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. A medida que você não utiliza um valor, ele será dissipado, fazendo com que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
 
 Esse capítulo introduz os elementos que representam os átomos dos programas JavaScript, que são os simples tipos de valores e os operadores que podem atuar sobre eles.
 
@@ -87,26 +87,24 @@ Existe mais um operador aritmético que você talvez não reconheça imediatamen
 
 ## Números Especiais
 
-Existem 3 valores especiais no JavaScript que são considerados números, mas não comportam-se como números normais.
+Existem três valores especiais no JavaScript que são considerados números, mas não se comportam como números normais.
 
-Os dois primeiros são `Infinity` e `-Infinity`, que são usados para representar os infinitos positivo e negativo. `Infinity - 1` continua sendo `Infinity`, e assim por diante. Mas não ponha muita confiança neste tipo de computação *baseada em infinito*, pois é uma matemática pesada, e vai rapidamente levar para nosso próximo número especial: `NaN`.
+Os dois primeiros são `Infinity` e `-Infinity`, que são usados para representar os infinitos positivo e negativo. O cálculo `Infinity - 1` continua sendo `Infinity`, assim como qualquer outra variação dessa conta. Entretanto, não confie muito em cálculos baseados no valor infinito, pois esse valor não é matematicamente sólido, e rapidamente nos levará ao próximo número especial: `NaN`.
 
-`NaN` significa "not a number" (não é um número). Você obtém isso quando declara `0 / 0` (zero dividido por zero), `Infinity - Infinity`, ou qualquer número de outra operação numérica que não produz um preciso e significante valor.
+`NaN` é a abreviação de “_not a number_” (não é um número), mesmo sabendo que ele é um valor do tipo número. Você receberá esse valor como resultado quando, por exemplo, tentar calcular `0 / 0` (zero dividido por zero), `Infinity - Infinity` ou, então, realizar quaisquer outras operações numéricas que não resultem em um número preciso e significativo.
 
 ## Strings
 
-O próximo tipo básico de dado é a *string*. Strings são usadas para representar texto. Elas são escritas delimitando seu conteúdo entre aspas:
+O próximo tipo básico de dado é a _string_. _Strings_ são usadas para representar texto, e são escritas delimitando o seu conteúdo entre aspas.
 
-```javascript
-
+```js
 "Patch my boat with chewing gum"
 'Monkeys wave goodbye'
-
 ```
 
-Ambas as aspas simples e duplas podem ser usadas para marcar strings - contanto que as aspas no início e no fim da string combinem.
+Ambas as aspas simples e duplas podem ser usadas para representar _strings_, contanto que as aspas abertas no início e fechadas fim sejam iguais.
 
-Quase tudo pode ser colocado entre aspas, e o JavaScript vai fazer um valor de string com isso. Mas alguns caracteres são difíceis. Você pode imaginar como colocar aspas entre aspas deve ser difícil. Novas linhas, as coisas que você obtém quando pressiona `enter`, também não podem ser colocadas entre aspas - a string tem que estar em uma linha única.
+Quase tudo pode ser colocado entre aspas, e o JavaScript criará um valor do tipo _string_ com isso. Entretanto, alguns caracteres são mais difíceis. Você pode imaginar como deve ser complicado colocar aspas dentro de aspas. Além disso, os caracteres _newlines_ (quebra de linhas, usados quando você aperta _Enter_), também não podem ser colocados entre aspas. As _strings_ devem permanecer em uma única linha.
 
 Para ser capaz de ter estes caracteres em uma string, a convenção seguinte é usada: Sempre que um barra invertida `\` é encontrada dentro do texto entre aspas, isto indica que o caracter depois desta tem um significado especial. Uma aspa precedida de uma barra invertida não vai findar a string, mas ser parte dela. Quando um caracter 'n' correr depois de uma barra invertida, será interpretado como uma nova linha. Similarmente, um 't' depois da barra invertida significa o caracter tab. Veja a string seguinte:
 

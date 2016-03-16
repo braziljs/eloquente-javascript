@@ -104,21 +104,19 @@ O próximo tipo básico de dado é a _string_. _Strings_ são usadas para repres
 
 Ambas as aspas simples e duplas podem ser usadas para representar _strings_, contanto que as aspas abertas no início e fechadas fim sejam iguais.
 
-Quase tudo pode ser colocado entre aspas, e o JavaScript criará um valor do tipo _string_ com isso. Entretanto, alguns caracteres são mais difíceis. Você pode imaginar como deve ser complicado colocar aspas dentro de aspas. Além disso, os caracteres _newlines_ (quebra de linhas, usados quando você aperta _Enter_), também não podem ser colocados entre aspas. As _strings_ devem permanecer em uma única linha.
+Quase tudo pode ser colocado entre aspas, e o JavaScript criará um valor do tipo _string_ com o que quer que seja. Entretanto, alguns caracteres são mais difíceis. Você pode imaginar como deve ser complicado colocar aspas dentro de aspas. Além disso, os caracteres _newlines_ (quebra de linhas, usados quando você aperta _Enter_), também não podem ser colocados entre aspas. As _strings_ devem permanecer em uma única linha.
 
-Para ser capaz de ter estes caracteres em uma string, a convenção seguinte é usada: Sempre que um barra invertida `\` é encontrada dentro do texto entre aspas, isto indica que o caracter depois desta tem um significado especial. Uma aspa precedida de uma barra invertida não vai findar a string, mas ser parte dela. Quando um caracter 'n' correr depois de uma barra invertida, será interpretado como uma nova linha. Similarmente, um 't' depois da barra invertida significa o caracter tab. Veja a string seguinte:
+Para que seja possível incluir tais caracteres em uma _string_, a seguinte notação é utilizada: toda vez que um caractere de barra invertida (`\`) for encontrado dentro de um texto entre aspas, ele indicará que o caractere seguinte possui um significado especial. Isso é chamado de _escapar_ o caractere. Uma aspa que se encontra logo após uma barra invertida não representará o fim da _string_ e, ao invés disso, será considerada como parte do texto dela. Quando um caractere `n` aparecer após uma barra invertida, ele será interpretado como uma quebra de linha e, de forma similar, um `t` significará um caractere de tabulação. Considere a seguinte _string_:
 
-```
+```js
 "This is the first line\nAnd this is the second"
-
 ```
 
-O verdadeiro texto contido é:
+O texto na verdade será:
 
 ```
 This is the first line
 And this is the second
-
 ```
 
 Existe, obviamente, situações onde você quer uma barra invertida em uma string apenas como uma barra invertida. não um código especial. Se duas barras invertidas estiverem seguidas uma da outra, elas se anulam, e somente uma vai ser deixada no valor da string resultante. Assim é como a string `A newline character is written like "\n" can be written`:

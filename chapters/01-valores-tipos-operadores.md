@@ -119,21 +119,19 @@ This is the first line
 And this is the second
 ```
 
-Existe, obviamente, situações onde você quer uma barra invertida em uma string apenas como uma barra invertida. não um código especial. Se duas barras invertidas estiverem seguidas uma da outra, elas se anulam, e somente uma vai ser deixada no valor da string resultante. Assim é como a string `A newline character is written like "\n" can be written`:
+Existe, obviamente, situações nas quais você vai querer que a barra invertida em uma _string_ seja apenas uma barra invertida e não um código especial. Nesse caso, se duas barras invertidas estiverem seguidas uma da outra, elas se anulam e apenas uma será deixada no valor da _string_ resultante. Essa é a forma na qual a _string_ “`A newline character is written like “\n”.`” pode ser representada:
 
-```
+```js
 "A newline character is written like \"\\n\"."
-
 ```
 
-Strings não podem ser divididas, multiplicadas ou subtraídas, mas o operador `+` pode ser usado nelas. Ele não adiciona, mas concatena - ele cola duas strings unindo-as. A linha seguinte vai produzir a string `concatenate`:
+_Strings_ não podem ser divididas, multiplicadas nem subtraídas, entretanto, o operador `+` pode ser usado nelas. Ele não efetua a adição, mas _concatena_, ou seja, junta duas _strings_ em uma única _string_. O próximo exemplo produzirá a _string_ `"concatenate"`:
 
-```
+```js
 "con" + "cat" + "e" + "nate"
-
 ```
 
-Existem outras maneiras de manipular strings, que nós vamos discutir quando entrarmos nós métodos no capítulo 4.
+Existem outras maneiras de manipular as _strings_, as quais serão discutidas quando chegarmos aos métodos no [Capítulo 4](./04-estruturas-de-dados.md) [TODO:] Adicionar link correto com âncora para a sessão mencionada no texto original: http://eloquentjavascript.net/04_data.html#methods [/TODO]
 
 ## Operadores Unários
 

@@ -8,7 +8,7 @@ Números, Booleanos e _strings_ são os tijolos usados para construir as estrutu
 
 Os programas que construímos até agora foram seriamente limitados devido ao fato de que estiveram operando apenas com tipos de dados simples. Esse capítulo irá adicionar uma compreensão básica sobre estrutura de dados para o seu _kit_ de ferramentas. Ao final, você saberá o suficiente para começar a escrever programas úteis.
 
-O capítulo irá trabalhar com um exemplo de programação mais ou menos realista, introduzindo conceitos a medida em que eles se aplicam ao problema em questão. O código de exemplo será, muitas vezes, construído em cima de funções e variáveis ​​que foram apresentadas no início do texto.
+O capítulo irá trabalhar com um exemplo de programação mais ou menos realista, introduzindo conceitos na medida em que eles se aplicam ao problema em questão. O código de exemplo será, muitas vezes, construído em cima de funções e variáveis que foram apresentadas no início do texto.
 
 ## O Esquilo-homem
 
@@ -18,7 +18,7 @@ Por um lado, Jacques fica muito contente por não ter licantropia clássica. Tra
 
 ![The weresquirrel](../img/weresquirrel.png)
 
-Isso resolve os problemas do gato e da árvore. Mesmo assim, Jacques ainda sofre com sua condição. As ocorrências irregulares das transformações o faz suspeitar de que talvez possa ter alguma coisa que as ativam. Por um tempo, ele acreditava que isso só acontecia nos dias em que ele havia tocado em árvores. Por isso, ele parou de tocar de vez nas árvores e até parou de ficar perto delas, mas o problema persistiu.
+Isso resolve os problemas do gato e da árvore. Mesmo assim, Jacques ainda sofre com sua condição. As ocorrências irregulares das transformações o fazem suspeitar de que talvez possa ter alguma coisa que as ativam. Por um tempo, ele acreditava que isso só acontecia nos dias em que ele havia tocado em árvores. Por isso, ele parou de tocar de vez nas árvores e até parou de ficar perto delas, mas o problema persistiu.
 
 Mudando para uma abordagem mais científica, Jacques pretende começar a manter um registro diário de tudo o que ele faz e se ele se transformou. Com essas informações, ele espera ser capaz de diminuir e limitar as condições que ativam as transformações.
 
@@ -175,7 +175,7 @@ var journal = [
 
 ## Mutabilidade
 
-Nós iremos chegar na programação de fato muito em breve. Mas há, primeiramente, uma última parte teórica que precisamos entender.
+Nós iremos chegar à programação de fato muito em breve. Mas há, primeiramente, uma última parte teórica que precisamos entender.
 
 Nós vimos que os valores de objetos podem ser modificados. Os tipos de valores discutidos nos capítulos anteriores, tais como números, _strings_ e booleanos, são _imutáveis_. É impossível mudar o valor já existente desses tipos. Você pode, a partir deles, combiná-los e criar novos valores, mas quando você analisar um valor específico de _string_, ele será sempre o mesmo, sendo que o seu texto não pode ser alterado. Por exemplo, se você tiver referência a uma _string_ que contêm `"cat"`, é impossível que outro código altere os caracteres dessa _string_ para `"rat"`.
 
@@ -200,7 +200,7 @@ console.log(object3.value);
 // → 10
 ```
 
-As variáveis `object1` e `object2` estão associadas ao _mesmo objeto_ e, por isso, alterar `object1` também altera o valor de `object2`. A variável `object3` aponta para um objeto diferente, o qual inicialmente contêm as mesmas propriedades de `object1` e sua existência é totalmente separada.
+As variáveis `object1` e `object2` estão associadas ao _mesmo objeto_ e, por isso, alterar `object1` também altera o valor de `object2`. A variável `object3` aponta para um objeto diferente, o qual inicialmente contém as mesmas propriedades de `object1` e sua existência é totalmente separada.
 
 Quando comparamos objetos, o operador `==` do JavaScript irá retornar `true` apenas se ambos os objetos possuem exatamente o mesmo valor. Comparar objetos diferentes irá retornar `false` mesmo se eles tiverem conteúdos idênticos. Não existe uma operação nativa no JavaScript de _"deep" comparison_ (comparação "profunda"), onde se verifica o conteúdo de um objeto, mas é possível escrevê-la você mesmo (que será um dos [exercícios](#deep-comparison) ao final desse capítulo).
 
@@ -253,7 +253,7 @@ Portanto, para a tabela de pizza, a parte de cima da linha (o dividendo) seria 1
 
 ## Calculando a correlação
 
-No JavaScript, podemos representar uma tabela dois por dois usando um _array_ com quatro elementos (`[76, 9, 4, 1]`). Podemos também usar outras formas de representações, como por exemplo um _array_ contendo dois _arrays_ com dois elementos cada (`[[76, 9], [4, 1]]`), ou até mesmo um objeto com propriedades nomeadas de `"11"` e `"01"`. Entretanto, a maneira mais simples e que faz com que seja mais fácil acessar os dados é utilizando um _array_ com quatro elementos. Nós iremos interpretar os índices do _array_ como elementos binários de dois bits, onde o dígito a esquerda (mais significativo) se refere à variável do esquilo, e o dígito a direita (menos significativo) se refere à variável do evento. Por exemplo, o número binário `10` se refere ao caso no qual Jacques se tornou um esquilo, mas o evento não ocorreu (por exemplo "pizza"). Isso aconteceu quatro vezes, e já que o número binário `10` é equivalente ao número 2 na notação decimal, iremos armazenar esse valor no índice 2 do _array_.
+No JavaScript, podemos representar uma tabela dois por dois usando um _array_ com quatro elementos (`[76, 9, 4, 1]`). Podemos também usar outras formas de representações, como por exemplo, um _array_ contendo dois _arrays_ com dois elementos cada (`[[76, 9], [4, 1]]`), ou até mesmo um objeto com propriedades nomeadas de `"11"` e `"01"`. Entretanto, a maneira mais simples e que faz com que seja mais fácil acessar os dados é utilizando um _array_ com quatro elementos. Nós iremos interpretar os índices do _array_ como elementos binários de dois bits, onde o dígito a esquerda (mais significativo) se refere à variável do esquilo, e o dígito a direita (menos significativo) se refere à variável do evento. Por exemplo, o número binário `10` se refere ao caso no qual Jacques se tornou um esquilo, mas o evento não ocorreu (por exemplo "pizza"). Isso aconteceu quatro vezes, e já que o número binário `10` é equivalente ao número 2 na notação decimal, iremos armazenar esse valor no índice 2 do _array_.
 
 Essa é a função que calcula o coeficiente _ϕ_ de um _array_ desse tipo:
 
@@ -270,9 +270,9 @@ console.log(phi([76, 9, 4, 1]));
 // → 0.068599434
 ```
 
-Essa é simplesmente uma tradução direta da fórmula de _ϕ_ para o JavaScript. `Math.sqrt` é a função que calcula a raiz quadrada, fornecida pelo objeto `Math` que é padrão do JavaScript. Temos que somar dois campos da tabela para encontrar valores como n1•, pois a soma das linhas ou colunas não são armazenadas diretamente em nossa estrutura de dados.
+Essa é simplesmente uma tradução direta da fórmula de _ϕ_ para o JavaScript. `Math.sqrt` é a função que calcula a raiz quadrada, fornecida pelo objeto `Math` que é padrão do JavaScript. Temos que somar dois campos da tabela para encontrar valores como n1•, pois as somas das linhas ou colunas não são armazenadas diretamente em nossa estrutura de dados.
 
-Jacques manteve seu diário por três meses. O conjunto de dados resultante está disponível no ambiente de código desse capítulo, armazenado na variável `JOURNAL` e em um [arquivo](http://eloquentjavascript.net/code/jacques_journal.js) que pode ser baixado.
+Jacques manteve seu diário por três meses. O conjunto de dados resultante está disponível no ambiente de código desse capítulo, armazenado na variável `JOURNAL` e em um [arquivo](http://eloquentjavascript.net/code/jacques_journal.js) que pode ser baixado. 
 
 Para extrair uma tabela dois por dois de um evento específico desse diário, devemos usar um loop para percorrer todas as entradas e ir adicionando quantas vezes o evento ocorreu em relação às transformações de esquilo.
 
@@ -372,7 +372,7 @@ for (var event in correlations)
 // and so on...
 ```
 
-A grande maioria das correlações tendem a zero. Comer cenouras, pão ou pudim aparentemente não ativam a transformação em esquilo. Entretanto, elas parecem acontecer com mais frequência aos finais de semana. Vamos filtrar os resultados para mostrar apenas as correlações que são maiores do que 0.1 ou menores do que -0.1.
+A maioria das correlações tende a zero. Comer cenouras, pão ou pudim aparentemente não ativam a transformação em esquilo. Entretanto, elas parecem acontecer com mais frequência aos finais de semana. Vamos filtrar os resultados para mostrar apenas as correlações que são maiores do que 0.1 ou menores do que -0.1.
 
 ```js
 for (var event in correlations) {
@@ -561,7 +561,7 @@ Essa versão lê o primeiro argumento (`squirrel`) da forma normal e depois perc
 
 Como vimos anteriormente, `Math` é uma caixa de ferramentas com funções relacionadas a números, tais como `Math.max` (máximo), `Math.min` (mínimo) e `Math.sqrt` (raiz quadrada).
 
-O objeto `Math` é usado como um _container_ para agrupar uma série de funcionalidades relacionadas. Existe apenas um único objeto `Math` e, na maioria das vezes, ele não é útil quando usado como um valor. Mais precisamente, ele fornece um _namespace_ (espaço nominal) para que todas essas funções e valores não precisem ser declaradas como variáveis globais.
+O objeto `Math` é usado como um _container_ para agrupar uma série de funcionalidades relacionadas. Existe apenas um único objeto `Math` e, na maioria das vezes, ele não é útil quando usado como um valor. Mais precisamente, ele fornece um _namespace_ (espaço nominal) para que todas essas funções e valores não precisem ser declarados como variáveis globais.
 
 Possuir muitas variáveis globais "polui" o _namespace_. Quanto mais nomes são usados, mais prováveis são as chances de acidentalmente sobrescrever o valor de uma variável. Por exemplo, é provável que você queira chamar algo de `max` em um de seus programas. Sabendo que no JavaScript a função nativa `max` está contida de forma segura dentro do objeto `Math`, não precisamos nos preocupar em sobrescrevê-la.
 
@@ -592,7 +592,7 @@ console.log(Math.random());
 // → 0.40180766698904335
 ```
 
-Embora os computadores sejam deterministas (sempre reagem da mesma maneira quando são usados os mesmos dados de entrada), é possível fazer com que eles produzam números que pareçam ser aleatórios. Para fazer isso, a máquina mantém um número (ou uma quantidade deles) armazenado em seu estado interno. Assim, toda vez que um número aleatório é requisitado, ela executa alguns cálculos complicados e deterministas usando esse estado interno e, então, retorna parte do resultado desses cáculos. A máquina também utiliza esses resultados para mudar o seu estado interno, fazendo com que o próximo número "aleatório" produzido seja diferente.
+Embora os computadores sejam deterministas (sempre reagem da mesma maneira quando são usados os mesmos dados de entrada), é possível fazer com que eles produzam números que pareçam ser aleatórios. Para fazer isso, a máquina mantém um número (ou uma quantidade deles) armazenado em seu estado interno. Assim, toda vez que um número aleatório é requisitado, ela executa alguns cálculos complicados e deterministas usando esse estado interno e, então, retorna parte do resultado desses cálculos. A máquina também utiliza esses resultados para mudar o seu estado interno, fazendo com que o próximo número "aleatório" produzido seja diferente.
 
 Se ao invés de um número fracionário, quisermos um número aleatório inteiro, podemos usar `Math.floor` (que arredonda o número para o menor valor inteiro mais próximo) no resultado de `Math.random`.
 
@@ -619,7 +619,7 @@ console.log(window.myVar);
 
 ## Resumo
 
-Objetos e _arrays_ (que são tipos específicos de objetos) fornecem maneiras de agrupar uma conjunto de valores em um único valor. Conceitualmente, ao invés de tentar carregar e manter todas as coisas individualmente em nossos braços, eles nos permitem colocar e carregar todas as coisas relacionadas dentro de uma bolsa.
+Objetos e _arrays_ (que são tipos específicos de objetos) fornecem maneiras de agrupar um conjunto de valores em um único valor. Conceitualmente, ao invés de tentar carregar e manter todas as coisas individualmente em nossos braços, eles nos permitem colocar e carregar todas as coisas relacionadas dentro de uma bolsa.
 
 Com excessão de `null` e `undefined`, a maioria dos valores no JavaScript possuem propriedades e são acessados usando `value.propName` ou `value["propName"]`. Objetos tendem a usar nomes para suas propriedades e armazenam mais o menos uma quantidade fixa delas. Por outro lado, os _Arrays_ normalmente contêm quantidades variáveis de valores conceitualmente iguais e usam números (iniciando do zero) como os nomes de suas propriedades.
 

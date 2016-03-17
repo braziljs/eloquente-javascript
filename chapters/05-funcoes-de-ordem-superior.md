@@ -32,7 +32,7 @@ Se medirmos o tamanho das definições de `sum` e `range`, o segundo programa ta
 
 A razão dele possivelmente ser o mais correto, é que a solução é expressa em um vocabulário que corresponde ao problema que está sendo resolvido. Somar um intervalo de números não se trata de laços de repetição e contadores. Trata-se de intervalos e somas.
 
-As definições desse vocabulário (as funções `sum` e `range`) ainda assim terão que lidar com laços de repetição, contadores e outros detalhes secundários. No entanto, devido ao fato de representarem conceitos mais simples, elas acabam sendo mais fáceis de se entender.
+As definições desse vocabulário (as funções `sum` e `range`) ainda assim terão que lidar com laços de repetição, contadores e outros detalhes secundários. No entanto, devido ao fato de representarem conceitos mais simples, elas acabam sendo mais fáceis de entender.
 
 ## Abstração
 
@@ -45,11 +45,11 @@ Isto é uma analogia que compara duas receitas de sopa de ervilha:
 E a segunda receita:
 
 > "Para uma pessoa: 1 copo de ervilha, meia cebola, um talo de aipo e uma cenoura."
-Embeba as ervilhas por 12 horas, ferva por 2 horas em 4 copos de água (por pessoa). Pique e adicione os vegetais. Deixe cozinhar por mais 10 minutos".
+“Embeba as ervilhas por 12 horas, ferva por 2 horas em 4 copos de água (por pessoa). Pique e adicione os vegetais. Deixe cozinhar por mais 10 minutos".
 
-A segunda é bem menor e mais fácil de interpretar. Mas ela necessita de um conhecimento maior sobre algumas palavras relacionadas à cozinhar como: embeber, ferva, pique e vegetais.
+A segunda é bem menor e mais fácil de interpretar. Mas ela necessita de um conhecimento maior sobre algumas palavras relacionadas a cozinhar como: embeber, ferva, pique e vegetais.
 
-Quando programamos não podemos contar com todas as palavras do dicionário para expressar o que precisamos. Assim cairemos no primeiro padrão de receita - onde damos cada comando que o computador tem que realizar, um por um, ocultando os conceitos de alto níveis que se expressam.
+Quando programamos não podemos contar com todas as palavras do dicionário para expressar o que precisamos. Assim cairemos no primeiro padrão de receita - onde damos cada comando que o computador tem que realizar, um por um, ocultando os conceitos de alto nível que se expressam.
 
 Perceber quando um conceito implora para ser abstraído em uma nova palavra é um costume que tem de virar algo natural quando programamos.
 
@@ -111,7 +111,7 @@ Nesse padrão, podemos simplificar o nome da variável (`number`) pelo elemento 
 
 De fato, não precisamos definir um método `forEach`. Ele esta disponível como um método padrão em `arrays`. Quando um `array` é fornecido para o método agir sobre ele, o `forEach` espera apenas um argumento obrigatório: a função a ser executada para cada elemento.
 
-Para ilustrar o quão útil isso é, vamos lembrar da função que vimos no [capítulo anterior](./04-estrutura-de-ordem-superior), onde continha dois `arrays` transversais.
+Para ilustrar o quão útil isso é, vamos lembrar a função que vimos no [capítulo anterior](./04-estrutura-de-ordem-superior), onde continha dois `arrays` transversais.
 
 ```js
 function gatherCorrelations(journal) {
@@ -147,7 +147,7 @@ function gatherCorrelations(journal) {
 
 Funções que operam em outras funções, seja ela apenas devolvendo argumentos, são chamadas de funções de ordem superior. Se você concorda com o fato de que as funções são valores normais, não há nada de notável sobre o fato de sua existência. O termo vem da matemática onde a distinção entre funções e outros valores é levado mais a sério.
 
-Funções de ordem superior nos permitem abstrair as ações. Elas podem serem de diversas formas. Por exemplo, você pode ter funções que criam novas funções.
+Funções de ordem superior nos permitem abstrair as ações. Elas podem ser de diversas formas. Por exemplo, você pode ter funções que criam novas funções.
 
 ```js
 function greaterThan(n) {
@@ -196,7 +196,7 @@ As regras de escopo léxico que discutimos no [capítulo 3](./03-funcoes.md) tra
 
 ## Passando argumentos
 
-A função `noisy` declarada abaixo, envolve seu argumento em outra função, isso gera uma grave deficiência.
+A função `noisy` declarada abaixo envolve seu argumento em outra função, isso gera uma grave deficiência.
 
 ```js
 function noisy(f) {
@@ -225,7 +225,7 @@ Essa função é inútil, mas nos mostra o padrão que estamos interessados, a f
 
 ## JSON
 
-Funções de ordem superior que aplicam uma função para os elementos de um `array` são bastante usadas em JavaScript. O método`forEach` é uma função mais primitiva. Existe outras variantes disponíveis como métodos em `arrays`. Para acostumarmos com eles vamos brincar com um outro conjunto de dados.
+Funções de ordem superior que aplicam uma função para os elementos de um `array` são bastante usadas em JavaScript. O método`forEach` é uma função mais primitiva. Existem outras variantes disponíveis como métodos em `arrays`. Para acostumarmos com eles vamos brincar com outro conjunto de dados.
 
 Há alguns anos, alguém juntou um monte de arquivos e montou um livro sobre a história do nome da minha família (Haverbeke que significa Oatbrook). Eu abri na esperança de encontrar cavaleiros, piratas, e alquimistas... mas o livro acaba por ser principalmente de agricultores de Flamengos. Para minha diversão extrai uma informação sobre os meus antepassados e coloquei em um formato legível por um computador.
 
@@ -248,7 +248,7 @@ O arquivo que eu criei se parece mais ou menos assim:
 Este formato é chamado de `JSON` (pronuncia-se "Jason") que significa _JavaScript Object Notation_. `JSON` é amplamente utilizado como armazenamento de dados e formato de comunicação na _Web_.
 
 `JSON` se escreve semelhantemente como `arrays` e objetos em JavaScript, mas com algumas restrições.
-Todos os nomes das propriedades devem ficar entre aspas duplas e apenas expressões de dados simples são permitidos, não é permitido chamadas de funções, variáveis ou qualquer coisa que envolva cálculo real. Comentários não são permitidos em `JSON`.
+Todos os nomes das propriedades devem ficar entre aspas duplas e apenas expressões de dados simples são permitidos, não são permitidas chamadas de funções, variáveis ou qualquer coisa que envolva cálculo real. Comentários não são permitidos em `JSON`.
 
 JavaScript nos fornece duas funções `JSON.stringify` e `JSON.parse`, que convertem dados para este formato. O primeiro recebe um valor em JavaScript e retorna uma string codificada em `JSON`. A segunda obtém uma `string` e converte-a para um valor que ele codifica.
 
@@ -407,13 +407,13 @@ Escrever um código limpo é fabuloso. Infelizmente essa clareza tem um custo.
 
 ## O Custo
 
-No mundo dos códigos elegantes e lindos arco-íris, vive um monstro que estraga os prazeres chamado de ineficiência.
+No mundo dos códigos elegantes e lindos arco-íris, vive um monstro que estraga-prazeres chamado de ineficiência.
 
 Um programa que processa um `array` é mais elegante expresso em uma sequência separada onde cada passo pode fazer algo com o `array` e produzir um novo `array`. Mas a construção de todos esses `arrays` intermediários é um pouco custoso.
 
 Passar uma função para `forEach` e deixar que o método cuide da iteração para os nós é conveniente e fácil de ler. Mas chamadas de funções em JavaScript são custosas comparadas com os simples blocos de repetição.
 
-E assim existem várias técnicas que ajudam a melhorar a clareza de um programa. Abstrações adiciona uma camada a mais entre as coisas cruas que o computador faz e o conceito que estamos trabalhando, sendo assim a máquina realiza mais trabalho. Esta não é uma lei de ferro, existem linguagens de programação que tem um suporte melhor para a construção de abstração sem adição de ineficiências, até mesmo em JavaScript, um programador experiente pode encontrar maneiras de escrever um código abstrato e rápido. Mas é um problema que é muito comum.
+E assim existem várias técnicas que ajudam a melhorar a clareza de um programa. Abstrações adicionam uma camada a mais entre as coisas cruas que o computador faz e o conceito que estamos trabalhando, sendo assim a máquina realiza mais trabalho. Esta não é uma lei de ferro, existem linguagens de programação que tem um suporte melhor para a construção de abstração sem adição de ineficiências, até mesmo em JavaScript, um programador experiente pode encontrar maneiras de escrever um código abstrato e rápido. Mas é um problema que é muito comum.
 
 Existem várias técnicas que ajudam a esclarecer o código. Elas adicionam camadas entre as coisas cruas que o computador está fazendo com os conceitos que estamos trabalhando e faz com que a máquina trabalhe mais rápido. Isso não é uma lei inescapável -- existem linguagens de programação que possuem um melhor suporte para construir aplicações sem adicionar ineficiências e, ainda em JavaScript, um programador experiente pode encontrar jeitos de escrever códigos relativamente abstratos que ainda são rápidos, porém é um problema frequente.
 
@@ -425,7 +425,7 @@ Felizmente muitos computadores são extremamente rápidos. Se você estiver proc
 
 Meu avô, Philibert Haverbeke está incluído nos dados do arquivo. Começando com ele, eu posso traçar minha linhagem para descobrir qual é a pessoa mais velha no conjunto de dados, Pauwels van Haverbeke, é meu ancestral direto. E se ele for, gostaria de saber o quanto de DNA, teoricamente, que partilho com ele.
 
-Para ser capaz de fazer uma busca pelo nome de um pai para um objeto real que representa uma pessoa, primeiramente precisamos construirmos um objeto que associa os nomes com as pessoas.
+Para ser capaz de fazer uma busca pelo nome de um pai para um objeto real que representa uma pessoa, primeiramente precisamos construir um objeto que associa os nomes com as pessoas.
 
 ```js
 var byName = {};
@@ -436,11 +436,11 @@ ancestry.forEach(function(person) {
 console.log(byName["Philibert Haverbeke"]);
 // → {name: "Philibert Haverbeke", …}
 ```
-Agora o problema não é totalmente simples como conseguir as propriedades do pai e ir contando quantos levam até chegar a Pauwels. Existem vários casos na árvore genealógica onde pessoas se casaram com seus primos de segundo grau (pequenos vilarejos tem essas coisas). Isso faz com que as ramificações da família se reencontrem em certos lugares, o que significa que eu compartilho mais de 1/2G do meu genes com essa pessoa, onde usaremos G como número de gerações entre Pauwels e eu. Esta fórmula vem a partir da idéia que de cada geração divide o conjunto de genes em dois.
+Agora o problema não é totalmente simples como conseguir as propriedades do pai e ir contando quantos levam até chegar a Pauwels. Existem vários casos na árvore genealógica onde pessoas se casaram com seus primos de segundo grau (pequenos vilarejos têm essas coisas). Isso faz com que as ramificações da família se reencontrem em certos lugares, o que significa que eu compartilho mais de 1/2G dos meus genes com essa pessoa, onde usaremos G como número de gerações entre Pauwels e eu. Esta fórmula vem a partir da idéia que de cada geração divide o conjunto de genes em dois.
 
-Uma maneira razoável de pensar sobre este problema é olhar para ele como sendo um análogo de `reduce`, que condensa um `array` em um único valor, por valores que combinam várias vezes da esquerda para a direita. Neste caso nós também queremos condensar a nossa estrutura de dados para um único valor mas de uma forma que segue as linhas da família. O formato dos dados é a de uma árvore genealógica em vez de uma lista plana.
+Uma maneira razoável de pensar sobre este problema é olhar para ele como sendo um análogo de `reduce`, que condensa um `array` em um único valor, por valores que combinam várias vezes da esquerda para a direita. Neste caso nós também queremos condensar a nossa estrutura de dados para um único valor, mas de uma forma que segue as linhas da família. O formato dos dados é a de uma árvore genealógica em vez de uma lista plana.
 
-A maneira que nós queremos reduzir esta forma é calculando um valor para uma determinada pessoa, combinando com os valores de seus ancestrais. Isso pode ser feito de uma forma recursiva: se estamos interessados ​​em uma pessoa A, temos que calcular os valores para os pais de As, que por sua vez obrigá-nos a calcular o valor para os avós de As e assim por diante. A princípio isso iria exigir-mos a olhar para um número infinito de pessoas, já que o nosso conjunto de dados é finito, temos que parar em algum lugar. Vamos permitir um valor padrão para nossa função de redução, que será utilizado para pessoas que não estão em nossos dados. No nosso caso, esse valor é simplesmente zero, pressupondo de que as pessoas que não estão na lista não compartilham do mesmo DNA do ancestral que estamos olhando.
+A maneira que nós queremos reduzir esta forma é calculando um valor para uma determinada pessoa, combinando com os valores de seus ancestrais. Isso pode ser feito de uma forma recursiva: se estamos interessados em uma pessoa A, temos que calcular os valores para os pais de As, que por sua vez obrigar-nos a calcular o valor para os avôs de As e assim por diante. A princípio isso iria exigirmos a olhar para um número infinito de pessoas, já que o nosso conjunto de dados é finito, temos que parar em algum lugar. Vamos permitir um valor padrão para nossa função de redução, que será utilizado para pessoas que não estão em nossos dados. No nosso caso, esse valor é simplesmente zero, pressupondo de que as pessoas que não estão na lista não compartilham do mesmo DNA do ancestral que estamos olhando.
 
 Dado uma pessoa, a função combina os valores a partir de dois pais de uma determinada pessoa, e o valor padrão, `reduceAncestors` condensa o valor a partir de uma árvore genealógica.
 
@@ -475,9 +475,9 @@ console.log(reduceAncestors(ph, sharedDNA, 0) / 4);
 
 A pessoa com o nome Pauwels van Haverbeke obviamente compartilhada 100 por cento de seu DNA com Pauwels van Haverbeke (não existem pessoas que compartilham o mesmo nome no conjunto de dados), então a função retorna 1 para ele. Todas as outras pessoas compartilham a média do montante que os seus pais compartilham.
 
-Assim estatisticamente falando, eu compartilho cerca de 0,05 por cento do DNA de uma pessoa do século 16. Deve-se notar que este é só uma aproximação estatística e, não uma quantidade exata. Este é um número bastante pequeno mas dada a quantidade de material genético que carregamos (cerca de 3 bilhões de pares de bases), provavelmente ainda há algum aspecto na máquina biológica que se originou de Pauwels.
+Assim estatisticamente falando, eu compartilho cerca de 0,05 por cento do DNA de uma pessoa do século 16. Deve-se notar que este é só uma aproximação estatística e, não uma quantidade exata. Este é um número bastante pequeno, mas dada a quantidade de material genético que carregamos (cerca de 3 bilhões de pares de bases), provavelmente ainda há algum aspecto na máquina biológica que se originou de Pauwels.
 
-Nós também podemos calcular esse número sem depender de `reduceAncestors`. Mas separando a abordagem geral (condensação de uma árvore genealógica) a partir do caso específico (computação do DNA compartilhado) podemos melhorar a clareza do código permitindo reutilizar a parte abstrata do programa para outros casos. Por exemplo, o código a seguir encontra a porcentagem de antepassados ​​conhecidos para uma determinada pessoa que viveu mais de 70 anos (por linhagem, para que as pessoas possam ser contadas várias vezes).
+Nós também podemos calcular esse número sem depender de `reduceAncestors`. Mas separando a abordagem geral (condensação de uma árvore genealógica) a partir do caso específico (computação do DNA compartilhado) podemos melhorar a clareza do código permitindo reutilizar a parte abstrata do programa para outros casos. Por exemplo, o código a seguir encontra a porcentagem de antepassados conhecidos para uma determinada pessoa que viveu mais de 70 anos (por linhagem, para que as pessoas possam ser contadas várias vezes).
 
 ```js
 function countAncestors(person, test) {
@@ -530,7 +530,7 @@ O primeiro argumento onde o exemplo passa `null`, é utilizado para as chamadas 
 
 ## Sumário
 
-A possibilidade de passar funções como argumento para outras funções não é apenas um artifício mas sim um aspecto muito útil em JavaScript. Ela nos permite escrever cálculos com intervalos como funções, e chamar estas funções para preencher estes intervalos, fornecendo os valores para função que descrevem os cálculos que faltam.
+A possibilidade de passar funções como argumento para outras funções não é apenas um artifício, mas sim um aspecto muito útil em JavaScript. Ela nos permite escrever cálculos com intervalos como funções, e chamar estas funções para preencher estes intervalos, fornecendo os valores para função que descrevem os cálculos que faltam.
 
 `Arrays` fornece uma grande quantidade de funções de ordem superior - `forEach` faz algo com cada elemento de um `array`, `filter` para contruir um novo `array` com valores filtrados, `map` para construir um novo array onde cada elemento é colocado através de uma função e `reduce` para combinar todos os elementos de um `array` em um valor único.
 
@@ -627,4 +627,4 @@ console.log(some([2, 3, 4], isNaN));
 
 **Dica:**
 
-As funções podem seguir um padrão semelhante à definição de `forEach` que foi mostrado no início do capítulo, a única exceção é que eles devem retornar imediatamente (com o valor à direita) quando a função predicada retorna `true` ou `false`. Não se esqueça de colocar uma outra instrução de `return` após o `loop`; para que a função retorne um valor correto quando atingir o final do `array`.
+As funções podem seguir um padrão semelhante à definição de `forEach` que foi mostrado no início do capítulo, a única exceção é que eles devem retornar imediatamente (com o valor à direita) quando a função predicada retorna `true` ou `false`. Não se esqueça de colocar outra instrução de `return` após o `loop`; para que a função retorne um valor correto quando atingir o final do `array`.

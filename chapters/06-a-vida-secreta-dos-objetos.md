@@ -1,57 +1,31 @@
 # A vida secreta dos objetos
-> "O problema com as linguagens orientadas a objeto é que elas têm tudo
-implícito no ambiente que elas carregam consigo. Você queria banana, mas o que
-você teve foi um gorila segurando a banana e toda a floresta."
-> `Joe Armstrong, entrevistado em Coders at Work``
+> "O problema com as linguagens orientadas a objeto é que elas têm tudo implícito no ambiente que elas carregam consigo. Você queria banana, mas o que você teve foi um gorila segurando a banana e toda a floresta."
+> ``Joe Armstrong, entrevistado em Coders at Work``
 
-Quando um programador diz "objeto", isso é um termo carregado. Na minha
-profissão, objetos são a maneira de viver, o sujeito das guerras santas, e um
-jargão apaixonante que ainda não perdeu o seu poder.
+Quando um programador diz "objeto", isso é um termo carregado. Na minha profissão, objetos são a maneira de viver, o sujeito das guerras santas, e um jargão apaixonante que ainda não perdeu o seu poder.
 
-Para um estrangeiro, isso provavelmente é um pouco confuso. Vamos começar com
-uma rápida história dos objetos como constrtutores da programação.
+Para um estrangeiro, isso provavelmente é um pouco confuso. Vamos começar com uma rápida história dos objetos como constrtutores da programação.
 
 ## História
-Essa história, como a maioria das histórias de programação, começa com um
-problema de complexidade. A teoria é de que a complexidade pode ser
-administrada separando-a em pequenos compartimentos isolados um do outro. Esses
-compartimentos acabaram ganhando o nome de _objetos_.
-
-Um objeto é um escudo duro que esconde a complexidade grudenta dentro dele e nos apresenta pequenos conectores (como métodos) que apresentam uma interface
-para utilizarmos o objeto. A ideia é que a interface seja relativamente simples
-e toda as coisas complexas que vão dentro do objeto possam ser ignoradas
-enquanto se trabalha com ele.
+Essa história, como a maioria das histórias de programação, começa com um problema de complexidade. A teoria é de que a complexidade pode ser administrada separando-a em pequenos compartimentos isolados um do outro. Esses compartimentos acabaram ganhando o nome de _objetos_.
+Um objeto é um escudo duro que esconde a complexidade grudenta dentro dele e nos apresenta pequenos conectores (como métodos) que apresentam uma interface para utilizarmos o objeto. A ideia é que a interface seja relativamente simples e todas as coisas complexas que vão dentro do objeto possam ser ignoradas enquanto se trabalha com ele.
 
 ![Uma interface simples pode esconder muita complexidade.](../img/object.jpg)
 
-Como exemplo, você pode imaginar um objeto que disponibiliza uma interface para
-uma determinada área na sua tela. Ele disponibiliza uma maneira de desenhar
-formas ou textos nessa área, mas esconde todos os detalhes de como essas formas
-são convertidos para os pixels que compõem a tela. Você teria um conjunto de
-métodos-`desenharCirculo`, por exemplo- e essas serão as únicas coisas que
-você precisa saber pra usar tal objeto.
+Como exemplo, você pode imaginar um objeto que disponibiliza uma interface para uma determinada área na sua tela. Ele disponibiliza uma maneira de desenhar formas ou textos nessa área, mas esconde todos os detalhes de como essas formas são convertidos para os pixels que compõem a tela. Você teria um conjunto de métodos-`desenharCirculo`, por exemplo- e essas serão as únicas coisas que você precisa saber pra usar tal objeto.
 
-Essas ideias foram trabalhadas inicialmente por volta dos anos 70 e 80 e, nos
-anos 90, foram trazidas a tona por uma enorme onda _hype_-a revolução da
-programação orientada a objetos. De repente, existia uma enorme tribo de pessoas declarando que objetos eram a maneira correta de programar-e que qualquer coisa que não envolvesse objetos era uma loucura ultrapassada.
+Essas ideias foram trabalhadas inicialmente por volta dos anos 70 e 80 e, nos anos 90, foram trazidas a tona por uma enorme onda _hype_-a revolução da programação orientada a objetos. De repente, existia uma enorme tribo de pessoas declarando que objetos eram a maneira correta de programar-e que qualquer coisa que não envolvesse objetos era uma loucura ultrapassada.
 
-Esse tipo de fanatismo produz um monte de bobagem impraticável, e desde então
-uma espécie de contra-revolução vem acontecendo. Em alguns círculos de
-desenvolvedores, os objetos têm uma péssima reputação hoje em dia.
+Esse tipo de fanatismo produz um monte de bobagem impraticável, e desde então uma espécie de contra-revolução vem acontecendo. Em alguns círculos de desenvolvedores, os objetos têm uma péssima reputação hoje em dia.
 
 Eu prefiro olhar para esse problema de um ângulo prático, e não ideológico.
 Existem vários conceitos úteis, dentre eles um dos mais importantes é o
-_encapsulamento_ (distinguir complexidade interna e interface externa), que a
-cultura orientada a objetos tem popularizado. Vamos ver esses conceitos, pois
-eles valem a pena.
+_encapsulamento_ (distinguir complexidade interna e interface externa), que a cultura orientada a objetos tem popularizado. Vamos ver esses conceitos, pois eles valem a pena.
 
-Esse capítulo descreve uma pegada mais excêntrica do JavaScript com foco nos
-objetos e na forma como eles se relacionam com algumas técnicas clássicas de
-orientação a objetos.
+Esse capítulo descreve uma pegada mais excêntrica do JavaScript com foco nos objetos e na forma como eles se relacionam com algumas técnicas clássicas de orientação a objetos.
 
 ## Métodos
-Métodos são propriedades simples que comportam valores de funções. Isso é um
-método simples:
+Métodos são propriedades simples que comportam valores de funções. Isso é um método simples:
 
 ```javascript
 var coelho = {};
@@ -63,10 +37,7 @@ coelho.diz("Estou vivo.");
 // → O coelho diz 'Estou vivo.'
 ```
 
-Normalmente um método precisa fazer alguma coisa com o objeto pelo qual ele
-foi chamado. Quando uma função é chamada como um método-visualizada como uma
-propriedade e imediatamente chamada, como em `objeto.metodo()`-a variável
-especial `this` no seu conteúdo vai apontar para o objeto pelo qual foi chamada.
+Normalmente um método precisa fazer alguma coisa com o objeto pelo qual ele foi chamado. Quando uma função é chamada como um método-visualizada como uma propriedade e imediatamente chamada, como em `objeto.metodo()`-a variável especial `this` no seu conteúdo vai apontar para o objeto pelo qual foi chamada.
 
 ```javascript
 function speak(line) {
@@ -85,12 +56,9 @@ fatRabbit.speak("I could sure use a carrot right now.");
 //   right now.'
 ```
 
-O código acima usa a palavra chava `this` para dar a saída do tipo de coelho que está falando. Lembrando que ambos os métodos `apply` e `bind` podem user o
-primeiro argumento para simular chamadas de métodos. Esse primeiro argumento, é
-na verdade, usado para passar um valor ao `this`.
+O código acima usa a palavra chava `this` para dar a saída do tipo de coelho que está falando. Lembrando que ambos os métodos `apply` e `bind` podem user o primeiro argumento para simular chamadas de métodos. Esse primeiro argumento é, na verdade, usado para passar um valor ao `this`.
 
-Existe um método parecido ao `apply` chamado `call`. Ele também chama a função
-na qual ele é um método e aceita argumentos normalmente, ao invés de um array.
+Existe um método parecido ao `apply` chamado `call`. Ele também chama a função na qual ele é um método e aceita argumentos normalmente, ao invés de um array.
 Assim como `apply` e `bind`, o `call` pode ser passado com um valor específico
 no `this`.
 
@@ -114,9 +82,7 @@ console.log(empty.toString());
 
 Eu acabei de sacar uma propriedade de um objeto vazio. Mágica!
 
-Só que não. Eu venho ocultando algumas informações sobre como os objetos
-funcionam no JavaScript. Além de sua lista de propriedades, quase todos os
-objetos também possuem um _protótipo_, ou _prototype_. Um _prototype_ é outro objeto que é usado como fonte de _fallback_ para as propriedades. Quando um objeto recebe uma chamada em uma propriedade que ele não possui, seu _prototype_ designado para aquela propriedade será buscado, e então o _prototype_ daquele _prototype_ e assim por diante.
+Só que não. Eu venho ocultando algumas informações sobre como os objetos funcionam no JavaScript. Além de sua lista de propriedades, quase todos os objetos também possuem um _protótipo_, ou _prototype_. Um _prototype_ é outro objeto que é usado como fonte de _fallback_ para as propriedades. Quando um objeto recebe uma chamada em uma propriedade que ele não possui, seu _prototype_ designado para aquela propriedade será buscado, e então o _prototype_ daquele _prototype_ e assim por diante.
 
 Então quem é o _prototype_ de um objeto vazio? É o ancestral de todos os
 _prototypes_, a entidade por trás de quase todos os objetos, `Object.prototype`.
@@ -211,7 +177,7 @@ Popocatepetl   5465 Mexico
 
 A forma que nosso sistema de construir tabelas vai funcionar é que a função construtora vai perguntar para cada célula quanto de altura e largura ela vai querer ter e então usar essa informação para determinar a largura das colunas e a altura das linhas. A função construtora vai então pedir para as células se desenharem no tamanho correto e montar o resultado dentro de uma string.
 
-O programa de *layout* vai comunicar com os objetos células através de uma interface bem definida. Dessa forma, os tipos de células que o programa suporta não está definida antecipadamente. Nós podemos adicionar novas células de estilo depois — por exemplo, células sublinhadas para cabeçalho — e se eles suportarem nossa interface, isso vai simplesmente, funcionar, sem exigir alterações no layout do programa.
+O programa de *layout* vai comunicar com os objetos células através de uma interface bem definida. Dessa forma, os tipos de células que o programa suporta não estão definidos antecipadamente. Nós podemos adicionar novas células de estilo depois — por exemplo, células sublinhadas para cabeçalho — e se eles suportarem nossa interface, isso vai simplesmente, funcionar, sem exigir alterações no layout do programa.
 
 Esta é a interface:
 
@@ -312,7 +278,7 @@ TextCell.prototype.draw = function(width, height) {
 };
 ```
 
-O código usa uma função auxiliar chamada `repeat`, que constrói uma linha na qual o valor é um argumento `string` repetido `times` número de vezes. O método `draw` usa isso e adiciona "preenchimento" para as linhas assim todas vão ter o tamanho requerido.
+O código usa uma função auxiliar chamada `repeat`, que constrói uma linha na qual o valor é um argumento `string` repetido `times` número de vezes. O método `draw` usa isso e adiciona "preenchimento" para as linhas assim todas vão ter o tamanho requerido. 
 
 Vamos testar tudo que construímos e criar um tabuleiro de damas 5 x 5.
 
@@ -385,7 +351,7 @@ console.log(drawTable(dataTable(MOUNTAINS)));
 //   … etcetera
 ```
 
-A função padrão `Object.keys` retorna um array com nomes de propriedades de um objeto. A linha do topo da tabela deve conter células sublinhadas que dão os nomes das colunas. Abaixo disso, os valores de todos os objetos no conjuto de dados aparecem como células normais - nós os extraímos mapeando sobre o array `keys` de modo que tenhamos certeza que a ordem das células é a mesma em todas as linhas.
+A função padrão `Object.keys` retorna um array com nomes de propriedades de um objeto. A linha do topo da tabela deve conter células sublinhadas que dão os nomes das colunas. Abaixo disso, os valores de todos os objetos no conjunto de dados aparecem como células normais - nós os extraímos mapeando sobre o array `keys` de modo que tenhamos certeza que a ordem das células é a mesma em todas as linhas.
 
 A tabela resultante se assemelha ao exemplo mostrado anteriormente, exceto que ela não alinha os números à direita na coluna `height`. Vamos chegar nessa parte em um instante.
 
@@ -395,7 +361,7 @@ Quando especificamos uma interface, é possível incluir propriedades que não s
 
 Isso tem levado algumas pessoas a adotarem um princípio de nunca incluirem propriedades *nonmethod* em interfaces. Ao invés de acessarem diretamente o valor da propriedade, eles usam métodos `getSomething` e `setSomething` para ler e escrever propriedades. Esta abordagem tem a parte negativa de que você irá acabar escrevendo - e lendo - muitos métodos adicionais.
 
-Felizmente, o JavaScript fornece uma técnica que fornece o melhor de ambos os mundos. Nós podemos especificar propriedades que, do lado de fora, parecem propriedades normais mas secretamente tem métodos associados a elas.
+Felizmente, o JavaScript fornece uma técnica que fornece o melhor de ambos os mundos. Nós podemos especificar propriedades que, do lado de fora, parecem propriedades normais, mas secretamente tem métodos associados a elas.
 
 ```js
 var pile = {
@@ -414,7 +380,7 @@ pile.height = 100;
 // → Ignoring attempt to set height to 100
 ```
 
-Em um objeto literal, a notação `get` ou  `set` para propriedades permite que você especifique uma função a ser executada quando a propriedade for lida ou escrita. Você pode também adicionar tal propriedade em um objeto existente, por exemplo um protótipo, usando a função `Object.defineProperty` (que nós previamente usamos para criar propriedades não enumeráveis).
+Em um objeto literal, a notação `get` ou  `set` para propriedades permite que você especifique uma função a ser executada quando a propriedade for lida ou escrita. Você pode também adicionar tal propriedade em um objeto existente, por exemplo, um protótipo, usando a função `Object.defineProperty` (que nós previamente usamos para criar propriedades não enumeráveis).
 
 ```js
 Object.defineProperty(TextCell.prototype, "heightProp", {
@@ -429,7 +395,7 @@ console.log(cell.heightProp);
 // → 2
 ```
 
-Você pode usar a propriedade similar `set`, no objeto passado à `defineProperty`, para especificar um método *setter*. Quando um *getter* é definido mas um *setter* não, escrever nessa propriedade é algo simplesmente ignorado.
+Você pode usar a propriedade similar `set`, no objeto passado à `defineProperty`, para especificar um método *setter*. Quando um *getter* é definido, mas um *setter* não, escrever nessa propriedade é algo simplesmente ignorado.
 
 ## Herança
 
@@ -485,7 +451,7 @@ Herança é uma parte fundamental da orientação a objetos tradicional, ao lado
 
 A principal razão para isso é que este tópico é geralmente confundido com polimorfismo, vendido como uma ferramenta mais poderosa do que realmente é, e subsequentemente usado em excesso de diversas horríveis formas. Onde encapsulamento e polimorfismo podem ser usados para *separar* pedaços de código de cada um, reduzindo o emaranhamento de todo o programa, herança fundamentalmente vincula os tipos, criando *mais* emaranhados.
 
-Você pode ter polimorfismo sem herança, como nós vimos. Eu não vou dizer para você evitar herança completamente. Eu a uso regularmente em meus programas. Mas você deve vê-la como um leve truque desonesto que vai ajudá-lo a definir novos tipos com menos código, não como um grande princípio de organização de código. Uma forma mais apropriada de extender tipos é através da composição, como `UnderlinedCell` constrói em outra célula simplesmente armazenando-a em uma propriedade e um método posterior a chama nos seus próprios métodos.
+Você pode ter polimorfismo sem herança, como nós vimos. Eu não vou dizer para você evitar herança completamente. Eu a uso regularmente em meus programas. Mas você deve vê-la como um leve truque desonesto que vai ajudá-lo a definir novos tipos com menos código, não como um grande princípio de organização de código. Uma forma mais apropriada de estender tipos é através da composição, como `UnderlinedCell` constrói em outra célula simplesmente armazenando-a em uma propriedade e um método posterior a chama nos seus próprios métodos.
 
 ## O operador `instanceof`
 
@@ -506,15 +472,15 @@ O operador vai olhar através dos tipos herdados. Um `RTextCell` é uma instânc
 
 ## Resumo
 
-Então objetos são mais complicados do que inicialmente eu os retratei. Eles tem protótipos, que são outros objetos, e vão agir como se tivessem propriedades que eles não tem caso seu protótipo tenha essa propriedade. Objetos simples tem `Object.prototype` como seus protótipos.
+Então objetos são mais complicados do que inicialmente eu os retratei. Eles têm protótipos, que são outros objetos, e vão agir como se tivessem propriedades que eles não têm caso seu protótipo tenha essa propriedade. Objetos simples tem `Object.prototype` como seus protótipos.
 
-Construtores, que são funções cujos nomes usualmente iniciam com uma letra maiúscula, podem ser usador com o operador `new` para criar objetos. O protótipo do novo objeto será o objeto encontrado na propriedade `prototype` da função construtora. Você pode fazer bom uso disso adicionando propriedades que todos os valores de um tipo  compartilham em seus protótipos. O operador `instanceof` pode, dado um objeto e um construtor, dizer se o objeto é uma instância deste construtor.
+Construtores, que são funções cujos nomes usualmente iniciam com uma letra maiúscula, podem ser usados com o operador `new` para criar objetos. O protótipo do novo objeto será o objeto encontrado na propriedade `prototype` da função construtora. Você pode fazer bom uso disso adicionando propriedades que todos os valores de um tipo compartilham em seus protótipos. O operador `instanceof` pode, dado um objeto e um construtor, dizer se o objeto é uma instância deste construtor.
 
 Algo útil a se fazer com objetos é especificar uma interface para eles e dizer para todos quer irão supostamente conversar com seu objeto a fazer isso somente por essa interface. O resto dos detalhes que constroem seu objeto estão agora *encapsulados*, escondidos atrás da interface.
 
 Uma vez que você esteja conversando em termos de interfaces, quem diz que apenas um tipo de objeto pode implementar essa interface? Ter diferentes objetos expondo a mesma interface é chamado de *polimorfismo*. Isso é muito útil.
 
-Quando implementando vários tipos que diferem apenas em alguns detalhes, pode ser útil simplesmente criar o protótipo do seu novo tipo derivando do protótipo do seu antigo tipo e ter seu novo construtor chamando o antigo. Isso lhe dá um tipo similar de objeto ao antigo mas que permite que você adicione ou sobrescreva propriedades quando necessário.
+Quando implementando vários tipos que diferem apenas em alguns detalhes, pode ser útil simplesmente criar o protótipo do seu novo tipo derivando do protótipo do seu antigo tipo e ter seu novo construtor chamando o antigo. Isso lhe dá um tipo similar de objeto ao antigo, mas que permite que você adicione ou sobrescreva propriedades quando necessário.
 
 ## Exercícios
 
@@ -591,6 +557,6 @@ logFive(new RangeSeq(100, 1000));
 
 Uma forma de resolver isso é fornecendo objetos sequenciais *state*, que significa que suas propriedades são alteradas no seu processo de uso. Você pode armazenar um contador que indica quão longe o objeto sequenciais avançaram.
 
-Sua interface vai precisar expor ao menos uma forma de pegar o próximo elemento e encontrar se a iteração já chegou no fim da sequencia. É tentador fazer isso em um método, `next`, que retorna `null` ou `undefined` quando a sequência chegar ao fim. Mas agora você tem um problema quando a sequência realmente tiver `null`. Então um método separado (ou uma propriedade getter) para descobrir se o fim foi alcançado é provavelmente preferível.
+Sua interface vai precisar expor ao menos uma forma de pegar o próximo elemento e encontrar se a iteração já chegou no fim da sequência. É tentador fazer isso em um método, `next`, que retorna `null` ou `undefined` quando a sequência chegar ao fim. Mas agora você tem um problema quando a sequência realmente tiver `null`. Então um método separado (ou uma propriedade getter) para descobrir se o fim foi alcançado é provavelmente preferível.
 
 Outra solução é evitar mudar o estado do objeto. Você pode expor um método para pegar o elemento atual (sem o auxílio de nenhum contador) e outro para pegar uma nova sequência que representa os elementos restantes depois do atual (ou um valor especial se o fim da sequência tiver sido atingido). Isso é bem elegante - um valor sequencial vai "permanecer ele mesmo" mesmo depois de ter sido usado e pode ser compartilhado com outro código sem a preocupação sobre o que pode acontecer com ele. Isso é, infelizmente, algo um pouco ineficiente numa linguagem como JavaScript porque envolve criar vários objetos durante a iteração.

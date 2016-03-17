@@ -10,25 +10,25 @@ Programas são pensamentos “cristalizados”. Algumas vezes, esses pensamentos
 
 Falhas em um programa são normalmente chamadas de *bugs*, e podem ser causadas por erros inseridos pelo programador ou problemas em outros sistemas que a aplicação interage. Alguns *bugs* são imediatamente aparentes, enquanto outros são sutis e podem ficar escondidos em um sistema por anos.
 
-Muitas vezes os problemas aparecem quando um programa executa de uma forma que o programador não considerou originalmente. As vezes, tais situações são inevitáveis. Quando o usuário insere um dado inválido, isso faz com que a aplicação fique em uma situação difícil. Tais situações devem ser antecipadas e tratadas de alguma maneira.
+Muitas vezes os problemas aparecem quando um programa executa de uma forma que o programador não considerou originalmente. Às vezes, tais situações são inevitáveis. Quando o usuário insere um dado inválido, isso faz com que a aplicação fique em uma situação difícil. Tais situações devem ser antecipadas e tratadas de alguma maneira.
 
 ## Erros do programador
 
 O nosso objetivo é simples quando se trata de erros do programador. Devemos encontrá-los e corrigi-los. Tais erros podem variar entre erros simples que faz o computador reclamar assim que ele tenta executar o programa ou erros sutis causado por uma compreensão errada da lógica do programa levando a resultados incorretos, podendo ser constante ou em apenas algumas condições específicas. Esse último tipo de erros pode levar semanas para ter um diagnostico correto.
 
-O nível de ajuda que as linguagens oferece para encontrar os erros variam bastante. Isso não é nenhuma surpresa pois o JavaScript está no "quase não ajuda em nada" no final dessa escala. Algumas linguagens exigem os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso da a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma incorreta.
+O nível de ajuda que as linguagens oferecem para encontrar os erros varia bastante. Isso não é nenhuma surpresa, pois o JavaScript está no "quase não ajuda em nada" no final dessa escala. Algumas linguagens exigem os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso da a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma incorreta.
 JavaScript considera os tipos somente na execução do programa e mesmo assim ele permite que você faça algumas coisas visivelmente absurdas sem dar nenhum tipo de aviso como por exemplo: `x = true "macaco" *`.
 
 Há algumas coisas que o JavaScript não se queixam. Mas escrever um programa que é sintaticamente incorreto faz com que ele nem execute e dispare um erro imediatamente.
 Existem outras coisas como, chamar algo que não é uma função ou procurar uma propriedade em um valor indefinido, isso causa um erro a ser relatado somente quando o programa entrar em execução e encontrar essa ação que não tem sentido.
 
-Mas muitas das vezes um cálculo absurdo pode simplesmente produzir um `NaN` (não um número) ou um valor indefinido. O programa irá continua alegremente convencido de que está fazendo algo correto. O erro vai se manifestar somente mais tarde, depois que o valor falso passou por várias funções. Não que isso venha desencadear um erro em tudo, mas isso pode silenciosamente causar uma série de saídas erradas. Encontrar a fonte de tais problemas são considerados difíceis.
+Mas muitas das vezes um cálculo absurdo pode simplesmente produzir um `NaN` (não um número) ou um valor indefinido. O programa irá continua alegremente convencido de que está fazendo algo correto. O erro vai se manifestar somente mais tarde, depois que o valor falso passou por várias funções. Não que isso venha desencadear um erro em tudo, mas isso pode silenciosamente causar uma série de saídas erradas. Encontrar a fonte de tais problemas pode ser difícil.
 
 O processo de encontrar erros (bugs) nos programas é chamado de depuração.
 
 # Modo estrito
 
-JavaScript pode ser feito de uma forma mais rigorosa, permitindo que o modo seja estrito. Para obter esse modo basta inserir uma string `"use strict"` na parte superior de um arquivo ou no corpo de uma função. Veja o exemplo:
+JavaScript pode ser feito de uma forma mais rigorosa, permitindo que o modo seja estrito. Para obter esse modo, basta inserir uma string `"use strict"` na parte superior de um arquivo ou no corpo de uma função. Veja o exemplo:
 
 ````js
 function canYouSpotTheProblem() {
@@ -41,7 +41,7 @@ canYouSpotTheProblem();
 // → ReferenceError: counter is not defined
 ````
 
-Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no exemplo, o JavaScript cria uma variável global para utiliza-la, no entanto no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
+Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no exemplo, o JavaScript cria uma variável global para utilizá-la, no entanto no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
 
 Outra mudança no modo estrito é que esta ligação tem o valor `undefined` para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referencia do objeto é do escopo global. Então se você acidentalmente chamar um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
 
@@ -66,7 +66,7 @@ var ferdinand = Person("Ferdinand");
 
 Somos imediatamente informados de que algo está errado. Isso é útil.
 
-Existe mais coisas no modo estrito. Ele não permite dar a uma função vários parâmetros com o mesmo nome e remove totalmente certas características problemáticas da linguagem.
+Existem mais coisas no modo estrito. Ele não permite dar a uma função vários parâmetros com o mesmo nome e remove totalmente certas características problemáticas da linguagem.
 
 Em suma, colocando um `"use strict"` no topo do seu programa não irá causar frustrações mas vai ajudar a detectar problemas.
 
@@ -108,7 +108,7 @@ console.log(testVector());
 // → everything ok
 ````
 
-Escrevendo testes como este tende a parecer um pouco repetitivo e um código estranho. Felizmente existem opções de software que ajudam a construir e executar coleções de testes (suites de teste), fornecendo uma linguagem (na forma de funções e métodos) adequada para expressar os testes e emitir informações informativas de quando um teste falhou. Isto é chamados de estruturas de teste.
+Escrevendo testes como este tende a parecer um pouco repetitivo e um código estranho. Felizmente existem opções de software que ajudam a construir e executar coleções de testes (suites de teste), fornecendo uma linguagem (na forma de funções e métodos) adequada para expressar os testes e emitir informações informativas de quando um teste falhou. Isto é chamado de estruturas de teste.
 
 ## Depuração
 
@@ -116,7 +116,7 @@ Você consegue perceber que há algo errado com o seu programa quando ele esta s
 
 Às vezes é óbvio. A mensagem de erro vai apontar para a linha específica; e se você olhar para a descrição do erro e para linha de código muitas vezes você irá entender o problema.
 
-Mas nem sempre é assim. Às vezes a linha que desencadeou o problema é simplesmente o primeiro lugar onde um valor falso foi produzido e que em outros lugares foi usado de uma forma incorreta ou as vezes não há nenhuma mensagem de erro, apenas um resultado inválido. Se você tentou resolver os exercícios nos capítulos anteriores você provavelmente já experimentou tais situações.
+Mas nem sempre é assim. Às vezes a linha que desencadeou o problema é simplesmente o primeiro lugar onde um valor falso foi produzido e que em outros lugares foi usado de uma forma incorreta ou às vezes não há nenhuma mensagem de erro, apenas um resultado inválido. Se você tentou resolver os exercícios nos capítulos anteriores você provavelmente já experimentou tais situações.
 
 O exemplo seguinte tenta converter um número inteiro para uma cadeia em qualquer base (decimal, binário, e assim por diante), para se livrar do último dígito escolhemos o último dígito repetidamente e em seguida dividimos. Mas a saída produzida sugere que ele tem um bug.
 
@@ -154,7 +154,7 @@ Colocar algumas chamadas `console.log` estratégicas no programa é uma boa mane
 
 Certo. Dividindo 13 por 10 não produz um número inteiro. Em vez de `n / = base` o que nós realmente queremos é `n = Math.floor (n / base)` de modo que o número está devidamente deslocando-se para a direita.
 
-Uma alternativa para o uso do `console.log` é usar os recursos de depuração do seu browser. Navegadores modernos vêm com a capacidade de definir um ponto de interrupção em uma linha específica de seu código. Isso fará com que a execução do programa faz uma pausa a cada vez que a linha com o ponto de interrupção é atingido. Isso permite que você inspecione os valores das variáveis nesse ponto. Eu não vou entrar em detalhes aqui pois depuradores diferem de navegador para navegador, mas vale a pena olhar as ferramentas de desenvolvimento do seu navegador e pesquisar na web para obter mais informações. Outra maneira de definir um ponto de interrupção é incluir uma declaração no depurador (que consiste em simplesmente em uma palavra-chave) em seu programa. Se as ferramentas de desenvolvedor do seu navegador estão ativos, o programa fará uma pausa sempre que ele atingir esta declaração e você será capaz de inspecionar o seu estado.
+Uma alternativa para o uso do `console.log` é usar os recursos de depuração do seu browser. Navegadores modernos vêm com a capacidade de definir um ponto de interrupção em uma linha específica de seu código. Isso fará com que a execução do programa faz uma pausa a cada vez que a linha com o ponto de interrupção é atingido. Isso permite que você inspecione os valores das variáveis nesse ponto. Eu não vou entrar em detalhes aqui, pois depuradores diferem de navegador para navegador, mas vale a pena olhar as ferramentas de desenvolvimento do seu navegador e pesquisar na web para obter mais informações. Outra maneira de definir um ponto de interrupção é incluir uma declaração no depurador (que consiste em simplesmente em uma palavra-chave) em seu programa. Se as ferramentas de desenvolvedor do seu navegador estão ativas, o programa fará uma pausa sempre que ele atingir esta declaração e você será capaz de inspecionar o seu estado.
 
 ## Propagação de erros
 
@@ -164,7 +164,7 @@ Programas simples ou programas que são executados somente sob a sua supervisão
 
 Digamos que você tenha uma função `promptInteger` que pede para o usuário um número inteiro e retorna-o. O que ele deve retornar se a entradas do usuário for incorreta?
 
-Uma opção é fazê-lo retornar um valor especial. Escolhas comuns são valores nulos e indefinido.
+Uma opção é fazê-lo retornar um valor especial. Escolhas comuns são valores nulos e indefinidos.
 
 ````js
 function promptNumber(question) {
@@ -178,7 +178,7 @@ console.log(promptNumber("How many trees do you see?"));
 
 Isto é uma boa estratégia. Agora qualquer código que chamar a função `promptNumber` deve verificar se um número real foi lido, e na falha deve de alguma forma recuperar preenchendo um valor padrão ou retornando um valor especial para o seu chamador indicando que ele não conseguiu fazer o que foi solicitado.
 
-Em muitas situações, principalmente quando os erros são comuns e o chamador deve explicitamente tê-las em conta, retornaremos um valor especial, é uma forma perfeita para indicar um erro. Mas essa maneira no entanto tem suas desvantagens. Em primeiro lugar, como a função pode retornar todos os tipos possíveis de valores? Para tal função é difícil encontrar um valor especial que pode ser distinguido a partir de um resultado válido.
+Em muitas situações, principalmente quando os erros são comuns e o chamador deve explicitamente tê-las em conta, retornaremos um valor especial, é uma forma perfeita para indicar um erro. Mas essa maneira, no entanto tem suas desvantagens. Em primeiro lugar, como a função pode retornar todos os tipos possíveis de valores? Para tal função é difícil encontrar um valor especial que pode ser distinguido a partir de um resultado válido.
 
 O segundo problema é com o retorno de valores especiais, isso pode levar a um código muito confuso. Se um pedaço de código chama a função `promptNumber` 10 vezes, teremos que verificar 10 vezes se nulo foi devolvido. E se a sua resposta ao encontrar nulo é simplesmente retornar nulo, o chamador por sua vez tem que verificar assim por diante.
 
@@ -186,9 +186,9 @@ O segundo problema é com o retorno de valores especiais, isso pode levar a um c
 
 Quando uma função não pode prosseguir normalmente, o que gostaríamos de fazermos é simplesmente parar o que esta sendo feito e saltar imediatamente de volta para o lugar onde devemos lidar com o problema. Isto é o que faz o tratamento de exceção.
 
-As exceções são um mecanismo que torna possível parar o código que é executado com problema disparando (ou lançar) uma exceção que nada mais é que um simples valor. Levantando uma exceção lembra um pouco um retorno super carregado a partir de uma função: ele salta para fora não apenas da função atual mas também fora de todo o caminho de seus interlocutores para a primeira chamada que iniciou a execução atual. Isto é chamado de desenrolamento do `stack`. Você pode se lembrar das chamadas de função do `stack` que foi mencionado no Capítulo 3. Uma exceção é exibida no `stack` indicando todos os contextos de chamadas que ele encontrou.
+As exceções são um mecanismo que torna possível parar o código que é executado com problema disparando (ou lançar) uma exceção que nada mais é que um simples valor. Levantando uma exceção lembra um pouco um retorno super carregado a partir de uma função: ele salta para fora não apenas da função atual, mas também fora de todo o caminho de seus interlocutores para a primeira chamada que iniciou a execução atual. Isto é chamado de desenrolamento do `stack`. Você pode se lembrar das chamadas de função do `stack` que foi mencionado no Capítulo 3. Uma exceção é exibida no `stack` indicando todos os contextos de chamadas que ele encontrou.
 
-Se as exceções tivessem um `stack` de uma forma ampliada não seria muito útil. Eles apenas fornecem uma nova maneira de explodir o seu programa. Seu poder reside no fato de que você pode definir "obstáculos" ao longo do seu `stack` para capturar a exceção. Depois você pode fazer alguma coisa com ele no ponto em que a exceção foi pega para que o programa continua em execução.
+Se as exceções tivessem um `stack` de uma forma ampliada não seria muito útil. Eles apenas fornecem uma nova maneira de explodir o seu programa. Seu poder reside no fato de que você pode definir "obstáculos" ao longo do seu `stack` para capturar a exceção. Depois você pode fazer alguma coisa com ele no ponto em que a exceção foi pega para que o programa continue em execução.
 
 Aqui está um exemplo:
 
@@ -218,7 +218,7 @@ A palavra-chave `throw` é usada para gerar uma exceção. Para tratar uma exces
 
 Neste caso usaremos o construtor de erro para lançar o nosso valor de exceção. Este é um construtor JavaScript normal que cria um objeto com uma propriedade de mensagem. Em ambientes de JavaScript modernos instâncias deste construtor também coletam informações para o `stack` e sobre chamadas que existia quando a exceção foi criado, o chamado `stack` de rastreamento. Esta informação é armazenada na propriedade do `stack` e pode ser útil ao tentar depurar um problema: ela nos diz a função precisa de onde ocorreu o problema e que outras funções que levou até a chamada onde ocorreu a falha.
 
-Note que se olharmos para função `promptDirection` podemos ignoramos completamente a possibilidade de que ela pode conter erros. Esta é a grande vantagem do tratamento de erros - manipulação de erro no código é necessário apenas no ponto em que o erro ocorre e no ponto onde ele é tratado. Essas funções no meio pode perder tudo sobre ela.
+Note que se olharmos para função `promptDirection` podemos ignoramos completamente a possibilidade de que ela pode conter erros. Esta é a grande vantagem do tratamento de erros - manipulação de erro no código é necessário apenas no ponto em que o erro ocorre e no ponto onde ele é tratado. Essas funções no meio podem perder tudo sobre ela.
 
 Bem, estamos quase lá.
 
@@ -277,15 +277,15 @@ Mesmo que a chamada da função `withContext` explodiu,  `withContext` limpou co
 
 ## Captura seletiva
 
-Quando uma exceção percorre todo o caminho até o final do `stack` sem ser pego,  ele é tratado pelo `environment`. Significa que isto é diferente entre os ambientes. Nos navegadores uma descrição do erro normalmente é escrita no console do JavaScript (alcançável através de "Ferramentas" do navegador no menu de "developer").
+Quando uma exceção percorre todo o caminho até o final do `stack` sem ser pego, ele é tratado pelo `environment`. Significa que isto é diferente entre os ambientes. Nos navegadores uma descrição do erro normalmente é escrita no console do JavaScript (alcançável através de "Ferramentas" do navegador no menu de "developer").
 
 Erros passam muitas vezes como algo normal, isto acontece para erros do programador ou problemas que o browser não consegue manipular o erro. Uma exceção sem tratamento é uma forma razoável para indicar a um programa que ele esta quebrado e o console JavaScript em navegadores modernos terá que fornecer-lhe algumas informações no `stack` sobre quais foram as chamadas de funções quando o problema ocorreu.
 
 Para problemas que se espera que aconteça durante o uso rotineiro chegando como uma exceção e que não seja tratada isso pode não ser uma resposta muito simpática.
 
-Usos incorretos da linguagem como, a referência a uma variável inexistente, propriedade que tem null ou chamar algo que não é uma função também irá resultar em lançamentos de exceções. Essas exceções podem ser capturados como outra qualquer.
+Usos incorretos da linguagem como, a referência a uma variável inexistente, propriedade que tem null ou chamar algo que não é uma função também irá resultar em lançamentos de exceções. Essas exceções podem ser capturadas como outra qualquer.
 
-Quando um pedaço de código é inserido no bloco `catch`, todos nós sabemos que algo em nosso corpo `try` pode ou vai causar uma exceção. Mas nós não sabemos o que ou qual exceção que sera lançada.
+Quando um pedaço de código é inserido no bloco `catch`, todos nós sabemos que algo em nosso corpo `try` pode ou vai causar uma exceção. Mas nós não sabemos o que ou qual exceção que será lançada.
 
 O JavaScript (tem uma omissão gritante) não fornece suporte direto para a captura seletiva exceções: ou você manipula todos ou você trata de algum em específico. Isto torna muito fácil supor que a exceção que você recebe é o que você estava pensando quando escreveu o bloco `catch`.
 
@@ -303,13 +303,13 @@ for (;;) {
 }
  ````
 
-O `for (;;)` é a construção de um loop infinito de forma intencionalmente que não para sozinho. Nós quebramos o circuito de fora somente quando uma direção válida é fornecida. Mas a mal escrita do `promptDirection` resultará em um erro de "variável indefinida". O bloco `catch` ignora completamente o seu valor de exceção, supondo que ele sabe qual é o problema ele trata equivocadamente o erro de variável como uma indicação de má entrada. Isso não só causa um loop infinito mas também exibi uma mensagem de erro incorretamente sobre a variável que estamos usando.
+O `for (;;)` é a construção de um loop infinito de forma intencionalmente que não para sozinho. Nós quebramos o circuito de fora somente quando uma direção válida é fornecida. Mas a mal escrita do `promptDirection` resultará em um erro de "variável indefinida". O bloco `catch` ignora completamente o seu valor de exceção, supondo que ele sabe qual é o problema ele trata equivocadamente o erro de variável como uma indicação de má entrada. Isso não só causa um loop infinito, mas também exibi uma mensagem de erro incorretamente sobre a variável que estamos usando.
 
-Como regra geral não capturamos exceções a menos que tenha a finalidade de monitora-las em algum lugar, por exemplo através de softwares externos conectados à nossa aplicação que indica quando nossa aplicação está caída. E assim mesmo podemos pensar cuidadosamente sobre como você pode estar escondendo alguma informação.
+Como regra geral, não capturamos exceções a menos que tenha a finalidade de monitora-las em algum lugar, por exemplo através de softwares externos conectados à nossa aplicação que indica quando nossa aplicação está caída. E assim mesmo podemos pensar cuidadosamente sobre como você pode estar escondendo alguma informação.
 
-E se quisermos pegar um tipo específico de exceção? Podemos fazer isso através da verificação no bloco catch para saber se a exceção que temos é a que queremos, dai então é so lançar a exceção novamente. Mas como que nós reconhecemos uma exceção?
+E se quisermos pegar um tipo específico de exceção? Podemos fazer isso através da verificação no bloco catch para saber se a exceção que temos é a que queremos, dai então é só lançar a exceção novamente. Mas como que nós reconhecemos uma exceção?
 
-Naturalmente nós poderíamos fazer uma comparação de mensagens de erros. Mas isso é uma forma instável de escrever código pois estaríamos utilizando informações que são destinadas ao consumo humano (a mensagem) para tomar uma decisão programática. Assim que alguém muda (ou traduz) a mensagem o código irá parar de funcionar.
+Naturalmente nós poderíamos fazer uma comparação de mensagens de erros. Mas isso é uma forma instável de escrever código, pois estaríamos utilizando informações que são destinadas ao consumo humano (a mensagem) para tomar uma decisão programática. Assim que alguém muda (ou traduz) a mensagem o código irá parar de funcionar.
 
 Em vez disso, vamos definir um novo tipo de erro e usar `instanceof` para identificá-lo.
 
@@ -378,15 +378,15 @@ function lastElement(array) {
 }
 ````
 
-Isso fornece uma maneira compacta de fazer cumprir as expectativas solicitadas para quebrar um programa se a condição descrita não for válida. Por exemplo se a função `lastElement` que busca o último elemento de uma matriz voltar indefinida para matrizes vazias caso a declaração for omitida. Buscar o último elemento de uma matriz vazia não faz muito sentido por isso é quase certeza de que um erro de programação pode acontecer.
+Isso fornece uma maneira compacta de fazer cumprir as expectativas solicitadas para quebrar um programa se a condição descrita não for válida. Por exemplo, se a função `lastElement` que busca o último elemento de uma matriz voltar indefinida para matrizes vazias caso a declaração for omitida. Buscar o último elemento de uma matriz vazia não faz muito sentido por isso é quase certeza de que um erro de programação pode acontecer.
 
-As afirmações são maneiras de certificar-se de que erros pode causar falhas e qual o ponto deste erro ao invés de valores sem sentido produzidos silenciosamente que pode acarretar problemas em uma parte do programa a qual não se tem nenhuma relação de onde ocorreu realmente.
+As afirmações são maneiras de certificar-se de que erros podem causar falhas e qual o ponto deste erro ao invés de valores sem sentido produzidos silenciosamente que pode acarretar problemas em uma parte do programa a qual não se tem nenhuma relação de onde ocorreu realmente.
 
 ## Resumo
 
 Erros e má entrada acontecem. Erros de programas precisam ser encontrados e corrigidos. Eles podem tornar-se mais fácil de perceber quando se tem uma suites de testes automatizadas e asserções adicionadas em seu programa.
 
-Problemas causados por fatores fora do controle do programa devem geralmente serem tratados normalmente. Às vezes quando o problema pode ser tratado localmente, valores de retorno especiais é um caminho sensato para monitorá-los. Caso contrário as exceções são preferíveis.
+Problemas causados por fatores fora do controle do programa devem geralmente ser tratados normalmente. Às vezes quando o problema pode ser tratado localmente, valores de retorno especiais é um caminho sensato para monitorá-los. Caso contrário as exceções são preferíveis.
 
 Lançar uma exceção faz com que `stack` de chamadas se desencadeie o bloco `try/catch` até a parte inferior do `stack`. O valor da exceção será capturado pelo bloco `catch` onde podemos verificar se ele é realmente do tipo de exceção esperada e em seguida fazer algo com ela. Para lidar com o fluxo de controle imprevisível causado pelas exceções, o bloco `finally` pode ser utilizado para garantir que um pedaço de código seja sempre executado.
 

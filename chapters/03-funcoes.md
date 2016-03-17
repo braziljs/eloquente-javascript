@@ -113,7 +113,7 @@ As funções `flat` e `mountain` podem “ver” a variável `result` porque ela
 
 Em resumo, cada escopo local pode também ver todos os escopos locais que o contêm. O conjunto de variáveis visíveis dentro de uma função é determinado pelo local onde aquela função está escrita na aplicação. Todas as variáveis que estejam em blocos ao redor de definições de funções, são visíveis aos corpos dessas funções e também àqueles que estão no mesmo nível. Essa abordagem em relação à visibilidade de variáveis é chamada de *escopo léxico*.
 
-Pessoas com experiência em outras linguagens de programação podem talvez esperar que qualquer bloco de código entre chaves produza um novo “ambiente local”. Entretanto, no JavaScript, as funções são as únicas coisas que podem criar novos escopos. Também é permitido a utilização de “blocos livres”:
+Pessoas com experiência em outras linguagens de programação podem talvez esperar que qualquer bloco de código entre chaves produza um novo “ambiente local”. Entretanto, no JavaScript, as funções são as únicas coisas que podem criar novos escopos. Também é permitida a utilização de “blocos livres”:
 
 ```js
 var something = 1;
@@ -167,7 +167,7 @@ function future() {
 
 O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
 
-O que acontece quando definimos uma declaração de função dentro de um bloco condicional (`if`) ou um laço de repetição? Bom, não faça isso. Diferentes plataformas JavaScript usadas em diferentes navegadores têm tradicionalmente feito coisas diferentes nessas situações, e a última versão basicamente proíbe essa prática. Se você deseja que seu programa se comportem de forma consistente, use somente essa forma de definição de função no bloco externo de uma outra função ou programa.
+O que acontece quando definimos uma declaração de função dentro de um bloco condicional (`if`) ou um laço de repetição? Bom, não faça isso. Diferentes plataformas JavaScript usadas em diferentes navegadores têm tradicionalmente feito coisas diferentes nessas situações, e a última versão basicamente proíbe essa prática. Se você deseja que seu programa se comporte de forma consistente, use somente essa forma de definição de função no bloco externo de outra função ou programa.
 
 ```js
 function example() {
@@ -425,7 +425,7 @@ printFarmInventory(7, 11);
 
 Adicionar `.length` após o valor de uma `string` nos fornecerá o tamanho (quantidade de caracteres) daquela `string`. Por isso, o laço de repetição `while` continua adicionando zeros no início da `string` que representa o número até que a mesma tenha três caracteres.
 
-Missão cumprida! Porém, no momento em que iríamos enviar o código ao fazendeiro (juntamente com uma grande cobrança, é claro), ele nos ligou dizendo que começou a criar porcos, e perguntou, se poderíamos estender a funcionalidade do software para também imprimir os porcos?
+Missão cumprida! Porém, no momento em que iríamos enviar o código ao fazendeiro (juntamente com uma grande cobrança, é claro), ele nos ligou dizendo que começou a criar porcos, e perguntou se poderíamos estender a funcionalidade do software para também imprimir os porcos?
 
 É claro que podemos. Antes de entrar no processo de copiar e colar essas mesmas quatro linhas outra vez, vamos parar e reconsiderar. Deve existir uma forma melhor. Aqui está a primeira tentativa:
 
@@ -522,7 +522,7 @@ console.log(min(0, -10));
 
 ### Recursão
 
-Nós vimos que o `%` (operador resto) pode ser usado para testar se um número é par ou ímpar, usando `% 2` para verificar se ele é divisível por dois. Abaixo, está uma outra maneira de definir se um número inteiro positivo é par ou ímpar:
+Nós vimos que o `%` (operador resto) pode ser usado para testar se um número é par ou ímpar, usando `% 2` para verificar se ele é divisível por dois. Abaixo, está outra maneira de definir se um número inteiro positivo é par ou ímpar:
 
 - Zero é par.
 - Um é ímpar.

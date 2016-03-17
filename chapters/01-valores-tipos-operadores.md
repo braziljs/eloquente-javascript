@@ -25,7 +25,7 @@ Imagine um mar de bits, um oceano deles. Um computador moderno possui mais de tr
 
 Para que seja possível trabalhar com tais quantidades de bits sem ficar perdido, você pode separá-los em partes que representam pedaços de informação. No ambiente JavaScript, essas partes são chamadas de _valores_. Embora todos os valores sejam compostos por bits, cada valor exerce um papel diferente e todo valor possui um tipo que determina o seu papel. Existem seis tipos básicos de valores no JavaScript: números, strings, Booleanos, objetos, funções e valores indefinidos.
 
-Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do ar. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. A medida que você não utiliza um valor, ele será dissipado, fazendo com que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
+Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do ar. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. À medida que você não utiliza um valor, ele será dissipado, fazendo com que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
 
 Esse capítulo introduz os elementos que representam os átomos dos programas JavaScript, que são os simples tipos de valores e os operadores que podem atuar sobre eles.
 
@@ -79,7 +79,7 @@ O significado do exemplo anterior é “adicione 4 e 100 e, em seguida, multipli
 
 Para subtração existe o operador `-` e para a divisão usamos o operador `/`.
 
-Quando os operadores aparecem juntos sem parêntesis, a ordem que eles serão aplicados é determinada pela _precedência_ deles. O exemplo mostra que a multiplicação ocorre antes da adição. O operador `/` possui a mesma precedência que `*` e, de forma similar, os operadores `+` e `-` possuem a mesma precedência entre si. Quando vários operadores de mesma precedência aparecem próximos uns aos outros, como por exemplo `1 - 2 + 1`, eles são aplicados da esquerda para a direita: `(1 - 2) + 1`.
+Quando os operadores aparecem juntos sem parêntesis, a ordem que eles serão aplicados é determinada pela _precedência_ deles. O exemplo mostra que a multiplicação ocorre antes da adição. O operador `/` possui a mesma precedência que `*` e, de forma similar, os operadores `+` e `-` possuem a mesma precedência entre si. Quando vários operadores de mesma precedência aparecem próximos uns aos outros, como por exemplo, `1 - 2 + 1`, eles são aplicados da esquerda para a direita: `(1 - 2) + 1`.
 
 Essas regras de precedência não são algo que você deve se preocupar. Quando estiver em dúvida, apenas adicione os parênteses.
 
@@ -108,7 +108,7 @@ Ambas as aspas simples e duplas podem ser usadas para marcar strings - contanto 
 
 Quase tudo pode ser colocado entre aspas, e o JavaScript vai fazer um valor de string com isso. Mas alguns caracteres são difíceis. Você pode imaginar como colocar aspas entre aspas deve ser difícil. Novas linhas, as coisas que você obtém quando pressiona `enter`, também não podem ser colocadas entre aspas - a string tem que estar em uma linha única.
 
-Para ser capaz de ter estes caracteres em uma string, a convenção seguinte é usada: Sempre que um barra invertida `\` é encontrada dentro do texto entre aspas, isto indica que o caracter depois desta tem um significado especial. Uma aspa precedida de uma barra invertida não vai findar a string, mas ser parte dela. Quando um caracter 'n' correr depois de uma barra invertida, será interpretado como uma nova linha. Similarmente, um 't' depois da barra invertida significa o caracter tab. Veja a string seguinte:
+Para ser capaz de ter estes caracteres em uma string, a convenção seguinte é usada: Sempre que um barra invertida `\` é encontrada dentro do texto entre aspas, isto indica que o caracter depois desta tem um significado especial. Uma aspa precedida de uma barra invertida não vai findar a string, mas ser parte dela. Quando um caracter 'n' ocorrer depois de uma barra invertida, será interpretado como uma nova linha. Similarmente, um 't' depois da barra invertida significa o caracter tab. Veja a string seguinte:
 
 ```
 "This is the first line\nAnd this is the second"
@@ -123,7 +123,7 @@ And this is the second
 
 ```
 
-Existe, obviamente, situações onde você quer uma barra invertida em uma string apenas como uma barra invertida. não um código especial. Se duas barras invertidas estiverem seguidas uma da outra, elas se anulam, e somente uma vai ser deixada no valor da string resultante. Assim é como a string `A newline character is written like "\n" can be written`:
+Existem, obviamente, situações onde você quer uma barra invertida em uma string apenas como uma barra invertida, não um código especial. Se duas barras invertidas estiverem seguidas uma da outra, elas se anulam, e somente uma vai ser deixada no valor da string resultante. Assim é como a string `A newline character is written like "\n" can be written`:
 
 ```
 "A newline character is written like \"\\n\"."
@@ -165,7 +165,7 @@ console.log(- (10 - 2))
 
 ## Valores Booleanos
 
-As vezes, você vai precisar de um valor que simplesmente distingue entre 2 possibilidades, "sim" ou "não", ou "ligado" e "desligado". Para isso o JavaScript tem um tipo *booleano*, que tem apenas dois valores, `true` e `false` (que são escritos com estas palavras mesmo).
+Às vezes, você vai precisar de um valor que simplesmente distingue entre 2 possibilidades, "sim" ou "não", ou "ligado" e "desligado". Para isso o JavaScript tem um tipo *booleano*, que tem apenas dois valores, `true` e `false` (que são escritos com estas palavras mesmo).
 
 ### Comparações
 
@@ -276,7 +276,7 @@ console.log(false == 0)
 // → true
 
 ```
-Quando um operador é aplicado a um tipo de valor "errado", ele vai silenciosamente converter este valor para o tipo que quiser, usando um conjunto de regras que frequentemente não são as que você expera. O `null` na primeira expressão torna-se 0, o `"5"` na segunda expressão se torna `5` (de string para número), ainda na terceira expressão, o `+` tenta a concatenação de strings antes de tentar a adição numérica, o `1` é convertido em `"1"` (de número para string).
+Quando um operador é aplicado a um tipo de valor "errado", ele vai silenciosamente converter este valor para o tipo que quiser, usando um conjunto de regras que frequentemente não são as que você espera. O `null` na primeira expressão torna-se 0, o `"5"` na segunda expressão se torna `5` (de string para número), ainda na terceira expressão, o `+` tenta a concatenação de strings antes de tentar a adição numérica, o `1` é convertido em `"1"` (de número para string).
 
 Quando algo que não pode ser mapeado como um número de forma óbvia, do tipo `"five"` ou `undefined` é convertido para um número, o valor `NaN` é produzido. Operações aritméticas com `NaN` continuam produzindo `NaN`, então se você encontrar alguns destes resultados em algum local inesperado, procure por conversões acidentais de tipo.
 

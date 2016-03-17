@@ -66,7 +66,7 @@ Quando você define uma variável sem fornecer um valor a ela, o tentáculo fica
 
 ![Polvo](../img/octopus.jpg)
 
-Um exemplo. Para lembrar da quantidade de dólares que Luigi ainda lhe deve, você cria uma variável. E então quando ele lhe paga 35 dólares, você dá a essa variável um novo valor.
+Um exemplo. Para lembrar a quantidade de dólares que Luigi ainda lhe deve, você cria uma variável. E então quando ele lhe paga 35 dólares, você dá a essa variável um novo valor.
 
 ```javascript
 
@@ -235,7 +235,7 @@ Isso funciona, mas a ideia de escrever um programa é fazer com que algo seja _m
 
 ![Fluxo de Controle do Loop](../img/controlflow_loop.png)
 
-O fluxo de controle do loop nos permite voltar a um mesmo ponto no programa onde estávamos anteriormente e repetí-lo no estado atual do programa. Se combinarmos isso a uma variável contadora, conseguimos fazer algo assim:
+O fluxo de controle do loop nos permite voltar a um mesmo ponto no programa onde estávamos anteriormente e repeti-lo no estado atual do programa. Se combinarmos isso a uma variável contadora, conseguimos fazer algo assim:
 
 ```js
 var number = 0;
@@ -341,9 +341,9 @@ Se você criar um loop infinito em algum dos exemplos destas páginas, você nor
 
 A palavra-chave `continue` é similar ao `break`, de modo que também influencia o progresso de um loop. Quando `continue` é encontrado no corpo de um loop, o controle de execução pula para fora do corpo e continua executando a próxima iteração do loop.
 
-## Atualizando variáveis suscintamente
+## Atualizando variáveis sucintamente
 
-Um programa, especialmente quando em loop, muita vezes precisa de atualizar uma variável para armazenar um valor baseado no valor anterior dessa variável.
+Um programa, especialmente quando em loop, muita vezes precisa atualizar uma variável para armazenar um valor baseado no valor anterior dessa variável.
 
 ```javascript
 counter = counter + 1;
@@ -363,7 +363,7 @@ Isto nos permite encurtar nosso exemplo de contagem um pouco mais:
 
 ```javascript
 for (var number = 0; number <= 12; number += 2)
-	console.log(number);
+  console.log(number);
 ```
 
 Para `counter += 1` e `counter -= 1`, existem equivalentes mais curtos: `counter++` e `counter--`
@@ -397,7 +397,7 @@ switch (prompt("What is the weather like?")) {
 }
 ```
 
-Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulo no `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações, e continua a passar pelos rótulos, até encontrar uma declaração `break`. Em alguns casos, como no exemplo `case "sunny"`, pode ser usado para compartilhar algum código entre os `cases` (ele recomenda "ir lá fora" para ambos os tempos `sunny` e `cloudy`). Mas tenha cuidado: é fácil esquecer de um `break`, o que fará com que o programa execute código que você não gostaria de executar.
+Dentro do bloco aberto pelo `switch`, você pode colocar qualquer número de rótulo no `case`. O programa vai pular para o rótulo correspondente ao valor que `switch` fornece, ou para `default` se nenhum valor for encontrado. Então ele começa a executar as declarações, e continua a passar pelos rótulos, até encontrar uma declaração `break`. Em alguns casos, como no exemplo `case "sunny"`, pode ser usado para compartilhar algum código entre os `cases` (ele recomenda "ir lá fora" para ambos os tempos `sunny` e `cloudy`). Mas tenha cuidado: é fácil esquecer um `break`, o que fará com que o programa execute código que você não gostaria de executar.
 
 ## Capitalização
 
@@ -447,7 +447,7 @@ var theNumber = 11213;
 
 ## Resumo
 
-Você agora sabe que um programa é construído de declarações, que as vezes contém mais declarações. Declarações tendem a conter expressões, que podem ser feitas de pequenas expressões.
+Você agora sabe que um programa é construído de declarações, que às vezes contém mais declarações. Declarações tendem a conter expressões, que podem ser feitas de pequenas expressões.
 
 Colocar declarações uma após a outra nos dá um programa que é executado de cima para baixo. Você pode causar transtornos no fluxo de controle usando declarações condicionais (`ìf`, `else` e `switch`) e loops (`while`, `do` e `for`).
 
@@ -465,13 +465,13 @@ Cada exercício começa com a descrição de um problema. Leia e tente resolvê-
 
 Escreva um programa que faça sete chamadas a `console.log()` para retornar o seguinte triângulo:
 
-	#
-	##
-	###
-	####
-	#####
-	######
-	#######
+  #
+  ##
+  ###
+  ####
+  #####
+  ######
+  #######
 
 Uma maneira interessante para saber o comprimento de uma `string` é escrevendo `.length` após ela.
 
@@ -507,7 +507,7 @@ Interar sobre os números é trabalho claro de um loop, e selecionar o que impri
 
 Na primeira versão, existem três resultados possíveis para cada número, então você irá criar uma cadeia de `if/else if/else`.
 
-Na segunda versão o programa tem uma solução simples e uma inteligente. A maneira mais simples é adicionar um outro "ramo" para um teste preciso da condição dada. Para o método inteligente é construir uma sequência de caracteres contendo palavra ou palavras para a saída, que imprima a palavra ou o número, caso não haja palavra, fazendo o uso do operador elegante `||`.
+Na segunda versão o programa tem uma solução simples e uma inteligente. A maneira mais simples é adicionar outro "ramo" para um teste preciso da condição dada. Para o método inteligente é construir uma sequência de caracteres contendo palavra ou palavras para a saída, que imprima a palavra ou o número, caso não haja palavra, fazendo o uso do operador elegante `||`.
 
 ### Tabuleiro de Xadrez
 

@@ -36,7 +36,7 @@ Um computador é uma máquina construída para atuar como um hospedeiro para ess
 
 Para alguns de nós, escrever programas de computador é um fascinante jogo. Um programa é uma construção do pensamento. Não possui custos de construção, é leve e cresce facilmente com a digitação feita por nossas mãos.
 
-Entretanto, se não formos cuidadosos, o tamanho e a complexidade de um programa pode crescer e ficar fora de controle, confundindo, até mesmo, a pessoa que o criou. Manter os programas sob controle é o maior desafio da programação. Quando um programa funciona, é lindo. A arte de programar é, basicamente, a habilidade de controlar a complexidade. Um ótimo programa é suave e simples em sua própria complexidade.
+Entretanto, se não formos cuidadosos, o tamanho e a complexidade de um programa podem crescer e ficar fora de controle, confundindo, até mesmo, a pessoa que o criou. Manter os programas sob controle é o maior desafio da programação. Quando um programa funciona, é lindo. A arte de programar é, basicamente, a habilidade de controlar a complexidade. Um ótimo programa é suave e simples em sua própria complexidade.
 
 Muitos programadores acreditam que essa complexidade é melhor gerenciada usando, em seus programas, apenas um pequeno conjunto de técnicas bem entendidas. Eles criaram uma série de regras rígidas ("boas práticas") recomendando a forma que os programas deveriam ter. Os mais zelosos entre eles, vão considerar como _maus programadores_ aqueles que saem dessa pequena zona de segurança.
 
@@ -44,7 +44,7 @@ Quanta hostilidade em relação à riqueza da programação, tentar reduzi-lá a
 
 ## Porque linguagens importam?
 
-No início, quando a computação nasceu, não haviam linguagens de programação. Os programas eram parecidos com algo assim:
+No início, quando a computação nasceu, não havia linguagens de programação. Os programas eram parecidos com algo assim:
 
 ```
 00110001 00000000 00000000
@@ -131,7 +131,7 @@ Depois que o JavaScript foi adotado fora do Netscape, um documento padrão foi e
 
 Existem aqueles que irão falar coisas _terríveis_ sobre a linguagem JavaScript. Muitas dessas coisas são verdades. Quando fui obrigado a escrever algo em JavaScript pela primeira vez, rapidamente comecei a odiá-lo, pois a linguagem aceitava praticamente tudo que eu digitava e interpretava de uma forma que era completamente diferente de como eu queria. É evidente que isso estava muito relacionado ao fato de que eu não tinha a mínima ideia do que eu estava fazendo. Porém, existe um grande problema nisso: O JavaScript é ridiculamente liberal em relação ao que ele permite. A ideia por trás desse design era a de que isso deveria fazer com que o JavaScript fosse fácil para iniciantes. Na realidade, isso acaba fazendo com que seja bastante difícil encontrar problemas nos seus programas, pois o sistema não aponta onde eles estão.
 
-Mesmo assim, essa flexibilidade também tem suas vantagens. Ela dá espaço para muitas técnicas que são impossíveis de serem realizadas em linguagens mais rígidas e, como você verá em breve (por exemplo no [Capítulo 10](./10-modulos.md)), ela pode ser usada para superar algumas das limitações do JavaScript. Após aprender corretamente e trabalhar por um tempo com a linguagem, aprendi a realmente _gostar_ do JavaScript.
+Mesmo assim, essa flexibilidade também tem suas vantagens. Ela dá espaço para muitas técnicas que são impossíveis de serem realizadas em linguagens mais rígidas e, como você verá em breve (por exemplo, no [Capítulo 10](./10-modulos.md)), ela pode ser usada para superar algumas das limitações do JavaScript. Após aprender corretamente e trabalhar por um tempo com a linguagem, aprendi a realmente _gostar_ do JavaScript.
 
 Existem diversas versões do JavaScript. A versão 3 do ECMAScript era a versão que tinha amplamente mais suporte na época em que o JavaScript estava em ascensão para se tornar dominante, aproximadamente entre os anos 2000 e 2010. Durante esse período, a ambiciosa versão 4 estava sendo desenvolvida, incluindo planos de melhorias radicais e extensões para a linguagem. Porém, mudar de forma radical uma linguagem viva e amplamente usada acabou provando ser politicamente muito difícil e, por isso, a versão 4 foi abandonada em 2008, fazendo com que a versão 5, bem menos ambiciosa, fossa lançada em 2009. Nós estamos, atualmente, em um ponto em que todos os grandes navegadores suportam a versão 5, que será a versão que iremos usar nesse livro. A versão 6 ainda está no processo para ser finalizada, e alguns navegadores já estão suportando algumas de suas novas funcionalidades.
 

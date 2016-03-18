@@ -475,7 +475,7 @@ Cada exercício começa com a descrição de um problema. Leia e tente resolvê-
 
 Escreva um programa que faça sete chamadas a `console.log()` para retornar o seguinte triângulo:
 
-  ```
+```
   #
   ##
   ###
@@ -484,7 +484,7 @@ Escreva um programa que faça sete chamadas a `console.log()` para retornar o se
   ######
   #######
 
-  ```
+```
 
 Uma maneira interessante para saber o comprimento de uma `string` é escrevendo `.length` após ela.
 

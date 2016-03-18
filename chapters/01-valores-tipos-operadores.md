@@ -135,31 +135,27 @@ Existem outras maneiras de manipular as _strings_, as quais serão discutidas qu
 
 ## Operadores Unários
 
-Nem todos operadores são símbolos. Alguns são palavras escritas. Um exemplo é o operador `typeof`, que produz uma string com o valor do tipo dado para fornecido para avaliação.
+Nem todos os operadores são símbolos, sendo que alguns são escritos como palavras. Um exemplo é o operador `typeof`, que produz um valor do tipo _string_ contendo o nome do tipo do valor que você está verificando.
 
-```javascript
-
+```js
 console.log(typeof 4.5)
 // → number
 console.log(typeof "x")
 // → string
-
 ```
 
-Nós vamos usar `console.log` nos códigos exemplo para indicar que nós queremos ver o resultado da avaliação de algo. Quando você roda algum código, o valor produzido vai ser mostrado na tela - de alguma forma, dependendo do ambiente JavaScript que você usa para rodá-lo.
+Nós vamos usar `console.log` nos códigos de exemplo para indicar que desejamos ver o resultado da avaliação de algo. Quando você executar tais códigos, o valor produzido será mostrado na tela, entretanto, a forma como ele será apresentado vai depender do ambiente JavaScript que você usar para rodar os códigos.
 
-Os outros operadores que vimos sempre operam com 2 valores; `typeof` pega somente um. Operadores que usam 2 valores são chamados operadores *binários*, enquanto aqueles que pegam um são chamados operadores *unários*. O operador menos `-` pode ser usado como operador binário e unário.
+Todos os operadores que vimos operavam em dois valores, mas `typoeof` espera um único valor. Operadores que usam dois valores são chamados de operadores _binários_, enquanto que aqueles que recebem apenas um, são chamados de operadores _unários_. O operador `-` pode ser usado tanto como binário quanto como unário.
 
-```javascript
-
+```js
 console.log(- (10 - 2))
 // → -8
-
 ```
 
 ## Valores Booleanos
 
-As vezes, você vai precisar de um valor que simplesmente distingue entre 2 possibilidades, "sim" ou "não", ou "ligado" e "desligado". Para isso o JavaScript tem um tipo *booleano*, que tem apenas dois valores, `true` e `false` (que são escritos com estas palavras mesmo).
+Você frequentemente precisará de um valor para distinguir entre duas possibilidades, como por exemplo “sim” e “não”, ou “ligado” e “desligado”. Para isso, o JavaScript possui o tipo _Booleano_, que tem apenas dois valores: verdadeiro e falso (que são escritos como `true` e `false` respectivamente).
 
 ### Comparações
 

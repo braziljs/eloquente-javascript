@@ -137,7 +137,7 @@ Strings não podem ser divididas, multiplicadas ou subtraídas, mas o operador `
 
 ```
 
-Existem outras maneiras de manipular strings, que nós vamos discutir quando entrarmos nós métodos no capítulo 4.
+Existem outras maneiras de manipular strings, que nós vamos discutir quando entrarmos nós métodos no [capítulo 4](./04-estruturas-de-dados.md).
 
 ## Operadores Unários
 
@@ -250,6 +250,18 @@ Quando misturamos estes operadores booleanos com operadores aritméticos e outro
 
 ```
 
+O último operador que eu vou discutir não é unário, nem binário, mas `ternário`, ou seja, opera sobre três valores. É escrito com os símbolos ponto-de-interrogação (?) e dois-pontos (:), assim:
+
+```javascript
+
+console.log(true ? 1 : 2);
+// → 1
+console.log(false ? 1 : 2);
+// → 2
+```
+
+Esse operador é chamado de operador `condicional` (ou, às vezes, simplesmente, operador `ternário`, uma vez que é o único operador desse tipo presente na linguagem). O valor à esquerda do sinal de interrogação "escolhe" qual dos outros dois valores será retornado. Quando esse valor (à esquerda) é verdadeiro, o valor do meio (entre '?' e ':') é escolhido, e quando ele é falso, o valor mais a direita é retornado.
+
 ## Valores Indefinidos
 
 Temos dois valores especiais, `null` e `undefined`, que são usados para denotar a ausência de valores significativos. Eles são por si próprios valores, porém valores que não levam informação.
@@ -282,6 +294,15 @@ Quando algo que não pode ser mapeado como um número de forma óbvia, do tipo `
 
 Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de conversão de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined`ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
 
+```javascript
+
+console.log(null == undefined);
+// → true
+console.log(null == 0);
+// → false
+
+```
+
 A última parte do comportamento é frequentemente muito útil. Quando você quer testar se um valor tem um valor real, em vez de ser `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
 
 Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de conversão de strings e números para valores booleanos afirmam que `0`, `NaN` e empty strings contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro teste se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como esperado.
@@ -303,14 +324,19 @@ console.log("Karl" || "user")
 
 ```
 
+Essa funcionalidade permite que o operador `||` seja usado para definir um valor default. Se você tiver uma expressão que pode produzir um valor vazio à esquerda, o valor à direita será usado como substituto nesse caso.
+
 O operador `&&` trabalha similarmente, mas ao contrário. Quando o valor à sua esquerda é algo que se torne `false`, ele retorna o valor, e caso contrário ele retorna o valor à sua direita.
 
-Outro importante propriedade destes 2 operadores é que a expressão a sua direita é avaliada somente quando necessário. No caso de `true || X`, não importa o que `X` é - pode ser uma expressão que faça algo *terrível* - o resultado vai ser verdadeiro, e `X` nunca é avaliado. O mesmo acontece para `false && X`, que é falso, e vai ignorar `X`.
+Outro importante propriedade destes 2 operadores é que a expressão a sua direita é avaliada somente quando necessário. No caso de `true || X`, não importa o que `X` é - pode ser uma expressão que faça algo *terrível* - o resultado vai ser verdadeiro, e `X` nunca é avaliado. O mesmo acontece para `false && X`, que é falso, e vai ignorar `X`. Isso é chamado de `avaliação de curto-circuito`.
+
+O operador condicional funciona de uma maneira similar. A primeira expressão (mais à esquerda) é sempre avaliada, mas entre a segunda (meio) ou a terceira (mais à direita), só é avaliada a expressão escolhida, a outra não.
+
 
 ## Resumo
 
 Nós vimos 4 tipos de valores do JavaScript neste capítulo. Números, strings, booleanos e valores indefinidos.
 
-Alguns valores são criados digitando seu nome (`true`, `null`) ou valores (13, `"abc"`). Eles podem ser combinados e transformados com operadores. Nós vimos operadores binários para aritmética (`+`, `-`, `*`, `/`, e `%`), um para concatenação de string (`+`), comparação (`==`, `!=`, `===`, `!==`, `<`, `>`, `<=`, `>=`) e lógica (`&&`, `||`), como também vários operadores unários (`-` para negativar um número, `!` para negar uma lógica, e `typeof` para encontrar o tipo do valor).
+Alguns valores são criados digitando seu nome (`true`, `null`) ou valores (13, `"abc"`). Eles podem ser combinados e transformados com operadores. Nós vimos operadores binários para aritmética (`+`, `-`, `*`, `/`, e `%`), um para concatenação de string (`+`), comparação (`==`, `!=`, `===`, `!==`, `<`, `>`, `<=`, `>=`) e lógica (`&&`, `||`), como também vários operadores unários (`-` para negativar um número, `!` para negar uma lógica, e `typeof` para encontrar o tipo do valor) e um operador tenário (?:) para escolher entre dois valores baseado em um terceiro valor.
 
-Isto lhe dá informação suficiente para usar o JavaScript como uma calculadora de bolso, mas não muito mais. O próximo capítulo vai começar a amarrar essas operações básicas conjuntamente dentro de programas básicos.
+Isto lhe dá informação suficiente para usar o JavaScript como uma calculadora de bolso, mas não muito mais. O [próximo capítulo](./02-estrutura-de-programa.md) vai começar a amarrar essas operações básicas conjuntamente dentro de programas básicos.

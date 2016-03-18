@@ -62,8 +62,6 @@ console.log(mood);
 
 Você deve imaginar variáveis como tentáculos, ao invés de caixas. Elas não *contêm* valores; elas os *agarram* - duas variáveis podem referenciar o mesmo valor. Somente os valores que o programa mantém tem o poder de ser acessado por ele. Quando você precisa se lembrar de algo, você aumenta o tentáculo para segurar ou recoloca um de seus tentáculos existentes para fazer isso.
 
-Quando você define uma variável sem fornecer um valor a ela, o tentáculo fica conceitualmente no ar - ele não tem nada para segurar. Quando você pergunta por um valor em um lugar vazio, você recebe o valor `undefined`.
-
 ![Polvo](../img/octopus.jpg)
 
 Um exemplo. Para lembrar a quantidade de dólares que Luigi ainda lhe deve, você cria uma variável. E então quando ele lhe paga 35 dólares, você dá a essa variável um novo valor.
@@ -76,6 +74,18 @@ console.log(luigisDebt);
 // 105
 
 ```
+Quando você define uma variável sem fornecer um valor a ela, o tentáculo fica conceitualmente no ar - ele não tem nada para segurar. Quando você pergunta por um valor em um lugar vazio, você recebe o valor `undefined`.
+
+Um único uso de `var` pode definir múltiplas variáveis. As definições dessas variáveis devem ser separadas por vírgulas.
+
+```javascript
+
+var one = 1, two = 2;
+console.log(one + two);
+// → 3
+
+```
+
 
 ## Palavras-chave e Palavras Reservadas
 
@@ -113,7 +123,7 @@ console.log("o valor de x é ", x);
 // o valor de x é 30
 ```
 
-Embora eu tenha afirmado que nomes de variáveis não podem conter pontos, `console.log` claramente contém um ponto. Eu não tinha mentido para você. Esta não é uma simples variável, mas na verdade uma expressão que retorna o campo `log` do valor contido na variável `console`. Nós vamos entender o que isso significa no capítulo 4.
+Embora eu tenha afirmado que nomes de variáveis não podem conter pontos, `console.log` claramente contém um ponto. Eu não tinha mentido para você. Esta não é uma simples variável, mas na verdade uma expressão que retorna o campo `log` do valor contido na variável `console`. Nós vamos entender o que isso significa no [capítulo 4](./04-estruturas-de-dados.md).
 
 ## Retornando Valores
 
@@ -129,7 +139,7 @@ Quando uma função produz um valor, é dito que ela _retorna_ (`return`) ele. E
 console.log(Math.min(2, 4) + 100);
 ```
 
-O próximo capítulo explica como nós podemos escrever nossas próprias funções.
+O [próximo capítulo](./03-estrutura-do-programa.md) explica como nós podemos escrever nossas próprias funções.
 
 ## `prompt` e `confirm`
 
@@ -269,7 +279,7 @@ console.log(result);
 // → 1024
 ```
 
-O contador pode também iniciar com `1` e checar o valor com `<= 10`, mas por razões que iremos ver no [Capítulo 4](./04-estruturas-de-dados.md) [TODO:] Adicionar link correto com âncora para a sessão mencionada no texto original: http://eloquentjavascript.net/04_data.html#array_indexing [/TODO], é uma boa ideia se acostumar a usar a contagem iniciando com zero.
+O contador pode também iniciar com `1` e checar o valor com `<= 10`, mas por razões que iremos ver no [Capítulo 4](./04-estruturas-de-dados#Propriedades.md), é uma boa ideia se acostumar a usar a contagem iniciando com zero.
 
 O loop `do` é uma estrutura de controle similar ao `while`. A única diferença entre eles é que o `do` sempre executa suas declarações ao menos uma vez e inicia o teste para verificar se deve parar ou não apenas após a primeira execução. Para demonstrar isso, o teste aparece após o corpo do loop:
 

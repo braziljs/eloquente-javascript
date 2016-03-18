@@ -279,7 +279,7 @@ console.log(result);
 // → 1024
 ```
 
-O contador pode também iniciar com `1` e checar o valor com `<= 10`, mas por razões que iremos ver no [Capítulo 4](./04-estruturas-de-dados#Propriedades.md), é uma boa ideia se acostumar a usar a contagem iniciando com zero.
+O contador pode também iniciar com `1` e checar o valor com `<= 10`, mas por razões que iremos ver no [Capítulo 4](./04-estruturas-de-dados.md#propriedades), é uma boa ideia se acostumar a usar a contagem iniciando com zero.
 
 O loop `do` é uma estrutura de controle similar ao `while`. A única diferença entre eles é que o `do` sempre executa suas declarações ao menos uma vez e inicia o teste para verificar se deve parar ou não apenas após a primeira execução. Para demonstrar isso, o teste aparece após o corpo do loop:
 
@@ -475,6 +475,7 @@ Cada exercício começa com a descrição de um problema. Leia e tente resolvê-
 
 Escreva um programa que faça sete chamadas a `console.log()` para retornar o seguinte triângulo:
 
+  ```
   #
   ##
   ###
@@ -482,6 +483,8 @@ Escreva um programa que faça sete chamadas a `console.log()` para retornar o se
   #####
   ######
   #######
+
+  ```
 
 Uma maneira interessante para saber o comprimento de uma `string` é escrevendo `.length` após ela.
 

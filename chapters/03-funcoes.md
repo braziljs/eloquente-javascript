@@ -143,7 +143,7 @@ if (safeMode)
   launchMissiles = function(value) {/* do nothing */};
 ```
 
-No capítulo 5, nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
+No [capítulo 5](./05-funcoes-de-ordem-superior.md), nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
 
 ## Notação Por Declaração
 

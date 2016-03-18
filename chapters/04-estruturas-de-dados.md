@@ -59,6 +59,8 @@ As duas formas mais comuns de acessar propriedades no JavaScript são usando pon
 
 Portanto, se você sabe que a propriedade que você está interessado se chama "length", você usa `value.length`. Se você deseja extrair a propriedade cujo nome é o valor que está armazenado na variável `i`, você usa `value[i]`. Devido ao fato de que nomes de propriedades podem ser qualquer _string_, se você quiser acessar as propriedades "2" ou "John Doe", você deve usar os colchetes: `value[2]` ou `value["John Doe"]`, pois mesmo sabendo exatamente o nome da propriedade, "2" e "John Doe" não são nomes válidos de variáveis, sendo impossível acessá-los usando a notação com o ponto.
 
+Os elementos de um array são armazenados como propriedades. Por causa do fato dos nomes dessas propriedades serem números e por precisarmos frequentemente conseguir seu valor, nós podemos usar a sintaxe de colchetes para acessá-los. A propriedade `length` de um array nos diz quantos elementos ele contêm. Esse nome de propriedade é um nome válido e nós conhecemos bem, então para achar o tamanho de um array, você escreve `array.length`, porque é mais fácil do que escrever `array["length"]`.
+
 ## Métodos
 
 Ambos os objetos _string_ e _array_ possuem, além da propriedade `length`, um número de propriedades que se referem à valores de função.
@@ -236,14 +238,11 @@ A _correlação_ é uma medida de dependência entre variáveis ("variáveis" no
 
 Para variáveis binárias (booleanos), o coeficiente _phi_ (_ϕ_) fornece uma boa forma de medir a correlação e é relativamente fácil de ser calculado. Para calcular _ϕ_, precisamos de uma tabela _n_ que contêm o número de vezes que as diversas combinações das duas variáveis foram observadas. Por exemplo, podemos considerar o evento de "comer pizza" e colocá-lo nessa tabela da seguinte maneira:
 
-![Comendo Pizza x transformar-se em esquilo](../img/pizza-squirrel.svg)
+![Comendo Pizza x transformar-se em esquilo](../img/pizza-squirrel.png)
 
 _ϕ_ pode ser calculado usando a seguinte fórmula, onde _n_ se refere à tabela:
 
-```math
-ϕ = (n11n00 - n10n01) / √ n1•n0•n•1n•0
-[TODO: Adicionar formatação correta da fórmula após converter em asciidoc]
-```
+![equation](../image/correlation.png)
 
 A notação _n01_ indica o número de ocorrências nas quais a primeira variável (transformar-se em esquilo) é falsa (0) e a segunda variável (pizza) é verdadeira (1). Nesse exemplo, _n01_ é igual a 9.
 
@@ -414,7 +413,7 @@ Tudo ficou bem com Jacques por um tempo. Entretanto, alguns anos depois, ele per
 
 Antes de finalizar esse capítulo, gostaria de introduzir alguns outros conceitos relacionados a objetos. Começaremos com alguns métodos normalmente úteis dos _arrays_.
 
-Vimos no [início do capítulo](http://eloquentjavascript.net/04_data.html#array_methods) [TODO: fix final link] os métodos `push` e `pop`, que adicionam e removem elementos no final de um _array_. Os métodos correspondentes para adicionar e remover itens no início de um _array_ são chamados `unshift` e `shift`.
+Vimos no [início do capítulo](./04-estrutura-de-dados.md#métodos) os métodos `push` e `pop`, que adicionam e removem elementos no final de um _array_. Os métodos correspondentes para adicionar e remover itens no início de um _array_ são chamados `unshift` e `shift`.
 
 ```js
 var todoList = [];
@@ -710,7 +709,9 @@ var list = {
 
 O resultado é uma cadeia de objetos conectados, como mostrado abaixo:
 
-![Linked List](http://eloquentjavascript.net/img/linked-list.svg)
+```
+![Linked List](../img/linked-list.png)
+```
 
 Uma das vantagens das listas é que elas podem compartilhar partes de sua estrutura. Por exemplo, se eu criasse dois novos valores `{value: 0, rest: list}` e `{value: -1, rest: list}` (sendo que `list` é uma referência à variável definida anteriormente), ambas serão listas independentes que compartilham a mesma estrutura que foi usada para criar os três últimos elementos. Além disso, a lista original ainda é uma lista válida com três elementos.
 

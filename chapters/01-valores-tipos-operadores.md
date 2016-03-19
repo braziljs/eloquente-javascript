@@ -159,16 +159,15 @@ Você frequentemente precisará de um valor para distinguir entre duas possibili
 
 ### Comparações
 
-Aqui temos uma maneira de produzir valores booleanos:
+Essa é uma maneira de produzir valores Booleanos:
 
-```javascript
-
+```js
 console.log(3 > 2)
 // → true
 console.log(3 < 2)
 // → false
-
 ```
+
 Os sinais `>` e `<` são tradicionalmente símbolos para "é maior que" e "é menor que". Eles são operadores binários, e o resultado da aplicação deles é um valor booleano que indica se eles são verdadeiros neste caso.
 
 Strings podem ser comparadas da mesma forma:

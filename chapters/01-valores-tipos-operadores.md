@@ -168,36 +168,32 @@ console.log(3 < 2)
 // → false
 ```
 
-Os sinais `>` e `<` são tradicionalmente símbolos para "é maior que" e "é menor que". Eles são operadores binários, e o resultado da aplicação deles é um valor booleano que indica se eles são verdadeiros neste caso.
+Os sinais `>` e `<` são tradicionalmente símbolos para representar “é maior que” e “é menor que” respectivamente. Eles são operadores binários, e o resultado da aplicação deles é um valor Booleano que indica se eles são verdadeiros nesse caso.
 
-Strings podem ser comparadas da mesma forma:
+_Strings_ podem ser comparadas da mesma forma.
 
-```javascript
-
+```js
 console.log("Aardvark" < "Zoroaster")
 // → true
-
 ```
 
-A maneira que as strings são ordenadas é mais ou menos alfabética: Letras maiúsculas são sempre "menores" que as minúsculas, então ` "Z" < "a" ` é `true`, e caracteres não alfabéticos ('!', '-', e assim por diante) são também incluídos na ordenação. A maneira real da comparação é feita baseada no padrão *Unicode*. Este padrão atribui um número a todo caracter virtual que pode ser usado, incluindo caracteres da Grécia, Arábia, Japão, Tamil e por ai vai. Ter estes números é prático para guardar strings dentro do computador - você pode representá-los como uma sequência de números. Quando se compara strings, o JavaScript vai sobre elas da esquerda para a direita, comparando os códigos numéricos dos caracteres um por um.
+A forma na qual as _strings_ são ordenadas é mais ou menos alfabética. Letras maiúsculas serão sempre “menores” que as minúsculas, portanto, `“Z” < “a”` é verdadeiro. Além disso, caracteres não alfabéticos (!, -, e assim por diante) também são incluídos nessa ordenação. A comparação de fato, é baseada no padrão _Unicode_, que atribui um número para todos os caracteres que você possa precisar, incluindo caracteres do Grego, Árabe, Japonês, Tâmil e por aí vai. Possuir tais números é útil para armazenar as _strings_ dentro do computador, pois faz com que seja possível representá-las como uma sequência de números. Quando comparamos _strings_, o JavaScript inicia da esquerda para a direita, comparando os códigos numéricos dos caracteres um por um.
 
-Outros operadores similares são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a) e `!=` (não igual a).
+Outros operadores parecidos são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a) e `!=` (não igual a).
 
-```javascript
-
+```js
 console.log("Itchy" != "Scratchy")
 // → true
-
 ```
 
-Há somente um valor no JavaScript que não é igual a ele mesmo, que é o `NaN` (not a number).
+Existe apenas um valor no JavaScript que não é igual a ele mesmo, que é o valor `NaN`. Ele significa _“not a number”_, que em português seria traduzido como “não é um número”.
 
-```javascript
-
+```js
 console.log(NaN == NaN)
 // → false
-
 ```
+
+http://eloquentjavascript.net/01_values.html#p_/oU7fPa5Kl
 
 `NaN` (not a number) supostamente define o resultado de *uma operação* sem sentido, e como tal, não será igual ao resultado de *outra operação* sem sentido.
 

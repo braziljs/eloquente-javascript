@@ -193,36 +193,28 @@ console.log(NaN == NaN)
 // → false
 ```
 
-http://eloquentjavascript.net/01_values.html#p_/oU7fPa5Kl
-
-`NaN` (not a number) supostamente define o resultado de *uma operação* sem sentido, e como tal, não será igual ao resultado de *outra operação* sem sentido.
+`NaN` é supostamente usado para indicar o resultado de alguma operação que não tenha sentido e, por isso, ele não será igual ao resultado de quaisquer _outras_ operações sem sentido.
 
 ## Operadores Lógicos
 
-Temos também algumas operações que podem ser aplicadas aos valores booleanos. O JavaScript suporta 3 operadores lógicos: *e*, *ou* ou *não*.
+Existem também operadores que podem ser aplicados aos valores Booleanos. O JavaScript dá suporte a três operadores lógicos: _and_, _or_ e _not_, que podem ser traduzidos para o português como _e_, _ou_ e _não_. Eles podem ser usados para "pensar" de forma lógica sobre Booleanos.
 
-O operador `&&` representa o **e** lógico. É um operador binário, e seu resultado é `true` (verdadeiro) somente se ambos os valores dados a ele forem `true`.
+O operador `&&` representa o valor lógico _and_ ou, em português, _e_. Ele é um operador binário, e seu resultado é apenas verdadeiro se ambos os valores dados à ele forem verdadeiros.
 
-```javascript
-
-console.log(true && false);
+```js
+console.log(true && false)
 // → false
-
-console.log(true && true);
+console.log(true && true)
 // → true
-
 ```
 
-O operador `||` denota ao **ou** lógico. Ele produz `true` se algum dos valores fornecidos for `true`:
+O operador `||` indica o valor lógico _or_ ou, em português, _ou_. Ele produz um valor verdadeiro se qualquer um dos valores dados à ele for verdadeiro.
 
-```javascript
-
-console.log(false || true);
+```js
+console.log(false || true)
 // → true
-
-console.log(false || false);
+console.log(false || false)
 // → false
-
 ```
 
 **Não** é escrito com uma exclamação `!`. É um operador unário que inverte o valor dado a ele - `!true` produz `false` e `!false` produz `true`.

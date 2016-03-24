@@ -217,15 +217,24 @@ console.log(false || false)
 // → false
 ```
 
-**Não** é escrito com uma exclamação `!`. É um operador unário que inverte o valor dado a ele - `!true` produz `false` e `!false` produz `true`.
+_Not_, em português _não_, é escrito usando um ponto de exclamação (`!`). Ele é um operador unário que inverte o valor que é dado a ele. Por exemplo, `!true` produz `false` e `!false` produz `true`.
 
-Quando misturamos estes operadores booleanos com operadores aritméticos e outros operadores, não é sempre óbvio quando o parênteses é necessário. Na prática, você precisa conhecer sobre os operadores que vimos antes, e que `||` tem o mais baixo nível de precedência, seguido do `&&`, e então os operadores de comparação (`>`, `==`, e outros), e depois o resto. Sendo assim, como vemos na expressão abaixo, os parênteses poucas vezes são necessários.
+Quando misturamos esses operadores Booleanos com operadores aritméticos e outros tipos de operadores, nem sempre é óbvio quando devemos usar ou não os parênteses. Na prática, você normalmente não terá problemas sabendo que, dos operadores que vimos até agora, `||` possui a menor precedência, seguido do operador `&&`, após vêm os operadores de comparação (`>`, `==`, etc) e, por último, quaisquer outros operadores. Essa ordem foi escolhida de tal forma que, em expressões típicas como o exemplo a seguir, poucos parênteses são realmente necessários:
 
-```javascript
-
-1 + 1 == 2 || 10 * 10 <= 100
-
+```js
+1 + 1 == 2 && 10 * 10 > 50
 ```
+
+O último operador lógico que iremos discutir não é unário nem binário, mas _ternário_, operando em três valores. Ele é escrito usando um ponto de interrogação e dois pontos, como mostrado abaixo:
+
+```js
+console.log(true ? 1 : 2);
+// → 1
+console.log(false ? 1 : 2);
+// → 2
+```
+
+Esse operador é chamado de operador _condicional_ (algumas vezes é chamado apenas de operador _ternário_, já que é o único operador desse tipo na linguagem). O valor presente à esquerda do ponto de interrogação “seleciona” qual dos outros dois valores será retornado. Quando ele for verdadeiro, o valor do meio é escolhido e, quando for falso, o valor à direita é retornado.
 
 ## Valores Indefinidos
 

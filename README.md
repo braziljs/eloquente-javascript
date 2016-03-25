@@ -32,11 +32,15 @@
 1. [Node.js](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/20-nodejs.md) - (**Parte 3: Node.js**)
 1. [Projeto: Website de Compartilhamento de Habilidades](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/21-projeto-website-de-compartilhamento-de-habilidades.md)
 
-## Como Contribuir
+## Status Geral do Projeto 
 
-Veja nosso guia de contribuição [aqui](https://github.com/braziljs/eloquente-javascript/blob/master/CONTRIBUTING.md).
+As informações sobre o status e log de cada capítulo estão organizadas [nessa issue](https://github.com/braziljs/eloquente-javascript/issues/254).
 
-Confira também o glossário de termos técnicos em inglês e suas respectivas traduções [aqui](https://github.com/braziljs/eloquente-javascript/blob/master/glossario.md).
+Atualmente, estamos melhorando o que já está traduzido, focando na qualidade e precisão da tradução e entendimento do texto como um todo, além de tentar aplicar a gramática mais correta possível. Vários [contribuidores](https://github.com/braziljs/eloquente-javascript/graphs/contributors) ajudaram em diferentes partes do livro e, por isso, existem diversas oportunidades de melhorias.
+
+## Como Contribuir?
+
+Se você tiver interesse em ajudar, criamos um [guia](https://github.com/braziljs/eloquente-javascript/blob/master/CONTRIBUTING.md) para ajudá-lo e, se tiver qualquer dúvida, basta abrir uma issue.
 
 ## Informações Importantes
 

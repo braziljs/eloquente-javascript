@@ -47,6 +47,6 @@ Se você tiver interesse em ajudar, criamos um [guia](https://github.com/brazilj
 - Autor: **Marijn Haverbeke**
 - [Versão original](http://eloquentjavascript.net) deste livro.
 
-Licenciado sob a licença [Creative Commons attribution-noncommercial.](http://creativecommons.org/licenses/by-nc/3.0/).
+Licenciado sob a licença [Creative Commons attribution-noncommercial](http://creativecommons.org/licenses/by-nc/3.0/).
 
 Todo código neste livro também pode ser considerado sob a [licença MIT](http://opensource.org/licenses/MIT).

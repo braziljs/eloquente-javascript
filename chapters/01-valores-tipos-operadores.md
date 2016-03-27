@@ -102,7 +102,7 @@ O próximo tipo básico de dado é a _string_. _Strings_ são usadas para repres
 'Monkeys wave goodbye'
 ```
 
-Ambas as aspas simples e duplas podem ser usadas para representar _strings_, contanto que as aspas abertas no início e fechadas fim sejam iguais.
+Ambas as aspas simples e duplas podem ser usadas para representar _strings_, contanto que as aspas abertas sejam iguais no início e no fim.
 
 Quase tudo pode ser colocado entre aspas, e o JavaScript criará um valor do tipo _string_ com o que quer que seja. Entretanto, alguns caracteres são mais difíceis. Você pode imaginar como deve ser complicado colocar aspas dentro de aspas. Além disso, os caracteres _newlines_ (quebra de linhas, usados quando você aperta _Enter_), também não podem ser colocados entre aspas. As _strings_ devem permanecer em uma única linha.
 
@@ -263,11 +263,18 @@ console.log(false == 0)
 
 Quando um operador é aplicado a um tipo de valor “errado”, o JavaScript converterá, de forma silenciosa, esse valor para o tipo que ele desejar, usando uma série de regras que muitas vezes não é o que você deseja ou espera. Esse comportamento é chamado de _coerção de tipo_ (ou _conversão de tipo_). Portanto, na primeira expressão, `null` se torna `0` e, na segunda, a string `"5"` se torna o número `5`. Já na terceira expressão, o operador `+` tenta efetuar uma concatenação de string antes de tentar executar a adição numérica e, por isso, o número `1` é convertido para a string `"1"`.
 
-Quando algo que não pode ser mapeado como um número de forma óbvia, do tipo `"five"` ou `undefined` é convertido para um número, o valor `NaN` é produzido. Operações aritméticas com `NaN` continuam produzindo `NaN`, então se você encontrar alguns destes resultados em algum local inesperado, procure por conversões acidentais de tipo.
+Quando algo que não pode ser mapeado como um número de forma óbvia (tais como `"five"` ou `undefined`) é convertido para um número, o valor `NaN` é produzido. Quaisquer outras operações aritméticas realizadas com `NaN` continuam produzindo `NaN`, portanto, quando você perceber que está recebendo esse valor em algum lugar inesperado, procure por conversões acidentais de tipo.
 
-Quando comparamos coisas do mesmo tipo usando `==`, o resultado é bastante fácil de se prever - você vai obter `true` quando ambos os valores forem os mesmos. Mas quando os tipos diferem, o JavaScript usa um complicado e confuso conjunto de regras para determinar o que fazer. Eu não vou explicar isto precisamente, mas na maioria dos casos irá ocorrer a tentativa de conversão de um dos valores para o tipo do outro valor. Contudo, quando `null`ou `undefined`ocorrem em algum dos lados do operador, isso produzirá `true` somente se ambos os lados forem `null` ou `undefined`.
+Quando comparamos valores do mesmo tipo usando o operador `==`, o resultado é fácil de se prever: você receberá verdadeiro quando ambos os valores forem o mesmo, exceto no caso de `NaN`. Por outro lado, quando os tipos forem diferentes, o JavaScript usa um conjunto de regras complicadas e confusas para determinar o que fazer, sendo que, na maioria dos casos, ele tenta apenas converter um dos valores para o mesmo tipo do outro valor. Entretanto, quando `null` ou `undefined` aparece em algum dos lados do operador, será produzido verdadeiro apenas se ambos os lados forem `null` ou `undefined`.
 
-A última parte do comportamento é frequentemente muito útil. Quando você quer testar se um valor tem um valor real, em vez de ser `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
+```js
+console.log(null == undefined);
+// → true
+console.log(null == 0);
+// → false
+```
+
+O último exemplo é um comportamento que normalmente é bastante útil. Quando quiser testar se um valor possui um valor real ao invés de `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
 
 Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de conversão de strings e números para valores booleanos afirmam que `0`, `NaN` e empty strings contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro teste se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como esperado.
 

@@ -2,7 +2,7 @@
 
 **Uma moderna introdução ao JavaScript, programação e maravilhas digitais.**
 
-> **Mantenedor:** [Joao Stein](https://github.com/joaostein)
+> **Mantenedor:** [Eric Douglas](https://github.com/ericdouglas)
 
 ![JavaScript Eloquente](img/eloq-js.png)
 

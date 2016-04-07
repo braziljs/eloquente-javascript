@@ -40,10 +40,10 @@ A maneira tradicional de tratar a entrada e saída é ter uma função, como
 totalmente lido. Isso é chamado _I/O_ síncrono (I/O quer dizer input/output ou
 entrada/saída).
 
-Node foi inicialmente concebido para o propósito de tornar a assincroneidade I/O
+Node foi inicialmente concebido para o propósito de tornar a assincronicidade I/O
 mais fácil e conveniente. Nós já vimos interfaces síncronas antes, como o objeto
-`XMLHttpRequest` do navegador, discutodo no Capítulo 17. Uma interface
-asíncrona permite que o script continue executando enquanto ela faz seu trabalho
+`XMLHttpRequest` do navegador, discutido no Capítulo 17. Uma interface
+assíncrona permite que o script continue executando enquanto ela faz seu trabalho
 e chama uma função de _callback_ quando está finalizada. Isso é como Node faz
 todo seu I/O.
 
@@ -58,20 +58,20 @@ acostumada com um estilo de programação assíncrono.
 ## Assincronia
 
 Eu vou tentar ilustrar I/O síncrono contra I/O assíncrono com um pequeno
-exemplo, onde um programa precisa buscar rescursos da Internet e então fazer
+exemplo, onde um programa precisa buscar recursos da Internet e então fazer
 algum processamento simples com o resultado dessa busca.
 
 Em um ambiente síncrono, a maneira óbvia de realizar essa tarefa é fazer uma
-requisição após outra. Esse método tem a desvatangem de que a segunda requisição
+requisição após outra. Esse método tem a desvantagem de que a segunda requisição
 só será realizada após a primeira ter finalizado. O tempo total de execução será
 no mínimo a soma da duração das duas requisições. Isso não é um uso eficaz da
 máquina, que vai estar inativa por boa parte do tempo enquanto os dados são
-transmitidos através rede.
+transmitidos através da rede.
 
 A solução para esse problema, num sistema síncrono, é iniciar _threads_ de
 controle. (Dê uma olhada no Capítulo 14 para uma discussão sobre _threads_.) Uma
-sebgunda _thread_ poderia iniciar a segunda requisição, e então ambas as
-_threads_ vão esperar os resultados voltarem, e após a resincronização elas vão
+segunda _thread_ poderia iniciar a segunda requisição, e então ambas as
+_threads_ vão esperar os resultados voltarem, e após a ressincronização elas vão
 combinar seus resultados.
 
 No seguinte diagrama, as linhas grossa representam o tempo que o programa gastou
@@ -89,7 +89,7 @@ finalize é implícita no modelo síncrono, enquanto que é explícita no assín
 Mas assincronia é uma faca de dois gumes. Ela faz com que expressivos programas
 que seguem uma linha reta se tornem mais estranhos.
 
-No capítulo 17, eu já mensionei o fato de que todos esses _callbacks_ adicionam
+No capítulo 17, eu já mencionei o fato de que todos esses _callbacks_ adicionam
 um pouco de ruído e rodeios para um programa. Se esse estilo de assincronia é
 uma boa ideia ou não, em geral isso pode ser discutido. De qualquer modo, levará
 algum tempo para se acostumar.
@@ -99,7 +99,7 @@ assincronia com callback é uma escolha sensata. Uma das forças do JavaScript �
 sua simplicidade, e tentar adicionar múltiplas _threads_ de controle poderia
 causar uma grande complexidade. Embora os _callbacks_ não tendem a ser códigos
 simples, como conceito, eles são agradavelmente simples e ainda assim poderosos
-o suficiente para escrever servidores web de alta perfomance.
+o suficiente para escrever servidores web de alta performance.
 
 ## O Comando Node
 
@@ -148,7 +148,7 @@ algum erro (qualquer outro código).
 Para encontrar os argumentos de linha de comando recebidos pelo seu script, você
 pode ler `process.argv`, que é um _array_ de _strings_. Note que também
 estarão inclusos o nome dos comandos `node` e o nome do seu script, fazendo
-com que os argumentos começem na posição 2. Se `showargv.js` contém somente
+com que os argumentos comecem na posição 2. Se `showargv.js` contém somente
 o _statement_ `console.log(process.argv)`, você pode rodá-lo dessa forma:
 
 ```
@@ -184,7 +184,7 @@ omitida.
 
 Quando uma _string_ recebida pelo `require` não parece ter um caminho
 relativo ou absoluto, fica implícito que ela se refere a um módulo integrado ou
-que está instalado no diretório `node_modules`do. Por exemplo,
+que está instalado no diretório `node_modules`. Por exemplo,
 `require(fs)` disponibilizará o módulo de sistema de arquivos integrado ao
 Node, `require("elife")` vai tentar carregar a biblioteca encontrada em
 `node_modules/elife`. A maneira mais comum de instalar bibliotecas como
@@ -266,7 +266,7 @@ $ node
 
 Depois de rodar `npm install`, NPM já vai ter criado um diretório chamado
 `node_modules`. Dentro desse diretório haverá um outro diretório chamado
-`figlet`, que vai conter qa biblioteca. Quando rodamos `node` e
+`figlet`, que vai conter a biblioteca. Quando rodamos `node` e
 chamamos `require("figlet")`, essa biblioteca é carregada, e nós podemos
 chamar seu método `text` para desenhar algumas letras grandes.
 
@@ -287,8 +287,8 @@ Existem muito mais coisas no NPM além de `npm install`. Ele pode ler
 arquivos `package,json`, que contém informações codificadas em JSON sobre
 o programa ou biblioteca, como por exemplo outras bibliotecas que depende.
 Rodar `npm install` em um diretório que contém um arquivo como esse vai
-instalar automaticamente todas as dependencias, assim como as dependencias das
-dependencias. A ferramenta `npm` também é usada para publicar bibliotecas
+instalar automaticamente todas as dependências, assim como as dependências das
+dependências. A ferramenta `npm` também é usada para publicar bibliotecas
 para o repositório NPM online de pacotes para que as pessoas possam encontrar,
 transferir e usá-los.
 
@@ -314,11 +314,11 @@ fs.readFile("file.txt", "utf8", function(error, text) {
 });
 ```
 
-O segundo argumento passado para `readFile` indica a codificação de caracter
+O segundo argumento passado para `readFile` indica a codificação de caracteres
 usada para decodificar o arquivo numa _string_. Existem muitas maneiras de
 codificar texto em informação binária, mas a maioria dos sistemas modernos usam
 UTF-8 para codificar texto, então a menos que você tenha razões para acreditar
-que outra forma de codifica'ão deve ser usada, pssar "utf8" ao ler um arquivo de
+que outra forma de codificação deve ser usada, passar "utf8" ao ler um arquivo de
 texto é uma aposta segura. Se você não passar uma codificação, o Node vai
 assumir que você está interessado na informação binária e vai te dar um objeto
 `Buffer` ao invés de uma _string_. O que por sua vez, é um objeto
@@ -396,7 +396,7 @@ endereço http://localhost:8000/hello para fazer uma requisição no seu servido
 Ele irá responder com uma pequena página HTML.
 
 A função passada como um argumento para `createServer` é chamada toda vez
-que um cliente tenta se conecar ao servidor. As variáveis `request` e
+que um cliente tenta se conectar ao servidor. As variáveis `request` e
 `response` são os objetos que representam a informação que chega e sai. A
 primeira contém informações sobre a requisição, como por exemplo a propriedade
 `url`, que nos diz em qual URL essa requisição foi feita.
@@ -407,10 +407,10 @@ Capítulo 17). Você define o código de status (200 para "OK" nesse caso) e um
 objeto que contém valores de cabeçalho. Aqui nós dizemos ao cliente que
 estaremos enviando um documento HTML de volta.
 
-Em seguida, o corpo da resposta (o prórpio documento) é enviado com
+Em seguida, o corpo da resposta (o próprio documento) é enviado com
 `response.write`. Você pode chamar esse método quantas vezes você quiser
-para enviar a resposta peça por peça, possibilitando que a iformação seja
-transimitida para o cliente assim que ela esteja disponível. Finalmente,
+para enviar a resposta peça por peça, possibilitando que a informação seja
+transmitida para o cliente assim que ela esteja disponível. Finalmente,
 `response,end` assina o fim da resposta.
 
 A chamada de `server.listen`  faz com que o servidor comece a esperar por
@@ -555,7 +555,7 @@ Quando lidamos com arquivos de recursos HTTP, os métodos HTTP `GET`, `PUT` e
 arquivos. Nós vamos interpretar o caminho na requisição como o caminho do
 arquivo referido por aquela requisição.
 
-Provavelmente nós não queremos compartilhar todo nosso sitema de arquivos, então
+Provavelmente nós não queremos compartilhar todo nosso sistema de arquivos, então
 nós vamos interpretar esses caminhos como se começassem no diretório de trabalho
 do servidor, que é o diretório no qual ele começou. Se eu rodar o servidor de
 `/home/braziljs/public/` (ou `C:\Users\braziljs\public\` no Windows), então a
@@ -563,7 +563,7 @@ requisição por `/file.txt` deve ser referir a `/home/braziljs/public/file.txt`
 ou `C:\Users\braziljs\public\file.txt`).
 
 Nós vamos construir um programa peça por peça, usando um objeto chamado
-`methods` para guardar as funções que tratam o vários métodos HTTP.
+`methods` para guardar as funções que tratam os vários métodos HTTP.
 
 ```javascript
 var http = require("http"), fs = require("fs");
@@ -612,7 +612,7 @@ function urlToPath(url) {
 }
 ```
 
-É provável que você esteja preocupado com a segurança da função ```urlToPath`,
+É provável que você esteja preocupado com a segurança da função `urlToPath`,
 e você está certo, deve se preocupar mesmo. Nós vamos retornar a ela nos
 exercícios.
 
@@ -707,7 +707,7 @@ Você deve estar se perguntando porque tentar deletar um arquivo inexistente
 retornar um status 204, e não um erro. Quando o arquivo que será deletado não
 existe, você pode dizer que o objetivo da requisição já foi cumprido. O padrão
 HTTP recomenda que as pessoas façam requisições _idempotentes_, o que significa
-que indepedente da quantidade de requisições, elas não devem produzir um
+que independente da quantidade de requisições, elas não devem produzir um
 resultado diferente.
 
 ```javascript
@@ -899,7 +899,7 @@ No Capítulo 17, o primeiro exercício era fazer várias requisições para
 [eloquentjavascript.net/author](http://eloquentjavascript.net/author), pedindo
 por tipos diferentes de conteúdo passando cabeçalhos `Accept` diferentes.
 
-Faá isso novamente usando a função `http.request` do Node. Solicite pelo menos
+Faça isso novamente usando a função `http.request` do Node. Solicite pelo menos
 os tipos de mídia `text/plain`, `text/html` e `application/json`. Lembre-se que
 os cabeçalhos para uma requisição podem ser passados como objetos, na
 propriedade `headers` do primeiro argumento da `http.request`.
@@ -1003,7 +1003,7 @@ erro. O código 400 ("_bad request_") seria o mais adequado nessa situação.
 ## Um espaço público na rede
 Uma vez que o servidor de arquivos serve qualquer tipo de arquivo e ainda inclui
 o cabeçalho `Content-Type`, você pode usá-lo para servir um website. Mas uma vez
-que seu servidor de arquivos permita que qualquer um delete e sobescreva
+que seu servidor de arquivos permita que qualquer um delete e sobrescreva
 arquivos, seria um tipo interessante de website: que pode ser modificado,
 vandalizado e destruído por qualquer um que gaste um tempo para criar a
 requisição HTTP correta. Mas ainda assim, seria um website.
@@ -1017,12 +1017,12 @@ combine todo o conhecimento que você adquiriu desse livro para construir uma
 interface mais amigável pra modificar o website de dentro do website.
 
 Use um formulário HTML (Capítulo 18) para editar os conteúdos dos arquivos que
-fazer parte do website, permitindo que o usuário atualize eles no servidor
+fazem parte do website, permitindo que o usuário atualize eles no servidor
 fazendo requisições HTTP como vimos no Capítulo 17.
 
 Comece fazendo somente um único arquivo editável. Então faça de uma maneira que
 o usuário escolha o arquivo que quer editar. Use o fato de que nosso servidor de
-arquivos retornar uma lista de arquivos durante a leitura de um diretório.
+arquivos retorna uma lista de arquivos durante a leitura de um diretório.
 
 Não trabalhe diretamente no código do servidor de arquivos, tendo em vista que
 se você cometer um engano você vai afetar diretamente os arquivos que estão lá.
@@ -1031,7 +1031,7 @@ e copie ele pra lá enquanto testa.
 
 Se seu computador está diretamente ligado a internet, sem um _firewall_,
 roteador, ou outro dispositivo interferindo, você pode ser capaz de convidar um
-amigo para user seu website. Para checar, vá até
+amigo para usar seu website. Para checar, vá até
 [whatismyip.com](http://www.whatismyip.com/), copie e cole o endereço de IP que
 ele te deu na barra de endereço do seu navegador, e adicione `:8000` depois dele
 para selecionar a porta correta. Se isso te levar ao seu website, está online
@@ -1051,7 +1051,7 @@ para salvar o arquivo.
 
 Você pode então adicionar um elemento `<select>` que contenha todos os arquivos
 na raiz do servidor adicionando elementos `<option>` contendo as linhas
-retornadas pela requisição `GET` para a URL /. Quando um usuário selectio outro
+retornadas pela requisição `GET` para a URL /. Quando um usuário seleciona outro
 arquivo (um evento `"change"` nesse campo), o script deve buscar e mostrar o
 arquivo. Também tenha certeza que quando salvar um arquivo, você esteja usando
 o nome do arquivo selecionado.

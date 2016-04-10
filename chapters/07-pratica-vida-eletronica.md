@@ -10,9 +10,9 @@ Nosso projeto neste capítulo é construir um ecossistema virtual, um mundo pequ
 
 ## Definição
 
-Para tornar esta tarefa gerenciável, vamos simplificar radicalmente o conceito de um mundo. Ou seja, um mundo será uma `grid` bidimensional onde cada entidade ocupa um quadrado da `grid`. Em cada turno os bichos todos tem a chance de tomar alguma ação.
+Para tornar esta tarefa gerenciável, vamos simplificar radicalmente o conceito de um mundo. Ou seja, um mundo será uma `grid` bidimensional onde cada entidade ocupa um quadrado da `grid`. Em cada turno os bichos todos têm a chance de tomar alguma ação.
 
-Utilizaremos o tempo e o espaço com um tamanho fixo como unidades. Os quadrados sera os espaços e as voltas o tempo. É claro que as aproximações seram imprecisas. Mas nossa simulação pretende ser divertida para que possamos livremente cortar as sobras.
+Utilizaremos o tempo e o espaço com um tamanho fixo como unidades. Os quadrados serão os espaços e as voltas o tempo. É claro que as aproximações serão imprecisas. Mas nossa simulação pretende ser divertida para que possamos livremente cortar as sobras.
 
 Podemos definir um mundo com uma matriz de `Strings` que estabelece uma `grid` do mundo usando um personagem por metro quadrado.
 
@@ -31,9 +31,9 @@ var plan = ["############################",
             "############################"];
 ```
 
-Os caracteres `"#"` representam as paredes e rochas, e os personagens `"O"` representam os bichos. Os espaços como você ja deve ter pensado é o espaço vazio.
+Os caracteres `"#"` representam as paredes e rochas, e os personagens `"O"` representam os bichos. Os espaços como você já deve ter pensado é o espaço vazio.
 
-Um plano de matriz pode ser usada para criar um objeto de mundo. Tal objeto mantém o controle do tamanho e do conteúdo do mundo. Ele tem um método `toString`, que converte o mundo de volta para uma seqüência de impressão(similar ao plano que foi baseado) para que possamos ver o que está acontecendo lá dentro. O objeto do mundo também tem um método por sua vez que permite que todos os bichos podem darem uma volta e atualizar o mundo para terem suas ações.
+Um plano de matriz pode ser usada para criar um objeto de mundo. Tal objeto mantém o controle do tamanho e do conteúdo do mundo. Ele tem um método `toString`, que converte o mundo de volta para uma sequência de impressão (similar ao plano que foi baseado) para que possamos ver o que está acontecendo lá dentro. O objeto do mundo também tem um método por sua vez que permite que todos os bichos podem darem uma volta e atualizar o mundo para terem suas ações.
 
 ## Representando o espaço
 
@@ -104,9 +104,9 @@ console.log(grid.get(new Vector(1, 1)));
 
 ## A interface da programação dos bichos
 
-Antes de começarmos nosso construtor global, devemos específicar quais os objetos bichos que estarão vivendo em nosso mundo. Eu mencionei que o mundo vai especificar os bichos e as ações que eles teram. Isso funciona da seguinte forma: cada bicho é um objeto e tem um método de ação que quando chamado retorna uma ação. Uma ação é um objeto com uma propriedade de tipo, que dá nome a ação que o bicho terá, por exemplo `"move"`. A ação pode também conter informação extra de alguma direção que o bicho possa se mover.
+Antes de começarmos nosso construtor global, devemos especificar quais os objetos bichos que estarão vivendo em nosso mundo. Eu mencionei que o mundo vai especificar os bichos e as ações que eles terão. Isso funciona da seguinte forma: cada bicho é um objeto e tem um método de ação que quando chamado retorna uma ação. Uma ação é um objeto com uma propriedade de tipo, que dá nome a ação que o bicho terá, por exemplo `"move"`. A ação pode também conter informação extra de alguma direção que o bicho possa se mover.
 
-Bichos são terrivelmente míope e pode ver apenas os quadrados em torno da `grid`. Mas essa visão limitada pode ser útil ao decidir que ação tomar. Quando o método `act` é chamado o objeto de verificação permite que o bicho inspecione seus arredores. Nós vamos nomear oito quadrados vizinhos para ser as coordenadas: `"n"` para norte, `"ne"` para nordeste e assim por diante. Aqui está o objeto, vamos utilizar para mapear os nomes das direções para coordenar os  `offsets`:
+Bichos são terrivelmente míopes e podem ver apenas os quadrados em torno da `grid`. Mas essa visão limitada pode ser útil ao decidir que ação tomar. Quando o método `act` é chamado o objeto de verificação permite que o bicho inspecione seus arredores. Nós vamos nomear oito quadrados vizinhos para ser as coordenadas: `"n"` para norte, `"ne"` para nordeste e assim por diante. Aqui está o objeto, vamos utilizar para mapear os nomes das direções para coordenar os  `offsets`:
 
 ```js
 var directions = {
@@ -145,13 +145,13 @@ BouncingCritter.prototype.act = function(view) {
 
 A função auxiliar `randomElement` simplesmente pega um elemento aleatório de uma matriz usando `Math.random` para obter um índice aleatório. Vamos usar isso de novo mais tarde porque a aleatoriedade pode ser útil em simulações.
 
-Para escolher uma direção aleatória o construtor de `BouncingCritter` chama `randomElement` em uma matriz de nomes de direção. Nós também poderiamos termos usado `Object.keys` para obter essa matriz de direções que definimos anteriormente, mas não é garantido a ordem em que as propriedades seram listadas. Na maioria das situações os motores modernos de JavaScript retornam as propriedades na ordem em que foram definidos, mas eles não são obrigados a terem tais comportamentos.
+Para escolher uma direção aleatória o construtor de `BouncingCritter` chama `randomElement` em uma matriz de nomes de direção. Nós também poderíamos termos usado `Object.keys` para obter essa matriz de direções que definimos anteriormente, mas não é garantido a ordem em que as propriedades serão listadas. Na maioria das situações os motores modernos de JavaScript retornam as propriedades na ordem em que foram definidos, mas eles não são obrigados a terem tais comportamentos.
 
 O `“|| "s"”` no método de ação serve para impedir que `this.direction` obtenha um valor nulo para o bicho que está preso em um espaço vazio em torno dele(por exemplo, quando um canto esta lotado de outros bichos).
 
 ## O objeto do mundo
 
-Agora podemos começar a fazer o objeto mundo. O construtor tem um plano(a matriz de `Strings` que representa a `grid` do mundo como descrito anteriormente) e uma legenda como argumentos. A legenda é um objeto que nos diz o que cada personagem no mapa significa. Ela contém um construtor para cada personagem, exceto para o caracter de espaço que sempre se refere como `null` sendo este o valor que vamos usar para representar o espaço vazio.
+Agora podemos começar a fazer o objeto mundo. O construtor tem um plano(a matriz de `Strings` que representa a `grid` do mundo como descrito anteriormente) e uma legenda como argumentos. A legenda é um objeto que nos diz o que cada personagem no mapa significa. Ela contém um construtor para cada personagem, exceto para o caractere de espaço que sempre se refere como `null` sendo este o valor que vamos usar para representar o espaço vazio.
 
 ```js
 function elementFromChar(legend, ch) {
@@ -177,7 +177,7 @@ function World(map, legend) {
 
 Em `elementFromChar` primeiro criamos uma instância do tipo correto, observando o construtor do caráter aplicando um novo para ele. Em seguida é adicionado uma propriedade `originChar` tornando mais fácil de descobrir em qual personagem o elemento foi originalmente criado.
 
-Precisamos da propriedade `originChar` quando implementarmos o método `toString` no mundo. Este método constrói uma seqüência de mapeamento de estado atual do mundo através da realização de um ciclo de duas dimensões sobre os quadrados na `grid`.
+Precisamos da propriedade `originChar` quando implementarmos o método `toString` no mundo. Este método constrói uma sequência de mapeamento de estado atual do mundo através da realização de um ciclo de duas dimensões sobre os quadrados na `grid`.
 
 ```js
 function charFromElement(element) {
@@ -251,7 +251,7 @@ console.log(test.addPropTo([5]));
 
 A função mapeia um `array` e retorna o valor do `prop` que esta dentro do objeto  `test` somado ao resultado do valor de um elemento do `array`.
 
-A maioria dos métodos que mapeam matrizes tais como `forEach` e `map`, tem um segundo argumento opcional que pode ser usado para fornecer um escopo para dentro do bloco de interação(segundo argumento do interador). Assim, você poderá expressar o exemplo anterior de uma forma um pouco mais simples.
+A maioria dos métodos que mapeiam matrizes tais como `forEach` e `map`, têm um segundo argumento opcional que pode ser usado para fornecer um escopo para dentro do bloco de interação (segundo argumento do interador). Assim, você poderá expressar o exemplo anterior de uma forma um pouco mais simples.
 
 ```js
 var test = {
@@ -286,7 +286,7 @@ Grid.prototype.forEach = function(f, context) {
 
 O próximo passo é escrever um método para o objeto mundo que dá aos bichos a chance de movimento. Ele vai passar por cima da `grid` usando o método `forEach` que acabamos de definir a procura de objetos com um método `act`. Quando ele encontra um ele chama o método para obter uma ação e realiza a ação quando ela for válida. Por enquanto apenas as ações `"move"` serão compreendidas.
 
-Existe um problema com esta abordagem. Você consegue identificar? Se deixarmos as criaturas se mover livremente, eles podem se mover para um quadrado que não existe, e nós vamos permitir que eles se mova novamente quando estiver dentro do quadrado vázio. Assim temos que ficar mantendo uma variedade de criaturas que já sumiram ao invés de apenas ignorarmos.
+Existe um problema com esta abordagem. Você consegue identificar? Se deixarmos as criaturas se mover livremente, eles podem se mover para um quadrado que não existe, e nós vamos permitir que eles se mova novamente quando estiver dentro do quadrado vazio. Assim temos que ficar mantendo uma variedade de criaturas que já sumiram ao invés de apenas ignorarmos.
 
 ```js
 World.prototype.turn = function() {
@@ -359,7 +359,7 @@ View.prototype.find = function(ch) {
 };
 ```
 
-O método observa e descobre se as coordenadas que estamos visitando esta dentro da `grid` e se o personagem correspondente ao elemento. Para coordenadas fora da `grid` podemos simplesmente fingir que há uma paredes no modo que podemos definir um mundo que não é murado mas os bichos não podera caminhar fora das bordas.
+O método observa e descobre se as coordenadas que estamos visitando está dentro da `grid` e se o personagem correspondente ao elemento. Para coordenadas fora da `grid` podemos simplesmente fingir que há uma paredes no modo que podemos definir um mundo que não é murado mas os bichos não poderão caminhar fora das bordas.
 
 ## O movimento
 
@@ -380,7 +380,7 @@ Imprimir várias cópias do mundo é uma forma bastante desagradável para movim
 // → … life!
 ```
 
- A implementação do `animateWorld` parece algo mistérioso agora, mas depois que você ler os capítulos deste livro que discutem a integração JavaScript em navegadores web, ele não sera tão mágico.
+ A implementação do `animateWorld` parece algo misterioso agora, mas depois que você ler os capítulos deste livro que discutem a integração JavaScript em navegadores web, ele não sera tão mágico.
 
  ## Mais formas de vida
 
@@ -538,9 +538,9 @@ actionTypes.reproduce = function(critter, vector, action) {
 };
 ```
 
-Reproduzir custa duas vezes mais o nível de energia de um bicho recém-nascido. Então primeiro criamos o bebê(hipotéticamente) usando `elementFromChar` no próprio caráter origem do bicho. Uma vez que temos um bebê podemos encontrar o seu nível de energia e testar se o pai tem energia suficiente para trazê-lo com sucesso no mundo. Também é exigido um destino válido(vazio).
+Reproduzir custa duas vezes mais o nível de energia de um bicho recém-nascido. Então primeiro criamos o bebê (hipoteticamente) usando `elementFromChar` no próprio caráter origem do bicho. Uma vez que temos um bebê podemos encontrar o seu nível de energia e testar se o pai tem energia suficiente para trazê-lo com sucesso no mundo. Também é exigido um destino válido(vazio).
 
-Se tudo estiver bem o bebê é colocado sobre a `grid`(que já não é hipotéticamente), e a energia é subtraida do pai.
+Se tudo estiver bem o bebê é colocado sobre a `grid` (que já não é hipoteticamente), e a energia é subtraída do pai.
 
 ## Populando o novo mundo
 
@@ -621,7 +621,7 @@ Na maioria das vezes as plantas se multiplicam e expandem muito rapidamente, mas
 
 Tendo os habitantes do nosso mundo se extinguindo após alguns minutos é uma espécie de deprimente. Para lidar com isso poderíamos tentar criar uma forma mais inteligente para o comedor de plantas.
 
-Há vários problemas óbvios com os nossos herbívoros. Primeiro eles são terrivelmente ganancioso enchendo-se com todas as plantas que vêem até que tenham dizimado a vida vegetal local. Em segundo lugar o seu movimento randomizado(lembre-se que o método `view.find` retorna uma direção aleatória quando múltiplas direções combinar) faz com que eles fique em torno de si e acabe morrendo de fome se não não acontecer de haver plantas nas proximidades. E finalmente eles se reproduzem muito rápido o que faz com que os ciclos entre abundância e fome se torne bastante intenso.
+Há vários problemas óbvios com os nossos herbívoros. Primeiro eles são terrivelmente ganancioso enchendo-se com todas as plantas que veem até que tenham dizimado a vida vegetal local. Em segundo lugar o seu movimento randomizado(lembre-se que o método `view.find` retorna uma direção aleatória quando múltiplas direções combinar) faz com que eles fique em torno de si e acabe morrendo de fome se não não acontecer de haver plantas nas proximidades. E finalmente eles se reproduzem muito rápido o que faz com que os ciclos entre abundância e fome se tornem bastante intensos.
 
 Escrever um novo tipo de bicho que tenta abordar um ou mais desses pontos e substituí-lo para o tipo `PlantEater` no velho no mundo do vale. Veja como é que as tarifas estão. Ajuste um pouco mais se necessário.
 

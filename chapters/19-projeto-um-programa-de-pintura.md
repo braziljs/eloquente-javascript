@@ -13,7 +13,7 @@ Pintar pelo computador é ótimo. Você não precisa se preocupar com materiais,
 
 ##Implementação
 
-A interface para o programa de pintura mostra um grande elemento `<canvas>` na parte superior, com os campos do formulário abaixo dele. O usuário desenha na imagem ao selecionar uma ferramenta de um campo `<select>` e em seguida clicando ou arrastanto em toda a tela. Existem ferramentas para desenhar linhas, apagar partes da imagem, adicionar texto e assim por diante.
+A interface para o programa de pintura mostra um grande elemento `<canvas>` na parte superior, com os campos do formulário abaixo dele. O usuário desenha na imagem ao selecionar uma ferramenta de um campo `<select>` e em seguida clicando ou arrastando em toda a tela. Existem ferramentas para desenhar linhas, apagar partes da imagem, adicionar texto e assim por diante.
 
 Clicando na tela, será delegado o evento `mousedown` para a ferramenta selecionada no momento, que poderá manipulá-lo em qualquer maneira que escolher. A ferramenta de desenhar linha, por exemplo, vai ouvir os eventos de `mousemove` até que o botão do mouse seja liberado e desenhará linhas através do caminho do mouse usando a cor atual e o tamanho do pincel.
 
@@ -25,11 +25,11 @@ Imagens são salvas em um lugar atípico. O link de salvar está no canto direit
 
 ##Construindo o DOM
 
-A interface do nosso programa é criado apartir de mais de 30 elementos DOM. Nós precisamos construir esses de alguma maneira.
+A interface do nosso programa é criado a partir de mais de 30 elementos DOM. Nós precisamos construir esses de alguma maneira.
 
 HTML é o formato mais óbvio para definir estrutura complexas do DOM. Mas, separando o programa em pedaços de HTML e um script é dificultada pelo fato de muitos elementos do DOM precisar de manipuladores de eventos ou ser tocado por outro script de alguma outra forma. Assim, nosso script precisa fazer muitas chamadas de `querySelector` (ou similar), afim de encontrar algum elemento DOM que ele precise para agir.
 
-Seria bom se a estrutura DOM para cada parte da nossa interface fosse definida perto do código Javacript que vai interagir com ela. Assim, eu escolhi por fazer toda a criação dos nós do DOM no Javascript. Como nós vimos no [Capítulo 13](http://eloquentjavascript.net/13_dom.html#standard), a interface integrada para a criação da estrutura DOM é terrivelmente verbosa. Se vamos fazer um monte de construções DOM, precisamos de uma função auxiliar.
+Seria bom se a estrutura DOM para cada parte da nossa interface fosse definida perto do código JavaScript que vai interagir com ela. Assim, eu escolhi por fazer toda a criação dos nós do DOM no JavaScript. Como nós vimos no [Capítulo 13](http://eloquentjavascript.net/13_dom.html#standard), a interface integrada para a criação da estrutura DOM é terrivelmente verbosa. Se vamos fazer um monte de construções DOM, precisamos de uma função auxiliar.
 
 Essa função auxiliar é uma função estendida da função `elt` a partir do [Capítulo 13](http://eloquentjavascript.net/13_dom.html#elt). Ela cria um elemento com o nome e os atributos dado e acrescenta todos os argumentos que ela recebe como nós filho, automaticamente convertendo strings em nós de texto.
 
@@ -101,7 +101,7 @@ controls.tool = function(cx) {
 
 O campo de ferramenta é preenchida com elementos `<option>` para todas as ferramentas que foram definidas e um manipulador `mousedown` no elemento `canvas` cuida de chamar a função para a ferramenta atual, passando tanto o objeto do evento quanto o contexto do desenho como argumentos. E também chama `preventDefault` para que segurando o botão do mouse e arrastando não cause uma seleção do navegador em qualquer parte da página.
 
-A ferramenta mais básica é a ferramenta de linha, o qual permite o usuário a desenhar linhas com o mouse. Para colocar o final da linha no lugar certo, temos que ser capazes de encontrar as coordenadas relativas do canvas que um determinado evento do mouse corresponde. O método `getBoundingClientRect`, brevemente mensionado no [Capítulo 13](http://eloquentjavascript.net/13_dom.html#boundingRect), pode nos ajudar aqui. Nos diz que um elemento é exibido, relativo ao canto `top-left` da tela. As propriedades `clientX` e `clientY` dos eventos do mouse também são relativas a esse canto, então podemos subtrair o canto `top-left` da tela a partir deles para obter uma posição em relação a esse canto.
+A ferramenta mais básica é a ferramenta de linha, o qual permite o usuário a desenhar linhas com o mouse. Para colocar o final da linha no lugar certo, temos que ser capazes de encontrar as coordenadas relativas do canvas que um determinado evento do mouse corresponde. O método `getBoundingClientRect`, brevemente mencionado no [Capítulo 13](http://eloquentjavascript.net/13_dom.html#boundingRect), pode nos ajudar aqui. Nos diz que um elemento é exibido, relativo ao canto `top-left` da tela. As propriedades `clientX` e `clientY` dos eventos do mouse também são relativas a esse canto, então podemos subtrair o canto `top-left` da tela a partir deles para obter uma posição em relação a esse canto.
 
 ```javascript
 function relativePos(event, element) {
@@ -146,7 +146,7 @@ tools.Line = function(event, cx, onEnd) {
 };
 ```
 
-A função inicia por definir a propriedade do contexto de desenho `lineCap` para `round`, que faz com que ambas as extremidades de um caminho traçado,  fique arredondada e não na forma padrão quadrada. Esse é o truque para se certificar de que várias linhas separadas, desenhadas em resposta a eventos separados, parecam a mesma, coerente. Com larguras maiores de linhas, você vai ver as lacunas nos cantos se você usar as linhas planas padrão.
+A função inicia por definir a propriedade do contexto de desenho `lineCap` para `round`, que faz com que ambas as extremidades de um caminho traçado,  fique arredondada e não na forma padrão quadrada. Esse é o truque para se certificar de que várias linhas separadas, desenhadas em resposta a eventos separados, pareçam a mesma, coerente. Com larguras maiores de linhas, você vai ver as lacunas nos cantos se você usar as linhas planas padrão.
 
 Então, para cada evento `mousemove` que ocorre enquanto o botão do mouse está pressionado, um simples segmento de linha entre o botão do mouse apertado e a nova posição, usando qualquer `strokeStyle` e `lineWidth` começa a ser desenhado no momento.
 
@@ -171,7 +171,7 @@ Isso nos dá duas ferramentas para nosso programa de pintura. Nós podemos desen
 
 Partindo do princípio que os usuários vão querer desenhar em cores diferentes do preto e usar tamanhos diferentes de pincéis, vamos adicionar controles para essas duas definições.
 
-No [Capítulo 8](http://eloquentjavascript.net/18_forms.html#forms), eu discuti um número de diferentes campos de formulário. Campo de cor não estava entre aqueles. Tradicionalmente, os navagadores não tem suporte embutido para seletores de cores, mas nos últimos anos, uma série de tipos de campos foram padronizados. Uma delas é `<input type='color'>`. Outros incluem `date`, `email`, `url` e `number`. Nem todos os navegadores suportam eles ainda - no momento da escrita, nenhuma versão do Internet Explorer suporta campos de cor. O tipo padrão de uma tag `<input>` é `text`, e quando um tipo não suportado é usado, os navegadores irão tratá-lo como um campo de texto. Isso significa que usuários do Internet Explorer executando o nosso programa de pintura vão ter que digitar o nome da cor que quiser, ao invés de selecioná-la a partir de um componente conveniente.
+No [Capítulo 8](http://eloquentjavascript.net/18_forms.html#forms), eu discuti um número de diferentes campos de formulário. Campo de cor não estava entre aqueles. Tradicionalmente, os navegadores não tem suporte embutido para seletores de cores, mas nos últimos anos, uma série de tipos de campos foram padronizados. Uma delas é `<input type='color'>`. Outros incluem `date`, `email`, `url` e `number`. Nem todos os navegadores suportam eles ainda - no momento da escrita, nenhuma versão do Internet Explorer suporta campos de cor. O tipo padrão de uma tag `<input>` é `text`, e quando um tipo não suportado é usado, os navegadores irão tratá-lo como um campo de texto. Isso significa que usuários do Internet Explorer executando o nosso programa de pintura vão ter que digitar o nome da cor que quiser, ao invés de selecioná-la a partir de um componente conveniente.
 
 ```javascript
 controls.color = function(cx) {
@@ -251,7 +251,7 @@ Para evitar esse tipo vazamento de informações, os navegadores irá deixar a t
 
 ###Carregando arquivos de imagem
 
-Os dois controles finais são usados para carregar arquivos de imagens locais e a partir de URLs. Vamos precisar da seguinta função auxiliar, que tenta carregar um arquivo de imagem a partir de uma URL e substitui o conteúdo do `canvas` por ela.
+Os dois controles finais são usados para carregar arquivos de imagens locais e a partir de URLs. Vamos precisar da seguinte função auxiliar, que tenta carregar um arquivo de imagem a partir de uma URL e substitui o conteúdo do `canvas` por ela.
 
 ```javascript
 function loadImageURL(cx, url) {
@@ -288,7 +288,7 @@ controls.openFile = function(cx) {
 };
 ```
 
-Carregando um aqruivo através de uma URL é ainda mais simples. Mas, com o campo de texto, é menos limpo quando o usuário termina de escrever a URL, por isso nós não podemos simplesmente ouvir pelos eventos `change`. Ao invés disso, vamos envolver o campo de um formulário e responder quando o formulário for enviado, seja porque o usuário pressionou `Enter` ou porque clicou no botão de carregar.
+Carregando um arquivo através de uma URL é ainda mais simples. Mas, com o campo de texto, é menos limpo quando o usuário termina de escrever a URL, por isso nós não podemos simplesmente ouvir pelos eventos `change`. Ao invés disso, vamos envolver o campo de um formulário e responder quando o formulário for enviado, seja porque o usuário pressionou `Enter` ou porque clicou no botão de carregar.
 
 ```javascript
 controls.openURL = function(cx) {
@@ -347,7 +347,7 @@ tools.Spray = function(event, cx) {
 };
 ```
 
-A ferramenta spray usa `setInterval` para cuspir pontos coloridos a cada 25 milisegundos enquanto o botão do mouse é pressionado. A função `trackDrag` é usada para manter o `currentPos` apontando para a posição atual do mouse e para desligar o intervalo quando o mouse é liberado.
+A ferramenta spray usa `setInterval` para cuspir pontos coloridos a cada 25 milissegundos enquanto o botão do mouse é pressionado. A função `trackDrag` é usada para manter o `currentPos` apontando para a posição atual do mouse e para desligar o intervalo quando o mouse é liberado.
 
 Para determinar quantos pontos serão desenhados a cada intervalo de cliques, a função calcula a área do pincel e divide por 30. Para encontrar uma posição aleatória sob o pincel, é usada a função `randomPointLnRadius`.
 
@@ -386,7 +386,7 @@ Definir uma ferramenta chamada `Retângulo` que preenche um retângulo (veja o m
 
 Uma vez que ele funcionar, você vai perceber que é um pouco chocante não ver o retângulo como você está arrastando o mouse para definir o seu tamanho. Você pode chegar a uma maneira de mostrar algum tipo de retângulo durante o movimento do mouse, sem realmente ir desenhando no `canvas` até que o botão do mouse seja liberado?
 
-Se nada lhe vem a mente, relembre `position: absolute` discutito no [Capítulo 13](http://eloquentjavascript.net/13_dom.html#animation), que pode ser usado para sobrepor um nó no resto do documento. As propriedades `pagex` e `pageY` de um evento de mouse pode ser usada para a posicionar um elemento precisamente sob o mouse, definindo os estilos `left`, `top`, `width` e `height` para os valores corretos de pixel.
+Se nada lhe vem a mente, relembre `position: absolute` discutido no [Capítulo 13](http://eloquentjavascript.net/13_dom.html#animation), que pode ser usado para sobrepor um nó no resto do documento. As propriedades `pagex` e `pageY` de um evento de mouse pode ser usada para a posicionar um elemento precisamente sob o mouse, definindo os estilos `left`, `top`, `width` e `height` para os valores corretos de pixel.
 
 ```html
 <script>
@@ -405,7 +405,7 @@ Se nada lhe vem a mente, relembre `position: absolute` discutito no [Capítulo 1
 
 Você pode utilizar `relativePos` para encontrar o canto correspondente ao início do arrasto do mouse. Descobrir aonde as extremidades de arrasto termina pode ser com `trackDrag` ou registrando seu próprio manipulador de eventos.
 
-Quando você tem dois cantos do retângulo, você deve de alguma forma traduzí-los em argumentos que o `fillRect` espera: O canto `top-lef`, `width` e `height` do retângulo. `Math.min` pode ser usado para encontrar a coordenada mais a esquerda X e a coordenada superior Y. Para obter o `width` e `height`, você pode chamar `Math.abs` (o valor absoluto) sobre a diferença entre os dois lados.
+Quando você tem dois cantos do retângulo, você deve de alguma forma traduzi-los em argumentos que o `fillRect` espera: O canto `top-lef`, `width` e `height` do retângulo. `Math.min` pode ser usado para encontrar a coordenada mais a esquerda X e a coordenada superior Y. Para obter o `width` e `height`, você pode chamar `Math.abs` (o valor absoluto) sobre a diferença entre os dois lados.
 
 Mostrando o retângulo durante o arrastar do mouse requer um conjunto semelhante de números, mas no contexto de toda a página em vez de em relação ao `canvas`. Considere escrever um `findRect`, que converte dois pontos em um objeto com propriedades `top`, `left`, `width` e `height`, de modo que você não tenha que escrever a mesma lógica duas vezes.
 
@@ -417,7 +417,7 @@ Outra ferramenta que é comumente encontrada em programas gráficos é um seleto
 
 Para esta ferramenta, precisamos de uma maneira para acessar o conteúdo do `canvas`. O método `toDataURL` mais ou menos faz isso, mas recebendo informações de pixel para fora de tal URL de dados é difícil. Em vez disso, vamos usar o método `getImageData` no contexto do desenho, que retorna um pedaço retangular da imagem como um objeto com propriedades `width`, `height` e dados. A propriedade de dados contém um array de números de 0 a 255, com quatro números para representar, componentes de cada pixel vermelho, verde, azul e opacidade.
 
-Este exemplo recupera os números para um único pixel de uma tela de uma vez, quando o `canvas` está em branco (todos os picels são preto transparente) e uma vez quando o pixel foi colorido de vermelho.
+Este exemplo recupera os números para um único pixel de uma tela de uma vez, quando o `canvas` está em branco (todos os pixels são preto transparente) e uma vez quando o pixel foi colorido de vermelho.
 
 ```javascript
 function pixelAt(cx, x, y) {
@@ -474,7 +474,7 @@ A imagem a seguir ilustra o conjunto de pixels coloridos quando a ferramenta de 
 
 O preenchimento não vaza através de aberturas diagonais e não toca pixels que não são acessíveis, mesmo que tenham a mesma cor que o pixel alvo.
 
-Você vai precisar mais uma vez do `getImageData` para descobrir a cor para cada pixel. É provavelmente uma boa ideia para buscar a imagem inteira de uma só vez e, em seguida, selcionar os dados de pixel do array resultante. Os pixels são organizados nesse array de uma forma semelhante aos elementos de rede, no [Capítulo 7](http://eloquentjavascript.net/07_elife.html#grid), uma linha de cada vez, exceto que cada pixel é representado por quatro valores. O primeiro valor para o pixel em (x, y) é a posição (x + y x width) x 4.
+Você vai precisar mais uma vez do `getImageData` para descobrir a cor para cada pixel. É provavelmente uma boa ideia para buscar a imagem inteira de uma só vez e, em seguida, selecionar os dados de pixel do array resultante. Os pixels são organizados nesse array de uma forma semelhante aos elementos de rede, no [Capítulo 7](http://eloquentjavascript.net/07_elife.html#grid), uma linha de cada vez, exceto que cada pixel é representado por quatro valores. O primeiro valor para o pixel em (x, y) é a posição (x + y x width) x 4.
 
 Não incluam o quarto valor (alpha) desta vez, já que queremos ser capazes de dizer a diferença entre pixels pretos e vazios.
 

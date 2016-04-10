@@ -40,7 +40,7 @@ Entretanto, se não formos cuidadosos, o tamanho e a complexidade de um programa
 
 Muitos programadores acreditam que essa complexidade é melhor gerenciada usando, em seus programas, apenas um pequeno conjunto de técnicas bem entendidas. Eles criaram uma série de regras rígidas ("boas práticas") recomendando a forma que os programas deveriam ter. Os mais zelosos entre eles, vão considerar como _maus programadores_ aqueles que saem dessa pequena zona de segurança.
 
-Quanta hostilidade em relação à riqueza da programação, tentar reduzi-lá a algo simples e previsível, colocando um tabu em todos os estranhos e bonitos programas. A dimensão das técnicas de programação é enorme e fascinante em sua diversidade e, ainda assim, amplamente inexplorada. É certamente muito perigoso atrair programadores inexperientes nesses tipos de confusões, entretanto, você deve seguir com cautela e manter o seu senso comum em relação a elas. Conforme você aprende, sempre haverá novos territórios e desafios a serem explorados. Programadores que se recusam a continuar explorando irão estagnar, esquecer da alegria que é programar e acabarão ficando entediados com as coisas que constroem.
+Quanta hostilidade em relação à riqueza da programação, tentar reduzi-la a algo simples e previsível, colocando um tabu em todos os estranhos e bonitos programas. A dimensão das técnicas de programação é enorme e fascinante em sua diversidade e, ainda assim, amplamente inexplorada. É certamente muito perigoso atrair programadores inexperientes nesses tipos de confusões, entretanto, você deve seguir com cautela e manter o seu senso comum em relação a elas. Conforme você aprende, sempre haverá novos territórios e desafios a serem explorados. Programadores que se recusam a continuar explorando irão estagnar, esquecer da alegria que é programar e acabarão ficando entediados com as coisas que constroem.
 
 ## Porque linguagens importam?
 
@@ -159,7 +159,7 @@ Após o [primeiro projeto](./chapters/07-pratica-vida-eletronica.md), a primeira
 
 ## Convenções Tipográficas
 
-Nesse livro, os textos escritos em fonte `mono-espaçada` representarão elementos de programas. Algumas vezes serão fragmentos auto-suficientes e em outras, apenas referências para alguma parte de um programa próximo. Programas (os quais você já viu alguns) são escritos assim:
+Nesse livro, os textos escritos em fonte `mono-espaçada` representarão elementos de programas. Algumas vezes serão fragmentos autossuficientes e em outras, apenas referências para alguma parte de um programa próximo. Programas (os quais você já viu alguns) são escritos assim:
 
 ```js
 function fac(n) {

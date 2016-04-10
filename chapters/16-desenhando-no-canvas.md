@@ -8,7 +8,7 @@ Os Browsers permitem de várias maneiras de mostrarem gráficos. A maneira mais 
 
 Mas estaríamos usando o DOM para algo que não foi originalmente projetado. Algumas tarefas, tais como desenhar uma linha entre pontos arbitrários são extremamente difíceis de fazer com elementos regulares em HTML.
 
-Existem duas alternativas. O primeiro é baseado em DOM mas utiliza Scalable Vector Graphics(`SVG`) ao invés de elementos HTML. Pense em SVG como um dialeto para descrever documentos que se concentra em formas ao invéz de texto. Você pode embutir um documento SVG em um documento HTML ou você pode incluí-lo através de uma tag `<img>`.
+Existem duas alternativas. O primeiro é baseado em DOM mas utiliza Scalable Vector Graphics(`SVG`) ao invés de elementos HTML. Pense em SVG como um dialeto para descrever documentos que se concentra em formas ao invés de texto. Você pode embutir um documento SVG em um documento HTML ou você pode incluí-lo através de uma tag `<img>`.
 
 A segunda alternativa é chamado de `canvas`. A tela é um único elemento DOM que encapsula uma imagem. Ele fornece uma interface de programação para desenhar formas para o espaço ocupado pelo nó. A principal diferença entre um `canvas` e uma imagem de `SVG`, é que em `SVG` a descrição original das formas é preservada de modo que eles podem ser movidos ou redimensionados em qualquer momento. O  `canvas` por outro lado, converte as formas para pixels(pontos coloridos em um rastro), logo eles são desenhados e não guardam informações do que estes pixels representam. A única maneira de mover uma forma em `canvas` é limpar a tela(ou a parte da tela em torno) e redesenhar uma forma em uma nova posição.
 
@@ -91,7 +91,7 @@ Quando nenhuma largura ou altura é especificado como atributo, como no exemplo 
 
 #### Paths
 
-Um `path` é uma seqüência de linhas. A interface de uma tela 2D tem uma abordagem peculiar de descrever esse `path`. Isso é feito inteiramente através dos efeitos colaterais. Os `paths` não constituem valores que podem ser armazenados ou repassados. Se você deseja fazer algo com um `path`, você faz uma seqüência de chamadas de método para descrever sua forma.
+Um `path` é uma sequência de linhas. A interface de uma tela 2D tem uma abordagem peculiar de descrever esse `path`. Isso é feito inteiramente através dos efeitos colaterais. Os `paths` não constituem valores que podem ser armazenados ou repassados. Se você deseja fazer algo com um `path`, você faz uma sequência de chamadas de método para descrever sua forma.
 
 ```html
 <canvas></canvas>
@@ -130,7 +130,7 @@ Você também pode usar o método `closePath` para fechar explicitamente um `pat
 #### Curvas
 
 Um `path` também pode conter linhas com curvas. Estes infelizmente é um pouco mais complexo do que desenhar linhas retas.
-O método `quadraticCurveTo` desenha uma curva ate um ponto considerado. Para determinar a curvatura da linha é dado no método um ponto de controle e um ponto de destino. Imagine o seguinte, ponto de controle é uma atração a linha, o que da a ela sua curvatura. A linha não passa pelo ponto de controle. Ao contrário disso a direcção da linha nos seus pontos de início e fim fica alinhado, com a linha puxando para o ponto de controle. O exemplo a seguir ilustra isso:
+O método `quadraticCurveTo` desenha uma curva ate um ponto considerado. Para determinar a curvatura da linha é dado no método um ponto de controle e um ponto de destino. Imagine o seguinte, ponto de controle é uma atração a linha, o que da a ela sua curvatura. A linha não passa pelo ponto de controle. Ao contrário disso a direção da linha nos seus pontos de início e fim fica alinhado, com a linha puxando para o ponto de controle. O exemplo a seguir ilustra isso:
 
 ```html
 <canvas></canvas>
@@ -264,7 +264,7 @@ Um contexto de desenho em canvas 2D fornece os métodos `fillText` e `strokeText
 </script>
 ```
 
-Você pode especificar o tamanho, estilo e tipo da letra do texto com a propriedade `font`. Este exemplo apenas dá um tamanho de fonte e nome da família. Você pode adicionar o itálico ou negrito para o início de uma seqüência de caracteres.
+Você pode especificar o tamanho, estilo e tipo da letra do texto com a propriedade `font`. Este exemplo apenas dá um tamanho de fonte e nome da família. Você pode adicionar o itálico ou negrito para o início de uma sequência de caracteres.
 
 Os dois últimos argumentos para `fillText`(e `strokeText`) fornecem a posição em que a fonte é desenhado. Por padrão a posição do início da linha indica a base alfabética do texto, que é a linha que as letras ficam não tendo partes penduradas; em letras como `j` ou `p` você pode mudar a posição horizontal definindo a propriedade `textAlign` para `end` ou `center` ou posicionamento vertical definindo `textBaseline` para `top`, `middle` ou `bottom`.
 
@@ -272,7 +272,7 @@ Vamos voltar ao nosso gráfico de pizza para corrigir o problema de rotular as f
 
 #### Imagens
 
-Na computação gráfica uma distinção é feita frequentemente entre gráficos vetoriais e bitmap. O primeiro é como iremos fazer neste capítulo; a especificação de uma imagem dando uma descrição lógica de formas. Os gráficos de bitmap não especificam formas reais, mas sim trabalham com dados de pixel(ratros de pontos coloridos).
+Na computação gráfica uma distinção é feita frequentemente entre gráficos vetoriais e bitmap. O primeiro é como iremos fazer neste capítulo; a especificação de uma imagem dando uma descrição lógica de formas. Os gráficos de bitmap não especificam formas reais, mas sim trabalham com dados de pixel (rastros de pontos coloridos).
 
 O método `drawImage` nos permite desenhar dados de pixel em `canvas`. Estes dados de pixel pode ter origem a partir de uma tag `<img>` ou `<canvas>`, e nem todos são visíveis no documento atual. O exemplo a seguir cria um elemento `<img>` e carrega um arquivo de imagem nele. Mas não é iniciado imediatamente; a elaboração desta imagem não ocorreu porque o browser ainda não buscou por isso. Para lidar com tal situação registramos um manipulador de eventos(`"load"`)  para fazer o desenho depois que a imagem for carregada.
 
@@ -347,7 +347,7 @@ Chamar o método `scale` fará com que qualquer coisa desenhada depois possa ser
 
 `scaling` fará tudo sobre a imagem desenhada incluindo: a largura da linha a ser esticado ou espremido, conforme especificado. Dimensionamento por um valor negativo vai inverter a imagem ao redor. A inversão acontece em torno do ponto(0,0); o que significa que tudo irá virar a direção do sistema de coordenadas. Quando uma escala horizontal de -1 é aplicada, a forma desenhada em x na posição 100 vai acabar na posição -100.
 
-Então para transformar uma imagem em torno não podemos simplesmente adicionar `cx.scale (-1, 1)` antes da chamada `drawImage` pois ira mover a nossa imagem fora da tela onde não será mais possível ve-la. Você pode ajustar as coordenadas dadas a `drawImage` para compensar esse desenho da imagem em x na posição -50 em vez de 0. Outra solução que não exige que o código faça o desenho para saber sobre a mudança de escala, é ajustar o eixo em torno do qual a escala acontece.
+Então para transformar uma imagem em torno não podemos simplesmente adicionar `cx.scale (-1, 1)` antes da chamada `drawImage` pois ira mover a nossa imagem fora da tela onde não será mais possível vê-la. Você pode ajustar as coordenadas dadas a `drawImage` para compensar esse desenho da imagem em x na posição -50 em vez de 0. Outra solução que não exige que o código faça o desenho para saber sobre a mudança de escala, é ajustar o eixo em torno do qual a escala acontece.
 
 Há vários outros métodos além de `scale` que influenciam no sistema de coordenadas para o `canvas`. Você pode girar formas posteriormente desenhados com o método de `rotation` e movê-los com o método de `translate`. É interessante e confuso saber que estas transformações são realizados no estilo de pilha, o que significa que cada uma acontece em relação às transformações anteriores.
 
@@ -474,7 +474,7 @@ CanvasDisplay.prototype.drawFrame = function(step) {
 
 Diferente do controle de tempo, o método atualiza a janela de exibição para a posição atual do jogador, preenche toda a tela com uma cor de fundo, desenha o fundo e os atores. Note que que é diferente da abordagem no capítulo 15 onde traçamos o plano de fundo toda vez que movemos qualquer elemento do DOM envolvido.
 
-Como as formas em uma tela são apenas pixels, depois que atraido, não há nenhuma maneira de removê-los. A única maneira de atualizar a exibição de tela é limpar e redesenhar a cena.
+Como as formas em uma tela são apenas pixels, depois que atraído, não há nenhuma maneira de removê-los. A única maneira de atualizar a exibição de tela é limpar e redesenhar a cena.
 
 O método `updateViewport` é semelhante ao método de `scrollPlayerIntoView` no `DOMDisplay`. Ele verifica se o jogador está demasiado perto da borda da tela e move a janela de exibição quando for o caso.
 
@@ -553,7 +553,7 @@ Nós não nos incomodamos em esperar a imagem do sprite carregar. Chamando `draw
 O carácter para caminhar que foi utilizado, sera usado para representar o jogador. O código que chama ele precisa pegar a posição da sprite com base no movimento atual do jogador. Os primeiros oito sprites contém uma animação curta. Quando o jogador está se movendo ao longo de um chão os ciclos são alternados entre as propriedades de `animationTime` da tela. Este é medido em segundos, e queremos mudar os quadros 12 vezes por segundo, assim que o tempo é multiplicado por 12. Quando o jogador está parado, vamos traçar a nona Sprite. Durante saltos que são reconhecidos pelo fato de que a velocidade vertical não é zero, nós usamos o décimo elemento que esta na sprite mais a direita.
 
 Porque os sprites são ligeiramente mais largo do que o jogador? 
-24 ao invéz de 16 pixels? Isso é para permitir algum espaço para os pés e braços em movimento, o método tem de ajustar a coordenada x e largura por um determinado montante(`playerXOverlap`).
+24 ao invés de 16 pixels? Isso é para permitir algum espaço para os pés e braços em movimento, o método tem de ajustar a coordenada x e largura por um determinado montante(`playerXOverlap`).
 
 ```js
 var playerSprites = document.createElement("img");
@@ -604,7 +604,7 @@ CanvasDisplay.prototype.drawActors = function() {
 
 Ao desenhar algo que não é o jogador, verificamos o seu tipo para encontrar o deslocamento correto na sprite. A telha de lava é encontrado no deslocamento 20 o sprite moeda é encontrada em 40(duas vezes escala).
 
-Nós temos que subtrair a posição da janela de exibição ao computar a posição do ator, (0,0) corresponde ao canto superior esquerdo da janela da exibição do nosso `canvas` na parte superior esquerda do `level`. Nós também poderiamos ter usado o `translate` para isso. De qualquer maneira funcionaria.
+Nós temos que subtrair a posição da janela de exibição ao computar a posição do ator, (0,0) corresponde ao canto superior esquerdo da janela da exibição do nosso `canvas` na parte superior esquerda do `level`. Nós também poderíamos ter usado o `translate` para isso. De qualquer maneira funcionaria.
 
 O documento minúsculo mostrado a seguir conecta o novo `display` em `runGame`:
 
@@ -624,9 +624,9 @@ HTML tem a vantagem de ser simples. Ele se integra bem com textos. Ambos SVG e C
 
 SVG pode ser usado para produzir gráficos nítidos que ficam bem em qualquer nível de zoom. É mais difícil de usar do que HTML mas também é muito mais potente.
 
-Ambos SVG e HTML podem construirem uma estrutura de dados(DOM) que represente uma imagem. Isto torna possível modificar os elementos depois de serem desenhados. Se você precisa mudar várias vezes uma pequena parte de um grande deseho em resposta ao que o usuário está fazendo ou como parte de uma animação em `canvas` isso pode ser extremamente caro. O DOM também nos permite registrar manipuladores de eventos de mouse sobre cada elemento da imagem(mesmo em formas desenhadas com SVG). E isso não pode ser feito em `canvas`.
+Ambos SVG e HTML podem construírem uma estrutura de dados(DOM) que represente uma imagem. Isto torna possível modificar os elementos depois de serem desenhados. Se você precisa mudar várias vezes uma pequena parte de um grande desenho em resposta ao que o usuário está fazendo ou como parte de uma animação em `canvas` isso pode ser extremamente caro. O DOM também nos permite registrar manipuladores de eventos de mouse sobre cada elemento da imagem(mesmo em formas desenhadas com SVG). E isso não pode ser feito em `canvas`.
 
-Mas a abordagem orientada a pixel da tela pode ser uma vantagem quando o desenho usa uma enorme quantidade de elementos minúsculos. O fato de não se criar uma estrutura de dados, mas de apenas chama-los repetidamente sobre a mesma superfície de pixel, `canvas` dá um menor custo em performance.
+Mas a abordagem orientada a pixel da tela pode ser uma vantagem quando o desenho usa uma enorme quantidade de elementos minúsculos. O fato de não se criar uma estrutura de dados, mas de apenas chamá-los repetidamente sobre a mesma superfície de pixel, `canvas` dá um menor custo em performance.
 
 Há também efeitos, como renderizar uma cena de um pixel de cada vez(por exemplo, fazer um desenho de raios) ou pós-processamento de uma imagem com JavaScript(com efeito de embaçado ou distorcida) que só pode ser realisticamente manipulados por uma técnica baseada em pixel.
 
@@ -648,9 +648,9 @@ Chamando `beginPath` inicia um novo caminho. Uma série de outros métodos podem
 
 Mover os pixels de uma imagem ou de outra tela no nosso `canvas` é realizado com o método `drawImage`. Por padrão esse método desenha a imagem da origem por inteiro, mas passando mais parâmetros você pode copiar uma área específica da imagem. Usamos isso para o nosso jogo onde copiamos poses individuais do personagem do jogo a partir de uma imagem que tinha muitas cenas.
 
-Transformações permitem que você desenhe uma forma de múltiplas orientações. Um contexto de desenho em 2D tem uma transformação em curso que pode ser alterado com os métodos `translate`, `scale` e `rotate`. Estes irão afetar todas as operações dos desenhos subseqüentes. Um estado de transformação podem ser salvas com o método `save` e restaurado com o método `restore`.
+Transformações permitem que você desenhe uma forma de múltiplas orientações. Um contexto de desenho em 2D tem uma transformação em curso que pode ser alterado com os métodos `translate`, `scale` e `rotate`. Estes irão afetar todas as operações dos desenhos subsequentes. Um estado de transformação podem ser salvas com o método `save` e restaurado com o método `restore`.
 
-Ao desenhar uma animação sobre uma tela, o método `clearRect` pode ser usado para limpar parte da tela antes de redesenha-la novamente.
+Ao desenhar uma animação sobre uma tela, o método `clearRect` pode ser usado para limpar parte da tela antes de redesenhá-la novamente.
 
 ## Exercícios
 
@@ -689,7 +689,7 @@ Para o ziguezague(3) torna-se impraticável escrever uma novo `path` para cada `
 
 Você também vai precisar de um loop para a espiral(4). Se você desenhar uma série de pontos com cada ponto que se move mais ao longo de um círculo e ao redor do centro do espiral, você começara a fazer um círculo. Se durante o loop você variar o raio do círculo em que você está colocando o ponto atual o resultado sera um espiral. 
 
-A estrela(5) representado é construída a partir de linhas `quadraticCurveTo`. Você também pode tirar uma com linhas retas. Divida um círculo em oito pedaços, ou um pedaço para cada ponto que você quer que sua estrela tenha. Desenhar linhas entre estes pontos, tornam as curvas na direcção do centro da estrela. Com `quadraticCurveTo`, você pode usar o centro como o ponto de controle.
+A estrela(5) representado é construída a partir de linhas `quadraticCurveTo`. Você também pode tirar uma com linhas retas. Divida um círculo em oito pedaços, ou um pedaço para cada ponto que você quer que sua estrela tenha. Desenhar linhas entre estes pontos, tornam as curvas na direção do centro da estrela. Com `quadraticCurveTo`, você pode usar o centro como o ponto de controle.
 
 #### Gráfico de pizza
 
@@ -737,7 +737,7 @@ var textY = Math.sin(middleAngle) * 120 + centerY;
 
 Para `textBaseline` o valor `"middle"` é provavelmente uma abordagem a ser utilizada. O que for usado para `textAlign` depende do lado do círculo em que estamos. À esquerda deve ser `"center"`, a direita deve usar `"rigth"`, e `left` para texto que estiver posicionado longe do pedaço.
 
-Se você não tem certeza de como descobrir qual lado do círculo um determinado ângulo esta, olhe para a explicação de `Math.cos` no exercício anterior. O coseno de um ângulo nos diz qual coordenada x corresponde, que por sua vez nos diz exatamente que lado do círculo em que estamos.
+Se você não tem certeza de como descobrir qual lado do círculo um determinado ângulo esta, olhe para a explicação de `Math.cos` no exercício anterior. O cosseno de um ângulo nos diz qual coordenada x corresponde, que por sua vez nos diz exatamente que lado do círculo em que estamos.
 
 #### Quicando a bola
 

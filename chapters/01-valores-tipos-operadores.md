@@ -146,7 +146,7 @@ console.log(typeof "x")
 
 Nós vamos usar `console.log` nos códigos de exemplo para indicar que desejamos ver o resultado da avaliação de algo. Quando você executar tais códigos, o valor produzido será mostrado na tela, entretanto, a forma como ele será apresentado vai depender do ambiente JavaScript que você usar para rodar os códigos.
 
-Todos os operadores que vimos operavam em dois valores, mas `typoeof` espera um único valor. Operadores que usam dois valores são chamados de operadores _binários_, enquanto que aqueles que recebem apenas um, são chamados de operadores _unários_. O operador `-` pode ser usado tanto como binário quanto como unário.
+Todos os operadores que vimos operavam em dois valores, mas `typeof` espera um único valor. Operadores que usam dois valores são chamados de operadores _binários_, enquanto que aqueles que recebem apenas um, são chamados de operadores _unários_. O operador `-` pode ser usado tanto como binário quanto como unário.
 
 ```js
 console.log(- (10 - 2))

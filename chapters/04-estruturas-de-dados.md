@@ -48,7 +48,7 @@ O primeiro índice de um _array_ é o número zero e não o número um. Portanto
 
 Nós vimos, em exemplos anteriores, algumas expressões de aparência suspeita, como `myString.length` (para acessar o tamanho de uma _string_) e `Math.max` (função que retorna o valor máximo). Essas são expressões que acessam uma propriedade em algum valor. No primeiro caso, acessamos a propriedade `length` do valor contido em `myString`. No segundo, acessamos a propriedade chamada `max` no objeto `Math` (que é um conjunto de valores e funções relacionados à matemática).
 
-Praticamente todos os valores no JavaScript possuem propriedades. As únicas excessões são `null` e `undefined`. Se você tentar acessar a propriedade em algum deles, você receberá um erro.
+Praticamente todos os valores no JavaScript possuem propriedades. As únicas exceções são `null` e `undefined`. Se você tentar acessar a propriedade em algum deles, você receberá um erro.
 
 ```js
 null.length;
@@ -567,7 +567,7 @@ Possuir muitas variáveis globais "polui" o _namespace_. Quanto mais nomes são 
 
 Muitas linguagens irão parar você ou, ao menos, avisá-lo quando tentar definir uma variável com um nome que já está sendo usado. Como o JavaScript não faz isso, tenha cuidado.
 
-De volta ao objeto `Math`, caso precise realizar cálculos trigonométricos, `Math` pode ajudá-lo. Ele contém `cos` (coseno), `sin` (seno) e `tan` (tangente), tanto quanto suas funções inversas `aos`, `asin` e `atan` respectivamente. O número π (pi), ou pelo menos a aproximação que é possível ser representada através de um número no JavaScript, está disponível como `Math.PI`. (Existe uma tradição antiga na programação de escrever os nomes de valores constantes em caixa alta).
+De volta ao objeto `Math`, caso precise realizar cálculos trigonométricos, `Math` pode ajudá-lo. Ele contém `cos` (cosseno), `sin` (seno) e `tan` (tangente), tanto quanto suas funções inversas `aos`, `asin` e `atan` respectivamente. O número π (pi), ou pelo menos a aproximação que é possível ser representada através de um número no JavaScript, está disponível como `Math.PI`. (Existe uma tradição antiga na programação de escrever os nomes de valores constantes em caixa alta).
 
 ```js
 function randomPointOnCircle(radius) {
@@ -579,7 +579,7 @@ console.log(randomPointOnCircle(2));
 // → {x: 0.3667, y: 1.966}
 ```
 
-Se senos e cosenos não são muito familiares para você, não se preocupe. Quando eles forem usados no [Capítulo 13](./13-document-object-model.md) desse livro, eu lhe explicarei.
+Se senos e cossenos não são muito familiares para você, não se preocupe. Quando eles forem usados no [Capítulo 13](./13-document-object-model.md) desse livro, eu lhe explicarei.
 
 O exemplo anterior usa `Math.random`. Essa é uma função que retorna um número "pseudo-aleatório" entre zero (incluído) e um (excluído) toda vez que você a chama.
 
@@ -592,7 +592,7 @@ console.log(Math.random());
 // → 0.40180766698904335
 ```
 
-Embora os computadores sejam deterministas (sempre reagem da mesma maneira quando são usados os mesmos dados de entrada), é possível fazer com que eles produzam números que pareçam ser aleatórios. Para fazer isso, a máquina mantém um número (ou uma quantidade deles) armazenado em seu estado interno. Assim, toda vez que um número aleatório é requisitado, ela executa alguns cálculos complicados e deterministas usando esse estado interno e, então, retorna parte do resultado desses cáculos. A máquina também utiliza esses resultados para mudar o seu estado interno, fazendo com que o próximo número "aleatório" produzido seja diferente.
+Embora os computadores sejam deterministas (sempre reagem da mesma maneira quando são usados os mesmos dados de entrada), é possível fazer com que eles produzam números que pareçam ser aleatórios. Para fazer isso, a máquina mantém um número (ou uma quantidade deles) armazenado em seu estado interno. Assim, toda vez que um número aleatório é requisitado, ela executa alguns cálculos complicados e deterministas usando esse estado interno e, então, retorna parte do resultado desses cálculos. A máquina também utiliza esses resultados para mudar o seu estado interno, fazendo com que o próximo número "aleatório" produzido seja diferente.
 
 Se ao invés de um número fracionário, quisermos um número aleatório inteiro, podemos usar `Math.floor` (que arredonda o número para o menor valor inteiro mais próximo) no resultado de `Math.random`.
 
@@ -621,7 +621,7 @@ console.log(window.myVar);
 
 Objetos e _arrays_ (que são tipos específicos de objetos) fornecem maneiras de agrupar uma conjunto de valores em um único valor. Conceitualmente, ao invés de tentar carregar e manter todas as coisas individualmente em nossos braços, eles nos permitem colocar e carregar todas as coisas relacionadas dentro de uma bolsa.
 
-Com excessão de `null` e `undefined`, a maioria dos valores no JavaScript possuem propriedades e são acessados usando `value.propName` ou `value["propName"]`. Objetos tendem a usar nomes para suas propriedades e armazenam mais o menos uma quantidade fixa delas. Por outro lado, os _Arrays_ normalmente contêm quantidades variáveis de valores conceitualmente iguais e usam números (iniciando do zero) como os nomes de suas propriedades.
+Com exceção de `null` e `undefined`, a maioria dos valores no JavaScript possuem propriedades e são acessados usando `value.propName` ou `value["propName"]`. Objetos tendem a usar nomes para suas propriedades e armazenam mais o menos uma quantidade fixa delas. Por outro lado, os _Arrays_ normalmente contêm quantidades variáveis de valores conceitualmente iguais e usam números (iniciando do zero) como os nomes de suas propriedades.
 
 Existem algumas propriedades com nomes específicos nos _arrays_, como `length` e uma série de métodos. Métodos são funções que são armazenadas em propriedades e, normalmente, atuam no valor nas quais elas são propriedade.
 
@@ -751,7 +751,7 @@ O operador `==` compara objetos pelas suas identidades. Entretanto, algumas veze
 
 Escreva a função `deepEqual` que recebe dois valores e retorna `true` apenas se os valores forem iguais ou se forem objetos que possuem propriedades e valores iguais quando comparados usando uma chamada recursiva de `deepEqual`.
 
-Para saber se a comparação entre duas coisas deve ser feita pela identidade (use o operador `===` para isso) ou pela verificação de suas propriedades, você pode usar o operador `typeof`. Se ele produzir `"object"` para ambos os valores, você deverá fazer uma comparação "profunda". Entretanto, você deve levar em consideração uma excessão: devido a um acidente histórico, `typeof null` também produz `"object"`.
+Para saber se a comparação entre duas coisas deve ser feita pela identidade (use o operador `===` para isso) ou pela verificação de suas propriedades, você pode usar o operador `typeof`. Se ele produzir `"object"` para ambos os valores, você deverá fazer uma comparação "profunda". Entretanto, você deve levar em consideração uma exceção: devido a um acidente histórico, `typeof null` também produz `"object"`.
 
 ```js
 // Your code here.

@@ -385,7 +385,7 @@ console.log(drawTable(dataTable(MOUNTAINS)));
 //   … etcetera
 ```
 
-A função padrão `Object.keys` retorna um array com nomes de propriedades de um objeto. A linha do topo da tabela deve conter células sublinhadas que dão os nomes das colunas. Abaixo disso, os valores de todos os objetos no conjuto de dados aparecem como células normais - nós os extraímos mapeando sobre o array `keys` de modo que tenhamos certeza que a ordem das células é a mesma em todas as linhas.
+A função padrão `Object.keys` retorna um array com nomes de propriedades de um objeto. A linha do topo da tabela deve conter células sublinhadas que dão os nomes das colunas. Abaixo disso, os valores de todos os objetos no conjunto de dados aparecem como células normais - nós os extraímos mapeando sobre o array `keys` de modo que tenhamos certeza que a ordem das células é a mesma em todas as linhas.
 
 A tabela resultante se assemelha ao exemplo mostrado anteriormente, exceto que ela não alinha os números à direita na coluna `height`. Vamos chegar nessa parte em um instante.
 
@@ -393,7 +393,7 @@ A tabela resultante se assemelha ao exemplo mostrado anteriormente, exceto que e
 
 Quando especificamos uma interface, é possível incluir propriedades que não são métodos. Poderíamos ter definido `minHeight` e `minWidth` para simplesmente conter números. Mas isso teria exigido de nós computá-los no construtor, o que adicionaria código que não é estritamente relevante para *construção* do objeto. Isso pode causar problemas se, por exemplo, a célula interior de uma célula exterior mudou, onde nesse ponto o tamanho da célula sublinhada também deve mudar.
 
-Isso tem levado algumas pessoas a adotarem um princípio de nunca incluirem propriedades *nonmethod* em interfaces. Ao invés de acessarem diretamente o valor da propriedade, eles usam métodos `getSomething` e `setSomething` para ler e escrever propriedades. Esta abordagem tem a parte negativa de que você irá acabar escrevendo - e lendo - muitos métodos adicionais.
+Isso tem levado algumas pessoas a adotarem um princípio de nunca incluírem propriedades *nonmethod* em interfaces. Ao invés de acessarem diretamente o valor da propriedade, eles usam métodos `getSomething` e `setSomething` para ler e escrever propriedades. Esta abordagem tem a parte negativa de que você irá acabar escrevendo - e lendo - muitos métodos adicionais.
 
 Felizmente, o JavaScript fornece uma técnica que fornece o melhor de ambos os mundos. Nós podemos especificar propriedades que, do lado de fora, parecem propriedades normais mas secretamente tem métodos associados a elas.
 

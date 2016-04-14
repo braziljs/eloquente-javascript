@@ -22,7 +22,7 @@ Um *protocolo de rede* descreve um estilo de comunicação em uma rede. Existem 
 
 Por exemplo, um simples protocolo de chat deve consistir em um computador enviando os bits que representam o texto "CHAT?" para outra máquina, e o outro respondendo "OK!" para confirmar que o protocolo foi entendido. Eles podem então proceder e enviar um para o outro `strings` de texto, ler o texto enviado um para o outro pela rede, e mostrar o que eles receberam nas suas telas.
 
-A maioria dos protocolos são feitos em cima de outros protocolos. Nosso exemplo de protocolo de chat considera a rede como um tipo de dispositivo de *stream*, no qual você pode enviar bits e recebe-lôs com destino correto e na ordem correta. Assegurar essas coisas atualmente é um problema técnico bastante difícil.
+A maioria dos protocolos são feitos em cima de outros protocolos. Nosso exemplo de protocolo de chat considera a rede como um tipo de dispositivo de *stream*, no qual você pode enviar bits e recebê-los com destino correto e na ordem correta. Assegurar essas coisas atualmente é um problema técnico bastante difícil.
 
 O TCP (Protocolo de Controle de Transmissão) é um protocolo que resolve este problema. Todos os aparelhos conectados na Internet "falam" ele, e a maioria da comunicação na Internet é feita através dele.
 
@@ -77,7 +77,7 @@ Um documento HTML simples, se parece  com este:
 
 As *tags*, definidas entre os sinais de menor e maior que (< e >), fornecem informações sobre a estrutura do documento. O conteúdo restante é apenas texto puro.
 
-O documento começa com `<!doctype html>`, que diz ao navegador para interepretá-lo como HTML *moderno* (HTML5), ao invés de outras versões que foram usadas no passado.
+O documento começa com `<!doctype html>`, que diz ao navegador para interpretá-lo como HTML *moderno* (HTML5), ao invés de outras versões que foram usadas no passado.
 
 Documentos HTML possuem um `head` (cabeça) e um `body` (corpo). O `head` contém informações *sobre* o documento, o `body` contém o documento em si. Neste caso, nós primeiro declaramos que o título do documento é *"My home page"* e em seguida, declaramos o `body` contendo um cabeçalho (`<h1>`, que significa *"heading 1"* - As *tags* de `<h2>` a `<h6>` produzem cabeçalhos menores) e dois parágrafos (`<p>`). 
 
@@ -89,7 +89,7 @@ Para sermos capazes de incluir os sinais de menor e maior no texto de um documen
 
 Essa notação é parecida com a forma que as barras invertidas são utilizadas nas *strings* em JavaScript. Uma vez que esse mecanismo dá ao caractere `&` um significado especial, este tem que ser representado como `&amp;`. Dentro que um atributo, que é definido entre aspas duplas, a entidade `&quot;` pode ser usada para representar um caractere de aspas duplas.
 
-O HTML é interpretado de uma forma notavelmente tolerante a erros. Se uma *tag* é omitida, o navegador irá inserí-la. A forma com que isto é feito foi padronizada, você pode confiar em todos os navegadores modernos para realizar tal tarefa.
+O HTML é interpretado de uma forma notavelmente tolerante a erros. Se uma *tag* é omitida, o navegador irá inseri-la. A forma com que isto é feito foi padronizada, você pode confiar em todos os navegadores modernos para realizar tal tarefa.
 
 O documento a seguir será tratado exatamente como o mostrado anteriormente:
 
@@ -130,7 +130,7 @@ Incluir programas grandes diretamente no documento HTML é impraticável. A *tag
 
 O arquivo `code/hello.js` incluído aqui contém o mesmo simples programa, `alert("hello!")`. Quando uma página HTML referencia outras URLs como parte de si, por exemplo um arquivo de imagem ou um *script*, os navegadores irão buscá-los imediatamente e incluí-los na página.
 
-Uma *tag*  de *script* deve sempre ser fechada com `</script>`, mesmo quando fizer referência para um arquvio externo e não contenha nenhum código. Se você esquecer disso, o restante da página será interpretado como parte de um *script* .
+Uma *tag*  de *script* deve sempre ser fechada com `</script>`, mesmo quando fizer referência para um arquivo externo e não contenha nenhum código. Se você esquecer disso, o restante da página será interpretado como parte de um *script* .
 
 Alguns atributos podem conter um programa JavaScript. A *tag* `<button>` mostrada abaixo (que aparece como um botão na página) possui um atributo `onclick`, cujo conteúdo será executado sempre que o botão for clicado.
 
@@ -138,7 +138,7 @@ Alguns atributos podem conter um programa JavaScript. A *tag* `<button>` mostrad
 <button onclick="alert('Boom!');">DO NOT PRESS</button>
 ```
 
-Perceba que eu tive que usar aspas simples para a *string* do atributo `onclick` porque aspas duplas já estão sendo usadas para envolver o valor do atributo. Eu também poderia ter usado `&quot;`, mas isso tornaría o programa difícil de ler.
+Perceba que eu tive que usar aspas simples para a *string* do atributo `onclick` porque aspas duplas já estão sendo usadas para envolver o valor do atributo. Eu também poderia ter usado `&quot;`, mas isso tornaria o programa difícil de ler.
 
 ## Na caixa de areia
 
@@ -148,7 +148,7 @@ Contudo, a atração da *Web* é que você pode navegar sem necessariamente conf
 
 O isolamento de um ambiente de programação dessa maneira é chamado de *sandboxing*, a ideia é que o programa é inofensivo "brincando" em uma "caixa de areia". Mas você deve imaginar esse tipo específico de caixas de areia como tendo sobre si uma gaiola de grossas barras de aço, o que as torna um pouco diferentes das caixas de areia típicas de *playgrounds*.
 
-A parte difícil do *sandboxing* é permitir que os programas tenham espaço suficiente para serem úteis e ao mesmo tempo impedí-los de fazer qualquer coisa perigosa. Várias funcionalidades úteis, como se comunicar com outros servidores ou ler o conteúdo da área de transferência, podem ser usadas para tarefas problemáticas ou invasivas à privacidade.
+A parte difícil do *sandboxing* é permitir que os programas tenham espaço suficiente para serem úteis e ao mesmo tempo impedi-los de fazer qualquer coisa perigosa. Várias funcionalidades úteis, como se comunicar com outros servidores ou ler o conteúdo da área de transferência, podem ser usadas para tarefas problemáticas ou invasivas à privacidade.
 
 De vez em quando, alguém aparece com uma nova forma de burlar as limitações de um navegador e fazer algo prejudicial, variando de vazamentos de alguma pequena informação pessoal até assumir o controle total da máquina onde o navegador está sendo executado. Os desenvolvedores de navegadores respondem "tapando o buraco", e tudo está bem novamente —até que o próximo problema seja descoberto e divulgado, ao invés de ser secretamente explorado por algum governo ou máfia.
 

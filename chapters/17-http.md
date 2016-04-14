@@ -107,9 +107,9 @@ Content-type: application/x-www-form-urlencoded
 name=Jean&message=Yes%3F
 ```
 
-Por convenção, o método `GET` é usado para requisições que não produzem efeitos colaterais, tais como fazer uma pesquisa. Requisições que alteram alguma coisa no servidor, como criar uma nova conta ou postar uma nova mensagem, devem ser expressadas usando outros métodos, como `POST`. Aplicações _client-side_, como os navegadores, sabem que não devem fazer requisições `POST` cegamente, mas frequentemente farão requisições `GET` implícitas para, por exemplo, pré-carregar um recurso que ele acredita que o usuário irá precisar no curto-prazo.
+Por convenção, o método `GET` é usado para requisições que não produzem efeitos colaterais, tais como fazer uma pesquisa. Requisições que alteram alguma coisa no servidor, como criar uma nova conta ou postar uma nova mensagem, devem ser expressadas usando outros métodos, como `POST`. Aplicações _client-side_, como os navegadores, sabem que não devem fazer requisições `POST` cegamente, mas frequentemente farão requisições `GET` implícitas para, por exemplo, pré-carregar um recurso que ele acredita que o usuário irá precisar no curto prazo.
 
-O [próximo capítulo](./18-formularios-e-campos-de-formularios.md) irá retomar o assunto formulários e explicará como podemos desenvolve-los usando JavaScript.
+O [próximo capítulo](./18-formularios-e-campos-de-formularios.md) irá retomar o assunto formulários e explicará como podemos desenvolvê-los usando JavaScript.
 
 ## XMLHttpRequest
 
@@ -149,7 +149,7 @@ console.log(req.getResponseHeader("content-type"));
 // → text/plain
 ```
 
-Os nomes dos cabeçalhos são _case-insensitive_ (não faz diferença entre letras maiúsculas e minúsculas). Eles são normalmente escritos com letra maíuscula no início de cada palavra, como por exemplo "Content-Type". Entretanto, as respectivas variações "content-type" e "cOnTeNt-TyPe" fazem referência ao mesmo cabeçalho.
+Os nomes dos cabeçalhos são _case-insensitive_ (não faz diferença entre letras maiúsculas e minúsculas). Eles são normalmente escritos com letra maiúscula no início de cada palavra, como por exemplo "Content-Type". Entretanto, as respectivas variações "content-type" e "cOnTeNt-TyPe" fazem referência ao mesmo cabeçalho.
 
 O navegador irá automaticamente adicionar alguns cabeçalhos da requisição, tais como "Host" e outros necessários para o servidor descobrir o tamanho do corpo da requisição. Mesmo assim, você pode adicionar os seus próprios cabeçalhos usando o método `setRequestHeader`. Isso é necessário apenas para usos avançados e requer a cooperação do servidor ao qual você está se comunicando (o servidor é livre para ignorar cabeçalhos que ele não sabe lidar).
 

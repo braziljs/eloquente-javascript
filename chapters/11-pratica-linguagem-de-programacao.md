@@ -24,7 +24,7 @@ A parte imediatamente mais visível de uma linguagem de programação é sua sin
 
 Nossa linguagem terá uma sintaxe simples e uniforme. Tudo em **Egg** é uma expressão. Uma expressão pode ser uma variável, um `Number`, uma `String`, ou uma aplicação. As aplicações são usados para chamadas de função, mas também para construções como `if` ou `while`.
 
-Para manter o analisador simples, `String` em **Egg** não suportam qualquer coisa como escapes e uma seqüência simplesmente de caracteres que não são aspas duplas envolvidas em aspas duplas. Um número é uma sequência de dígitos. Os nomes das variáveis podem consistir de qualquer caractere que não seja um espaço em branco e não tem um significado especial na sintaxe.
+Para manter o analisador simples, `String` em **Egg** não suportam qualquer coisa como escapes e uma sequência simplesmente de caracteres que não são aspas duplas envolvidas em aspas duplas. Um número é uma sequência de dígitos. Os nomes das variáveis podem consistir de qualquer caractere que não seja um espaço em branco e não tem um significado especial na sintaxe.
 
 As aplicação será escrita da forma como é em JavaScript; colocando parênteses após uma expressão e com uma série de argumentos entre esses parênteses separados por vírgulas.
 

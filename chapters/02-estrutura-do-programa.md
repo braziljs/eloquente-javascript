@@ -10,7 +10,7 @@ Este é o ponto onde nós começamos a fazer coisas que podem realmente ser cham
 
 No [Capítulo 1](./01-valores-tipos-operadores.md) nós criamos alguns valores e então aplicamos operadores para obter novos valores. Criar valores desta forma é uma parte essencial de todo programa JavaScript, mas isso é somente uma parte. Um fragmento de código que produz um valor é chamado de *expressão*. Todo valor que é escrito literalmente (como `22` ou `"psychoanalysis"`) é uma expressão. Uma expressão entre parênteses é também uma expressão, e também um operador binário aplicado a duas expressões, ou um unário aplicado a uma.
 
-Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma semelhante às sub-frases usadas na linguagem humana - uma sub-frase pode conter sua própria sub-frase, e assim por diante. Isto nos permite combinar expressões para expressar computações complexas arbitrariamente.
+Isso mostra parte da beleza da interface baseada na linguagem. Expressões podem ser encadeadas de forma semelhante às subfrases usadas na linguagem humana - uma subfrase pode conter sua própria subfrase, e assim por diante. Isto nos permite combinar expressões para expressar computações complexas arbitrariamente.
 
 Se uma expressão corresponde a um fragmento de sentença, uma *afirmação*, no JavaScript, corresponde a uma frase completa em linguagem humana. Um programa é simplesmente uma lista de afirmações.
 
@@ -235,7 +235,7 @@ Isso funciona, mas a ideia de escrever um programa é fazer com que algo seja _m
 
 ![Fluxo de Controle do Loop](../img/controlflow_loop.png)
 
-O fluxo de controle do loop nos permite voltar a um mesmo ponto no programa onde estávamos anteriormente e repetí-lo no estado atual do programa. Se combinarmos isso a uma variável contadora, conseguimos fazer algo assim:
+O fluxo de controle do loop nos permite voltar a um mesmo ponto no programa onde estávamos anteriormente e repeti-lo no estado atual do programa. Se combinarmos isso a uma variável contadora, conseguimos fazer algo assim:
 
 ```js
 var number = 0;
@@ -341,9 +341,9 @@ Se você criar um loop infinito em algum dos exemplos destas páginas, você nor
 
 A palavra-chave `continue` é similar ao `break`, de modo que também influencia o progresso de um loop. Quando `continue` é encontrado no corpo de um loop, o controle de execução pula para fora do corpo e continua executando a próxima iteração do loop.
 
-## Atualizando variáveis suscintamente
+## Atualizando variáveis sucintamente
 
-Um programa, especialmente quando em loop, muita vezes precisa de atualizar uma variável para armazenar um valor baseado no valor anterior dessa variável.
+Um programa, especialmente quando em loop, muitas vezes precisa de atualizar uma variável para armazenar um valor baseado no valor anterior dessa variável.
 
 ```javascript
 counter = counter + 1;
@@ -511,7 +511,7 @@ Na segunda versão o programa tem uma solução simples e uma inteligente. A man
 
 ### Tabuleiro de Xadrez
 
-Escreva um programa que cria uma `string` que representa uma grade 8x8, usando novas linhas para separar os caracteres. A cada posição da grade existe um espaço ou um caracter "#". Esses caracteres formam um tabuleiro de xadrez.
+Escreva um programa que cria uma `string` que representa uma grade 8x8, usando novas linhas para separar os caracteres. A cada posição da grade existe um espaço ou um caractere "#". Esses caracteres formam um tabuleiro de xadrez.
 
 Passando esta `string` para o `console.log` deve mostrar algo como isto:
 ```

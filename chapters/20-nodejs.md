@@ -2,7 +2,7 @@
 
 > "Um estudante perguntou ‘Os programadores de antigamente usavam somente
 máquinas simples e nenhuma linguagem de programação, mas mesmo assim eles
-construiram lindos programas. Por que nós usamos máquinas complicadas e
+construíram lindos programas. Por que nós usamos máquinas complicadas e
 linguagens de programação?’. Fu-Tzu respondeu ‘Os construtores de antigamente
 usaram somente varas e barro, mas mesmo assim eles construíram lindas cabanas."
 > `Mestre Yuan-Ma, The Book of Programming`
@@ -29,7 +29,7 @@ profunda sobre Node e seus módulos integrados.
 
 ## Por Trás dos Panos
 
-Um dos problemas mais difícies em escrever sistemas que se comunicam através de
+Um dos problemas mais difíceis em escrever sistemas que se comunicam através de
 uma rede é administrar a entrada e saída — ou seja, ler escrever dados na rede,
 num disco rígido, e outros dispositivos. Mover os dados desta forma consome
 tempo, e planejar isso de forma inteligente pode fazer uma enorme diferença
@@ -141,7 +141,7 @@ $
 A variável `process`, assim como a variável `console`, está disponível
 globalmente no Node. Ela fornece várias maneiras de inspecionar e manipular o
 programa atual. O método `exit` finaliza o processo e pode receber um código
-de sáida, que diz ao programa que iniciou `node` (nesse caso, a linha de
+de saída, que diz ao programa que iniciou `node` (nesse caso, a linha de
 comando) se o programa foi completado com sucesso (código zero) ou se encontrou
 algum erro (qualquer outro código).
 
@@ -215,13 +215,13 @@ module.exports = function(string) {
 }
 ```
 
-Lembre-se que substituir `module.exports`, ao invés de adicionar propiedades
+Lembre-se que substituir `module.exports`, ao invés de adicionar propriedades
 à ele, nos permite exportar um valor específico do módulo. Nesse caso, nós
-fizemos com que o resultado ao requerir nosso arquivo `garble` seja a
+fizemos com que o resultado ao requerer nosso arquivo `garble` seja a
 própria função de alterar.
 
 A função separa a _string_ recebida em dois caracteres únicos separando a
-_string_ vazia e então substituindo cada caracter cujo código é cinco pontos
+_string_ vazia e então substituindo cada caractere cujo código é cinco pontos
 maior. Finalmente, o resultado é reagrupado novamente numa _string_.
 
 Agora nós podemos chamar nossa ferramenta dessa forma:
@@ -960,7 +960,7 @@ http://myhostname:8000/../../../etc/passwd
 ```
 
 Mudar o `urlToPath` corrige esse problema. Levando em conta o fato de que o Node
-no Windows permite tanto barras quanto contra-barras para separar diretórios.
+no Windows permite tanto barras quanto contrabarras para separar diretórios.
 
 Além disso, pense no fato de que assim que você expor algum sistema _meia boca_
 na internet, os _bugs_ nesse sistema podem ser usado para fazer coisas ruins
@@ -968,7 +968,7 @@ para sua máquina.
 
 **Dicas**
 Basta remover todas as recorrências de dois pontos que tenham uma barra, uma
-contra-barra ou as extremidades da _string_. Usando o método `replace` com uma
+contrabarra ou as extremidades da _string_. Usando o método `replace` com uma
 expressão regular é a maneira mais fácil de fazer isso. Não se esqueça da _flag_
 `g` na expressão, ou o `replace` vai substituir somente uma única instância e
 as pessoas ainda poderiam incluir pontos duplos no caminho da URL a partir dessa

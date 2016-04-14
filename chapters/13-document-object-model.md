@@ -32,11 +32,11 @@ A variável global `document` nos dá acesso à esses objetos. Sua propriedade `
 
 ## Árvores
 
-Relembre-se da sintaxe das árvores do [Capítulo 11](11-pratica-linguagem-de-programacao.md) por um momento. A estrutura delas é incrivelmente similar a estrutura de um documento do navegador. Cada nó pode se referir a outros nós, "filhos", os quais podem ter, por sua vez, seus próprios "filhos". Esse formato é típico de estruturas aninhadas, nas quais os elementos podem conter sub-elementos que são similares à eles mesmos.
+Relembre-se da sintaxe das árvores do [Capítulo 11](11-pratica-linguagem-de-programacao.md) por um momento. A estrutura delas é incrivelmente similar a estrutura de um documento do navegador. Cada nó pode se referir a outros nós, "filhos", os quais podem ter, por sua vez, seus próprios "filhos". Esse formato é típico de estruturas aninhadas, nas quais os elementos podem conter subelementos que são similares à eles mesmos.
 
-Nós chamamos uma estrutura de dados de uma *árvore* quando ela possui uma estrutura de galhos, sem ciclos (um nó não deve conter ele mesmo, direta ou indiretamente) e possui uma única, bem definida, raíz. No caso do DOM, document.documentElement representa a raíz.
+Nós chamamos uma estrutura de dados de uma *árvore* quando ela possui uma estrutura de galhos, sem ciclos (um nó não deve conter ele mesmo, direta ou indiretamente) e possui uma única, bem definida, raiz. No caso do DOM, document.documentElement representa a raiz.
 
-Árvores aparecem muito em Ciências da Computação. Além de representar estruturas recursivas como documentos HTML ou programas, elas também são comumente usadas para manter conjuntos ordenados de dados, pois elementos podem ser típicamente encontrados ou inseridos de maneira mais eficiente em uma árvore ordenada do que em um conjunto (ou "array") plano ordenado.
+Árvores aparecem muito em Ciências da Computação. Além de representar estruturas recursivas como documentos HTML ou programas, elas também são comumente usadas para manter conjuntos ordenados de dados, pois elementos podem ser tipicamente encontrados ou inseridos de maneira mais eficiente em uma árvore ordenada do que em um conjunto (ou "array") plano ordenado.
 
 Uma árvore típica possui diferentes tipos de nós. A árvore de sintaxe para a [Egg Language](11-pratica-linguagem-de-programacao.md) continha variáveis, valores e nós de aplicação. Nós de aplicação sempre têm filhos, diferentemente das variáveis e valores, que eram *folhas*, ou seja, nós sem filhos.
 
@@ -60,7 +60,7 @@ Como um exemplo dessa integração *pobre*, considere a propriedade `childNodes`
 
 Além disso existem outros problemas que são simplesmente ocasionados por um design falho. Por exemplo: não há nenhuma maneira de criar um novo nó e imediatamente adicionar nós filhos ou atributos à ele. Ao invés disso, você precisa primeiro criá-lo, depois adicionar os filhos, um por um, e só então definir os atributos um à um usando *side effects*. Códigos que interagem muito com o DOM tendem à ficar muito longos, repetitivos e feios.
 
-Porém nenhuma dessas falhas é fatal, pois JavaScript nos permite criar nossas próprias abstrações. É facil escrever algumas funções auxiliares que permitem que você expresse as operações que quer fazer de maneira mais curta. Na verdade, muitas *libraries* dedicadas à programação em browsers já vêm com essas ferramentas.
+Porém nenhuma dessas falhas é fatal, pois JavaScript nos permite criar nossas próprias abstrações. É fácil escrever algumas funções auxiliares que permitem que você expresse as operações que quer fazer de maneira mais curta. Na verdade, muitas *libraries* dedicadas à programação em browsers já vêm com essas ferramentas.
 
 ## Movendo-se Através da Árvore
 
@@ -96,7 +96,7 @@ A propriedade `nodeValue` de um nó de texto se refere à string de texto que el
 
 ## Encontrando Elementos
 
-Navegar por essas ligações entre pais, filhos e irmãos pode até ser útil, assim como no exemplo da função acima, a qual passa por todo o documento, mas, se quisermos encontrar um nó específico no documento, é uma má idéia começarmos a busca em `document.body` e seguirmos cegamente um caminho pré-estabelecido de ligações até finalmente achá-lo. Fazer isso irá formular pressuposições no nosso programa sobre a estrutura precisa do documento—uma estrutura que pode mudar depois. Outro fator complicante é que os nós de texto são criados até mesmo por espaço em branco entre nós. A tag `body` que usamos no começo deste capítulo, por exemplo, não tem apenas três filhos (um `<h1>` e dois `<p>`'s), na verdade ela tem sete: esses três e ainda o espaço antes, depois e entre eles.
+Navegar por essas ligações entre pais, filhos e irmãos pode até ser útil, assim como no exemplo da função acima, a qual passa por todo o documento, mas, se quisermos encontrar um nó específico no documento, é uma má ideia começarmos a busca em `document.body` e seguirmos cegamente um caminho preestabelecido de ligações até finalmente achá-lo. Fazer isso irá formular pressuposições no nosso programa sobre a estrutura precisa do documento—uma estrutura que pode mudar depois. Outro fator complicante é que os nós de texto são criados até mesmo por espaço em branco entre nós. A tag `body` que usamos no começo deste capítulo, por exemplo, não tem apenas três filhos (um `<h1>` e dois `<p>`'s), na verdade ela tem sete: esses três e ainda o espaço antes, depois e entre eles.
 
 Então se quisermos obter o atributo `href` do link naquele documento, nós não queremos dizer algo como "pegue o segundo filho do sexto filho do corpo do documento". Seria muito melhor se pudéssemos dizer "pegue o primeiro link nesse documento". E nós podemos.
 
@@ -136,7 +136,7 @@ Quase tudo na estrutura de dados DOM pode ser alterado. Nós de elementos possue
 </script>
 ```
 
-Um nó pode existir no documento em apenas um lugar. Sendo assim, inserir o paragráfo "Três" na frente do parágrafo "Um" vai apenas removê-lo do fim do documento e depois inserí-lo na frente, resultando em "Três/Um/Dois". Todas as operações que inserem um nó em algum lugar irão, como efeito colateral, fazer com que ele seja removido de sua posição atual (caso ele tenha uma).
+Um nó pode existir no documento em apenas um lugar. Sendo assim, inserir o parágrafo "Três" na frente do parágrafo "Um" vai apenas removê-lo do fim do documento e depois inseri-lo na frente, resultando em "Três/Um/Dois". Todas as operações que inserem um nó em algum lugar irão, como efeito colateral, fazer com que ele seja removido de sua posição atual (caso ele tenha uma).
 
 O método `replaceChild` é usado para substituir um nó filho por outro. Ele aceita como argumentos dois nós: um novo nó e o nó à ser substituído. O nó substituído deverá ser um filho do elemento com o qual o método é chamado. Note que ambos `replaceChild` e `insertBefore` esperam o seu *novo* nó como primeiro argumento.
 
@@ -170,7 +170,7 @@ Dada uma string, o método `createTextNode` nos dá um nó do DOM de tipo 3 (um 
 
 O *loop* (ou repetição) que percorre as imagens começa no fim da lista de nós. Isso é necessário porque a lista de nós retornada por um método como `getElementsByTagName` (ou uma propriedade como `childNodes`) é *viva*—isto é, atualizada em tempo real conforme o documento muda. Se nós começássemos pelo início do documento, remover a primeira imagem faria com que a lista perdesse seu primeiro elemento, então na segunda vez que o *loop* se repetisse, quando `i` é um, ele iria parar, pois o comprimento da coleção agora também é um.
 
-Se você quiser um conjunto sólido de nós, em oposição a um conjunto em tempo-real, você pode converter o conjunto para um *array* de verdade, chamando o método `slice`.
+Se você quiser um conjunto sólido de nós, em oposição a um conjunto em tempo real, você pode converter o conjunto para um *array* de verdade, chamando o método `slice`.
 
 ```JavaScript
 var arrayish = {0: "um", 1: "dois", length: 2};
@@ -418,7 +418,7 @@ p.a.b#main {
 }
 ```
 
-A regra de preferência favorecendo a regra mais recentemente definida é válida somente quando as regras possuem a mesma especifícidade. A especifícidade de uma regra é uma medida de o quão precisamente ela descreve os elementos que seleciona, sendo determinada por um número e um tipo (tag, classe ou id) de um aspecto do elemento que requer. Por exemplo, `p.a` é mais específico que apenas um `p` ou apenas um `.a`, então uma regra composta como essa teria preferência.
+A regra de preferência favorecendo a regra mais recentemente definida é válida somente quando as regras possuem a mesma especificidade. A especificidade de uma regra é uma medida de o quão precisamente ela descreve os elementos que seleciona, sendo determinada por um número e um tipo (tag, classe ou id) de um aspecto do elemento que requer. Por exemplo, `p.a` é mais específico que apenas um `p` ou apenas um `.a`, então uma regra composta como essa teria preferência.
 
 A notação `p > a {...}` aplica os estilos passados para todas as tags `<a>` que são filhos diretos de tags `<p>`. Do mesmo modo, `p a {...}` aplica-se à todas as tags `<a>` dentro de tags `<p>`, sejam elas filhos diretos ou indiretos.
 
@@ -426,7 +426,7 @@ A notação `p > a {...}` aplica os estilos passados para todas as tags `<a>` qu
 
 Nós não iremos usar muitas folhas de estilo neste livro. Ainda assim, entendê-las é crucial para programar no navegador, explicar todas as propriedades que elas suportam de maneira correta e a interação entre essas propriedades levaria dois ou três livros somente para isso.
 
-A razão principal pela qual eu introduzi a sintaxe de *seletores*—a notação usada em folhas de estilo para definir a qual elemento um conjunto de regras se aplica—é que nós podemos usar essa mesma mini-linguagem para definir uma maneira eficaz de encontrar elementos do DOM.
+A razão principal pela qual eu introduzi a sintaxe de *seletores*—a notação usada em folhas de estilo para definir a qual elemento um conjunto de regras se aplica—é que nós podemos usar essa mesma mini linguagem para definir uma maneira eficaz de encontrar elementos do DOM.
 
 O método querySelectorAll, que é definido em tanto no objeto `document` quanto nos nós de elementos, leva apenas uma string seletora e retorna um objeto parecido um array, contendo todos os elementos que encontra.
 
@@ -504,7 +504,7 @@ Note que os estilos geralmente precisam de *unidades*. Nesse caso, nós temos qu
 
 Programas JavaScript podem inspecionar e interferir com o documento atual cujo navegador está mostrando através de uma estrutura de dados chamada DOM. Essa estrutura representa o modelo do documento feito pelo navegador e um programa JavaScript pode modificá-la para mudar o documento que está sendo mostrado.
 
-O DOM é organizado como uma árvore, na qual elementos são organizados hierárquicamente de acordo com a estrutura do documento. Os objetos representando elementos possuem propriedades como `parentNode` e `childNodes`, que podem ser usadas para navegar pela árvore.
+O DOM é organizado como uma árvore, na qual elementos são organizados hierarquicamente de acordo com a estrutura do documento. Os objetos representando elementos possuem propriedades como `parentNode` e `childNodes`, que podem ser usadas para navegar pela árvore.
 
 A maneira com que um documento é mostrada pode ser influenciada através da *estilização*, tanto anexando estilos diretamente à um nó ou definindo regras que aplicam-se à certos nós. Existem muitas propriedades de estilo diferentes, assim como `color` ou `display`. JavaScript pode manipular o estilo de um elemento diretamente através de sua propriedade `style`.
 
@@ -533,7 +533,7 @@ Para cada *sequência* (linha), a tag `<table>` contém uma tag `<tr>`. Dentro d
 
 A mesma fonte de dados usada no [Capítulo 6](06-a-vida-secreta-dos-objetos.md) está disponível novamente na variável `MOUNTAINS`, disponível em nossa *sandbox* e também [disponível para download](../code/mountains.js) na nossa lista de conjunto de dados no website([eloquentjavascript.net/code](http://eloquentjavascript.net/code)).
 
-Esreva uma função buildTable que, dado um array de objetos com um mesmo conjunto de propriedades, construa uma estrutura DOM representando uma tabela. A tabela deve ter uma sequência (linha) de cabeçalho com os nomes das propriedades dentro de elementos `<th>` e uma linha subsequente por objeto no array, com seus valores das propriedades em elementos `<td>`.
+Escreva uma função buildTable que, dado um array de objetos com um mesmo conjunto de propriedades, construa uma estrutura DOM representando uma tabela. A tabela deve ter uma sequência (linha) de cabeçalho com os nomes das propriedades dentro de elementos `<th>` e uma linha subsequente por objeto no array, com seus valores das propriedades em elementos `<td>`.
 
 A função `Object.keys, a qual retorna um array contendo os nomes das propriedades que um objeto possui, provavelmente vai ser útil nesse caso.
 

@@ -88,7 +88,7 @@ Por padrão, a maioria dos tipos de elementos HTML não podem ser focado. Mas vo
 
 ## Campos desativados
 
-Todos o campos dos formulários podem ser desabilitadods por meio do seu atributo `disabled`, que também existe como uma propriedade no elemento do objeto DOM.
+Todos o campos dos formulários podem ser desabilitados por meio do seu atributo `disabled`, que também existe como uma propriedade no elemento do objeto DOM.
 
 ```html
   <button>I'm all right</button>
@@ -144,7 +144,7 @@ Interceptar eventos _submit_ em JavaScript tem vários usos. Podemos escrever c�
 
 ## Campos de Texto
 
-Campos criados pela tag `<input>` com um tipo de text ou password, bem como uma tag `textarea`, compartilha uma interface comum. Seus elementos DOM tem uma propriedade de valor que mantém o seu conteúdo atual como um valor de string. A definição dessa propriedade para outra seqüência altera o conteúdo dos campos.
+Campos criados pela tag `<input>` com um tipo de text ou password, bem como uma tag `textarea`, compartilha uma interface comum. Seus elementos DOM tem uma propriedade de valor que mantém o seu conteúdo atual como um valor de string. A definição dessa propriedade para outra sequência altera o conteúdo dos campos.
 
 As propriedades `selectionEnd e `selectionEnd` de campos de texto nos dão informações sobre o curso e seleção do texto. Quando não temos nada selecionado, estas duas propriedades tem o mesmo número o que indica a posição do cursor. Por exemplo, 0 indica o início do texto, e 10 indica o curso está após o décimo caractere. Quando uma parte do campo é selecionada as duas propriedades serão diferentes, nos dando o final e inicio do texto selecionado. Essas propriedades também podem ser gravadas como valores.
 
@@ -329,7 +329,7 @@ sobre o arquivo escolhido ao lado dele.
     }
   });
 ```
-A propriedade `files` de um elmento campo file é um objeto de array-like (novamente, não um array autêntico) 
+A propriedade `files` de um elemento campo file é um objeto de array-like (novamente, não um array autêntico) 
 que contém os arquivos escolhidos no campo. É inicialmente vazio. A razão não é simplesmente uma propriedade de 
 arquivo é que os campos file também suportam um atributo múltiplo, o que torna possível selecionar vários arquivos ao mesmo tempo.
 
@@ -408,10 +408,10 @@ console.log(localStorage.getItem("username"));
 // → marijn
 localStorage.removeItem("username");
 ```
-Um valor em localStorage continua na paǵina até que seja substituído, ele é removido com removeItem, ou o usuário
+Um valor em localStorage continua na página até que seja substituído, ele é removido com removeItem, ou o usuário
 apaga seus dados locais.
 
-Sites de domínios diferentes obtem diferentes espaços de armazenamento. Isso significa que os dados armazenados 
+Sites de domínios diferentes obtém diferentes espaços de armazenamento. Isso significa que os dados armazenados 
 em localStorage por um determinado site pode, a princípio,  ser lido (e sobrescritos) por scripts desse mesmo site.
 
 Os navegadores também impor um limite para o tamanho dos dados de um site pode armazenar em localStorage, 
@@ -498,14 +498,14 @@ eventos permitem-nos a perceber quando o usuário está interagindo com os campo
 como value (para texto e seleção campos) ou checked (para checkboxes e radio buttons)são usados 
 para ler ou definir o conteúdo do campo.
 
-Quando um formulário é enviado, o evento "submit" dispara. Um manipulador de JavaScript pode chamar _preventDefault_ para impedir que que dispare o evento submit. Elementos de campo de formulário não prcisam ser envolvidos em tags `<form>`.
+Quando um formulário é enviado, o evento "submit" dispara. Um manipulador de JavaScript pode chamar _preventDefault_ para impedir que que dispare o evento submit. Elementos de campo de formulário não precisam ser envolvidos em tags `<form>`.
 
 Quando o usuário tenha selecionado um campo de seu sistema de arquivos local em um campo picker field, 
 a interface FileReader pode ser usado para acessar o conteúdo deste arquivo a partir de um programa de JavaScript.
 
 Os objetos _LocalStorage_ e _sessionStorage_ pode ser usado para guardar informações de uma forma que continue 
 mesmo recarregando a página. O primeiro salva os dados para sempre (ou até que o usuário decida limpá-la),
-e o segundo salva-lo até que o navegador é fechado.
+e o segundo salvá-lo até que o navegador é fechado.
 
 ## Exercícios
 
@@ -567,10 +567,10 @@ foi digitado. Quando uma sugestão é clicada, substitua o valor atual do campo 
 O melhor evento para a atualização da lista de sugestões é "`input`", uma vez que será acionado imediatamente 
 quando o conteúdo do campo é alterado.
 
-Em seguida, um loop por meio do array de termos e ver se eles começam com a string dada. Por exemplo, você poderia chamar `indexOf` e ver se o resultado é zero. Para cada seqüência correspondente, adicionar um elemento para as sugestões `<div>`. Você deve, provavelmente,  cada vez que você inicia começar vazio e atualizar as sugestões, por exemplo, definindo sua textContent para a string vazia.
+Em seguida, um loop por meio do array de termos e ver se eles começam com a string dada. Por exemplo, você poderia chamar `indexOf` e ver se o resultado é zero. Para cada sequência correspondente, adicionar um elemento para as sugestões `<div>`. Você deve, provavelmente,  cada vez que você inicia começar vazio e atualizar as sugestões, por exemplo, definindo sua textContent para a string vazia.
 
 Você poderia adicionar um manipulador de evento "`click`" [para cada elemento  ou adicionar um único para
-fora `<div>` que prende-los e olhar para a propriedade target do evento para descobrir qual sugestão foi 
+fora `<div>` que prendê-los e olhar para a propriedade target do evento para descobrir qual sugestão foi 
 clicada.]
 
 Para obter o texto sugestão de um nó DOM, você pode olhar para a sua textContent ou definir um atributo para 

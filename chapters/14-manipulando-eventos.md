@@ -12,7 +12,7 @@ Imaginem uma interface onde a única maneira de descobrir se uma tecla está sen
 
 É assim que tal atributo foi tratado em máquinas primitivas. A um passo para o hardware, o sistema operacional deve notificar qual a tecla pressionada e colocá-lo em uma fila. Um programa pode então verificar periodicamente a fila para novos eventos e reagir ao encontrar.
 
-É claro que ha sempre uma responsabilidade de verificar a fila e executa-las várias vezes, isso é necessário porque ha uma latência entre a pressão da tecla e a leitura da fila pelo programa com isso o software pode sentir que não esta tendo resposta. Esta abordagem é chamada de `polling`. A maioria dos programadores tentam evitar essa abordagem sempre que possível.
+É claro que ha sempre uma responsabilidade de verificar a fila e executá-las várias vezes, isso é necessário porque ha uma latência entre a pressão da tecla e a leitura da fila pelo programa com isso o software pode sentir que não esta tendo resposta. Esta abordagem é chamada de `polling`. A maioria dos programadores tentam evitar essa abordagem sempre que possível.
 
 A melhor mecanismo para o sistema subjacente é dar ao nosso código a chance de reagir a eventos que ocorrerem. Os browsers podem fazerem isto por que nos permite registrar funções como manipuladores para eventos específicos.
 

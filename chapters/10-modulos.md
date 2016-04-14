@@ -14,7 +14,7 @@ Todo programa possui uma forma. Em menor escala essa forma é determinada pela d
 
 Quando olhamos um programa grande em seu todo, funções individuais começam a se misturar e seria bom possuir uma unidade maior de organização.
 
-Módulos dividem programas em blocos de código, que por algum critério pertencem a uma mesma unidade. Este capítulo explora alguns dos benefícios que estes agrupamentos fornecem e mostra algumas técnicas para construção de módulos em Javascript.
+Módulos dividem programas em blocos de código, que por algum critério pertencem a uma mesma unidade. Este capítulo explora alguns dos benefícios que estes agrupamentos fornecem e mostra algumas técnicas para construção de módulos em JavaScript.
 
 ## Organização
 
@@ -32,7 +32,7 @@ A maioria das linguagens modernas de programação têm um nível de escopo entr
 
 Poluição de Namespace, o problema de um monte de código não relacionado ter que compartilhar um único conjunto de nomes de variáveis globais, foi mencionado no capítulo 4, onde o objeto `Math` foi dado como um exemplo de um objeto que age como uma espécie de módulo por um agrupamento série de funcionalidades relacionadas com a matemática.
 
-Embora Javascript não possua a criação de módulos nativamente, objetos podem ser usados para criar sub-namespaces publicamente acessíveis, e funções podem ser usadas para criar um namespace privado dentro de um módulo. Vou demonstrar algumas técnicas que nos permitirão construir módulos namespace isolados bem convenientes.
+Embora JavaScript não possua a criação de módulos nativamente, objetos podem ser usados para criar sub-namespaces publicamente acessíveis, e funções podem ser usadas para criar um namespace privado dentro de um módulo. Vou demonstrar algumas técnicas que nos permitirão construir módulos namespace isolados bem convenientes.
 
 ## Reuso
 
@@ -40,7 +40,7 @@ Em um projeto "flat" (plano), não é claro quais partes do código são necess�
 
 Uma vez que você tenha muitos pedaços de código compartilhados e duplicados, você vai se encontrar perdendo uma grande quantidade de tempo e energia organizá-los e mantê-los atualizados.
 
-Quando partes de funcionalidades que são independentes são colocadas em arquivos e módulos separados, elas podem ser rastreiadas mais facilmente, atualizadas quando uma nova versão for criada, ou até mesmo compartilhadas, tendo várias partes do código que desejam usá-las carregando o mesmo arquivo.
+Quando partes de funcionalidades que são independentes são colocadas em arquivos e módulos separados, elas podem ser rastreadas mais facilmente, atualizadas quando uma nova versão for criada, ou até mesmo compartilhadas, tendo várias partes do código que desejam usá-las carregando o mesmo arquivo.
 
 Essa idea fica ainda mais poderosa quando as relações entre os módulos - onde outros módulos cada módulo depende - são explicitamente especificados. Você pode então automatizar o processo de instalação e atualização de módulos externos.
 
@@ -75,7 +75,7 @@ console.log(dayName(1));
 // → Monday
 ```
 
-A função `dayName` é parte desta interface, mas a variável `names` não. Nós prefirimos não deixá-la no escopo global.
+A função `dayName` é parte desta interface, mas a variável `names` não. Nós preferimos não deixá-la no escopo global.
 
 Podemos fazer isso:
 
@@ -108,7 +108,7 @@ Um padrão similar é usado para isolar inteiramente código do mundo exterior. 
 
 Este código simplesmente imprime o quadrado de cem (no mundo real, este poderia ser um módulo que adiciona um método a algum prototype, ou configura algum *widget* em uma página da web). Ele encapsula seu código em uma função para, novamente, prevenir que as variáveis que ele usa internamente estejam no escopo global.
 
-Por que a função namespace está encapsulada em uma par de parênteses? Isso tem relação com um truque da sintaxe JavaScript. Se uma expressão começa com a palavra-chave `function`, ela é uma expressão de função. Entretanto, se uma declaração inicia com esta palavra-chave, será uma declaração de função, que requer um nome e não pode ser chamada imediatamente. Mesmo que uma declaração comece com uma expressão, a segunda regra tem precedência, e se os parênteses extras foram esquecidos no exemplo acima, isso irá produzir um erro de sintaxe. Você pode imaginá-los como um truco para forçar a linguagem a enteder que nós queremos escrever uma expressão.
+Por que a função namespace está encapsulada em uma par de parênteses? Isso tem relação com um truque da sintaxe JavaScript. Se uma expressão começa com a palavra-chave `function`, ela é uma expressão de função. Entretanto, se uma declaração inicia com esta palavra-chave, será uma declaração de função, que requer um nome e não pode ser chamada imediatamente. Mesmo que uma declaração comece com uma expressão, a segunda regra tem precedência, e se os parênteses extras foram esquecidos no exemplo acima, isso irá produzir um erro de sintaxe. Você pode imaginá-los como um truco para forçar a linguagem a entender que nós queremos escrever uma expressão.
 
 ## Objetos como namespaces
 
@@ -153,7 +153,7 @@ O padrão acima é usado normalmente em módulos JavaScript criados para o naveg
 
 Ainda existe um problema quando múltiplos módulos reivindicam o mesmo nome, ou quando você quer, por qualquer motivo, carregar duas versões do mesmo módulo de forma conjunta.
 
-Com um pequeno encanamento, nós podemos criar um sistema que permite que aos módulos requerirem diretamente por interfaces de objetos de outros módulos que eles precisem de acessar, sem precisarmos usar o escopo global. Isso resolve os problemas mencionados acima e tem um benefício adicional de ser explícito sobre suas dependências, tornando difícil usar acidentalmente algum módulo sem declarar que você precisa dele.
+Com um pequeno encanamento, nós podemos criar um sistema que permite que aos módulos requererem diretamente por interfaces de objetos de outros módulos que eles precisem de acessar, sem precisarmos usar o escopo global. Isso resolve os problemas mencionados acima e tem um benefício adicional de ser explícito sobre suas dependências, tornando difícil usar acidentalmente algum módulo sem declarar que você precisa dele.
 
 Nosso objetivo é uma função 'require' que, quando dado o nome de um módulo, vai carregar esse arquivo (do disco ou da web, dependendo da plataforma que estivermos rodando), e retornar o valor apropriado da interface.
 
@@ -226,7 +226,7 @@ var today = require("today");
 console.log(weekDay.name(today.dayNumber()));
 ```
 
-A implementação de require acima tem diversos problemas. Primeiro, ela vai carregar e rodar um módulo todas as vezes que este for "require-d" (requisitado), então se diversos módulos têm a mesma dependência, ou uma chamada require é colocada dentro de uma função que vai ser chamada múltiplas vezes, tempo e energia serão disperdiçados.
+A implementação de require acima tem diversos problemas. Primeiro, ela vai carregar e rodar um módulo todas as vezes que este for "require-d" (requisitado), então se diversos módulos têm a mesma dependência, ou uma chamada require é colocada dentro de uma função que vai ser chamada múltiplas vezes, tempo e energia serão desperdiçados.
 
 Isso pode ser resolvido armazenando os módulos que já tenham sido carregados em um objeto, e simplesmente retornando o valor existente se eles forem carregados novamente.
 
@@ -339,7 +339,7 @@ Uma implementação real do AMD é, novamente, bem mais inteligente em relação
 
 ## Projeto de interfaces
 
-Projetar interfaces para módulos e tipos de objeto é um dos aspectos sutis da programação. Qualquer pedaço não-trivial de funcionalidade pode ser modelada de formas diferentes. Encontrar um caminho que funciona bem requer perspicácia e previdência.
+Projetar interfaces para módulos e tipos de objeto é um dos aspectos sutis da programação. Qualquer pedaço não trivial de funcionalidade pode ser modelada de formas diferentes. Encontrar um caminho que funciona bem requer perspicácia e previdência.
 
 A melhor forma de aprender o valor de um bom projeto de interface é usar várias interfaces, algumas boas, algumas horríveis. Experiência vai ensinar a você o que funciona e o que não funciona. Nunca assuma que uma interface dolorosa de se usar é "da forma que ela deve ser". Conserte-a, ou encapsule-a em uma nova interface de forma que funcione melhor para você.
 
@@ -359,7 +359,7 @@ Outro exemplo seria um módulo verificação ortográfica de texto, que podemos 
 
 ### Interfaces em camadas
 
-Quando projetando uma interface para uma complexa parte de funcionalidade - digo, enviar email - você geralmente se depara com um dilema. Em uma mão, você não quer sobrecarregar o usuário da sua interface com detalhes. Ele não deve estudar sua interface por 20 minutos antes de ser capaz de enviar um email. Na outra mão, você não quer esconder todos os detalhes - quando pessoas precisam fazer coisas complicadas com seu moulo, eles também devem ser capazes.
+Quando projetando uma interface para uma complexa parte de funcionalidade - digo, enviar email - você geralmente se depara com um dilema. Em uma mão, você não quer sobrecarregar o usuário da sua interface com detalhes. Ele não deve estudar sua interface por 20 minutos antes de ser capaz de enviar um email. Na outra mão, você não quer esconder todos os detalhes - quando pessoas precisam fazer coisas complicadas com seu módulo, eles também devem ser capazes.
 
 Normalmente a solução é oferecer duas interfaces: uma de "baixo nível" detalhada para situações complexas e uma de "alto nível" simples para uso rotineiro. A segunda pode ser construída de forma simples utilizando as ferramentas fornecidas pela primeira camada. No módulo de email, a interface de alto nível pode simplesmente ser uma função que recebe uma mensagem, um endereço de remetente, um endereço de destinatário e envia o email. A interface de baixo nível deve permitir um controle completo sobre os cabeçalhos do email, anexos, envio de email HTML, e por ai vai.
 
@@ -390,7 +390,7 @@ Ele vai seguir o módulo weekDay praticamente por inteiro. Uma função anônima
 
 ### Dependências circulares
 
-Um assunto complicado na gestão de dependências é o de dependências circulares, onde módulo A depende do módulo B, e B também depende do módulo A. Muitos sistemas simplesmente proibem isso. CommonJS permite uma forma limitada disso, onde isso funciona se os módulos não trocarem seus objetos exportados por padrão com outro valor, e somente começam a acessar a interface um do outro após terem finalizados seus carregamentos.
+Um assunto complicado na gestão de dependências é o de dependências circulares, onde módulo A depende do módulo B, e B também depende do módulo A. Muitos sistemas simplesmente proíbem isso. CommonJS permite uma forma limitada disso, onde isso funciona se os módulos não trocarem seus objetos exportados por padrão com outro valor, e somente começam a acessar a interface um do outro após terem finalizados seus carregamentos.
 
 Você pode pensar em algo que dê suporte para essa funcionalidade ser implementada? Olhe anteriormente a definição de `require`, e considere o quê você deve fazer para permitir isso.
 

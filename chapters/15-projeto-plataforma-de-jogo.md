@@ -291,7 +291,7 @@ DOMDisplay.prototype.drawActors = function() {
 };
 ```
 
-Para dar mais classe ao elemento separamos os nomes de classe com espaços. No código CSS abaixo mostramos a classe ator que nos dá os atores com sua posição absoluta. O seu nome é o tipo usado como uma classe extra para dar-lhes uma uma cor diferente. Não temos que definir a classe de lava novamente porque vamos reutilizar a classe para os quadradrinhos de lava que definimos anteriormente.
+Para dar mais classe ao elemento separamos os nomes de classe com espaços. No código CSS abaixo mostramos a classe ator que nos dá os atores com sua posição absoluta. O seu nome é o tipo usado como uma classe extra para dar-lhes uma uma cor diferente. Não temos que definir a classe de lava novamente porque vamos reutilizar a classe para os quadradinhos de lava que definimos anteriormente.
 
 ```css
 .actor  { position: absolute;            }
@@ -336,7 +336,7 @@ Não podemos assumir que os `Level` sempre se encaixem na janela de exibição. 
 }
 ```
 
-No método `scrollPlayerIntoView` encontramos a posição do jogador e atualizamos a posição de rolagem do elemento conforme seu envolvimento. Vamos mudar a posição de rolagem através da manipulação das propriedades desses elementos com os enventos de `scrollLeft` e `scrollTop` para quando o jogador estiver muito perto do canto.
+No método `scrollPlayerIntoView` encontramos a posição do jogador e atualizamos a posição de rolagem do elemento conforme seu envolvimento. Vamos mudar a posição de rolagem através da manipulação das propriedades desses elementos com os eventos de `scrollLeft` e `scrollTop` para quando o jogador estiver muito perto do canto.
 
 ```js
 DOMDisplay.prototype.scrollPlayerIntoView = function() {
@@ -365,7 +365,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
 
 A forma de como o centro do jogador é encontrado mostra como os métodos em nosso tipo `Vector` permite calcular os objetos a serem escritos de forma legível. Para encontrar o centro do ator nós adicionamos a sua posição (o canto superior esquerdo) e a metade do seu tamanho. Esse é o centro em coordenadas de `Level` mas precisamos dele em coordenadas de pixel, por isso em seguida vamos multiplicar o vetor resultante de nossa escala de exibição.
 
-Em seguida uma série de verificações são feitas para a posição do jogador dentro e fora do intervalo permitido. Note-se que, as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai ser obrigdo a ter valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
+Em seguida uma série de verificações são feitas para a posição do jogador dentro e fora do intervalo permitido. Note-se que, as vezes, isto irá definir as coordenadas absolutas de rolagem, abaixo de zero ou fora da área de rolagem do elemento. Isso é bom pois o DOM vai ser obrigado a ter valores verdadeiros. Definir `scrollLeft` para `-10` fará com que ele torne `0`.
 
 Teria sido um pouco mais simples tentar deslocarmos o jogador para o centro da janela. Mas isso cria um efeito bastante chocante. Como você está pulando a visão vai mudar constantemente de cima e para baixo. É mais agradável ter uma área "neutra" no meio da tela onde você pode se mover sem causar qualquer rolagem.
 
@@ -425,11 +425,11 @@ Level.prototype.obstacleAt = function(pos, size) {
 ```
 
 
-Este método calcula o conjunto de quadradros que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que as unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima para baixo temos o quadrado da gama de fundo que tem os toques nas caixas.
+Este método calcula o conjunto de quadrados que o `body` se sobrepõe usando `Math.floor` e `Math.ceil` nas coordenadas do `body`. Lembre-se que as unidades de tamanho dos quadrados são 1 por 1. Arredondando os lados de uma caixa de cima para baixo temos o quadrado da gama de fundo que tem os toques nas caixas.
 
 ![Game grid](../img/game_grid.png)
 
-Se o corpo se sobressai do `Level`, sempre retornaremos `"wall"` para os lados e na parte superior e `"lava"` para o fundo. Isso garante que o jogador morra ao cair para fora do mundo. Quando o corpo esta totalmente no interior da `grid`, nosso loop sobre o bloco de quadradros encontra as coordenadas por arredondamento e retorna o conteúdo do primeira `nonempty`.
+Se o corpo se sobressai do `Level`, sempre retornaremos `"wall"` para os lados e na parte superior e `"lava"` para o fundo. Isso garante que o jogador morra ao cair para fora do mundo. Quando o corpo esta totalmente no interior da `grid`, nosso loop sobre o bloco de quadrados encontra as coordenadas por arredondamento e retorna o conteúdo do primeira `nonempty`.
 
 Colisões entre o jogador e outros atores dinâmicos (moedas, lava em movimento) são tratadas depois que o jogador se mudou. Quando o movimento do jogador coincide com o de outro ator, se for uma moeda é feito o efeito de recolha ou se for lava o efeito de morte é ativado.
 
@@ -633,7 +633,7 @@ Note como o mesmo manipulador da função é usado para ambos os tipos de evento
 
 A função `requestAnimationFrame` que vimos no capítulo 13 fornece uma boa maneira de animar um jogo. Mas sua interface é bastante primitiva para usá-la, o que nos obriga a ficar controlando sua última chamada para executar a função `requestAnimationFrame` novamente após cada frame.
 
-Vamos definir uma função auxiliar que envolve as partes chatas em uma interface conveniente e nos permitir simplesmente chamar `runAnimation` dando-lhe uma função que espera uma diferença de tempo como um argumento e desenha-la em um quadro único. Quando a função de armação retorna o valor falso a animação para.
+Vamos definir uma função auxiliar que envolve as partes chatas em uma interface conveniente e nos permitir simplesmente chamar `runAnimation` dando-lhe uma função que espera uma diferença de tempo como um argumento e desenhá-la em um quadro único. Quando a função de armação retorna o valor falso a animação para.
 
 ```js
 function runAnimation(frameFunc) {
@@ -652,7 +652,7 @@ function runAnimation(frameFunc) {
 }
 ```
 
-Temos que definir um passo de quadros máximo de 100 milissegundos(um décimo de segundo). Quando a aba ou janela do navegador com a página estiver oculto as chamadas `requestAnimationFrame` será suspenso até que a aba ou janela é mostrado novamente. Neste caso a diferença entre `lasttime` será todo o tempo em que a página estiver oculta. Avançando o jogo, que em uma única etapa vai parecer fácil mas podemos ter um monte de trabalho(lembre-se o tempo-splitting no método de animação).
+Temos que definir um passo de quadros máximo de 100 milissegundos(um décimo de segundo). Quando a aba ou janela do navegador com a página estiver oculto as chamadas `requestAnimationFrame` será suspenso até que a aba ou janela é mostrado novamente. Neste caso a diferença entre `lasttime` será todo o tempo em que a página estiver oculta. Avançando o jogo, que em uma única etapa vai parecer fácil mas podemos ter um monte de trabalho (lembre-se o tempo-splitting no método de animação).
 
 A função também converte os passos de tempo para segundos, que são uma quantidade mais fácil de pensar do que milissegundos.
 
@@ -757,7 +757,7 @@ Faça o possível para fazer uma pausa(suspenso) e retomar o jogo pressionando a
 
 Isso pode ser feito alterando a execução função do `Level` para usar outro manipulador de eventos de teclado e interromper ou retomar a animação sempre que a tecla `Esc` é pressionada.
 
-A interface `runAnimation` não pode se reponsabilizar por isso à primeira vista, mas basta você reorganizar a maneira que `RUNLEVEL` é chamado.
+A interface `runAnimation` não pode se responsabilizar por isso à primeira vista, mas basta você reorganizar a maneira que `RUNLEVEL` é chamado.
 
 Quando você tem que trabalhar não há outra coisa que você pode tentar. O caminho que temos vindo a registrar manipuladores de eventos de teclas é um pouco problemático. O objeto `keys` é uma variável global e seus manipuladores de eventos são mantidas ao redor mesmo quando nenhum jogo está sendo executado. Pode-se dizer que isso pode vazar para fora do nosso sistema. Estender `trackKeys` nos da uma maneira de fornecer o cancelamento do registro e de seus manipuladores e em seguida mudar a execução do `Level` para registrar seus tratadores quando começa e cancela o registro novamente quando ele for concluído.
 

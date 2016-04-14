@@ -14,7 +14,7 @@ A maneira como técnicas e convenções de programação sobrevivem e se dissemi
 
 Neste capítulo, discutiremos uma dessas tecnologias, expressões regulares. Expressões regulares são um modo de descrever padrões em um conjunto de caracteres. Eles formam uma pequena linguagem à parte, que é incluída no JavaScript (assim como em várias outras linguagens de programação e ferramentas).
 
-Expressões regulares são ao mesmo tempo, extremamente úteis e estranhas. Conhecê-las apropriadamente facilitará muito vários tipos de processamento de textos. Mas a sintaxe utilizada para descreve-las é ridiculamente enigmática. Além disso, a interface do JavaScript para elas é um tanto quanto desajeitada.
+Expressões regulares são ao mesmo tempo, extremamente úteis e estranhas. Conhecê-las apropriadamente facilitará muito vários tipos de processamento de textos. Mas a sintaxe utilizada para descrevê-las é ridiculamente enigmática. Além disso, a interface do JavaScript para elas é um tanto quanto desajeitada.
 
 ----
 
@@ -144,7 +144,7 @@ console.log( dataHora.test("30/1/2003 8:45") );
 
 Também é possível deixar em aberto o número mínimo ou máximo de ocorrências, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
 
-## Agrupando sub-expressões
+## Agrupando subexpressões
 
 Para usar um operador como "*" ou "+" em mais de um caractere de de uma vez, é necessário o uso de parênteses. Um pedaço de uma expressão regular que é delimitado por parênteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
 
@@ -220,7 +220,7 @@ console.log( new Date(1981, 6, 29, 18, 30, 50) );
 
 O JavaScript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias iniciam-se em um. É bem confuso, então, tenha cuidado.
 
-Os últimos quatro argumentos (horas, minutos, segundos e milisegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
+Os últimos quatro argumentos (horas, minutos, segundos e milissegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
 
 Internamente, objetos do tipo data são armazenados como o número de milissegundos desde o início de 1970. Usar o método _getTime_ em uma data retorna esse número, e ele é bem grande, como deve imaginar.
 
@@ -284,7 +284,7 @@ Parênteses podem ser usados para limitar a que parte do padrão que o pipe ("|"
 
 ![O mecanismo de procura](../img/re_porcogalinhas.svg)
 
-Uma _string_ corresponde à expressão se um caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na seqüência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais (menos os limites de palavra), continue no fluxo das caixas.
+Uma _string_ corresponde à expressão se um caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na sequência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais (menos os limites de palavra), continue no fluxo das caixas.
 
 Então se encontrarmos "the 3 pigs" existe uma correspondência entre as posições 4 (o dígito "3") e 10 (o final da string).
 
@@ -295,7 +295,7 @@ Então se encontrarmos "the 3 pigs" existe uma correspondência entre as posiç�
 - Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa de "s".
 - Estamos na posição 10 (final da string) e só podemos achar um limite de palavra. O fim de uma _string_ conta como um limite de palavra, de modo que passamos a última caixa e achamos com sucesso a busca.
 
-O modo como o mecanismo de expressões regulares do JavaScript trata uma busca em uma _string_ é simples. Começa no início da _string_ e tenta achar um resultado nela. Nesse casso, existe um limite de palavra aqui, então passamos pela primeira caixa, mas nao existe um dígito, então ele falha na segunda caixa. Continua no segundo caractere da _string_ e tenta novamente. E assim continua, até encontrar um resultado ou alcançar o fim da _string_ e concluir que não encontrou nenhum resultado
+O modo como o mecanismo de expressões regulares do JavaScript trata uma busca em uma _string_ é simples. Começa no início da _string_ e tenta achar um resultado nela. Nesse casso, existe um limite de palavra aqui, então passamos pela primeira caixa, mas não existe um dígito, então ele falha na segunda caixa. Continua no segundo caractere da _string_ e tenta novamente. E assim continua, até encontrar um resultado ou alcançar o fim da _string_ e concluir que não encontrou nenhum resultado
 
 ## Retrocedendo
 
@@ -309,7 +309,7 @@ Ao buscar esta expressão, muitas vezes o ramo superior será percorrido, mesmo 
 
 Quando mais de um ramo encontra um resultado, o primeiro (na ordem em que foi escrito na expressão regular) será considerado.
 
-Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se buscar-mos /^.*x/  em "abcxe", a parte ".*" tentará achar toda a _string_. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da _string_. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
+Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se buscarmos /^.*x/  em "abcxe", a parte ".*" tentará achar toda a _string_. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da _string_. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
 
 É possível escrever expressões regulares que fazem muitos retrocessos. O Problema ocorre quando um padrão encontra um pedaço da _string_ de entrada de muitas maneiras. Por exemplo, se confundimos e escrevemos nossa expressão regular para achar binários e números assim /([01]+)+b/.
 
@@ -615,11 +615,11 @@ Expressões regulares podem ter opções configuradas (_flags_), que são escrit
 
 O construtor _RegExp_ pode ser usado para criar uma expressão regular dinâmica a partir de uma _string_.
 
-Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. Elas simplificarão muito algumas tarefas simples, mas rapidamente se tornarão inusáveis quando aplicadas a tarefas mais complexas. Saber quando usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
+Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. Elas simplificarão muito algumas tarefas simples, mas rapidamente se tornarão inviáveis quando aplicadas a tarefas mais complexas. Saber quando usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
 
 ## Exercícios
 
-É quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expressão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como [debuggex.com](debuggex.com), para ver se a vizualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias _strings_ diferentes.
+É quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expressão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como [debuggex.com](debuggex.com), para ver se a visualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias _strings_ diferentes.
 
 ## Regexp golf
 

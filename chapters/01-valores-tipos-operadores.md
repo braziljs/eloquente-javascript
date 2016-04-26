@@ -39,7 +39,7 @@ Valores do tipo _número_ são, sem muitas surpresas, valores numéricos. Em um 
 
 Coloque isso em um programa e isso fará com que padrões de bits referentes ao número 13 sejam criados e passe a existir dentro da memória do computador.
 
-O JavaScript utiliza um número fixo de bits, mais precisamente 64 deles, para armazenar um único valor numérico. Existem apenas algumas maneiras possíveis que você pode combinar esses 64 bits, ou seja, a quantidade de números diferentes que podem ser representados é limitada. Para um valor _N_ de dígitos decimais, a quantidade de números que pode ser representada é _10^N_ [TODO: arrumar exponencial]. De forma similar, dado 64 dígitos binários, você pode representar 2⁶⁴ número diferentes, que é aproximadamente 18  quintilhões (o número 18 com 18 zeros após ele). Isso é muito.
+O JavaScript utiliza um número fixo de bits, mais precisamente 64 deles, para armazenar um único valor numérico. Existem apenas algumas maneiras possíveis que você pode combinar esses 64 bits, ou seja, a quantidade de números diferentes que podem ser representados é limitada. Para um valor _N_ de dígitos decimais, a quantidade de números que pode ser representada é _10ⁿ_. De forma similar, dado 64 dígitos binários, você pode representar 2⁶⁴ número diferentes, que é aproximadamente 18  quintilhões (o número 18 com 18 zeros após ele). Isso é muito.
 
 A memória do computador costumava ser bem menor e, por isso, as pessoas usavam grupos de 8 ou 16 bits para representar os números. Por isso, era muito fácil extrapolar essa capacidade de armazenamento tão pequena usando números que não cabiam nesse espaço. Hoje em dia, até os computadores pessoais possuem memória suficiente, possibilitando usar grupos de 64 bits, sendo apenas necessário se preocupar em exceder o espaço quando estiver lidando com números extremamente grandes.
 
@@ -131,7 +131,7 @@ _Strings_ não podem ser divididas, multiplicadas nem subtraídas, entretanto, o
 "con" + "cat" + "e" + "nate"
 ```
 
-Existem outras maneiras de manipular as _strings_, as quais serão discutidas quando chegarmos aos métodos no [Capítulo 4](./04-estruturas-de-dados.md) [TODO:] Adicionar link correto com âncora para a sessão mencionada no texto original: http://eloquentjavascript.net/04_data.html#methods [/TODO]
+Existem outras maneiras de manipular as _strings_, as quais serão discutidas quando chegarmos aos métodos no [Capítulo 4](./04-estruturas-de-dados.md#metodos).
 
 ## Operadores Unários
 

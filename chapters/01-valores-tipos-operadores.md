@@ -131,7 +131,7 @@ _Strings_ não podem ser divididas, multiplicadas nem subtraídas, entretanto, o
 "con" + "cat" + "e" + "nate"
 ```
 
-Existem outras maneiras de manipular as _strings_, as quais serão discutidas quando chegarmos aos métodos no [Capítulo 4](./04-estruturas-de-dados.md#metodos).
+Existem outras maneiras de manipular as _strings_, as quais serão discutidas quando chegarmos aos métodos no [Capítulo 4](./04-estruturas-de-dados.md#métodos).
 
 ## Operadores Unários
 

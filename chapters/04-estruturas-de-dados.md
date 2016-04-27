@@ -238,7 +238,7 @@ A _correlação_ é uma medida de dependência entre variáveis ("variáveis" no
 
 Para variáveis binárias (booleanos), o coeficiente _phi_ (_ϕ_) fornece uma boa forma de medir a correlação e é relativamente fácil de ser calculado. Para calcular _ϕ_, precisamos de uma tabela _n_ que contêm o número de vezes que as diversas combinações das duas variáveis foram observadas. Por exemplo, podemos considerar o evento de "comer pizza" e colocá-lo nessa tabela da seguinte maneira:
 
-![Comendo Pizza x transformar-se em esquilo](../img/pizza-squirrel.svg)
+![Comendo Pizza x transformar-se em esquilo](../img/pizza-squirrel.png)
 
 _ϕ_ pode ser calculado usando a seguinte fórmula, onde _n_ se refere à tabela:
 

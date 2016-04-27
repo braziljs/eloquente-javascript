@@ -269,7 +269,7 @@ console.log(result);
 // → 1024
 ```
 
-O contador pode também iniciar com `1` e checar o valor com `<= 10`, mas por razões que iremos ver no [Capítulo 4](./04-estruturas-de-dados.md) [TODO:] Adicionar link correto com âncora para a sessão mencionada no texto original: http://eloquentjavascript.net/04_data.html#array_indexing [/TODO], é uma boa ideia se acostumar a usar a contagem iniciando com zero.
+O contador pode também iniciar com `1` e checar o valor com `<= 10`, mas por razões que iremos ver no [Capítulo 4](./04-estruturas-de-dados.md#user-content-indexação-de-arrays), é uma boa ideia se acostumar a usar a contagem iniciando com zero.
 
 O loop `do` é uma estrutura de controle similar ao `while`. A única diferença entre eles é que o `do` sempre executa suas declarações ao menos uma vez e inicia o teste para verificar se deve parar ou não apenas após a primeira execução. Para demonstrar isso, o teste aparece após o corpo do loop:
 

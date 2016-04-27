@@ -42,6 +42,8 @@ console.log(listOfNumbers[1 - 1]);
 
 A notação para acessar elementos contidos em um _array_ também usa colchetes. Um par de colchetes imediatamente após uma expressão, contendo outra expressão entre esses colchetes, irá procurar o elemento contido na expressão à esquerda que está na posição dada pelo _índice_ determinado pela expressão entre colchetes.
 
+###### Indexação de Arrays
+
 O primeiro índice de um _array_ é o número zero e não o número um. Portanto, o primeiro elemento pode ser acessado usando `listOfNumbers[0]`. Se você não tem experiência com programação, essa convenção pode levar um tempo para se acostumar. Mesmo assim, a contagem baseada em zero é uma tradição de longa data no mundo da tecnologia e, desde que seja seguida consistentemente (que é o caso no JavaScript), ela funciona bem.
 
 ## Propriedades
@@ -236,7 +238,7 @@ A _correlação_ é uma medida de dependência entre variáveis ("variáveis" no
 
 Para variáveis binárias (booleanos), o coeficiente _phi_ (_ϕ_) fornece uma boa forma de medir a correlação e é relativamente fácil de ser calculado. Para calcular _ϕ_, precisamos de uma tabela _n_ que contêm o número de vezes que as diversas combinações das duas variáveis foram observadas. Por exemplo, podemos considerar o evento de "comer pizza" e colocá-lo nessa tabela da seguinte maneira:
 
-![Comendo Pizza x transformar-se em esquilo](../img/pizza-squirrel.svg)
+![Comendo Pizza x transformar-se em esquilo](../img/pizza-squirrel.png)
 
 _ϕ_ pode ser calculado usando a seguinte fórmula, onde _n_ se refere à tabela:
 
@@ -414,7 +416,7 @@ Tudo ficou bem com Jacques por um tempo. Entretanto, alguns anos depois, ele per
 
 Antes de finalizar esse capítulo, gostaria de introduzir alguns outros conceitos relacionados a objetos. Começaremos com alguns métodos normalmente úteis dos _arrays_.
 
-Vimos no [início do capítulo](http://eloquentjavascript.net/04_data.html#array_methods) [TODO: fix final link] os métodos `push` e `pop`, que adicionam e removem elementos no final de um _array_. Os métodos correspondentes para adicionar e remover itens no início de um _array_ são chamados `unshift` e `shift`.
+Vimos no [início do capítulo](#user-content-estrutura-de-dados-objetos-e-array) os métodos `push` e `pop`, que adicionam e removem elementos no final de um _array_. Os métodos correspondentes para adicionar e remover itens no início de um _array_ são chamados `unshift` e `shift`.
 
 ```js
 var todoList = [];

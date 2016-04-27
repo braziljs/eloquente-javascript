@@ -416,7 +416,7 @@ Tudo ficou bem com Jacques por um tempo. Entretanto, alguns anos depois, ele per
 
 Antes de finalizar esse capítulo, gostaria de introduzir alguns outros conceitos relacionados a objetos. Começaremos com alguns métodos normalmente úteis dos _arrays_.
 
-Vimos no [início do capítulo](#user-content-estrutura-de-dados-objetos-e-array) [TODO: fix final link] os métodos `push` e `pop`, que adicionam e removem elementos no final de um _array_. Os métodos correspondentes para adicionar e remover itens no início de um _array_ são chamados `unshift` e `shift`.
+Vimos no [início do capítulo](#user-content-estrutura-de-dados-objetos-e-array) os métodos `push` e `pop`, que adicionam e removem elementos no final de um _array_. Os métodos correspondentes para adicionar e remover itens no início de um _array_ são chamados `unshift` e `shift`.
 
 ```js
 var todoList = [];

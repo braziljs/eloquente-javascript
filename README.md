@@ -25,7 +25,7 @@
 1. [O *Document Object Model*](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/13-document-object-model.md)
 1. [Manipulando Eventos](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/14-manipulando-eventos.md)
 1. [Projeto: Plataforma de Jogo](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/15-projeto-plataforma-de-jogo.md)
-1. [Desenhando no Canvas](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/16-desenhando-n0-canvas.md)
+1. [Desenhando no Canvas](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/16-desenhando-no-canvas.md)
 1. [HTTP](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/17-http.md)
 1. [Formulários e Campos de Formulários](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/18-formularios-e-campos-de-formularios.md)
 1. [Projeto: Um Programa de Pintura](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/19-projeto-um-programa-de-pintura.md)

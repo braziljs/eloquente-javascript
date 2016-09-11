@@ -155,7 +155,7 @@ No decorrer do livro, haverá cinco _projetos_ que descrevem exemplos de program
 
 A parte correspondente à linguagem começa com quatro capítulos que introduzem as estruturas básicas do JavaScript. Serão introduzidas estruturas de controle (tais como a palavra `while` que foi mostrada nessa introdução), funções (escrever suas próprias operações) e estrutura de dados. Após isso, você será capaz de escrever programas simples. Em seguida, os capítulos [5](./chapters/05-funcoes-de-ordem-superior.md) e [6](./chapters/06-a-vida-secreta-dos-objetos.md) irão introduzir técnicas para usar funções e objetos a fim de escrever código mais abstrato e manter a complexidade sob controle.
 
-Após o [primeiro projeto](./chapters/07-pratica-vida-eletronica.md), a primeira parte do livro continua com os capítulos sobre [manipulação e concerto de erros](./chapters/08-erros-e-manipulacao-de-erros.md), [expressões regulares](./chapters/09-expressoes-regulares.md) (uma ferramenta importante para trabalhar com dados de texto) e [modularidade](./chapters/10-modulos.md), que é uma outra arma contra a complexidade. O [segundo projeto](./chapters/pratica-linguagem-de-programacao.md) conclui a primeira parte do livro.
+Após o [primeiro projeto](./chapters/07-pratica-vida-eletronica.md), a primeira parte do livro continua com os capítulos sobre [manipulação e conserto de erros](./chapters/08-erros-e-manipulacao-de-erros.md), [expressões regulares](./chapters/09-expressoes-regulares.md) (uma ferramenta importante para trabalhar com dados de texto) e [modularidade](./chapters/10-modulos.md), que é uma outra arma contra a complexidade. O [segundo projeto](./chapters/pratica-linguagem-de-programacao.md) conclui a primeira parte do livro.
 
 ## Convenções Tipográficas
 

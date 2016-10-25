@@ -23,7 +23,7 @@ Imagine um mar de bits, um oceano deles. Um computador moderno possui mais de tr
 
 ![Bit Sea](../img/bit-sea.png)
 
-Para que seja possível trabalhar com tais quantidades de bits sem ficar perdido, você pode separá-los em partes que representam pedaços de informação. No ambiente JavaScript, essas partes são chamadas de _valores_. Embora todos os valores sejam compostos por bits, cada valor exerce um papel diferente e todo valor possui um tipo que determina o seu papel. Existem seis tipos básicos de valores no JavaScript: números, strings, Booleanos, objetos, funções e valores indefinidos.
+Para que seja possível trabalhar com tais quantidades de bits sem ficar perdido, você pode separá-los em partes que representam pedaços de informação. No ambiente JavaScript, essas partes são chamadas de _valores_. Embora todos os valores sejam compostos por bits, cada valor exerce um papel diferente e todo valor possui um tipo que determina o seu papel. Existem seis tipos básicos de valores no JavaScript: números, _Strings_, _Booleanos_, objetos, funções e valores indefinidos.
 
 Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente, pois você não precisa de nenhum material extra para construí-los e muito menos ter que pagar algo por eles. Você só chama por ele e pronto, você o tem. É claro que eles não são criados do nada. Todo valor precisa estar armazenado em algum lugar e, se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode acabar ficando sem bits. Felizmente, esse é um problema apenas se você precisa deles simultaneamente. A medida que você não utiliza um valor, ele será dissipado, fazendo com que seus bits sejam reciclados, disponibilizando-os para serem usados na construção de outros novos valores.
 
@@ -81,7 +81,7 @@ Para subtração existe o operador `-` e para a divisão usamos o operador `/`.
 
 Quando os operadores aparecem juntos sem parênteses, a ordem que eles serão aplicados é determinada pela _precedência_ deles. O exemplo mostra que a multiplicação ocorre antes da adição. O operador `/` possui a mesma precedência que `*` e, de forma similar, os operadores `+` e `-` possuem a mesma precedência entre si. Quando vários operadores de mesma precedência aparecem próximos uns aos outros, como por exemplo `1 - 2 + 1`, eles são aplicados da esquerda para a direita: `(1 - 2) + 1`.
 
-Essas regras de precedência não são algo que você deve se preocupar. Quando estiver em dúvida, apenas adicione os parênteses.
+Essas regras de precedência não são coisas com as quais você deve se preocupar. Quando estiver em dúvida, apenas adicione os parênteses.
 
 Existe mais um operador aritmético que você talvez não reconheça imediatamente. O símbolo `%` é usado para representar a operação de _resto_. `X % Y` é o resto da divisão de `X` por `Y`. Por exemplo, `314 % 100` produz `14` e `144 % 12` produz `0`. A precedência do operador resto é a mesma da multiplicação e divisão. Você ouvirá com frequência esse operador ser chamado de _modulo_ mas, tecnicamente falando, _resto_ é o termo mais preciso.
 
@@ -89,24 +89,24 @@ Existe mais um operador aritmético que você talvez não reconheça imediatamen
 
 Existem três valores especiais no JavaScript que são considerados números, mas não se comportam como números normais.
 
-Os dois primeiros são `Infinity` e `-Infinity`, que são usados para representar os infinitos positivo e negativo. O cálculo `Infinity - 1` continua sendo `Infinity`, assim como qualquer outra variação dessa conta. Entretanto, não confie muito em cálculos baseados no valor infinito, pois esse valor não é matematicamente sólido, e rapidamente nos levará ao próximo número especial: `NaN`.
+Os dois primeiros são `Infinity` e `-Infinity`, que são usados para representar os infinitos positivo e negativo. O cálculo `Infinity - 1` continua sendo `Infinity`, assim como qualquer outra variação dessa conta. Entretanto, não confie muito em cálculos baseados no valor infinito, pois esse valor não é matematicamente sólido e rapidamente nos levará ao próximo número especial: `NaN`.
 
 `NaN` é a abreviação de “_not a number_” (não é um número), mesmo sabendo que ele é um valor do tipo número. Você receberá esse valor como resultado quando, por exemplo, tentar calcular `0 / 0` (zero dividido por zero), `Infinity - Infinity` ou, então, realizar quaisquer outras operações numéricas que não resultem em um número preciso e significativo.
 
-## Strings
+## _Strings_
 
-O próximo tipo básico de dado é a _string_. _Strings_ são usadas para representar texto, e são escritas delimitando o seu conteúdo entre aspas.
+O próximo tipo básico de dado é a _String_. _Strings_ são usadas para representar texto, e são escritas delimitando o seu conteúdo entre aspas.
 
 ```js
 "Patch my boat with chewing gum"
 'Monkeys wave goodbye'
 ```
 
-Ambas as aspas simples e duplas podem ser usadas para representar _strings_, contanto que as aspas abertas sejam iguais no início e no fim.
+Ambas as aspas simples e duplas podem ser usadas para representar _Strings_, contanto que as aspas abertas sejam iguais no início e no fim.
 
-Quase tudo pode ser colocado entre aspas, e o JavaScript criará um valor do tipo _string_ com o que quer que seja. Entretanto, alguns caracteres são mais difíceis. Você pode imaginar como deve ser complicado colocar aspas dentro de aspas. Além disso, os caracteres _newlines_ (quebra de linhas, usados quando você aperta _Enter_), também não podem ser colocados entre aspas. As _strings_ devem permanecer em uma única linha.
+Quase tudo pode ser colocado entre aspas e o JavaScript criará um valor do tipo _String_ com o que quer que seja. Entretanto, alguns caracteres são mais difíceis. Você pode imaginar como deve ser complicado colocar aspas dentro de aspas. Além disso, os caracteres _newlines_ (quebra de linhas, usados quando você aperta _Enter_), também não podem ser colocados entre aspas. As _Strings_ devem permanecer em uma única linha.
 
-Para que seja possível incluir tais caracteres em uma _string_, a seguinte notação é utilizada: toda vez que um caractere de barra invertida (`\`) for encontrado dentro de um texto entre aspas, ele indicará que o caractere seguinte possui um significado especial. Isso é chamado de _escapar_ o caractere. Uma aspa que se encontra logo após uma barra invertida não representará o fim da _string_ e, ao invés disso, será considerada como parte do texto dela. Quando um caractere `n` aparecer após uma barra invertida, ele será interpretado como uma quebra de linha e, de forma similar, um `t` significará um caractere de tabulação. Considere a seguinte _string_:
+Para que seja possível incluir tais caracteres em uma _String_, a seguinte notação é utilizada: toda vez que um caractere de barra invertida (`\`) for encontrado dentro de um texto entre aspas, ele indicará que o caractere seguinte possui um significado especial. Isso é chamado de _escapar_ o caractere. Uma aspa que se encontra logo após uma barra invertida não representará o fim da _String_ e, ao invés disso, será considerada como parte do texto dela. Quando um caractere `n` aparecer após uma barra invertida, ele será interpretado como uma quebra de linha e, de forma similar, um `t` significará um caractere de tabulação. Considere a seguinte _String_:
 
 ```js
 "This is the first line\nAnd this is the second"
@@ -119,23 +119,23 @@ This is the first line
 And this is the second
 ```
 
-Existe, obviamente, situações nas quais você vai querer que a barra invertida em uma _string_ seja apenas uma barra invertida e não um código especial. Nesse caso, se duas barras invertidas estiverem seguidas uma da outra, elas se anulam e apenas uma será deixada no valor da _string_ resultante. Essa é a forma na qual a _string_ “`A newline character is written like “\n”.`” pode ser representada:
+Existe, obviamente, situações nas quais você vai querer que a barra invertida em uma _String_ seja apenas uma barra invertida e não um código especial. Nesse caso, se duas barras invertidas estiverem seguidas uma da outra, elas se anulam e apenas uma será deixada no valor da _String_ resultante. Essa é a forma na qual a _String_ “`A newline character is written like “\n”.`” pode ser representada:
 
 ```js
 "A newline character is written like \"\\n\"."
 ```
 
-_Strings_ não podem ser divididas, multiplicadas nem subtraídas, entretanto, o operador `+` pode ser usado nelas. Ele não efetua a adição, mas _concatena_, ou seja, junta duas _strings_ em uma única _string_. O próximo exemplo produzirá a _string_ `"concatenate"`:
+_Strings_ não podem ser divididas, multiplicadas nem subtraídas, entretanto, o operador `+` pode ser usado nelas. Ele não efetua a adição, mas _concatena_, ou seja, junta duas _Strings_ em uma única _String_. O próximo exemplo produzirá a _String_ `"concatenate"`:
 
 ```js
 "con" + "cat" + "e" + "nate"
 ```
 
-Existem outras maneiras de manipular as _strings_, as quais serão discutidas quando chegarmos aos métodos no [Capítulo 4](./04-estruturas-de-dados.md#métodos).
+Existem outras maneiras de manipular as _Strings_, as quais serão discutidas quando chegarmos aos métodos no [Capítulo 4](./04-estruturas-de-dados.md#métodos).
 
 ## Operadores Unários
 
-Nem todos os operadores são símbolos, sendo que alguns são escritos como palavras. Um exemplo é o operador `typeof`, que produz um valor do tipo _string_ contendo o nome do tipo do valor que você está verificando.
+Nem todos os operadores são símbolos, sendo que alguns são escritos como palavras. Um exemplo é o operador `typeof`, que produz um valor do tipo _String_ contendo o nome do tipo do valor que você está verificando.
 
 ```js
 console.log(typeof 4.5)
@@ -153,13 +153,13 @@ console.log(- (10 - 2))
 // → -8
 ```
 
-## Valores Booleanos
+## Valores _Booleanos_
 
 Você frequentemente precisará de um valor para distinguir entre duas possibilidades, como por exemplo “sim” e “não”, ou “ligado” e “desligado”. Para isso, o JavaScript possui o tipo _Booleano_, que tem apenas dois valores: verdadeiro e falso (que são escritos como `true` e `false` respectivamente).
 
 ### Comparações
 
-Essa é uma maneira de produzir valores Booleanos:
+Essa é uma maneira de produzir valores _Booleanos_:
 
 ```js
 console.log(3 > 2)
@@ -168,7 +168,7 @@ console.log(3 < 2)
 // → false
 ```
 
-Os sinais `>` e `<` são tradicionalmente símbolos para representar “é maior que” e “é menor que” respectivamente. Eles são operadores binários, e o resultado da aplicação deles é um valor Booleano que indica se eles são verdadeiros nesse caso.
+Os sinais `>` e `<` são tradicionalmente símbolos para representar “é maior que” e “é menor que” respectivamente. Eles são operadores binários, e o resultado da aplicação deles é um valor _Booleano_ que indica se a operação é verdadeira nesse caso.
 
 _Strings_ podem ser comparadas da mesma forma.
 
@@ -177,7 +177,7 @@ console.log("Aardvark" < "Zoroaster")
 // → true
 ```
 
-A forma na qual as _strings_ são ordenadas é mais ou menos alfabética. Letras maiúsculas serão sempre “menores” que as minúsculas, portanto, `“Z” < “a”` é verdadeiro. Além disso, caracteres não alfabéticos (!, -, e assim por diante) também são incluídos nessa ordenação. A comparação de fato, é baseada no padrão _Unicode_, que atribui um número para todos os caracteres que você possa precisar, incluindo caracteres do Grego, Árabe, Japonês, Tâmil e por aí vai. Possuir tais números é útil para armazenar as _strings_ dentro do computador, pois faz com que seja possível representá-las como uma sequência de números. Quando comparamos _strings_, o JavaScript inicia da esquerda para a direita, comparando os códigos numéricos dos caracteres um por um.
+A forma na qual as _Strings_ são ordenadas é mais ou menos alfabética. Letras maiúsculas serão sempre “menores” que as minúsculas, portanto, `“Z” < “a”` é verdadeiro. Além disso, caracteres não alfabéticos (!, -, e assim por diante) também são incluídos nessa ordenação. A comparação de fato, é baseada no padrão _Unicode_, que atribui um número para todos os caracteres que você possa precisar, incluindo caracteres do Grego, Árabe, Japonês, Tâmil e por aí vai. Possuir tais números é útil para armazenar as _Strings_ dentro do computador, pois faz com que seja possível representá-las como uma sequência de números. Quando comparamos _Strings_, o JavaScript inicia da esquerda para a direita, comparando os códigos numéricos dos caracteres um por um.
 
 Outros operadores parecidos são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a) e `!=` (não igual a).
 
@@ -197,7 +197,7 @@ console.log(NaN == NaN)
 
 ## Operadores Lógicos
 
-Existem também operadores que podem ser aplicados aos valores Booleanos. O JavaScript dá suporte a três operadores lógicos: _and_, _or_ e _not_, que podem ser traduzidos para o português como _e_, _ou_ e _não_. Eles podem ser usados para "pensar" de forma lógica sobre Booleanos.
+Existem também operadores que podem ser aplicados aos valores _Booleanos_. O JavaScript dá suporte a três operadores lógicos: _and_, _or_ e _not_, que podem ser traduzidos para o português como _e_, _ou_ e _não_. Eles podem ser usados para "pensar" de forma lógica sobre _Booleanos_.
 
 O operador `&&` representa o valor lógico _and_ ou, em português, _e_. Ele é um operador binário, e seu resultado é apenas verdadeiro se ambos os valores dados à ele forem verdadeiros.
 
@@ -219,7 +219,7 @@ console.log(false || false)
 
 _Not_, em português _não_, é escrito usando um ponto de exclamação (`!`). Ele é um operador unário que inverte o valor que é dado à ele. Por exemplo, `!true` produz `false` e `!false` produz `true`.
 
-Quando misturamos esses operadores Booleanos com operadores aritméticos e outros tipos de operadores, nem sempre é óbvio quando devemos usar ou não os parênteses. Na prática, você normalmente não terá problemas sabendo que, dos operadores que vimos até agora, `||` possui a menor precedência, depois vem o operador `&&`, em seguida vêm os operadores de comparação (`>`, `==`, etc) e, por último, quaisquer outros operadores. Essa ordem foi escolhida de tal forma que, em expressões típicas como o exemplo a seguir, poucos parênteses são realmente necessários:
+Quando misturamos esses operadores _Booleanos_ com operadores aritméticos e outros tipos de operadores, nem sempre é óbvio quando devemos usar ou não os parênteses. Na prática, você normalmente não terá problemas sabendo que, dos operadores que vimos até agora, `||` possui a menor precedência, depois vem o operador `&&`, em seguida vêm os operadores de comparação (`>`, `==`, etc) e, por último, quaisquer outros operadores. Essa ordem foi escolhida de tal forma que, em expressões típicas como o exemplo a seguir, poucos parênteses são realmente necessários:
 
 ```js
 1 + 1 == 2 && 10 * 10 > 50
@@ -261,9 +261,9 @@ console.log(false == 0)
 // → true
 ```
 
-Quando um operador é aplicado a um tipo de valor “errado”, o JavaScript converterá, de forma silenciosa, esse valor para o tipo que ele desejar, usando uma série de regras que muitas vezes não é o que você deseja ou espera. Esse comportamento é chamado de _coerção de tipo_ (ou _conversão de tipo_). Portanto, na primeira expressão, `null` se torna `0` e, na segunda, a string `"5"` se torna o número `5`. Já na terceira expressão, o operador `+` tenta efetuar uma concatenação de string antes de tentar executar a adição numérica e, por isso, o número `1` é convertido para a string `"1"`.
+Quando um operador é aplicado a um tipo de valor “errado”, o JavaScript converterá, de forma silenciosa, esse valor para o tipo que ele desejar, usando uma série de regras que muitas vezes não é o que você deseja ou espera. Esse comportamento é chamado de _coerção de tipo_ (ou _conversão de tipo_). Portanto, na primeira expressão, `null` se torna `0` e, na segunda, a _String_ `"5"` se torna o número `5`. Já na terceira expressão, o operador `+` tenta efetuar uma concatenação de _String_ antes de tentar executar a adição numérica e, por isso, o número `1` é convertido para a _String_ `"1"`.
 
-Quando algo que não pode ser mapeado como um número de forma óbvia (tais como `"five"` ou `undefined`) é convertido para um número, o valor `NaN` é produzido. Quaisquer outras operações aritméticas realizadas com `NaN` continuam produzindo `NaN`, portanto, quando você perceber que está recebendo esse valor em algum lugar inesperado, procure por conversões acidentais de tipo.
+Quando algo que não pode ser mapeado como um número de forma óbvia (tais como `"five"` ou `undefined`) é convertido para um número, o valor `NaN` é produzido. Quaisquer outras operações aritméticas realizadas com `NaN` continuam produzindo `NaN`, portanto, quando você perceber que está recebendo esse valor em algum lugar inesperado, procure por conversões de tipo acidentais.
 
 Quando comparamos valores do mesmo tipo usando o operador `==`, o resultado é fácil de se prever: você receberá verdadeiro quando ambos os valores forem o mesmo, exceto no caso de `NaN`. Por outro lado, quando os tipos forem diferentes, o JavaScript usa um conjunto de regras complicadas e confusas para determinar o que fazer, sendo que, na maioria dos casos, ele tenta apenas converter um dos valores para o mesmo tipo do outro valor. Entretanto, quando `null` ou `undefined` aparece em algum dos lados do operador, será produzido verdadeiro apenas se ambos os lados forem `null` ou `undefined`.
 
@@ -276,15 +276,15 @@ console.log(null == 0);
 
 O último exemplo é um comportamento que normalmente é bastante útil. Quando quiser testar se um valor possui um valor real ao invés de `null` ou `undefined`, você pode simplesmente compará-lo a `null` com o operador `==` (ou `!=`).
 
-Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de conversão de strings e números para valores booleanos afirmam que `0`, `NaN` e empty strings contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro teste se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como esperado.
+Mas e se você quiser testar se algo se refere ao valor preciso `false`? As regras de conversão de _Strings_ e números para valores _Booleanos_ afirmam que `0`, `NaN` e _Strings_ vazias contam como `false`, enquanto todos os outros valores contam como `true`. Por causa disso, expressões como `0 == false` e `"" == false` retornam `true`. Para casos assim, onde você **não** quer qualquer conversão automática de tipos acontecendo, existem dois tipos extras de operadores: `===` e `!==`. O primeiro testa se o valor é precisamente igual ao outro, e o segundo testa se ele não é precisamente igual. Então `"" === false` é falso como esperado.
 
 Usar os operadores de comparação de três caracteres defensivamente, para prevenir inesperadas conversões de tipo que o farão tropeçar, é algo que eu recomendo. Mas quando você tem certeza de que os tipos de ambos os lados serão iguais, ou que eles vão ser ambos `null`/`undefined`, não há problemas em usar os operadores curtos.
 
 ## O Curto-Circuito de && e ||
 
-Os operadores lógicos `&&` e `||` tem uma maneira peculiar de lidar com valores de tipos diferentes. Eles vão converter o valor à sua esquerda para o tipo booleano a fim de decidir o que fazer, mas então, dependendo do operador e do resultado da conversão, eles ou retornam o valor à esquerda *original*, ou o valor à direita.
+Os operadores lógicos `&&` e `||` tem uma maneira peculiar de lidar com valores de tipos diferentes. Eles vão converter o valor à sua esquerda para o tipo _Booleano_ a fim de decidir o que fazer, mas então, dependendo do operador e do resultado da conversão, eles ou retornam o valor à esquerda *original*, ou o valor à direita.
 
-O operador `||` vai retornar o valor à sua esquerda quando ele puder ser convertido em `true`, ou valor à sua direita caso contrário. Ele faz a coisa certa para valores booleanos, e vai fazer algo análogo para valores de outros tipos. Isso é muito útil, pois permite que o operador seja usado para voltar um determinado valor predefinido.
+O operador `||` vai retornar o valor à sua esquerda quando ele puder ser convertido em `true`, caso contrário, retorna o valor à sua direita. Ele faz a coisa certa para valores _Booleanos_, e vai fazer algo análogo para valores de outros tipos. Isso é muito útil, pois permite que o operador seja usado para retornar um determinado valor predefinido.
 
 ```javascript
 
@@ -295,14 +295,14 @@ console.log("Karl" || "user")
 
 ```
 
-O operador `&&` trabalha similarmente, mas ao contrário. Quando o valor à sua esquerda é algo que se torne `false`, ele retorna o valor, e caso contrário ele retorna o valor à sua direita.
+O operador `&&` trabalha similarmente, mas ao contrário. Quando o valor à sua esquerda é algo que se torne `false`, ele retorna o valor e caso contrário, ele retorna o valor à sua direita.
 
 Outro importante propriedade destes 2 operadores é que a expressão a sua direita é avaliada somente quando necessário. No caso de `true || X`, não importa o que `X` é - pode ser uma expressão que faça algo *terrível* - o resultado vai ser verdadeiro, e `X` nunca é avaliado. O mesmo acontece para `false && X`, que é falso, e vai ignorar `X`.
 
 ## Resumo
 
-Nós vimos 4 tipos de valores do JavaScript neste capítulo. Números, strings, booleanos e valores indefinidos.
+Nós vimos 4 tipos de valores do JavaScript neste capítulo. Números, _Strings_, _Booleanos_ e valores indefinidos.
 
-Alguns valores são criados digitando seu nome (`true`, `null`) ou valores (13, `"abc"`). Eles podem ser combinados e transformados com operadores. Nós vimos operadores binários para aritmética (`+`, `-`, `*`, `/`, e `%`), um para concatenação de string (`+`), comparação (`==`, `!=`, `===`, `!==`, `<`, `>`, `<=`, `>=`) e lógica (`&&`, `||`), como também vários operadores unários (`-` para negativar um número, `!` para negar uma lógica, e `typeof` para encontrar o tipo do valor).
+Alguns valores são criados digitando seu nome (`true`, `null`) ou valores (13, `"abc"`). Você pode combinar e transformar valores com operadores. Nós vimos operadores binários para operações aritméticas (`+`, `-`, `*`, `/`, e `%`), um para concatenação de _String_ (`+`), comparação (`==`, `!=`, `===`, `!==`, `<`, `>`, `<=`, `>=`) e lógica (`&&`, `||`), assim como vários operadores unários (`-` para negativar um número, `!` para negar uma lógica, `typeof` para encontrar o tipo do valor) e o operador ternario (?:) para retornar um de dois valores, baseando-se em um terceiro valor.
 
 Isto lhe dá informação suficiente para usar o JavaScript como uma calculadora de bolso, mas não muito mais. O próximo capítulo vai começar a amarrar essas operações básicas conjuntamente dentro de programas básicos.

@@ -40,7 +40,7 @@ No contexto da programação esse tipo de vocabulário é geralmente expressado 
 
 Isto é uma analogia que compara duas receitas de sopa de ervilha:
 
-> "Coloque 1 copo de ervilha por pessoa num recipiente. Adicione água até as ervilhas ficarem cobertas. Deixa as ervilhas na água por no mínimo 12 horas. Tire as ervilhas da água e coloque-as numa panela. Adicione 4 copos de água por pessoa. Cubra a panela e deixe-as cozinhando por duas horas. Pegue meia cebola por pessoa, corte em pedaços, adicione às ervilhas. Pegue um talo de aipo por pessoa, corte em pedaços e adicione às ervilhas. Pegue uma cenoura por pessoa, corte em pedaços! Adicione às ervilhas. Cozinhe por 10 minutos".
+> "Coloque 1 copo de ervilha por pessoa num recipiente. Adicione água até as ervilhas ficarem cobertas. Deixe as ervilhas na água por no mínimo 12 horas. Tire as ervilhas da água e coloque-as numa panela. Adicione 4 copos de água por pessoa. Cubra a panela e deixe-as cozinhando por duas horas. Pegue meia cebola por pessoa, corte em pedaços, adicione às ervilhas. Pegue um talo de aipo por pessoa, corte em pedaços e adicione às ervilhas. Pegue uma cenoura por pessoa, corte em pedaços! Adicione às ervilhas. Cozinhe por 10 minutos".
 
 E a segunda receita:
 

@@ -85,7 +85,7 @@ fatRabbit.speak("I could sure use a carrot right now.");
 //   right now.'
 ```
 
-O código acima usa a palavra chava `this` para dar a saída do tipo de coelho que está falando. Lembrando que ambos os métodos `apply` e `bind` podem usar o
+O código acima usa a palavra-chave `this` para dar a saída do tipo de coelho que está falando. Lembrando que ambos os métodos `apply` e `bind` podem usar o
 primeiro argumento para simular chamadas de métodos. Esse primeiro argumento, é
 na verdade, usado para passar um valor ao `this`.
 

@@ -2,7 +2,7 @@
 > "O problema com as linguagens orientadas a objeto é que elas têm tudo
 implícito no ambiente que elas carregam consigo. Você queria banana, mas o que
 você teve foi um gorila segurando a banana e toda a floresta."
-> `Joe Armstrong, entrevistado em Coders at Work``
+> `Joe Armstrong, entrevistado em Coders at Work`
 
 Quando um programador diz "objeto", isso é um termo carregado. Na minha
 profissão, objetos são a maneira de viver, o sujeito das guerras santas, e um

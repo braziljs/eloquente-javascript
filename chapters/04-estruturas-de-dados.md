@@ -183,7 +183,7 @@ Nós vimos que os valores de objetos podem ser modificados. Os tipos de valores 
 
 Por outro lado, no caso de objetos, o conteúdo de um valor pode ser modificado quando alteramos suas propriedades.
 
-Quando temos dois números, 120 e 120, podemos considerá-los exatamente os mesmos números, mesmo se eles não fazem referência aos mesmos bits físicos. Entretanto, no caso de objetos há uma diferença entre ter duas referências para o mesmo objeto e ter dois objetos diferentes que possuem as mesmas propriedades. Considere o código a seguir:
+Quando temos dois números, 120 e 120, podemos considerá-los exatamente o mesmo número, quer se refiram ou não aos mesmos bits físicos. Entretanto, no caso de objetos há uma diferença entre ter duas referências para o mesmo objeto e ter dois objetos diferentes que possuem as mesmas propriedades. Considere o código a seguir:
 
 ```js
 var object1 = {value: 10};

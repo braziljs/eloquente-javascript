@@ -4,11 +4,11 @@ Esse livro é sobre como fazer com que os computadores façam exatamente o que v
 
 ![Communicating with a computer](../img/computer.png)
 
-Nós encontramos duas maneiras efetivas para aproximar o espaço vazio que existe na comunicação entre nós, organismos biológicos com um talento para o raciocínio espacial e social, e os computadores, que não possuem sentimentos e são apenas manipuladores de dados. A primeira delas, é baseada em usar nosso senso do mundo físico e construir interfaces que simulam esse mundo, permitindo manipular estruturas na tela com os nossos dedos. Isso funciona muito bem para interações casuais com a máquina.
+Nós encontramos duas maneiras efetivas para aproximar o espaço vazio que existe na comunicação entre nós, organismos biológicos com um talento para o raciocínio espacial e social, e os computadores, que não possuem sentimentos e são apenas manipuladores de dados. A primeira delas, é baseada em usar nosso senso do mundo físico e construir interfaces que simulam esse mundo, permitindo manipular as estruturas na tela com os nossos dedos. Isso funciona muito bem para interações casuais com a máquina.
 
-Entretanto, ainda não encontramos uma maneira boa de usar a abordagem de apontar e clicar para comunicar ao computador as coisas que o designer da interface não previu. Para interfaces mais gerais, como instruir o computador a executar tarefas arbitrárias, tivemos mais sorte com uma abordagem que utiliza nosso talento para linguagem: ensinar uma linguagem à maquina.
+Entretanto, ainda não encontramos uma maneira boa de usar a abordagem de apontar e clicar para comunicar ao computador as coisas que o designer da interface não previu. Para interfaces mais gerais, como instruir o computador a executar tarefas arbitrárias, tivemos mais sorte com uma abordagem que utiliza nosso talento para linguagem: ensinar uma linguagem a máquina.
 
-As linguagens humanas possibilitam que palavras e frases sejam combinadas de diferentes maneiras, nos permitindo falar diferentes coisas. As linguagens de computador, normalmente menos flexíveis em sua gramática, seguem um princípio similar.
+As linguagens humanas possibilitam que palavras e frases sejam combinadas de diferentes maneiras, nos permitindo falar coisas diferentes. As linguagens de computador, normalmente menos flexíveis em sua gramática, seguem um princípio similar.
 
 O uso da computação casual se tornou cada vez mais popular nos últimos vinte anos e as interfaces baseadas em linguagens, que era a forma na qual as pessoas interagiam com os computares, foram amplamente substituídas por interfaces gráficas. Mesmo assim, elas continuam por aí, basta saber onde procurá-las. Uma linguagem específica chamada JavaScript está presente em praticamente todos os navegadores e, por isso, está disponível em quase todos os aparelhos.
 
@@ -125,7 +125,7 @@ Uma boa linguagem de programação ajuda o programador permitindo-o conversar em
 
 O JavaScript foi introduzido em 1995 como uma forma de adicionar programas às páginas web do navegador Netscape. A linguagem, desde então, foi adotada por todos os outros grandes navegadores web que possuem interfaces gráficas. Ele tornou as aplicações modernas possíveis, fazendo com que você não tenha que recarregar a página inteira quando for necessário realizar interações diretas com a aplicação. Além disso, ele é usado em páginas web mais tradicionais, fornecendo diferentes maneiras de criar interatividade e inteligência.
 
-É importante observar que o JavaScript não tem praticamente nada a ver com a linguagem de programação Java. O nome parecido foi inspirado por considerações de marketing ao invés do bom senso. Quando o JavaScript foi introduzido, a linguagem Java estava sendo fortemente divulgada e ganhando bastante popularidade. Assim, alguém pensou que poderia ser uma boa ideia tentar aproveitar um pouco desse sucesso. Hoje, estamos presos a esse nome.
+É importante observar que o JavaScript não tem praticamente nada a ver com a linguagem de programação Java. O nome parecido foi inspirado por considerações de marketing ao invés do bom-senso. Quando o JavaScript foi introduzido, a linguagem Java estava sendo fortemente divulgada e ganhando bastante popularidade. Assim, alguém pensou que poderia ser uma boa ideia tentar aproveitar um pouco desse sucesso. Hoje, estamos presos a esse nome.
 
 Depois que o JavaScript foi adotado fora do Netscape, um documento padrão foi escrito para descrever a maneira na qual a linguagem deveria funcionar, garantindo que as diferentes partes dos softwares que afirmavam suportar JavaScript estavam, de fato, falando sobre a mesma linguagem. Esse documento é chamado de padrão ECMAScript, nomeado pela organização internacional Ecma, que foi responsável pela padronização. Na prática, os termos ECMAScript e JavaScript podem ser usados como sinônimos, pois são dois nomes para a mesma linguagem.
 
@@ -159,7 +159,7 @@ Após o [primeiro projeto](./chapters/07-pratica-vida-eletronica.md), a primeira
 
 ## Convenções Tipográficas
 
-Nesse livro, os textos escritos em fonte `mono-espaçada` representarão elementos de programas. Algumas vezes serão fragmentos autossuficientes e em outras, apenas referências para alguma parte de um programa próximo. Programas (os quais você já viu alguns) são escritos assim:
+Nesse livro, os textos escritos em fonte `mono espaçada` representarão elementos de programas. Algumas vezes serão fragmentos autossuficientes e em outras, apenas referências para alguma parte de um programa próximo. Programas (os quais você já viu alguns) são escritos assim:
 
 ```js
 function fac(n) {

@@ -200,7 +200,7 @@ Se nós tivermos mais que dois caminhos que queremos escolher, múltiplos pares 
 <pre data-language="javascript" class="prettyprint lang-javascript snippet cm-s-default">
 var num = Number(prompt("Digite um número", "0"));
 
-if (num < 0)
+if (num < 10)
     alert("Pequeno");
 else if (num < 100)
     alert("Médio");

@@ -122,7 +122,7 @@ console.log( /'\d*'/.test("''") );
 
 O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Então, algo com um asterisco depois não impede um padrão de ser achado, apenas retornando zero resultados.
 
-Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou mais vezes. Neste exemplo, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente.
+Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou uma vez. Neste exemplo, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente.
 
 ```js
 var neighbor = /neighbou?r/;

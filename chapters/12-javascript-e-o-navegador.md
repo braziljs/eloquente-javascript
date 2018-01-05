@@ -142,7 +142,7 @@ Perceba que eu tive que usar aspas simples para a *string* do atributo `onclick`
 
 ## Na caixa de areia
 
-Executar programas baixados da internet é potencialmente perigoso. Você não sabe muito sobre as pessoas por trás da maioria dos sites que visita e eles não necessariamente são bem intencionados. Executar programas de pessoas que tenham más intenções é como você tem seu computador infectado por vírus, seus dados roubados e suas contas *hackeadas*.
+Executar programas baixados da internet é potencialmente perigoso. Você não sabe muito sobre as pessoas por trás da maioria dos sites que visita e elas não necessariamente são bem intencionadas. Executar programas de pessoas que tenham más intenções é como ter seu computador infectado por vírus, seus dados roubados e suas contas *hackeadas*.
 
 Contudo, a atração da *Web* é que você pode navegar sem necessariamente confiar nas páginas que visita. Esse é o motivo pelo qual os navegadores limitam severamente as funções que um programa JavaScript pode fazer: eles não podem bisbilhotar os arquivos do seu computador ou modificar qualquer coisa que não esteja relacionada a página em que foi incorporado.
 

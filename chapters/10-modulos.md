@@ -243,8 +243,8 @@ function require(name) {
   var exports = {}, mod = {exports: exports};
   code(exports, mod);
 
-  require.cache[name] = module.exports;
-  return module.exports;
+  require.cache[name] = mod.exports;
+  return mod.exports;
 }
 require.cache = Object.create(null);
 ```

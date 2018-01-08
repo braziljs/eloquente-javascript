@@ -240,11 +240,11 @@ function require(name) {
     return require.cache[name];
 
   var code = new Function("exports, module", readFile(name));
-  var exports = {}, mod = {exports: exports};
-  code(exports, mod);
+  var exports = {}, module = {exports: exports};
+  code(exports, module);
 
-  require.cache[name] = mod.exports;
-  return mod.exports;
+  require.cache[name] = module.exports;
+  return module.exports;
 }
 require.cache = Object.create(null);
 ```

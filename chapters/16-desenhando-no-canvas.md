@@ -1,6 +1,6 @@
 ## Desenhando no canvas
 
-> Desenhar é uma decepção.
+> Desenhar é enganar.
 
 > M.C. Escher, citado por Bruno Ernst em The Magic Mirror of M.C. Escher.
 

@@ -2,8 +2,6 @@
 
 **Uma moderna introdução ao JavaScript, programação e maravilhas digitais.**
 
-> **Mantenedor:** -
-
 ![JavaScript Eloquente](img/eloq-js.png)
 
 ## Conteúdo do Livro

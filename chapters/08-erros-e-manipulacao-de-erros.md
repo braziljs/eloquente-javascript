@@ -10,19 +10,19 @@ Programas são pensamentos “cristalizados”. Algumas vezes, esses pensamentos
 
 Falhas em um programa são normalmente chamadas de *bugs*, e podem ser causadas por erros inseridos pelo programador ou problemas em outros sistemas que a aplicação interage. Alguns *bugs* são imediatamente aparentes, enquanto outros são sutis e podem ficar escondidos em um sistema por anos.
 
-Muitas vezes os problemas aparecem quando um programa executa de uma forma que o programador não considerou originalmente. As vezes, tais situações são inevitáveis. Quando o usuário insere um dado inválido, isso faz com que a aplicação fique em uma situação difícil. Tais situações devem ser antecipadas e tratadas de alguma maneira.
+Muitas vezes os problemas aparecem quando um programa executa de uma forma que o programador não considerou originalmente. Às vezes, tais situações são inevitáveis. Quando o usuário insere um dado inválido, isso faz com que a aplicação fique em uma situação difícil. Tais situações devem ser antecipadas e tratadas de alguma maneira.
 
 ## Erros do programador
 
-O nosso objetivo é simples quando se trata de erros do programador. Devemos encontrá-los e corrigi-los. Tais erros podem variar entre erros simples que faz o computador reclamar assim que ele tenta executar o programa ou erros sutis causado por uma compreensão errada da lógica do programa levando a resultados incorretos, podendo ser constante ou em apenas algumas condições específicas. Esse último tipo de erros pode levar semanas para ter um diagnostico correto.
+O nosso objetivo é simples quando se trata de erros do programador. Devemos encontrá-los e corrigi-los. Tais erros podem variar entre erros simples que faz o computador reclamar assim que ele tenta executar o programa ou erros sutis causado por uma compreensão errada da lógica do programa levando a resultados incorretos, podendo ser constante ou em apenas algumas condições específicas. Esse último tipo de erros pode levar semanas para ter um diagnóstico correto.
 
-O nível de ajuda que as linguagens oferece para encontrar os erros variam bastante. Isso não é nenhuma surpresa pois o JavaScript está no "quase não ajuda em nada" no final dessa escala. Algumas linguagens exigem os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso da a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma incorreta.
+O nível de ajuda que as linguagens oferecem para encontrar os erros variam bastante. Isso não é nenhuma surpresa pois o JavaScript está no "quase não ajuda em nada" no final dessa escala. Algumas linguagens exigem os tipos de todas as suas variáveis e expressões antes mesmo de executar; isso dá a possibilidade do programa nos dizer imediatamente quando um tipo é usado de forma incorreta.
 JavaScript considera os tipos somente na execução do programa e mesmo assim ele permite que você faça algumas coisas visivelmente absurdas sem dar nenhum tipo de aviso como por exemplo: `x = true "macaco" *`.
 
-Há algumas coisas que o JavaScript não se queixam. Mas escrever um programa que é sintaticamente incorreto faz com que ele nem execute e dispare um erro imediatamente.
+Há algumas coisas que o JavaScript não se queixa. Mas escrever um programa que é sintaticamente incorreto faz com que ele nem execute e dispare um erro imediatamente.
 Existem outras coisas como, chamar algo que não é uma função ou procurar uma propriedade em um valor indefinido, isso causa um erro a ser relatado somente quando o programa entrar em execução e encontrar essa ação que não tem sentido.
 
-Mas muitas das vezes um cálculo absurdo pode simplesmente produzir um `NaN` (não um número) ou um valor indefinido. O programa irá continua alegremente convencido de que está fazendo algo correto. O erro vai se manifestar somente mais tarde, depois que o valor falso passou por várias funções. Não que isso venha desencadear um erro em tudo, mas isso pode silenciosamente causar uma série de saídas erradas. Encontrar a fonte de tais problemas são considerados difíceis.
+Mas muitas das vezes um cálculo absurdo pode simplesmente produzir um `NaN` (não um número) ou um valor indefinido. O programa irá continuar alegremente convencido de que está fazendo algo correto. O erro vai se manifestar somente mais tarde, depois que o valor falso passou por várias funções. Não que isso venha desencadear um erro em tudo, mas isso pode silenciosamente causar uma série de saídas erradas. Encontrar a fonte de tais problemas são considerados difíceis.
 
 O processo de encontrar erros (bugs) nos programas é chamado de depuração.
 
@@ -41,9 +41,9 @@ canYouSpotTheProblem();
 // → ReferenceError: counter is not defined
 ````
 
-Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no exemplo, o JavaScript cria uma variável global para utiliza-la, no entanto no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
+Normalmente, quando você esquece de colocar `var` na frente de sua variável como acontece no exemplo, o JavaScript cria uma variável global para utilizá-la, no entanto no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
 
-Outra mudança no modo estrito é que esta ligação tem o valor `undefined` para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referencia do objeto é do escopo global. Então se você acidentalmente chamar um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
+Outra mudança no modo estrito é que esta ligação tem o valor `undefined` para funções que não são chamadas como métodos. Ao fazer tal chamada fora do modo estrito a referência do objeto é do escopo global. Então se você acidentalmente chamar um método ou um construtor incorretamente no modo estrito o JavaScript produzirá um erro assim que ele tentar ler algo com isso ao invés de seguir trabalhando normalmente com a criação e leitura de variáveis globais no objeto global.
 
 Por exemplo, considere o seguinte código que chama um construtor sem a nova palavra-chave, na qual seu objeto não vai se referir a um objeto recém-construído:
 
@@ -112,7 +112,7 @@ Escrevendo testes como este tende a parecer um pouco repetitivo e um código est
 
 ## Depuração
 
-Você consegue perceber que há algo errado com o seu programa quando ele esta se comportando mal ou produzindo erros; o próximo passo é descobrir qual é o problema.
+Você consegue perceber que há algo errado com o seu programa quando ele está se comportando mal ou produzindo erros; o próximo passo é descobrir qual é o problema.
 
 Às vezes é óbvio. A mensagem de erro vai apontar para a linha específica; e se você olhar para a descrição do erro e para linha de código muitas vezes você irá entender o problema.
 
@@ -214,7 +214,7 @@ try {
 }
 ````
 
-A palavra-chave `throw` é usada para gerar uma exceção. Para tratar uma excessão basta envolver um pedaço de código em um bloco `try`, seguido pela palavra-chave `catch`. Quando o código no bloco `try` causa uma exceção a ser lançada o bloco `catch` é chamado. O nome da variável (entre parênteses) após captura será vinculado ao valor de exceção. Após o termino do bloco `catch` ou do bloco `try` o controle prossegue sob toda a instrução `try/catch`.
+A palavra-chave `throw` é usada para gerar uma exceção. Para tratar uma exceção basta envolver um pedaço de código em um bloco `try`, seguido pela palavra-chave `catch`. Quando o código no bloco `try` causa uma exceção a ser lançada o bloco `catch` é chamado. O nome da variável (entre parênteses) após captura será vinculado ao valor de exceção. Após o término do bloco `catch` ou do bloco `try` o controle prossegue sob toda a instrução `try/catch`.
 
 Neste caso usaremos o construtor de erro para lançar o nosso valor de exceção. Este é um construtor JavaScript normal que cria um objeto com uma propriedade de mensagem. Em ambientes de JavaScript modernos instâncias deste construtor também coletam informações para o `stack` e sobre chamadas que existia quando a exceção foi criado, o chamado `stack` de rastreamento. Esta informação é armazenada na propriedade do `stack` e pode ser útil ao tentar depurar um problema: ela nos diz a função precisa de onde ocorreu o problema e que outras funções que levou até a chamada onde ocorreu a falha.
 

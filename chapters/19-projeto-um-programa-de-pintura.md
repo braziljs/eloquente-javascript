@@ -376,7 +376,7 @@ Nós agora temos um programa de pintura funcionando. Execute o código abaixo pa
 </body>
 ```
 
-###Exercícios
+## Exercícios
 
 Ainda há muito espaço para melhorias nesse programa. Vamos adicionar mais algumas funcionalidades como exercício.
 

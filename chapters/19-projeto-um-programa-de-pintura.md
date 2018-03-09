@@ -11,7 +11,7 @@ Nosso aplicativo será um programa de desenho baseado na web, aos moldes do Micr
 
 Pintar pelo computador é ótimo. Você não precisa se preocupar com materiais, habilidades ou talento. Você apenas precisa começar a manchar.
 
-##Implementação
+## Implementação
 
 A interface para o programa de pintura mostra um grande elemento `<canvas>` na parte superior, com os campos do formulário abaixo dele. O usuário desenha na imagem ao selecionar uma ferramenta de um campo `<select>` e em seguida clicando ou arrastando em toda a tela. Existem ferramentas para desenhar linhas, apagar partes da imagem, adicionar texto e assim por diante.
 
@@ -23,7 +23,7 @@ Você pode carregar uma imagem no programa de duas formas. A primeira usa um cam
 
 Imagens são salvas em um lugar atípico. O link de salvar está no canto direito da imagem ao lado do tamanho do pincel. Ele pode ser seguido, compartilhado ou salvo. Eu vou explicar como isso é possível em um momento.
 
-##Construindo o DOM
+## Construindo o DOM
 
 A interface do nosso programa é criado a partir de mais de 30 elementos DOM. Nós precisamos construir esses de alguma maneira.
 
@@ -53,7 +53,7 @@ function elt(name, attributes) {
 
 Isso nos permite criar elementos facilmente, sem fazer nosso código fonte tão longo e maçante quanto um contrato de usuário final corporativo.
 
-##A fundação
+## A fundação
 
 O núcleo do nosso programa é a função `createPaint`, que acrescenta a interface de pintura em um elemento do DOM que é dado como argumento. Porque nós queremos construir nosso programa pedaço por pedaço, definimos um objeto chamado `controls`, que realizará funções para inicializar vários controles abaixo da imagem.
 
@@ -76,7 +76,7 @@ Cada controle tem acesso ao contexto da tela de desenho e, através da proprieda
 
 Nós envolvemos a tela e os controles em elementos `<div>` com classes que seja possível adicionar um pouco de estilo, como uma borda cinza envolta da imagem.
 
-##Ferramenta de seleção
+## Ferramenta de seleção
 
 O primeiro controle que nós adicionamos é o elemento `<select>` que permite o usuário a selecionar uma ferramenta de desenho. Tal como com os controles, vamos usar um objeto para coletar as várias ferramentas de modo que não temos que codificá-las em um só lugar e nós podemos adicionar ferramentas novas mais tarde. Esse objeto associa os nomes das ferramentas com a função que deverá ser chamada quando ela for selecionada e quando for clicado na tela.
 
@@ -167,7 +167,7 @@ A ferramenta `apagar` define `globalCompositeOperation` para `destination-out`, 
 
 Isso nos dá duas ferramentas para nosso programa de pintura. Nós podemos desenhar linhas pretas em um único pixel de largura (o padrão `strokeStyle` e `lineWidth` para uma tela) e apagá-los novamente. É um trabalho, mesmo que ainda bastante limitado, programa de pintura.
 
-###Cor e tamanho do pincel
+### Cor e tamanho do pincel
 
 Partindo do princípio que os usuários vão querer desenhar em cores diferentes do preto e usar tamanhos diferentes de pincéis, vamos adicionar controles para essas duas definições.
 
@@ -205,7 +205,7 @@ controls.brushSize = function(cx) {
 
 O código gera opções a partir de uma `array` de tamanhos de pincel e, novamente, garante que o `lineWidth` seja atualizado quando um tamanho de pincel é escolhido.
 
-###Salvando
+### Salvando
 
 Para explicar a implementação do link salvar, eu preciso falar sobre `data URLs`. Um `data URL` é uma URL com dados: como seu protocolo. Ao contrário de `http`: normal e `https`: URLS, URLs de dados não apontam para algum recurso mas sim, contém todo o recurso em si. Esta é uma URL de dados contendo um simples documento HTML.
 
@@ -249,7 +249,7 @@ Para evitar esse tipo vazamento de informações, os navegadores irá deixar a t
 
 É por isso que precisamos das instruções `try/catch` na função `update` para o link salvar. Quando o `canvas` ficou corrompido, chamando `toDataURL` irá lançar uma exceção que é uma instância do `SecurityError`. Quando isso acontece, nós definimos o link para apontar para outro tipo de URL, usando o `javascript`: protocolo. Esses links simplesmente executam o script dado após os dois pontos para que o link irá mostrar uma janela de `alert` informando o usuário do problema quando é clicado.
 
-###Carregando arquivos de imagem
+### Carregando arquivos de imagem
 
 Os dois controles finais são usados para carregar arquivos de imagens locais e a partir de URLs. Vamos precisar da seguinte função auxiliar, que tenta carregar um arquivo de imagem a partir de uma URL e substitui o conteúdo do `canvas` por ela.
 
@@ -306,7 +306,7 @@ controls.openURL = function(cx) {
 
 Nós temos agora definidos todos os controles que o nosso simples programa de pintura precisa, mas isso ainda poderia usar mais algumas ferramentas.
 
-###Finalizando
+### Finalizando
 
 Nós podemos facilmente adicionar uma ferramenta de texto que peça para o usuário qual é o texto que deve desenhar.
 
@@ -380,7 +380,7 @@ Nós agora temos um programa de pintura funcionando. Execute o código abaixo pa
 
 Ainda há muito espaço para melhorias nesse programa. Vamos adicionar mais algumas funcionalidades como exercício.
 
-###Retângulos
+### Retângulos
 
 Definir uma ferramenta chamada `Retângulo` que preenche um retângulo (veja o método `fillRect` a partir do [Capítulo 16](http://eloquentjavascript.net/16_canvas.html#fill_stroke)) com a cor atual. O retângulo deve espalhar a partir do ponto onde o usuário pressionar o botão do mouse para o ponto onde ele é liberado. Note-se que este último pode estar acima ou a esquerda do primeiro.
 
@@ -411,7 +411,7 @@ Mostrando o retângulo durante o arrastar do mouse requer um conjunto semelhante
 
 Você pode, então, criar uma `<div>` e definir seu `style.position` como `absolute`. Ao definir os estilos de posicionamento, não se esqueça de acrescentar `px` para os números. O nó deve ser adicionado ao documento (você pode acrescentá-la à `document.body`) e também remover novamente quando o arrasto do mouse terminar e o retângulo real for desenhado na tela.
 
-###Seletor de cores
+### Seletor de cores
 
 Outra ferramenta que é comumente encontrada em programas gráficos é um seletor de cores, o que permite que o usuário clique na imagem e seleciona a cor sob o ponteiro do mouse. Construa este.
 
@@ -456,13 +456,13 @@ O método `getImageData` está sujeito as mesmas restrições como `toDataURL` i
   <script>createPaint(document.body);</script>
 </body>
 ```
-####Exibir dicas
+#### Exibir dicas
 
 Você de novo vai precisar usar `relativePos` para descobrir qual pixel foi clicado. A função `pixelAt` no exemplo demonstra como obter os valores para um determinado pixel. Colocar eles em uma `string rgb` exige apenas algumas concatenações.
 
 Certifique-se de verificar se a exceção que você pegar é uma instância de `SecurityError` de modo que você não trate acidentalmente o tipo errado de exceção.
 
-###Preenchimento
+### Preenchimento
 
 Este é um exercício mais avançado do que os dois anteriores, e isso vai exigir que você projete uma solução não trivial para um problema complicado. Certifique-se de que você tem bastante tempo e paciência antes de começar a trabalhar neste exercício e não desanime por falhas iniciais.
 
@@ -497,7 +497,7 @@ Eu recomendo chamando `fillRect` para pixels individuais quando um pixel que dev
 </body>
 ```
 
-####Exibir dicas
+#### Exibir dicas
 
 Dado um par de coordenadas de partida e os dados da imagem para todo o canvas, esta abordagem deve funcionar:
 

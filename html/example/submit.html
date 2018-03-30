@@ -1,0 +1,22 @@
+<!doctype html>
+<title>Example form target</title>
+
+<body style="font-family: arial">
+
+<p>You submitted...</p>
+
+<pre style="font: inherit"></pre>
+
+<script>
+  function dec(str) {
+    return decodeURIComponent(str.replace(/\+/g, " "));
+  }
+
+  document.querySelector("pre").textContent =
+    document.location.search.slice(1).split("&").map(param => {
+      let [name, value] = param.split("=");
+      return dec(name) + ": " + (dec(value) || "(nothing)");
+    }).join("\n");
+</script>
+
+</body>

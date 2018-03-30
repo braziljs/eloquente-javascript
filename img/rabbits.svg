@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="611" height="259" viewBox="-2 -82 611 259"><style type="text/css">
+    @font-face {
+      font-family: 'PT Mono';
+      font-style: normal;
+      font-weight: 400;
+      src: local('PT Mono'), local('PTMono-Regular'), url(http://themes.googleusercontent.com/static/fonts/ptmono/v1/jmle3kzCPnW8O7_gZGRDlQ.woff) format('woff');
+    }
+    .objtext { font-family: "PT Mono"; font-size: 14px; stroke: none; }
+    .objbox { border-radius: 2px; fill: white; stroke: black }
+    .sep { stroke: #666 }
+  </style>
+<g><g><rect x="208.5" y="123.5" width="200" height="51" class="objbox" rx="2" ry="2"></rect><text x="218.5" y="143.5" class="objtext">toString: &lt;function&gt;</text><text x="218.5" y="163.5" class="objtext">...</text></g><g><rect x="120.5" y="77.5" width="176" height="51" class="objbox" rx="2" ry="2"></rect><text x="130.5" y="97.5" class="objtext">teeth: "small"</text><text x="130.5" y="117.5" class="objtext">speak: &lt;function&gt;</text></g><g><rect x="0.5" y="0.5" width="240" height="82" class="objbox" rx="2" ry="2"></rect><text x="10" y="20" class="objtext">killerRabbit</text><text x="10" y="51" class="objtext">teeth: "long, sharp, ..."</text><text x="10" y="71" class="objtext">adjective: "killer"</text><path d="M 0.5 31.5 L 240.5 31.5" class="sep"></path></g><g><rect x="280.5" y="-79.5" width="112" height="62" class="objbox" rx="2" ry="2"></rect><text x="290.5" y="-59.5" class="objtext">Rabbit</text><text x="290.5" y="-28.5" class="objtext">prototype</text><path d="M 280.5 -48.5 L 392.5 -48.5" class="sep"></path></g><path d="M 326.5 -23.5 L 256.5 77.5" class="sep"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" stroke="none" fill="rgb(102, 102, 102)" transform="translate(256.5 77.5) rotate(214.72464183512187) scale(1)"></path><g><rect x="422.5" y="-9.5" width="184" height="102" class="objbox" rx="2" ry="2"></rect><text x="432.5" y="10.5" class="objtext">Object</text><text x="432.5" y="41.5" class="objtext">create: &lt;function&gt;</text><text x="432.5" y="61.5" class="objtext">prototype</text><text x="432.5" y="81.5" class="objtext">...</text><path d="M 422.5 21.5 L 606.5 21.5" class="sep"></path></g><path d="M 428.5 64.5 L 328.5 123.5" class="sep"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" stroke="none" fill="rgb(102, 102, 102)" transform="translate(328.5 123.5) rotate(239.4593951503185) scale(1)"></path></g></svg>

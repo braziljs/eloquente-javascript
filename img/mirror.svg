@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="324" height="152" viewBox="-62 -84 324 152"><style type="text/css">
+    @font-face {
+      font-family: 'PT Mono';
+      font-style: normal;
+      font-weight: 400;
+      src: local('PT Mono'), local('PTMono-Regular'), url(http://themes.googleusercontent.com/static/fonts/ptmono/v1/jmle3kzCPnW8O7_gZGRDlQ.woff) format('woff');
+    }
+    .caption { font-family: 'PT Mono'; font-size: 13px; }
+  </style>
+<g><path d="M 0.5 -59.5 L 0.5 60.5" stroke="black"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" stroke="none" fill="rgb(0, 0, 0)" transform="translate(0.5 60.5) rotate(180) scale(1)"></path><path d="M -59.5 0.5 L 60.5 0.5" stroke="black"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" stroke="none" fill="rgb(0, 0, 0)" transform="translate(60.5 0.5) rotate(90) scale(1)"></path><path d="M 0.5 -59.5 L 0.5 60.5" stroke="black" transform="translate(200 0) scale(-1 1)"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" transform="translate(200 0) scale(-1 1) translate(0.5 60.5) rotate(180) scale(1)" stroke="none" fill="rgb(0, 0, 0)"></path><path d="M -59.5 0.5 L 60.5 0.5" stroke="black" transform="translate(200 0) scale(-1 1)"></path><path d="M 0 0 L 3 8 L 0 7 L -3 8 Z" transform="translate(200 0) scale(-1 1) translate(60.5 0.5) rotate(90) scale(1)" stroke="none" fill="rgb(0, 0, 0)"></path><path d="M 100.5 -64.5 L 100.5 65.5" stroke="#888"></path><text x="76" y="-70" fill="#888" class="caption">mirror</text><path d="M -15 -25 L 30 0 L -15 25 z" stroke="#0a0" fill="none" transform="translate(100 0)"></path><path d="M -15 -25 L 30 0 L -15 25 z" stroke="#44f" fill="none" transform="translate(200 0)"></path><path d="M -15 -25 L 30 0 L -15 25 z" stroke="#f44" fill="none" transform="scale(-1 1)"></path><path d="M -15 -25 L 30 0 L -15 25 z" stroke="black" fill="none" transform="scale(-1 1) translate(-100 0)"></path><text x="72" y="-18" fill="#0a0" class="caption">1</text><text x="172" y="-18" fill="#44f" class="caption">2</text><text x="20" y="-18" fill="#f44" class="caption">3</text><text x="120" y="-18" fill="black" class="caption">4</text></g></svg>

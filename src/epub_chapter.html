@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en-US">
+  <head>
+    <title><<t $in.title>></title>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+  </head>
+  <body>
+    <article>
+      <<if $in.chap_num>><div class="chap_num">Chapter <<t $in.chap_num>></div><</if>>
+      <h1><<if $in.id>> id="<<t $in.id>>"<</if>><<t $in.title>></h1>
+      <<h $in.content>>
+    </article>
+  </body>
+</html>

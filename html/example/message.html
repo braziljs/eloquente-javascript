@@ -1,0 +1,35 @@
+<!doctype html>
+<title>Example form target</title>
+
+<body style="font-family: arial">
+
+<div id="ok" style="display: none">
+  <p>Hello<span id="name"></span>, we've received your message:</p>
+  <blockquote id="message" style="font-style: italic; margin-left: 1.5em"></blockquote>
+</div>
+<div id="missing" style="display: none">
+  <p>No message received.</p>
+</div>
+
+<p style="color: #777">(Note that this page is just an illustration. No actual message was delivered anywhere.)</p>
+
+<script>
+  function param(name) {
+    var f = new RegExp("\\b" + name + "=([^&]+)").exec(document.location.search);
+    if (f) return decodeURIComponent(f[1].replace(/\+/g, " "));
+  }
+
+  var username = param("name");
+  var message = param("message");
+
+  if (username)
+    document.querySelector("#name").innerText = " " + username;
+  if (message) {
+    document.querySelector("#message").innerText = message;
+    document.querySelector("#ok").style.display = "";
+  } else {
+    document.querySelector("#missing").style.display = "";
+  }
+</script>
+
+</body>

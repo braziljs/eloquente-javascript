@@ -1,193 +1,90 @@
-{{meta {docid: values}}}
+# Valores, Tipos, e Operadores
 
-# Values, Types, and Operators
+> Sob a superfície da máquina, o programa se move. Sem esforço, se expande e se contrai. Em grande harmonia, elétrons se espalham e se reagrupam. As formas no monitor são nada mais que ondulações na água. A essência permanece invisível abaixo.
+>
+> — Master Yuan-Ma, The Book of Programming
 
-{{quote {author: "Master Yuan-Ma", title: "The Book of Programming", chapter: true}
+![Mar de bits](img/chapter_picture_1.jpg)
 
-Below the surface of the machine, the program moves. Without effort,
-it expands and contracts. In great harmony, electrons scatter and
-regroup. The forms on the monitor are but ripples on the water. The
-essence stays invisibly below.
+Dentro do mundo do computador, só existem dados. Você pode ler dados, modificar dados, criar novos dados — mas aquilo que não é dado não pode ser mencionado. Todos esses dados são armazenados como longas sequências de bits e são assim fundamentalmente iguais.
 
-quote}}
+_Bits_ são quaisquer tipos de coisas com dois valores possíveis, geralmente descritos como zeros e uns. Dentro do computador, eles tomam formas como uma carga elétrica alta ou baixa, um sinal forte ou fraco, ou um ponto na superfície de um CD que tem brilho ou não. Qualquer pedaço de informação pode ser reduzido a uma sequência de zeros e unse, portanto, representado em bits.
 
-{{index "Yuan-Ma", "Book of Programming"}}
-
-{{figure {url: "img/chapter_picture_1.jpg", alt: "A sea of bits", chapter: framed}}}
-
-{{index "binary data", data, bit, memory}}
-
-Inside the computer's world, there is only data. You can read data,
-modify data, create new data—but that which isn't data cannot be
-mentioned. All this data is stored as long sequences of bits and is
-thus fundamentally alike.
-
-{{index CD, signal}}
-
-_Bits_ are any kind of two-valued things, usually described as zeros and
-ones. Inside the computer, they take forms such as a high or low
-electrical charge, a strong or weak signal, or a shiny or dull spot on
-the surface of a CD. Any piece of discrete information can be reduced
-to a sequence of zeros and ones and thus represented in bits.
-
-{{index "binary number", radix, "decimal number"}}
-
-For example, we can express the number 13 in bits. It works the same
-way as a decimal number, but instead of 10 different ((digit))s, you
-have only 2, and the weight of each increases by a factor of 2 from
-right to left. Here are the bits that make up the number 13, with the
-weights of the digits shown below them:
+Por exemplo, podemos expressar o número 13 em bits. Funciona do mesmo jeito como uma representação decimal mas ao invés de 10 dígitos diferentes, você tem apenas dois e o peso de cada um aumenta por um fator de 2, da direita para a esquerda. Estes são os bits que formam o número 13, com o peso de cada um logo abaixo:
 
 ```{lang: null}
    0   0   0   0   1   1   0   1
  128  64  32  16   8   4   2   1
 ```
 
-So that's the binary number 00001101, or 8 + 4 + 1, or 13.
+Então, este é o número binário 00001101, ou 8 + 4 + 1, ou 13.
 
-## Values
+## Valores
 
-{{index memory, "volatile data storage", "hard drive"}}
+Imagine um mar de bits — um oceano deles. Um típico computador moderno tem mais de 30 bilhões de bits em sua memória volátil. A memória não-volátil (o disco rígido ou equivalente) tende a ter algumas ordens de magnitude a mais.
 
-Imagine a sea of bits—an ocean of them. A typical modern computer has
-more than 30 billion bits in its volatile data storage (working
-memory). Nonvolatile storage (the hard disk or equivalent) tends to
-have yet a few orders of magnitude more.
+Para podermos trabalhar com quantidades tão altas de bits sem nos perdermos, precisamos separá-los em blocos que representam pedaços de informação. Em um ambiente JavaScript, esses blocossão chamados de _valores_. Embora todos os valores sejam feitos de bits, eles têm diferentes papeis. Cada valor tem um _tipo_ que determina seu papel. Alguns valores são números, alguns são pedaços de texto, alguns são funções, e por aí vai.
 
-To be able to work with such quantities of bits without getting lost,
-we must separate them into chunks that represent pieces of
-information. In a JavaScript environment, those chunks are called
-_((value))s_. Though all values are made of bits, they play different
-roles. Every value has a ((type)) that determines its role. Some
-values are numbers, some values are pieces of text, some values are
-functions, and so on.
+### Garbage collection
 
-{{index "garbage collection"}}
+Para criar um valor, você deve simplesmente invocar o seu nome. Isso é bastante conveniente. Você não precisa reunir nenhum material extra ou pagar por eles. Você apenas chama por ele e _woosh_, você o tem. Eles realmente não são criados do nada, claro. Cada valor tem que ser armazenado em algum lugar e se você quiser usar uma quantidade enorme deles ao mesmo tempo, você pode ficar sem memória. Felizmente, esse é um problema apenas se você precisar de todos simultaneamente. Assim que você não usar mais um valor, ele irá sumir, deixando para trás seus bits para serem reciclados como material de construção para a próxima geração de valores.
 
-To create a value, you must merely invoke its name. This is
-convenient. You don't have to gather building material for your values
-or pay for them. You just call for one, and _woosh_, you have it. They
-are not really created from thin air, of course. Every value has to be
-stored somewhere, and if you want to use a gigantic amount of them at
-the same time, you might run out of memory. Fortunately, this is a
-problem only if you need them all simultaneously. As soon as you no
-longer use a value, it will dissipate, leaving behind its bits to be
-recycled as building material for the next generation of values.
+Esse capítulo introduz os átomos dos programas JavaScript, isto é, os tipos simples de valores e os operadores que podem agir em tais valores.
 
-This chapter introduces the atomic elements of JavaScript programs,
-that is, the simple value types and the operators that can act on such
-values.
+## Números
 
-## Numbers
-
-{{index syntax, number, [number, notation]}}
-
-Values of the _number_ type are, unsurprisingly, numeric values. In a
-JavaScript program, they are written as follows:
+Valores do tipo _número_ são, sem surpresa, valores numéricos. Em um programa JavaScript, eles são escritos dessa forma:
 
 ```
 13
 ```
 
-{{index "binary number"}}
+Use isso em um programa e isso fará com que o padrão em bits para o número 13 passe a existir dentro da memória do computador.
 
-Use that in a program, and it will cause the bit pattern for the
-number 13 to come into existence inside the computer's memory.
+O JavaScript usa um número limitado de bits, mais especificamente 64 deles, para guardar um único valor numérico. Existem apenas alguns poucos padrões que você pode fazer com 64 bits, o que significa que a quantidade de números diferentes que podem ser representados é limitada. Para um dígito decimal _N_, a quantidade de números que podem ser representados é de 10<sup>n</sup>. Da mesma forma, dados 64 dígitos binários, você pode representar 2<sup>64</sup> números diferentes, o que é mais ou menos 18 quintilhões (um 18 com 18 zeros depois dele). É muita coisa. 
 
-{{index [number, representation], bit}}
+A memória do computador costumava ser muito menor, e as pessoas tendiam a usar grupos de 8 ou 16 bits para representar os números. Era muito fácil de ultrapassar acidentalmente esses números -  para conseguir um número que não se encaixava na quantidade de bits dada. Hoje, mesmo computadores que cabem no seu bolso tem muita memória disponível, então você é livre para usar blocos de 64-bits, e você só vai precisar se preocupar com espaço quando lidar com números realmente astronômicos.
 
-JavaScript uses a fixed number of bits, namely 64 of them, to store a
-single number value. There are only so many patterns you can make with
-64 bits, which means that the amount of different numbers that can be
-represented is limited. For _N_ decimal ((digit))s, the amount of
-numbers that can be represented is 10^N^. Similarly, given 64 binary
-digits, you can represent 2^64^ different numbers, which is about 18
-quintillion (an 18 with 18 zeros after it). That's a lot.
+Entretanto, nem todos os números inteiros menores do que 18 quintilhões cabem em um número no JavaScript. Os bits também armazenam números negativos, e um desses bits indica o sinal do número. Um grande problema é que números não inteiros também precisam ser representados. 
+Para isso, alguns dos bits são usados para armazenar a posição do ponto decimal. Então, o maior número inteiro que pode ser armazenado está por volta de 9 quatrilhões (15 zeros) - que ainda é extremamente grande.
 
-Computer memory used to be much smaller, and people tended to use
-groups of 8 or 16 bits to represent their numbers. It was easy to
-accidentally _((overflow))_ such small numbers—to end up with a number
-that did not fit into the given amount of bits. Today, even computers
-that fit in your pocket have plenty of memory, so you are free to use
-64-bit chunks, and you need to worry about overflow only when dealing
-with truly astronomical numbers.
-
-{{index sign, "floating-point number", "fractional number", "sign bit"}}
-
-Not all whole numbers below 18 quintillion fit in a JavaScript number,
-though. Those bits also store negative numbers, so one bit indicates
-the sign of the number. A bigger issue is that nonwhole numbers must
-also be represented. To do this, some of the bits are used to store
-the position of the decimal point. The actual maximum whole number
-that can be stored is more in the range of 9 quadrillion (15
-zeros)—which is still pleasantly huge.
-
-{{index [number, notation]}}
-
-Fractional numbers are written by using a dot:
+Números fracionários são escritos usando um ponto:
 
 ```
 9.81
 ```
 
-{{index exponent, "scientific notation", [number, notation]}}
-
-For very big or very small numbers, you may also use scientific
-notation by adding an _e_ (for _exponent_), followed by the exponent
-of the number:
+Para números muito grandes ou pequenos, você também pode usar notação científica adicionando um "e" (de "expoente") seguido pelo valor do expoente:
 
 ```
 2.998e8
 ```
 
-That is 2.998 × 10^8^ = 299,800,000.
+Isso é 2.998 x 10<sup>⁸</sup> = 299800000.
 
-{{index pi, [number, "precision of"], "floating-point number"}}
+Cálculos com números inteiros menores que os 9 quadrilhões mencionados anteriormente, serão sempre precisos. Infelizmente, cálculos com número fracionários normalmente não são. Assim como π (pi) não pode ser expresso de forma precisa por uma quantidade finita de dígitos decimais, muitos números perdem sua precisão quando existem apenas 64 bits disponíveis para armazená-los. Isso é vergonhoso, mas causa problemas reais apenas em situações específicas. O importante é estar ciente disso e tratar números fracionários como aproximações e não como valores precisos.
 
-Calculations with whole numbers (also called _((integer))s_) smaller
-than the aforementioned 9 quadrillion are guaranteed to always be
-precise. Unfortunately, calculations with fractional numbers are
-generally not. Just as π (pi) cannot be precisely expressed by a
-finite number of decimal digits, many numbers lose some precision when
-only 64 bits are available to store them. This is a shame, but it
-causes practical problems only in specific situations. The important
-thing is to be aware of it and treat fractional digital numbers as
-approximations, not as precise values.
-
-### Arithmetic
-
-{{index syntax, operator, "binary operator", arithmetic, addition, multiplication}}
+### Aritmética
 
 The main thing to do with numbers is arithmetic. Arithmetic operations
 such as addition or multiplication take two number values and produce
 a new number from them. Here is what they look like in JavaScript:
 
+A principal coisa a se fazer com números são cálculos aritméticos. Operações aritméticas como adição ou multiplicação recebem dois valores numéricos e produzem um novo número a partir deles. É assim que eles se parecem no JavaScript:
+
 ```
 100 + 4 * 11
 ```
 
-{{index [operator, application], asterisk, "plus character", "* operator", "+ operator"}}
+Os símbolos `+` e `*` são chamados de _operadores_. O primeiro se refere à adição, e o segundo à multiplicação. Colocar um operador entre dois valores irá aplicá-lo a esses valores e produzirá um novo valor.
 
-The `+` and `*` symbols are called _operators_. The first stands for
-addition, and the second stands for multiplication. Putting an
-operator between two values will apply it to those values and produce
-a new value.
-
-{{index grouping, parentheses, precedence}}
-
-But does the example mean "add 4 and 100, and multiply the result by 11,"
-or is the multiplication done before the adding? As you might have
-guessed, the multiplication happens first. But as in mathematics, you
-can change this by wrapping the addition in parentheses:
+Mas esse exemplo significa "adicione 4 e 100, e multiplique o resultado por 11," ou a multiplicação é feita antes da adição? Como você deve ter adivinhado, a multiplicaçào acontece antes. Mas como na matemática, você pode mudar isso envolvendo a adiçào em parênteses:
 
 ```
 (100 + 4) * 11
 ```
 
-{{index "dash character", "slash character", division, subtraction, minus, "- operator", "/ operator"}}
-
-For subtraction, there is the `-` operator, and division can be done
-with the `/` operator.
+Para subtração, há o operador `-`, e a divisão pode ser feita com o operador `/`.
 
 When operators appear together without parentheses, the order in which
 they are applied is determined by the _((precedence))_ of the

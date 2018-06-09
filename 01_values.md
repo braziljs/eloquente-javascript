@@ -88,7 +88,7 @@ Para números muito grandes ou pequenos, você também pode usar notação cient
 2.998e8
 ```
 
-Isso é 2.998 x 10^⁸^ = 299800000.
+Isso é 2.998 x 10^⁸^ = 299,800,000.
 
 {{index pi, [number, "precision of"], "floating-point number"}}
 

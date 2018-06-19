@@ -5,8 +5,6 @@
 {{quote {author: "Master Yuan-Ma", title: "The Book of Programming", chapter: true}
 
 > Sob a superfície da máquina, o programa se move. Sem esforço, se expande e se contrai. Em grande harmonia, elétrons se espalham e se reagrupam. As formas no monitor são nada mais que ondulações na água. A essência permanece invisível abaixo.
->
-> — Master Yuan-Ma, The Book of Programming
 
 quote}}
 
@@ -16,15 +14,15 @@ quote}}
 
 {{index "binary data", data, bit, memory}}
 
-Dentro do mundo do computador, só existem dados. Você pode ler dados, modificar dados, criar novos dados — mas aquilo que não é dado não pode ser mencionado. Todos esses dados são armazenados como longas sequências de bits e são assim fundamentalmente iguais.
+Dentro do mundo do computador, só existem dados. Você pode ler dados, modificar dados, criar novos dados — mas aquilo que não é dado não pode ser mencionado. Todos esses dados são armazenados como longas sequências de bits e são, assim, fundamentalmente iguais.
 
 {{index CD, signal}}
 
-_Bits_ são quaisquer tipos de coisas com dois valores possíveis, geralmente descritos como zeros e uns. Dentro do computador, eles tomam formas como uma carga elétrica alta ou baixa, um sinal forte ou fraco, ou um ponto na superfície de um CD que tem brilho ou não. Qualquer pedaço de informação pode ser reduzido a uma sequência de zeros e unse, portanto, representado em bits.
+_Bits_ são quaisquer tipos de coisas com dois valores possíveis, geralmente descritos como zeros e uns. Dentro do computador, eles tomam formas como uma carga elétrica alta ou baixa, um sinal forte ou fraco, ou um ponto na superfície de um CD que tem brilho ou não. Qualquer pedaço de informação pode ser reduzido a uma sequência de zeros e uns e, portanto, representado em bits.
 
 {{index "binary number", radix, "decimal number"}}
 
-Por exemplo, podemos expressar o número 13 em bits. Funciona do mesmo jeito como uma representação decimal mas ao invés de 10 dígitos diferentes, você tem apenas dois e o peso de cada um aumenta por um fator de 2, da direita para a esquerda. Estes são os bits que formam o número 13, com o peso de cada um logo abaixo:
+Por exemplo, podemos expressar o número 13 em bits. Funciona do mesmo jeito como uma representação decimal mas, ao invés de 10 dígitos diferentes, você tem apenas dois e o peso de cada um aumenta por um fator de 2, da direita para a esquerda. Estes são os bits que formam o número 13, com o peso de cada um logo abaixo:
 
 ```{lang: null}
    0   0   0   0   1   1   0   1
@@ -39,7 +37,7 @@ Então, este é o número binário 00001101, ou 8 + 4 + 1, ou 13.
 
 Imagine um mar de bits — um oceano deles. Um típico computador moderno tem mais de 30 bilhões de bits em sua memória volátil. A memória não-volátil (o disco rígido ou equivalente) tende a ter algumas ordens de magnitude a mais.
 
-Para podermos trabalhar com quantidades tão altas de bits sem nos perdermos, precisamos separá-los em blocos que representam pedaços de informação. Em um ambiente JavaScript, esses blocos são chamados de _valores_. Embora todos os valores sejam feitos de bits, eles têm diferentes papeis. Cada valor tem um _tipo_ que determina seu papel. Alguns valores são números, alguns são pedaços de texto, alguns são funções, e por aí vai.
+Para podermos trabalhar com quantidades tão altas de bits sem nos perdermos, precisamos separá-los em blocos que representam pedaços de informação. Em um ambiente JavaScript, esses blocos são chamados de _valores_. Embora todos os valores sejam feitos de bits, eles têm diferentes papéis. Cada valor tem um _tipo_ que determina seu papel. Alguns valores são números, alguns são pedaços de texto, alguns são funções, e por aí vai.
 
 {{index "garbage collection"}}
 
@@ -65,7 +63,7 @@ Use isso em um programa e isso fará com que o padrão em bits para o número 13
 
 O JavaScript usa um número limitado de bits, mais especificamente 64 deles, para guardar um único valor numérico. Existem apenas alguns poucos padrões que você pode fazer com 64 bits, o que significa que a quantidade de números diferentes que podem ser representados é limitada. Para um dígito decimal _N_, a quantidade de números que podem ser representados é de 10^n^. Da mesma forma, dados 64 dígitos binários, você pode representar 2^64^ números diferentes, o que é mais ou menos 18 quintilhões (um 18 com 18 zeros depois dele). É muita coisa. 
 
-A memória do computador costumava ser muito menor, e as pessoas tendiam a usar grupos de 8 ou 16 bits para representar os números. Era muito fácil de ultrapassar acidentalmente esses números -  para conseguir um número que não se encaixava na quantidade de bits dada. Hoje, mesmo computadores que cabem no seu bolso tem muita memória disponível, então você é livre para usar blocos de 64-bits, e você só vai precisar se preocupar com espaço quando lidar com números realmente astronômicos.
+A memória do computador costumava ser muito menor, e as pessoas tendiam a usar grupos de 8 ou 16 bits para representar os números. Era muito fácil de ultrapassar acidentalmente esses números - para conseguir um número que não se encaixava na quantidade de bits dada. Hoje, mesmo computadores que cabem no seu bolso têm muita memória disponível, então você é livre para usar blocos de 64-bits, e você só vai precisar se preocupar com espaço quando lidar com números realmente astronômicos.
 
 {{index sign, "floating-point number", "fractional number", "sign bit"}}
 
@@ -82,17 +80,17 @@ Números fracionários são escritos usando um ponto:
 
 {{index exponent, "scientific notation", [number, notation]}}
 
-Para números muito grandes ou pequenos, você também pode usar notação científica adicionando um "e" (de "expoente") seguido pelo valor do expoente:
+Para números muito grandes ou pequenos, você também pode usar notação científica adicionando um _e_ (de _expoente_) seguido pelo valor do expoente:
 
 ```
 2.998e8
 ```
 
-Isso é 2.998 x 10^⁸^ = 299,800,000.
+Isso é 2.998 × 10^8^ = 299,800,000.
 
 {{index pi, [number, "precision of"], "floating-point number"}}
 
-Cálculos com números inteiros menores que os 9 quadrilhões mencionados anteriormente, serão sempre precisos. Infelizmente, cálculos com número fracionários normalmente não são. Assim como π (pi) não pode ser expresso de forma precisa por uma quantidade finita de dígitos decimais, muitos números perdem sua precisão quando existem apenas 64 bits disponíveis para armazená-los. Isso é vergonhoso, mas causa problemas reais apenas em situações específicas. O importante é estar ciente disso e tratar números fracionários como aproximações e não como valores precisos.
+Cálculos com números inteiros menores que os 9 quadrilhões mencionados anteriormente, serão sempre precisos. Infelizmente, cálculos com números fracionários normalmente não são. Assim como π (pi) não pode ser expresso de forma precisa por uma quantidade finita de dígitos decimais, muitos números perdem sua precisão quando existem apenas 64 bits disponíveis para armazená-los. Isso é vergonhoso, mas causa problemas reais apenas em situações específicas. O importante é estar ciente disso e tratar números fracionários como aproximações e não como valores precisos.
 
 ### Aritmética
 
@@ -160,7 +158,7 @@ Você pode usar aspas simples, aspas duplas ou crases para sinalizar strings, co
 
 {{index "line break", "newline character"}}
 
-Quase tudo pode ser colocado entre aspas, e o JavaScript criará um valor do tipo _String_ com isso. Entretanto alguns caracteres são mais difíceis. Você pode imaginar como deve ser difícil colocar aspas entre aspas. _Newlines_ (qos caracteres usados quando você aperta _Enter_), só podem ser incluídos sem "escapar" quando a string está envolvida em crases (`` ` ``).
+Quase tudo pode ser colocado entre aspas, e o JavaScript criará um valor do tipo _String_ com isso. Entretanto alguns caracteres são mais difíceis. Você pode imaginar como deve ser difícil colocar aspas entre aspas. _Newlines_ (os caracteres usados quando você aperta _Enter_), só podem ser incluídos sem "escapar" quando a string está envolvida em crases (`` ` ``).
 
 {{index [escaping, "in strings"], "backslash character"}}
 
@@ -187,7 +185,7 @@ Existem, com certeza, situações onde você quer que a barra invertida em uma _
 
 {{index [string, representation], Unicode, character}}
 
-Strings também devem ser modeladas como uma série de bits para poderem existir dentro do computados. A forma como o JavaScript faz isso é baseada no padrão _Unicode_. Esse padrão atribui um número para praticamente cada caractere que você pode algum dia precisar, incluindo caracteres Gregos, Arábicos, Japoneses, Armênios, etc. Se temos um número para cada caractere, uma string pode ser descrita por uma sequência de números.
+Strings também devem ser modeladas como uma série de bits para poderem existir dentro do computador. A forma como o JavaScript faz isso é baseada no padrão _Unicode_. Esse padrão atribui um número para praticamente cada caractere que você pode algum dia precisar, incluindo caracteres Gregos, Arábicos, Japoneses, Armênios, etc. Se temos um número para cada caractere, uma string pode ser descrita por uma sequência de números.
 
 {{index "UTF-16", emoji}}
 
@@ -201,11 +199,11 @@ _Strings_ não podem ser divididas, multiplicadas nem subtraídas, mas o operado
 "con" + "cat" + "e" + "nate"
 ```
 
-Os valores string tem várias funções associadas (_métodos_) que podem ser usadas para realizar outras operações neles. Voltaremos a eles no [Capítulo ?](data#methods).
+Os valores string têm várias funções associadas (_métodos_) que podem ser usadas para realizar outras operações neles. Voltaremos a eles no [Capítulo ?](data#methods).
 
 {{index interpolation, backtick}}
 
-Strings escritas com aspas duplas ou simples se comportam basicamente da mesma forma—a única diferença está em qual tipo de aspas você precisa escapar dentro delas. Strings definidas usando crases, geralmente chamadas de _template literals_, podem fazer alguns outros truques. Além de poderem ter quebras de linha, elas podem também conter outros valores.
+Strings escritas com aspas duplas ou simples se comportam basicamente da mesma forma - a única diferença está em qual tipo de aspas você precisa escapar dentro delas. Strings definidas usando crases, geralmente chamadas de _template literals_, podem fazer alguns outros truques. Além de poderem ter quebras de linha, elas podem também conter outros valores.
 
 ```
 `half of 100 is ${100 / 2}`
@@ -262,7 +260,7 @@ console.log(3 < 2)
 
 {{index [comparison, "of numbers"], "> operator", "< operator", "greater than", "less than"}}
 
-Os sinais `>` e `<` são tradicionalmente símbolos para representar "é maior que" e "é menor que", respectivamente. Eles são operadores binários. Aplicar ele entre dois valores resulta em um valor _Booleano_ que indica se o resultado é verdadeiro ou falso nesse caso.
+Os sinais `>` e `<` são tradicionalmente símbolos para representar "é maior que" e "é menor que", respectivamente. Eles são operadores binários. Aplicar eles entre dois valores resulta em um valor _Booleano_ que indica se o resultado é verdadeiro ou falso nesse caso.
 
 Strings podem ser comparadas da mesma forma.
 
@@ -277,7 +275,7 @@ A forma na qual as _Strings_ são ordenadas é mais ou menos alfabética, mas n�
 
 {{index equality, ">= operator", "<= operator", "== operator", "!= operator"}}
 
-Outros operadores similares são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a), and `!=` (diferente de).
+Outros operadores similares são `>=` (maior que ou igual a), `<=` (menor que ou igual a), `==` (igual a), e `!=` (diferente de).
 
 ```
 console.log("Itchy" != "Scratchy")
@@ -414,7 +412,7 @@ Os operadores lógicos `&&` e `||` lidam com valores de diferentes tipos de uma 
 
 {{index "|| operator"}}
 
-O operador `||`, por exemplo, irá retornar o valor à sua esquerda quando ele puder ser convertido para `true`, e retornará o valor à sua direita caso isso não ocorra. Isso tem o efeito esperado quando os valores são _Booleanos_, e faz algo análogo para valores de outros tpos.
+O operador `||`, por exemplo, irá retornar o valor à sua esquerda quando ele puder ser convertido para `true`, e retornará o valor à sua direita caso isso não ocorra. Isso tem o efeito esperado quando os valores são _Booleanos_, e faz algo análogo para valores de outros tipos.
 
 ```
 console.log(null || "user")
@@ -431,7 +429,7 @@ Podemos usar essa funcionalidade como forma de garantir um valor padrão. Se voc
 
 O operador `&&` trabalha de forma similar, mas ao contrário. Quando o valor à sua esquerda é algo que se torne `false`, ele retorna o valor e caso contrário, ele retorna o valor à sua direita.
 
-Outra propriedade importante destes dois operadores é que a expressão à direita é avaliada somente quando necessário. No caso de `true || X`, não importa o que `X` é - mesmo que seja algo que faça uma coisa *terrível* - o resultado será verdadeiro, e `X` nunca será avaliado. O mesmo acontece para `false && X`, que é falso, e vai ignorar `X`. Isso é chamado de _avaliação de curto-circuito_.
+Outra propriedade importante destes dois operadores é que a expressão à direita é avaliada somente quando necessário. No caso de `true || X`, não importa o que `X` é - mesmo que seja algo que faça uma coisa _terrível_ - o resultado será verdadeiro, e `X` nunca será avaliado. O mesmo acontece para `false && X`, que é falso, e vai ignorar `X`. Isso é chamado de _avaliação de curto-circuito_.
 
 {{index "ternary operator", "?: operator", "conditional operator"}}
 
@@ -443,4 +441,4 @@ Nós vimos quatro tipos de valores do JavaScript neste capítulo. Números, _Str
 
 Tais valores são criados digitando seu nome (`true`, `null`) ou valores (`13`, `"abc"`). Você pode combinar e transformar valores com operadores. Nós vimos operadores binários para operações aritméticas (`+`, `-`, `*`, `/`, e `%`), para concatenação de _String_ (`+`), comparação (`==`, `!=`, `===`, `!==`, `<`, `>`, `<=`, `>=`) e lógica (`&&`, `||`), assim como alguns operadores unários (`-` para negativar um número, `!` para negar logicamente, e `typeof` para encontrar o tipo do valor) e o operador ternario (`?:`) para retornar um de dois valores, baseando-se em um terceiro valor.
 
-Isto lhe dá informação suficiente para usar o JavaScript como uma calculadora de bolso, mas não muito mais que isso. O próximo capítulo vai começar a amarrar essas operações dentro de programas básicos.
+Isto lhe dá informação suficiente para usar o JavaScript como uma calculadora de bolso, mas não muito mais que isso. O [próximo capítulo](program_structure) vai começar a amarrar essas operações dentro de programas básicos.

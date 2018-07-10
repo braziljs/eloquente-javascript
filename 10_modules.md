@@ -2,13 +2,13 @@
 
 # Módulos
 
-{{quote {author: "Tef", title: "Programar é Terrível", chapter: true}
+{{quote {autor: "Tef", title: "Programar é Terrível", chapter: true}
 
 Escreva código que seja fácil de deletar, difícil de estender.
 
 quote}}
 
-{{índice organization, "estrutura de código", "Yuan-Ma", "Livro de Programação"}}
+{{índice organização, "estrutura de código", "Yuan-Ma", "Livro de Programação"}}
 
 O programa ideal tem uma estrutura limpa como cristal. É fácil de explicar como funciona
 e cada parte tem um papel bem definido.
@@ -23,62 +23,55 @@ do programa ficarem profundamente confusas.
 
 {{índice legibilidade, re-uso, isolamento}}
 
-This causes two practical issues. Firstly, understanding such a system
-is hard. If everything can touch everything else, it is difficult to
-look at any given piece in isolation. You are forced to build up a
-holistic understanding of the whole thing. Secondly, if you want to
-use any of the functionality from such a program in another situation,
-rewriting it may be easier than trying to disentangle it from its
-context.
+Isso causa dois problemas práticos. Primeiro, entender este sistema é difícil. Se 
+tudo puder tocar todo o resto, é difícil olhar uma determinada parte isolada. Você
+é forçado a construir uma compreensão holística de toda coisa. Segundo, se você quer 
+usar qualquer funcionalidade do programa em outra situação, re-escrever será mais
+fácil do que tentar desenrolar a função de seu contexto.
 
-The term "((big ball of mud))" is often used for such large,
-structureless programs. Everything sticks together, and when you try
-to pick out a piece, the whole thing comes apart and your hands get
-dirty.
+O termo "((grande bola de lama))" é geralmente para programas grandes e sem estrutura.
+Tudo fica junto e quando você tenta pegar uma parte, toda a coisa despenca e você
+fica com as mãos sujas.
 
-## Modules
+## Módulos
 
-{{index dependency}}
+{{índice dependência}}
 
-_Modules_ are an attempt to avoid these problems. A ((module)) is a
-piece of program that specifies which other pieces it relies on (its
-_dependencies_), and which functionality it provides for other modules
-to use (its _((interface))_).
+_Módulos_ são uma tentativa de evitar estes problemas. Um ((módulo)) é uma parte de 
+programa que especifica quais partes ele depende (são as _dependências_) em que as 
+funcionalidades ele fornece para outros módulos (são as _((interfaces))_).
 
-{{index "big ball of mud"}}
+{{índice "grande bola de lama"}}
 
-Module interfaces have a lot in common with object interfaces, as we
-saw them in [Chapter ?](object#interface). They make part of the
-module available to the outside world, and keep the rest private. By
-restricting the ways in which modules interact with each other, the
-system becomes more like ((Lego)), where pieces interact through
-well-defined connectors, and less like mud, where everything mixes
-with everything.
+Interface de módulo têm muito em comum com interface objetvo como vimos no 
+[Capítulo ?](object#interface). Eles fazem parte do módulo disponível no mundo 
+externo e mantém o resto privado. Restringindo o modo como os módulos interagem entre 
+si, o sistema fica mais parecido com ((Lego)), onde as peças interagem através de 
+conectores bem definidos e menos como lama, onde tudo se mistura.
 
-{{index dependency}}
+{{índice dependência}}
 
-The relations between modules are called dependencies. When a module
-needs a piece from another module, it is said to depend on that
-module. When this fact is clearly specified in the module itself, it
-can be used to figure out which other modules need to be present to be
-able to use a given module and to automatically load dependencies.
+A relação entre módulos é chamada dependência. Quando um módulo precisa de outro 
+módulo, é dito que ele depende daquele módulo. Quando este fato é claramente 
+especificado no próprio módulo, pode ser utilizado para descobrir quais módulos 
+devem estar presentes para que o módulo desejado seja utilizado e carregar automaticamente 
+suas dependências.
 
-To separate modules in that way, each needs it own private ((scope)).
+Para separar módulos desta forma, cada uma precisa de sua privacidade ((escopo)).
 
-Just putting your JavaScript code into different ((file))s does not
-satisfy these requirements. The files still share the same global
-namespace. They can, intentionally or accidentally, interfere with
-each other's bindings. And the dependency structure remains unclear.
-We can do better, as we'll see later in the chapter.
+Apenas colocando seus arquivos JavaScript em diferentes ((arquivo))s não satisfaz esses 
+requerimentos. Os arquivos ainda compartilham o mesmo namespace global. Elas podem, 
+intencionalmente ou acidentalmente, interferir umas com as outras e a estrutura de 
+dependência permanece escondida. Podemos fazer melhor, como veremos mais tarde neste 
+capítulo.
 
-{{index design}}
+{{índice design}}
 
-Designing a fitting module structure for a program can be difficult.
-In the phase where you are still exploring the problem, trying out
-different things to see what works, you might want to not worry about
-it too much, since it can be a big distraction. Once you have
-something that feels solid, that's a good time to take a step back and
-organize it.
+Definir uma estrutura de módulo para um programa pode ser difícil. Na fase onde você 
+está ainda explorando o problema, testar soluções diferentes para ver qual irá funcionar, 
+você pode querer não se preocupar tanto com isso, pois pode ser uma grande distração. 
+Quando você tiver algo que parece definitivo, é um bom momento dar um passo atrás e 
+organizar o programa.
 
 ## Packages
 

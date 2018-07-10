@@ -1,28 +1,27 @@
 {{meta {load_files: ["code/packages_chapter_10.js", "code/chapter/07_robot.js"]}}}
 
-# Modules
+# Módulos
 
-{{quote {author: "Tef", title: "Programming is Terrible", chapter: true}
+{{quote {author: "Tef", title: "Programar é Terrível", chapter: true}
 
-Write code that is easy to delete, not easy to extend.
+Escreva código que seja fácil de deletar, difícil de estender.
 
 quote}}
 
-{{index organization, "code structure", "Yuan-Ma", "Book of Programming"}}
+{{índice organization, "estrutura de código", "Yuan-Ma", "Livro de Programação"}}
 
-The ideal program has a crystal clear structure. It's easy to explain
-how it works, and each part plays a well-defined role.
+O programa ideal tem uma estrutura limpa como cristal. É fácil de explicar como funciona
+e cada parte tem um papel bem definido.
 
-{{index "organic growth"}}
+{{índice "crescimento orgânico"}}
 
-A typical real program grows organically. New pieces of functionality
-are added as new needs come up. Structuring—and preserving
-structure—is additional work, work which will only pay off in the
-future, the _next_ time someone works on the program. So it is
-tempting to neglect it, and allow the parts of the program to become
-deeply entangled.
+Um programa real típico cresce organicamente. Novas funcionalidades são adicionadas
+conforme novas necessidades surgem. Estruturação e preservação da estrutura é um
+trabalho adicional, trabalho que será pago somente no futuro, da próxima vez que 
+alguém trabalhar no programa. Então é tentador negligenciar isso e permite as partes
+do programa ficarem profundamente confusas.
 
-{{index readability, reuse, isolation}}
+{{índice legibilidade, re-uso, isolamento}}
 
 This causes two practical issues. Firstly, understanding such a system
 is hard. If everything can touch everything else, it is difficult to

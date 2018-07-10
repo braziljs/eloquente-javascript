@@ -73,90 +73,81 @@ você pode querer não se preocupar tanto com isso, pois pode ser uma grande dis
 Quando você tiver algo que parece definitivo, é um bom momento dar um passo atrás e 
 organizar o programa.
 
-## Packages
+## Pacotes
 
-{{index bug, dependency, structure, reuse}}
+{{índice bug, dependência, estrutura, reuso}}
 
-One of the advantages of building a program out of separate pieces,
-and being actually able to run those pieces on their own, is that you
-might be able to apply the same piece in different programs.
+Uma das vantagens de construir um programa separando por partes e sendo possível executar 
+essas partes separadamente é que você é capaz de executar as mesmas partes em diferentes 
+programas.
 
-{{index "parseINI function"}}
+{{índice "função parseINI"}}
 
-But how do you set this up? Say I want to use the `parseINI` function
-from [Chapter ?](regexp#ini) in another program. If it is clear what
-it depends on (in this case, nothing), I can just copy all the
-necessary code into my new project, and use it. But then, if I find a
-mistake in that code, I'll probably fix it in whichever program that
-I'm working with at the time and forget to also fix it in the other
-program.
+Mas como você faz isso? Digamos que eu queira usar a função `parseINI` do 
+[Capítulo ?](regexp#ini) em outro programa. Se está claro no que esta função depende 
+(neste caso, nada), podemos simplesmente copiar todo código necessário no novo projeto. 
+Mas então se eu encontrar um erro no código, provavelmente irei corrigir no programa em
+que estarei trabalhando e esqueço de corrigir no código de onde copiei.
 
-{{index duplication, "copy-paste programming"}}
+{{índice duplicação, "programando copia-cola"}}
 
-Once you start duplicating code, you'll quickly find yourself wasting
-time and energy moving copies around and keeping them up-to-date.
+Quando você começa a duplicar código, se verá rapidamente perdendo tempo e energia movendo 
+cópias e as mantendo atualizadas.
 
-That's where _((package))s_ come in. A package is a chunk of code that
-can be distributed (copied and installed). It may contain one or more
-modules, and has information about which other packages it depends on.
-A package also usually comes with documentation explaining what it
-does, so that people who didn't write it might still be able to use
-it.
+Aí que entram os _((pacotes))_. Um pacote é um pedaço de um código que pode ser 
+distribuído (copiado e instalado). Pode conter um ou mais módulos e possui informação 
+sobre outros pacotes que ele depende. Um pacote também costuma vir com documentação 
+explicando o que ele faz, assim pessoas que não o escreveram também poderão utilizá-lo.
 
-When a problem is found in a package, or a new feature is added, the
-package is updated. Now the programs that depend on it (which may also
-be packages) can upgrade to the new ((version)).
+Quando um problema é encontrado no pacote ou uma nova funcionalidade é adicionada, o 
+pacote é atualizado. Agora o programa que depende dele (que também podem ser pacotes) 
+podem ser atualizados ((versão)).
 
-{{id modules_npm}}
+{{id módulos npm}}
 
-{{index installation, upgrading, "package manager", download, reuse}}
+{{índice instalação, atualização, "gerenciador de pacotes", download, reuso}}
 
-Working in this way requires ((infrastructure)). We need a place to
-store and find packages, and a convenient way to install and upgrade
-them. In the JavaScript world, this infrastructure is provided by
-((NPM)) ([_npmjs.org_](https://npmjs.org)).
+Trabalhar desta requer ((infra-estrutura)). Precisamos de um lugar para armazenar 
+e encontrar os pacotes e uma forma conveniente de instalar e atualizá-los. No mundo 
+JavaScript, essa infra-estrutura é fornecedir pelo ((NPM)) ([_npmjs.org_](https://npmjs.org)).
 
-NPM is two things: an online service where one can download (and
-upload) packages, and a program (bundled with Node.js) that helps you
-install and manage them.
+NPM é duas coisas: um serviço online onde podemos fazer download (e upload) dos pacotes 
+e programas (juntos com Node.js) que ajudam a instalá-los e gerenciá-los.
 
-{{index "ini package"}}
+{{índice "pacote ini"}}
 
-At the time of writing, there are over half a million different
-packages available on NPM. A large portion of those are rubbish, I
-should mention, but almost every useful, publicly available package
-can be found on there. For example, an INI file parser, similar to the
-one we built in [Chapter ?](regexp), is available under the package
-name `ini`.
+No momento em que este texto foi escrito, há próximo de 1 milhão de diferentes pacotes 
+disponíveis no NPM. Uma grande parte é lixo, devo dizer, mas quase todos os pacotes 
+úteis estão disponíveis lá. Por exemplo, a função INI file parser, similar ao que 
+foi construído no [Capítulo ?](regexp) está disponível como pacote `ini`.
 
-[Chapter ?](node) will show how to install such packages locally using
-the `npm` ((command line)) program.
+[Capítulo ?](node) irá mostrar como instalar estes pacotes usando linha de comando 
+`npm`.
 
-Having quality packages available for download is extremely valuable.
-It means that we can often avoid reinventing a program that a hundred
-people have written before, and get a solid, well-tested
-implementation at the press of a few keys.
+Ter pacotes de alta qualidade disponíveis é extremamente valioso. Isso quer dizer 
+que normalmente podemos evitar de re-inventar um programa que diversas pessoas já 
+escreveram antes e ter uma sólida e bem testada implementação apenas apertando 
+alguns botões.
 
-{{index maintenance}}
+{{índice manutenção}}
 
-Software is cheap to copy, so once someone has written it,
-distributing it to other people is an efficient process. But writing
-it in the first place _is_ work, and responding to people who have
-found problems in the code, or who want to propose new features, is
-even more work.
+É barato copiar software, então quando alguém já escreveu, distribuir para outras 
+pessoas é um processo eficiente. Escrê-lo da primeira vez que _é_ o trabalho e 
+responder a pessoas que encontraram problemas no códio ou querem propor novas 
+funcionalidades, é ainda mais trabalho.
 
-By default, you own the ((copyright)) to the code you write, and other
-people may only use it with your permission. But because some people
-are just nice, and because publishing good software can help make you
-a little bit famous among programmers, many packages are published
-under a ((license)) that explicitly allows other people to use it.
+Por padrão, você possui o ((copyright)) do seu código e outras pessoas podem apenas 
+usá-lo com sua permissão. Mas como algumas pessoas são legais e porque publicar 
+bons softwares podem te deixar um pouco mais famoso entre programadores, muitos 
+pacotes são publicados sobre a ((licença)) que explicamente permitem outras pessoas 
+a utilizá-los.
 
-Most code on ((NPM)) is licensed this way. Some licenses require you
-to also publish code that you build on top of the package under the
-same license. Others are less demanding, just requiring that you keep
-the license with the code as you distribute it. The JavaScript
-community mostly uses the latter type of license. When using other
-people's packages, make sure you are aware of their license.
+A maioria dos códigos do ((NPM)) possui este tipo de licença. Algumas licenças 
+requerem que você publique o código que você criou utilizando o pacote baixado 
+sobre a mesma licença. Outros são menos exigentes, apenas requerindo que você 
+mantenha a licença com o código conforme você o distribui. A maioria da comunidade 
+JavaSciprt usa o último tipo de licença. Quando utilizar o pacote de outras pessoas, 
+tenha certeza de conhecer sua licença.
 
 ## Improvised modules
 

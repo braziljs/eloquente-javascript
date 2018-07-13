@@ -2,18 +2,18 @@
 
 # Módulos
 
-{{quote {autor: "Tef", title: "Programar é Terrível", chapter: true}
+{{quote {author: "Tef", title: "Programming is Terrible", chapter: true}
 
 Escreva código que seja fácil de deletar, difícil de estender.
 
 quote}}
 
-{{índice organização, "estrutura de código", "Yuan-Ma", "Livro de Programação"}}
+{{index organization, "code structure", "Yuan-Ma", "Book of Programming"}}
 
 O programa ideal tem uma estrutura limpa como cristal. É fácil de explicar como funciona
 e cada parte tem um papel bem definido.
 
-{{índice "crescimento orgânico"}}
+{{index "organic growth"}}
 
 Um programa real típico cresce organicamente. Novas funcionalidades são adicionadas
 conforme novas necessidades surgem. Estruturação e preservação da estrutura é um
@@ -21,7 +21,7 @@ trabalho adicional, trabalho que será pago somente no futuro, da próxima vez q
 alguém trabalhar no programa. Então é tentador negligenciar isso e permite as partes
 do programa ficarem profundamente confusas.
 
-{{índice legibilidade, re-uso, isolamento}}
+{{index readability, reuse, isolation}}
 
 Isso causa dois problemas práticos. Primeiro, entender este sistema é difícil. Se 
 tudo puder tocar todo o resto, é difícil olhar uma determinada parte isolada. Você
@@ -29,27 +29,27 @@ tudo puder tocar todo o resto, é difícil olhar uma determinada parte isolada. 
 usar qualquer funcionalidade do programa em outra situação, re-escrever será mais
 fácil do que tentar desenrolar a função de seu contexto.
 
-O termo "((grande bola de lama))" é geralmente para programas grandes e sem estrutura.
-Tudo fica junto e quando você tenta pegar uma parte, toda a coisa despenca e você
-fica com as mãos sujas.
+O termo "((grande bola de lama))" geralmente é usado para programas grandes e sem 
+estrutura. Tudo fica junto e quando você tenta pegar uma parte, toda a coisa despenca 
+e você fica com as mãos sujas.
 
 ## Módulos
 
-{{índice dependência}}
+{{index dependency}}
 
 _Módulos_ são uma tentativa de evitar estes problemas. Um ((módulo)) é uma parte de 
 programa que especifica quais partes ele depende (são as _dependências_) em que as 
 funcionalidades ele fornece para outros módulos (são as _((interfaces))_).
 
-{{índice "grande bola de lama"}}
+{{index "big ball of mud"}}
 
-Interface de módulo têm muito em comum com interface objetvo como vimos no 
+Interfaces de módulo têm muito em comum com interfaces de objetvo como vimos no 
 [Capítulo ?](object#interface). Eles fazem parte do módulo disponível no mundo 
 externo e mantém o resto privado. Restringindo o modo como os módulos interagem entre 
 si, o sistema fica mais parecido com ((Lego)), onde as peças interagem através de 
 conectores bem definidos e menos como lama, onde tudo se mistura.
 
-{{índice dependência}}
+{{index dependency}}
 
 A relação entre módulos é chamada dependência. Quando um módulo precisa de outro 
 módulo, é dito que ele depende daquele módulo. Quando este fato é claramente 
@@ -57,15 +57,15 @@ especificado no próprio módulo, pode ser utilizado para descobrir quais módul
 devem estar presentes para que o módulo desejado seja utilizado e carregar automaticamente 
 suas dependências.
 
-Para separar módulos desta forma, cada uma precisa de sua privacidade ((escopo)).
+Para separar módulos desta forma, cada um precisa de sua privacidade ((escopo)).
 
 Apenas colocando seus arquivos JavaScript em diferentes ((arquivo))s não satisfaz esses 
-requerimentos. Os arquivos ainda compartilham o mesmo namespace global. Elas podem, 
-intencionalmente ou acidentalmente, interferir umas com as outras e a estrutura de 
+requerimentos. Os arquivos ainda compartilham o mesmo _namespace_ global. Eles podem, 
+intencionalmente ou acidentalmente, interferir uns com os outros e a estrutura de 
 dependência permanece escondida. Podemos fazer melhor, como veremos mais tarde neste 
 capítulo.
 
-{{índice design}}
+{{index design}}
 
 Definir uma estrutura de módulo para um programa pode ser difícil. Na fase onde você 
 está ainda explorando o problema, testar soluções diferentes para ver qual irá funcionar, 
@@ -75,13 +75,13 @@ organizar o programa.
 
 ## Pacotes
 
-{{índice bug, dependência, estrutura, reuso}}
+{{index bug, dependency, structure, reuse}}
 
 Uma das vantagens de construir um programa separando por partes e sendo possível executar 
 essas partes separadamente é que você é capaz de executar as mesmas partes em diferentes 
 programas.
 
-{{índice "função parseINI"}}
+{{index "parseINI function"}}
 
 Mas como você faz isso? Digamos que eu queira usar a função `parseINI` do 
 [Capítulo ?](regexp#ini) em outro programa. Se está claro no que esta função depende 
@@ -89,7 +89,7 @@ Mas como você faz isso? Digamos que eu queira usar a função `parseINI` do
 Mas então se eu encontrar um erro no código, provavelmente irei corrigir no programa em
 que estarei trabalhando e esqueço de corrigir no código de onde copiei.
 
-{{índice duplicação, "programando copia-cola"}}
+{{index duplication, "copy-paste programming"}}
 
 Quando você começa a duplicar código, se verá rapidamente perdendo tempo e energia movendo 
 cópias e as mantendo atualizadas.
@@ -103,18 +103,18 @@ Quando um problema é encontrado no pacote ou uma nova funcionalidade é adicion
 pacote é atualizado. Agora o programa que depende dele (que também podem ser pacotes) 
 podem ser atualizados ((versão)).
 
-{{id módulos npm}}
+{{id modules_npm}}
 
-{{índice instalação, atualização, "gerenciador de pacotes", download, reuso}}
+{{index installation, upgrading, "package manager", download, reuse}}
 
-Trabalhar desta requer ((infra-estrutura)). Precisamos de um lugar para armazenar 
+Trabalhar desta forma requer ((infra-estrutura)). Precisamos de um lugar para armazenar 
 e encontrar os pacotes e uma forma conveniente de instalar e atualizá-los. No mundo 
-JavaScript, essa infra-estrutura é fornecedir pelo ((NPM)) ([_npmjs.org_](https://npmjs.org)).
+JavaScript, essa infra-estrutura é fornecida pelo ((NPM)) ([_npmjs.org_](https://npmjs.org)).
 
 NPM é duas coisas: um serviço online onde podemos fazer download (e upload) dos pacotes 
 e programas (juntos com Node.js) que ajudam a instalá-los e gerenciá-los.
 
-{{índice "pacote ini"}}
+{{index "ini package"}}
 
 No momento em que este texto foi escrito, há próximo de 1 milhão de diferentes pacotes 
 disponíveis no NPM. Uma grande parte é lixo, devo dizer, mas quase todos os pacotes 
@@ -125,28 +125,28 @@ foi construído no [Capítulo ?](regexp) está disponível como pacote `ini`.
 `npm`.
 
 Ter pacotes de alta qualidade disponíveis é extremamente valioso. Isso quer dizer 
-que normalmente podemos evitar de re-inventar um programa que diversas pessoas já 
+que normalmente podemos evitar de ter que inventar um programa que diversas pessoas já 
 escreveram antes e ter uma sólida e bem testada implementação apenas apertando 
 alguns botões.
 
-{{índice manutenção}}
+{{index maintenance}}
 
 É barato copiar software, então quando alguém já escreveu, distribuir para outras 
-pessoas é um processo eficiente. Escrê-lo da primeira vez que _é_ o trabalho e 
-responder a pessoas que encontraram problemas no códio ou querem propor novas 
+pessoas é um processo eficiente. Escrevê-lo da primeira vez que _é_ o trabalho e 
+responder a pessoas que encontraram problemas no código ou querem propor novas 
 funcionalidades, é ainda mais trabalho.
 
 Por padrão, você possui o ((copyright)) do seu código e outras pessoas podem apenas 
 usá-lo com sua permissão. Mas como algumas pessoas são legais e porque publicar 
 bons softwares podem te deixar um pouco mais famoso entre programadores, muitos 
-pacotes são publicados sobre a ((licença)) que explicamente permitem outras pessoas 
+pacotes são publicados sobre a ((licença)) que explicitamente permitem outras pessoas 
 a utilizá-los.
 
 A maioria dos códigos do ((NPM)) possui este tipo de licença. Algumas licenças 
 requerem que você publique o código que você criou utilizando o pacote baixado 
 sobre a mesma licença. Outros são menos exigentes, apenas requerindo que você 
 mantenha a licença com o código conforme você o distribui. A maioria da comunidade 
-JavaSciprt usa o último tipo de licença. Quando utilizar o pacote de outras pessoas, 
+JavaScript usa o último tipo de licença. Quando utilizar o pacote de outras pessoas, 
 tenha certeza de conhecer sua licença.
 
 ## Improvised modules

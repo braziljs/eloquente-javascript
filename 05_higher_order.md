@@ -86,7 +86,8 @@ ability to talk about problems at a higher (or more abstract) level.
 
 {{index "recipe analogy", "pea soup"}}
 
-As an analogy, compare these two recipes for pea soup:
+As an analogy, compare these two recipes for pea soup. The first one
+goes like this:
 
 {{quote
 
@@ -102,7 +103,7 @@ peas. Cook for 10 more minutes.
 
 quote}}
 
-And the second recipe:
+And this is the second recipe:
 
 {{quote
 
@@ -117,11 +118,11 @@ quote}}
 {{index vocabulary}}
 
 The second is shorter and easier to interpret. But you do need to
-understand a few more cooking-related words—_soak_, _simmer_, _chop_,
+understand a few more cooking-related words such as _soak_, _simmer_, _chop_,
 and, I guess, _vegetable_.
 
 When programming, we can't rely on all the words we need to be waiting
-for us in the dictionary. Thus you might fall into the pattern of the
+for us in the dictionary. Thus, we might fall into the pattern of the
 first recipe—work out the precise steps the computer has to perform,
 one by one, blind to the higher-level concepts that they express.
 
@@ -180,8 +181,8 @@ repeat(3, console.log);
 // → 2
 ```
 
-You don't have to pass a predefined function to `repeat`. Often, you'd
-want to create a function value on the spot instead.
+We don't have to pass a predefined function to `repeat`. Often, it
+is easier to create a function value on the spot instead.
 
 ```
 let labels = [];
@@ -192,14 +193,14 @@ console.log(labels);
 // → ["Unit 1", "Unit 2", "Unit 3", "Unit 4", "Unit 5"]
 ```
 
-{{index "loop body", "curly braces"}}
+{{index "loop body", braces}}
 
 This is structured a little like a `for` loop—it first describes the
-kind of loop, and then gives a body. However, the body is now written
+kind of loop and then provides a body. However, the body is now written
 as a function value, which is wrapped in the ((parentheses)) of the
 call to `repeat`. This is why it has to be closed with the closing
 brace _and_ closing parenthesis. In cases like this example, where the
-body is a single small expression, you could also omit the curly
+body is a single small expression, you could also omit the
 braces and write the loop on a single line.
 
 ## Higher-order functions
@@ -216,7 +217,7 @@ between functions and other values is taken more seriously.
 {{index abstraction}}
 
 Higher-order functions allow us to abstract over _actions_, not just
-values. They come in several forms. For example, you can have
+values. They come in several forms. For example, we can have
 functions that create new functions.
 
 ```
@@ -228,7 +229,7 @@ console.log(greaterThan10(11));
 // → true
 ```
 
-And you can have functions that change other functions.
+And we can have functions that change other functions.
 
 ```
 function noisy(f) {
@@ -244,7 +245,7 @@ noisy(Math.min)(3, 2, 1);
 // → called with [3, 2, 1] , returned 1
 ```
 
-You can even write functions that provide new types of ((control
+We can even write functions that provide new types of ((control
 flow)).
 
 ```
@@ -263,7 +264,7 @@ repeat(3, n => {
 
 {{index [array, methods], [array, iteration], "forEach method"}}
 
-There is a built-in array method, `forEach` that provides something
+There is a built-in array method, `forEach`, that provides something
 like a `for`/`of` loop as a higher-order function.
 
 ```
@@ -274,21 +275,20 @@ like a `for`/`of` loop as a higher-order function.
 
 ## Script data set
 
-One area where higher-order functions shine is data processing. In
-order to process data, we'll need some actual data. This chapter will
+One area where higher-order functions shine is data processing. To process data, we'll need some actual data. This chapter will
 use a ((data set)) about scripts—((writing system))s such as Latin,
 Cyrillic, or Arabic.
 
 Remember ((Unicode)) from [Chapter ?](values#unicode), the system that
-assigns a number to each character in written language. Most of these
+assigns a number to each character in written language? Most of these
 characters are associated with a specific script. The standard
-contains 140 different scripts. 81 of which are still in use today, 59
+contains 140 different scripts—81 are still in use today, and 59
 are historic.
 
-Though I can only fluently read Latin characters, I appreciate the
+Though I can fluently read only Latin characters, I appreciate the
 fact that people are writing texts in at least 80 other writing
 systems, many of which I wouldn't even recognize. For example, here's
-a sample of ((Tamil)) handwriting.
+a sample of ((Tamil)) handwriting:
 
 {{figure {url: "img/tamil.png", alt: "Tamil handwriting"}}}
 
@@ -297,7 +297,7 @@ a sample of ((Tamil)) handwriting.
 The example ((data set)) contains some pieces of information about the
 140 scripts defined in Unicode. It is available in the [coding
 sandbox](https://eloquentjavascript.net/code#5) for this chapter[
-([_eloquentjavascript.net/code#5_](https://eloquentjavascript.net/code#5))]{if
+([_https://eloquentjavascript.net/code#5_](https://eloquentjavascript.net/code#5))]{if
 book} as the `SCRIPTS` binding. The binding contains an array of
 objects, each of which describes a script.
 
@@ -313,20 +313,20 @@ objects, each of which describes a script.
 }
 ```
 
-Such an object tells you the name of the script, the Unicode ranges
+Such an object tells us the name of the script, the Unicode ranges
 assigned to it, the direction in which it is written, the
 (approximate) origin time, whether it is still in use, and a link to
-more information. Direction may be `"ltr"` for left-to-right, `"rtl"`
-for right-to-left (the way Arabic and Hebrew text are written), or
-`"ttb"` for top-to-bottom (as with Mongolian writing).
+more information. The direction may be `"ltr"` for left to right, `"rtl"`
+for right to left (the way Arabic and Hebrew text are written), or
+`"ttb"` for top to bottom (as with Mongolian writing).
 
 {{index "slice method"}}
 
 The `ranges` property contains an array of Unicode character
-((range))s, each of which is a two-element array containing a lower
-and upper bound. Any character codes within these ranges are assigned
+((range))s, each of which is a two-element array containing a lower bound
+and an upper bound. Any character codes within these ranges are assigned
 to the script. The lower ((bound)) is inclusive (code 994 is a Coptic
-character) and the upper bound non-inclusive (code 1008 isn't).
+character), and the upper bound is non-inclusive (code 1008 isn't).
 
 ## Filtering arrays
 
@@ -365,13 +365,15 @@ the test. This function is _pure_. It does not modify the array it is
 given.
 
 Like `forEach`, `filter` is a ((standard)) array method. The example
-defined the function only in order to show what it does internally.
+defined the function only to show what it does internally.
 From now on, we'll use it like this instead:
 
 ```
 console.log(SCRIPTS.filter(s => s.direction == "ttb"));
 // → [{name: "Mongolian", …}, …]
 ```
+
+{{id map}}
 
 ## Transforming with map
 
@@ -408,9 +410,9 @@ Like `forEach` and `filter`, `map` is a standard array method.
 
 {{index [array, methods], "summing example", "reduce method"}}
 
-Another common thing to do with arrays is computing a single value
+Another common thing to do with arrays is to compute a single value
 from them. Our recurring example, summing a collection of numbers, is
-an instance of this. Another example would be finding the script with
+an instance of this. Another example is finding the script with
 the most characters.
 
 {{indexsee "fold", "reduce method"}}
@@ -420,12 +422,13 @@ the most characters.
 The higher-order operation that represents this pattern is called
 _reduce_ (sometimes also called _fold_). It builds a value by
 repeatedly taking a single element from the array and combining it
-with the previous value. When summing numbers, you'd start with the
+with the current value. When summing numbers, you'd start with the
 number zero and, for each element, add that to the sum.
 
 The parameters to `reduce` are, apart from the array, a combining
 function and a start value. This function is a little less
-straightforward than `filter` and `map`, so look closely.
+straightforward than `filter` and `map`, so take a close look at
+it:
 
 ```
 function reduce(array, combine, start) {
@@ -477,13 +480,13 @@ list of the reducer function. The second call to `reduce` then uses
 this to find the largest script by repeatedly comparing two scripts
 and returning the larger one.
 
-The Han script has over 89 thousand characters assigned to it in the
+The Han script has more than 89,000 characters assigned to it in the
 Unicode standard, making it by far the biggest writing system in the
 data set. Han is a script (sometimes) used for Chinese, Japanese, and
 Korean text. Those languages share a lot of characters, though they
-tend to write them differently. The (US based) Unicode Consortium
-decided to treat them as a single writing system in order to save
-character codes. This is called "Han unification" and still makes some
+tend to write them differently. The (U.S.-based) Unicode Consortium
+decided to treat them as a single writing system to save
+character codes. This is called _Han unification_ and still makes some
 people very angry.
 
 ## Composability
@@ -524,10 +527,10 @@ function average(array) {
 
 console.log(Math.round(average(
   SCRIPTS.filter(s => s.living).map(s => s.year))));
-// → 1185
+// → 1188
 console.log(Math.round(average(
   SCRIPTS.filter(s => !s.living).map(s => s.year))));
-// → 209
+// → 188
 ```
 
 So the dead scripts in Unicode are, on average, older than the living
@@ -548,7 +551,7 @@ for (let script of SCRIPTS) {
   }
 }
 console.log(Math.round(total / count));
-// → 1185
+// → 1188
 ```
 
 But it is harder to see what was being computed and how. And because
@@ -560,7 +563,7 @@ function.
 
 In terms of what the computer is actually doing, these two approaches
 are also quite different. The first will build up new ((array))s when
-running `filter` and `map`, whereas the second only computes some
+running `filter` and `map`, whereas the second computes only some
 numbers, doing less work. You can usually afford the readable
 approach, but if you're processing huge arrays, and doing so many
 times, the less abstract style might be worth the extra speed.
@@ -595,7 +598,7 @@ console.log(characterScript(121));
 ```
 
 The `some` method is another higher-order function. It takes a test
-function and tells you if that function returns true for any of the
+function and tells you whether that function returns true for any of the
 elements in the array.
 
 {{id code_units}}
@@ -605,12 +608,12 @@ But how do we get the character codes in a string?
 In [Chapter ?](values) I mentioned that JavaScript ((string))s are
 encoded as a sequence of 16-bit numbers. These are called _((code
 unit))s_. A ((Unicode)) ((character)) code was initially supposed to
-fit within such a unit (which gives you a little over 65 thousand
+fit within such a unit (which gives you a little over 65,000
 characters). When it became clear that wasn't going to be enough, many
 people balked at the need to use more memory per character. To address
 these concerns, ((UTF-16)), the format used by JavaScript strings, was
 invented. It describes most common characters using a single 16-bit
-code unit, but uses a pair of two such units for others.
+code unit but uses a pair of two such units for others.
 
 {{index error}}
 
@@ -678,9 +681,9 @@ units), you can use `codePointAt(0)` to get its code.
 {{index "SCRIPTS data set", "countBy function", array}}
 
 We have a `characterScript` function and a way to correctly loop over
-characters. The next step would be to count the characters that belong
+characters. The next step is to count the characters that belong
 to each script. The following counting abstraction will be useful
-there.
+there:
 
 ```{includeCode: strip_log}
 function countBy(items, groupName) {
@@ -702,8 +705,9 @@ console.log(countBy([1, 2, 3, 4, 5], n => n > 2));
 ```
 
 The `countBy` function expects a collection (anything that we can loop
-over with `for`/`of`) and a grouping function. It returns an array of
-objects, each of which names a group and tells you the amount of
+over with `for`/`of`) and a function that computes a group name for a
+given element. It returns an array of
+objects, each of which names a group and tells you the number of
 elements that were found in that group.
 
 {{index "findIndex method", "indexOf method"}}
@@ -740,18 +744,18 @@ console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
 {{index "characterScript function", "filter method"}}
 
 The function first counts the characters by name, using
-`characterScript` to assign them a name, and falling back to the
+`characterScript` to assign them a name and falling back to the
 string `"none"` for characters that aren't part of any script. The
-`filter` call drops the entry for `"none"` from the resulting array,
+`filter` call drops the entry for `"none"` from the resulting array
 since we aren't interested in those characters.
 
 {{index "reduce method", "map method", "join method", [array, methods]}}
 
-To be able to compute ((percentage))s, we first need the total amount
+To be able to compute ((percentage))s, we first need the total number
 of characters that belong to a script, which we can compute with
 `reduce`. If no such characters are found, the function returns a
 specific string. Otherwise, it transforms the counting entries into
-readable strings with `map`, and then combine them with `join`.
+readable strings with `map` and then combines them with `join`.
 
 ## Summary
 
@@ -796,9 +800,9 @@ if}}
 Write a higher-order function `loop` that provides something like a
 `for` loop statement. It takes a value, a test function, an update
 function, and a body function. Each iteration, it first runs the test
-function on the current loop value, and stops if that returns false.
-Then it calls the body function, giving it the current value. And
-finally, it calls the update function to create a new value, and
+function on the current loop value and stops if that returns false.
+Then it calls the body function, giving it the current value. 
+Finally, it calls the update function to create a new value and
 starts from the beginning.
 
 When defining the function, you can use a regular loop to do the
@@ -859,8 +863,8 @@ function returns false. If the loop runs to its end without finding
 such an element, we know that all elements matched and we should
 return true.
 
-To build `every` on top of `some`, we can apply "((De Morgan's
-laws))", which state that `a && b` equals `!(!a || !b)`. This can be
+To build `every` on top of `some`, we can apply _((De Morgan's
+laws))_, which state that `a && b` equals `!(!a || !b)`. This can be
 generalized to arrays, where all elements in the array match if there
 is no element in the array that does not match.
 
@@ -872,13 +876,13 @@ hint}}
 
 Write a function that computes the dominant writing direction in a
 string of text. Remember that each script object has a `direction`
-property that can be `"ltr"` (left-to-right), `"rtl"` (right-to-left),
-or `"ttb"` (top-to-bottom).
+property that can be `"ltr"` (left to right), `"rtl"` (right to left),
+or `"ttb"` (top to bottom).
 
 {{index "characterScript function", "countBy function"}}
 
 The dominant direction is the direction of a majority of the
-characters which have a script associated with them. The
+characters that have a script associated with them. The
 `characterScript` and `countBy` functions defined earlier in the
 chapter are probably useful here.
 
@@ -902,13 +906,13 @@ if}}
 
 Your solution might look a lot like the first half of the
 `textScripts` example. You again have to count characters by a
-criteria based on `characterScript`, and then filter out the part of
-the result that refers to uninteresting (script-less characters).
+criterion based on `characterScript` and then filter out the part of
+the result that refers to uninteresting (script-less) characters.
 
 {{index "reduce method"}}
 
 Finding the direction with the highest character count can be done
-with `reduce`. If it's not clear how, refer back to the example
+with `reduce`. If it's not clear how, refer to the example
 earlier in the chapter, where `reduce` was used to find the script
 with the most characters.
 

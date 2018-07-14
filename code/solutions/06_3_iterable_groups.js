@@ -4,7 +4,7 @@ class Group {
   }
 
   add(value) {
-    if (!this.members.includes(value)) {
+    if (!this.has(value)) {
       this.members.push(value);
     }
   }

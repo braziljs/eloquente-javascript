@@ -12,9 +12,11 @@ quote}}
 
 {{index "Liskov, Barbara", "abstract data type"}}
 
+{{figure {url: "img/chapter_picture_6.jpg", alt: "Picture of a rabbit with its proto-rabbit", chapter: framed}}}
+
 [Chapter ?](data) introduced JavaScript's ((object))s. In programming
 culture, we have a thing called _((object-oriented programming))_, a
-set of techniques that uses objects (and related concepts) as the
+set of techniques that use objects (and related concepts) as the
 central principle of program organization.
 
 Though no one really agrees on its precise definition, object-oriented
@@ -27,7 +29,7 @@ can be applied in JavaScript.
 {{index encapsulation, isolation, modularity}}
 
 The core idea in object-oriented programming is to divide programs
-into smaller pieces, and make each piece responsible for managing its
+into smaller pieces and make each piece responsible for managing its
 own state.
 
 This way, some knowledge about the way a piece of the program works
@@ -40,22 +42,22 @@ needs to be updated.
 
 Different pieces of such a program interact with each other through
 _((interface))s_, limited sets of functions or bindings that provide
-useful functionality at a more abstract level, hiding its precise
+useful functionality at a more abstract level, hiding their precise
 implementation.
 
 {{index "public properties", "private properties", "access control"}}
 
 Such program pieces are modeled using ((object))s. Their interface
 consists of a specific set of ((method))s and properties. Properties
-that are part of the interface are called _public_. The others, that
+that are part of the interface are called _public_. The others, which
 outside code should not be touching, are called _private_.
 
 {{index "underscore character"}}
 
 Many languages provide a way to distinguish public and private
-properties, and will prevent outside code from accessing the private
+properties and prevent outside code from accessing the private
 ones altogether. JavaScript, once again taking the minimalist
-approach, does not. Not yet, at least—there is work underway to add
+approach, does not—not yet at least. There is work underway to add
 this to the language.
 
 Even though the language doesn't have this distinction built in,
@@ -114,8 +116,8 @@ hungryRabbit.speak("I could use a carrot right now.");
 
 You can think of `this` as an extra ((parameter)) that is passed in a
 different way. If you want to pass it explicitly, you can use a
-function's `call` method, which takes the `this` value as first
-argument, and treats further arguments as normal parameters.
+function's `call` method, which takes the `this` value as its first
+argument and treats further arguments as normal parameters.
 
 ```
 speak.call(hungryRabbit, "Burp!");
@@ -128,10 +130,10 @@ scope in a regular function defined with the `function` keyword.
 
 {{index this, "arrow function"}}
 
-Arrow functions are different—they do not bind their own `this`, but
-can see the `this` binding of the scope around them. Thus you can do
+Arrow functions are different—they do not bind their own `this` but
+can see the `this` binding of the scope around them. Thus, you can do
 something like the following code, which references `this` from inside
-a local function.
+a local function:
 
 ```
 function normalize() {
@@ -205,7 +207,7 @@ It provides a few ((method))s that show up in all objects, such as
 {{index inheritance, "Function prototype", "Array prototype", "Object prototype"}}
 
 Many objects don't directly have `Object.prototype` as their
-((prototype)), but instead have another object, which provides its own
+((prototype)) but instead have another object that provides a different set of
 default properties. Functions derive from `Function.prototype`, and
 arrays derive from `Array.prototype`.
 
@@ -243,8 +245,8 @@ killerRabbit.speak("SKREEEE!");
 
 {{index "shared property"}}
 
-A property like `speak(line)` in an object expression is a shorthand
-for defining a method. It creates a property called `speak` and gives
+A property like `speak(line)` in an object expression is a shorthand way
+of defining a method. It creates a property called `speak` and gives
 it a function as its value.
 
 The "proto" rabbit acts as a container for the properties that are
@@ -271,7 +273,7 @@ be stored directly in the objects themselves.
 
 {{id constructors}}
 
-So in order to create an instance of a given class, you have to make
+So to create an instance of a given class, you have to make
 an object that derives from the proper prototype, but you _also_ have
 to make sure it, itself, has the properties that instances of this
 class are supposed to have. This is what a _((constructor))_ function
@@ -295,7 +297,7 @@ function, and returned at the end of the function.
 
 {{index "prototype property"}}
 
-The appropriate prototype object for a constructor is found by taking
+The prototype object used when constructing objects is found by taking
 the `prototype` property of the constructor function.
 
 {{index "rabbit example"}}
@@ -334,6 +336,15 @@ is `Function.prototype` since constructors are functions. Its
 `prototype` _property_ holds the prototype used for instances created
 through it.
 
+```
+console.log(Object.getPrototypeOf(Rabbit) ==
+            Function.prototype);
+// → true
+console.log(Object.getPrototypeOf(weirdRabbit) ==
+            Rabbit.prototype);
+// → true
+```
+
 ## Class notation
 
 So JavaScript ((class))es are ((constructor)) functions with a
@@ -359,24 +370,25 @@ let blackRabbit = new Rabbit("black");
 
 The `class` keyword starts a ((class declaration)), which allows us to
 define a constructor and a set of methods all in a single place. Any
-number of methods may be written inside the declaration's ((curly
-braces)). The one named `constructor` is treated specially. It
+number of methods may be written inside the declaration's ((braces)).
+The one named `constructor` is treated specially. It
 provides the actual constructor function, which will be bound to the
 name `Rabbit`. The others are packaged into that constructor's
-prototype. Thus, the class declaration above is equivalent to the
+prototype. Thus, the earlier class declaration is equivalent to the
 constructor definition from the previous section. It just looks nicer.
 
 {{index ["class declaration", properties]}}
 
-Class declarations only allow _methods_—properties that hold
+Class declarations currently allow only _methods_—properties that hold
 functions—to be added to the ((prototype)). This can be somewhat
-inconvenient when you want to save a non-function value in there. You
-can still create such properties by directly manipulating the
+inconvenient when you want to save a non-function value in there.
+The next version of the language will probably improve this. For now, you
+can create such properties by directly manipulating the
 prototype after you've defined the class.
 
-Like `function`, `class` can be used both in statement and in
-expression positions. When used as an expression, it doesn't define a
-binding, but just produces the constructor as a value. You are allowed
+Like `function`, `class` can be used both in statements and in
+expressions. When used as an expression, it doesn't define a
+binding but just produces the constructor as a value. You are allowed
 to omit the class name in a class expression.
 
 ```
@@ -390,9 +402,9 @@ console.log(object.getWord());
 {{index "shared property", overriding}}
 
 When you add a ((property)) to an object, whether it is present in the
-prototype or not, the property is added to the object _itself_, which
-will henceforth have it as its own property. If there _is_ a property
-by the same name in the prototype, this property will no longer affect
+prototype or not, the property is added to the object _itself_.
+If there was already a property with
+the same name in the prototype, this property will no longer affect
 the object, as it is now hidden behind the object's own property.
 
 ```
@@ -420,14 +432,14 @@ itself can be looked up.
 {{index "shared property"}}
 
 Overriding properties that exist in a prototype can be a useful thing
-to do. As the rabbit teeth example shows, it can be used to express
+to do. As the rabbit teeth example shows, overriding can be used to express
 exceptional properties in instances of a more generic class of
-objects, while letting the nonexceptional objects simply take a
+objects, while letting the nonexceptional objects take a
 standard value from their prototype.
 
 {{index "toString method", "Array prototype", "Function prototype"}}
 
-It is also used to give the standard function and array prototypes a
+Overriding is also used to give the standard function and array prototypes a
 different `toString` method than the basic object prototype.
 
 ```
@@ -444,7 +456,7 @@ Calling `toString` on an array gives a result similar to calling
 `.join(",")` on it—it puts commas between the values in the array.
 Directly calling `Object.prototype.toString` with an array produces a
 different string. That function doesn't know about arrays, so it
-simply puts the word "object" and the name of the type between square
+simply puts the word _object_ and the name of the type between square
 brackets.
 
 ```
@@ -454,11 +466,18 @@ console.log(Object.prototype.toString.call([1, 2]));
 
 ## Maps
 
+{{index "map method"}}
+
+We saw the word _map_ used in the [previous chapter](higher_order#map)
+for an operation that transforms a data structure by applying a
+function to its elements. Confusing as it is, in programming the same
+word is also used for a related but rather different thing.
+
 {{index "map (data structure)", "ages example", "data structure"}}
 
-A _map_ is a data structure that associates values with other values.
-For example, you might want to map names to ages. It is possible to
-use objects for this.
+A _map_ (noun) is a data structure that associates values (the keys)
+with other values. For example, you might want to map names to ages.
+It is possible to use objects for this.
 
 ```
 let ages = {
@@ -478,16 +497,16 @@ console.log("Is toString's age known?", "toString" in ages);
 {{index "Object.prototype", "toString method"}}
 
 Here, the object's property names are the people's names, and the
-property values their ages. But we certainly didn't list anybody named
+property values are their ages. But we certainly didn't list anybody named
 toString in our map. Yet, because plain objects derive from
 `Object.prototype`, it looks like the property is there.
 
 {{index "Object.create function", prototype}}
 
 As such, using plain objects as maps is dangerous. There are several
-possible ways to avoid this problem. Firstly, it is possible to create
+possible ways to avoid this problem. First, it is possible to create
 objects with _no_ prototype. If you pass `null` to `Object.create`,
-the resulting object will not derive from `Object.prototype`, and can
+the resulting object will not derive from `Object.prototype` and can
 safely be used as a map.
 
 ```
@@ -502,7 +521,7 @@ use an object as your map.
 {{index "Map class"}}
 
 Fortunately, JavaScript comes with a class called `Map` that is
-written for this exact purpose. It stores a mapping, and allows any
+written for this exact purpose. It stores a mapping and allows any
 type of keys.
 
 ```
@@ -515,6 +534,8 @@ console.log(`Júlia is ${ages.get("Júlia")}`);
 // → Júlia is 62
 console.log("Is Jack's age known?", ages.has("Jack"));
 // → Is Jack's age known? false
+console.log(ages.has("toString"));
+// → false
 ```
 
 {{index interface, "set method", "get method", "has method", encapsulation}}
@@ -528,7 +549,7 @@ simple interface to use their work.
 {{index "hasOwnProperty method", "in operator"}}
 
 If you do have a plain object that you need to treat as a map for some
-reason, it is useful to know that `Object.keys` only returns an
+reason, it is useful to know that `Object.keys` returns only an
 object's _own_ keys, not those in the prototype. As an alternative to
 the `in` operator, you can use the `hasOwnProperty` method, which
 ignores the object's prototype.
@@ -576,14 +597,14 @@ it expects.
 I mentioned in [Chapter ?](data#for_of_loop) that a `for`/`of` loop
 can loop over several kinds of data structures. This is another case
 of polymorphism—such loops expect the data structure to expose a
-specific interface, which arrays and strings do. And you can also add
+specific interface, which arrays and strings do. And we can also add
 this interface to your own objects! But before we can do that, we need
 to know what symbols are.
 
 ## Symbols
 
 It is possible for multiple interfaces to use the same property name
-for different things. For example I could define an interface in which
+for different things. For example, I could define an interface in which
 the `toString` method is supposed to convert the object into a piece
 of yarn. It would not be possible for an object to conform to both
 that interface and the standard use of `toString`.
@@ -611,11 +632,11 @@ console.log(blackRabbit[sym]);
 ```
 
 The string you pass to `Symbol` is included when you convert it to a
-string, and can make it easier to recognize a symbol when, for
+string and can make it easier to recognize a symbol when, for
 example, showing it in the console. But it has no meaning beyond
 that—multiple symbols may have the same name.
 
-Being both unique and useable as property names makes symbols suitable
+Being both unique and usable as property names makes symbols suitable
 for defining interfaces that can peacefully live alongside other
 properties, no matter what their names are.
 
@@ -650,7 +671,7 @@ console.log(stringObject[toStringSymbol]());
 {{index "iterable interface", "Symbol.iterator symbol", "for/of loop"}}
 
 The object given to a `for`/`of` loop is expected to be _iterable_.
-This means that it has a method named with the `Symbol.iterator`
+This means it has a method named with the `Symbol.iterator`
 symbol (a symbol value defined by the language, stored as a property
 of the `Symbol` function).
 
@@ -659,9 +680,9 @@ of the `Symbol` function).
 When called, that method should return an object that provides a
 second interface, _iterator_. This is the actual thing that iterates.
 It has a `next` method that returns the next result. That result
-should be an object with a `value` property, providing the next value,
-and a `done` property, which should be true when there are no more
-results and false otherwise.
+should be an object with a `value` property that provides the next value,
+if there is one, and a `done` property, which should be true when there
+are no more results and false otherwise.
 
 Note that the `next`, `value`, and `done` property names are plain
 strings, not symbols. Only `Symbol.iterator`, which is likely to be
@@ -688,14 +709,14 @@ class, acting as a two-dimensional array.
 
 ```{includeCode: true}
 class Matrix {
-  constructor(width, height, content = (x, y) => undefined) {
+  constructor(width, height, element = (x, y) => undefined) {
     this.width = width;
     this.height = height;
     this.content = [];
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        this.content[y * width + x] = content(x, y);
+        this.content[y * width + x] = element(x, y);
       }
     }
   }
@@ -710,11 +731,11 @@ class Matrix {
 ```
 
 The class stores its content in a single array of _width_ × _height_
-elements. The elements are stored row-by-row, so for example the third
+elements. The elements are stored row by row, so, for example, the third
 element in the fifth row is (using zero-based indexing) stored at
 position 4 × _width_ + 2.
 
-The constructor function takes a width, height, and an optional
+The constructor function takes a width, a height, and an optional
 content function that will be used to fill in the initial values.
 There are `get` and `set` methods to retrieve and update elements in
 the matrix.
@@ -752,12 +773,12 @@ class MatrixIterator {
 The class tracks the progress of iterating over a matrix in its `x`
 and `y` properties. The `next` method starts by checking whether the
 bottom of the matrix has been reached. If it hasn't, it _first_
-creates the object holding the current value, and _then_ updates its
+creates the object holding the current value and _then_ updates its
 position, moving to the next row if necessary.
 
-Let us set up the `Matrix` class to be iterable. Throughout this book,
+Let's set up the `Matrix` class to be iterable. Throughout this book,
 I'll occasionally use after-the-fact prototype manipulation to add
-methods to classes, so that the individual pieces of code remain small
+methods to classes so that the individual pieces of code remain small
 and self-contained. In a regular program, where there is no need to
 split the code into small pieces, you'd declare these methods directly
 in the class instead.
@@ -790,7 +811,7 @@ for (let {x, y, value} of matrix) {
 Interfaces often consist mostly of methods, but it is also okay to
 include properties that hold non-function values. For example, `Map`
 objects have a `size` property that tells you how many keys are stored
-in it.
+in them.
 
 It is not even necessary for such an object to compute and store such
 a property directly in the instance. Even properties that are accessed
@@ -844,14 +865,14 @@ console.log(temp.celsius);
 
 The `Temperature` class allows you to read and write the temperature
 in either degrees ((Celsius)) or degrees ((Fahrenheit)), but
-internally only stores Celsius, and automatically converts to Celsius
-in the `fahrenheit` getter and setter.
+internally it stores only Celsius and automatically converts to
+and from Celsius in the `fahrenheit` getter and setter.
 
 {{index "static method"}}
 
 Sometimes you want to attach some properties directly to your
 constructor function, rather than to the prototype. Such methods won't
-have access to a class instance, but can for example be used to
+have access to a class instance but can, for example, be used to
 provide additional ways to create instances.
 
 Inside a class declaration, methods that have `static` written before
@@ -864,11 +885,11 @@ temperature using degrees Fahrenheit.
 {{index inheritance, "matrix example", "object-oriented programming", "SymmetricMatrix class"}}
 
 Some matrices are known to be _symmetric_. If you mirror a symmetric
-matrix around its top-left to bottom-right diagonal, it stays the
+matrix around its top-left-to-bottom-right diagonal, it stays the
 same. In other words, the value stored at _x_,_y_ is always the same
 as that at _y_,_x_.
 
-Imagine we need a data structure like `Matrix`, but one which enforces
+Imagine we need a data structure like `Matrix` but one that enforces
 the fact that the matrix is and remains symmetrical. We could write it
 from scratch, but that would involve repeating some code very similar
 to what we already wrote.
@@ -878,7 +899,7 @@ to what we already wrote.
 JavaScript's prototype system makes it possible to create a _new_
 class, much like the old class, but with new definitions for some of
 its properties. The prototype for the new class derives from the old
-prototype, but adds a new definition for, say, the `set` method.
+prototype but adds a new definition for, say, the `set` method.
 
 In object-oriented programming terms, this is called
 _((inheritance))_. The new class inherits properties and behavior from
@@ -886,10 +907,10 @@ the old class.
 
 ```{includeCode: "top_lines: 17"}
 class SymmetricMatrix extends Matrix {
-  constructor(size, content = (x, y) => undefined) {
+  constructor(size, element = (x, y) => undefined) {
     super(size, size, (x, y) => {
-      if (x < y) return content(y, x);
-      else return content(x, y);
+      if (x < y) return element(y, x);
+      else return element(x, y);
     });
   }
 
@@ -907,21 +928,21 @@ console.log(matrix.get(2, 3));
 ```
 
 The use of the word `extends` indicates that this class shouldn't be
-based on the default `Object` prototype, but on some other class. This
+directly based on the default `Object` prototype but on some other class. This
 is called the _((superclass))_. The derived class is the
 _((subclass))_.
 
 To initialize a `SymmetricMatrix` instance, the constructor calls its
-superclass' constructor through the `super` keyword. This is necessary
+superclass's constructor through the `super` keyword. This is necessary
 because if this new object is to behave (roughly) like a `Matrix`, it
-is going to need the instance properties that matrices have. In order
-to ensure the matrix is symmetrical, the constructor wraps the
+is going to need the instance properties that matrices have. 
+To ensure the matrix is symmetrical, the constructor wraps the
 `content` method to swap the coordinates for values below the
 diagonal.
 
-The `set` method again uses `super`, but this time not to call the
-constructor, but to call a specific method from the superclass' set of
-methods. We are redefining `set`, but do want to use the original
+The `set` method again uses `super` but this time not to call the
+constructor but to call a specific method from the superclass's set of
+methods. We are redefining `set` but do want to use the original
 behavior. Because `this.set` refers to the _new_ `set` method, calling
 that wouldn't work. Inside class methods, `super` provides a way to
 call methods as they were defined in the superclass.
@@ -966,7 +987,7 @@ console.log([1] instanceof Array);
 
 {{index inheritance}}
 
-The operator will see through inherited types so a `SymmetricMatrix`
+The operator will see through inherited types, so a `SymmetricMatrix`
 is an instance of `Matrix`. The operator can also be applied to
 standard constructors like `Array`. Almost every object is an instance
 of `Object`.
@@ -988,7 +1009,7 @@ to define a constructor and its prototype.
 
 You can define getters and setters to secretly call methods every time
 an object's property is accessed. Static methods are methods stored in
-a class' constructor, rather than its prototype.
+a class's constructor, rather than its prototype.
 
 The `instanceof` operator can, given an object and a constructor, tell
 you whether that object is an instance of that constructor.
@@ -1004,7 +1025,7 @@ different objects that provide the interface. This is called
 _polymorphism_.
 
 When implementing multiple classes that differ in only some details,
-it can be helpful to write the new classes as _subclass_ of an
+it can be helpful to write the new classes as _subclasses_ of an
 existing class, _inheriting_ part of its behavior.
 
 ## Exercises
@@ -1073,8 +1094,8 @@ hint}}
 The standard JavaScript environment provides another data structure
 called `Set`. Like an instance of `Map`, a set holds a collection of
 values. Unlike `Map`, it does not associate other values with those—it
-just tracks which values are part of the set. A value can only be part
-of a set once—adding it again doesn't have any effect.
+just tracks which values are part of the set. A value can be part
+of a set only once—adding it again doesn't have any effect.
 
 {{index "add method", "delete method", "has method"}}
 
@@ -1092,7 +1113,7 @@ determine whether two values are the same.
 
 {{index "static method"}}
 
-Give the class a static `from` method that takes an iteratable object
+Give the class a static `from` method that takes an iterable object
 as argument and creates a group that contains all the values produced
 by iterating over it.
 
@@ -1126,9 +1147,9 @@ used to check whether a given value is in the array.
 
 {{index "push method"}}
 
-Your class' ((constructor)) can set the member collection to an empty
+Your class's ((constructor)) can set the member collection to an empty
 array. When `add` is called, it must check whether the given value is
-in the array, and add it, for example with `push`, otherwise.
+in the array or add it, for example with `push`, otherwise.
 
 {{index "filter method"}}
 
@@ -1140,7 +1161,7 @@ members with the newly filtered version of the array.
 {{index "for/of loop", "iterable interface"}}
 
 The `from` method can use a `for`/`of` loop to get the values out of
-the iterable object, and call `add` to put them into a newly created
+the iterable object and call `add` to put them into a newly created
 group.
 
 hint}}
@@ -1151,13 +1172,13 @@ hint}}
 
 {{id group_iterator}}
 
-Make the `Group` class from the previous exercise iterable. Refer back
+Make the `Group` class from the previous exercise iterable. Refer 
 to the section about the iterator interface earlier in the chapter if
 you aren't clear on the exact form of the interface anymore.
 
 If you used an array to represent the group's members, don't just
 return the iterator created by calling the `Symbol.iterator` method on
-the array. That would work, but defeats the purpose of this exercise.
+the array. That would work, but it defeats the purpose of this exercise.
 
 It is okay if your iterator behaves strangely when the group is
 modified during iteration.
@@ -1184,10 +1205,10 @@ if}}
 It is probably worthwhile to define a new class `GroupIterator`.
 Iterator instances should have a property that tracks the current
 position in the group. Every time `next` is called, it checks whether
-it is done, and if not, moves past the current value and returns it.
+it is done and, if not, moves past the current value and returns it.
 
 The `Group` class itself gets a method named by `Symbol.iterator`
-which, when called, returns a new instance of the iterator class for
+that, when called, returns a new instance of the iterator class for
 that group.
 
 hint}}
@@ -1198,7 +1219,7 @@ Earlier in the chapter I mentioned that an object's `hasOwnProperty`
 can be used as a more robust alternative to the `in` operator when you
 want to ignore the prototype's properties. But what if your map needs
 to include the word `"hasOwnProperty"`? You won't be able to call that
-method anymore, because the object's own property hides the method
+method anymore because the object's own property hides the method
 value.
 
 Can you think of a way to call `hasOwnProperty` on an object that has
@@ -1221,7 +1242,7 @@ if}}
 Remember that methods that exist on plain objects come from
 `Object.prototype`.
 
-And that you can call a function with a specific `this` binding by
-using its `call` method.
+Also remember that you can call a function with a specific `this`
+binding by using its `call` method.
 
 hint}}

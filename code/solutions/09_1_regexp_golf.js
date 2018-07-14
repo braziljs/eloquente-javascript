@@ -6,7 +6,7 @@ verify(/ca[rt]/,
 
 verify(/pr?op/,
        ["pop culture", "mad props"],
-       ["plop"]);
+       ["plop", "prrrop"]);
 
 verify(/ferr(et|y|ari)/,
        ["ferret", "ferry", "ferrari"],
@@ -20,7 +20,7 @@ verify(/\s[.,:;]/,
        ["bad punctuation ."],
        ["escape the dot"]);
 
-verify(/\w{7,}/,
+verify(/\w{7}/,
        ["hottentottententen"],
        ["no", "hotten totten tenten"]);
 

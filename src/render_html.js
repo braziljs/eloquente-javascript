@@ -29,7 +29,7 @@ let chapters = fs.readdirSync(__dirname + "/..")
     .filter(file => /^\d{2}_\w+\.md$/.test(file))
     .sort()
     .map(file => /^\d{2}_(\w+)\.md$/.exec(file)[1])
-    .concat(['hints'])
+if (epub) chapters.push("hints")
 
 function escapeChar(ch) {
   return ch == "<" ? "&lt;" : ch == ">" ? "&gt;" : ch == "&" ? "&amp;" : "&quot;"
@@ -151,6 +151,8 @@ let renderer = {
     return (author ? `\n\n<footer>${escape(author)}${title ? `, <cite>${escape(title)}</cite>` : ""}</footer>` : "") +
       "\n\n</blockquote>"
   },
+  meta_keyname_open() { return "<span class=\"keyname\">" },
+  meta_keyname_close() { return "</span>" },
 
   meta_hint_open() { return "\n\n<div class=\"solution\"><div class=\"solution-text\">" },
   meta_hint_close() { return "\n\n</div></div>" }

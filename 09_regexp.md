@@ -7,6 +7,8 @@ regular expressions.' Now they have two problems.
 
 quote}}
 
+{{index "Zawinski, Jamie"}}
+
 {{if interactive
 
 {{quote {author: "Master Yuan-Ma", title: "The Book of Programming", chapter: true}
@@ -19,12 +21,14 @@ quote}}
 
 if}}
 
-{{index "Zawinski, Jamie", evolution, adoption, integration}}
+{{figure {url: "img/chapter_picture_9.jpg", alt: "A railroad diagram", chapter: "square-framed"}}}
+
+{{index evolution, adoption, integration}}
 
 Programming ((tool))s and techniques survive and spread in a chaotic,
 evolutionary way. It's not always the pretty or brilliant ones that
 win but rather the ones that function well enough within the right
-niche or happen to be integrated with another successful piece of
+niche or that happen to be integrated with another successful piece of
 technology.
 
 {{index "domain-specific language"}}
@@ -46,7 +50,7 @@ expressions will make you a more effective programmer.
 
 {{index ["regular expression", creation], "RegExp class", "literal expression", "slash character"}}
 
-A regular expression is a type of object. It can either be constructed
+A regular expression is a type of object. It can be either constructed
 with the `RegExp` constructor or written as a literal value by
 enclosing a pattern in forward slash (`/`) characters.
 
@@ -55,7 +59,7 @@ let re1 = new RegExp("abc");
 let re2 = /abc/;
 ```
 
-Both of these regular expression objects represent the same
+Both of those regular expression objects represent the same
 ((pattern)): an _a_ character followed by a _b_ followed by a _c_.
 
 {{index "backslash character", "RegExp class"}}
@@ -124,9 +128,9 @@ console.log(/[0-9]/.test("in 1992"));
 // → true
 ```
 
-{{index "dash character"}}
+{{index "hyphen character"}}
 
-Within square brackets, a dash (`-`) between two characters can be
+Within square brackets, a hyphen (`-`) between two characters can be
 used to indicate a ((range)) of characters, where the ordering is
 determined by the character's ((Unicode)) number. Characters 0 to 9
 sit right next to each other in this ordering (codes 48 to 57), so
@@ -134,7 +138,7 @@ sit right next to each other in this ordering (codes 48 to 57), so
 
 {{index whitespace, "alphanumeric character", "period character"}}
 
-There are a number of common character groups that have their own
+A number of common character groups have their own
 built-in shortcuts. Digits are one of them: `\d` means the same thing
 as `[0-9]`.
 
@@ -150,12 +154,12 @@ as `[0-9]`.
 | `\S`    | A nonwhitespace character
 | `.`     | Any character except for newline
 
-So you could match a ((date)) and ((time)) format like 30-01-2003
+So you could match a ((date)) and ((time)) format like 01-30-2003
 15:20 with the following expression:
 
 ```
 let dateTime = /\d\d-\d\d-\d\d\d\d \d\d:\d\d/;
-console.log(dateTime.test("30-01-2003 15:20"));
+console.log(dateTime.test("01-30-2003 15:20"));
 // → true
 console.log(dateTime.test("30-jan-2003 15:20"));
 // → false
@@ -223,7 +227,7 @@ any suitable text to match.
 {{index "British English", "American English", "question mark"}}
 
 A question mark makes a part of a pattern _((optional))_, meaning it
-may occur zero or one time. In the following example, the _u_
+may occur zero times or one time. In the following example, the _u_
 character is allowed to occur, but the pattern also matches when it is
 missing.
 
@@ -235,10 +239,10 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-{{index repetition, "curly braces"}}
+{{index repetition, braces}}
 
 To indicate that a pattern should occur a precise number of times, use
-curly braces. Putting `{4}` after an element, for example, requires it
+braces. Putting `{4}` after an element, for example, requires it
 to occur exactly four times. It is also possible to specify a
 ((range)) this way: `{2,4}` means the element must occur at least
 twice and at most four times.
@@ -251,12 +255,12 @@ is also slightly easier to decipher.
 
 ```
 let dateTime = /\d{1,2}-\d{1,2}-\d{4} \d{1,2}:\d{2}/;
-console.log(dateTime.test("30-1-2003 8:45"));
+console.log(dateTime.test("1-30-2003 8:45"));
 // → true
 ```
 
-You can also specify open-ended ((range))s when using ((curly braces))
-by omitting the number after the comma. So `{5,}` means five or more
+You can also specify open-ended ((range))s when using ((braces))
+by omitting the number after the comma. So, `{5,}` means five or more
 times.
 
 ## Grouping subexpressions
@@ -309,7 +313,7 @@ console.log(match.index);
 An object returned from `exec` has an `index` property that tells us
 _where_ in the string the successful match begins. Other than that,
 the object looks like (and in fact is) an array of strings, whose
-first element is the string that was matched—in the previous example,
+first element is the string that was matched. In the previous example,
 this is the sequence of ((digit))s that we were looking for.
 
 {{index [string, methods], "match method"}}
@@ -358,14 +362,14 @@ extract it and construct an object that represents it, we can wrap
 parentheses around the digit patterns and directly pick the date out
 of the result of `exec`.
 
-But first, a brief detour, in which we discuss the built-in way to
+But first we'll take a brief detour, in which we discuss the built-in way to
 represent date and ((time)) values in JavaScript.
 
 ## The Date class
 
 {{index constructor, "Date class"}}
 
-JavaScript has a standard class for representing ((date))s—or rather,
+JavaScript has a standard class for representing ((date))s—or, rather,
 points in ((time)). It is called `Date`. If you simply create a date
 object using `new`, you get the current date and time.
 
@@ -418,10 +422,10 @@ millisecond count by creating a new `Date` object and calling
 
 {{index "getFullYear method", "getMonth method", "getDate method", "getHours method", "getMinutes method", "getSeconds method", "getYear method"}}
 
-Date objects provide methods like `getFullYear`, `getMonth`,
+Date objects provide methods such as `getFullYear`, `getMonth`,
 `getDate`, `getHours`, `getMinutes`, and `getSeconds` to extract their
-components. Besides `getFullYear`, there's also `getYear`, which gives
-you a rather useless two-digit year value (such as `93` or `14`).
+components. Besides `getFullYear` there's also `getYear`, which gives
+you the year minus 1900 (`98` or `119`) and is mostly useless.
 
 {{index "capture group", "getDate function"}}
 
@@ -430,17 +434,17 @@ interested in, we can now create a date object from a string.
 
 ```
 function getDate(string) {
-  let [_, day, month, year] =
+  let [_, month, day, year] =
     /(\d{1,2})-(\d{1,2})-(\d{4})/.exec(string);
   return new Date(year, month - 1, day);
 }
-console.log(getDate("30-1-2003"));
+console.log(getDate("1-30-2003"));
 // → Thu Jan 30 2003 00:00:00 GMT+0100 (CET)
 ```
 
 {{index destructuring, "underscore character"}}
 
-The `_` (underscore) binding is ignored, and only used to skip the
+The `_` (underscore) binding is ignored and used only to skip the
 full match element in the array returned by `exec`.
 
 ## Word and string boundaries
@@ -456,7 +460,7 @@ second character and end at the second-to-last character.
 
 If we want to enforce that the match must span the whole string, we
 can add the markers `^` and `$`. The caret matches the start of the
-input string, while the dollar sign matches the end. So, `/^\d+$/`
+input string, whereas the dollar sign matches the end. So, `/^\d+$/`
 matches a string consisting entirely of one or more digits, `/^!/`
 matches any string that starts with an exclamation mark, and `/x^/`
 does not match any string (there cannot be an _x_ before the start of
@@ -514,10 +518,10 @@ each other to express a choice between more than two alternatives.
 
 {{index ["regular expression", matching], [matching, algorithm], searching}}
 
-Conceptually, when you use `exec` or `test` the regular expression
+Conceptually, when you use `exec` or `test`, the regular expression
 engine looks for a match in your string by trying to match the
 expression first from the start of the string, then from the second
-character, and so on until it finds a match or reaches the end of the
+character, and so on, until it finds a match or reaches the end of the
 string. It'll either return the first match that can be found or fail
 to find any match at all.
 
@@ -550,9 +554,9 @@ through the flow chart would look like this:
    single space character. There is a space here, not a digit, so we
    must take the second path.
 
- - We are now at position 6 (the start of "pigs") and at the three-way
-   branch in the diagram. We don't see "cow" or "chicken" here, but we
-   do see "pig", so we take that branch.
+ - We are now at position 6 (the start of _pigs_) and at the three-way
+   branch in the diagram. We don't see _cow_ or _chicken_ here, but we
+   do see _pig_, so we take that branch.
 
  - At position 9, after the three-way branch, one path skips the _s_
    box and goes straight to the final word boundary, while the other
@@ -628,7 +632,7 @@ write something like `/([01]+)+b/`.
 {{index "inner loop", [nesting, "in regexps"]}}
 
 If that tries to match some long series of zeros and ones with no
-trailing _b_ character, the matcher will first go through the inner
+trailing _b_ character, the matcher first goes through the inner
 loop until it runs out of digits. Then it notices there is no _b_, so
 it backtracks one position, goes through the outer loop once, and
 gives up again, trying to backtrack out of the inner loop once more.
@@ -641,7 +645,7 @@ will take practically forever.
 
 {{index "replace method", "regular expression"}}
 
-String values have a `replace` method, which can be used to replace
+String values have a `replace` method that can be used to replace
 part of the string with another string.
 
 ```
@@ -674,7 +678,7 @@ expression instead.
 {{index grouping, "capture group", "dollar sign", "replace method", ["regular expression", grouping]}}
 
 The real power of using regular expressions with `replace` comes from
-the fact that we can refer back to matched groups in the replacement
+the fact that we can refer to matched groups in the replacement
 string. For example, say we have a big string containing the names of
 people, one name per line, in the format `Lastname, Firstname`. If we
 want to swap these names and remove the comma to get a `Firstname
@@ -710,7 +714,7 @@ console.log(s.replace(/\b(fbi|cia)\b/g,
 // → the CIA and FBI
 ```
 
-And here's a more interesting one:
+Here's a more interesting one:
 
 ```
 let stock = "1 lemon, 2 cabbages, and 101 eggs";
@@ -733,7 +737,7 @@ is decremented by one.
 
 The `(\d+)` group ends up as the `amount` argument to the function,
 and the `(\w+)` group gets bound to `unit`. The function converts
-`amount` to a number—which always works, since it matched `\d+`—and
+`amount` to a number—which always works since it matched `\d+`—and
 makes some adjustments in case there is only one or zero left.
 
 ## Greed
@@ -832,10 +836,10 @@ When creating the `\b` ((boundary)) markers, we have to use two
 backslashes because we are writing them in a normal string, not a
 slash-enclosed regular expression. The second argument to the `RegExp`
 constructor contains the options for the regular expression—in this
-case `"gi"` for global and case-insensitive.
+case, `"gi"` for global and case insensitive.
 
 But what if the name is `"dea+hl[]rd"` because our user is a ((nerd))y
-teenager? That would result in a nonsensical regular expression, which
+teenager? That would result in a nonsensical regular expression that
 won't actually match the user's name.
 
 {{index "backslash character", [escaping, "in regexps"], ["regular expression", escaping]}}
@@ -857,7 +861,7 @@ console.log(text.replace(regexp, "_$&_"));
 {{index searching, ["regular expression", methods], "indexOf method", "search method"}}
 
 The `indexOf` method on strings cannot be called with a regular
-expression. But there is another method, `search`, which does expect a
+expression. But there is another method, `search`, that does expect a
 regular expression. Like `indexOf`, it returns the first index on
 which the expression was found, or -1 when it wasn't found.
 
@@ -914,7 +918,7 @@ found, `lastIndex` is set back to zero, which is also the value it has
 in a newly constructed regular expression object.
 
 The difference between the global and the sticky options is that, when
-sticky is enabled, the match will only succeed if it starts directly
+sticky is enabled, the match will succeed only if it starts directly
 at `lastIndex`, whereas with global, it will search ahead for a
 position where a match can start.
 
@@ -1032,8 +1036,9 @@ usually called an _INI_ file) are as follows:
 - Anything else is invalid.
 
 Our task is to convert a string like this into an object whose
-properties hold strings for sectionless settings and sub-objects for
-sections, with those sub-objects holding the section's settings.
+properties hold strings for settings written before the first
+section header and subobjects for sections, with those subobjects
+holding the section's settings.
 
 {{index "carriage return", "line break", "newline character"}}
 
@@ -1043,7 +1048,7 @@ the file into separate lines is a good start. We used
 Some operating systems, however, use not just a newline character to
 separate lines but a carriage return character followed by a newline
 (`"\r\n"`). Given that the `split` method also allows a regular
-expression as its argument, we can split on a regular expression like
+expression as its argument, we can use a regular expression like
 `/\r?\n/` to split in a way that allows both `"\n"` and `"\r\n"`
 between lines.
 
@@ -1132,7 +1137,7 @@ whitespace, including things like the ((nonbreaking space)) and the
 
 Another problem is that, by default, regular expressions work on code
 units, as discussed in [Chapter ?](higher_order#code_units), not
-actual characters. This means that characters that are composed of two
+actual characters. This means characters that are composed of two
 code units behave strangely.
 
 ```
@@ -1149,7 +1154,7 @@ units, and the `{3}` part is applied only to the second one.
 Similarly, the dot matches a single code unit, not the two that make
 up the rose ((emoji)).
 
-You must add an `u` option (for ((Unicode))) to your regular
+You must add a `u` option (for ((Unicode))) to your regular
 expression to make it treat such characters properly. The wrong
 behavior remains the default, unfortunately, because changing that
 might cause problems for existing code that depends on it.
@@ -1161,7 +1166,7 @@ not widely supported yet, it is possible to use `\p` in a regular
 expression (that must have the Unicode option enabled) to match all
 characters to which the Unicode standard assigns a given property.
 
-```{test: false}
+```{test: never}
 console.log(/\p{Script=Greek}/u.test("α"));
 // → true
 console.log(/\p{Script=Arabic}/u.test("α"));
@@ -1176,8 +1181,8 @@ Unicode defines a number of useful properties, though finding the one
 that you need may not always be trivial. You can use the
 `\p{Property=Value}` notation to match any character that has the
 given value for that property. If the property name is left off, as in
-`\p{Name}`, the name is assumed to either be a binary property such as
-`Alphabetic`, or a category such as `Number`.
+`\p{Name}`, the name is assumed to be either a binary property such as
+`Alphabetic` or a category such as `Number`.
 
 {{id summary_regexp}}
 
@@ -1240,7 +1245,7 @@ It is almost unavoidable that, in the course of working on these
 exercises, you will get confused and frustrated by some regular
 expression's inexplicable ((behavior)). Sometimes it helps to enter
 your expression into an online tool like
-[_debuggex.com_](https://www.debuggex.com/) to see whether its
+[_https://debuggex.com_](https://www.debuggex.com/) to see whether its
 visualization corresponds to what you intended and to ((experiment))
 with the way it responds to various input strings.
 
@@ -1283,7 +1288,7 @@ verify(/.../,
 
 verify(/.../,
        ["pop culture", "mad props"],
-       ["plop"]);
+       ["plop", "prrrop"]);
 
 verify(/.../,
        ["ferret", "ferry", "ferrari"],
@@ -1348,8 +1353,8 @@ if}}
 
 {{index "quoting style (exercise)", boundary}}
 
-The most obvious solution is to only replace quotes with a nonword
-character on at least one side. Something like `/\W'|'\W/`. But you
+The most obvious solution is to replace only quotes with a nonword
+character on at least one side—something like `/\W'|'\W/`. But you
 also have to take the start and end of the line into account.
 
 {{index grouping, "replace method"}}
@@ -1368,7 +1373,7 @@ hint}}
 
 Write an expression that matches only JavaScript-style ((number))s. It
 must support an optional minus _or_ plus sign in front of the number,
-the decimal dot, and exponent notation—`5e-3` or `1E10`— again with an
+the decimal dot, and exponent notation—`5e-3` or `1E10`—again with an
 optional sign in front of the exponent. Also note that it is not
 necessary for there to be digits in front of or after the dot, but the
 number cannot be a dot alone. That is, `.5` and `5.` are valid
@@ -1416,7 +1421,7 @@ digits _or_ a dot followed by one or more digits.
 
 {{index exponent, "case sensitivity", ["regular expression", flags]}}
 
-Finally, to make the _e_ case-insensitive, either add an `i` option to
+Finally, to make the _e_ case insensitive, either add an `i` option to
 the regular expression or use `[eE]`.
 
 hint}}

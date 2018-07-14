@@ -11,6 +11,8 @@ quote}}
 
 {{index "Laozi"}}
 
+{{figure {url: "img/chapter_picture_11.jpg", alt: "Picture of two crows on a branch", chapter: framed}}}
+
 The central part of a computer, the part that carries out the
 individual steps that make up our programs, is called the
 _((processor))_. The programs we have seen so far are things that will
@@ -35,8 +37,8 @@ progress while it is waiting for a network request.
 {{index "synchronous programming"}}
 
 In a _synchronous_ programming model, things happen one at a time.
-When you call a function that performs a long-running action, it only
-returns when the action has finished and it can return the result.
+When you call a function that performs a long-running action, it
+returns only when the action has finished and it can return the result.
 This stops your program for the time the action takes.
 
 {{index "asynchronous programming"}}
@@ -52,7 +54,7 @@ then combines results.
 
 {{index "synchronous programming"}}
 
-In a synchronous environment, where the request function only returns
+In a synchronous environment, where the request function returns only
 after it has done its work, the easiest way to perform this task is to
 make the requests one after the other. This has the drawback that the
 second request will be started only when the first has finished. The
@@ -61,7 +63,7 @@ total time taken will be at least the sum of the two response times.
 {{index parallelism}}
 
 The solution to this problem, in a synchronous system, is to start
-additional ((thread))s of control. A thread is another running program
+additional ((thread))s of control. A _thread_ is another running program
 whose execution may be interleaved with other programs by the
 operating system—since most modern computers contain multiple
 processors, multiple threads may even run at the same time, on
@@ -114,10 +116,10 @@ far behind human technology, and they are catching up.
 For example, many crow cultures have the ability to construct
 computing devices. These are not electronic, as human computing
 devices are, but operate through the actions of tiny insects, a
-species closely related to the ((termite)), that has developed a
+species closely related to the ((termite)), which has developed a
 ((symbiotic relationship)) with the crows. The birds provide them with
 food, and in return the insects build and operate their complex
-colonies which, with the help of the living creatures inside them,
+colonies that, with the help of the living creatures inside them,
 perform computations.
 
 Such colonies are usually located in big, long-lived nests. The birds
@@ -133,7 +135,7 @@ nests that have an unbroken visual connection can communicate.
 
 Our friend the corvid expert has mapped the network of crow nests in
 the village of ((Hières-sur-Amby)), on the banks of the river Rhône.
-This map shows the nests and their connections.
+This map shows the nests and their connections:
 
 {{figure {url: "img/Hieres-sur-Amby.png", alt: "A network of crow nests in a small village"}}}
 
@@ -153,7 +155,7 @@ function is called with the result.
 {{index "setTimeout function", waiting}}
 
 As an example, the `setTimeout` function, available both in Node.js
-and in browsers, waits a given amount of milliseconds (a second is a
+and in browsers, waits a given number of milliseconds (a second is a
 thousand milliseconds) and then calls a function.
 
 ```{test: no}
@@ -161,7 +163,7 @@ setTimeout(() => console.log("Tick"), 500);
 ```
 
 Waiting is not generally a very important type of work, but it can be
-useful when doing something like updating an animation or checking if
+useful when doing something like updating an animation or checking whether
 something is taking longer than a given amount of ((time)).
 
 Performing multiple asynchronous actions in a row using callbacks
@@ -172,13 +174,12 @@ means that you have to keep passing new functions to handle the
 
 Most crow nest computers have a long-term data storage bulb, where
 pieces of information are etched into twigs so that they can be
-retrieved later. Etching or finding a piece of data takes a moment, so
-the interface to long-term storage is asynchronous, and uses callback
+retrieved later. Etching, or finding a piece of data, takes a moment, so
+the interface to long-term storage is asynchronous and uses callback
 functions.
 
 Storage bulbs store pieces of ((JSON))-encodable data under names. A
-((crow)) might store information about the places where it's hidden
-away food under the name `"food caches"`, which could hold an array of
+((crow)) might store information about the places where it's hidden food under the name `"food caches"`, which could hold an array of
 names that point at other pieces of data, describing the actual cache.
 To look up a food ((cache)) in the storage bulbs of the _Big Oak_
 nest, a crow could run code like this:
@@ -200,8 +201,8 @@ bigOak.readStorage("food caches", caches => {
 to English.)
 
 This style of programming is workable, but the indentation level
-increases with each asynchronous action, because you end up in another
-function. Doing more complicated things, like running multiple actions
+increases with each asynchronous action because you end up in another
+function. Doing more complicated things, such as running multiple actions
 at the same time, can get a little awkward.
 
 Crow nest computers are built to communicate using
@@ -221,7 +222,7 @@ The interface exported by the `"./crow-tech"` module provides
 callback-based functions for communication. Nests have a `send` method
 that sends off a request. It expects the name of the target nest, the
 type of the request, and the content of the request as its first three
-arguments, and a function to call when a response comes in as its
+arguments, and it expects a function to call when a response comes in as its
 fourth and last argument.
 
 ```
@@ -231,7 +232,7 @@ bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM",
 
 But to make nests capable of receiving that request, we first have to
 define a ((request type)) named `"note"`. The code that handles the
-requests has to run not just on this nest-computer, but on all nests
+requests has to run not just on this nest-computer but on all nests
 that can receive messages of this type. We'll just assume that a crow
 flies over and installs our handler code on all the nests.
 
@@ -265,7 +266,7 @@ another ((callback function))—to signal when a response is available.
 
 In a way, asynchronicity is _contagious_. Any function that calls a
 function that works asynchronously must itself be asynchronous, using
-a callback or similar mechanism to deliver its result. Calling
+a callback or similar mechanism to deliver its result. Calling a
 callback is somewhat more involved and error-prone than simply
 returning a value, so needing to structure large parts of your program
 that way is not great.
@@ -273,13 +274,13 @@ that way is not great.
 ## Promises
 
 Working with abstract concepts is often easier when those concepts can
-be represented by ((value))s. In the case of asynchronous actions you
+be represented by ((value))s. In the case of asynchronous actions, you
 could, instead of arranging for a function to be called at some point
 in the future, return an object that represents this future event.
 
 {{index "Promise class", "asynchronous programming"}}
 
-This is what the standard class `Promise` is for. A promise is an
+This is what the standard class `Promise` is for. A _promise_ is an
 asynchronous action that may complete at some point and produce a
 value. It is able to notify anyone who is interested when its value is
 available.
@@ -288,8 +289,8 @@ available.
 
 The easiest way to create a promise is by calling `Promise.resolve`.
 This function ensures that the value you give it is wrapped in a
-promise. If it's already a promise it is simply returned, and
-otherwise you get a new promise that immediately finishes with your
+promise. If it's already a promise, it is simply returned—otherwise,
+you get a new promise that immediately finishes with your
 value as its result.
 
 ```
@@ -330,7 +331,7 @@ resolve it.
 {{index "storage function"}}
 
 This is how you'd create a promise-based interface for the
-`readStorage` function.
+`readStorage` function:
 
 ```{includeCode: "top_lines: 5"}
 function storage(nest, name) {
@@ -346,7 +347,7 @@ storage(bigOak, "enemies")
 This asynchronous function returns a meaningful value. This is the
 main advantage of promises—they simplify the use of asynchronous
 functions. Instead of having to pass around callbacks, promise-based
-functions look similar to regular ones: they take input as arguments,
+functions look similar to regular ones: they take input as arguments
 and return their output. The only difference is that the output may
 not be available yet.
 
@@ -356,7 +357,7 @@ not be available yet.
 
 Regular JavaScript computations can fail by throwing an exception.
 Asynchronous computations often need something like that. A network
-request may fail, or some code that is as part of the asynchronous
+request may fail, or some code that is part of the asynchronous
 computation may throw an exception.
 
 {{index "callback function", error}}
@@ -368,7 +369,7 @@ make sure failures are properly reported to the callbacks.
 A widely used convention is that the first argument to the callback is
 used to indicate that the action failed, and the second contains the
 value produced by the action when it was successful. Such callback
-functions must always check whether they received an exception, and
+functions must always check whether they received an exception and
 make sure that any problems they cause, including exceptions thrown by
 functions they call, are caught and given to the right function.
 
@@ -376,12 +377,12 @@ functions they call, are caught and given to the right function.
 
 Promises make this easier. They can be either resolved (the action
 finished successfully) or rejected (it failed). Resolve handlers (as
-registered with `then`) are only called when the action is successful,
+registered with `then`) are called only when the action is successful,
 and rejections are automatically propagated to the new promise that is
 returned by `then`. And when a handler throws an exception, this
 automatically causes the promise produced by its `then` call to be
 rejected. So if any element in a chain of asynchronous actions fails,
-the outcome of the whole chain is marked as rejected, and no regular
+the outcome of the whole chain is marked as rejected, and no success
 handlers are called beyond the point where it failed.
 
 {{index "Promise.reject function", "Promise class"}}
@@ -392,21 +393,21 @@ exception in a handler function causes the rejection, the exception
 value is used as the reason. Similarly, when a handler returns a
 promise that is rejected, that rejection flows into the next promise.
 There's a `Promise.reject` function that creates a new,
-immediately-rejected promise.
+immediately rejected promise.
 
 {{index "catch method"}}
 
-To explicitly handle such rejections, promises have a `catch` method,
-which registers a handler to be called when the promise is rejected,
-similar to how `then` handlers handle normal resolution. It also very
+To explicitly handle such rejections, promises have a `catch` method
+that registers a handler to be called when the promise is rejected,
+similar to how `then` handlers handle normal resolution. It's also very
 much like `then` in that it returns a new promise, which resolves to
-the original promise's value if it resolves normally, and to the
+the original promise's value if it resolves normally and to the
 result of the `catch` handler otherwise. If a `catch` handler throws
 an error, the new promise is also rejected.
 
 {{index "then method"}}
 
-As a shorthand, `then` also accepts a rejection handler as second
+As a shorthand, `then` also accepts a rejection handler as a second
 argument, so you can install both types of handlers in a single method
 call.
 
@@ -424,11 +425,23 @@ and their outcome determines what kind of value comes next—success
 when it returns a non-promise value, rejection when it throws an
 exception, and the outcome of a promise when it returns one of those.
 
+```{test: no}
+new Promise((_, reject) => reject(new Error("Fail")))
+  .then(value => console.log("Handler 1"))
+  .catch(reason => {
+    console.log("Caught failure " + reason);
+    return "nothing";
+  })
+  .then(value => console.log("Handler 2", value));
+// → Caught failure Error: Fail
+// → Handler 2 nothing
+```
+
 {{index "uncaught exception", "exception handling"}}
 
 Much like an uncaught exception is handled by the environment,
 JavaScript environments can detect when a promise rejection isn't
-handled, and will report this as an error.
+handled and will report this as an error.
 
 ## Networks are hard
 
@@ -436,7 +449,7 @@ handled, and will report this as an error.
 
 Occasionally, there isn't enough light for the ((crow))s' mirror
 systems to transmit a signal or something is blocking the path of the
-signal. It is possible for a signal to be sent, but never received.
+signal. It is possible for a signal to be sent but never received.
 
 {{index "send method", error, timeout}}
 
@@ -454,14 +467,14 @@ times before it gives up.
 
 {{index "Promise class", "callback function", interface}}
 
-And, since we've established that promises are a nice thing, we'll
+And, since we've established that promises are a good thing, we'll
 also make our request function return a promise. In terms of what they
 can express, callbacks and promises are equivalent. Callback-based
 functions can be wrapped to expose a promise-based interface, and
 vice versa.
 
 Even when a ((request)) and its ((response)) are successfully
-delivered, the response may indicate failure. For example if the
+delivered, the response may indicate failure—for example, if the
 request tries to use a request type that hasn't been defined or the
 handler throws an error. To support this, `send` and
 `defineRequestType` follow the convention mentioned before, where the
@@ -498,10 +511,10 @@ function request(nest, target, type, content) {
 
 {{index "Promise class", "resolving (a promise)", "rejecting (a promise)"}}
 
-Because promises can only be resolved (or rejected) once, this will
+Because promises can be resolved (or rejected) only once, this will
 work. The first time `resolve` or `reject` is called determines the
 outcome of the promise, and any further calls, such as the timeout
-arriving after the request finishes, or a request coming back after
+arriving after the request finishes or a request coming back after
 another request finished, are ignored.
 
 {{index recursion}}
@@ -516,7 +529,7 @@ instance of `Timeout` as the reason.
 
 {{index idempotence}}
 
-Retrying every quarter second and giving up when no response has come
+Retrying every quarter-second and giving up when no response has come
 in after a second is definitely somewhat arbitrary. It is even
 possible, if the request did come through but the handler is just
 taking a bit longer, for requests to be delivered multiple times.
@@ -524,14 +537,14 @@ We'll write our handlers with that problem in mind—duplicate messages
 should be harmless.
 
 In general, we will not be building a world-class, robust network
-today. But that's okay—crows don't have very high expectations yet,
+today. But that's okay—crows don't have very high expectations yet
 when it comes to computing.
 
 {{index "defineRequestType function", "requestType function"}}
 
 To isolate ourselves from callbacks altogether, we'll go ahead and
-also define a wrapper for `defineRequestType` which allows the handler
-function to return a promise or plain value, and wires that up to the
+also define a wrapper for `defineRequestType` that allows the handler
+function to return a promise or plain value and wires that up to the
 callback for us.
 
 ```{includeCode: true}
@@ -556,12 +569,12 @@ to a promise if it isn't already.
 
 {{index "try keyword", "callback function"}}
 
-Note that the call to `handler` had to be wrapped in a `try` block, to
+Note that the call to `handler` had to be wrapped in a `try` block to
 make sure any exception it raises directly is given to the callback.
 This nicely illustrates the difficulty of properly handling errors
-with raw callbacks—it is very easy to forget to properly route
+with raw callbacks—it is easy to forget to properly route
 exceptions like that, and if you don't do it, failures won't get
-reported to the right callback. Promises make this mostly automatic,
+reported to the right callback. Promises make this mostly automatic
 and thus less error-prone.
 
 ## Collections of promises
@@ -572,13 +585,13 @@ Each nest computer keeps an array of other nests within transmission
 distance in its `neighbors` property. To check which of those are
 currently reachable, you could write a function that tries to send a
 `"ping"` request (a request that simply asks for a response) to each
-of them, and see which ones come back.
+of them and see which ones come back.
 
 {{index "Promise.all function"}}
 
 When working with collections of promises running at the same time,
 the `Promise.all` function can be useful. It returns a promise that
-waits for all of the promises in the array to resolve, and then
+waits for all of the promises in the array to resolve and then
 resolves to an array of the values that these promises produced (in
 the same order as the original array). If any promise is rejected, the
 result of `Promise.all` is itself rejected.
@@ -600,10 +613,10 @@ function availableNeighbors(nest) {
 {{index "then method"}}
 
 When a neighbor isn't available, we don't want the entire combined
-promise to fail, since then we still wouldn't know anything. So the
+promise to fail since then we still wouldn't know anything. So the
 function that is mapped over the set of neighbors to turn them into
 request promises attaches handlers that make successful requests
-produce `true`, and rejected ones `false`.
+produce `true` and rejected ones produce `false`.
 
 {{index "filter method", "map method", "some method"}}
 
@@ -615,7 +628,7 @@ of the current element as a second argument to its filtering function
 
 ## Network flooding
 
-The fact that nests can only talk to their neighbors greatly inhibits
+The fact that nests can talk only to their neighbors greatly inhibits
 the usefulness of this network.
 
 For broadcasting information to the whole network, one solution is to
@@ -657,7 +670,7 @@ every nest—to add a property to the nest's `state` object, which is
 where we'll keep nest-local ((state)).
 
 When a nest receives a duplicate gossip message, which is very likely
-to happen with everybody blindly resending these, it ignores it. But
+to happen with everybody blindly resending them, it ignores it. But
 when it receives a new message, it excitedly tells all its neighbors
 except for the one who sent it the message.
 
@@ -692,15 +705,15 @@ would lead to a lot of useless data transfers.
 {{index "routing"}}
 
 An alternative approach is to set up a way for messages to hop from
-node to node, until they reach their destination. The difficulty with
-that is that it requires knowledge about the layout of the network. To
-send a request in the direction of a far-away nest, it is necessary to
+node to node until they reach their destination. The difficulty with
+that is it requires knowledge about the layout of the network. To
+send a request in the direction of a faraway nest, it is necessary to
 know which neighboring nest gets it closer to its destination. Sending
 it in the wrong direction will not do much good.
 
-Since each nest only knows about its direct neighbors, it doesn't have
+Since each nest knows only about its direct neighbors, it doesn't have
 the information it needs to compute a route. We must somehow spread
-the information about these connections to all nests. Preferably in a
+the information about these connections to all nests, preferably in a
 way that allows it to change over time, when nests are abandoned or
 new nests are built.
 
@@ -742,7 +755,7 @@ everywhere(nest => {
 {{index JSON, "== operator"}}
 
 The comparison uses `JSON.stringify` because `==`, on objects or
-arrays, will only return true when the two are the exact same value,
+arrays, will return true only when the two are the exact same value,
 which is not what we need here. Comparing the JSON strings is a crude
 but effective way to compare their content.
 
@@ -752,9 +765,9 @@ every nest a map of the current network ((graph)).
 
 {{index pathfinding}}
 
-A thing you can do with graphs is finding routes in them, as we saw in
-[Chapter ?](robot). If we have a route towards a message's
-destination, we know in which direction to send it.
+A thing you can do with graphs is find routes in them, as we saw in
+[Chapter ?](robot). If we have a route toward a message's
+destination, we know which direction to send it in.
 
 {{index "findRoute function"}}
 
@@ -821,8 +834,8 @@ if}}
 {{index "[network, stack]"}}
 
 We've constructed several ((layer))s of functionality on top of a
-primitive communication system, in order to make it convenient to use.
-This is a nice (but simplified) model of how real computer networks
+primitive communication system to make it convenient to use.
+This is a nice (though simplified) model of how real computer networks
 work.
 
 {{index error}}
@@ -898,9 +911,10 @@ one. In a synchronous programming model, it'd be simpler to express.
 
 {{index "async function", "await keyword"}}
 
-The good news is that JavaScript allows you write pseudo-synchronous
-code. An `async` function is a function that implicitly returns a
-promise, and that can, in its body `await` other promises in a way
+The good news is that JavaScript allows you to write pseudo-synchronous
+code to describe asynchronous computation. An `async` function is a
+function that implicitly returns a
+promise and that can, in its body, `await` other promises in a way
 that _looks_ synchronous.
 
 {{index "findInStorage function"}}
@@ -948,18 +962,18 @@ if}}
 {{index "await keyword", "control flow"}}
 
 Inside an `async` function, the word `await` can be put in front of an
-expression to wait for a promise to resolve, and only then continue
+expression to wait for a promise to resolve and only then continue
 the execution of the function.
 
 Such a function no longer, like a regular JavaScript function, runs
 from start to completion in one go. Instead, it can be _frozen_ at any
-point that has an `await`, and resumed at a later time.
+point that has an `await`, and can be resumed at a later time.
 
 For non-trivial asynchronous code, this notation is usually more
 convenient than directly using promises. Even if you need to do
-something that doesn't fit the synchronous model, like performing
+something that doesn't fit the synchronous model, such as perform
 multiple actions at the same time, it is easy to combine `await` with
-direct use of promises.
+the direct use of promises.
 
 ## Generators
 
@@ -970,7 +984,7 @@ exclusive to `async` functions. JavaScript also has a feature called
 _((generator))_ functions. These are similar, but without the
 promises.
 
-When you define a function with `function*` (placing as asterisk after
+When you define a function with `function*` (placing an asterisk after
 the word `function`), it becomes a generator. When you call a
 generator, it returns an ((iterator)), which we already saw in
 [Chapter ?](object).
@@ -1026,7 +1040,7 @@ There's no longer a need to create an object to hold the iteration
 ((state))—generators automatically save their local state every time
 they yield.
 
-Such `yield` expressions may only occur directly in the generator
+Such `yield` expressions may occur only directly in the generator
 function itself and not in an inner function you define inside of it.
 The state a generator saves, when yielding, is only its _local_
 environment and the position where it yielded.
@@ -1044,7 +1058,7 @@ result of the `await` expression.
 {{index "asynchronous programming", scheduling, "event loop", timeline}}
 
 Asynchronous programs are executed piece by piece. Each piece may
-start some actions, and schedule code to be executed when the action
+start some actions and schedule code to be executed when the action
 finishes or fails. In between these pieces, the program sits idle,
 waiting for the next action.
 
@@ -1078,15 +1092,15 @@ try {
 {{index thread, queue}}
 
 No matter how closely together events—such as timeouts or incoming
-requests—happen, a JavaScript environment will only run one program at
+requests—happen, a JavaScript environment will run only one program at
 a time. You can think of this as it running a big loop _around_ your
 program, called the _event loop_. When there's nothing to be done,
-that loop is stopped. But as events come in, they are added to a queue
+that loop is stopped. But as events come in, they are added to a queue,
 and their code is executed one after the other. Because no two things
 run at the same time, slow-running code might delay the handling of
 other events.
 
-This example sets a timeout, but then dallies until after the
+This example sets a timeout but then dallies until after the
 timeout's intended point of time, causing the timeout to be late.
 
 ```
@@ -1126,9 +1140,9 @@ makes. For asynchronous programs this is different—they may have
 _gaps_ in their execution during which other code can run.
 
 Let's look at an example. One of the hobbies of our crows is to count
-the amount of chicks that hatch throughout the village every year.
-Nests store this count in their storage bulbs. The code below tries to
-enumerate the counts from all the nests for a given year.
+the number of chicks that hatch throughout the village every year.
+Nests store this count in their storage bulbs. The following code tries to
+enumerate the counts from all the nests for a given year:
 
 {{index "anyStorage function", "chicks function"}}
 
@@ -1156,7 +1170,7 @@ made `async` by putting the word `async` in front of them.
 
 {{index "Promise.all function"}}
 
-The code doesn't immediately look suspicious... it maps the `async`
+The code doesn't immediately look suspicious...it maps the `async`
 arrow function over the set of nests, creating an array of promises,
 and then uses `Promise.all` to wait for all of these before returning
 the list they build up.
@@ -1177,7 +1191,7 @@ Can you work out why?
 {{index "+= operator"}}
 
 The problem lies in the `+=` operator, which takes the _current_ value
-of `list` at the time where the statement starts executing, and then,
+of `list` at the time where the statement starts executing and then,
 when the `await` finishes, sets the `list` binding to be that value
 plus the added string.
 
@@ -1213,8 +1227,8 @@ async function chicks(nest, year) {
 Mistakes like this are easy to make, especially when using `await`,
 and you should be aware of where the gaps in your code occur. An
 advantage of JavaScript's _explicit_ asynchronicity (whether through
-callbacks, promises, or `await`) is that it's relatively easy to spot
-these gaps.
+callbacks, promises, or `await`) is that spotting these gaps is
+relatively easy.
 
 ## Summary
 
@@ -1229,7 +1243,7 @@ not overlap.
 Programming asynchronously is made easier by promises, objects that
 represent actions that might complete in the future, and `async`
 functions, which allow you to write an asynchronous program as if it
-is synchronous.
+were synchronous.
 
 ## Exercises
 
@@ -1242,7 +1256,7 @@ special missions—say, to cut through screen doors or packaging. To be
 able to quickly track it down, every time the scalpel is moved to
 another nest, an entry is added to the storage of both the nest that
 had it and the nest that took it, under the name `"scalpel"`, with its
-new location as value.
+new location as the value.
 
 This means that finding the scalpel is a matter of following the
 breadcrumb trail of storage entries, until you find a nest where that
@@ -1274,7 +1288,7 @@ function locateScalpel2(nest) {
   // Your code here.
 }
 
-locateScalpel(nest).then(console.log);
+locateScalpel(bigOak).then(console.log);
 // → Butcher Shop
 ```
 
@@ -1286,7 +1300,7 @@ if}}
 
 This can be done with a single loop that searches through the nests,
 moving forward to the next when it finds a value that doesn't match
-the current nest's name, and returning the name when it finds a
+the current nest's name and returning the name when it finds a
 matching value. In the `async` function, a regular `for` or `while`
 loop can be used.
 
@@ -1306,9 +1320,9 @@ from the main function.
 
 In the `async` function, rejected promises are converted to exceptions
 by `await`. When an `async` function throws an exception, its promise
-is rejects. So that works.
+is rejected. So that works.
 
-If you implemented the non-`async` function as outlined above, the way
+If you implemented the non-`async` function as outlined earlier, the way
 `then` works also automatically causes a failure to end up in the
 returned promise. If a request fails, the handler passed to `then`
 isn't called, and the promise it returns is rejected with the same
@@ -1322,9 +1336,9 @@ hint}}
 
 Given an array of ((promise))s, `Promise.all` returns a promise that
 waits for all of the promises in the array to finish. It then
-succeeds, yielding an array of result values. If any of the promises
-in the array fail, the promise returned by `all` fails too, with the
-failure value from the failing promise.
+succeeds, yielding an array of result values. If a promise
+in the array fails, the promise returned by `all` fails too, with the
+failure reason from the failing promise.
 
 Implement something like this yourself as a regular function
 called `Promise_all`.
@@ -1381,15 +1395,15 @@ promise if it was.
 
 {{index "counter variable"}}
 
-The latter can be done with a counter which is initialized to the
+The latter can be done with a counter that is initialized to the
 length of the input array and from which we subtract 1 every time a
 promise succeeds. When it reaches 0, we are done. Make sure you take
-the situation where the input array is empty (and thus no promise will
-ever resolve) into account.
+into account the situation where the input array is empty (and thus no
+promise will ever resolve).
 
 Handling failure requires some thought but turns out to be extremely
 simple. Just pass the `reject` function of the wrapping promise to
-each of the promises in the array as a `catch` handler or as second
+each of the promises in the array as a `catch` handler or as a second
 argument to `then` so that a failure in one of them triggers the
 rejection of the whole wrapper promise.
 

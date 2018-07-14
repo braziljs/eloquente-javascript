@@ -11,6 +11,10 @@ context on the server.
 
 quote}}
 
+{{index "Fielding, Roy"}}
+
+{{figure {url: "img/chapter_picture_18.jpg", alt: "Picture of a web form on a medieval scroll", chapter: "framed"}}}
+
 The _Hypertext Transfer Protocol_, already mentioned in [Chapter
 ?](browser#web), is the mechanism through which data is requested and
 provided on the ((World Wide Web)). This chapter describes the
@@ -63,20 +67,20 @@ GET /18_http.html HTTP/1.1
 
 The first word is the _((method))_ of the ((request)). `GET` means
 that we want to _get_ the specified resource. Other common methods are
-`DELETE` to delete a resource, `PUT` to replace it, and `POST` to send
+`DELETE` to delete a resource, `PUT` to create or replace it, and `POST` to send
 information to it. Note that the ((server)) is not obliged to carry
 out every request it gets. If you walk up to a random website and tell
 it to `DELETE` its main page, it'll probably refuse.
 
 {{index [path, URL], GitHub}}
 
-The part after the ((method)) name is the path of the ((resource)) the
+The part after the ((method)) name is the path of the _((resource))_ the
 request applies to. In the simplest case, a resource is simply a
 ((file)) on the ((server)), but the protocol doesn't require it to be.
 A resource may be anything that can be transferred _as if_ it is a
 file. Many servers generate the responses they produce on the fly. For
 example, if you open
-[_github.com/marijnh_](https://github.com/marijnh), the server looks
+[_https://github.com/marijnh_](https://github.com/marijnh), the server looks
 in its database for a user named "marijnh", and if it finds one, it
 will generate a profile page for that user.
 
@@ -85,10 +89,10 @@ After the resource path, the first line of the request mentions
 is using.
 
 In practice, many sites use HTTP version 2, which supports the same
-concepts as version 1.1, but is a lot more complicated so that it can
+concepts as version 1.1 but is a lot more complicated so that it can
 be faster. Browsers will automatically switch to the appropriate
 protocol version when talking to a given server, and the outcome of a
-request is the same regardless which version is used. Because version
+request is the same regardless of which version is used. Because version
 1.1 is more straightforward and easier to play around with, we'll
 focus on that.
 
@@ -134,7 +138,7 @@ that document was last modified.
 {{index "Host header", domain}}
 
 For most ((header))s, the client and server are free to decide whether
-to include them in a ((request)) or ((response)) or not. But a few are
+to include them in a ((request)) or ((response)). But a few are
 required. For example, the `Host` header, which specifies the
 hostname, should be included in a request because a ((server)) might
 be serving multiple hostnames on a single ((IP address)), and without
@@ -196,7 +200,7 @@ GET /example/message.html?name=Jean&message=Yes%3F HTTP/1.1
 {{index "ampersand character"}}
 
 The ((question mark)) indicates the end of the path part of the URL
-and the start of the query. After that follow pairs of names and
+and the start of the query. It is followed by pairs of names and
 values, corresponding to the `name` attribute on the form field
 elements and the content of those elements, respectively. An ampersand
 character (`&`) is used to separate the pairs.
@@ -226,7 +230,7 @@ console.log(decodeURIComponent("Yes%3F"));
 If we change the `method` attribute of the HTML form in the example we
 saw earlier to `POST`, the ((HTTP)) request made to submit the
 ((form)) will use the `POST` method and put the ((query string)) in
-body of the request, rather than adding it to the URL.
+the body of the request, rather than adding it to the URL.
 
 ```{lang: http}
 POST /example/message.html HTTP/1.1
@@ -237,7 +241,7 @@ name=Jean&message=Yes%3F
 ```
 
 `GET` requests should be used for requests that do not have ((side
-effect))s, but simply ask for information. Requests that change
+effect))s but simply ask for information. Requests that change
 something on the server, for example creating a new account or posting
 a message, should be expressed with other methods, such as `POST`.
 Client-side software such as a browser knows that it shouldn't blindly
@@ -271,21 +275,21 @@ fetch("example/data.txt").then(response => {
 Calling `fetch` returns a promise that resolves to a `Response` object
 holding information about the server's response, such as its status
 code and its headers. The headers are wrapped in a `Map`-like object
-that treats its keys (the header names) as case-insensitive, because
-header names are not supposed to be case sensitive. This means that
+that treats its keys (the header names) as case insensitive because
+header names are not supposed to be case sensitive. This means 
 `headers.get("Content-Type")` and `headers.get("content-TYPE")` will
 return the same value.
 
 Note that the promise returned by `fetch` resolves successfully even
 if the server responded with an error code. It _might_ also be
-rejected, if there is a network error or the ((server)) that the
+rejected if there is a network error or if the ((server)) that the
 request is addressed to can't be found.
 
 {{index [path, URL], "relative URL"}}
 
 The first argument to `fetch` is the URL that should be requested.
-What that ((URL)) doesn't start with a protocol name (such as _http:_)
-it is treated as relative, which means that it is interpreted relative
+When that ((URL)) doesn't start with a protocol name (such as _http:_),
+it is treated as _relative_, which means it is interpreted relative
 to the current document. When it starts with a slash (/), it replaces
 the current path, which is the part after the server name. When it
 does not, the part of the current path up to and including its last
@@ -295,7 +299,7 @@ does not, the part of the current path up to and including its last
 
 To get at the actual content of a response, you can use its `text`
 method. Because the initial promise is resolved as soon as the
-response's headers have been received, and reading the response body
+response's headers have been received and because reading the response body
 might take a while longer, this again returns a promise.
 
 ```{test: no}
@@ -307,16 +311,16 @@ fetch("example/data.txt")
 
 {{index "json method"}}
 
-There is a similar method, called `json`, which returns a promise that
-resolves to the value you get when parsing the body as ((JSON)), or
+A similar method, called `json`, returns a promise that
+resolves to the value you get when parsing the body as ((JSON)) or
 rejects if it's not valid JSON.
 
 {{index "GET method", "body (HTTP)", "DELETE method", "method property"}}
 
-By default, `fetch` uses the `GET` method to make its request, and
+By default, `fetch` uses the `GET` method to make its request and
 does not include a request body. You can configure it differently by
 passing an object with extra options as a second argument. For
-example, this request tries to delete `example/data.txt`.
+example, this request tries to delete `example/data.txt`:
 
 ```{test: no}
 fetch("example/data.txt", {method: "DELETE"}).then(resp => {
@@ -334,7 +338,7 @@ of saying "I can't do that".
 
 To add a request body, you can include a `body` option. To set
 headers, there's the `headers` option. For example, this request
-includes a `Range` header, which instructs the server to only return a
+includes a `Range` header, which instructs the server to return only
 part of a response.
 
 ```{test: no}
@@ -347,7 +351,7 @@ fetch("example/data.txt", {headers: {Range: "bytes=8-19"}})
 The browser will automatically add some request ((header))s, such as
 "Host" and those needed for the server to figure out the size of the
 body. But adding your own headers is often useful to include things
-like authentication information or to tell the server which file
+such as authentication information or to tell the server which file
 format you'd like to receive.
 
 {{id http_sandbox}}
@@ -370,7 +374,7 @@ _mybank.com_).
 
 {{index "Access-Control-Allow-Origin header", "cross-domain request"}}
 
-This can be an annoying problem when building systems that wants to
+This can be an annoying problem when building systems that want to
 access several domains for legitimate reasons. Fortunately,
 ((server))s can include a ((header)) like this in their ((response))
 to explicitly indicate to the browser that it is okay for the request
@@ -426,7 +430,7 @@ server interface around.
 
 Data traveling over the Internet tends to follow a long, dangerous
 road. To get to its destination, it must hop through anything from
-coffee-shop Wi-Fi to ((network))s controlled by various companies and
+coffee shop Wi-Fi hotspots to ((network))s controlled by various companies and
 states. At any point along its route it may be inspected or even
 modified.
 
@@ -441,16 +445,16 @@ to via your bank's website, plain HTTP is not good enough.
 
 {{indexsee "Secure HTTP", HTTPS}}
 
-The secure ((HTTP)) protocol, whose ((URL))s start with _https://_,
+The secure ((HTTP)) protocol, used for ((URL))s starting with _https://_,
 wraps HTTP traffic in a way that makes it harder to read and tamper
 with. Before exchanging data, the client verifies that the server is
-who it claims to be, by asking it to prove that it has a cryptographic
+who it claims to be by asking it to prove that it has a cryptographic
 ((certificate)) issued by a certificate authority that the ((browser))
 recognizes. Next, all data going over the ((connection)) is encrypted
 in a way that should prevent eavesdropping and tampering.
 
-Thus, when it works right, ((HTTPS)) prevents both the someone
-impersonating the website you were trying to talk to and the someone
+Thus, when it works right, ((HTTPS)) prevents other people from
+impersonating the website you are trying to talk to and from
 snooping on your communication. It is not perfect, and there have been
 various incidents where HTTPS failed because of forged or stolen
 certificates and broken software, but it is a _lot_ safer than plain
@@ -460,7 +464,7 @@ HTTP.
 
 ## Form fields
 
-Forms were originally designed for the pre-JavaScript Web, to allow
+Forms were originally designed for the pre-JavaScript Web to allow
 web sites to send user-submitted information in an HTTP request. This
 design assumes that interaction with the server always happens by
 navigating to a new page.
@@ -483,8 +487,8 @@ but we'll start with a rough overview.
 
 {{index "input (HTML tag)", "type attribute"}}
 
-A lot of field types use the 
-`<input>` tag. This tag's `type` attribute is used to select the 
+A lot of field types use the
+`<input>` tag. This tag's `type` attribute is used to select the
 field's style. These are some commonly used `<input>` types:
 
 {{index "password field", checkbox, "radio button", "file field"}}
@@ -560,7 +564,7 @@ predefined options.
 
 Such a field looks like this:
 
-{{figure {url: "img/form_select.png", alt: "A select field",width: "4cm"}}}
+{{figure {url: "img/form_select.png", alt: "A select field", width: "4cm"}}}
 
 if}}
 
@@ -576,12 +580,12 @@ event.
 {{indexsee "keyboard focus", focus}}
 
 Unlike most elements in HTML documents, form fields can get _keyboard
-((focus))_. When clicked or activated in some other way they become
+((focus))_. When clicked or activated in some other way, they become
 the currently active element and the recipient of keyboard ((input)).
 
 {{index "option (HTML tag)", "select (HTML tag)"}}
 
-Thus you can only type into a ((text field)) when it is focused. Other
+Thus, you can type into a ((text field)) only when it is focused. Other
 fields respond differently to keyboard events. For example, a
 `<select>` menu tries to move to the option that contains the text the
 user typed and responds to the arrow keys by moving its selection up
@@ -614,14 +618,14 @@ the document is loaded, but HTML also provides the `autofocus`
 attribute, which produces the same effect while letting the browser
 know what we are trying to achieve. This gives the browser the option
 to disable the behavior when it is not appropriate, such as when the
-user has focused something else.
+user has put the focus on something else.
 
 {{index "tab key", keyboard, "tabindex attribute", "a (HTML tag)"}}
 
 Browsers traditionally also allow the user to move the focus
-through the document by pressing the Tab key. We can influence the
+through the document by pressing the [tab]{keyname} key. We can influence the
 order in which elements receive focus with the `tabindex` attribute.
-The following example document will let focus jump from the text input to
+The following example document will let the focus jump from the text input to
 the OK button, rather than going through the help link first:
 
 ```{lang: "text/html", focus: true}
@@ -632,7 +636,7 @@ the OK button, rather than going through the help link first:
 {{index "tabindex attribute"}}
 
 By default, most types of HTML elements cannot be focused. But you can
-add a `tabindex` attribute to any element, which will make it
+add a `tabindex` attribute to any element that will make it
 focusable. A `tabindex` of -1 makes tabbing skip over an element, even
 if it is normally focusable.
 
@@ -661,8 +665,8 @@ if}}
 {{index "user experience", "asynchronous programming"}}
 
 When a program is
-in the process of handling an action caused by some ((button)) or other control,
-which might require communication with the server and thus take a
+in the process of handling an action caused by some ((button)) or other control
+that might require communication with the server and thus take a
 while, it can be a good idea to
 disable the control until the action finishes. That way, when the user
 gets impatient and clicks it again, they don't accidentally repeat
@@ -702,10 +706,10 @@ acts both as an array-like object (accessible by number) and a ((map))
 </script>
 ```
 
-{{index "button (HTML tag)", "type attribute", submit, "Enter key"}}
+{{index "button (HTML tag)", "type attribute", submit, "enter key"}}
 
 A button with a `type` attribute of `submit` will, when pressed,
-cause the form to be submitted. Pressing Enter when a form field is
+cause the form to be submitted. Pressing [enter]{keyname} when a form field is
 focused has the same effect.
 
 {{index "submit event", "event handling", "preventDefault method", "page reload", "GET method", "POST method"}}
@@ -713,9 +717,8 @@ focused has the same effect.
 Submitting a ((form)) normally means that the ((browser)) navigates to
 the page indicated by the form's `action` attribute, using either a
 `GET` or a `POST` ((request)). But before that happens, a `"submit"`
-event is fired. This event can be handled by JavaScript, and the
-handler can prevent the default behavior by calling `preventDefault`
-on the event object.
+event is fired. You can handle this event with JavaScript and prevent
+this default behavior by calling `preventDefault` on the event object.
 
 ```{lang: "text/html"}
 <form action="example/submit.html">
@@ -808,7 +811,7 @@ a handler for the `"input"` event instead, which fires for every
 time the user types a character, deletes text, or otherwise manipulates
 the field's content.
 
-The following example shows a text field and a counter showing the
+The following example shows a text field and a counter displaying the
 current length of the text in the field:
 
 ```{lang: "text/html"}
@@ -922,7 +925,7 @@ deselect an option.
 
 This example extracts the selected values from a `multiple` select
 field and uses them to compose a binary number from individual bits.
-Hold Ctrl (or Command on a Mac) to select multiple options.
+Hold [control]{keyname} (or [command]{keyname} on a Mac) to select multiple options.
 
 ```{lang: "text/html"}
 <select multiple>
@@ -1087,7 +1090,7 @@ removed with `removeItem`, or the user clears their local data.
 
 Sites from different ((domain))s get different storage
 compartments. That means data stored in `localStorage` by a given
-website can, in principle, only be read (and overwritten) by scripts on
+website can, in principle, be read (and overwritten) only by scripts on
 that same site.
 
 {{index "localStorage object"}}
@@ -1100,7 +1103,7 @@ prevents the feature from eating up too much space.
 {{index "localStorage object", "note-taking example", "select (HTML tag)", "button (HTML tag)", "textarea (HTML tag)"}}
 
 The following code implements a crude note-taking application. It
-keeps a set of named notes, and allows the user to edit notes and
+keeps a set of named notes and allows the user to edit notes and
 create new ones.
 
 ```{lang: "text/html", startCode: true}
@@ -1154,14 +1157,14 @@ Notes: <select></select> <button>Add</button><br>
 {{index "getItem method", JSON, "|| operator", "default value"}}
 
 The script gets its starting state from the `"Notes"` value stored in
-`localStorage` or, if that is missing, it creates an example state
-that only has a shopping list in it. Reading a field that does not
+`localStorage` or, if that is missing, creates an example state
+that has only a shopping list in it. Reading a field that does not
 exist from `localStorage` will yield `null`. Passing `null` to
 `JSON.parse` will make it parse the string `"null"` and return `null`.
 Thus, the `||` operator can be used to provide a default value in a
 situation like this.
 
-The `setState` method makes sure the DOM is showing a given state, and
+The `setState` method makes sure the DOM is showing a given state and
 stores the new state to `localStorage`. Event handlers call this
 function to move to a new state.
 
@@ -1169,11 +1172,11 @@ function to move to a new state.
 
 The use of `Object.assign` in the example is intended to create a new
 object that is a clone of the old `state.notes`, but with one property
-added or overwritten. `Object.assign` takes its first argument, and
-add all properties from any further arguments to it. Thus, giving it
+added or overwritten. `Object.assign` takes its first argument and
+adds all properties from any further arguments to it. Thus, giving it
 an empty object will cause it to fill a fresh object. The ((square
 brackets)) notation in the third argument is used to create a property
-whose names is based on some dynamic value.
+whose name is based on some dynamic value.
 
 {{index "sessionStorage object"}}
 
@@ -1205,19 +1208,19 @@ a web page. A page may also contain forms, which allow information
 entered by the user to be sent as a request for a new page when the
 form is submitted.
 
-HTML can express various types of form fields, such as text fields,
+HTML can represent various types of form fields, such as text fields,
 checkboxes, multiple-choice fields, and file pickers.
 
 Such fields can be inspected and manipulated with JavaScript. They
-fire the `"change"` event when changed, the `"input"` event when text
+fire the `"change"` event when changed, fire the `"input"` event when text
 is typed, and receive keyboard events when they have keyboard focus.
 Properties like `value` (for text and select fields) or `checked` (for
 checkboxes and radio buttons) are used to read or set the field's
 content.
 
 When a form is submitted, a `"submit"` event is fired on it. A
-JavaScript handler can call `preventDefault` on that event to prevent
-the submission from happening. Form field elements may also occur
+JavaScript handler can call `preventDefault` on that event to disable
+the browser's default behavior. Form field elements may also occur
 outside of a form tag.
 
 When the user has selected a file from their local file system in a
@@ -1225,7 +1228,7 @@ file picker field, the `FileReader` interface can be used to access
 the content of this file from a JavaScript program.
 
 The `localStorage` and `sessionStorage` objects can be used to save
-information in a way that survives page reloads. The first saves the
+information in a way that survives page reloads. The first object saves the
 data forever (or until the user decides to clear it), and the second
 saves it until the browser is closed.
 
@@ -1235,7 +1238,7 @@ saves it until the browser is closed.
 
 {{index "Accept header", "media type", "document format", "content negotiation (exercise)"}}
 
-One of the things that HTTP can do is called _content negotiation_.
+One of the things HTTP can do is called _content negotiation_.
 The `Accept` request header is used to tell the server what type of
 document the client would like to get. Many servers ignore this
 header, but when a server knows of various ways to encode a resource,
@@ -1244,7 +1247,7 @@ it can look at this header and send the one that the client prefers.
 {{index "MIME type"}}
 
 The URL
-[_eloquentjavascript.net/author_](https://eloquentjavascript.net/author)
+[_http://eloquentjavascript.net/author_](http://eloquentjavascript.net/author)
 is configured to respond with either plaintext, HTML, or JSON,
 depending on what the client asks for. These formats are identified by
 the standardized _((media type))s_ `text/plain`, `text/html`, and
@@ -1257,7 +1260,7 @@ Send requests to fetch all three formats of this resource. Use the
 header named `Accept` to the desired media type.
 
 Finally, try asking for the media type `application/rainbows+unicorns`
-and see what happens.
+and see which status code that produces.
 
 {{if interactive
 
@@ -1291,7 +1294,7 @@ JavaScript code.
 
 {{index "textarea (HTML tag)", "button (HTML tag)", "Function constructor", "error message"}}
 
-Put a button next to a `<textarea>` field, which, when pressed, uses
+Put a button next to a `<textarea>` field that, when pressed, uses
 the `Function` constructor we saw in [Chapter ?](modules#eval) to wrap
 the text in a function and call it. Convert the return value of the
 function, or any error it raises, to a string and display it below the
@@ -1323,7 +1326,7 @@ property of the text field and call `Function` on it.
 {{index "try keyword", "exception handling"}}
 
 Make sure you wrap both the call to `Function` and the call to its
-result in a `try` block so that you can catch exceptions that it
+result in a `try` block so you can catch the exceptions it
 produces. In this case, we really don't know what type of exception we
 are looking for, so catch everything.
 
@@ -1342,7 +1345,7 @@ hint}}
 {{index "game of life (exercise)", "artificial life", "Conway's Game of Life"}}
 
 Conway's Game of Life is a simple ((simulation)) that creates
-artificial "life" on a ((grid)), each cell of which is either live or
+artificial "life" on a ((grid)), each cell of which is either alive or
 not. Each ((generation)) (turn), the following rules are applied:
 
 * Any live ((cell)) with fewer than two or more than three live
@@ -1353,7 +1356,7 @@ not. Each ((generation)) (turn), the following rules are applied:
 
 * Any dead cell with exactly three live neighbors becomes a live cell.
 
-A neighbor is defined as any adjacent cell, including diagonally
+A _neighbor_ is defined as any adjacent cell, including diagonally
 adjacent ones.
 
 {{index "pure function"}}
@@ -1403,7 +1406,7 @@ center, whose neighbors we are counting.
 
 {{index "event handling", "change event"}}
 
-Making changes to ((checkbox))es take effect on the next generation
+Ensuring that changes to ((checkbox))es take effect on the next generation
 can be done in two ways. An event handler could notice these changes
 and update the current grid to reflect them, or you could generate a
 fresh grid from the values in the checkboxes before computing the next

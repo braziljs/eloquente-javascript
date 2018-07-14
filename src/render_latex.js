@@ -161,6 +161,9 @@ let renderer = {
   meta_latex_open() { raw = true; return "" },
   meta_latex_close() { raw = false; return "" },
 
+  meta_keyname_open() { return "\\textsc{" },
+  meta_keyname_close() { return "}" },
+
   link_open(token) {
     let href= token.attrGet("href")
     let maybeChapter = /^(\w+)(?:#(.*))?$/.exec(href)

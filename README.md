@@ -12,5 +12,5 @@ Feedback welcome, in the form of issues and pull requests.
 
 To build the PDF file:
 
-    apt-get install texlive texlive-xetex fonts-inconsolata fonts-symbola texlive-fonts-chinese
+    apt-get install texlive texlive-xetex fonts-inconsolata fonts-symbola texlive-lang-chinese inkscape
     make book.pdf

@@ -10,6 +10,8 @@ definition, not smart enough to debug it.
 
 quote}}
 
+{{figure {url: "img/chapter_picture_8.jpg", alt: "Picture of a collection of bugs", chapter: framed}}}
+
 {{index "Kernighan, Brian", "Plauger, P.J.", debugging, "error handling"}}
 
 Flaws in computer programs are usually called _((bug))s_. It makes
@@ -18,7 +20,7 @@ happen to crawl into our work. In reality, of course, we put them
 there ourselves.
 
 If a program is crystallized thought, you can roughly categorize bugs
-into those caused by the thoughts being confused, and those caused by
+into those caused by the thoughts being confused and those caused by
 mistakes introduced while converting a thought to code. The former
 type is generally harder to diagnose and fix than the latter.
 
@@ -26,7 +28,7 @@ type is generally harder to diagnose and fix than the latter.
 
 {{index parsing, analysis}}
 
-Many mistakes could automatically be pointed out to us by the
+Many mistakes could be pointed out to us automatically by the
 computer, if it knew enough about what we're trying to do. But here
 JavaScript's looseness is a hindrance. Its concept of bindings and
 properties is vague enough that it will rarely catch ((typo))s before
@@ -46,7 +48,7 @@ program tries to perform the action.
 {{index NaN, error}}
 
 But often, your nonsense computation will merely produce `NaN` (not a
-number) or an undefined value. And the program happily continues,
+number) or an undefined value, while the program happily continues,
 convinced that it's doing something meaningful. The mistake will
 manifest itself only later, after the bogus value has traveled through
 several functions. It might not trigger an error at all but silently
@@ -62,7 +64,7 @@ _((debugging))_.
 
 {{indexsee "use strict", "strict mode"}}
 
-JavaScript can be made a _little_ more strict by enabling _strict
+JavaScript can be made a _little_ stricter by enabling _strict
 mode_. This is done by putting the string `"use strict"` at the top of
 a file or a function body. Here's an example:
 
@@ -82,10 +84,10 @@ canYouSpotTheProblem();
 
 Normally, when you forget to put `let` in front of your binding, as
 with `counter` in the example, JavaScript quietly creates a global
-binding and uses that. In strict mode an ((error)) is reported
+binding and uses that. In strict mode, an ((error)) is reported
 instead. This is very helpful. It should be noted, though, that this
 doesn't work when the binding in question already exists as a global
-binding. In that case the loop will still quietly overwrite the value
+binding. In that case, the loop will still quietly overwrite the value
 of the binding.
 
 {{index this, "global object", undefined, "strict mode"}}
@@ -155,11 +157,11 @@ lot of mistakes come from being confused about the kind of value that
 goes into or comes out of a function. If you have that information
 written down, you're less likely to get confused.
 
-You could add a comment like this above the `goalOrientedRobot`
-function from the last chapter, to describe its type.
+You could add a comment like the following before the `goalOrientedRobot`
+function from the previous chapter to describe its type:
 
 ```
-// (WorldState, Array) → {direction: string, memory: Array}
+// (VillageState, Array) → {direction: string, memory: Array}
 function goalOrientedRobot(state, memory) {
   // ...
 }
@@ -199,14 +201,14 @@ we'll have to find them the hard way: by running the program and
 seeing whether it does the right thing.
 
 Doing this by hand, again and again, is a really bad idea. Not only is
-it annoying, it also tends to be ineffective, since it takes too much
+it annoying, it also tends to be ineffective since it takes too much
 time to exhaustively test everything every time you make a change.
 
 Computers are good at repetitive tasks, and testing is the ideal
 repetitive task. Automated testing is the process of writing a program
 that tests another program. Writing tests is a bit more work than
-testing manually, but once you've done it you gain a kind of
-superpower: it only takes you a few seconds to verify that your
+testing manually, but once you've done it, you gain a kind of
+superpower: it takes you only a few seconds to verify that your
 program still behaves properly in all the situations you wrote tests
 for. When you break something, you'll immediately notice, rather than
 randomly running into it at some later time.
@@ -255,7 +257,7 @@ values rather than changing objects, tends to be easy to test.
 
 {{index debugging}}
 
-Once you notice that there is something wrong with your program
+Once you notice there is something wrong with your program
 because it misbehaves or produces errors, the next step is to figure
 out _what_ the problem is.
 
@@ -305,7 +307,7 @@ out why.
 {{index "trial and error"}}
 
 This is where you must resist the urge to start making random changes
-to the code to see if that makes it better. Instead, _think_. Analyze
+to the code to see whether that makes it better. Instead, _think_. Analyze
 what is happening and come up with a ((theory)) of why it might be
 happening. Then, make additional observations to test this theory—or,
 if you don't yet have a theory, make additional observations to help
@@ -360,10 +362,10 @@ have the network fail.
 
 {{index "error recovery"}}
 
-If you're only programming for yourself, you can afford to just ignore
+If you're programming only for yourself, you can afford to just ignore
 such problems until they occur. But if you build something that is
 going to be used by anybody else, you usually want the program to do
-better than just crashing. Sometimes the right thing to do is take the
+better than just crash. Sometimes the right thing to do is take the
 bad input in stride and continue running. In other cases, it is better
 to report to the user what went wrong and then give up. But in either
 situation, the program has to actively do something in response to the
@@ -419,7 +421,7 @@ function lastElement(array) {
 {{index "special return value", readability}}
 
 The second issue with returning special values is that it can lead to
-very awkward code. If a piece of code calls `promptNumber` 10 times,
+awkward code. If a piece of code calls `promptNumber` 10 times,
 it has to check 10 times whether `null` was returned. And if its
 response to finding `null` is to simply return `null` itself, callers
 of the function will in turn have to check for it, and so on.
@@ -438,7 +440,7 @@ Exceptions are a mechanism that makes it possible for code that runs
 into a problem to _raise_ (or _throw_) an exception. An exception can
 be any value. Raising one somewhat resembles a super-charged return
 from a function: it jumps out of not just the current function but
-also out of its callers, all the way down to the first call that
+also its callers, all the way down to the first call that
 started the current execution. This is called _((unwinding the
 stack))_. You may remember the stack of function calls that was
 mentioned in [Chapter ?](functions#stack). An exception zooms down
@@ -451,7 +453,7 @@ they would not be of much use. They'd just provide a novel way to blow
 up your program. Their power lies in the fact that you can set
 "obstacles" along the stack to _catch_ the exception as it is zooming
 down. Once you've caught an exception, you can do something with it to
-address the problem, and then continue to run the program.
+address the problem and then continue to run the program.
 
 Here's an example:
 
@@ -505,7 +507,7 @@ the failing call.
 
 Note that the `look` function completely ignores the possibility that
 `promptDirection` might go wrong. This is the big advantage of
-exceptions—error-handling code is necessary only at the point where
+exceptions: error-handling code is necessary only at the point where
 the error occurs and at the point where it is handled. The functions
 in between can forget all about it.
 
@@ -520,7 +522,7 @@ action that might cause an exception, which is pretty much every
 function call and property access, might cause control to suddenly
 leave your code.
 
-That means that when code has several side effects, even if its
+This means when code has several side effects, even if its
 "regular" control flow looks like they'll always all happen, an
 exception might prevent some of them from taking place.
 
@@ -554,7 +556,7 @@ The `transfer` function transfers a sum of money from a given account
 to another, asking for the name of the other account in the process.
 If given an invalid account name, `getAccount` throws an exception.
 
-But `transfer` _first_ removes the money from the account, and _then_
+But `transfer` _first_ removes the money from the account and _then_
 calls `getAccount` before it adds it to another account. If it is
 broken off by an exception at that point, it'll just make the money
 disappear.
@@ -565,7 +567,7 @@ But often problems like this occur in more subtle ways. Even functions
 that don't look like they will throw an exception might do so in
 exceptional circumstances or when they contain a programmer mistake.
 
-One way to address this is to use less side effects. Again, a
+One way to address this is to use fewer side effects. Again, a
 programming style that computes new values instead of changing
 existing data helps. If a piece of code stops running in the middle of
 creating a new value, no one ever sees the half-finished value, and
@@ -577,7 +579,7 @@ But that isn't always practical. So there is another feature that
 `try` statements have. They may be followed by a `finally` block
 either instead of or in addition to a `catch` block. A `finally` block
 says "no matter _what_ happens, run this code after trying to run the
-code in the `try` block".
+code in the `try` block."
 
 ```{includeCode: true}
 function transfer(from, amount) {
@@ -600,14 +602,14 @@ This version of the function tracks its progress, and if, when
 leaving, it notices that it was aborted at a point where it had
 created an inconsistent program state, it repairs the damage it did.
 
-Note that, even though the `finally` code is run when an exception
-leaves the `try` block, it does not interfere with the exception.
+Note that even though the `finally` code is run when an exception
+is thrown in the `try` block, it does not interfere with the exception.
 After the `finally` block runs, the stack continues unwinding.
 
 {{index "exception safety"}}
 
 Writing programs that operate reliably even when exceptions pop up in
-unexpected places is very hard. Many people simply don't bother, and
+unexpected places is hard. Many people simply don't bother, and
 because exceptions are typically reserved for exceptional
 circumstances, the problem may occur so rarely that it is never even
 noticed. Whether that is a good thing or a really bad thing depends on
@@ -649,7 +651,7 @@ Such exceptions can also be caught.
 {{index "catch keyword"}}
 
 When a `catch` body is entered, all we know is that _something_ in our
-`try` body caused an exception. But we don't know _what_, or _which_
+`try` body caused an exception. But we don't know _what_ did or _which_
 exception it caused.
 
 {{index "exception handling"}}
@@ -664,7 +666,7 @@ the `catch` block.
 
 But it might not be. Some other ((assumption)) might be violated, or
 you might have introduced a bug that is causing an exception. Here is
-an example, which _attempts_ to keep on calling `promptDirection`
+an example that _attempts_ to keep on calling `promptDirection`
 until it gets a valid answer:
 
 ```{test: no}
@@ -687,7 +689,7 @@ valid direction is given. _But_ we misspelled `promptDirection`, which
 will result in an "undefined variable" error. Because the `catch`
 block completely ignores its exception value (`e`), assuming it knows
 what the problem is, it wrongly treats the binding error as indicating
-bad input. Not only does this cause an infinite loop, but it also
+bad input. Not only does this cause an infinite loop, it 
 "buries" the useful error message about the misspelled binding.
 
 As a general rule, don't blanket-catch exceptions unless it is for the
@@ -729,7 +731,7 @@ function promptDirection(question) {
 The new error class extends `Error`. It doesn't define its own
 constructor, which means that it inherits the `Error` constructor,
 which expects a string message as argument. In fact, it doesn't define
-anything at all—the class is empty. `InputError` object behave like
+anything at all—the class is empty. `InputError` objects behave like
 `Error` objects, except that they have a different class by which we
 can recognize them.
 
@@ -765,10 +767,10 @@ error will be properly reported.
 
 _Assertions_ are checks inside a program that verify that something is
 the way it is supposed to be. They are used not to handle situations
-that can come up in normal operation, but to find programmer mistakes.
+that can come up in normal operation but to find programmer mistakes.
 
 If, for example, `firstElement` is described as a function that should
-never be called on empty arrays, we might write it like this.
+never be called on empty arrays, we might write it like this:
 
 ```
 function firstElement(array) {
@@ -784,7 +786,7 @@ function firstElement(array) {
 Now, instead of silently returning undefined (which you get when
 reading an array property that does not exist), this will loudly blow
 up your program as soon as you misuse it. This makes it less likely
-for such mistakes to go unnoticed, and easier to find their cause when
+for such mistakes to go unnoticed and easier to find their cause when
 they occur.
 
 I do not recommend trying to write assertions for every possible kind
@@ -810,7 +812,7 @@ exception value will be given to the `catch` block that catches it,
 which should verify that it is actually the expected kind of exception
 and then do something with it. To help address the unpredictable
 control flow caused by exceptions, `finally` blocks can be used to
-ensure a piece of code _always_ runs when a block finishes.
+ensure that a piece of code _always_ runs when a block finishes.
 
 ## Exercises
 
@@ -818,8 +820,8 @@ ensure a piece of code _always_ runs when a block finishes.
 
 {{index "primitiveMultiply (exercise)", "exception handling", "throw keyword"}}
 
-Say you have a function `primitiveMultiply` that, in 20 percent of
-cases, multiplies two numbers, and in the other 80 percent, raises an
+Say you have a function `primitiveMultiply` that in 20 percent of
+cases multiplies two numbers and in the other 80 percent of cases raises an
 exception of type `MultiplicatorUnitFailure`. Write a function that
 wraps this clunky function and just keeps trying until a call
 succeeds, after which it returns the result.
@@ -859,7 +861,7 @@ block. The corresponding `catch` block should rethrow the exception
 when it is not an instance of `MultiplicatorUnitFailure` and ensure
 the call is retried when it is.
 
-To do the retrying, you can either use a loop that breaks only when a
+To do the retrying, you can either use a loop that stops only when a
 call succeeds—as in the [`look` example](error#look) earlier in this
 chapter—or use ((recursion)) and hope you don't get a string of
 failures so long that it overflows the stack (which is a pretty safe
@@ -947,6 +949,6 @@ body. The `finally` block after it should lock the box again.
 
 To make sure we don't lock the box when it wasn't already locked,
 check its lock at the start of the function and unlock and lock
-it only  when it started out locked.
+it only when it started out locked.
 
 hint}}

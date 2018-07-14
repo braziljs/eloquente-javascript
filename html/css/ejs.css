@@ -394,6 +394,13 @@ figure.framed img {
   border: 4px double #666;
 }
 
+figure.square-framed img {
+  border-radius: 30px;
+  border: 4px double #666;
+}
+
+span.keyname { font-variant: small-caps }
+
 @media screen and (max-width: 500px) {
   figure {
     margin: 0;

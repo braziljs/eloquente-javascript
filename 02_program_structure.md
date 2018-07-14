@@ -11,9 +11,9 @@ quote}}
 
 {{index why, "Poignant Guide"}}
 
-{{figure {url: "img/chapter_picture_2.jpg", alt: "Tentacles holding objects", chapter: framed}}}
+{{figure {url: "img/chapter_picture_2.jpg", alt: "Picture of tentacles holding objects", chapter: framed}}}
 
-In this chapter, we start to do things that can actually be called
+In this chapter, we will start to do things that can actually be called
 _programming_. We will expand our command of the JavaScript language
 beyond the nouns and sentence fragments we've seen so far, to the
 point where we can express meaningful prose.
@@ -25,7 +25,7 @@ point where we can express meaningful prose.
 In [Chapter ?](values), we made values and applied operators to them
 to get new values. Creating values like this is the main substance of
 any JavaScript program. But that substance has to be framed in a
-larger structure to be useful. So that's what we'll get to next.
+larger structure to be useful. So that's what we'll cover next.
 
 {{index "literal expression"}}
 
@@ -38,8 +38,7 @@ applied to two expressions or a ((unary operator)) applied to one.
 {{index [nesting, "of expressions"], "human language"}}
 
 This shows part of the beauty of a language-based interface.
-Expressions can contain other expressions in a way very similar to the
-way subsentences in human languages are nested—a subsentence can
+Expressions can contain other expressions in a way similar to how subsentences in human languages are nested—a subsentence can
 contain its own subsentences, and so on. This allows us to build
 expressions that describe arbitrarily complex computations.
 
@@ -120,7 +119,7 @@ console.log(ten * ten);
 When a binding points at a value, that does not mean it is tied to
 that value forever. The `=` operator can be used at any time on
 existing bindings to disconnect them from their current value and have
-them point to a new one:
+them point to a new one.
 
 ```
 let mood = "light";
@@ -135,13 +134,13 @@ console.log(mood);
 
 You should imagine bindings as tentacles, rather than boxes. They do
 not _contain_ values; they _grasp_ them—two bindings can refer to the
-same value. A program can only access the values that it still has a
+same value. A program can access only the values that it still has a
 reference to. When you need to remember something, you grow a tentacle
 to hold on to it or you reattach one of your existing tentacles to it.
 
 Let's look at another example. To remember the number of dollars that
 Luigi still owes you, you create a binding. And then when he pays back
-$35, you give this binding a new value:
+$35, you give this binding a new value.
 
 ```
 let luigisDebt = 140;
@@ -180,7 +179,7 @@ console.log(greeting + name);
 {{index "var keyword"}}
 
 The first, `var` (short for "variable"), is the way bindings were
-declared in pre-2015 JavaScript. We'll get back to the precise way it
+declared in pre-2015 JavaScript. I'll get back to the precise way it
 differs from `let` in the [next chapter](functions). For now,
 remember that it mostly does the same thing, but we'll rarely use it
 in this book because it has some confusing properties.
@@ -199,7 +198,7 @@ easily refer to it later.
 Binding names can be any word. Digits can be part of binding
 names—`catch22` is a valid name, for example—but the name must not
 start with a digit. A binding name may include dollar signs (`$`) or
-underscores (`_`), but no other punctuation or special characters.
+underscores (`_`) but no other punctuation or special characters.
 
 {{index syntax, "implements (reserved word)", "interface (reserved word)", "package (reserved word)", "private (reserved word)", "protected (reserved word)", "public (reserved word)", "static (reserved word)", "void operator", "yield (reserved word)", "enum (reserved word)", "reserved word", [binding, naming]}}
 
@@ -207,7 +206,7 @@ Words with a special meaning, such as `let`, are _((keyword))s_, and
 they may not be used as binding names. There are also a number of
 words that are "reserved for use" in ((future)) versions of
 JavaScript, which also can't be used as binding names. The full list
-of keywords and reserved words is rather long:
+of keywords and reserved words is rather long.
 
 ```{lang: "text/plain"}
 break case catch class const continue debugger default
@@ -217,8 +216,8 @@ new package private protected public return static super
 switch this throw true try typeof var void while with yield
 ```
 
-Don't worry about memorizing these. When creating a binding produces
-an unexpected ((syntax error)), see if you're trying to define a
+Don't worry about memorizing this list. When creating a binding produces
+an unexpected ((syntax error)), see whether you're trying to define a
 reserved word.
 
 ## The environment
@@ -278,9 +277,9 @@ systems (including all modern web ((browser))s and Node.js) provide a
 `console.log` function that writes out its arguments to _some_ text
 output device. In browsers, the output lands in the ((JavaScript
 console)). This part of the browser interface is hidden by default,
-but most browsers open it when you press F12 or, on Mac, Command-Option-I.
-If that does not work, search through the menus for an item named "developer
-tools" or similar.
+but most browsers open it when you press F12 or, on a Mac, [command]{keyname}-[option]{keyname}-I.
+If that does not work, search through the menus for an item named Developer
+Tools or similar.
 
 {{if interactive
 
@@ -301,7 +300,7 @@ if}}
 Though binding names cannot contain ((period character))s,
 `console.log` does have one. This is because `console.log` isn't a
 simple binding. It is actually an expression that retrieves the `log`
-((property)) from the value held by the `console` binding. We will
+((property)) from the value held by the `console` binding. We'll
 find out exactly what this means in [Chapter ?](data#properties).
 
 {{id return_values}}
@@ -408,12 +407,11 @@ doesn't represent a valid number. Thus, the condition translates to
 
 {{index grouping, "{} (block)"}}
 
-The statement below the `if` is wrapped in ((curly braces)) (`{` and
-`}`) in this example. Those can be used to group any number of
+The statement after the `if` is wrapped in ((braces)) (`{` and
+`}`) in this example. The braces can be used to group any number of
 statements into a single statement, called a _((block))_. You could
-also have omitted them in this case, since they only hold a single
-statement, but to avoid having to think about whether they are needed
-or not, most JavaScript programmers use them in every wrapped
+also have omitted them in this case, since they hold only a single
+statement, but to avoid having to think about whether they are needed, most JavaScript programmers use them in every wrapped
 statement like this. We'll mostly follow that convention in this book,
 except for the occasional one-liner.
 
@@ -426,8 +424,7 @@ if (1 + 1 == 2) console.log("It's true");
 
 You often won't just have code that executes when a condition holds
 true, but also code that handles the other case. This alternate path
-is represented by the second arrow in the diagram. The `else` keyword
-can be used, together with `if`, to create two separate, alternative
+is represented by the second arrow in the diagram. You can use the `else` keyword, together with `if`, to create two separate, alternative
 execution paths.
 
 ```{test: wrap}
@@ -442,8 +439,8 @@ if (!Number.isNaN(theNumber)) {
 
 {{index ["if keyword", chaining]}}
 
-If we have more than two paths to choose from, multiple `if`/`else`
-pairs can be "chained" together. Here's an example:
+If you have more than two paths to choose from, you can "chain" multiple `if`/`else`
+pairs together. Here's an example:
 
 ```
 let num = Number(prompt("Pick a number"));
@@ -490,7 +487,7 @@ That works, but the idea of writing a program is to make something
 _less_ work, not more. If we needed all even numbers less than 1,000,
 this approach would be unworkable. What we need is a way to run a
 piece of code multiple times. This form of control flow is called a
-_((loop))_:
+_((loop))_.
 
 {{figure {url: "img/controlflow-loop.svg", alt: "Loop control flow",width: "4cm"}}}
 
@@ -549,7 +546,7 @@ console.log(result);
 ```
 
 The counter could also have started at `1` and checked for `<= 10`,
-but, for reasons that will become apparent in [Chapter
+but for reasons that will become apparent in [Chapter
 ?](data#array_indexing), it is a good idea to get used to
 counting from 0.
 
@@ -559,7 +556,7 @@ A `do` loop is a control structure similar to a `while` loop. It
 differs only on one point: a `do` loop always executes its body at
 least once, and it starts testing whether it should stop only after
 that first execution. To reflect this, the test appears after the body
-of the loop:
+of the loop.
 
 ```
 let yourName;
@@ -582,7 +579,7 @@ continues going round until you provide a non-empty name.
 {{index "code structure", whitespace, "programming style"}}
 
 In the examples, I've been adding spaces in front of statements that
-are part of some larger statement. These are not required—the computer
+are part of some larger statement. These spaces are not required—the computer
 will accept the program just fine without them. In fact, even the
 ((line)) breaks in programs are optional. You could write a program as
 a single long line if you felt like it.
@@ -613,7 +610,7 @@ amount.
 
 {{index syntax, "while loop", "counter variable"}}
 
-Many loops follow the pattern seen in the `while` examples. First, a
+Many loops follow the pattern shown in the `while` examples. First a
 "counter" binding is created to track the progress of the loop. Then
 comes a `while` loop, usually with a test expression that checks whether the
 counter has reached its end value. At the end of the loop body, the
@@ -623,7 +620,7 @@ counter is updated to track progress.
 
 Because this pattern is so common, JavaScript and similar languages
 provide a slightly shorter and more comprehensive form, the `for`
-loop:
+loop.
 
 ```
 for (let number = 0; number <= 12; number = number + 2) {
@@ -650,7 +647,7 @@ cases, this is shorter and clearer than a `while` construct.
 
 {{index exponentiation}}
 
-This is the code that computes 2^10^, using `for` instead of `while`:
+This is the code that computes 2^10^ using `for` instead of `while`:
 
 ```{test: wrap}
 let result = 1;
@@ -704,8 +701,7 @@ will never finish running, which is usually a bad thing.
 If you create an infinite loop in one of the examples on these pages,
 you'll usually be asked whether you want to stop the script after a
 few seconds. If that fails, you will have to close the tab that you're
-working in, or on some browsers close your whole browser, in order to
-recover.
+working in, or on some browsers close your whole browser, to recover.
 
 if}}
 
@@ -727,7 +723,7 @@ to hold a value based on that binding's previous value.
 counter = counter + 1;
 ```
 
-JavaScript provides a shortcut for this:
+JavaScript provides a shortcut for this.
 
 ```{test: no}
 counter += 1;
@@ -870,11 +866,10 @@ information about a file or a chunk of program.
 
 ```
 /*
-  I first found this number scrawled on the back of one of
-  an old notebook. Since then, it has often dropped by,
-  showing up in phone numbers and the serial numbers of
-  products that I've bought. It obviously likes me, so I've
-  decided to keep it.
+  I first found this number scrawled on the back of an old notebook.
+  Since then, it has often dropped by, showing up in phone numbers
+  and the serial numbers of products that I've bought. It obviously
+  likes me, so I've decided to keep it.
 */
 const myNumber = 11213;
 ```
@@ -898,21 +893,21 @@ of useful standard bindings into your environment.
 
 Functions are special values that encapsulate a piece of program. You
 can invoke them by writing `functionName(argument1, argument2)`. Such
-a function call is an expression, and may produce a value.
+a function call is an expression and may produce a value.
 
 ## Exercises
 
 {{index exercises}}
 
-If you are unsure how to try your solutions to exercises, refer to the
-[introduction](intro).
+If you are unsure how to test your solutions to the exercises, refer to the
+[Introduction](intro).
 
-Each exercise starts with a problem description. Read that and try to
+Each exercise starts with a problem description. Read this description and try to
 solve the exercise. If you run into problems, consider reading the
 hints [after the exercise]{if interactive}[at the [end of the
 book](hints)]{if book}. Full solutions to the exercises are
 not included in this book, but you can find them online at
-[_eloquentjavascript.net/code_](https://eloquentjavascript.net/code#2).
+[_https://eloquentjavascript.net/code_](https://eloquentjavascript.net/code#2).
 If you want to learn something from the exercises, I recommend looking
 at the solutions only after you've solved the exercise, or at least
 after you've attacked it long and hard enough to have a slight
@@ -938,7 +933,7 @@ following triangle:
 {{index [string, length]}}
 
 It may be useful to know that you can find the length of a string by
-writing `.length` after it:
+writing `.length` after it.
 
 ```
 let abc = "abc";
@@ -981,7 +976,7 @@ Write a program that uses `console.log` to print all the numbers from
 `"Fizz"` instead of the number, and for numbers divisible by 5 (and
 not 3), print `"Buzz"` instead.
 
-When you have that working, modify your program to print `"FizzBuzz"`,
+When you have that working, modify your program to print `"FizzBuzz"`
 for numbers that are divisible by both 3 and 5 (and still print
 `"Fizz"` or `"Buzz"` for numbers divisible by only one of those).
 
@@ -1010,22 +1005,22 @@ number, so you'll have to create an `if`/`else if`/`else` chain.
 {{index "|| operator", ["if keyword", chaining]}}
 
 The second version of the program has a straightforward solution and a
-clever one. The simple way is to add another conditional "branch" to
-precisely test the given condition. For the clever method, build up a
+clever one. The simple solution is to add another conditional "branch" to
+precisely test the given condition. For the clever solution, build up a
 string containing the word or words to output and print either this
 word or the number if there is no word, potentially by making good use
 of the `||` operator.
 
 hint}}
 
-### Chess board
+### Chessboard
 
-{{index "chess board (exercise)", loop, [nesting, "of loops"], "newline character"}}
+{{index "chessboard (exercise)", loop, [nesting, "of loops"], "newline character"}}
 
 Write a program that creates a string that represents an 8×8 grid,
 using newline characters to separate lines. At each position of the
 grid there is either a space or a "#" character. The characters should
-form a chess board.
+form a chessboard.
 
 Passing this string to `console.log` should show something like this:
 
@@ -1054,17 +1049,17 @@ if}}
 
 {{index "chess board (exercise)"}}
 
-The string can be built by starting with an empty one (`""`) and
+You can build the string by starting with an empty one (`""`) and
 repeatedly adding characters. A newline character is written `"\n"`.
 
-{{index [nesting, "of loops"]}}
+{{index [nesting, "of loops"], braces}}
 
 To work with two ((dimensions)), you will need a ((loop)) inside of a
-loop. Put ((curly braces)) around the bodies of both loops to make it
+loop. Put braces around the bodies of both loops to make it
 easy to see where they start and end. Try to properly indent these
 bodies. The order of the loops must follow the order in which we build
 up the string (line by line, left to right, top to bottom). So the
-outer loop handles the lines and the inner loop handles the characters
+outer loop handles the lines, and the inner loop handles the characters
 on a line.
 
 {{index "counter variable", "remainder operator", "% operator"}}
@@ -1074,7 +1069,6 @@ put a space or a hash sign at a given position, you could test whether
 the sum of the two counters is even (`% 2`).
 
 Terminating a line by adding a newline character must happen after the
-line has been built up, so do this after the inner loop but inside of
-the outer loop.
+line has been built up, so do this after the inner loop but inside the outer loop.
 
 hint}}

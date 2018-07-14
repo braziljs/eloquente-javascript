@@ -326,7 +326,7 @@ var SCRIPTS = [
     ranges: [[4352, 4608], [12334, 12336], [12593, 12687], [12800, 12831], [12896, 12927], [43360, 43389], [44032, 55204], [55216, 55239], [55243, 55292], [65440, 65471], [65474, 65480], [65482, 65488], [65490, 65496], [65498, 65501]],
     direction: "ltr",
     year: 1443,
-    living: false,
+    living: true,
     link: "https://en.wikipedia.org/wiki/Hangul"
   },
   {
@@ -1116,7 +1116,7 @@ var SCRIPTS = [
 ];
 
 // This makes sure the data is exported in node.js —
-// `require('./path/to/jaques_journal.js')` will get you the array.
+// `require('./path/to/scripts.js')` will get you the array.
 if (typeof module != "undefined" && module.exports && (typeof window == "undefined" || window.exports != exports))
   module.exports = SCRIPTS;
 if (typeof global != "undefined" && !global.SCRIPTS)

@@ -5,7 +5,7 @@
 
 <div></div>
 <script>
-  PictureCanvas.prototype.setState = function(picture) {
+  PictureCanvas.prototype.syncState = function(picture) {
     if (this.picture == picture) return;
     drawPicture(picture, this.dom, scale, this.picture);
     this.picture = picture;

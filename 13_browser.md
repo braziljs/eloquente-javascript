@@ -11,6 +11,8 @@ quote}}
 
 {{index "Berners-Lee, Tim", "World Wide Web", HTTP, [JavaScript, "history of"], "World Wide Web"}}
 
+{{figure {url: "img/chapter_picture_13.jpg", alt: "Picture of a telephone switchboard", chapter: "framed"}}}
+
 The next chapters of this book will talk about web browsers. Without
 web ((browser))s, there would be no JavaScript. Or even if there were,
 no one would ever have paid any attention to it.
@@ -19,9 +21,9 @@ no one would ever have paid any attention to it.
 
 Web technology has, from the start, been decentralized, not just
 technically but also in the way it evolved. Various browser vendors
-have added new functionality in ad hoc and sometimes poorly thought
-out ways, which then, sometimes, ended up being adopted by others—and
-finally set down as a ((standard)).
+have added new functionality in ad hoc and sometimes poorly thought-out
+ways, which then, sometimes, ended up being adopted by others—and
+finally set down as in ((standards)).
 
 This is both a blessing and a curse. On the one hand, it is empowering
 to not have a central party control a system but have it be improved
@@ -53,22 +55,22 @@ on the kind of thing that it is trying to express and on the
 
 A _network ((protocol))_ describes a style of communication over a
 ((network)). There are protocols for sending email, for fetching email,
-for sharing files, or even for controlling computers that happen to be
+for sharing files, and even for controlling computers that happen to be
 infected by malicious software.
 
-{{indexsee "Hypertext Transfer Prototol", HTTP}}
+{{indexsee "Hypertext Transfer Protocol", HTTP}}
 
-For example, the ((HTTP)) protocol (_Hypertext Transfer Protocol_) is
+For example, the _Hypertext Transfer Protocol_ (((HTTP))) is
 a protocol for retrieving named ((resource))s (chunks of information,
 such as web pages or pictures). It specifies that the side making the
 request should start with a line like this, naming the resource and
-the version of the protocol that it is trying to use.
+the version of the protocol that it is trying to use:
 
 ```{lang: "text/plain"}
 GET /index.html HTTP/1.1
 ```
 
-There's a lot more rules about the way the requester can include more
+There are a lot more rules about the way the requester can include more
 information in the ((request)) and the way the other side, which
 returns the resource, packages up its content. We'll look at HTTP in a
 little more detail in [Chapter ?](http).
@@ -123,8 +125,8 @@ that such pages can easily link to each other, thus connecting into a
 huge ((mesh)) that users can move through.
 
 To become part of the Web, all you need to do is connect a machine to
-the ((Internet)), and have it listen on port 80 with the ((HTTP))
-protocol, so that other computers can ask it for documents.
+the ((Internet)) and have it listen on port 80 with the ((HTTP))
+protocol so that other computers can ask it for documents.
 
 {{index URL}}
 
@@ -158,7 +160,7 @@ domain name to serve web pages.
 
 {{index browser}}
 
-If you type the URL we saw into your browser's ((address bar)), it
+If you type this URL into your browser's ((address bar)), the browser
 will try to retrieve and display the ((document)) at that URL. First,
 your browser has to find out what address _eloquentjavascript.net_
 refers to. Then, using the ((HTTP)) protocol, it will make a
@@ -220,8 +222,8 @@ _about_ the document, and the body contains the document itself. In
 this case, the head declares that the title of this document is "My
 home page" and that it uses the UTF-8 encoding, which is a way to
 encode Unicode text as binary data. The document's body contains a
-heading (`<h1>`, meaning "heading 1"—`<h2>` to `<h6>` produce more
-minor headings) and two ((paragraph))s (`<p>`).
+heading (`<h1>`, meaning "heading 1"—`<h2>` to `<h6>` produce
+subheadings) and two ((paragraph))s (`<p>`).
 
 {{index "href attribute", "a (HTML tag)"}}
 
@@ -247,14 +249,14 @@ even though they have a special meaning in HTML, yet another form of
 special notation has to be introduced. A plain opening angle bracket
 is written as `&lt;` ("less than"), and a closing bracket is written
 as `&gt;` ("greater than"). In HTML, an ampersand (`&`) character
-followed by a word and a semicolon (`;`) is called an _((entity))_,
+followed by a name or character code and a semicolon (`;`) is called an _((entity))_
 and will be replaced by the character it encodes.
 
 {{index "backslash character", "ampersand character", "double-quote character"}}
 
 This is analogous to the way backslashes are used in JavaScript
 strings. Since this mechanism gives ampersand characters a special
-meaning, too, those need to be escaped as `&amp;`. Inside attribute
+meaning, too, they need to be escaped as `&amp;`. Inside attribute
 values, which are wrapped in double quotes, `&quot;` can be used to
 insert an actual quote character.
 
@@ -282,7 +284,7 @@ The following document will be treated just like the one shown previously:
 {{index "title (HTML tag)", "head (HTML tag)", "body (HTML tag)", "html (HTML tag)"}}
 
 The `<html>`, `<head>`, and `<body>` tags are gone completely. The
-browser knows the `<meta>` and `<title>` belong in the head, and that
+browser knows that `<meta>` and `<title>` belong in the head and that
 `<h1>` means the body has started. Furthermore, I am no longer
 explicitly closing the paragraphs since opening a new paragraph or
 ending the document will close them implicitly. The quotes around the
@@ -298,7 +300,7 @@ I will also usually omit the ((doctype)) and `charset` declaration.
 This is not to be taken as an encouragement to drop these from HTML
 documents. Browsers will often do ridiculous things when you forget
 them. You should consider the doctype and the `charset` metadata
-implicitly present in examples, even when they are not actually shown
+to be implicitly present in examples, even when they are not actually shown
 in the text.
 
 {{id script_tag}}
@@ -326,8 +328,7 @@ little window, but only shows a message without asking for input.
 {{index "src attribute"}}
 
 Including large programs directly in HTML documents is often
-impractical. The `<script>` tag can be given an `src` attribute in
-order to fetch a script file (a text file containing a JavaScript
+impractical. The `<script>` tag can be given an `src` attribute  to fetch a script file (a text file containing a JavaScript
 program) from a URL.
 
 ```{lang: "text/html"}
@@ -337,7 +338,7 @@ program) from a URL.
 
 The _code/hello.js_ file included here contains the same
 program—`alert("hello!")`. When an HTML page references other URLs as
-part of itself, for example an image file or a script—web browsers
+part of itself—for example, an image file or a script—web browsers
 will retrieve them immediately and include them in the page.
 
 {{index "script (HTML tag)", "closing tag"}}
@@ -391,7 +392,7 @@ web page it was embedded in.
 Isolating a programming environment in this way is called
 _((sandbox))ing_, the idea being that the program is harmlessly
 playing in a sandbox. But you should imagine this particular kind of
-sandbox as having a cage of thick steel bars over it, so that the
+sandbox as having a cage of thick steel bars over it so that the
 programs playing in it can't actually get out.
 
 The hard part of sandboxing is allowing the programs enough room to be
@@ -415,12 +416,12 @@ government agency or ((mafia)).
 {{index Microsoft, "World Wide Web"}}
 
 In the early stages of the Web, a browser called ((Mosaic)) dominated
-the market. After a few years, the balance had shifted to
+the market. After a few years, the balance shifted to
 ((Netscape)), which was then, in turn, largely supplanted by
 Microsoft's ((Internet Explorer)). At any point where a single
 ((browser)) was dominant, that browser's vendor would feel entitled to
 unilaterally invent new features for the Web. Since most users used
-the same browser, ((website))s would simply start using those
+the most popular browser, ((website))s would simply start using those
 features—never mind the other browsers.
 
 This was the dark age of ((compatibility)), often called the

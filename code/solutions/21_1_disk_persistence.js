@@ -23,3 +23,6 @@ SkillShareServer.prototype.updated = function() {
 
   writeFile(fileName, JSON.stringify(this.talks));
 };
+
+// The line that starts the server must be changed to
+new SkillShareServer(loadTalks()).start(8000);

@@ -11,6 +11,8 @@ quote}}
 
 {{index "Abelson, Hal", "Sussman, Gerald", SICP, "project chapter"}}
 
+{{figure {url: "img/chapter_picture_12.jpg", alt: "Picture of an egg with smaller eggs inside", chapter: "framed"}}}
+
 Building your own ((programming language)) is surprisingly easy (as
 long as you do not aim too high) and very enlightening.
 
@@ -52,7 +54,7 @@ To keep the parser simple, strings in Egg do not support anything like
 backslash escapes. A string is simply a sequence of characters that
 are not double quotes, wrapped in double quotes. A number is a
 sequence of digits. Binding names can consist of any character that is
-not ((whitespace)) and does not have a special meaning in the syntax.
+not ((whitespace)) and that does not have a special meaning in the syntax.
 
 {{index "comma character"}}
 
@@ -90,7 +92,7 @@ represent. Expressions of type `"word"` are used for identifiers
 (names). Such objects have a `name` property that holds the
 identifier's name as a string. Finally, `"apply"` expressions
 represent applications. They have an `operator` property that refers
-to the expression that is being applied, and an `args` property that
+to the expression that is being applied, as well as an `args` property that
 holds an array of argument expressions.
 
 The `>(x, 5)` part of the previous program would be represented like this:
@@ -157,7 +159,7 @@ function parseExpression(program) {
     expr = {type: "value", value: match[1]};
   } else if (match = /^\d+\b/.exec(program)) {
     expr = {type: "value", value: Number(match[0])};
-  } else if (match = /^[^\s(),"]+/.exec(program)) {
+  } else if (match = /^[^\s(),#"]+/.exec(program)) {
     expr = {type: "word", name: match[0]};
   } else {
     throw new SyntaxError("Unexpected syntax: " + program);
@@ -188,7 +190,7 @@ supports: strings, numbers, and words. The parser constructs a
 different kind of data structure depending on which one matches. If
 the input does not match one of these three forms, it is not a valid
 expression, and the parser throws an error. We use `SyntaxError`
-instead of `Error` as exception constructor, which is another standard
+instead of `Error` as the exception constructor, which is another standard
 error type, because it is a little more specific—it is also the error
 type thrown when an attempt is made to run an invalid JavaScript
 program.
@@ -373,7 +375,7 @@ the first, and if the result isn't the value `false`, it will evaluate
 the second. Otherwise, the third gets evaluated. This `if` form is
 more similar to JavaScript's ternary `?:` operator than to
 JavaScript's `if`. It is an expression, not a statement, and it
-produces a value, namely the result of the second or third argument.
+produces a value, namely, the result of the second or third argument.
 
 {{index Boolean}}
 
@@ -452,7 +454,7 @@ represent the ((global scope)).
 To be able to use the `if` construct we just defined, we must have
 access to ((Boolean)) values. Since there are only two Boolean values,
 we do not need special syntax for them. We simply bind two names to
-the values `true` and `false` and use those.
+the values `true` and `false` and use them.
 
 ```{includeCode: true}
 const topScope = Object.create(null);
@@ -474,7 +476,7 @@ console.log(evaluate(prog, topScope));
 To supply basic ((arithmetic)) and ((comparison)) ((operator))s, we
 will also add some function values to the ((scope)). In the interest
 of keeping the code short, we'll use `Function` to synthesize a bunch
-of operator functions in a loop, rather than defining them
+of operator functions in a loop, instead of defining them
 individually.
 
 ```{includeCode: true}
@@ -483,7 +485,7 @@ for (let op of ["+", "-", "*", "/", "==", "<", ">"]) {
 }
 ```
 
-A way to ((output)) values is also very useful, so we'll wrap
+A way to ((output)) values is also useful, so we'll wrap
 `console.log` in a function and call it `print`.
 
 ```{includeCode: true}
@@ -497,7 +499,7 @@ topScope.print = value => {
 
 That gives us enough elementary tools to write simple programs. The
 following function provides a convenient way to parse a program and
-run it in a fresh scope.
+run it in a fresh scope:
 
 ```{includeCode: true}
 function run(program) {
@@ -507,7 +509,7 @@ function run(program) {
 
 {{index "Object.create function", prototype}}
 
-We'll use object prototype chains to represent nested scopes, so that
+We'll use object prototype chains to represent nested scopes so that
 the program can add bindings to its local scope without changing the
 top-level scope.
 
@@ -641,7 +643,7 @@ values.
 If you compare the implementation of Egg, built on top of JavaScript,
 with the amount of work and complexity required to build a programming
 language directly on the raw functionality provided by a machine, the
-difference is huge. Regardless, this example hopefully gave you an
+difference is huge. Regardless, this example ideally gave you an
 impression of the way ((programming language))s work.
 
 And when it comes to getting something done, cheating is more
@@ -743,7 +745,7 @@ hint}}
 
 {{index closure, [function, scope], "closure in egg (exercise)"}}
 
-The way we have defined `fun` allows functions in Egg to "close over"
+The way we have defined `fun` allows functions in Egg to reference
 the surrounding scope, allowing the function's body to use local
 values that were visible at the time the function was defined, just
 like JavaScript functions do.
@@ -771,7 +773,7 @@ mechanism causes this to work.
 Again, we are riding along on a JavaScript mechanism to get the
 equivalent feature in Egg. Special forms are passed the local scope in
 which they are evaluated so that they can evaluate their subforms in
-that scope. The function returned by `fun` closes over the `scope`
+that scope. The function returned by `fun` has access to the `scope`
 argument given to its enclosing function and uses that to create the
 function's local ((scope)) when it is called.
 
@@ -894,7 +896,7 @@ if}}
 {{index [binding, definition], assignment, "getPrototypeOf function", "hasOwnProperty method", "fixing scope (exercise)"}}
 
 You will have to loop through one ((scope)) at a time, using
-`Object.getPrototypeOf` to go the next outer scope. For each scope,
+`Object.getPrototypeOf` to go to the next outer scope. For each scope,
 use `hasOwnProperty` to find out whether the binding, indicated by the
 `name` property of the first argument to `set`, exists in that scope.
 If it does, set it to the result of evaluating the second argument to

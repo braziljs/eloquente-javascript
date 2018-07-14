@@ -10,17 +10,17 @@
   },
   "dependencies": {
     "acorn": "^5.1.0",
-    "codemirror": "^5.25.0",
+    "codemirror": "^5.37.0",
     "hjson": "^3.1.0",
     "jszip": "^2.5.0",
     "markdown-it": "^8.4.0",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
+    "mime": "^2.3.1",
     "mold-template": "^2.0.1",
     "uglify-js": "^2.0.0"
   },
   "devDependencies": {
-    "canvas": "^1.6.7",
     "jsdom": "^11.2.0",
     "promise": "^8.0.1"
   },

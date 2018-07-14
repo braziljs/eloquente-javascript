@@ -209,8 +209,6 @@ function report(err) {
   console.log("error raised (" + _console.pos + "): " + msg, err.stack)
 }
 
-require("canvas/lib/context2d").prototype.drawImage = function() {}
-
 // Gruesome kludgery to make the node chapter tests run
 
 let fakeFS = {}

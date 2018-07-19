@@ -1,4 +1,4 @@
-a{{meta {load_files: ["code/chapter/19_paint.js"], zip: "html include=[\"css/paint.css\"]"}}}
+{{meta {load_files: ["code/chapter/19_paint.js"], zip: "html include=[\"css/paint.css\"]"}}}
 
 # Projeto: Um Editor de Pixel Art
 

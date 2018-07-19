@@ -13,17 +13,17 @@ quote}}
 
 O material do capítulo anterior te dá todo os elementos que você precisa para construir uma ((aplicação web)) simples. Nesse capítulo, nós vamos fazer exatamente isso.
 
-Nossa ((aplicação)) será um programa de ((desenho)) em ((pixel)), onde você pode modificar uma imagem pixel a pixel manipulando uma visão ampliada, uma grid de quadrados coloridos. Você pode usá-la para abrir ((aquivo))s de imagem, rabiscar sobre com o mouse e salvá-la. é assim como vai ficar:
+Nossa ((aplicação)) será um programa de ((desenho)) em ((pixel)), onde você pode modificar uma imagem pixel a pixel manipulando uma visão ampliada, uma grid de quadrados coloridos. Você pode usá-la para abrir ((aquivo))s de imagem, rabiscar sobre com o mouse e salvá-la. É assim como vai ficar:
 
 {{figure {url: "img/pixel_editor.png", alt: "A interface do editor de pixels, com pixels coloridos na parte superior e controles na parte inferior", width: "8cm"}}}
 
-Pintar pelo computador é ótimo. Você não tem uqe se preocupar com materiais, ((habilidades)), ou talento. Você apenas precisa começar a manchar.
+Pintar pelo computador é ótimo. Você não tem que se preocupar com materiais, ((habilidades)), ou talento. Você apenas precisa começar a manchar.
 
 ## Componentes
 
 {{index drawing, "select (HTML tag)", "canvas (HTML tag)", component}}
 
-A interface para a aplicação mostra um grande elemento `<canvas>` na parte superior, com uma série de ((campos)) do formulário abaixo dele. O usuário desenha na ((imagem)) ao selecionar uma ferramenta de um campo `<select>` e em seguida ((clicando)), ((tocando)), ou ((arrastando)) em toda a tela. Existem ((ferramenta))s para desenhar um pixel unico ou retangulos, para preencher uma área, e para escolher uma ((cor)) da imagem.
+A interface para a aplicação mostra um grande elemento `<canvas>` na parte superior, com uma série de ((campos)) do formulário abaixo dele. O usuário desenha na ((imagem)) ao selecionar uma ferramenta de um campo `<select>` e em seguida ((clicando)), ((tocando)), ou ((arrastando)) em toda a tela. Existem ((ferramenta))s para desenhar um pixel unico ou retângulos, para preencher uma área, e para escolher uma ((cor)) da imagem.
 
 Nós vamos estruturar a interface do editor com _((componente))s_, objetos que são responsáveis por uma parte do ((DOM)), e que pode conter outros componentes dentro deles.
 

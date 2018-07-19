@@ -26,10 +26,10 @@ class Talk {
         }
       }, elt("input", {type: "text", name: "comment"}), " ",
           elt("button", {type: "submit"}, "Add comment")));
-    this.setState(talk);
+    this.syncState(talk);
   }
 
-  setState(talk) {
+  syncState(talk) {
     this.talk = talk;
     this.comments.textContent = "";
     for (let comment of talk.comments) {
@@ -47,10 +47,10 @@ class SkillShareApp {
                    renderUserField(state.user, dispatch),
                    this.talkDOM,
                    renderTalkForm(dispatch));
-    this.setState(state);
+    this.syncState(state);
   }
 
-  setState(state) {
+  syncState(state) {
     if (state.talks == this.talks) return;
     this.talks = state.talks;
 
@@ -58,7 +58,7 @@ class SkillShareApp {
       let cmp = this.talkMap[talk.title];
       if (cmp && cmp.talk.author == talk.author &&
           cmp.talk.summary == talk.summary) {
-        cmp.setState(talk);
+        cmp.syncState(talk);
       } else {
         if (cmp) cmp.dom.remove();
         cmp = new Talk(talk, this.dispatch);

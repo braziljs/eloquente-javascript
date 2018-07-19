@@ -53,7 +53,7 @@
         }
 
         state = state.update(time, arrowKeys);
-        display.setState(state);
+        display.syncState(state);
         if (state.status == "playing") {
           return true;
         } else if (ending > 0) {

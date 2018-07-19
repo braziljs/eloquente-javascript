@@ -11,17 +11,19 @@ portion devoted to logic, order, rule, and clarity.
 
 quote}}
 
+{{figure {url: "img/chapter_picture_00.jpg", alt: "Picture of a screwdriver and a circuit board", chapter: "framed"}}}
+
 This is a book about instructing ((computer))s. Computers are about as
 common as screwdrivers today, but they are quite a bit more complex,
-and making them do the things you want them to do isn't always easy.
+and making them do what you want them to do isn't always easy.
 
 If the task you have for your computer is a common, well-understood
 one, such as showing you your email or acting like a calculator, you
 can open the appropriate ((application)) and get to work. But for
-unique or open-ended tasks, there may not be an application.
+unique or open-ended tasks, there probably is no application.
 
 That is where ((programming)) may come in. _Programming_ is the act of
-constructing a _program_—a set of precise instructions that tell a
+constructing a _program_—a set of precise instructions telling a
 computer what to do. Because computers are dumb, pedantic beasts,
 programming is fundamentally tedious and frustrating.
 
@@ -29,8 +31,8 @@ programming is fundamentally tedious and frustrating.
 
 Fortunately, if you can get over that fact, and maybe even enjoy the rigor
 of thinking in terms that dumb machines can deal with, programming can
-be very rewarding. It allows you to do things that would take
-_forever_ by hand, in seconds. It is a way to make your computer tool
+be rewarding. It allows you to do things in seconds that would take
+_forever_ by hand. It is a way to make your computer tool
 do things that it couldn't do before. And it provides a wonderful
 exercise in abstract thinking.
 
@@ -45,8 +47,8 @@ express ever new concepts.
 {{index [JavaScript, "availability of"], "casual computing"}}
 
 At one point language-based interfaces, such as the BASIC and DOS
-prompts of the 80s and 90s, were the main method of interacting with
-computers. Those have largely been replaced with visual interfaces,
+prompts of the 1980s and 1990s, were the main method of interacting with
+computers. They have largely been replaced with visual interfaces,
 which are easier to learn but offer less freedom. Computer languages
 are still there, if you know where to look. One such language,
 JavaScript, is built into every modern web ((browser)) and is thus
@@ -61,7 +63,7 @@ do useful and amusing things with it.
 
 {{index [programming, "difficulty of"]}}
 
-Besides explaining JavaScript, I will also introduce the basic
+Besides explaining JavaScript, I will introduce the basic
 principles of programming. Programming, it turns out, is hard. The
 fundamental rules are simple and clear, but programs built on top of
 these rules tend to become complex enough to introduce their own rules
@@ -80,7 +82,7 @@ to follow the book, do not jump to any conclusions about your own
 capabilities. You are fine—you just need to keep at it. Take a break,
 reread some material, and make sure you read and understand the
 example programs and ((exercises)). Learning is hard work, but
-everything you learn is yours, and will make subsequent learning
+everything you learn is yours and will make subsequent learning
 easier.
 
 {{quote {author: "Ursula K. Le Guin", title: "The Left Hand of Darkness"}
@@ -108,7 +110,7 @@ A ((computer)) is a physical machine that acts as a host for these immaterial
 machines. Computers themselves can do only stupidly straightforward
 things. The reason they are so useful is that they do these things at
 an incredibly high ((speed)). A program can ingeniously combine an
-enormous number of these simple actions in order to do very
+enormous number of these simple actions to do very
 complicated things.
 
 {{index [programming, "joy of"]}}
@@ -128,14 +130,14 @@ its complexity.
 Some programmers believe that this complexity is best managed by using
 only a small set of well-understood techniques in their programs. They
 have composed strict rules ("best practices") prescribing the form
-programs should have, and carefully stay within their safe little
+programs should have and carefully stay within their safe little
 zone.
 
 {{index experiment}}
 
-This is not only boring, it is also ineffective. New problems often
+This is not only boring, it is ineffective. New problems often
 require new solutions. The field of programming is young and still
-developing rapidly, and is varied enough to have room for wildly
+developing rapidly, and it is varied enough to have room for wildly
 different approaches. There are many terrible mistakes to make in
 program design, and you should go ahead and make them so that you
 understand them. A sense of what a good program looks like is
@@ -198,7 +200,7 @@ could be written in English like this:
 
 Although that is already more readable than the soup of bits, it is
 still rather obscure. Using names instead of numbers for the
-instructions and memory locations helps:
+instructions and memory locations helps.
 
 ```{lang: "text/plain"}
  Set “total” to 0.
@@ -221,7 +223,7 @@ give two memory locations their starting values: `total` will be used
 to build up the result of the computation, and `count` will keep track
 of the number that we are currently looking at. The lines using
 `compare` are probably the weirdest ones. The program wants to see
-whether `count` is equal to 11 in order to decide whether it can stop
+whether `count` is equal to 11 to decide whether it can stop
 running. Because our hypothetical machine is rather primitive, it can
 only test whether a number is zero and make a decision based
 on that. So it uses the memory location labeled `compare` to compute
@@ -242,9 +244,9 @@ console.log(total);
 // → 55
 ```
 
-{{index "while loop", loop, "curly braces"}}
+{{index "while loop", loop, braces}}
 
-This version gives us a few more improvements. Most importantly, there
+This version gives us a few more improvements. Most important, there
 is no need to specify the way we want the program to jump back and
 forth anymore. The `while` construct takes care of that. It continues
 executing the block (wrapped in braces) below it as long as the
@@ -317,7 +319,7 @@ ride along on this success. Now we are stuck with the name.
 {{index ECMAScript, compatibility}}
 
 After its adoption outside of Netscape, a ((standard)) document was
-written to describe the way the JavaScript language should work, so
+written to describe the way the JavaScript language should work so
 that the various pieces of software that claimed to support JavaScript
 were actually talking about the same language. This is called the
 ECMAScript standard, after the Ecma International organization that
@@ -357,13 +359,13 @@ underway on an ambitious version 4, which planned a number of radical
 improvements and extensions to the language. Changing a living, widely
 used language in such a radical way turned out to be politically
 difficult, and work on the version 4 was abandoned in 2008, leading to
-a much less ambitious version 5, which only made some uncontroversial
+a much less ambitious version 5, which made only some uncontroversial
 improvements, coming out in 2009. Then in 2015 version 6 came out, a
 major update that included some of the ideas planned for version 4.
 Since then we've had new, small updates every year.
 
 The fact that the language is evolving means that browsers have to
-constantly keep up, and if you're using an older one, it may not
+constantly keep up, and if you're using an older browser, it may not
 support every feature. The language designers are careful to not make
 any changes that could break existing programs, so new browsers can
 still run old programs. In this book, I'm using the 2017 version of
@@ -411,10 +413,10 @@ if}}
 
 The easiest way to run the example code in the book, and to experiment
 with it, is to look it up in the online version of the book at
-[_eloquentjavascript.net_](https://eloquentjavascript.net/). There,
+[_https://eloquentjavascript.net_](https://eloquentjavascript.net/). There,
 you can click any code example to edit and run it and to see the
 output it produces. To work on the exercises, go to
-[_eloquentjavascript.net/code_](https://eloquentjavascript.net/code),
+[_https://eloquentjavascript.net/code_](https://eloquentjavascript.net/code),
 which provides starting code for each coding exercise and allows you
 to look at the solutions.
 
@@ -436,7 +438,7 @@ necessary to run the code for a given chapter.
 ## Overview of this book
 
 This book contains roughly three parts. The first 12 chapters discuss
-the JavaScript language itself. The next seven chapters are about web
+the JavaScript language. The next seven chapters are about web
 ((browsers)) and the way JavaScript is used to program them. Finally,
 two chapters are devoted to ((Node.js)), another environment to
 program JavaScript in.
@@ -489,7 +491,7 @@ if}}
 In this book, text written in a `monospaced` font will represent
 elements of programs—sometimes they are self-sufficient fragments, and
 sometimes they just refer to part of a nearby program. Programs (of
-which you have already seen a few), are written as follows:
+which you have already seen a few) are written as follows:
 
 ```
 function factorial(n) {
@@ -503,7 +505,7 @@ function factorial(n) {
 
 {{index "console.log"}}
 
-Sometimes, in order to show the output that a program produces, the
+Sometimes, to show the output that a program produces, the
 expected output is written after it, with two slashes and an arrow in
 front.
 

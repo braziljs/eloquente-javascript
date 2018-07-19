@@ -13,14 +13,14 @@ quote}}
 
 {{index "Babbage, Charles"}}
 
-{{figure {url: "img/chapter_picture_4.jpg", alt: "A weresquirrel", chapter: framed}}}
+{{figure {url: "img/chapter_picture_4.jpg", alt: "Picture of a weresquirrel", chapter: framed}}}
 
 {{index object, "data structure"}}
 
 Numbers, Booleans, and strings are the atoms that ((data)) structures
 are built from. Many types of information require more than one
 atom, though. _Objects_ allow us to group values—including other
-objects—together to build more complex structures.
+objects—to build more complex structures.
 
 The programs we have built so far have been limited by the fact that
 they were operating only on simple data types. This chapter will
@@ -35,7 +35,7 @@ introduced earlier in the text.
 {{if book
 
 The online coding ((sandbox)) for the book
-([_eloquentjavascript.net/code_](https://eloquentjavascript.net/code))
+([_https://eloquentjavascript.net/code_](https://eloquentjavascript.net/code))
 provides a way to run code in the context of a specific chapter. If
 you decide to work through the examples in another environment, be
 sure to first download the full code for this chapter from the sandbox
@@ -47,7 +47,7 @@ if}}
 
 {{index "weresquirrel example", lycanthropy}}
 
-Every now and then, usually between eight and ten in the evening,
+Every now and then, usually between 8 p.m. and 10 p.m.,
 ((Jacques)) finds himself transforming into a small furry rodent with
 a bushy tail.
 
@@ -121,7 +121,7 @@ _((index))_ given by the expression in the brackets.
 
 The first index of an array is zero, not one. So the first element is
 retrieved with `listOfNumbers[0]`. Zero-based counting has a long
-tradition in technology, and in certain ways makes a lot of sense, but
+tradition in technology and in certain ways makes a lot of sense, but
 it takes some getting used to. Think of the index as the amount of
 items to skip, counting from the start of the array.
 
@@ -153,7 +153,7 @@ null.length;
 {{indexsee "dot character", "period character"}}
 {{index "[] (subscript)", "period character", "square brackets", "computed property"}}
 
-The two typical ways to access properties in JavaScript are with a dot
+The two main ways to access properties in JavaScript are with a dot
 and with square brackets. Both `value.x` and `value[x]` access a
 ((property)) on `value`—but not necessarily the same property. The
 difference is in how `x` is interpreted. When using a dot, the word
@@ -161,19 +161,19 @@ after the dot is the literal name of the property. When using square
 brackets, the expression between the brackets is _evaluated_ to get
 the property name. Whereas `value.x` fetches the property of `value`
 named "x", `value[x]` tries to evaluate the expression `x` and uses
-the result as the property name.
+the result, converted to a string, as the property name.
 
 So if you know that the property you are interested in is called
-"name", you say `value.name`. If you want to extract the property
+_color_, you say `value.color`. If you want to extract the property
 named by the value held in the binding `i`, you say `value[i]`.
-Property names can be any string, but the dot notation only works with
+Property names are strings. They can be any string, but the dot notation works only with
 names that look like valid binding names. So if you want to access a
-property named "2" or "John Doe", you must use square brackets:
+property named _2_ or _John Doe_, you must use square brackets:
 `value[2]` or `value["John Doe"]`.
 
 The elements in an ((array)) are stored as the array's properties, using
 numbers as property names. Because you can't use the dot notation with
-numbers, and usually want to use a binding that holds the index
+numbers and usually want to use a binding that holds the index
 anyway, you have to use the bracket notation to get at them.
 
 {{index ["length property", "for array"], [array, "length of"]}}
@@ -214,7 +214,7 @@ value whose property we called. How this works is described in
 [Chapter ?](object#obj_methods).
 
 Properties that contain functions are generally called _methods_ of
-the value they belong to. As in, "`toUpperCase` is a method of a
+the value they belong to, as in "`toUpperCase` is a method of a
 string".
 
 {{id array_methods}}
@@ -243,7 +243,7 @@ and returning it.
 These somewhat silly names are the traditional terms for operations on
 a _((stack))_. A stack, in programming, is a ((data structure)) that
 allows you to push values into it and pop them out again in the
-opposite order, so the thing that was added last is removed first.
+opposite order so that the thing that was added last is removed first.
 These are common in programming—you might remember the function ((call
 stack)) from [the previous chapter](functions#stack), which is an
 instance of the same idea.
@@ -259,10 +259,10 @@ a Boolean value that indicates whether Jacques turned into a squirrel
 or not. Ideally, we would like to group these together into a single
 value and then put those grouped values into an array of log entries.
 
-{{index syntax, property, "curly braces", "{} (object)"}}
+{{index syntax, property, braces, "{} (object)"}}
 
 Values of the type _((object))_ are arbitrary collections of
-properties. One way to create an object is by using curly braces as an
+properties. One way to create an object is by using braces as an
 expression.
 
 ```
@@ -284,7 +284,7 @@ console.log(day1.wolf);
 Inside the braces, there is a list of properties separated by commas.
 Each property has a name followed by a colon and a value. When an
 object is written over multiple lines, indenting it like in the
-example helps with readability. Properties whose names are not valid
+example helps with readability. Properties whose names aren't valid
 binding names or valid numbers have to be quoted.
 
 ```
@@ -294,10 +294,10 @@ let descriptions = {
 };
 ```
 
-This means that ((curly braces)) have _two_ meanings in JavaScript. At
+This means that ((braces)) have _two_ meanings in JavaScript. At
 the start of a ((statement)), they start a ((block)) of statements. In
 any other position, they describe an object. Fortunately, it is rarely
-useful to start a statement with a curly-brace object, so the
+useful to start a statement with an object in braces, so the
 ambiguity between these two is not much of a problem.
 
 {{index undefined}}
@@ -322,7 +322,7 @@ name tattooed on it.
 {{index "delete operator", [property, deletion]}}
 
 The `delete` operator cuts off a tentacle from such an octopus. It is
-a unary operator that, when applied to a property access expression,
+a unary operator that, when applied to an object property,
 will remove the named property from the object. This is not a common
 thing to do, but it is possible.
 
@@ -342,7 +342,7 @@ console.log("right" in anObject);
 {{index "in operator", [property, "testing for"], object}}
 
 The binary `in` operator, when applied to a string and an object,
-tells you whether that object has that property. The difference
+tells you whether that object has a property with that name. The difference
 between setting a property to `undefined` and actually deleting it is
 that, in the first case, the object still _has_ the property (it just
 doesn't have a very interesting value), whereas in the second case the
@@ -374,11 +374,11 @@ console.log(objectA);
 Arrays, then, are just a kind of object specialized for storing
 sequences of things. If you evaluate `typeof []`, it produces
 `"object"`. You can see them as long, flat octopuses with all their
-arms in a neat row, labeled with numbers.
+tentacles in a neat row, labeled with numbers.
 
 {{index journal, "weresquirrel example"}}
 
-We will represent Jacques' journal as an array of objects.
+We will represent the journal that Jacques keeps as an array of objects.
 
 ```{test: wrap}
 let journal = [
@@ -411,8 +411,8 @@ same. The text inside it cannot be changed. If you have a string that
 contains `"cat"`, it is not possible for other code to change a
 character in your string to make it spell `"rat"`.
 
-The content of an object value _can_ be modified, by changing its
-properties.
+Objects work differently. You _can_ change their properties,
+causing a single object value to have different content at different times.
 
 {{index [object, identity], identity, memory, mutability}}
 
@@ -441,35 +441,44 @@ console.log(object3.value);
 
 {{index "tentacle (analogy)", [binding, "model of"]}}
 
-The `object1` and `object2` bindings grasp the _same_ object, which
-is why changing `object1` also changes the value of `object2`. The
-binding `object3` points to a different object, which initially
-contains the same properties as `object1` but lives a separate life.
+The `object1` and `object2` bindings grasp the _same_ object, which is
+why changing `object1` also changes the value of `object2`. They are
+said to have the same _identity_. The binding `object3` points to a
+different object, which initially contains the same properties as
+`object1` but lives a separate life.
 
 {{index "const keyword", "let keyword"}}
 
 Bindings can also be changeable or constant, but this is separate from
 the way their values behave. Even though number values don't change,
 you can use a `let` ((binding)) to keep track of a changing number by
-changing the value it points at. Similarly, though a `const` binding
-to an object can itself not be changed and will continue to point at
-the same object, the _contents_ of that object might change.
+changing the value the binding points at. Similarly, though a `const`
+binding to an object can itself not be changed and will continue to
+point at the same object, the _contents_ of that object might change.
+
+```{test: no}
+const score = {visitors: 0, home: 0};
+// This is okay
+score.visitors = 1;
+// This isn't allowed
+score = {visitors: 1, home: 1};
+```
 
 {{index "== operator", [comparison, "of objects"], "deep comparison"}}
 
-When you compare objects with JavaScript's `==` operator it will
-produce `true` only if both objects are precisely the same value.
-Comparing different objects will return `false`, even if they have
-identical properties. There is no "deep" comparison operation built
-into JavaScript, which compares objects by contents, but it is
-possible to write it yourself (which will be one of the
+When you compare objects with JavaScript's `==` operator, it compares
+by identity: it will produce `true` only if both objects are precisely
+the same value. Comparing different objects will return `false`, even
+if they have identical properties. There is no "deep" comparison
+operation built into JavaScript, which compares objects by contents,
+but it is possible to write it yourself (which is one of the
 [exercises](data#exercise_deep_compare) at the end of this chapter).
 
 ## The lycanthrope's log
 
 {{index "weresquirrel example", lycanthropy, "addEntry function"}}
 
-So Jacques starts up his JavaScript interpreter and sets up the
+So, Jacques starts up his JavaScript interpreter and sets up the
 environment he needs to keep his ((journal)).
 
 ```{includeCode: true}
@@ -480,15 +489,15 @@ function addEntry(events, squirrel) {
 }
 ```
 
-{{index "curly braces", "{} (object)"}}
+{{index braces, "{} (object)"}}
 
 Note that the object added to the journal looks a little odd. Instead
 of declaring properties like `events: events`, it just gives a
-((property)) name. This is a short-hand that means the same thing—if a
-property name in curly brace notation isn't followed by a value, its
+((property)) name. This is shorthand that means the same thing—if a
+property name in brace notation isn't followed by a value, its
 value is taken from the binding with the same name.
 
-So then, every evening at ten—or sometimes the next morning, after
+So then, every evening at 10 p.m.—or sometimes the next morning, after
 climbing down from the top shelf of his bookcase—Jacques records the
 day.
 
@@ -521,7 +530,7 @@ opposites—when one is true, the other is false.
 
 To compute the measure of correlation between two Boolean variables,
 we can use the _phi coefficient_ (_ϕ_). This is a formula whose input
-is a ((frequency table)) containing the amount of times the different
+is a ((frequency table)) containing the number of times the different
 combinations of the variables were observed. The output of the formula
 is a number between -1 and 1 that describes the correlation.
 
@@ -558,8 +567,8 @@ if}}
 
 (If at this point you're putting the book down to focus on a terrible
 flashback to 10th grade math class—hold on! I do not intend to torture
-you with endless pages of cryptic notation—just this one formula for
-now. And even with that one, all we do is turn it into JavaScript.)
+you with endless pages of cryptic notation—it's just this one formula for
+now. And even with this one, all we do is turn it into JavaScript.)
 
 The notation [_n_~01~]{if html}[[$n_{01}$]{latex}]{if tex} indicates
 the number of measurements where the first variable (squirrelness) is
@@ -633,8 +642,8 @@ columns are not stored directly in our data structure.
 Jacques kept his journal for three months. The resulting ((data set))
 is available in the [coding
 sandbox](https://eloquentjavascript.net/code#4) for this chapter[
-([_eloquentjavascript.net/code#4_](https://eloquentjavascript.net/code#4))]{if
-book}, where it is stored in the `JOURNAL` binding, and in a
+([_https://eloquentjavascript.net/code#4_](https://eloquentjavascript.net/code#4))]{if
+book}, where it is stored in the `JOURNAL` binding and in a
 downloadable
 [file](https://eloquentjavascript.net/code/journal.js).
 
@@ -711,7 +720,7 @@ for (let entry of JOURNAL) {
 
 When a `for` loop looks like this, with the word `of` after a variable
 definition, it will loop over the elements of the value given after
-`of`. This works not only for arrays, but also for strings and some
+`of`. This works not only for arrays but also for strings and some
 other data structures. We'll discuss _how_ it works in [Chapter
 ?](object).
 
@@ -744,7 +753,7 @@ console.log(journalEvents(JOURNAL));
 // → ["carrot", "exercise", "weekend", "bread", …]
 ```
 
-By going over all the events, and adding those that aren't already in
+By going over all the events and adding those that aren't already in
 there to the `events` array, the function collects every type of
 event.
 
@@ -783,14 +792,14 @@ for (let event of journalEvents(JOURNAL)) {
 // → peanuts:        0.5902679812
 ```
 
-A-ha! There are two factors whose ((correlation)) is clearly stronger
+Aha! There are two factors with a ((correlation)) that's clearly stronger
 than the others. Eating ((peanuts)) has a strong positive effect on
 the chance of turning into a squirrel, whereas brushing his teeth has
 a significant negative effect.
 
 Interesting. Let's try something.
 
-```{includeCode: strip_log}
+```
 for (let entry of JOURNAL) {
   if (entry.events.includes("peanuts") &&
      !entry.events.includes("brushed teeth")) {
@@ -826,7 +835,7 @@ vanishes into the forest. He is never seen again.
 {{index [array, methods], method}}
 
 Before finishing the chapter, I want to introduce you to a few more
-object-related concepts. We'll start by introducing some generally
+object-related concepts. I'll start by introducing some generally
 useful array methods.
 
 {{index "push method", "pop method", "shift method", "unshift method"}}
@@ -859,8 +868,8 @@ adds it to the front instead of the back of the queue.
 
 {{index [array, searching], "indexOf method", "lastIndexOf method"}}
 
-To search for a specific value, arrays provide an `indexOf` method. It
-goes through the array from the start to the end, and returns the
+To search for a specific value, arrays provide an `indexOf` method. The method
+searches through the array from the start to the end and returns the
 index at which the requested value was found—or -1 if it wasn't found.
 To search from the end instead of the start, there's a similar method
 called `lastIndexOf`.
@@ -897,8 +906,9 @@ entire array.
 {{index concatenation, "concat method"}}
 
 The `concat` method can be used to glue arrays together to create a
-new array, similar to what the `+` operator does for strings. The
-following example shows both `concat` and `slice` in action. It takes
+new array, similar to what the `+` operator does for strings.
+
+The following example shows both `concat` and `slice` in action. It takes
 an array and an index, and it returns a new array that is a copy of
 the original array with the element at the given index removed.
 
@@ -912,7 +922,7 @@ console.log(remove(["a", "b", "c", "d", "e"], 2));
 ```
 
 If you pass `concat` an argument that is not an array, that value will
-be added to the new array as if it was a one-element array.
+be added to the new array as if it were a one-element array.
 
 ## Strings and their properties
 
@@ -930,7 +940,7 @@ console.log(kim.age);
 
 Values of type string, number, and Boolean are not objects, and though
 the language doesn't complain if you try to set new properties on
-them, it doesn't actually store those properties. As mentioned before,
+them, it doesn't actually store those properties. As mentioned earlier,
 such values are immutable and cannot be changed.
 
 {{index [string, methods], "slice method", "indexOf method", [string, searching]}}
@@ -977,11 +987,13 @@ console.log(String(6).padStart(3, "0"));
 {{id split}}
 
 You can split a string on every occurrence of another string with
-`split`, and join it together again with `join`.
+`split` and join it again with `join`.
 
 ```
 let sentence = "Secretarybirds specialize in stomping";
 let words = sentence.split(" ");
+console.log(words);
+// → ["Secretarybirds", "specialize", "in", "stomping"]
 console.log(words.join(". "));
 // → Secretarybirds. specialize. in. stomping
 ```
@@ -1027,7 +1039,7 @@ is given.
 To write such a function, you put three dots before the function's
 last ((parameter)), like this:
 
-```
+```{includeCode: strip_log}
 function max(...numbers) {
   let result = -Infinity;
   for (let number of numbers) {
@@ -1042,7 +1054,7 @@ console.log(max(4, 1, 9, -2));
 When such a function is called, the _((rest parameter))_ is bound to
 an array containing all further arguments. If there are other
 parameters before it, their values aren't part of that array. When, as
-in `max`, it is the first parameter, it will hold all arguments.
+in `max`, it is the only parameter, it will hold all arguments.
 
 {{index "function application"}}
 
@@ -1062,7 +1074,7 @@ like that along with other arguments, as in `max(9, ...numbers, 2)`.
 {{index array, "square brackets"}}
 
 Square bracket array notation similarly allows the triple-dot operator
-to spread another array into the new array:
+to spread another array into the new array.
 
 ```
 let words = ["never", "fully"];
@@ -1074,7 +1086,7 @@ console.log(["will", ...words, "understand"]);
 
 {{index "Math object", "Math.min function", "Math.max function", "Math.sqrt function", minimum, maximum, "square root"}}
 
-As we've seen, `Math` is a grab-bag of number-related utility
+As we've seen, `Math` is a grab bag of number-related utility
 functions, such as `Math.max` (maximum), `Math.min` (minimum), and
 `Math.sqrt` (square root).
 
@@ -1101,7 +1113,7 @@ Since JavaScript's built-in `max` function is tucked safely inside the
 Many languages will stop you, or at least warn you, when you are
 defining a binding with a name that is already taken. JavaScript does
 this for bindings you declared with `let` or `const`
-but—perversely—not for standard bindings, nor for bindings declared
+but—perversely—not for standard bindings nor for bindings declared
 with `var` or `function`.
 
 {{index "Math.cos function", "Math.sin function", "Math.tan function", "Math.acos function", "Math.asin function", "Math.atan function", "Math.PI constant", cosine, sine, tangent, "PI constant", pi}}
@@ -1147,8 +1159,8 @@ console.log(Math.random());
 
 Though computers are deterministic machines—they always react the same
 way if given the same input—it is possible to have them produce
-numbers that appear random. To do this, the machine keeps some hidden
-value, and whenever you ask for a new random number, it'll perform
+numbers that appear random. To do that, the machine keeps some hidden
+value, and whenever you ask for a new random number, it performs
 complicated computations on this hidden value to create a new value.
 It stores a new value and returns some number derived from it. That
 way, it can produce ever new, hard-to-predict numbers in a way that
@@ -1166,7 +1178,7 @@ console.log(Math.floor(Math.random() * 10));
 ```
 
 Multiplying the random number by 10 gives us a number greater than or
-equal to zero and below 10. Since `Math.floor` rounds down, this
+equal to 0 and below 10. Since `Math.floor` rounds down, this
 expression will produce, with equal chance, any number from 0 through
 9.
 
@@ -1181,7 +1193,7 @@ negates negative values but leaves positive ones as they are.
 
 {{index "phi function"}}
 
-Let's go back to the `phi` function for a moment:
+Let's go back to the `phi` function for a moment.
 
 ```{test: wrap}
 function phi(table) {
@@ -1197,7 +1209,7 @@ function phi(table) {
 
 One of the reasons this function is awkward to read is that we have a
 binding pointing at our array, but we'd much prefer to have bindings
-for the _elements_ of the array. I.e. `let n00 = table[0]`, and so on.
+for the _elements_ of the array, that is, `let n00 = table[0]` and so on.
 Fortunately, there is a succinct way to do this in JavaScript.
 
 ```
@@ -1215,7 +1227,7 @@ This also works for ((binding))s created with `let`, `var`, or
 use ((square brackets)) to "look inside" of the value, binding its
 contents.
 
-{{index object, "curly braces"}}
+{{index object, braces}}
 
 A similar trick works for objects, using braces instead of square
 brackets.
@@ -1229,14 +1241,14 @@ console.log(name);
 {{index null, undefined}}
 
 Note that if you try to destructure `null` or `undefined`, you get an
-error, much like you would if you'd directly try to access a property
+error, much as you would if you directly try to access a property
 of those values.
 
 ## JSON
 
 {{index [array, representation], [object, representation], "data format"}}
 
-Because properties only grasp their value, rather than containing it,
+Because properties only grasp their value, rather than contain it,
 objects and arrays are stored in the computer's ((memory)) as
 sequences of bits holding the _((address))es_—the place in memory—of
 their contents. So an array with another array inside of it consists
@@ -1244,7 +1256,7 @@ of (at least) one memory region for the inner array, and another for
 the outer array, containing (among other things) a binary number that
 represents the position of the inner array.
 
-If you want to save data in a file for later, or send it to another
+If you want to save data in a file for later or send it to another
 computer over the network, you have to somehow convert these tangles
 of memory addresses to a description that can be stored or sent. You
 _could_ send over your entire computer memory along with the address
@@ -1361,6 +1373,7 @@ console.log(range(5, 2, -1));
 console.log(sum(range(1, 10)));
 // → 55
 ```
+
 if}}
 
 {{hint
@@ -1379,7 +1392,7 @@ operator rather than `<` to check for the end of your loop.
 
 {{index "arguments object"}}
 
-To step parameter can be an optional parameter that defaults (using
+The step parameter can be an optional parameter that defaults (using
 the `=` operator) to 1.
 
 {{index "range function", "for loop"}}
@@ -1401,7 +1414,7 @@ hint}}
 
 {{index "reversing (exercise)", "reverse method", [array, methods]}}
 
-Arrays have a `reverse` method which changes the array by inverting
+Arrays have a `reverse` method that changes the array by inverting
 the order in which its elements appear. For this exercise, write two
 functions, `reverseArray` and `reverseArrayInPlace`. The first,
 `reverseArray`, takes an array as argument and produces a _new_ array
@@ -1428,6 +1441,7 @@ reverseArrayInPlace(arrayValue);
 console.log(arrayValue);
 // → [5, 4, 3, 2, 1]
 ```
+
 if}}
 
 {{hint
@@ -1437,9 +1451,9 @@ if}}
 There are two obvious ways to implement `reverseArray`. The first is
 to simply go over the input array from front to back and use the
 `unshift` method on the new array to insert each element at its start.
-The second is to loop over the input array backward and use the `push`
-method. Iterating over an array backward requires a (somewhat awkward)
-`for` specification like `(let i = array.length - 1; i >= 0; i--)`.
+The second is to loop over the input array backwards and use the `push`
+method. Iterating over an array backwards requires a (somewhat awkward)
+`for` specification, like `(let i = array.length - 1; i >= 0; i--)`.
 
 {{index "slice method"}}
 
@@ -1500,7 +1514,7 @@ original list is also still a valid three-element list.
 
 Write a function `arrayToList` that builds up a list structure like
 the one shown when given `[1, 2, 3]` as argument. Also write a
-`listToArray` function that produces an array from a list. Then, add a
+`listToArray` function that produces an array from a list. Then add a
 helper function `prepend`, which takes an element and a list and
 creates a new list that adds the element to the front of the input
 list, and `nth`, which takes a list and a number and returns the
@@ -1525,6 +1539,7 @@ console.log(prepend(10, prepend(20, null)));
 console.log(nth(arrayToList([10, 20, 30]), 1));
 // → 20
 ```
+
 if}}
 
 {{hint
@@ -1532,7 +1547,7 @@ if}}
 {{index "list (exercise)", "linked list"}}
 
 Building up a list is easier when done back to front. So `arrayToList`
-could iterate over the array backward (see previous exercise) and, for
+could iterate over the array backwards (see the previous exercise) and, for
 each element, add an object to the list. You can use a local binding
 to hold the part of the list that was built so far and use an
 assignment like `list = {value: X, rest: list}` to add an element.
@@ -1550,14 +1565,14 @@ Can you see how that works? Every iteration of the loop, `node` points
 to the current sublist, and the body can read its `value` property to
 get the current element. At the end of an iteration, `node` moves to
 the next sublist. When that is null, we have reached the end of the
-list and the loop is finished.
+list, and the loop is finished.
 
 {{index recursion}}
 
 The recursive version of `nth` will, similarly, look at an ever
 smaller part of the "tail" of the list and at the same time count down
 the index until it reaches zero, at which point it can return the
-`value` property of the node it is looking at. To get the zeroeth
+`value` property of the node it is looking at. To get the zeroth
 element of a list, you simply take the `value` property of its head
 node. To get element _N_ + 1, you take the _N_th element of the list
 that's in this list's `rest` property.
@@ -1570,18 +1585,18 @@ hint}}
 
 {{index "deep comparison (exercise)", comparison, "deep comparison", "== operator"}}
 
-The `==` operator compares objects by identity. But sometimes, you
-would prefer to compare the values of their actual properties.
+The `==` operator compares objects by identity. But sometimes you'd
+prefer to compare the values of their actual properties.
 
-Write a function, `deepEqual`, that takes two values and returns true
+Write a function `deepEqual` that takes two values and returns true
 only if they are the same value or are objects with the same
 properties, where the values of the properties are equal when compared
 with a recursive call to `deepEqual`.
 
 {{index null, "=== operator", "typeof operator"}}
 
-To find out whether to compare two things by identity (use the `===`
-operator for that) or by looking at their properties, you can use the
+To find out whether values should be compared directly (use the `===`
+operator for that) or have their properties compared, you can use the
 `typeof` operator. If it produces `"object"` for both values, you
 should do a deep comparison. But you have to take one silly exception
 into account: because of a historical accident, `typeof null` also
@@ -1605,6 +1620,7 @@ console.log(deepEqual(obj, {here: 1, object: 2}));
 console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
 // → true
 ```
+
 if}}
 
 {{hint
@@ -1624,9 +1640,9 @@ both objects have the same set of property names and whether those
 properties have identical values. One way to do that is to ensure that
 both objects have the same number of properties (the lengths of the
 property lists are the same). And then, when looping over one of the
-object's properties in order to compare them, always first make sure
+object's properties to compare them, always first make sure
 the other actually has a property by that name. If they have the same
-number of properties, and all properties in one also exist in the
+number of properties and all properties in one also exist in the
 other, they have the same set of property names.
 
 {{index "return value"}}

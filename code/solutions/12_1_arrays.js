@@ -1,8 +1,8 @@
-topEnv.array = (...values) => values;
+topScope.array = (...values) => values;
 
-topEnv.length = array => array.length;
+topScope.length = array => array.length;
 
-topEnv.element = (array, i) => array[i];
+topScope.element = (array, i) => array[i];
 
 run(`
 do(define(sum, fun(array,

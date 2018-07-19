@@ -120,6 +120,8 @@ figure.framed img {
   border: 2px solid black;
 }
 
+span.keyname { font-variant: small-caps }
+
 td {
   vertical-align: top;
 }

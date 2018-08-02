@@ -180,7 +180,7 @@ function example() {
 
 ## A Pilha de Chamadas
 
-Será muito útil observamos como o fluxo de controle flui por meio das execuções das funções. Aqui, temos um simples programa fazendo algumas chamadas de funções:
+Será muito útil observarmos como o fluxo de controle flui por meio das execuções das funções. Aqui, temos um simples programa fazendo algumas chamadas de funções:
 
 ```js
 function greet(who) {

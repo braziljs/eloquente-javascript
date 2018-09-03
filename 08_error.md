@@ -1,72 +1,72 @@
 {{meta {load_files: ["code/chapter/08_error.js"]}}}
 
-# Bugs and Errors
+# Bugs e erros
 
 {{quote {author: "Brian Kernighan and P.J. Plauger", title: "The Elements of Programming Style", chapter: true}
 
-Debugging is twice as hard as writing the code in the first place.
-Therefore, if you write the code as cleverly as possible, you are, by
-definition, not smart enough to debug it.
+Depurar é duas vezes mais difícil que escrever o código da primeira vez.
+Portanto, se você escrever o código mais inteligente possível, por definição,
+você não é inteligente o suficiente para depurá-lo.
 
 quote}}
 
-{{figure {url: "img/chapter_picture_8.jpg", alt: "Picture of a collection of bugs", chapter: framed}}}
+{{figure {url: "img/chapter_picture_8.jpg", alt: "Figura de uma coleção de bugs", chapter: framed}}}
 
 {{index "Kernighan, Brian", "Plauger, P.J.", debugging, "error handling"}}
 
-Flaws in computer programs are usually called _((bug))s_. It makes
-programmers feel good to imagine them as little things that just
-happen to crawl into our work. In reality, of course, we put them
-there ourselves.
+Falhas em programas de computador são geralmente chamadas de _((bug))s_. Isso faz
+os programadores se sentirem bem imaginando eles como pequenas coisas que apenas
+acontecem no nosso trabalho. Na realidade, é claro, nós os colocamos 
+lá nós mesmos.
 
-If a program is crystallized thought, you can roughly categorize bugs
-into those caused by the thoughts being confused and those caused by
-mistakes introduced while converting a thought to code. The former
-type is generally harder to diagnose and fix than the latter.
+Se um programa é um pensamento cristalizado, você pode grosseiramente categorizar os bugs
+naqueles causados por pensamentos confusos e aqueles causados por
+erros introduzidos ao converter um pensamento em código. O primeiro
+tipo é geralmente mais difícil de diagnosticar e consertar que o último.
 
-## Language
+## Linguagem
 
 {{index parsing, analysis}}
 
-Many mistakes could be pointed out to us automatically by the
-computer, if it knew enough about what we're trying to do. But here
-JavaScript's looseness is a hindrance. Its concept of bindings and
-properties is vague enough that it will rarely catch ((typo))s before
-actually running the program. And even then, it allows you to do some
-clearly nonsensical things without complaint, such as computing
+Muitos erros poderiam ser apontados para nós automaticamente pelo
+computador, se ele soubesse realmente o que estamos tentando fazer. Mas aqui
+a liberdade do JavaScript é um obstáculo. Seu conceito de atribuições e
+propriedades é vago o suficiente para raramente identificar ((erros de digitação)) antes
+de realmente executar o programa. E até, permite que você faça algumas
+coisas claramente sem sentido sem objeção, como o cálculo
 `true * "monkey"`.
 
 {{index syntax}}
 
-There are some things that JavaScript does complain about. Writing a
-program that does not follow the language's ((grammar)) will
-immediately make the computer complain. Other things, such as calling
-something that's not a function or looking up a ((property)) on an
-((undefined)) value, will cause an error to be reported when the
-program tries to perform the action.
+Existem algumas coisas que o Javascript incomoda. Escrever um
+programa que não segue a ((gramática)) da linguagem vai
+fazer o computador imediatamente reclamar. Outras coisas, como chamar
+algo que não é uma função ou acessar uma ((propriedade)) em um
+valor que esteja ((indefinido)), vai causar um erro quando o
+programa tentar executar a ação.
 
 {{index NaN, error}}
 
-But often, your nonsense computation will merely produce `NaN` (not a
-number) or an undefined value, while the program happily continues,
-convinced that it's doing something meaningful. The mistake will
-manifest itself only later, after the bogus value has traveled through
-several functions. It might not trigger an error at all but silently
-cause the program's output to be wrong. Finding the source of such
-problems can be difficult.
+Mas algumas vezes, seus cálculos absurdos vão resultar apenas `NaN` (not a
+number) ou um valor undefined (indefinido), enquanto o programa alegrente continua,
+convencido que está fazendo alguma coisa importante. O erro se
+manifestará só mais tarde, depois que o valor falso viajou através  
+de várias funções. Isso pode não desencadear um erro mas silenciosamente
+fazer com que a saída do programa esteja errada. Encontrar a fonte de tais
+pode ser difícil.
 
-The process of finding mistakes—bugs—in programs is called
+O processo de encontrar erros ou bugs em programas é chamado de
 _((debugging))_.
 
-## Strict mode
+## Mode estrito
 
 {{index "strict mode", syntax, function}}
 
 {{indexsee "use strict", "strict mode"}}
 
-JavaScript can be made a _little_ stricter by enabling _strict
-mode_. This is done by putting the string `"use strict"` at the top of
-a file or a function body. Here's an example:
+JavaScript pode ser um _pouco_ mais rigoroso habilitando-se o _modo estrito_ ou 
+_strict mode_. Isto é feito colocando-se a string `"use strict"` no início de
+um arquivo ou do corpo de uma função. Aqui está um exemplo:
 
 ```{test: "error \"ReferenceError: counter is not defined\""}
 function canYouSpotTheProblem() {
@@ -82,28 +82,28 @@ canYouSpotTheProblem();
 
 {{index "let keyword", [binding, global]}}
 
-Normally, when you forget to put `let` in front of your binding, as
-with `counter` in the example, JavaScript quietly creates a global
-binding and uses that. In strict mode, an ((error)) is reported
-instead. This is very helpful. It should be noted, though, that this
-doesn't work when the binding in question already exists as a global
-binding. In that case, the loop will still quietly overwrite the value
-of the binding.
+Normalmente, quando você esquece de colocar `let` na frente da sua declaração, como
+com `counter` no exemplo, JavaScript silenciosamente cria uma declaração
+global e usa isso. No modo estrito ao contrário, um ((erro)) é lançado.
+Isso é muito útil. Deve-se notar, porém, que isso
+não funciona quando a declaração em questão já existe como uma declaração
+global. Nesse caso, o loop irá silenciosamente sobreescrever o valor
+da declaração.
 
 {{index this, "global object", undefined, "strict mode"}}
 
-Another change in strict mode is that the `this` binding holds the
-value `undefined` in functions that are not called as ((method))s.
-When making such a call outside of strict mode, `this` refers to the
-global scope object, which is an object whose properties are the
-global bindings. So if you accidentally call a method or constructor
-incorrectly in strict mode, JavaScript will produce an error as soon
-as it tries to read something from `this`, rather than happily writing
-to the global scope.
+Outra mudança no modo estrito é que o `this` possui o
+valor `undefined` nas funções que não são chamadas como ((métodos)).
+Quando fazer tal chamada fora do modo estrito, `this` refere-se ao
+escopo do objeto global, que é um objeto cuja as propriedades são as
+variáveis globais. Então se você acidentalmente chmar um método ou construtor
+incorretamente no modo estrito, o JavaScript irá lançar um erro assim
+que tentar ler algo de `this`, ao invés de simplesmenete escrever
+no escopo global.
 
-For example, consider the following code, which calls a
-((constructor)) function without the `new` keyword so that its `this`
-will _not_ refer to a newly constructed object:
+Por exemplo, considere o código a seguir, o qual chama um
+((construtor)) sem a palavra-chave `new` de modo que seu `this`
+_não_ irá se referir ao objeto recem criado:
 
 ```
 function Person(name) { this.name = name; }
@@ -114,51 +114,52 @@ console.log(name);
 
 {{index error}}
 
-So the bogus call to `Person` succeeded but returned an undefined
-value and created the global binding `name`. In strict mode, the
-result is different.
+Então a chamada falsa para `Pessoa` ocorreu mas retornou um valor 
+indefinido e criou uma variável global `name`. No modo estrito, o 
+resultado é outro.
 
 ```{test: "error \"TypeError: Cannot set property 'name' of undefined\""}
 "use strict";
 function Person(name) { this.name = name; }
-let ferdinand = Person("Ferdinand"); // forgot new
+let ferdinand = Person("Ferdinand"); // esquecido new
 // → TypeError: Cannot set property 'name' of undefined
 ```
 
-We are immediately told that something is wrong. This is helpful.
+Nos somos avisados imediatamente que algo está errado. Isso é útil.
 
-Fortunately, constructors created with the `class` notation will
-always complain if they are called without `new`, making this less of
+Felizmente, os contrutores criados com a notação `class` vão
+sempre reclamar se eles são chamados sem `new`, fazendo isso menos
+problemático mesmo não utilizando o modo estrito.
 a problem even in non-strict mode.
 
 {{index parameter, [binding, naming], "with statement"}}
 
-Strict mode does a few more things. It disallows giving a function
-multiple parameters with the same name and removes certain problematic
-language features entirely (such as the `with` statement, which is so
-wrong it is not further discussed in this book).
+O mode estrito faz mais algumas coisas. Não permite passar a uma função 
+vários parâmetros com o mesmo nome e remove certos problemas
+caraterísticos da linguagem ao todo (como a declaração `with`, que é tão
+errado que não é mais discutido neste livro).
 
 {{index debugging}}
 
-In short, putting `"use strict"` at the top of your program rarely
-hurts and might help you spot a problem.
+Em resumo, colocando `"use strict"` no começo do seu programa raramente
+dói e pode ajudá-lo a indentificar um problema.
 
-## Types
+## Tipos
 
-Some languages want to know the types of all your bindings and
-expressions before even running a program. They will tell you right
-away when a type is used in an inconsistent way. JavaScript considers
-types only when actually running the program, and even there often
-tries to implicitly convert values to the type it expects, so it's not
-much help.
+Algumas linguagens querem saber os tipos de todas as suas variáveis e
+expressões antes mesmo de executar um programa. Elas vão te dizer 
+imediatamente quando um tipo é usado de forma inconsistente. JavaScript considera
+os tipos apenas quando realmente executa o programa, e as vezes até mesmo
+tenta converter implicitamente valores para o tipo esperado, portanto não é
+grande ajuda.
 
-Still, types provide a useful framework for talking about programs. A
-lot of mistakes come from being confused about the kind of value that
-goes into or comes out of a function. If you have that information
-written down, you're less likely to get confused.
+Ainda assim, os tipos fornecem uma estrutura útil falando de programas. Muitos
+erros surgem ao você ficar confuso sobre que tipo de valor 
+entra ou sai de uma função. Se você tiver essa informação
+escrita, é menos provável que você fique confuso.
 
-You could add a comment like the following before the `goalOrientedRobot`
-function from the previous chapter to describe its type:
+Voce poderia adicionar um comentário como o seguinte antes da função
+`goalOrientedRobot` do capítulo anterior para descrever seu tipo:
 
 ```
 // (VillageState, Array) → {direction: string, memory: Array}
@@ -167,30 +168,31 @@ function goalOrientedRobot(state, memory) {
 }
 ```
 
-There are a number of different conventions for annotating JavaScript
-programs with types.
+Existem muitas convenções diferentes para anotar programas em JavaScript
+com tipos.
 
-One thing about types is that they need to introduce their own
-complexity to be able to describe enough code to be useful. What do
-you think would be the type of the `randomPick` function that returns
-a random element from an array? You'd need to introduce a _((type
-variable))_, _T_, which can stand in for any type, so that you can
-give `randomPick` a type like `([T]) → T` (function from an array of
-*T*s to a *T*).
+Algo sobre os tipos é que eles introduzem sua própria
+complexidade para poder descrever o código o suficiente para ser útil. O que 
+você acha que seria o tipo da função `ramdomPick` que retorna
+um elemento aleatório de uma array? Você precisaria passar uma _((variável
+tipo))_, _T_, que pode ser de qualquer tipo, de modo que você pode
+passar a `randomPick` um tipo como `([T]) → T` (função de um array de
+*T*s para um *T*).
 
 {{index "type checking", TypeScript}}
 
 {{id typing}}
 
-When the types of a program are known, it is possible for the computer
-to _check_ them for you, pointing out mistakes before the program is
-run. There are several JavaScript dialects that add types to the
-language and check them. The most popular one is called
-[TypeScript](https://www.typescriptlang.org/). If you are interested
-in adding more rigor to your programs, I recommend you give it a try.
+Quando os tipos de um programa são conhecidos, é possível para o computador
+verificar eles para você, apontando erros antes do programa ser
+executado. Existem vários dialetos JavaScript que adicionam tipos para a
+linguagem e os verificam. O mais popular é chamado
+[TypeScript](https://www.typescriptlang.org/). Se você estiver interessado
+em adicionar mais rigor ao seus programas, eu recomendo que você experimente.
 
-In this book, we'll continue using raw, dangerous, untyped JavaScript
-code.
+
+Neste livro, nos continuaremos utilizando o bruto, perigoso e não tipado
+código JavaScript puro.
 
 ## Testing
 

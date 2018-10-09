@@ -151,22 +151,22 @@ tenha certeza de conhecer sua licença.
 
 ## Improvised modules
 
-Until 2015, the JavaScript language had no built-in module system.
-People had been building large systems in JavaScript for over a decade
-though, and they _needed_ ((module))s.
+Até 2015, a linguagem JavaScript não possuía nenhum sistema de módulos embutido. No
+entanto, as pessoas têm construído grandes sistemas em JavaScript ao longo de uma
+década, embora precisassem dos ((módulo))s.
 
 {{index [function, scope]}}
 
-So they designed their own ((module system))s on top of the language.
-You can use JavaScript functions to create local scopes, and
-((object))s to represent module ((interface))s.
+Então desenvolveram seus próprios ((sistema de módulo))s para a linguagem. Você pode
+usar as funções JavaScript para criar escopos locais e ((objeto))s para representar
+sa interfaces de ((módulo))s.
 
 {{index "Date class", "weekDay module"}}
 
-This is a module for going between day names and numbers (as returned
-by `Date`'s `getDay` method). Its interface consists of `weekDay.name`
-and `weekDay.number`, and it hides its local binding `names` inside
-the scope of a function expression that is immediately invoked.
+Este é um módulo que irá entre os nomes e números dos dias (retornando como `Date` 
+pelo método `getDate` ). Sua interface consiste do `weekDay.name` e `weekDay.Number`
+e esconde sua ligação local `name` dentro do escopo da função que é imediatamente
+chamada.
 
 ```
 const weekDay = function() {
@@ -184,15 +184,15 @@ console.log(weekDay.name(weekDay.number("Sunday")));
 
 {{index dependency}}
 
-This style of modules provides ((isolation)), to a certain degree, but
-it does not declare dependencies. Instead, it just puts its
-((interface)) into the ((global scope)), and expects its dependencies,
-if any, to do the same. For a long time this was the main approach
-used in web programming, but is mostly obsolete now.
+Este estilo de módulos fornece ((isolamento)), até um certo poto, mas não declara 
+dependências. Ao invés disso, apenas coloca sua ((interface)) no ((escopo global))
+e espera suas dependências, se houver, que façam o mesmo. Por muito tempo esta foi 
+a principal abordagem utilizada na programação web, mas a maior parte é obsoleta 
+agora.
 
-If we want to make dependency relations part of the code, we'll have
-to take control of loading dependencies. Doing that requires being
-able to execute strings as code. JavaScript can do this.
+Se quiseremos fazer as relações de dependência parte do código, teremos que tomar 
+controle das dependências de carregamento. Fazer isso requer ser capaz de executar
+strings no código. JavaScript pode fazer isso.
 
 {{id eval}}
 
@@ -200,16 +200,15 @@ able to execute strings as code. JavaScript can do this.
 
 {{index evaluation, interpretation}}
 
-There are several ways to take data (a string of code) and run it as
-part of the current program.
+Há várias formas de obter dados (uma string de código) e executar como parte do 
+programa atual.
 
 {{index isolation, eval}}
 
-The most obvious way is the special operator `eval`, which will
-execute a string in the _current_ ((scope)). This is usually a bad idea
-because it breaks some of the properties that scopes normally have,
-such as it being easily predictable which binding a given name refers
-to.
+A forma mais óbvia é com o operator especial `eval`, que irá executar uma string
+no _atual_((escopo)). Geralmente é uma má idéia porque quebra algumas propriedades
+que o escopo possui normalmente, tal como sendo facilmente previsível qual ligação
+a qual um dado nome se refere.
 
 ```
 const x = 1;
@@ -224,10 +223,9 @@ console.log(evalAndReturnX("var x = 2"));
 
 {{index "Function constructor"}}
 
-A less scary way of interpreting data as code is to use the `Function`
-constructor. It takes two arguments: a string containing a
-comma-separated list of argument names and a string containing the
-function body.
+Uma forma menos pavorosa de interpretar dados como código é utilizar `Function`
+construtora. Ela leva dois argumentos: uma string contendo uma lista de nome de
+argumentos separada por vírgula e uma string contendo o corpo da função.
 
 ```
 let plusOne = Function("n", "return n + 1;");
@@ -235,9 +233,9 @@ console.log(plusOne(4));
 // → 5
 ```
 
-This is precisely what we need for a module system. We can wrap the
-module's code in a function, and use that function's scope as module
-((scope)).
+Isso é precisamente o que precisamos para um sistema de módulos. Podemos envolver
+o código do módulo em uma função e usar o escopo dessa função como o ((escopo))
+do módulo.
 
 ## CommonJS
 
@@ -245,30 +243,30 @@ module's code in a function, and use that function's scope as module
 
 {{index "CommonJS modules"}}
 
-The most widely used approach to bolted-on JavaScript modules is
-called _CommonJS modules_. ((Node.js)) uses it, and is the system used
-by most packages on ((NPM)).
+A abordagem mais utilizada de utilizar os módulos JavaScript é chamado 
+_módulos JS comuns_. ((Node.js)) utiliza e é o sistema mais utilizado pelos pacotes
+((NPM)).
 
 {{index "require function"}}
 
-The main concept in CommonJS modules is a function called `require`.
-When you call this with the module name of a dependency, it makes sure
-the module is loaded and returns its ((interface)).
+O coneceito principal nós módulos JS comuns é uma função chamada `require`. 
+Quando esta função é chamada com o nome do módulo de uma dependência, ele garante
+que o módulo é carrgeado e retorna sua ((interface)).
 
 {{index "exports object"}}
 
-Because the loader wraps the module code in a function, modules
-automatically get their own local scope. The only thing they have to
-do is call `require` to access their dependencies, and put their
-interface in the object bound to `exports`.
+Como o carregamento envolve o código do módulo em uma função, módulos automaticamente
+pegam seu próprio escopo local. A única coisa que eles têm que fazer é chamar 
+`require` para acessar suas dependências e colocar sua interface no objeto ligado
+ao `exports`.
 
 {{index "formatDate module", "Date class", "ordinal package", "date-names package"}}
 
-This example module provides a date-formatting function. It uses two
-((package))s from NPM—`ordinal` to convert numbers to strings like
-`"1st"` and `"2nd"`, and `date-names` to get the English names for
-weekdays and months. It exports a single function, `formatDate`, which
-takes a `Date` object and a ((template)) string.
+Este exemplo de módulo fornece uma função de formatação de data. Ele utiliza
+dois ((pacotes))s do NPM-`ordinal` para converter os números em strings como `"1st`
+e `"2nd` e `date-names` para pegar os nomes em inglês dos dias da semana e meses.
+Ele exporta uma única função `formatDate`, que recebe um objeto `Date` e uma
+string ((template)).
 
 The template string may contain codes that direct the format, such as
 `YYYY` for the full year and `Do` for the ordinal day of the month.

@@ -268,10 +268,9 @@ e `"2nd` e `date-names` para pegar os nomes em inglês dos dias da semana e mese
 Ele exporta uma única função `formatDate`, que recebe um objeto `Date` e uma
 string ((template)).
 
-The template string may contain codes that direct the format, such as
-`YYYY` for the full year and `Do` for the ordinal day of the month.
-You could give it a string like `"MMMM Do YYYY"` to get output like
-"November 22nd 2017".
+O template da String pode conter códigos que direcionam o formato, como `YYYY` para 
+o ano completo e `Do` para o número ordinal do dia do mês. Você pode passar uma 
+string como `"MMMM Do YYYY"`para receber um retorno como "Novembro 22nd 2017".
 
 ```
 const ordinal = require("ordinal");
@@ -291,13 +290,14 @@ exports.formatDate = function(date, format) {
 
 {{index "destructuring binding"}}
 
-The interface of `ordinal` is a single function, whereas `date-names`
-exports an object containing multiple things—the two values we use are
-arrays of names. Destructuring is very convenient when creating
-bindings for imported interfaces.
+A interface do `ordinal` é uma única função, enquanto `date-names` 
+exporta um objeto contendo múltiplas coisas - os dois valores que
+usamos são um array de nomes. Desestruturar é muito conveninente 
+quando estamos criando ligações para interfaces importadas.
 
-The module adds its interface function to `exports`, so that modules
-that depend on it get access to it. We could use the module like this:
+O módulo adiciona sua função de interface to `exports`, então o 
+módulo que depende disso ganhará acesso. Podemos utilizar o módulo
+deste forma:
 
 ```
 const {formatDate} = require("./format-date");
@@ -311,7 +311,7 @@ console.log(formatDate(new Date(2017, 9, 13),
 
 {{id require}}
 
-We can define `require`, in its most minimal form, like this:
+Podemos definir `require` na sua forma mínima, conforme abaixo:
 
 ```{test: wrap, sandbox: require}
 require.cache = Object.create(null);
@@ -328,33 +328,31 @@ function require(name) {
 }
 ```
 
-In this code, `readFile` is a made-up function that reads a file and
-returns its contents as a string. Standard JavaScript provides no such
-functionality—but different JavaScript environments, such as the
-browser and Node.js, provide their own ways of accessing ((file))s.
-The example just pretends that `readFile` exists.
+Neste código, `readFile` é uma função inventada que irá lê um arquivo
+e retornará seu conteúdo como string. JavaScript não fornece esta 
+funcionalidade - mas ambientes JavaScript diferente, como browser e 
+Node.js, fornece seu próprio modo de acessar ((file))s. O exemplo apenas
+assume que `readFiles` existe.
 
 {{index cache, "Function constructor"}}
 
-To avoid loading the same module multiple times, `require` keeps a
-store (cache) of already loaded modules. When called, it first checks
-if the requested module has been loaded and, if not, loads it. This
-involves reading the module's code, wrapping it in a function, and
-calling it.
+Para evitar carregar o mesmo módulo várias vezes, `require` mantém um
+armazenamento (cache) de módulos já carregados. Quando chamado, verifica
+primeiro se o módulo requerido já foi carregado e se não, o carrega.
+Isso envolve ler o código do módulo, envolvê-lo em uma função e chamá-lo.
 
 {{index "ordinal package", "exports object", "module object"}}
 
-The ((interface)) of the `ordinal` package we saw before is not an
-object, but a function. A quirk of the CommonJS modules is that,
-though the module system will create an empty interface object for you
-(bound to `exports`), you can replace that with any value by
-overwriting `module.exports`. This is done by many modules to export a
-single value instead of an interface object.
+A ((interface)) do pacote `ordinal` que vimos anteriormente não é um objeto,
+mas sim uma função. Uma peculiaridade dos módulos CommonJS é que embora o 
+sistema modular crie um objeto de interface vazio para você (vinculado ao 
+`exports`), podemos substituir com qualquer valor sobrescrevendo
+`module.exports`. Isso é feito por muitos módulos para exportar um único 
+valor ao invés da interface objeto.
 
-By defining `require`, `exports`, and `module` as ((parameter))s for
-the generated wrapper function (and passing the appropriate values
-when calling it), the loader makes sure that these bindings are
-available in the module's ((scope)).
+Definindo `require`, `exports` e `module` como ((parameter))s para a função
+wrapper gerada (e passando os valores apropriados quando invocada), o 
+carregamento garante que essas conexões estão disponíveis no módulo ((scope)).
 
 {{index resolution, "relative path"}}
 

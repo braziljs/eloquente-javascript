@@ -79,10 +79,10 @@ information.
 
 ## Data sets
 
-{{index "data structure"}}
+{{index ["data structure", collection], [memory, organization]}}
 
 To work with a chunk of digital data, we'll first have to find a way
-to represent it in our machine's ((memory)). Say, for example, that we
+to represent it in our machine's memory. Say, for example, that we
 want to represent a ((collection)) of the numbers 2, 3, 5, 7, and 11.
 
 {{index string}}
@@ -129,17 +129,17 @@ items to skip, counting from the start of the array.
 
 ## Properties
 
-{{index "Math object", "Math.max function", ["length property", "for string"], [object, property], "period character"}}
+{{index "Math object", "Math.max function", ["length property", "for string"], [object, property], "period character", [property, access]}}
 
 We've seen a few suspicious-looking expressions like `myString.length`
 (to get the length of a string) and `Math.max` (the maximum function)
-in past chapters. These are expressions that access a _((property))_
+in past chapters. These are expressions that access a _property_
 of some value. In the first case, we access the `length` property of
 the value in `myString`. In the second, we access the property named
 `max` in the `Math` object (which is a collection of
 mathematics-related constants and functions).
 
-{{index property, null, undefined}}
+{{index [property, access], null, undefined}}
 
 Almost all JavaScript values have properties. The exceptions are
 `null` and `undefined`. If you try to access a property on one of
@@ -151,11 +151,11 @@ null.length;
 ```
 
 {{indexsee "dot character", "period character"}}
-{{index "[] (subscript)", "period character", "square brackets", "computed property"}}
+{{index "[] (subscript)", "period character", "square brackets", "computed property", [property, access]}}
 
 The two main ways to access properties in JavaScript are with a dot
 and with square brackets. Both `value.x` and `value[x]` access a
-((property)) on `value`—but not necessarily the same property. The
+property on `value`—but not necessarily the same property. The
 difference is in how `x` is interpreted. When using a dot, the word
 after the dot is the literal name of the property. When using square
 brackets, the expression between the brackets is _evaluated_ to get
@@ -206,7 +206,7 @@ Every string has a `toUpperCase` property. When called, it will return
 a copy of the string in which all letters have been converted to
 uppercase. There is also `toLowerCase`, going the other way.
 
-{{index this}}
+{{index "this binding"}}
 
 Interestingly, even though the call to `toUpperCase` does not pass any
 arguments, the function somehow has access to the string `"Doh"`, the
@@ -240,8 +240,10 @@ The `push` method adds values to the end of an array, and the
 `pop` method does the opposite, removing the last value in the array
 and returning it.
 
+{{index ["data structure", stack]}}
+
 These somewhat silly names are the traditional terms for operations on
-a _((stack))_. A stack, in programming, is a ((data structure)) that
+a _((stack))_. A stack, in programming, is a data structure that
 allows you to push values into it and pop them out again in the
 opposite order so that the thing that was added last is removed first.
 These are common in programming—you might remember the function ((call
@@ -259,7 +261,7 @@ a Boolean value that indicates whether Jacques turned into a squirrel
 or not. Ideally, we would like to group these together into a single
 value and then put those grouped values into an array of log entries.
 
-{{index syntax, property, braces, "{} (object)"}}
+{{index [syntax, object], [property, definition], [braces, object], "{} (object)"}}
 
 Values of the type _((object))_ are arbitrary collections of
 properties. One way to create an object is by using braces as an
@@ -294,7 +296,9 @@ let descriptions = {
 };
 ```
 
-This means that ((braces)) have _two_ meanings in JavaScript. At
+{{index [braces, object]}}
+
+This means that braces have _two_ meanings in JavaScript. At
 the start of a ((statement)), they start a ((block)) of statements. In
 any other position, they describe an object. Fortunately, it is rarely
 useful to start a statement with an object in braces, so the
@@ -311,7 +315,7 @@ It is possible to assign a value to a property expression with the `=`
 operator. This will replace the property's value if it already existed
 or create a new property on the object if it didn't.
 
-{{index "tentacle (analogy)", [property, "model of"]}}
+{{index "tentacle (analogy)", [property, "model of"], [binding, "model of"]}}
 
 To briefly return to our tentacle model of ((binding))s—property
 bindings are similar. They _grasp_ values, but other bindings and
@@ -400,7 +404,7 @@ let journal = [
 We will get to actual programming _real_ soon now. First there's one
 more piece of theory to understand.
 
-{{index mutability, "side effect", number, string, Boolean, object}}
+{{index mutability, "side effect", number, string, Boolean, [object, mutability]}}
 
 We saw that object values can be modified. The types of values
 discussed in earlier chapters, such as numbers, strings, and Booleans,
@@ -414,7 +418,7 @@ character in your string to make it spell `"rat"`.
 Objects work differently. You _can_ change their properties,
 causing a single object value to have different content at different times.
 
-{{index [object, identity], identity, memory, mutability}}
+{{index [object, identity], identity, [memory, organization], mutability}}
 
 When we have two numbers, 120 and 120, we can consider them precisely
 the same number, whether or not they refer to the same physical bits.
@@ -447,11 +451,11 @@ said to have the same _identity_. The binding `object3` points to a
 different object, which initially contains the same properties as
 `object1` but lives a separate life.
 
-{{index "const keyword", "let keyword"}}
+{{index "const keyword", "let keyword", [binding, "as state"]}}
 
 Bindings can also be changeable or constant, but this is separate from
 the way their values behave. Even though number values don't change,
-you can use a `let` ((binding)) to keep track of a changing number by
+you can use a `let` binding to keep track of a changing number by
 changing the value the binding points at. Similarly, though a `const`
 binding to an object can itself not be changed and will continue to
 point at the same object, the _contents_ of that object might change.
@@ -489,11 +493,11 @@ function addEntry(events, squirrel) {
 }
 ```
 
-{{index braces, "{} (object)"}}
+{{index [braces, object], "{} (object)", [property, definition]}}
 
 Note that the object added to the journal looks a little odd. Instead
 of declaring properties like `events: events`, it just gives a
-((property)) name. This is shorthand that means the same thing—if a
+property name. This is shorthand that means the same thing—if a
 property name in brace notation isn't followed by a value, its
 value is taken from the binding with the same name.
 
@@ -832,7 +836,7 @@ vanishes into the forest. He is never seen again.
 
 ## Further arrayology
 
-{{index [array, methods], method}}
+{{index [array, methods], [method, array]}}
 
 Before finishing the chapter, I want to introduce you to a few more
 object-related concepts. I'll start by introducing some generally
@@ -965,7 +969,7 @@ console.log("one two three".indexOf("ee"));
 // → 11
 ```
 
-{{index whitespace, "trim method"}}
+{{index [whitespace, trimming], "trim method"}}
 
 The `trim` method removes whitespace (spaces, newlines, tabs, and
 similar characters) from the start and end of a string.
@@ -1034,7 +1038,7 @@ It can be useful for a function to accept any number of ((argument))s.
 For example, `Math.max` computes the maximum of _all_ the arguments it
 is given.
 
-{{indexsee "period character", "max example", spread}}
+{{index "period character", "max example", spread}}
 
 To write such a function, you put three dots before the function's
 last ((parameter)), like this:
@@ -1056,7 +1060,7 @@ an array containing all further arguments. If there are other
 parameters before it, their values aren't part of that array. When, as
 in `max`, it is the only parameter, it will hold all arguments.
 
-{{index "function application"}}
+{{index [function, application]}}
 
 You can use a similar three-dot notation to _call_ a function with an
 array of arguments.
@@ -1071,7 +1075,7 @@ This "((spread))s" out the array into the function call, passing its
 elements as separate arguments. It is possible to include an array
 like that along with other arguments, as in `max(9, ...numbers, 2)`.
 
-{{index array, "square brackets"}}
+{{index [array, "of rest arguments"], "square brackets"}}
 
 Square bracket array notation similarly allows the triple-dot operator
 to spread another array into the new array.
@@ -1090,7 +1094,7 @@ As we've seen, `Math` is a grab bag of number-related utility
 functions, such as `Math.max` (maximum), `Math.min` (minimum), and
 `Math.sqrt` (square root).
 
-{{index namespace, "namespace pollution", object}}
+{{index namespace, [object, property]}}
 
 {{id namespace_pollution}}
 
@@ -1220,14 +1224,14 @@ function phi([n00, n01, n10, n11]) {
 }
 ```
 
-{{index "let keyword", "var keyword", "const keyword"}}
+{{index "let keyword", "var keyword", "const keyword", [binding, destructuring]}}
 
-This also works for ((binding))s created with `let`, `var`, or
+This also works for bindings created with `let`, `var`, or
 `const`. If you know the value you are binding is an array, you can
 use ((square brackets)) to "look inside" of the value, binding its
 contents.
 
-{{index object, braces}}
+{{index [object, property], [braces, object]}}
 
 A similar trick works for objects, using braces instead of square
 brackets.
@@ -1246,10 +1250,10 @@ of those values.
 
 ## JSON
 
-{{index [array, representation], [object, representation], "data format"}}
+{{index [array, representation], [object, representation], "data format", [memory, organization]}}
 
 Because properties only grasp their value, rather than contain it,
-objects and arrays are stored in the computer's ((memory)) as
+objects and arrays are stored in the computer's memory as
 sequences of bits holding the _((address))es_—the place in memory—of
 their contents. So an array with another array inside of it consists
 of (at least) one memory region for the inner array, and another for
@@ -1273,7 +1277,7 @@ _((JSON))_ (pronounced "Jason"), which stands for JavaScript Object
 Notation. It is widely used as a data storage and communication format
 on the Web, even in languages other than JavaScript.
 
-{{index array, object, [quoting, "in JSON"], comment}}
+{{index [array, notation], [object, creation], [quoting, "in JSON"], comment}}
 
 JSON looks similar to JavaScript's way of writing arrays and objects,
 with a few restrictions. All property names have to be surrounded by
@@ -1478,7 +1482,7 @@ hint}}
 
 ### A list
 
-{{index "data structure", "list (exercise)", "linked list", object, array, collection}}
+{{index ["data structure", list], "list (exercise)", "linked list", array, collection}}
 
 Objects, as generic blobs of values, can be used to build all sorts of
 data structures. A common data structure is the _list_ (not to be
@@ -1503,7 +1507,7 @@ The resulting objects form a chain, like this:
 
 {{figure {url: "img/linked-list.svg", alt: "A linked list",width: "8cm"}}}
 
-{{index "structure sharing", memory}}
+{{index "structure sharing", [memory, structure sharing]}}
 
 A nice thing about lists is that they can share parts of their
 structure. For example, if I create two new values `{value: 0, rest:
@@ -1583,7 +1587,7 @@ hint}}
 
 ### Deep comparison
 
-{{index "deep comparison (exercise)", comparison, "deep comparison", "== operator"}}
+{{index "deep comparison (exercise)", [comparison, deep], "deep comparison", "== operator"}}
 
 The `==` operator compares objects by identity. But sometimes you'd
 prefer to compare the values of their actual properties.
@@ -1625,7 +1629,7 @@ if}}
 
 {{hint
 
-{{index "deep comparison (exercise)", "typeof operator", object, "=== operator"}}
+{{index "deep comparison (exercise)", [comparison, deep], "typeof operator", "=== operator"}}
 
 Your test for whether you are dealing with a real object will look
 something like `typeof x == "object" && x != null`. Be careful to

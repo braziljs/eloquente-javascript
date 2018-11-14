@@ -252,7 +252,7 @@ function nextSandbox() {
   } else {
     let {JSDOM} = require("jsdom")
     new JSDOM({
-      url: "http://eloquentjavascript.net/" + file + "#" + i,
+      url: "https://eloquentjavascript.net/" + file + "#" + i,
       html: sandbox.html || "<!doctype html><body></body>",
       src: [baseCode],
       done: function(err, window) {

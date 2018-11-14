@@ -19,7 +19,7 @@ no one would ever have paid any attention to it.
 
 {{index decentralization, compatibility}}
 
-Web technology has, from the start, been decentralized, not just
+Web technology has been decentralized from the start, not just
 technically but also in the way it evolved. Various browser vendors
 have added new functionality in ad hoc and sometimes poorly thought-out
 ways, which then, sometimes, ended up being adopted by others—and
@@ -52,6 +52,8 @@ computers on both ends must know what the bits are supposed to
 represent. The meaning of any given sequence of bits depends entirely
 on the kind of thing that it is trying to express and on the
 ((encoding)) mechanism used.
+
+{{index [network, protocol]}}
 
 A _network ((protocol))_ describes a style of communication over a
 ((network)). There are protocols for sending email, for fetching email,
@@ -108,11 +110,13 @@ machine can be reached and is listening on that port, the connection
 is successfully created. The listening computer is called the
 _((server))_, and the connecting computer is called the _((client))_.
 
+{{index [abtraction, "of the network"]}}
+
 Such a connection acts as a two-way ((pipe)) through which bits can
 flow—the machines on both ends can put data into it. Once the bits are
 successfully transmitted, they can be read out again by the machine on
 the other side. This is a convenient model. You could say that ((TCP))
-provides an ((abstraction)) of the network.
+provides an abstraction of the network.
 
 {{id web}}
 
@@ -205,6 +209,8 @@ This is what such a document would look like in the browser:
 
 if}}
 
+{{index [HTML, notation]}}
+
 The tags, wrapped in ((angle brackets)) (`<` and `>`, the symbols for
 _less than_ and _greater than_), provide information about the
 ((structure)) of the document. The other ((text)) is just plain text.
@@ -252,7 +258,7 @@ as `&gt;` ("greater than"). In HTML, an ampersand (`&`) character
 followed by a name or character code and a semicolon (`;`) is called an _((entity))_
 and will be replaced by the character it encodes.
 
-{{index "backslash character", "ampersand character", "double-quote character"}}
+{{index ["backslash character", "in strings"], "ampersand character", "double-quote character"}}
 
 This is analogous to the way backslashes are used in JavaScript
 strings. Since this mechanism gives ampersand characters a special
@@ -309,7 +315,7 @@ in the text.
 
 {{index [JavaScript, "in HTML"], "script (HTML tag)"}}
 
-In the context of this book, the most important ((HTML)) tag is
+In the context of this book, the most important HTML tag is
 `<script>`. This tag allows us to include a piece of JavaScript in a
 document.
 

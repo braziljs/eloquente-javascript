@@ -20,19 +20,19 @@ point where we can express meaningful prose.
 
 ## Expressions and statements
 
-{{index grammar, syntax, [code, "structure of"], grammar, [JavaScript, syntax]}}
+{{index grammar, [syntax, expression], [code, "structure of"], grammar, [JavaScript, syntax]}}
 
 In [Chapter ?](values), we made values and applied operators to them
 to get new values. Creating values like this is the main substance of
 any JavaScript program. But that substance has to be framed in a
 larger structure to be useful. So that's what we'll cover next.
 
-{{index "literal expression"}}
+{{index "literal expression", [parentheses, expression]}}
 
 A fragment of code that produces a value is called an
 _((expression))_. Every value that is written literally (such as `22`
 or `"psychoanalysis"`) is an expression. An expression between
-((parentheses)) is also an expression, as is a ((binary operator))
+parentheses is also an expression, as is a ((binary operator))
 applied to two expressions or a ((unary operator)) applied to one.
 
 {{index [nesting, "of expressions"], "human language"}}
@@ -48,7 +48,7 @@ If an expression corresponds to a sentence fragment, a JavaScript
 _statement_ corresponds to a full sentence. A program is a list of
 statements.
 
-{{index syntax}}
+{{index [syntax, statement]}}
 
 The simplest kind of statement is an expression with a semicolon after
 it. This is a program:
@@ -82,9 +82,9 @@ about the subtleties of missing semicolons.
 ## Bindings
 
 {{indexsee variable, binding}}
-{{index syntax, [binding, definition], "side effect", memory}}
+{{index [syntax, statement], [binding, definition], "side effect", [memory, organization], [state, in binding]}}
 
-How does a program keep an internal ((state))? How does it remember
+How does a program keep an internal state? How does it remember
 things? We have seen how to produce new values from old values, but
 this does not change the old values, and the new value has to be
 immediately used or it will dissipate again. To catch and hold values,
@@ -200,7 +200,7 @@ names—`catch22` is a valid name, for example—but the name must not
 start with a digit. A binding name may include dollar signs (`$`) or
 underscores (`_`) but no other punctuation or special characters.
 
-{{index syntax, "implements (reserved word)", "interface (reserved word)", "package (reserved word)", "private (reserved word)", "protected (reserved word)", "public (reserved word)", "static (reserved word)", "void operator", "yield (reserved word)", "enum (reserved word)", "reserved word", [binding, naming]}}
+{{index [syntax, identifier], "implements (reserved word)", "interface (reserved word)", "package (reserved word)", "private (reserved word)", "protected (reserved word)", "public (reserved word)", "static (reserved word)", "void operator", "yield (reserved word)", "enum (reserved word)", "reserved word", [binding, naming]}}
 
 Words with a special meaning, such as `let`, are _((keyword))s_, and
 they may not be used as binding names. There are also a number of
@@ -216,33 +216,35 @@ new package private protected public return static super
 switch this throw true try typeof var void while with yield
 ```
 
+{{index [syntax, error]}}
+
 Don't worry about memorizing this list. When creating a binding produces
-an unexpected ((syntax error)), see whether you're trying to define a
+an unexpected syntax error, see whether you're trying to define a
 reserved word.
 
 ## The environment
 
-{{index "standard environment"}}
+{{index "standard environment", [browser, environment]}}
 
 The collection of bindings and their values that exist at a given time
 is called the _((environment))_. When a program starts up, this
 environment is not empty. It always contains bindings that are part of
 the language ((standard)), and most of the time, it also has bindings
 that provide ways to interact with the surrounding system. For
-example, in a ((browser)), there are functions to interact with the
+example, in a browser, there are functions to interact with the
 currently loaded website and to read ((mouse)) and ((keyboard)) input.
 
 ## Functions
 
-{{indexsee "application (of functions)", "function application"}}
-{{indexsee "invoking (of functions)", "function application"}}
-{{indexsee "calling (of functions)", "function application"}}
-{{index output, function, [function, application]}}
+{{indexsee "application (of functions)", [function, application]}}
+{{indexsee "invoking (of functions)", [function, application]}}
+{{indexsee "calling (of functions)", [function, application]}}
+{{index output, function, [function, application], [browser, environment]}}
 
 A lot of the values provided in the default environment have the type
 _((function))_. A function is a piece of program wrapped in a value.
 Such values can be _applied_ in order to run the wrapped program. For
-example, in a ((browser)) environment, the binding `prompt` holds a
+example, in a browser environment, the binding `prompt` holds a
 function that shows a little ((dialog box)) asking for user input. It
 is used like this:
 
@@ -252,10 +254,10 @@ prompt("Enter passcode");
 
 {{figure {url: "img/prompt.png", alt: "A prompt dialog", width: "8cm"}}}
 
-{{index parameter, [function, application]}}
+{{index parameter, [function, application], [parentheses, arguments]}}
 
 Executing a function is called _invoking_, _calling_, or _applying_
-it. You can call a function by putting ((parentheses)) after an
+it. You can call a function by putting parentheses after an
 expression that produces a function value. Usually you'll directly use
 the name of the binding that holds the function. The values between
 the parentheses are given to the program inside the function. In the
@@ -270,10 +272,10 @@ looks, but can be helpful in toy programs and experiments.
 
 ## The console.log function
 
-{{index "JavaScript console", "developer tools", "Node.js", "console.log", output}}
+{{index "JavaScript console", "developer tools", "Node.js", "console.log", output, [browser, environment]}}
 
 In the examples, I used `console.log` to output values. Most JavaScript
-systems (including all modern web ((browser))s and Node.js) provide a
+systems (including all modern web browsers and Node.js) provide a
 `console.log` function that writes out its arguments to _some_ text
 output device. In browsers, the output lands in the ((JavaScript
 console)). This part of the browser interface is hidden by default,
@@ -295,12 +297,12 @@ console.log("the value of x is", x);
 
 if}}
 
-{{index object}}
+{{index [object, property], [property, access]}}
 
 Though binding names cannot contain ((period character))s,
 `console.log` does have one. This is because `console.log` isn't a
 simple binding. It is actually an expression that retrieves the `log`
-((property)) from the value held by the `console` binding. We'll
+property from the value held by the `console` binding. We'll
 find out exactly what this means in [Chapter ?](data#properties).
 
 {{id return_values}}
@@ -366,7 +368,7 @@ control flow:
 
 ## Conditional execution
 
-{{index Boolean, "control flow"}}
+{{index Boolean, ["control flow", conditional]}}
 
 Not all programs are straight roads. We may, for example, want to
 create a branching road, where the program takes the proper branch
@@ -375,7 +377,7 @@ execution))_.
 
 {{figure {url: "img/controlflow-if.svg", alt: "Conditional control flow",width: "4cm"}}}
 
-{{index syntax, "Number function", "if keyword"}}
+{{index [syntax, statement], "Number function", "if keyword"}}
 
 Conditional execution is created with the `if` keyword in JavaScript.
 In the simple case, we want some code to be executed if, and only if,
@@ -392,9 +394,11 @@ if (!Number.isNaN(theNumber)) {
 
 With this modification, if you enter "parrot", no output is shown.
 
+{{index [parentheses, statement]}}
+
 The `if` keyword executes or skips a statement depending on the value
 of a Boolean expression. The deciding expression is written after the
-keyword, between ((parentheses)), followed by the statement to
+keyword, between parentheses, followed by the statement to
 execute.
 
 {{index "Number.isNaN function"}}
@@ -405,9 +409,9 @@ function happens to return `NaN` when you give it a string that
 doesn't represent a valid number. Thus, the condition translates to
 "unless `theNumber` is not-a-number, do this".
 
-{{index grouping, "{} (block)"}}
+{{index grouping, "{} (block)", [braces, "block"]}}
 
-The statement after the `if` is wrapped in ((braces)) (`{` and
+The statement after the `if` is wrapped in braces (`{` and
 `}`) in this example. The braces can be used to group any number of
 statements into a single statement, called a _((block))_. You could
 also have omitted them in this case, since they hold only a single
@@ -481,7 +485,7 @@ console.log(10);
 console.log(12);
 ```
 
-{{index "control flow"}}
+{{index ["control flow", loop]}}
 
 That works, but the idea of writing a program is to make something
 _less_ work, not more. If we needed all even numbers less than 1,000,
@@ -491,7 +495,7 @@ _((loop))_.
 
 {{figure {url: "img/controlflow-loop.svg", alt: "Loop control flow",width: "4cm"}}}
 
-{{index syntax, "counter variable"}}
+{{index [syntax, statement], "counter variable"}}
 
 Looping control flow allows us to go back to some point in the program
 where we were before and repeat it with our current program state. If
@@ -509,15 +513,15 @@ while (number <= 12) {
 //   … etcetera
 ```
 
-{{index "while loop", Boolean}}
+{{index "while loop", Boolean, [parentheses, statement]}}
 
 A ((statement)) starting with the keyword `while` creates a loop. The
-word `while` is followed by an ((expression)) in ((parentheses)) and
+word `while` is followed by an ((expression)) in parentheses and
 then a statement, much like `if`. The loop keeps entering that
 statement as long as the expression produces a value that gives `true`
 when converted to Boolean.
 
-{{index comparison, state}}
+{{index [state, in binding], [binding, as state]}}
 
 The `number` binding demonstrates the way a ((binding)) can track the
 progress of a program. Every time the loop repeats, `number` gets a
@@ -550,7 +554,7 @@ but for reasons that will become apparent in [Chapter
 ?](data#array_indexing), it is a good idea to get used to
 counting from 0.
 
-{{index "loop body", "do loop", "control flow"}}
+{{index "loop body", "do loop", ["control flow", loop]}}
 
 A `do` loop is a control structure similar to a `while` loop. It
 differs only on one point: a `do` loop always executes its body at
@@ -576,7 +580,7 @@ continues going round until you provide a non-empty name.
 
 ## Indenting Code
 
-{{index "code structure", whitespace, "programming style"}}
+{{index [code, "structure of"], [whitespace, indentation], "programming style"}}
 
 In the examples, I've been adding spaces in front of statements that
 are part of some larger statement. These spaces are not required—the computer
@@ -608,7 +612,7 @@ amount.
 
 ## for loops
 
-{{index syntax, "while loop", "counter variable"}}
+{{index [syntax, statement], "while loop", "counter variable"}}
 
 Many loops follow the pattern shown in the `while` examples. First a
 "counter" binding is created to track the progress of the loop. Then
@@ -631,16 +635,18 @@ for (let number = 0; number <= 12; number = number + 2) {
 //   … etcetera
 ```
 
-{{index "control flow", state}}
+{{index ["control flow", loop], state}}
 
 This program is exactly equivalent to the
 [earlier](program_structure#loops) even-number-printing example. The
 only change is that all the ((statement))s that are related to the
 "state" of the loop are grouped together after `for`.
 
-The ((parentheses)) after a `for` keyword must contain two
+{{index [binding, as state], [parentheses, statement]}}
+
+The parentheses after a `for` keyword must contain two
 ((semicolon))s. The part before the first semicolon _initializes_ the
-loop, usually by defining a ((binding)). The second part is the
+loop, usually by defining a binding. The second part is the
 ((expression)) that _checks_ whether the loop must continue. The final
 part _updates_ the state of the loop after every iteration. In most
 cases, this is shorter and clearer than a `while` construct.
@@ -714,7 +720,7 @@ iteration.
 
 ## Updating bindings succinctly
 
-{{index assignment, "+= operator", "-= operator", "/= operator", "*= operator", state, "side effect"}}
+{{index assignment, "+= operator", "-= operator", "/= operator", "*= operator", [state, in binding], "side effect"}}
 
 Especially when looping, a program often needs to "update" a binding
 to hold a value based on that binding's previous value.
@@ -747,7 +753,7 @@ equivalents: `counter++` and `counter--`.
 
 ## Dispatching on a value with switch
 
-{{index syntax, "conditional execution", dispatching, ["if keyword", chaining]}}
+{{index [syntax, statement], "conditional execution", dispatch, ["if keyword", chaining]}}
 
 It is not uncommon for code to look like this:
 
@@ -782,7 +788,7 @@ switch (prompt("What is the weather like?")) {
 }
 ```
 
-{{index fallthrough, comparison, "break keyword", "case keyword", "default keyword"}}
+{{index fallthrough, "break keyword", "case keyword", "default keyword"}}
 
 You may put any number of `case` labels inside the block opened by
 `switch`. The program will start executing at the label that
@@ -797,7 +803,7 @@ executed.
 
 ## Capitalization
 
-{{index capitalization, [binding, naming], whitespace}}
+{{index capitalization, [binding, naming], [whitespace, syntax]}}
 
 Binding names may not contain spaces, yet it is often helpful to use
 multiple words to clearly describe what the binding represents. These
@@ -1036,7 +1042,7 @@ Passing this string to `console.log` should show something like this:
 ```
 
 When you have a program that generates this pattern, define a
-((binding)) `size = 8` and change the program so that it works for
+binding `size = 8` and change the program so that it works for
 any `size`, outputting a grid of the given width and height.
 
 {{if interactive
@@ -1052,7 +1058,7 @@ if}}
 You can build the string by starting with an empty one (`""`) and
 repeatedly adding characters. A newline character is written `"\n"`.
 
-{{index [nesting, "of loops"], braces}}
+{{index [nesting, "of loops"], [braces, "block"]}}
 
 To work with two ((dimensions)), you will need a ((loop)) inside of a
 loop. Put braces around the bodies of both loops to make it

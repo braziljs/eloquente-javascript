@@ -41,7 +41,7 @@ JavaScript and many other languages and systems.
 {{index [interface, design]}}
 
 Regular expressions are both terribly awkward and extremely useful.
-Their syntax is cryptic, and the programming ((interface)) JavaScript
+Their syntax is cryptic, and the programming interface JavaScript
 provides for them is clumsy. But they are a powerful ((tool)) for
 inspecting and processing strings. Properly understanding regular
 expressions will make you a more effective programmer.
@@ -62,7 +62,7 @@ let re2 = /abc/;
 Both of those regular expression objects represent the same
 ((pattern)): an _a_ character followed by a _b_ followed by a _c_.
 
-{{index "backslash character", "RegExp class"}}
+{{index ["backslash character", "in regular expressions"], "RegExp class"}}
 
 When using the `RegExp` constructor, the pattern is written as a
 normal string, so the usual rules apply for backslashes.
@@ -136,19 +136,19 @@ determined by the character's ((Unicode)) number. Characters 0 to 9
 sit right next to each other in this ordering (codes 48 to 57), so
 `[0-9]` covers all of them and matches any ((digit)).
 
-{{index whitespace, "alphanumeric character", "period character"}}
+{{index [whitespace, matching], "alphanumeric character", "period character"}}
 
 A number of common character groups have their own
 built-in shortcuts. Digits are one of them: `\d` means the same thing
 as `[0-9]`.
 
-{{index "newline character"}}
+{{index "newline character", [whitespace, matching]}}
 
 {{table {cols: [1, 5]}}}
 
 | `\d`    | Any ((digit)) character
 | `\w`    | An alphanumeric character ("((word character))")
-| `\s`    | Any ((whitespace)) character (space, tab, newline, and similar)
+| `\s`    | Any whitespace character (space, tab, newline, and similar)
 | `\D`    | A character that is _not_ a digit
 | `\W`    | A nonalphanumeric character
 | `\S`    | A nonwhitespace character
@@ -165,7 +165,7 @@ console.log(dateTime.test("30-jan-2003 15:20"));
 // → false
 ```
 
-{{index "backslash character"}}
+{{index ["backslash character", "in regular expressions"]}}
 
 That looks completely awful, doesn't it? Half of it is backslashes,
 producing a background noise that makes it hard to spot the actual
@@ -239,7 +239,7 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-{{index repetition, braces}}
+{{index repetition, [braces, "in regular expression"]}}
 
 To indicate that a pattern should occur a precise number of times, use
 braces. Putting `{4}` after an element, for example, requires it
@@ -259,16 +259,16 @@ console.log(dateTime.test("1-30-2003 8:45"));
 // → true
 ```
 
-You can also specify open-ended ((range))s when using ((braces))
+You can also specify open-ended ((range))s when using braces
 by omitting the number after the comma. So, `{5,}` means five or more
 times.
 
 ## Grouping subexpressions
 
-{{index ["regular expression", grouping], grouping}}
+{{index ["regular expression", grouping], grouping, [parentheses, "in regular expressions"]}}
 
 To use an operator like `*` or `+` on more than one element at a time,
-you have to use ((parentheses)). A part of a regular expression that
+you have to use parentheses. A part of a regular expression that
 is enclosed in parentheses counts as a single element as far as the
 operators following it are concerned.
 
@@ -292,7 +292,7 @@ the input string, even though the pattern is itself all lowercase.
 
 ## Matches and groups
 
-{{index ["regular expression", grouping], "exec method", array}}
+{{index ["regular expression", grouping], "exec method", [array, "RegExp match"]}}
 
 The `test` method is the absolute simplest way to match a regular
 expression. It tells you only whether it matched and nothing else.
@@ -427,9 +427,9 @@ Date objects provide methods such as `getFullYear`, `getMonth`,
 components. Besides `getFullYear` there's also `getYear`, which gives
 you the year minus 1900 (`98` or `119`) and is mostly useless.
 
-{{index "capture group", "getDate function"}}
+{{index "capture group", "getDate method", [parentheses, "in regular expressions"]}}
 
-Putting ((parentheses)) around the parts of the expression that we are
+Putting parentheses around the parts of the expression that we are
 interested in, we can now create a date object from a string.
 
 ```
@@ -508,7 +508,7 @@ console.log(animalCount.test("15 pigchickens"));
 // → false
 ```
 
-{{index parentheses}}
+{{index [parentheses, "in regular expressions"]}}
 
 Parentheses can be used to limit the part of the pattern that the pipe
 operator applies to, and you can put multiple such operators next to
@@ -516,7 +516,7 @@ each other to express a choice between more than two alternatives.
 
 ## The mechanics of matching
 
-{{index ["regular expression", matching], [matching, algorithm], searching}}
+{{index ["regular expression", matching], [matching, algorithm], "search problem"}}
 
 Conceptually, when you use `exec` or `test`, the regular expression
 engine looks for a match in your string by trying to match the
@@ -591,7 +591,7 @@ example, it becomes clear only at the 3 that we are in the wrong
 branch. The string _does_ match the expression, just not the branch we
 are currently in.
 
-{{index backtracking, searching}}
+{{index backtracking, "search problem"}}
 
 So the matcher _backtracks_. When entering a branch, it remembers its
 current position (in this case, at the start of the string, just past
@@ -830,7 +830,7 @@ console.log(text.replace(regexp, "_$1_"));
 // → _Harry_ is a suspicious character.
 ```
 
-{{index ["regular expression", flags], "backslash character"}}
+{{index ["regular expression", flags], ["backslash character", "in regular expressions"]}}
 
 When creating the `\b` ((boundary)) markers, we have to use two
 backslashes because we are writing them in a normal string, not a
@@ -842,7 +842,7 @@ But what if the name is `"dea+hl[]rd"` because our user is a ((nerd))y
 teenager? That would result in a nonsensical regular expression that
 won't actually match the user's name.
 
-{{index "backslash character", [escaping, "in regexps"], ["regular expression", escaping]}}
+{{index ["backslash character", "in regular expressions"], [escaping, "in regexps"], ["regular expression", escaping]}}
 
 To work around this, we can add backslashes before any character that
 has a special meaning.
@@ -858,7 +858,7 @@ console.log(text.replace(regexp, "_$&_"));
 
 ## The search method
 
-{{index searching, ["regular expression", methods], "indexOf method", "search method"}}
+{{index ["regular expression", methods], "indexOf method", "search method"}}
 
 The `indexOf` method on strings cannot be called with a regular
 expression. But there is another method, `search`, that does expect a
@@ -984,13 +984,13 @@ while (match = number.exec(input)) {
 //   Found 88 at 40
 ```
 
-{{index "while loop", "= operator"}}
+{{index "while loop", ["= operator", "as expression"], [binding, "as state"]}}
 
 This makes use of the fact that the value of an ((assignment))
 expression (`=`) is the assigned value. So by using `match =
 number.exec(input)` as the condition in the `while` statement, we
 perform the match at the start of each iteration, save its result in a
-((binding)), and stop looping when no more matches are found.
+binding, and stop looping when no more matches are found.
 
 {{id ini}}
 ## Parsing an INI file
@@ -1043,8 +1043,8 @@ holding the section's settings.
 {{index "carriage return", "line break", "newline character"}}
 
 Since the format has to be processed ((line)) by line, splitting up
-the file into separate lines is a good start. We used
-`string.split("\n")` to do this in [Chapter ?](data#split).
+the file into separate lines is a good start. We saw
+the `split` method in [Chapter ?](data#split).
 Some operating systems, however, use not just a newline character to
 separate lines but a carriage return character followed by a newline
 (`"\r\n"`). Given that the `split` method also allows a regular
@@ -1096,7 +1096,7 @@ matches the whole line, not just part of it. Leaving these out results
 in code that mostly works but behaves strangely for some input, which
 can be a difficult bug to track down.
 
-{{index "if keyword", assignment, "= operator"}}
+{{index "if keyword", assignment, ["= operator", "as expression"]}}
 
 The pattern `if (match = string.match(...))` is similar to the trick
 of using an assignment as the condition for `while`. You often aren't
@@ -1106,10 +1106,12 @@ not break the pleasant chain of `else if` forms, we assign the result
 of the match to a binding and immediately use that assignment as the
 test for the `if` statement.
 
+{{index [parentheses, "in regular expressions"]}}
+
 If a line is not a section header or a property, the function checks
 whether it is a comment or an empty line using the expression
 `/^\s*(;.*)?$/`. Do you see how it works? The part between the
-((parentheses)) will match comments, and the `?` makes sure it also
+parentheses will match comments, and the `?` makes sure it also
 matches lines containing only whitespace. When a line doesn't match
 any of the expected forms, the function throws an exception.
 
@@ -1128,7 +1130,7 @@ underscore character. Things like _é_ or _β_, which most definitely
 are word characters, will not match `\w` (and _will_ match uppercase
 `\W`, the nonword category).
 
-{{index whitespace}}
+{{index [whitespace, matching]}}
 
 By a strange historical accident, `\s` (whitespace) does not have this
 problem and matches all characters that the Unicode standard considers
@@ -1357,11 +1359,11 @@ The most obvious solution is to replace only quotes with a nonword
 character on at least one side—something like `/\W'|'\W/`. But you
 also have to take the start and end of the line into account.
 
-{{index grouping, "replace method"}}
+{{index grouping, "replace method", [parentheses, "in regular expressions"]}}
 
 In addition, you must ensure that the replacement also includes the
 characters that were matched by the `\W` pattern so that those are not
-dropped. This can be done by wrapping them in ((parentheses)) and
+dropped. This can be done by wrapping them in parentheses and
 including their groups in the replacement string (`$1`, `$2`). Groups
 that are not matched will be replaced by nothing.
 
@@ -1369,7 +1371,7 @@ hint}}
 
 ### Numbers again
 
-{{index sign, "fractional number", syntax, minus, "plus character", exponent, "scientific notation", "period character"}}
+{{index sign, "fractional number", [syntax, number], minus, "plus character", exponent, "scientific notation", "period character"}}
 
 Write an expression that matches only JavaScript-style ((number))s. It
 must support an optional minus _or_ plus sign in front of the number,
@@ -1403,7 +1405,7 @@ if}}
 
 {{hint
 
-{{index ["regular expression", escaping], "backslash character"}}
+{{index ["regular expression", escaping], ["backslash character", "in regular expressions"]}}
 
 First, do not forget the backslash in front of the period.
 

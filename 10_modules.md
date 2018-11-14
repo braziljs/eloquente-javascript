@@ -12,7 +12,7 @@ quote}}
 
 {{figure {url: "img/chapter_picture_10.jpg", alt: "Picture of a building built from modular pieces", chapter: framed}}}
 
-{{index organization, "code structure"}}
+{{index organization, [code, "structure of"]}}
 
 O programa ideal tem uma estrutura limpa como cristal. É fácil de explicar como funciona
 e cada parte tem um papel bem definido.
@@ -39,7 +39,7 @@ e você fica com as mãos sujas.
 
 ## Módulos
 
-{{index dependency}}
+{{index dependency, [interface, module]}}
 
 _Módulos_ são uma tentativa de evitar estes problemas. Um ((módulo)) é uma parte de
 programa que especifica quais partes ele depende (são as _dependências_) em que as
@@ -125,6 +125,8 @@ disponíveis no NPM. Uma grande parte é lixo, devo dizer, mas quase todos os pa
 úteis estão disponíveis lá. Por exemplo, a função INI file parser, similar ao que
 foi construído no [Capítulo ?](regexp) está disponível como pacote `ini`.
 
+{{index "command line"}}
+
 [Capítulo ?](node) irá mostrar como instalar estes pacotes usando linha de comando
 `npm`.
 
@@ -159,7 +161,7 @@ Até 2015, a linguagem JavaScript não possuía nenhum sistema de módulos embut
 entanto, as pessoas têm construído grandes sistemas em JavaScript ao longo de uma
 década, embora precisassem dos ((módulo))s.
 
-{{index [function, scope]}}
+{{index [function, scope], [interface, module], [object, as module]}}
 
 Então desenvolveram seus próprios ((sistema de módulo))s para a linguagem. Você pode
 usar as funções JavaScript para criar escopos locais e ((objeto))s para representar
@@ -186,7 +188,7 @@ console.log(weekDay.name(weekDay.number("Sunday")));
 // → Sunday
 ```
 
-{{index dependency}}
+{{index dependency, [interface, module]}}
 
 Este estilo de módulos fornece ((isolamento)), até um certo poto, mas não declara
 dependências. Ao invés disso, apenas coloca sua ((interface)) no ((escopo global))
@@ -255,7 +257,7 @@ A abordagem mais utilizada de utilizar os módulos JavaScript é chamado
 _CommonJS modules_. ((Node.js)) utiliza e é o sistema mais utilizado pelos pacotes
 ((NPM)).
 
-{{index "require function"}}
+{{index "require function", [interface, module]}}
 
 O coneceito principal nós módulos JS comuns é uma função chamada `require`.
 Quando esta função é chamada com o nome do módulo de uma dependência, ele garante
@@ -336,11 +338,13 @@ function require(name) {
 }
 ```
 
-Neste código, `readFile` é uma função inventada que irá lê um arquivo
-e retornará seu conteúdo como string. JavaScript não fornece esta
-funcionalidade - mas ambientes JavaScript diferente, como browser e
-Node.js, fornece seu próprio modo de acessar ((file))s. O exemplo apenas
-assume que `readFiles` existe.
+{{index [file, access]}}
+
+In this code, `readFile` is a made-up function that reads a file and
+returns its contents as a string. Standard JavaScript provides no such
+functionality—but different JavaScript environments, such as the
+browser and Node.js, provide their own ways of accessing fileos.
+The example just pretends that `readFile` exists.
 
 {{index cache, "Function constructor"}}
 
@@ -349,7 +353,7 @@ armazenamento (cache) de módulos já carregados. Quando chamado, verifica
 primeiro se o módulo requerido já foi carregado e se não, o carrega.
 Isso envolve ler o código do módulo, envolvê-lo em uma função e chamá-lo.
 
-{{index "ordinal package", "exports object", "module object"}}
+{{index "ordinal package", "exports object", "module object", [interface, module]}}
 
 A ((interface)) do pacote `ordinal` que vimos anteriormente não é um objeto,
 mas sim uma função. Uma peculiaridade dos módulos CommonJS é que embora o
@@ -428,8 +432,10 @@ Similarly, the `export` keyword is used to export things. It may
 appear in front of a function, class, or binding definition (`let`,
 `const`, or `var`).
 
+{{index [binding, exported]}}
+
 An ES module's interface is not a single value but a set of named
-((binding))s. The preceding module binds `formatDate` to a function. When
+bindings. The preceding module binds `formatDate` to a function. When
 you import from another module, you import the _binding_, not the
 value, which means an exporting module may change the value of the
 binding at any time, and the modules that import it will see its new
@@ -492,11 +498,11 @@ To make this possible, they _compile_ their code, translating it from
 their chosen JavaScript dialect to plain old JavaScript—or even to a
 past version of JavaScript—so that old ((browsers)) can run it.
 
-{{index latency, performance}}
+{{index latency, performance, [file, access], [network, speed]}}
 
 Including a modular program that consists of 200 different
 files in a ((web page)) produces its own problems. If fetching a
-single ((file)) over the ((network)) takes 50 milliseconds, loading
+single file over the network takes 50 milliseconds, loading
 the whole program takes 10 seconds, or maybe half that if you can
 load several files simultaneously. That's a lot of wasted time.
 Because fetching a single big file tends to be faster than fetching a
@@ -526,7 +532,7 @@ JavaScript code you run is often not the code as it was written.
 
 ## Module design
 
-{{index [module, design], interface, "code structure"}}
+{{index [module, design], [interface, module], [code, "structure of"]}}
 
 Structuring programs is one of the subtler aspects of programming. Any
 nontrivial piece of functionality can be modeled in various ways.
@@ -538,10 +544,12 @@ and what doesn't. Don't assume that a painful mess is "just the way it
 is". You can improve the structure of almost everything by putting
 more thought into it.
 
+{{index [interface, module]}}
+
 One aspect of module design is ease of use. If you are designing
 something that is intended to be used by multiple people—or even by
 yourself, in three months when you no longer remember the specifics of
-what you did—it is helpful if your ((interface)) is simple and
+what you did—it is helpful if your interface is simple and
 predictable.
 
 {{index "ini package", JSON}}
@@ -578,19 +586,19 @@ scenario where the file's content comes from some other source.
 
 Relatedly, stateful objects are sometimes useful or even necessary,
 but if something can be done with a function, use a function. Several
-of the INI file readers on NPM provide an interface style that require
-you to first create an object, then load the file into your object,
-and finally use specialized methods to get at the results. This type
-of thing is common in the object-oriented tradition, and it's
-terrible. Instead of making a single function call and moving on, you
-have to perform the ritual of moving your object through various
+of the INI file readers on NPM provide an interface style that
+requires you to first create an object, then load the file into your
+object, and finally use specialized methods to get at the results.
+This type of thing is common in the object-oriented tradition, and
+it's terrible. Instead of making a single function call and moving on,
+you have to perform the ritual of moving your object through various
 states. And because the data is now wrapped in a specialized object
 type, all code that interacts with it has to know about that type,
 creating unnecessary interdependencies.
 
 Often defining new data structures can't be avoided—only a few
 basic ones are provided by the language standard, and many types of
-data have to be more complex than an ((array)) or a map. But when an
+data have to be more complex than an array or a map. But when an
 array suffices, use an array.
 
 An example of a slightly more complex data structure is the graph from

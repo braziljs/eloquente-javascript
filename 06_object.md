@@ -14,7 +14,7 @@ quote}}
 
 {{figure {url: "img/chapter_picture_6.jpg", alt: "Picture of a rabbit with its proto-rabbit", chapter: framed}}}
 
-[Chapter ?](data) introduced JavaScript's ((object))s. In programming
+[Chapter ?](data) introduced JavaScript's objects. In programming
 culture, we have a thing called _((object-oriented programming))_, a
 set of techniques that use objects (and related concepts) as the
 central principle of program organization.
@@ -39,16 +39,17 @@ Whenever these local details change, only the code directly around it
 needs to be updated.
 
 {{id interface}}
+{{index [interface, object]}}
 
 Different pieces of such a program interact with each other through
-_((interface))s_, limited sets of functions or bindings that provide
+_interfaces_, limited sets of functions or bindings that provide
 useful functionality at a more abstract level, hiding their precise
 implementation.
 
-{{index "public properties", "private properties", "access control"}}
+{{index "public properties", "private properties", "access control", [method, interface]}}
 
 Such program pieces are modeled using ((object))s. Their interface
-consists of a specific set of ((method))s and properties. Properties
+consists of a specific set of methods and properties. Properties
 that are part of the interface are called _public_. The others, which
 outside code should not be touching, are called _private_.
 
@@ -73,7 +74,7 @@ usually called _((encapsulation))_.
 
 ## Methods
 
-{{index "rabbit example", method, property}}
+{{index "rabbit example", method, [property, access]}}
 
 Methods are nothing more than properties that hold function values.
 This is a simple method:
@@ -88,7 +89,7 @@ rabbit.speak("I'm alive.");
 // → The rabbit says 'I'm alive.'
 ```
 
-{{index this, "method call"}}
+{{index "this binding", "method call"}}
 
 Usually a method needs to do something with the object it was called
 on. When a function is called as a method—looked up as a property and
@@ -128,7 +129,7 @@ Since each function has its own `this` binding, whose value depends on
 the way it is called, you cannot refer to the `this` of the wrapping
 scope in a regular function defined with the `function` keyword.
 
-{{index this, "arrow function"}}
+{{index "this binding", "arrow function"}}
 
 Arrow functions are different—they do not bind their own `this` but
 can see the `this` binding of the scope around them. Thus, you can do
@@ -168,7 +169,7 @@ console.log(empty.toString());
 
 I pulled a property out of an empty object. Magic!
 
-{{index property, object}}
+{{index [property, inheritance], [object, property]}}
 
 Well, not really. I have simply been withholding information about the
 way JavaScript objects work. In addition to their set of properties,
@@ -201,7 +202,7 @@ object.
 
 The prototype relations of JavaScript objects form a ((tree))-shaped
 structure, and at the root of this structure sits `Object.prototype`.
-It provides a few ((method))s that show up in all objects, such as
+It provides a few methods that show up in all objects, such as
 `toString`, which converts an object to a string representation.
 
 {{index inheritance, "Function prototype", "Array prototype", "Object prototype"}}
@@ -266,9 +267,11 @@ class defines the shape of a type of object—what methods and
 properties it has. Such an object is called an _((instance))_ of the
 class.
 
+{{index [property, inheritance]}}
+
 Prototypes are useful for defining properties for which all instances
 of a class share the same value, such as ((method))s. Properties that
-differ per instance, such as our rabbits' `type` ((property)), need to
+differ per instance, such as our rabbits' `type` property, need to
 be stored directly in the objects themselves.
 
 {{id constructors}}
@@ -287,7 +290,7 @@ function makeRabbit(type) {
 }
 ```
 
-{{index "new operator", this, "return keyword", [object, creation]}}
+{{index "new operator", "this binding", "return keyword", [object, creation]}}
 
 JavaScript provides a way to make defining this type of function
 easier. If you put the keyword `new` in front of a function call, the
@@ -366,11 +369,11 @@ let killerRabbit = new Rabbit("killer");
 let blackRabbit = new Rabbit("black");
 ```
 
-{{index "rabbit example"}}
+{{index "rabbit example", [braces, class]}}
 
 The `class` keyword starts a ((class declaration)), which allows us to
 define a constructor and a set of methods all in a single place. Any
-number of methods may be written inside the declaration's ((braces)).
+number of methods may be written inside the declaration's braces.
 The one named `constructor` is treated specially. It
 provides the actual constructor function, which will be bound to the
 name `Rabbit`. The others are packaged into that constructor's
@@ -399,9 +402,9 @@ console.log(object.getWord());
 
 ## Overriding derived properties
 
-{{index "shared property", overriding}}
+{{index "shared property", overriding, [property, inheritance]}}
 
-When you add a ((property)) to an object, whether it is present in the
+When you add a property to an object, whether it is present in the
 prototype or not, the property is added to the object _itself_.
 If there was already a property with
 the same name in the prototype, this property will no longer affect
@@ -473,7 +476,7 @@ for an operation that transforms a data structure by applying a
 function to its elements. Confusing as it is, in programming the same
 word is also used for a related but rather different thing.
 
-{{index "map (data structure)", "ages example", "data structure"}}
+{{index "map (data structure)", "ages example", ["data structure", map]}}
 
 A _map_ (noun) is a data structure that associates values (the keys)
 with other values. For example, you might want to map names to ages.
@@ -514,7 +517,9 @@ console.log("toString" in Object.create(null));
 // → false
 ```
 
-Object ((property)) names must be strings. If you need a map whose
+{{index [property, naming]}}
+
+Object property names must be strings. If you need a map whose
 keys can't easily be converted to strings—such as objects—you cannot
 use an object as your map.
 
@@ -538,7 +543,7 @@ console.log(ages.has("toString"));
 // → false
 ```
 
-{{index interface, "set method", "get method", "has method", encapsulation}}
+{{index [interface, object], "set method", "get method", "has method", encapsulation}}
 
 The methods `set`, `get`, and `has` are part of the interface of the
 `Map` object. Writing a data structure that can quickly update and
@@ -581,10 +586,10 @@ console.log(String(blackRabbit));
 // → a black rabbit
 ```
 
-{{index "object-oriented programming"}}
+{{index "object-oriented programming", [interface, object]}}
 
 This is a simple instance of a powerful idea. When a piece of code is
-written to work with objects that have a certain ((interface))—in this
+written to work with objects that have a certain interface—in this
 case, a `toString` method—any kind of object that happens to support
 this interface can be plugged into the code, and it will just work.
 
@@ -614,7 +619,7 @@ JavaScript programmers simply don't think about it. But the language
 designers, whose _job_ it is to think about this stuff, have provided
 us with a solution anyway.
 
-{{index "Symbol function", property}}
+{{index "Symbol function", [property, naming]}}
 
 When I claimed that property names are strings, that wasn't entirely
 accurate. They usually are, but they can also be _((symbol))s_.
@@ -652,8 +657,10 @@ console.log([1, 2][toStringSymbol]());
 // → 2 cm of blue yarn
 ```
 
+{{index [property, naming]}}
+
 It is possible to include symbol properties in object expressions and
-classes by using ((square bracket))s around the ((property)) name.
+classes by using ((square bracket))s around the property name.
 That causes the property name to be evaluated, much like the square
 bracket property access notation, which allows us to refer to a
 binding that holds the symbol.
@@ -700,7 +707,7 @@ console.log(okIterator.next());
 // → {value: undefined, done: true}
 ```
 
-{{index "matrix example", "Matrix class", array}}
+{{index "matrix example", "Matrix class", [array, "as matrix"]}}
 
 {{id matrix}}
 
@@ -806,7 +813,7 @@ for (let {x, y, value} of matrix) {
 
 ## Getters, setters, and statics
 
-{{index interface, property, "Map class"}}
+{{index [interface, object], [property, definition], "Map class"}}
 
 Interfaces often consist mostly of methods, but it is also okay to
 include properties that hold non-function values. For example, `Map`
@@ -1141,7 +1148,7 @@ if}}
 
 {{index "groups (exercise)", "Group class", "indexOf method", "includes method"}}
 
-The easiest way to do this is to store an ((array)) of group members
+The easiest way to do this is to store an array of group members
 in an instance property. The `includes` or `indexOf` methods can be
 used to check whether a given value is in the array.
 
@@ -1168,7 +1175,7 @@ hint}}
 
 ### Iterable groups
 
-{{index "groups (exercise)", interface, "iterator interface", "Group class"}}
+{{index "groups (exercise)", [interface, object], "iterator interface", "Group class"}}
 
 {{id group_iterator}}
 

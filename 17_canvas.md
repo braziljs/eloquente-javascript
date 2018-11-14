@@ -12,10 +12,10 @@ quote}}
 
 {{figure {url: "img/chapter_picture_17.jpg", alt: "Picture of a robot arm drawing on paper", chapter: "framed"}}}
 
-{{index CSS, "transform (CSS)"}}
+{{index CSS, "transform (CSS)", [DOM, graphics]}}
 
 Browsers give us several ways to display ((graphics)). The simplest
-way is to use styles to position and color regular ((DOM)) elements.
+way is to use styles to position and color regular DOM elements.
 This can get you quite far, as the game in the [previous
 chapter](game) showed. By adding partially transparent background
 ((image))s to the nodes, we can make them look exactly the way we
@@ -25,7 +25,7 @@ style.
 But we'd be using the DOM for something that it wasn't originally
 designed for. Some tasks, such as drawing a ((line)) between
 arbitrary points, are extremely awkward to do with regular
-((HTML)) elements.
+HTML elements.
 
 {{index SVG, "img (HTML tag)"}}
 
@@ -35,11 +35,11 @@ _Scalable Vector Graphics_ (SVG), rather than HTML. Think of SVG as a
 text. You can embed an SVG document directly in an HTML document or
 include it with an `<img>` tag.
 
-{{index clearing}}
+{{index clearing, [DOM graphics], [interface, canvas]}}
 
 The second alternative is called a _((canvas))_. A canvas is a single
-((DOM)) element that encapsulates a ((picture)). It provides a
-programming ((interface)) for drawing ((shape))s onto the space taken
+DOM element that encapsulates a ((picture)). It provides a
+programming interface for drawing ((shape))s onto the space taken
 up by the node. The main difference between a canvas and an SVG
 picture is that in SVG the original description of the shapes is
 preserved so that they can be moved or resized at any time. A canvas,
@@ -85,7 +85,9 @@ The document is displayed like this:
 
 if}}
 
-These tags create ((DOM)) elements, just like ((HTML)) tags, that
+{{index [DOM, graphics]}}
+
+These tags create DOM elements, just like HTML tags, that
 scripts can interact with. For example, this changes the `<circle>`
 element to be ((color))ed cyan instead:
 
@@ -105,10 +107,10 @@ size in ((pixel))s.
 A new canvas is empty, meaning it is entirely ((transparent)) and thus
 shows up as empty space in the document.
 
-{{index "2d (canvas context)", "webgl (canvas context)", OpenGL, [canvas, context], dimensions}}
+{{index "2d (canvas context)", "webgl (canvas context)", OpenGL, [canvas, context], dimensions, [interface, canvas]}}
 
 The `<canvas>` tag is intended to allow different styles of
-((drawing)). To get access to an actual drawing ((interface)), we
+((drawing)). To get access to an actual drawing interface, we
 first need to create a _((context))_, an object whose methods provide
 the drawing interface. There are currently two widely supported
 drawing styles: `"2d"` for two-dimensional graphics and `"webgl"` for
@@ -151,7 +153,7 @@ if}}
 
 {{index SVG, coordinates}}
 
-Just like in ((HTML)) (and SVG), the coordinate system that the canvas
+Just like in HTML (and SVG), the coordinate system that the canvas
 uses puts (0,0) at the top-left corner, and the positive y-((axis))
 goes down from there. So (10,10) is 10 pixels below and to the right
 of the top-left corner.
@@ -174,7 +176,7 @@ y-((coordinates)) of the rectangle's top-left corner, then its width,
 and then its height. A similar method, `strokeRect`, draws the
 ((outline)) of a rectangle.
 
-{{index property, state}}
+{{index [state, "of canvas"]}}
 
 Neither method takes any further parameters. The color of the fill,
 thickness of the stroke, and so on, are not determined by an argument
@@ -581,16 +583,16 @@ indicate the rectangle (x, y, width, and height) in the source image
 that should be copied, and the sixth to ninth arguments give the
 rectangle (on the canvas) into which it should be copied.
 
-{{index "player character", "pixel art"}}
+{{index "player", "pixel art"}}
 
 This can be used to pack multiple _((sprite))s_ (image elements) into
 a single image file and then draw only the part you need. For example,
 we have this picture containing a game character in multiple
 ((pose))s:
 
-{{figure {url: "img/player_big.png", alt: "Various poses of a game character",width: "6cm"}}}
+{{figure {url: "img/player_big.png", alt: "Various poses of a game character",width: "6cm", [animation, "platform game"]}}}
 
-By alternating which pose we draw, we can show an ((animation)) that
+By alternating which pose we draw, we can show an animation that
 looks like a walking character.
 
 {{index "fillRect method", "clearRect method", clearing}}
@@ -628,9 +630,9 @@ up an interval (repeated timer) to draw the next ((frame)):
 </script>
 ```
 
-{{index "remainder operator", "% operator"}}
+{{index "remainder operator", "% operator", [animation, "platform game"]}}
 
-The `cycle` binding tracks our position in the ((animation)). For each
+The `cycle` binding tracks our position in the animation. For each
 ((frame)), it is incremented and then clipped back to the 0 to 7 range
 by using the remainder operator. This binding is then used to compute
 the x-coordinate that the sprite for the current pose has in the
@@ -787,11 +789,11 @@ function does its thing, adding more transformations on top of the
 current transformation. Finally, we revert to the
 transformation we started with.
 
-{{index "save method", "restore method"}}
+{{index "save method", "restore method", [state, "of canvas"]}}
 
 The `save` and `restore` methods on the 2D ((canvas)) context do this
 ((transformation)) management. They conceptually keep a stack of
-transformation ((state))s. When you call `save`, the current state is
+transformation states. When you call `save`, the current state is
 pushed onto the stack, and when you call `restore`, the state on top
 of the stack is taken off and used as the context's current
 transformation. You can also call `resetTransform` to fully reset the
@@ -859,13 +861,13 @@ We now know enough about ((canvas)) drawing to start working on a
 just colored boxes. Instead, we'll use `drawImage` to draw pictures
 that represent the game's elements.
 
-{{index "CanvasDisplay class", "DOMDisplay class"}}
+{{index "CanvasDisplay class", "DOMDisplay class", [interface, object]}}
 
 We define another display object type called `CanvasDisplay`,
-supporting the same ((interface)) as `DOMDisplay` from [Chapter
+supporting the same interface as `DOMDisplay` from [Chapter
 ?](game#domdisplay), namely, the methods `syncState` and `clear`.
 
-{{index state}}
+{{index [state, "in objects"]}}
 
 This object keeps a little more information than `DOMDisplay`. Rather
 than using the scroll position of its DOM element, it tracks its own
@@ -1029,7 +1031,7 @@ few ((frame))s, while the image is still loading, but that is not a
 serious problem. Since we keep updating the screen, the correct scene
 will appear as soon as the loading finishes.
 
-{{index "player character", animation, drawing}}
+{{index "player", [animation, "platform game"], drawing}}
 
 The ((walking)) character shown earlier will be used to represent the
 player. The code that draws it needs to pick the right ((sprite)) and
@@ -1143,7 +1145,7 @@ if}}
 ## Choosing a graphics interface
 
 So when you need to generate graphics in the browser, you can choose
-between plain ((HTML)), ((SVG)), and ((canvas)). There is no single
+between plain HTML, ((SVG)), and ((canvas)). There is no single
 _best_ approach that works in all situations. Each option has
 strengths and weaknesses.
 
@@ -1161,9 +1163,9 @@ SVG can be used to produce ((crisp)) ((graphics)) that look good at
 any zoom level. Unlike HTML, it is designed for drawing
 and is thus more suitable for that purpose.
 
-{{index DOM, SVG, "event handling"}}
+{{index [DOM, graphics], SVG, "event handling", ["data structure", tree]}}
 
-Both SVG and HTML build up a ((data structure)) (the DOM) that
+Both SVG and HTML build up a data structure (the DOM) that
 represents your picture. This makes it possible to modify elements
 after they are drawn. If you need to repeatedly change a small part of
 a big ((picture)) in response to what the user is doing or as part of
@@ -1188,7 +1190,7 @@ handled only by a ((pixel))-based approach.
 
 In some cases, you may want to combine several of these techniques.
 For example, you might draw a ((graph)) with ((SVG)) or ((canvas)) but
-show ((text))ual information by positioning an ((HTML)) element on top
+show ((text))ual information by positioning an HTML element on top
 of the picture.
 
 {{index display}}
@@ -1417,7 +1419,7 @@ hint}}
 
 ### A bouncing ball
 
-{{index animation, "requestAnimationFrame function", bouncing}}
+{{index [animation, "bouncing ball"], "requestAnimationFrame function", bouncing}}
 
 Use the `requestAnimationFrame` technique that we saw in [Chapter
 ?](dom#animationFrame) and [Chapter ?](game#runAnimation) to draw a

@@ -135,7 +135,8 @@ function parseInlineMeta(state, silent) {
 function parseIndexTerm(state, silent) {
   let max = state.posMax
   // Check for opening '(('
-  if (state.pos >= max + 4 || state.src.charCodeAt(state.pos) != 40 || state.src.charCodeAt(state.pos + 1) != 40) return false
+  if (state.pos >= max + 4 || state.src.charCodeAt(state.pos) != 40 || state.src.charCodeAt(state.pos + 1) != 40 ||
+      state.src.charCodeAt(state.pos + 2) == 40) return false
 
   let start = state.pos + 2, end = start
   for (;; end++) {

@@ -22,7 +22,7 @@ some human inventions were so immensely clever and complicated that
 I'd never be able to understand them. But with a little reading and
 experimenting, they often turn out to be quite mundane.
 
-{{index "Egg language"}}
+{{index "Egg language", [abstraction, "in Egg"]}}
 
 We will build a programming language called Egg. It will be a tiny,
 simple language—but one that is powerful enough to express any
@@ -33,10 +33,10 @@ based on ((function))s.
 
 ## Parsing
 
-{{index parsing, validation}}
+{{index parsing, validation, [syntax, "of Egg"]}}
 
 The most immediately visible part of a programming language is its
-_((syntax))_, or notation. A _parser_ is a program that reads a piece
+_syntax_, or notation. A _parser_ is a program that reads a piece
 of text and produces a data structure that reflects the structure of
 the program contained in that text. If the text does not form a valid
 program, the parser should point out the error.
@@ -48,18 +48,18 @@ is an ((expression)). An expression can be the name of a binding, a
 number, a string, or an _application_. Applications are used for
 function calls but also for constructs such as `if` or `while`.
 
-{{index "double-quote character", parsing, [escaping, "in strings"]}}
+{{index "double-quote character", parsing, [escaping, "in strings"], [whitespace, syntax]}}
 
 To keep the parser simple, strings in Egg do not support anything like
 backslash escapes. A string is simply a sequence of characters that
 are not double quotes, wrapped in double quotes. A number is a
 sequence of digits. Binding names can consist of any character that is
-not ((whitespace)) and that does not have a special meaning in the syntax.
+not whitespace and that does not have a special meaning in the syntax.
 
-{{index "comma character"}}
+{{index "comma character", [parentheses, arguments]}}
 
 Applications are written the way they are in JavaScript, by putting
-((parentheses)) after an expression and having any number of
+parentheses after an expression and having any number of
 ((argument))s between those parentheses, separated by commas.
 
 ```{lang: null}
@@ -69,17 +69,17 @@ do(define(x, 10),
       print("small")))
 ```
 
-{{index block}}
+{{index block, [syntax, "of Egg"]}}
 
 The ((uniformity)) of the ((Egg language)) means that things that are
 ((operator))s in JavaScript (such as `>`) are normal bindings in this
 language, applied just like other ((function))s. And since the
-((syntax)) has no concept of a block, we need a `do` construct to
+syntax has no concept of a block, we need a `do` construct to
 represent doing multiple things in sequence.
 
-{{index "type property", parsing}}
+{{index "type property", parsing, ["data structure", tree]}}
 
-The ((data structure)) that the parser will use to describe a program
+The data structure that the parser will use to describe a program
 consists of ((expression)) objects, each of which has a `type`
 property indicating the kind of expression it is and other properties
 to describe its content.
@@ -108,9 +108,9 @@ The `>(x, 5)` part of the previous program would be represented like this:
 }
 ```
 
-{{indexsee "abstract syntax tree", "syntax tree"}}
+{{indexsee "abstract syntax tree", "syntax tree", ["data structure", tree]}}
 
-Such a ((data structure)) is called a _((syntax tree))_. If you
+Such a data structure is called a _((syntax tree))_. If you
 imagine the objects as dots and the links between them as lines
 between those dots, it has a ((tree))like shape. The fact that
 expressions contain other expressions, which in turn might contain
@@ -175,9 +175,9 @@ function skipSpace(string) {
 }
 ```
 
-{{index "skipSpace function"}}
+{{index "skipSpace function", [whitespace, syntax]}}
 
-Because Egg, like JavaScript, allows any amount of ((whitespace))
+Because Egg, like JavaScript, allows any amount of whitespace
 between its elements, we have to repeatedly cut the whitespace off the
 start of the program string. That is what the `skipSpace` function
 helps with.
@@ -422,9 +422,9 @@ specialForms.do = (args, scope) => {
 };
 ```
 
-{{index "= operator"}}
+{{index ["= operator", "in Egg"], [binding, "in Egg"]}}
 
-To be able to create ((binding))s and give them new values, we also
+To be able to create bindings and give them new values, we also
 create a form called `define`. It expects a word as its first argument
 and an expression producing the value to assign to that word as its
 second argument. Since `define`, like everything, is an expression, it
@@ -444,11 +444,11 @@ specialForms.define = (args, scope) => {
 
 ## The environment
 
-{{index "Egg language", "evaluate function"}}
+{{index "Egg language", "evaluate function", [binding, "in Egg"]}}
 
 The ((scope)) accepted by `evaluate` is an object with properties
 whose names correspond to binding names and whose values correspond to
-the values those ((binding))s are bound to. Let's define an object to
+the values those bindings are bound to. Let's define an object to
 represent the ((global scope)).
 
 To be able to use the `if` construct we just defined, we must have
@@ -602,16 +602,16 @@ do(define(pow, fun(base, exp,
 What we have built is an interpreter. During evaluation, it acts
 directly on the representation of the program produced by the parser.
 
-{{index efficiency, performance}}
+{{index efficiency, performance, [binding, definition], [memory, speed]}}
 
 _Compilation_ is the process of adding another step between the
 parsing and the running of a program, which transforms the program
 into something that can be evaluated more efficiently by doing as much
 work as possible in advance. For example, in well-designed languages
-it is obvious, for each use of a ((binding)), which binding is being
+it is obvious, for each use of a binding, which binding is being
 referred to, without actually running the program. This can be used to
 avoid looking up the binding by name every time it is accessed,
-instead directly fetching it from some predetermined ((memory))
+instead directly fetching it from some predetermined memory
 location.
 
 Traditionally, ((compilation)) involves converting the program to
@@ -692,9 +692,9 @@ described in its domain, and nothing else.
 
 ### Arrays
 
-{{index "Egg language", "arrays in egg (exercise)"}}
+{{index "Egg language", "arrays in egg (exercise)", [array, "in Egg"]}}
 
-Add support for ((array))s to Egg by adding the following three
+Add support for arrays to Egg by adding the following three
 functions to the top scope: `array(...values)` to construct an array
 containing the argument values, `length(array)` to get an array's
 length, and `element(array, n)` to fetch the n^th^ element from an
@@ -824,10 +824,10 @@ if}}
 
 {{hint
 
-{{index comment, "comments in egg (exercise)"}}
+{{index "comments in egg (exercise)", [whitespace, syntax]}}
 
 Make sure your solution handles multiple comments in a row, with
-potentially ((whitespace)) between or after them.
+potentially whitespace between or after them.
 
 A ((regular expression)) is probably the easiest way to solve this.
 Write something that matches "whitespace or a comment, zero or more
@@ -841,7 +841,7 @@ hint}}
 
 {{index [binding, definition], assignment, "fixing scope (exercise)"}}
 
-Currently, the only way to assign a ((binding)) a value is `define`.
+Currently, the only way to assign a binding a value is `define`.
 This construct acts as a way both to define new bindings and to give
 existing ones a new value.
 
@@ -893,7 +893,7 @@ if}}
 
 {{hint
 
-{{index [binding, definition], assignment, "getPrototypeOf function", "hasOwnProperty method", "fixing scope (exercise)"}}
+{{index [binding, "compilation of"], assignment, "getPrototypeOf function", "hasOwnProperty method", "fixing scope (exercise)"}}
 
 You will have to loop through one ((scope)) at a time, using
 `Object.getPrototypeOf` to go to the next outer scope. For each scope,

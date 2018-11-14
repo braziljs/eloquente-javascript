@@ -7,7 +7,7 @@ let fs = require("fs");
 
 let output = [], failed = false;
 
-let allSolutions = fs.readdirSync("code/solutions/").filter(file => !/^2[012]/.test(file));
+let allSolutions = fs.readdirSync("code/solutions/").filter(file => !/^(\.|2[012])/.test(file));
 
 for (let file of fs.readdirSync(".").sort()) {
   let match = /^((\d+).*).md$/.exec(file), chapNum = match && match[2];

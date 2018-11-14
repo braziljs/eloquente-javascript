@@ -297,7 +297,7 @@
     try { ast = acorn.parse(code, {sourceType: detectSourceType(code)}) }
     catch(e) { return {code, dependencies: []} }
     let patches = []
-    let backJump = "if (++__c % 1000 === 0) __sandbox.tick();"
+    let backJump = ";if (++__c % 1000 === 0) __sandbox.tick();"
     function loop(node) {
       if (node.body.type == "BlockStatement") {
         patches.push({from: node.body.end - 1, text: backJump})

@@ -8,6 +8,8 @@ have known—before you started.
 
 quote}}
 
+{{figure {url: "img/chapter_picture_14.jpg", alt: "Picture of a tree with letters and scripts hanging from its branches", chapter: "framed"}}}
+
 {{index drawing, parsing}}
 
 When you open a web page in your browser, the browser retrieves the
@@ -73,7 +75,7 @@ Think back to the ((syntax tree))s from [Chapter ?](language#parsing)
 for a moment. Their structures are strikingly similar to the structure
 of a browser's document. Each _((node))_ may refer to other nodes,
 _children_, which in turn may have their own children. This shape is
-typical of nested structures where elements can contain sub-elements
+typical of nested structures where elements can contain subelements
 that are similar to themselves.
 
 {{index "documentElement property"}}
@@ -96,7 +98,7 @@ array.
 A typical tree has different kinds of ((node))s. The syntax tree for
 [the Egg language](language) had identifiers, values, and application
 nodes. Application nodes may have children, whereas identifiers and
-values are _leaves_, nodes without children.
+values are _leaves_, or nodes without children.
 
 {{index "body property"}}
 
@@ -110,10 +112,10 @@ these children can be ((leaf node))s, such as pieces of ((text)) or
 
 Each DOM node object has a `nodeType` property, which contains a code
 (number) that identifies the type of node. Elements have code 1, which
-is also defined as the constant property `document.ELEMENT_NODE`. Text
+is also defined as the constant property `Node.ELEMENT_NODE`. Text
 nodes, representing a section of text in the document, get code 3
-(`document.TEXT_NODE`). Comments have code 8
-(`document.COMMENT_NODE`).
+(`Node.TEXT_NODE`). Comments have code 8
+(`Node.COMMENT_NODE`).
 
 Another way to visualize our document ((tree)) is as follows:
 
@@ -158,7 +160,7 @@ numbers to access the child nodes. But it is an instance of the
 
 Then there are issues that are simply poor design. For example, there
 is no way to create a new node and immediately add children or
-((attribute))s to it. Instead, you have to first create it, then add
+((attribute))s to it. Instead, you have to first create it and then add
 the children and attributes one by one, using side effects. Code that
 interacts heavily with the DOM tends to get long, repetitive, and
 ugly.
@@ -182,7 +184,7 @@ following diagram illustrates these:
 {{index "child node", "parentNode property", "childNodes property"}}
 
 Although the diagram shows only one link of each type, every node has
-a `parentNode` property that points to the node it is part of.
+a `parentNode` property that points to the node it is part of, if any.
 Likewise, every element node (node type 1) has a `childNodes` property
 that points to an ((array-like object)) holding its children.
 
@@ -200,8 +202,8 @@ child, `nextSibling` will be null.
 
 {{index "children property", "text node", element}}
 
-There's also the `children` property, which is like `childNodes`, but
-which only contains element (type 1) children, not other types of
+There's also the `children` property, which is like `childNodes` but
+contains only element (type 1) children, not other types of
 child nodes. This can be useful when you aren't interested in text
 nodes.
 
@@ -216,14 +218,14 @@ it has found one:
 
 ```{sandbox: "homepage"}
 function talksAbout(node, string) {
-  if (node.nodeType == document.ELEMENT_NODE) {
+  if (node.nodeType == Node.ELEMENT_NODE) {
     for (let i = 0; i < node.childNodes.length; i++) {
       if (talksAbout(node.childNodes[i], string)) {
         return true;
       }
     }
     return false;
-  } else if (node.nodeType == document.TEXT_NODE) {
+  } else if (node.nodeType == Node.TEXT_NODE) {
     return node.nodeValue.indexOf(string) > -1;
   }
 }
@@ -232,11 +234,11 @@ console.log(talksAbout(document.body, "book"));
 // → true
 ```
 
-{{index "childNodes property", "array-like object"}}
+{{index "childNodes property", "array-like object", "Array.from function"}}
 
-Because `childNodes` is not a real array, we can not loop over it with
+Because `childNodes` is not a real array, we cannot loop over it with
 `for`/`of` and have to run over the index range using a regular `for`
-loop.
+loop or use `Array.from`.
 
 {{index "nodeValue property"}}
 
@@ -254,7 +256,7 @@ of properties is a bad idea. Doing so bakes assumptions into our
 program about the precise structure of the document—a structure you
 might want to change later. Another complicating factor is that text
 nodes are created even for the ((whitespace)) between nodes. The
-example document's body tag does not have just three children (`<h1>`
+example document's `<body>` tag does not have just three children (`<h1>`
 and two `<p>` elements) but actually has seven: those three, plus the
 spaces before, after, and between them.
 
@@ -373,7 +375,7 @@ to replace them. Text nodes are created with the
 
 {{index "text node"}}
 
-Given a string, `createTextNode` gives us a text node, which we can
+Given a string, `createTextNode` gives us a text node that we can
 insert into the document to make it show up on the screen.
 
 {{index "live data structure", "getElementsByTagName method", "childNodes property"}}
@@ -460,7 +462,7 @@ object. This is the case for most commonly used standard attributes.
 But HTML allows you to set any attribute you want on nodes. This can
 be useful because it allows you to store extra information in a
 document. If you make up your own attribute names, though, such
-attributes will not be present as a property on the element's node.
+attributes will not be present as properties on the element's node.
 Instead, you have to use the `getAttribute` and `setAttribute` methods
 to work with them.
 
@@ -556,9 +558,9 @@ must add the current scroll position, which you can find in the
 
 Laying out a document can be quite a lot of work. In the interest of
 speed, browser engines do not immediately re-layout a document every
-time you change it, but wait as long as they can. When a JavaScript
+time you change it but wait as long as they can. When a JavaScript
 program that changed the document finishes running, the browser will
-have to compute a new layout in order to draw the changed document to
+have to compute a new layout to draw the changed document to
 the screen. When a program _asks_ for the position or size of
 something by reading properties such as `offsetHeight` or calling
 `getBoundingClientRect`, providing correct information also requires
@@ -608,14 +610,14 @@ one takes.
 
 We have seen that different HTML elements are drawn differently. Some
 are displayed as blocks, others inline. Some add styling—`<strong>`
-makes its content ((bold)) and `<a>` makes it blue and underlines it.
+makes its content ((bold)), and `<a>` makes it blue and underlines it.
 
 {{index "img (HTML tag)", "default behavior", "style attribute"}}
 
 The way an `<img>` tag shows an image or an `<a>` tag causes a link to
 be followed when it is clicked is strongly tied to the element type.
-But the default styling associated with an element, such as the text
-color or underline, can be changed by us. Here is an example that uses
+But we can change the styling associated with an element, such
+as the text color or underline. Here is an example that uses
 the `style` property:
 
 ```{lang: "text/html"}
@@ -640,7 +642,7 @@ separated by ((semicolon))s, as in `"color: red; border: none"`.
 
 {{index "display (CSS)", layout}}
 
-There are a lot of aspects of the document that can be influenced by
+A lot of aspects of the document can be influenced by
 styling. For example, the `display` property controls whether an
 element is displayed as a block or an inline element.
 
@@ -685,12 +687,12 @@ a particular aspect of the element's style.
 </script>
 ```
 
-{{index "camel case", capitalization, "dash character", "font-family (CSS)"}}
+{{index "camel case", capitalization, "hyphen character", "font-family (CSS)"}}
 
-Some style property names contain dashes, such as `font-family`.
+Some style property names contain hyphens, such as `font-family`.
 Because such property names are awkward to work with in JavaScript
 (you'd have to say `style["font-family"]`), the property names in the
-`style` object for such properties have their dashes removed and the
+`style` object for such properties have their hyphens removed and the
 letters after them capitalized (`style.fontFamily`).
 
 ## Cascading styles
@@ -699,7 +701,7 @@ letters after them capitalized (`style.fontFamily`).
 
 {{indexsee "Cascading Style Sheets", CSS}}
 
-The styling system for HTML is called ((CSS)) for _Cascading Style
+The styling system for HTML is called ((CSS)), for _Cascading Style
 Sheets_. A _((style sheet))_ is a set of rules for how to style
 elements in a document. It can be given inside a `<style>` tag.
 
@@ -759,7 +761,7 @@ applies only when the rules have the same _((specificity))_. A rule's
 specificity is a measure of how precisely it describes matching
 elements, determined by the number and kind (tag, class, or ID) of
 element aspects it requires. For example, a rule that targets `p.a` is
-more specific than rules that target `p` or just `.a`, and would thus
+more specific than rules that target `p` or just `.a` and would thus
 take precedence over them.
 
 {{index "direct child node"}}
@@ -784,11 +786,11 @@ in style sheets to determine which elements a set of styles apply
 to—is that we can use this same mini-language as an effective way to
 find ((DOM)) elements.
 
-{{index "querySelectorAll method"}}
+{{index "querySelectorAll method", "NodeList type"}}
 
 The `querySelectorAll` method, which is defined both on the `document`
-object and on element nodes, takes a selector string and returns an
-((array-like object)) containing all the elements that it matches.
+object and on element nodes, takes a selector string and returns a
+`NodeList` containing all the elements that it matches.
 
 ```{lang: "text/html"}
 <p>And if you go chasing
@@ -880,7 +882,7 @@ if}}
 
 Our picture is centered on the page and given a `position` of
 `relative`. We'll repeatedly update that picture's `top` and `left`
-styles in order to move it.
+styles to move it.
 
 {{index "requestAnimationFrame function", drawing, animation}}
 
@@ -895,7 +897,7 @@ which tends to produce a good-looking animation.
 
 {{index timeline, blocking}}
 
-If we just updated the DOM in a loop, the page would freeze and
+If we just updated the DOM in a loop, the page would freeze, and
 nothing would show up on the screen. Browsers do not update their
 display while a JavaScript program is running, nor do they allow any
 interaction with the page. This is why we need
@@ -906,7 +908,7 @@ updating the screen and responding to user actions.
 {{index "smooth animation"}}
 
 The ((animation)) function is passed the current ((time)) as an
-argument. To ensure the motion of the cat per millisecond is
+argument. To ensure that the motion of the cat per millisecond is
 stable, it bases the speed at which the angle changes on the
 difference between the current time and the last time the function
 ran. If it just moved the angle by a fixed amount per step, the motion
@@ -919,7 +921,7 @@ second.
 {{id sin_cos}}
 
 Moving in ((circle))s is done using the trigonometry functions
-`Math.cos` and `Math.sin`. For those of you who aren't familiar with
+`Math.cos` and `Math.sin`. For those who aren't familiar with
 these, I'll briefly introduce them since we will occasionally use them
 in this book.
 
@@ -931,7 +933,7 @@ interpret their argument as the position on this circle, with zero
 denoting the point on the far right of the circle, going clockwise
 until 2π (about 6.28) has taken us around the whole circle. `Math.cos`
 tells you the x-coordinate of the point that corresponds to the given
-position, while `Math.sin` yields the y-coordinate. Positions (or
+position, and `Math.sin` yields the y-coordinate. Positions (or
 angles) greater than 2π or less than 0 are valid—the rotation repeats
 so that _a_+2π refers to the same ((angle)) as _a_.
 
@@ -956,7 +958,7 @@ ellipse is much wider than it is high.
 {{index "unit (CSS)"}}
 
 Note that styles usually need _units_. In this case, we have to append
-`"px"` to the number to tell the browser we are counting in ((pixel))s
+`"px"` to the number to tell the browser that we are counting in ((pixel))s
 (as opposed to centimeters, "ems", or other units). This is easy to
 forget. Using numbers without units will result in your style being
 ignored—unless the number is 0, which always means the same thing,
@@ -1021,7 +1023,7 @@ Write this so that the columns are automatically derived from the
 objects, by taking the property names of the first object in the data.
 
 Add the resulting table to the element with an `id` attribute of
-`"mountains"`, so that it becomes visible in the document.
+`"mountains"` so that it becomes visible in the document.
 
 {{index "right-aligning", "text-align (CSS)"}}
 
@@ -1125,7 +1127,7 @@ in this chapter.
 {{index concatenation, "concat method", closure}}
 
 You could call `byTagname` itself recursively, concatenating the
-resulting arrays to produce the output. Or you can create an inner
+resulting arrays to produce the output. Or you could create an inner
 function that calls itself recursively and that has access to an array
 binding defined in the outer function, to which it can add the
 matching elements it finds. Don't forget to call the ((inner
@@ -1134,7 +1136,7 @@ function)) once from the outer function to start the process.
 {{index "nodeType property", "ELEMENT_NODE code"}}
 
 The recursive function must check the node type. Here we are
-interested only in node type 1 (`document.ELEMENT_NODE`). For such
+interested only in node type 1 (`Node.ELEMENT_NODE`). For such
 nodes, we must loop over their children and, for each child, see
 whether the child matches the query while also doing a recursive call
 on it to inspect its own children.
@@ -1194,7 +1196,7 @@ if}}
 
 `Math.cos` and `Math.sin` measure angles in radians, where a full
 circle is 2π. For a given angle, you can get the opposite angle by
-adding half of this, one time `Math.PI`. This can be useful for
+adding half of this, which is `Math.PI`. This can be useful for
 putting the hat on the opposite side of the orbit.
 
 hint}}

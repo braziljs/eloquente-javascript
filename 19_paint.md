@@ -12,13 +12,14 @@ quote}}
 
 {{index "Miro, Joan", "drawing program example", "project chapter"}}
 
+{{figure {url: "img/chapter_picture_19.jpg", alt: "Picture of a tiled mosaic", chapter: "framed"}}}
+
 The material from the previous chapters gives you all the elements you
 need to build a basic ((web application)). In this chapter, we will do
 just that.
 
 Our ((application)) will be a ((pixel)) ((drawing)) program, where you
-can modify a picture pixel by pixel by manipulating a zoomed-in view,
-a grid of colored squares. You can use it to open image ((file))s,
+can modify a picture pixel by pixel by manipulating a zoomed-in view of it, shown as a grid of colored squares. You can use the program to open image ((file))s,
 scribble on them with your mouse or other pointer device, and save
 them. This is what it will look like:
 
@@ -40,7 +41,7 @@ area, and for picking a ((color)) from the picture.
 
 We will structure the editor interface as a number of
 _((component))s_, objects that are responsible for a piece of the
-((DOM)), and may contain other components inside them.
+((DOM)) and that may contain other components inside them.
 
 The ((state)) of the application consists of the current picture, the
 selected tool, and the selected color. We'll set things up so that the
@@ -50,25 +51,25 @@ base the way they look on the current state.
 To see why this is important, let's consider the
 alternative—distributing pieces of state throughout the interface. Up
 to a certain point, this is easier to program. We can just put in a
-((color field)), and read its value when we need to know the current
+((color field)) and read its value when we need to know the current
 color.
 
-But then we add the ((color picker))—a tool that lets you click on the
-picture to select the color of a given pixel. In order to keep the
+But then we add the ((color picker))—a tool that lets you click the
+picture to select the color of a given pixel. To keep the
 color field showing the correct color, that tool would have to know
-that it exists, and update it whenever it picks a new color. And if
+that it exists and update it whenever it picks a new color. If
 you ever add another place that makes the color visible (maybe the
-mouse cursor could show it), you have to go and update your
-color-changing code to keep that synchronized too.
+mouse cursor could show it), you have to update your
+color-changing code to keep that synchronized.
 
 {{index modularity}}
 
-In effect, this gets you a problem where each part of the interface
+In effect, this creates a problem where each part of the interface
 needs to know about all other parts, which is not very modular. For
 small applications like the one in this chapter, that may not be a
-problem. For bigger projects it can turn into a real nightmare.
+problem. For bigger projects, it can turn into a real nightmare.
 
-So to avoid this nightmare on principle, we're going to be very strict
+To avoid this nightmare on principle, we're going to be strict
 about _((data flow))_. There is a state, and the interface is drawn
 based on that state. An interface component may respond to user
 actions by updating the state, at which point the components get a
@@ -80,7 +81,7 @@ In practice, each ((component)) is set up so that when it is given a
 new state, it also notifies its child components, insofar as those
 need to be updated. Setting this up is a bit of a hassle. Making this
 more convenient is the main selling point of many browser programming
-libraries. But for a small application like this we can do it without
+libraries. But for a small application like this, we can do it without
 such infrastructure.
 
 Updates to the ((state)) are represented as objects, which we'll call
@@ -92,30 +93,30 @@ themselves to this new state.
 We're taking the messy task of running a ((user interface)) and
 applying some ((structure)) to it. Though the ((DOM))-related pieces
 are still full of ((side effect))s, they are held up by a conceptually
-simple backbone—the state update cycle. The state determines what the
+simple backbone: the state update cycle. The state determines what the
 DOM looks like, and the only way DOM events can change the state is by
 dispatching actions to the state.
 
 {{index "data flow"}}
 
-There are _many_ variants of this approach, each with their own
-benefits and problems, but the central idea to them is the same: state
+There are _many_ variants of this approach, each with its own
+benefits and problems, but their central idea is the same: state
 changes should go through a single well-defined channel, not happen
 all over the place.
 
 {{index "dom property"}}
 
 Our ((component))s will be ((class))es conforming to an ((interface)).
-Their constructor is given a state, which may be the whole application
-state or some smaller value if it doesn't need access to everything,
-and uses that to build up a `dom` property, the DOM that represents
-the component. Most constructors will also take some other values,
+Their constructor is given a state—which may be the whole application
+state or some smaller value if it doesn't need access to everything—and
+uses that to build up a `dom` property. This is the DOM element that represents
+the component. Most constructors will also take some other values
 that won't change over time, such as the function they can use to
 ((dispatch)) an action.
 
-{{index "setState method"}}
+{{index "syncState method"}}
 
-Each component has a `setState` method that is used to synchronize it
+Each component has a `syncState` method that is used to synchronize it
 to a new state value. The method takes one argument, the state, which
 is of the same type as the first argument to its constructor.
 
@@ -124,7 +125,7 @@ is of the same type as the first argument to its constructor.
 {{index "Picture class", "picture property", "tool property", "color property", "Matrix class"}}
 
 The application state will be an object with `picture`, `tool`, and
-`color` properties. The picture is itself an object, storing the
+`color` properties. The picture is itself an object that stores the
 width, height, and pixel content of the picture. The ((pixel))s are
 stored in an array, in the same way as the matrix class from [Chapter
 ?](object)—row by row, from top to bottom.
@@ -162,21 +163,21 @@ to do that, the class has a `draw` method that expects an array of
 updated pixels—objects with `x`, `y`, and `color` properties—and
 creates a new picture with those pixels overwritten. This method uses
 `slice` without arguments to copy the entire pixel array—the start of
-the slice defaults to 0 and the end to the array's length.
+the slice defaults to 0, and the end defaults to the array's length.
 
 {{index "Array constructor", "fill method", ["length property", "for array"]}}
 
 The `empty` method uses two pieces of ((array)) functionality that we
 haven't seen before. The `Array` constructor can be called with a
-number to create an empty array of the given length. And the `fill`
+number to create an empty array of the given length. The `fill`
 method can then be used to fill this array with a given value. These
 are used to create an array in which all pixels have the same color.
 
 {{index "hexadecimal number", "color component", "color field", "fillColor property"}}
 
 Colors are stored as strings containing traditional ((CSS)) ((color
-code))s—a ((hash sign)) (`#`) followed by six hexadecimal (base-16)
-digits, two for the ((red)) component, two for the ((green))
+code))s made up of a ((hash sign)) (`#`) followed by six hexadecimal (base-16)
+digits—two for the ((red)) component, two for the ((green))
 component, and two for the ((blue)) component. This is a somewhat
 cryptic and inconvenient way to write colors, but it is the format the
 HTML color input field uses, and it can be used in the `fillColor`
@@ -188,7 +189,7 @@ in this program, it is practical enough.
 Black, where all components are zero, is written `"#000000"`, and
 bright ((pink)) looks like `"#ff00ff"`, where the red and blue
 components have the maximum value of 255, written `ff` in hexadecimal
-((digit))s (which use _a_ to _f_ as digits for 10 to 15).
+((digit))s (which use _a_ to _f_ to represent digits 10 to 15).
 
 We'll allow the interface to ((dispatch)) ((action))s as objects whose
 properties overwrite the properties of the previous ((state)). The
@@ -207,13 +208,13 @@ function updateState(state, action) {
 {{index "period character", spread, "Object.assign function"}}
 
 This rather cumbersome pattern, in which `Object.assign` is used to
-first add the properties of `state` to an empty object, and then
+first add the properties of `state` to an empty object and then
 overwrite some of those with the properties from `action`, is common
 in JavaScript code that uses ((immutable)) objects. A more convenient
 notation for this, in which the triple-dot operator is used to include
 all properties from another object in an object expression, is in the
 final stages of being standardized. With that addition, you could
-write `{...state, ...action}` instead. At the time of writing this
+write `{...state, ...action}` instead. At the time of writing, this
 doesn't yet work in all browsers.
 
 ## DOM building
@@ -223,7 +224,7 @@ doesn't yet work in all browsers.
 One of the main things that interface components do is creating
 ((DOM)) structure. We again don't want to directly use the verbose DOM
 methods for that, so here's a slightly expanded version of the `elt`
-function.
+function:
 
 ```{includeCode: true}
 function elt(type, props, ...children) {
@@ -237,7 +238,7 @@ function elt(type, props, ...children) {
 }
 ```
 
-{{index "setAttribute method", "attribute", "onclick propert", "click event", "event handling"}}
+{{index "setAttribute method", "attribute", "onclick property", "click event", "event handling"}}
 
 The main difference between this version and the one we used in
 [Chapter ?](game#domdisplay) is that it assigns _properties_ to DOM
@@ -248,7 +249,7 @@ a click event handler.
 
 {{index "button (HTML tag)"}}
 
-This allows this style of registering event handlers:
+This allows the following style of registering event handlers:
 
 ```{lang: "text/html"}
 <body>
@@ -269,9 +270,9 @@ responsible for two things: showing a picture and communicating
 
 {{index "PictureCanvas class", "callback function", "scale constant", "canvas (HTML tag)", "mousedown event", "touchstart event"}}
 
-As such, we can define it as a component that only knows about the
+As such, we can define it as a component that knows about only the
 current picture, not the whole application ((state)). Because it
-doesn't know how the application as a whole works, it can not directly
+doesn't know how the application as a whole works, it cannot directly
 dispatch ((action))s. Rather, when responding to pointer events, it
 calls a callback function provided by the code that created it, which
 will handle the application-specific parts.
@@ -285,9 +286,9 @@ class PictureCanvas {
       onmousedown: event => this.mouse(event, pointerDown),
       ontouchstart: event => this.touch(event, pointerDown)
     });
-    drawPicture(picture, this.dom, scale);
+    this.syncState(picture);
   }
-  setState(picture) {
+  syncState(picture) {
     if (this.picture == picture) return;
     this.picture = picture;
     drawPicture(this.picture, this.dom, scale);
@@ -295,17 +296,17 @@ class PictureCanvas {
 }
 ```
 
-{{index "setState method", efficiency}}
+{{index "syncState method", efficiency}}
 
 We draw each pixel as a 10-by-10 square, as determined by the `scale`
 constant. To avoid unnecessary work, the component keeps track of its
-current picture, and only does a redraw when `setState` is given a new
+current picture and does a redraw only when `syncState` is given a new
 picture.
 
 {{index "drawPicture function"}}
 
 The actual drawing function sets the size of the canvas based on the
-scale and picture size, and fills it with a series of squares, one for
+scale and picture size and fills it with a series of squares, one for
 each pixel.
 
 ```{includeCode: true}
@@ -363,13 +364,13 @@ function pointerPosition(pos, domNode) {
 Since we know the size of the ((pixel))s and we can use
 `getBoundingClientRect` to find the position of the canvas on the
 screen, it is possible to go from mouse event coordinates (`clientX`
-and `clientY`) to picture coordinates. These are always rounded down,
+and `clientY`) to picture coordinates. These are always rounded down
 so that they refer to a specific pixel.
 
 {{index "touchstart event", "touchmove event", "preventDefault method"}}
 
 With touch events, we have to do something similar, but using
-different events, and making sure we call `preventDefault` on the
+different events and making sure we call `preventDefault` on the
 `"touchstart"` event to prevent ((panning)).
 
 ```{includeCode: true}
@@ -417,11 +418,12 @@ constructors.
 _Tools_ are things like drawing pixels or filling in an area. The
 application shows the set of available tools as a `<select>` field.
 The currently selected tool determines what happens when the user
-interacts with the picture with a pointer device. They are provided as
+interacts with the picture with a pointer device. The set of
+available tools is provided as
 an object that maps the names that appear in the drop-down field to
-functions that implement the tools. Such function get a picture
+functions that implement the tools. Such functions get a picture
 position, a current application state, and a `dispatch` function as
-arguments. They may return a move handler function which gets called
+arguments. They may return a move handler function that gets called
 with a new position and a current state when the pointer moves to a
 different pixel.
 
@@ -442,10 +444,10 @@ class PixelEditor {
                    ...this.controls.reduce(
                      (a, c) => a.concat(" ", c.dom), []));
   }
-  setState(state) {
+  syncState(state) {
     this.state = state;
-    this.canvas.setState(state.picture);
-    for (let ctrl of this.controls) ctrl.setState(state);
+    this.canvas.syncState(state.picture);
+    for (let ctrl of this.controls) ctrl.syncState(state);
   }
 }
 ```
@@ -454,17 +456,17 @@ The pointer handler given to `PictureCanvas` calls the currently
 selected tool with the appropriate arguments and, if that returns a
 move handler, adapts it to also receive the state.
 
-{{index "reduce method", "map method", whitespace, "setState method"}}
+{{index "reduce method", "map method", whitespace, "syncState method"}}
 
 All controls are constructed and stored in `this.controls` so that
 they can be updated when the application state changes. The call to
 `reduce` introduces spaces between the controls' DOM elements. That
 way they don't look so pressed together.
 
-{{index "select (HTML tag)", "change event", "ToolSelect class", "setState method"}}
+{{index "select (HTML tag)", "change event", "ToolSelect class", "syncState method"}}
 
 The first control is the ((tool)) selection menu. It creates a
-`<select>` element with an option for each tool, and sets up a
+`<select>` element with an option for each tool and sets up a
 `"change"` event handler that updates the application state when the
 user selects a different tool.
 
@@ -478,19 +480,19 @@ class ToolSelect {
     }, name)));
     this.dom = elt("label", null, "🖌 Tool: ", this.select);
   }
-  setState(state) { this.select.value = state.tool; }
+  syncState(state) { this.select.value = state.tool; }
 }
 ```
 
 {{index "label (HTML tag)"}}
 
 By wrapping the label text and the field in a `<label>` element, we
-tell the browser that the label belongs to that field, so that you
+tell the browser that the label belongs to that field so that you
 can, for example, click the label to focus the field.
 
 {{index "color field", "input (HTML tag)"}}
 
-We also need to be able to change the color—so let's add a control for
+We also need to be able to change the color, so let's add a control for
 that. An HTML `<input>` element with a `type` attribute of `color`
 gives us a form field that is specialized for selecting colors. Such a
 field's value is always a CSS color code in `"#RRGGBB"` format (red,
@@ -505,9 +507,9 @@ Depending on the browser, the color picker might look like this:
 
 if}}
 
-{{index "ColorSelect class", "setState method"}}
+{{index "ColorSelect class", "syncState method"}}
 
-This ((control)) creates such a field, and wires it up to stay
+This ((control)) creates such a field and wires it up to stay
 synchronized with the application state's `color` property.
 
 ```{includeCode: true}
@@ -520,7 +522,7 @@ class ColorSelect {
     });
     this.dom = elt("label", null, "🎨 Color: ", this.input);
   }
-  setState(state) { this.input.value = state.color; }
+  syncState(state) { this.input.value = state.color; }
 }
 ```
 
@@ -533,7 +535,7 @@ will control the functionality of mouse or touch events on the canvas.
 
 The most basic tool is the draw tool, which changes any ((pixel)) you
 click or tap to the currently selected color. It dispatches an action
-that updates picture to a version in which the pointed-at pixel is
+that updates the picture to a version in which the pointed-at pixel is
 given the currently selected color.
 
 ```{includeCode: true}
@@ -547,13 +549,13 @@ function draw(pos, state, dispatch) {
 }
 ```
 
-The function immediately calls the `drawPixel` function, but then also
-returns it, so that it is called again for newly touched pixels when
+The function immediately calls the `drawPixel` function but then also
+returns it so that it is called again for newly touched pixels when
 the user drags or ((swipe))s over the picture.
 
 {{index "rectangle function"}}
 
-To draw larger shapes it can be useful to quickly create
+To draw larger shapes, it can be useful to quickly create
 ((rectangle))s. The `rectangle` ((tool)) draws a rectangle between the
 point where you start ((dragging)) and the point that you drag to.
 
@@ -626,7 +628,7 @@ function fill({x, y}, state, dispatch) {
 ```
 
 The ((array)) of drawn pixels doubles as the function's ((work list)).
-For each pixel reached, we have to see if any adjacent pixels have the
+For each pixel reached, we have to see whether any adjacent pixels have the
 same color and haven't already been painted over. The loop counter
 lags behind the length of the `drawn` array as new pixels are added.
 Any pixels ahead of it still need to be explored. When it catches up
@@ -661,7 +663,7 @@ We can now test our application!
     controls: [ToolSelect, ColorSelect],
     dispatch(action) {
       state = updateState(state, action);
-      app.setState(state);
+      app.syncState(state);
     }
   });
   document.querySelector("div").appendChild(app.dom);
@@ -697,7 +699,7 @@ class SaveButton {
     link.click();
     link.remove();
   }
-  setState(state) { this.picture = state.picture; }
+  syncState(state) { this.picture = state.picture; }
 }
 ```
 
@@ -711,7 +713,7 @@ that it draws the picture on (at a scale of one pixel per pixel).
 
 The `toDataURL` method on a canvas element creates a URL that starts
 with `data:`. Unlike `http:` and `https:` URLs, data URLs contain the
-whole resource in the URL itself. They are usually very long, but they
+whole resource in the URL. They are usually very long, but they
 allow us to create working links to arbitrary pictures, right here in
 the browser.
 
@@ -739,7 +741,7 @@ class LoadButton {
       onclick: () => startLoad(dispatch)
     }, "📁 Load");
   }
-  setState() {}
+  syncState() {}
 }
 
 function startLoad(dispatch) {
@@ -758,7 +760,7 @@ function startLoad(dispatch) {
 To get access to a file on the user's computer, we need the user to
 select the file through a file input field. But I don't want the load
 button to look like a file input field, so we create the file input
-when the button is clicked, and then pretend that it itself was
+when the button is clicked and then pretend that it itself was
 clicked.
 
 {{index "FileReader class", "img (HTML tag)", "readAsDataURL method", "Picture class"}}
@@ -789,7 +791,7 @@ function finishLoad(file, dispatch) {
 
 To get access to the pixels, we must first draw the picture to a
 `<canvas>` element. The canvas context has a `getImageData` method
-that allows a script to read its ((pixel))s. So once the picture is on
+that allows a script to read its ((pixel))s. So, once the picture is on
 the canvas, we can access it and construct a `Picture` object.
 
 ```{includeCode: true}
@@ -813,8 +815,8 @@ function pictureFromImage(image) {
 }
 ```
 
-We'll limit the size of images to 100 by 100 pixels, since anything
-bigger will look _huge_ on our display, and might slow down the
+We'll limit the size of images to 100 by 100 pixels since anything
+bigger will look _huge_ on our display and might slow down the
 interface.
 
 {{index "getImageData method", color, transparency}}
@@ -843,7 +845,7 @@ done.
 ## Undo history
 
 Half of the process of editing is making little mistakes and
-correcting them again. So a very important feature in a drawing
+correcting them. So an important feature in a drawing
 program is an ((undo history)).
 
 {{index "persistent data structure"}}
@@ -889,7 +891,10 @@ function historyUpdateState(state, action) {
 {{index "undo history"}}
 
 When the action is an undo action, the function takes the most recent
-picture from the history and makes that the current picture.
+picture from the history and makes that the current picture. It sets
+`doneAt` to zero so that the next change is guaranteed to store the
+picture back in the history, allowing you to revert to it another
+time if you want.
 
 Otherwise, if the action contains a new picture and the last time we
 stored something is more than a second (1000 milliseconds) ago, the
@@ -898,8 +903,8 @@ picture.
 
 {{index "UndoButton class", control}}
 
-The undo button ((component)) doesn't do very much. It dispatches undo
-actions when clicked, and disables itself when there is nothing to
+The undo button ((component)) doesn't do much. It dispatches undo
+actions when clicked and disables itself when there is nothing to
 undo.
 
 ```{includeCode: true}
@@ -910,7 +915,7 @@ class UndoButton {
       disabled: state.done.length == 0
     }, "⮪ Undo");
   }
-  setState(state) {
+  syncState(state) {
     this.dom.disabled = state.done.length == 0;
   }
 }
@@ -922,7 +927,7 @@ class UndoButton {
 
 To set up the application, we need to create a ((state)), a set of
 ((tool))s, a set of ((control))s, and a ((dispatch)) function. We can
-pass those to the `PixelEditor` constructor to create the main
+pass them to the `PixelEditor` constructor to create the main
 component. Since we'll need to create several editors in the
 exercises, we first define some bindings.
 
@@ -949,7 +954,7 @@ function startPixelEditor({state = startState,
     controls,
     dispatch(action) {
       state = historyUpdateState(state, action);
-      app.setState(state);
+      app.syncState(state);
     }
   });
   return app.dom;
@@ -962,10 +967,10 @@ When destructuring an object or array, you can use `=` after a binding
 name to give the binding a ((default)) value, which is used when the
 ((property)) is missing or holds `undefined`. The `startPixelEditor`
 function makes use of this to accept an object with a number of
-optional properties as argument. If you don't provide a `tools`
+optional properties as an argument. If you don't provide a `tools`
 property, for example, `tools` will be bound to `baseTools`.
 
-And this is how we get an actual editor on the screen:
+This is how we get an actual editor on the screen:
 
 ```{lang: "text/html", startCode: true}
 <div></div>
@@ -981,7 +986,7 @@ Go ahead and draw something. I'll wait.
 
 if}}
 
-## Why is this so hard
+## Why is this so hard?
 
 Browser technology is amazing. It provides a powerful set of interface
 building blocks, ways to style and manipulate them, and tools to
@@ -990,24 +995,24 @@ inspect and debug your applications. The software you write for the
 planet.
 
 At the same time, browser technology is ridiculous. You have to learn
-a large amount of silly tricks and obscure facts to master it, and the
+a large number of silly tricks and obscure facts to master it, and the
 default programming model it provides is so problematic that most
 programmers prefer to cover it in several layers of ((abstraction))
-rather than dealing with it directly.
+rather than deal with it directly.
 
 {{index standard, evolution}}
 
 And though the situation is definitely improving, it mostly does so in
 the form of more elements being added to address shortcomings—creating
 even more ((complexity)). A feature used by a million websites can't
-really be replaced. And even if it could, it can be hard to decide
+really be replaced. Even if it could, it would be hard to decide
 what it should be replaced with.
 
 {{index "social factors", "economic factors"}}
 
 Technology never exists in a vacuum—we're constrained by our tools and
-the social, economic, and ((historic factors)) that produced them.
-This can be annoying, but it is generally more productive to try and
+the social, economic, and ((historical factors)) that produced them.
+This can be annoying, but it is generally more productive to try to
 build a good understanding of how the _existing_ technical reality
 works—and why it is the way it is—than to rage against it or hold out
 for another reality.
@@ -1032,23 +1037,23 @@ more features as exercises.
 {{index "keyboard bindings (exercise)"}}
 
 Add ((keyboard)) shortcuts to the application. The first letter of a
-tool's name selects the tool, and Ctrl-Z or Command-Z activates undo.
+tool's name selects the tool, and [control]{keyname}-Z or [command]{keyname}-Z activates undo.
 
 {{index "PixelEditor class", "tabindex attribute", "elt function", "keydown event"}}
 
 Do this by modifying the `PixelEditor` component. Add a `tabIndex`
-property of 0 to the wrapping `<div>` element, so that it can receive
+property of 0 to the wrapping `<div>` element so that it can receive
 keyboard ((focus)). Note that the _property_ corresponding to the
 `tabindex` _attribute_ is called `tabIndex`, with a capital I, and our
 `elt` function expects property names. Register the key event handlers
-directly on that element. This means that you have to click, touch, or
+directly on that element. This means you have to click, touch, or
 tab to the application before you can interact with it with the
 keyboard.
 
 {{index "ctrlKey property", "metaKey property", "control key", "command key"}}
 
 Remember that keyboard events have `ctrlKey` and `metaKey` (for the
-Command key on Mac) properties that you can use to see whether those
+[command]{keyname} key on Mac) properties that you can use to see whether those
 keys are held down.
 
 {{if interactive
@@ -1075,10 +1080,10 @@ keys are held down.
                      ...this.controls.reduce(
                        (a, c) => a.concat(" ", c.dom), []));
     }
-    setState(state) {
+    syncState(state) {
       this.state = state;
-      this.canvas.setState(state.picture);
-      for (let ctrl of this.controls) ctrl.setState(state);
+      this.canvas.syncState(state.picture);
+      for (let ctrl of this.controls) ctrl.syncState(state);
     }
   }
 
@@ -1093,15 +1098,15 @@ if}}
 
 {{index "keyboard bindings (exercise)", "key property", "shift key"}}
 
-The `key` property of events for letter keys will be the lower case
-letter itself, if Shift isn't being held. And we're not interested in
-key events with Shift here.
+The `key` property of events for letter keys will be the lowercase
+letter itself, if [shift]{keyname} isn't being held. We're not interested in
+key events with [shift]{keyname} here.
 
 {{index "keydown event"}}
 
-A `"keydown"` handler can inspect its event object to see if it
+A `"keydown"` handler can inspect its event object to see whether it
 matches any of the shortcuts. You can automatically get the list of
-first letters from the `tools` object, so that you don't have to write
+first letters from the `tools` object so that you don't have to write
 them out.
 
 {{index "preventDefault method"}}
@@ -1120,15 +1125,15 @@ in `drawPicture`. Creating a new state and updating the rest of the
 DOM isn't very expensive, but repainting all the pixels on the canvas
 is quite a bit of work.
 
-{{index "setState method", "PictureCanvas class"}}
+{{index "syncState method", "PictureCanvas class"}}
 
-Find a way to make the `setState` method of `PictureCanvas` faster by
+Find a way to make the `syncState` method of `PictureCanvas` faster by
 redrawing only the pixels that actually changed.
 
 {{index "drawPicture function", compatibility}}
 
 Remember that `drawPicture` is also used by the save button, so if you
-change it, either make sure the changes don't break the old use, or
+change it, either make sure the changes don't break the old use or
 create a new version with a different name.
 
 {{index "width property", "height property"}}
@@ -1143,7 +1148,7 @@ transparent again.
 <div></div>
 <script>
   // Change this method
-  PictureCanvas.prototype.setState = function(picture) {
+  PictureCanvas.prototype.syncState = function(picture) {
     if (this.picture == picture) return;
     this.picture = picture;
     drawPicture(this.picture, this.dom, scale);
@@ -1176,23 +1181,24 @@ if}}
 
 This exercise is a good example of how ((immutable)) data structures
 can make code _faster_. Because we have both the old and the new
-picture, we can compare them and only redraw the pixels that changed
-color, saving over 99% of the drawing work in most cases.
+picture, we can compare them and redraw only the pixels that changed
+color, saving more than 99 percent of the drawing work in most cases.
 
 {{index "drawPicture function"}}
 
 You can either write a new function `updatePicture` or have
 `drawPicture` take an extra argument, which may be undefined or the
 previous picture. For each ((pixel)), the function checks whether a
-previous picture was passed with the same color at this position, and
+previous picture was passed with the same color at this position and
 skips the pixel when that is the case.
 
 {{index "width property", "height property", "canvas (HTML tag)"}}
 
 Because the canvas gets cleared when we change its size, you should
 also avoid touching its `width` and `height` properties when the old
-and the new picture have the same size. If they do not, you can set
-the binding holding the old picture to null, because you shouldn't
+picture and the new picture have the same size. If they are different, which
+will happen when a new picture has been loaded, you can set
+the binding holding the old picture to null after changing the canvas size because you shouldn't
 skip any pixels after you've changed the canvas size.
 
 hint}}
@@ -1235,8 +1241,8 @@ than the current picture, when the pointer moves.
 To figure out which pixels to color, you can use the ((Pythagorean
 theorem)). First figure out the distance between the current pointer
 position and the start position by taking the square root
-(`Math.sqrt`) of the square (`Math.pow(x, 2)`) of the difference in
-x-coordinates plus the square of the difference in y-coordinates. Then
+(`Math.sqrt`) of the sum of the square (`Math.pow(x, 2)`) of the difference in
+x-coordinates and the square of the difference in y-coordinates. Then
 loop over a square of pixels around the start position, whose sides
 are at least twice the ((radius)), and color those that are within the
 circle's radius, again using the Pythagorean formula to figure out
@@ -1260,12 +1266,12 @@ this exercise, and do not get discouraged by initial failures.
 
 On most browsers, when you select the `draw` ((tool)) and quickly drag
 across the picture, you don't get a closed line. Rather, you get dots
-with gaps between them, because the `"mousemove"` or `"touchmove"`
+with gaps between them because the `"mousemove"` or `"touchmove"`
 events did not fire quickly enough to hit every ((pixel)).
 
 Improve the `draw` tool to make it draw a full line. This means you
 have to make the motion handler function remember the previous
-position, and connect that to the current one.
+position and connect that to the current one.
 
 To do this, since the pixels can be an arbitrary distance apart,
 you'll have to write a general line drawing function.
@@ -1278,7 +1284,7 @@ picture on the left, not the picture on the right.
 {{figure {url: "img/line-grid.svg", alt: "Two pixelated lines, one light, skipping across pixels diagonally, and one heavy, with all pixels connected horizontally or vertically", width: "6cm"}}}
 
 If we have code that draws a line between two arbitrary points, we
-might as well go ahead and use that to also define a `line` tool,
+might as well use it to also define a `line` tool,
 which draws a straight line between the start and end of a drag.
 
 {{if interactive
@@ -1324,13 +1330,13 @@ slope.
 
 But as soon as your slope goes across 45 degrees, you need to switch
 the way you treat the coordinates. You now need one pixel per _y_
-position, since the line goes up more than it goes left. And then,
+position since the line goes up more than it goes left. And then,
 when you cross 135 degrees, you have to go back to looping over the
 x-coordinates, but from right to left.
 
 You don't actually have to write four loops. Since drawing a line from
 _A_ to _B_ is the same as drawing a line from _B_ to _A_, you can swap
-the start and end positions for lines going from right to left, and
+the start and end positions for lines going from right to left and
 treat them as going left to right.
 
 So you need two different loops. The first thing your line drawing
@@ -1348,7 +1354,7 @@ difference, which you can get with `Math.abs`.
 
 Once you know along which ((axis)) you will be looping, you can check
 whether the start point has a higher coordinate along that axis than
-the end point, and swap them if necessary. A succinct way to swap the
+the endpoint and swap them if necessary. A succinct way to swap the
 values of two bindings in JavaScript uses ((destructuring assignment))
 like this:
 
@@ -1359,11 +1365,11 @@ like this:
 {{index rounding}}
 
 Then you can compute the ((slope)) of the line, which determines the
-amount that the coordinate on the other axis changes for each step you
+amount the coordinate on the other axis changes for each step you
 take along your main axis. With that, you can run a loop along the
 main axis while also tracking the corresponding position on the other
-axis, and draw pixels on every iteration. Make sure you round the
-non-main axis coordinates, since they are likely to be fractional, and
+axis, and you can draw pixels on every iteration. Make sure you round the
+non-main axis coordinates since they are likely to be fractional and
 the `draw` method doesn't respond well to fractional coordinates.
 
 hint}}

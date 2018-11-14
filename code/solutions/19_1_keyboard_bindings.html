@@ -40,10 +40,10 @@
         }
       }
     }
-    setState(state) {
+    syncState(state) {
       this.state = state;
-      this.canvas.setState(state.picture);
-      for (let ctrl of this.controls) ctrl.setState(state);
+      this.canvas.syncState(state.picture);
+      for (let ctrl of this.controls) ctrl.syncState(state);
     }
   }
 

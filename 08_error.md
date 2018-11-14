@@ -36,12 +36,12 @@ actually running the program. And even then, it allows you to do some
 clearly nonsensical things without complaint, such as computing
 `true * "monkey"`.
 
-{{index syntax}}
+{{index [syntax, error], [property, access]}}
 
 There are some things that JavaScript does complain about. Writing a
 program that does not follow the language's ((grammar)) will
 immediately make the computer complain. Other things, such as calling
-something that's not a function or looking up a ((property)) on an
+something that's not a function or looking up a property on an
 ((undefined)) value, will cause an error to be reported when the
 program tries to perform the action.
 
@@ -60,7 +60,7 @@ _((debugging))_.
 
 ## Strict mode
 
-{{index "strict mode", syntax, function}}
+{{index "strict mode", [syntax, error], function}}
 
 {{indexsee "use strict", "strict mode"}}
 
@@ -90,7 +90,7 @@ doesn't work when the binding in question already exists as a global
 binding. In that case, the loop will still quietly overwrite the value
 of the binding.
 
-{{index this, "global object", undefined, "strict mode"}}
+{{index "this binding", "global object", undefined, "strict mode"}}
 
 Another change in strict mode is that the `this` binding holds the
 value `undefined` in functions that are not called as ((method))s.
@@ -434,7 +434,7 @@ When a function cannot proceed normally, what we would _like_ to do is
 just stop what we are doing and immediately jump to a place that knows
 how to handle the problem. This is what _((exception handling))_ does.
 
-{{index "control flow", "raising (exception)", "throw keyword", "call stack"}}
+{{index ["control flow", exceptions], "raising (exception)", "throw keyword", "call stack"}}
 
 Exceptions are a mechanism that makes it possible for code that runs
 into a problem to _raise_ (or _throw_) an exception. An exception can
@@ -446,7 +446,7 @@ stack))_. You may remember the stack of function calls that was
 mentioned in [Chapter ?](functions#stack). An exception zooms down
 this stack, throwing away all the call contexts it encounters.
 
-{{index "error handling", syntax, "catch keyword"}}
+{{index "error handling", [syntax, statement], "catch keyword"}}
 
 If exceptions always zoomed right down to the bottom of the stack,
 they would not be of much use. They'd just provide a novel way to blow
@@ -515,9 +515,9 @@ Well, almost...
 
 ## Cleaning up after exceptions
 
-{{index "exception handling", "cleaning up"}}
+{{index "exception handling", "cleaning up", ["control flow", exceptions]}}
 
-The effect of an exception is another kind of ((control flow)). Every
+The effect of an exception is another kind of control flow. Every
 action that might cause an exception, which is pretty much every
 function call and property access, might cause control to suddenly
 leave your code.
@@ -641,10 +641,10 @@ were on the stack when the problem occurred.
 For problems that are _expected_ to happen during routine use,
 crashing with an unhandled exception is a terrible strategy.
 
-{{index syntax, [function, application], "exception handling", "Error type"}}
+{{index [function, application], "exception handling", "Error type", [binding, undefined]}}
 
 Invalid uses of the language, such as referencing a nonexistent
-((binding)), looking up a property on `null`, or calling something
+binding, looking up a property on `null`, or calling something
 that's not a function, will also result in exceptions being raised.
 Such exceptions can also be caught.
 
@@ -781,7 +781,7 @@ function firstElement(array) {
 }
 ```
 
-{{index validation, "run-time error", crash, assumption, array}}
+{{index validation, "run-time error", crash, assumption}}
 
 Now, instead of silently returning undefined (which you get when
 reading an array property that does not exist), this will loudly blow
@@ -934,10 +934,10 @@ console.log(box.locked);
 // → true
 ```
 
+if}}
+
 For extra points, make sure that if you call `withBoxUnlocked` when
 the box is already unlocked, the box stays unlocked.
-
-if}}
 
 {{hint
 

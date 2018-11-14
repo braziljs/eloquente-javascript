@@ -13,12 +13,12 @@ quote}}
 
 {{index "Fielding, Roy"}}
 
-{{figure {url: "img/chapter_picture_18.jpg", alt: "Picture of a web form on a medieval scroll", chapter: "framed"}}}
+{{figure {url: "img/chapter_picture_18.jpg", alt: "Picture of a web form on a medieval scroll", chapter: "framed", [browser, environment]}}}
 
 The _Hypertext Transfer Protocol_, already mentioned in [Chapter
 ?](browser#web), is the mechanism through which data is requested and
 provided on the ((World Wide Web)). This chapter describes the
-((protocol)) in more detail and explains the way ((browser))
+((protocol)) in more detail and explains the way browser
 JavaScript has access to it.
 
 ## The protocol
@@ -63,20 +63,20 @@ starts with this line:
 GET /18_http.html HTTP/1.1
 ```
 
-{{index "DELETE method", "PUT method", "GET method"}}
+{{index "DELETE method", "PUT method", "GET method", [method, HTTP]}}
 
-The first word is the _((method))_ of the ((request)). `GET` means
+The first word is the _method_ of the ((request)). `GET` means
 that we want to _get_ the specified resource. Other common methods are
 `DELETE` to delete a resource, `PUT` to create or replace it, and `POST` to send
 information to it. Note that the ((server)) is not obliged to carry
 out every request it gets. If you walk up to a random website and tell
 it to `DELETE` its main page, it'll probably refuse.
 
-{{index [path, URL], GitHub}}
+{{index [path, URL], GitHub, [file, resource]}}
 
-The part after the ((method)) name is the path of the _((resource))_ the
+The part after the method name is the path of the _((resource))_ the
 request applies to. In the simplest case, a resource is simply a
-((file)) on the ((server)), but the protocol doesn't require it to be.
+file on the ((server)), but the protocol doesn't require it to be.
 A resource may be anything that can be transferred _as if_ it is a
 file. Many servers generate the responses they produce on the fly. For
 example, if you open
@@ -155,11 +155,11 @@ do not require a body.
 
 ## Browsers and HTTP
 
-{{index HTTP}}
+{{index HTTP, [file, resource]}}
 
 As we saw in the example, a ((browser)) will make a request when we
 enter a ((URL)) in its ((address bar)). When the resulting HTML page
-references other files, such as ((image))s and JavaScript ((file))s,
+references other files, such as ((image))s and JavaScript files,
 those are also retrieved.
 
 {{index parallelism, "GET method"}}
@@ -255,9 +255,9 @@ We'll come back to forms and how to interact with them from JavaScript
 
 ## Fetch
 
-{{index "fetch function", "Promise class"}}
+{{index "fetch function", "Promise class", [interface, module]}}
 
-The ((interface)) through which browser JavaScript can make HTTP
+The interface through which browser JavaScript can make HTTP
 requests is called `fetch`. Since it is relatively new, it
 conveniently uses promises (which is rare for browser interfaces).
 
@@ -358,14 +358,14 @@ format you'd like to receive.
 
 ## HTTP sandboxing
 
-{{index sandbox}}
+{{index sandbox, [browser, security]}}
 
 Making ((HTTP)) requests in web page scripts once again raises
 concerns about ((security)). The person who controls the script might
 not have the same interests as the person on whose computer it is
 running. More specifically, if I visit _themafia.org_, I do not want
 its scripts to be able to make a request to _mybank.com_, using
-identifying information from my ((browser)), with instructions to
+identifying information from my browser, with instructions to
 transfer all my money to some random account.
 
 For this reason, browsers protect us by disallowing scripts to make
@@ -386,14 +386,14 @@ Access-Control-Allow-Origin: *
 
 ## Appreciating HTTP
 
-{{index client, HTTP}}
+{{index client, HTTP, [interface, HTTP]}}
 
 When building a system that requires ((communication)) between a
 JavaScript program running in the ((browser)) (client-side) and a
 program on a ((server)) (server-side), there are several different
 ways to model this communication.
 
-{{index network, abstraction}}
+{{index [network, abstraction], abstraction}}
 
 A commonly used model is that of _((remote procedure call))s_. In this
 model, communication follows the patterns of normal function calls,
@@ -406,10 +406,10 @@ When thinking in terms of remote procedure calls, HTTP is just a
 vehicle for communication, and you will most likely write an
 abstraction layer that hides it entirely.
 
-{{index "media type", "document format"}}
+{{index "media type", "document format", [method, HTTP]}}
 
 Another approach is to build your communication around the concept of
-((resource))s and ((HTTP)) ((method))s. Instead of a remote procedure
+((resource))s and ((HTTP)) methods. Instead of a remote procedure
 called `addUser`, you use a `PUT` request to `/users/larry`. Instead
 of encoding that user's properties in function arguments, you define a
 JSON document format (or use an existing format) that represents a
@@ -426,11 +426,11 @@ server interface around.
 
 ## Security and HTTPS
 
-{{index "man-in-the-middle", security, HTTPS}}
+{{index "man-in-the-middle", security, HTTPS, [network, security]}}
 
 Data traveling over the Internet tends to follow a long, dangerous
 road. To get to its destination, it must hop through anything from
-coffee shop Wi-Fi hotspots to ((network))s controlled by various companies and
+coffee shop Wi-Fi hotspots to networks controlled by various companies and
 states. At any point along its route it may be inspected or even
 modified.
 
@@ -443,13 +443,13 @@ to via your bank's website, plain HTTP is not good enough.
 
 {{index cryptography, encryption}}
 
-{{indexsee "Secure HTTP", HTTPS}}
+{{indexsee "Secure HTTP", HTTPS, [browser, security]}}
 
 The secure ((HTTP)) protocol, used for ((URL))s starting with _https://_,
 wraps HTTP traffic in a way that makes it harder to read and tamper
 with. Before exchanging data, the client verifies that the server is
 who it claims to be by asking it to prove that it has a cryptographic
-((certificate)) issued by a certificate authority that the ((browser))
+((certificate)) issued by a certificate authority that the browser
 recognizes. Next, all data going over the ((connection)) is encrypted
 in a way that should prevent eavesdropping and tampering.
 
@@ -469,7 +469,9 @@ web sites to send user-submitted information in an HTTP request. This
 design assumes that interaction with the server always happens by
 navigating to a new page.
 
-But their elements are part of the ((DOM)) like the rest of the page,
+{{index [DOM, fields]}}
+
+But their elements are part of the DOM like the rest of the page,
 and the DOM elements that represent form ((field))s support a number
 of properties and events that are not present on other elements. These
 make it possible to inspect and control such input fields with
@@ -662,7 +664,7 @@ them look gray and faded.
 
 if}}
 
-{{index "user experience", "asynchronous programming"}}
+{{index "user experience"}}
 
 When a program is
 in the process of handling an action caused by some ((button)) or other control
@@ -734,7 +736,7 @@ this default behavior by calling `preventDefault` on the event object.
 </script>
 ```
 
-{{index "submit event", validation, XMLHttpRequest}}
+{{index "submit event", validation}}
 
 Intercepting `"submit"` events in JavaScript has various uses. We can
 write code to verify that the values the user entered make sense and
@@ -745,13 +747,13 @@ the example, and have our program handle the input, possibly using
 
 ## Text fields
 
-{{index "value attribute", "input (HTML tag)", "text field", "textarea (HTML tag)"}}
+{{index "value attribute", "input (HTML tag)", "text field", "textarea (HTML tag)", [DOM, fields], [interface, object]}}
 
-Fields created by `<input>` tags with a type of `text` or `password`,
-as well as `<textarea>` tags, share a common ((interface)). Their
-((DOM)) elements have a `value` property that holds their current
-content as a string value. Setting this property to another string
-changes the field's content.
+Fields created by `<textarea>` tags, or `<input>` tags with a type of
+`text` or `password`, share a common interface. Their DOM
+elements have a `value` property that holds their current content as a
+string value. Setting this property to another string changes the
+field's content.
 
 {{index "selectionStart property", "selectionEnd property"}}
 
@@ -954,9 +956,9 @@ Hold [control]{keyname} (or [command]{keyname} on a Mac) to select multiple opti
 {{index file, "hard drive", "file system", security, "file field", "input (HTML tag)"}}
 
 File fields were originally designed as
-a way to ((upload)) files from the browser's machine through a form.
+a way to ((upload)) files from the user's machine through a form.
 In modern browsers, they also provide a way to read such files from
-JavaScript programs. The field acts as a manner of gatekeeper. The
+JavaScript programs. The field acts as a kind of gatekeeper. The
 script cannot simply start reading private files from the user's
 computer, but if the user selects a file in such a field, the browser
 interprets that action to mean that the script may read the file.
@@ -995,7 +997,7 @@ filename), `size` (the file's size in bytes, which are chunks of 8
 bits), and `type` (the media type of the file, such as `text/plain` or
 `image/jpeg`).
 
-{{index "asynchronous programming", "file reading", "FileReader class"}}
+{{index ["asynchronous programming", "reading files"], "file reading", "FileReader class"}}
 
 {{id filereader}}
 
@@ -1058,10 +1060,10 @@ tasks. By connecting a few form ((field))s with event handlers, you
 can do anything from converting between centimeters and inches to
 computing passwords from a master password and a website name.
 
-{{index persistence, memory}}
+{{index persistence, [binding, "as state"], [browser, storage]}}
 
 When such an application needs to remember something between sessions,
-you cannot use JavaScript ((binding))s—those are thrown away every
+you cannot use JavaScript bindings—those are thrown away every
 time the page is closed. You could set up a server, connect it to the
 Internet, and have your application store something there. We will see
 how to do that in [Chapter ?](node). But that's a lot of extra work
@@ -1168,7 +1170,7 @@ The `setState` method makes sure the DOM is showing a given state and
 stores the new state to `localStorage`. Event handlers call this
 function to move to a new state.
 
-{{index "Object.assign function", object, property, "computed property"}}
+{{index "Object.assign function", [object, creation], property, "computed property"}}
 
 The use of `Object.assign` in the example is intended to create a new
 object that is a clone of the old `state.notes`, but with one property
@@ -1178,12 +1180,12 @@ an empty object will cause it to fill a fresh object. The ((square
 brackets)) notation in the third argument is used to create a property
 whose name is based on some dynamic value.
 
-{{index "sessionStorage object"}}
+{{index "sessionStorage object", [browser, storage]}}
 
 There is another object, similar to `localStorage`, called
 `sessionStorage`. The difference between the two is that the content
 of `sessionStorage` is forgotten at the end of each _((session))_,
-which for most ((browser))s means whenever the browser is closed.
+which for most browsers means whenever the browser is closed.
 
 ## Summary
 
@@ -1247,7 +1249,7 @@ it can look at this header and send the one that the client prefers.
 {{index "MIME type"}}
 
 The URL
-[_http://eloquentjavascript.net/author_](http://eloquentjavascript.net/author)
+[_https://eloquentjavascript.net/author_](https://eloquentjavascript.net/author)
 is configured to respond with either plaintext, HTML, or JSON,
 depending on what the client asks for. These formats are identified by
 the standardized _((media type))s_ `text/plain`, `text/html`, and

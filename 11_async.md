@@ -20,10 +20,12 @@ keep the processor busy until they have finished their work. The speed
 at which something like a loop that manipulates numbers can be
 executed depends pretty much entirely on the speed of the processor.
 
+{{index [memory, speed], [network, speed]}}
+
 But many programs interact with things outside of the processor. For
-example, they may communicate over a computer ((network)) or request
+example, they may communicate over a computer network or request
 data from the ((hard disk))—which is a lot slower than getting it from
-((memory)).
+memory.
 
 When such a thing is happening, it would be a shame to let the
 processor sit idle—there might be some other work it could do in the
@@ -84,7 +86,7 @@ notifying the program when it is finished.
 
 {{figure {url: "img/control-io.svg", alt: "Control flow for synchronous and asynchronous programming",width: "8cm"}}}
 
-{{index "control flow", "asynchronous programming", verbosity}}
+{{index ["control flow", asynchronous], "asynchronous programming", verbosity}}
 
 Another way to describe the difference is that waiting for actions to
 finish is _implicit_ in the synchronous model, while it is _explicit_,
@@ -445,7 +447,7 @@ handled and will report this as an error.
 
 ## Networks are hard
 
-{{index network}}
+{{index [network, reliability]}}
 
 Occasionally, there isn't enough light for the ((crow))s' mirror
 systems to transmit a signal or something is blocking the path of the
@@ -465,7 +467,7 @@ request may cause it to succeed. So while we're at it, let's make our
 request function automatically retry the sending of the request a few
 times before it gives up.
 
-{{index "Promise class", "callback function", interface}}
+{{index "Promise class", "callback function", [interface, object]}}
 
 And, since we've established that promises are a good thing, we'll
 also make our request function return a promise. In terms of what they
@@ -667,7 +669,7 @@ To avoid sending the same message around the network forever, each
 nest keeps an array of gossip strings that it has already seen. To
 define this array, we use the `everywhere` function—which runs code on
 every nest—to add a property to the nest's `state` object, which is
-where we'll keep nest-local ((state)).
+where we'll keep nest-local state.
 
 When a nest receives a duplicate gossip message, which is very likely
 to happen with everybody blindly resending them, it ignores it. But
@@ -831,9 +833,9 @@ routeRequest(bigOak, "Church Tower", "note",
 
 if}}
 
-{{index "[network, stack]"}}
+{{index [network, abstraction], layering}}
 
-We've constructed several ((layer))s of functionality on top of a
+We've constructed several layers of functionality on top of a
 primitive communication system to make it convenient to use.
 This is a nice (though simplified) model of how real computer networks
 work.
@@ -959,7 +961,7 @@ findInStorage(bigOak, "events on 2017-12-21")
 
 if}}
 
-{{index "await keyword", "control flow"}}
+{{index "await keyword", ["control flow", asynchronous]}}
 
 Inside an `async` function, the word `await` can be put in front of an
 expression to wait for a promise to resolve and only then continue
@@ -1015,7 +1017,7 @@ the function returns (the one in the example never does), the iterator
 is done.
 
 Writing iterators is often much easier when you use generator
-functions. The iterator for the group class (from the exercise in
+functions. The iterator for the `Group` class (from the exercise in
 [Chapter ?](object#group_iterator)) can be written with this
 generator:
 
@@ -1036,8 +1038,10 @@ class Group {
 }
 ```
 
+{{index [state, in iterator]}}
+
 There's no longer a need to create an object to hold the iteration
-((state))—generators automatically save their local state every time
+state—generators automatically save their local state every time
 they yield.
 
 Such `yield` expressions may occur only directly in the generator
@@ -1132,10 +1136,10 @@ the event loop.
 
 ## Asynchronous bugs
 
-{{index "asynchronous programming"}}
+{{index "asynchronous programming", [state, transitions]}}
 
 When your program runs synchronously, in a single go, there are no
-((state)) changes happening except those that the program itself
+state changes happening except those that the program itself
 makes. For asynchronous programs this is different—they may have
 _gaps_ in their execution during which other code can run.
 

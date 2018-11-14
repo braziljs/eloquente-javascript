@@ -9,8 +9,8 @@
     <dc:identifier id="pub-id">net.eloquentjavascript</dc:identifier>
     <dc:language>en-US</dc:language>
     <dc:rights>This work is shared with the public using the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) license.</dc:rights>
-    <link rel="cc:license" href="http://creativecommons.org/licenses/by-nc/3.0/"/>
-    <meta property="cc:attributionURL">http://eloquentjavascript.net/</meta>
+    <link rel="cc:license" href="https://creativecommons.org/licenses/by-nc/3.0/"/>
+    <meta property="cc:attributionURL">https://eloquentjavascript.net/</meta>
     <meta property="dcterms:modified">2018-02-25T22:07:00Z</meta>
   </metadata>
   <manifest>

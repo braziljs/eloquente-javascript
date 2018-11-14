@@ -47,16 +47,18 @@ instructions for your operating system. You can also find further
 
 ## Background
 
-{{index responsiveness, input}}
+{{index responsiveness, input, [network, speed]}}
 
 One of the more difficult problems with writing systems that
-communicate over the ((network)) is managing input and ((output))—that
+communicate over the network is managing input and ((output))—that
 is, the reading and writing of data to and from the network and ((hard
 drive)). Moving data around takes time, and ((scheduling)) it cleverly
 can make a big difference in how quickly a system responds to the user
 or to network requests.
 
-In such programs, ((asynchronous programming)) is often helpful. It
+{{index ["asynchronous programming", "in Node.js"]}}
+
+In such programs, asynchronous programming is often helpful. It
 allows the program to send and receive data from and to multiple
 devices at the same time without complicated thread management and
 synchronization.
@@ -71,7 +73,7 @@ be fit onto Node's rather eccentric approach to in- and output without
 ending up with two inconsistent interfaces. In 2009, when Node was
 being designed, people were already doing callback-based programming
 in the browser, so the ((community)) around the language was used to
-an ((asynchronous programming)) style.
+an asynchronous programming style.
 
 ## The node command
 
@@ -216,10 +218,10 @@ exports.reverse = function(string) {
 };
 ```
 
-{{index "exports object", CommonJS}}
+{{index "exports object", CommonJS, [interface, module]}}
 
 Remember that adding properties to `exports` adds them to the
-((interface)) of the module. Since Node.js treats files as
+interface of the module. Since Node.js treats files as
 ((CommonJS)) ((module))s, `main.js` can take the exported `reverse`
 function from `reverse.js`.
 
@@ -359,11 +361,11 @@ way to search for packages.
 
 ## The file system module
 
-{{index directory, "fs package", "Node.js"}}
+{{index directory, "fs package", "Node.js", [file, access]}}
 
 One of the most commonly used built-in modules in Node is the `fs`
 module, which stands for _((file system))_. It exports functions for
-working with ((file))s and directories.
+working with files and directories.
 
 {{index "readFile function", "callback function"}}
 
@@ -399,9 +401,9 @@ readFile("file.txt", (error, buffer) => {
 });
 ```
 
-{{index "writeFile function", "file system"}}
+{{index "writeFile function", "file system", [file, access]}}
 
-A similar function, `writeFile`, is used to write a ((file)) to disk.
+A similar function, `writeFile`, is used to write a file to disk.
 
 ```
 const {writeFile} = require("fs");
@@ -421,12 +423,12 @@ encoding, which is ((UTF-8)).
 {{index "fs package", "readdir function", "stat function", "rename function", "unlink function"}}
 
 The `fs` module contains many other useful functions: `readdir` will
-return the ((file))s in a ((directory)) as an array of strings, `stat`
+return the files in a ((directory)) as an array of strings, `stat`
 will retrieve information about a file, `rename` will rename a file,
 `unlink` will remove one, and so on. See the documentation at
 [_https://nodejs.org_](https://nodejs.org) for specifics.
 
-{{index "asynchronous programming", "Node.js", "error handling", "callback function"}}
+{{index ["asynchronous programming", "in Node.js"], "Node.js", "error handling", "callback function"}}
 
 Most of these take a callback function as the last parameter, which
 they call either with an error (the first argument) or with a successful
@@ -470,10 +472,10 @@ action might produce annoying delays.
 
 ## The HTTP module
 
-{{index "Node.js", "http package"}}
+{{index "Node.js", "http package", [HTTP, server]}}
 
 Another central module is called `http`. It provides functionality for
-running ((HTTP)) ((server))s and making HTTP ((request))s.
+running HTTP ((server))s and making HTTP ((request))s.
 
 {{index "listening (TCP)", "listen method", "createServer function"}}
 
@@ -495,7 +497,7 @@ console.log("Listening! (port 8000)");
 {{index port, localhost}}
 
 If you run this script on your own machine, you can point your web
-((browser)) at
+browser at
 [_http://localhost:8000/hello_](http://localhost:8000/hello) to make a
 request to your server. It will respond with a small HTML page.
 
@@ -535,12 +537,14 @@ connections on ((port)) 8000. This is why you have to connect
 to _localhost:8000_ to speak to this server, rather than just
 _localhost_, which would use the default port 80.
 
-{{index "Node.js", kill}}
+{{index "Node.js", "kill process"}}
 
 When you run this script, the process just sits there and waits. When
 a script is listening for events—in this case, network
 connections—`node` will not automatically exit when it reaches the end
 of the script. To close it, press [control]{keyname}-C.
+
+{{index [method, HTTP]}}
 
 A real web ((server)) usually does more than the one in the example—it
 looks at the request's ((method)) (the `method` property) to see what
@@ -548,9 +552,9 @@ action the client is trying to perform and looks at the request's ((URL)) to
 find out which resource this action is being performed on. We'll see a
 more advanced server [later in this chapter](node#file_server).
 
-{{index "http package", "request function"}}
+{{index "http package", "request function", [HTTP, client]}}
 
-To act as an ((HTTP)) _((client))_, we can use the `request` function
+To act as an HTTP _((client))_, we can use the `request` function
 in the `http` module.
 
 ```
@@ -604,7 +608,7 @@ We have seen two instances of writable streams in the HTTP
 examples—namely, the response object that the server could write to
 and the request object that was returned from `request`.
 
-{{index "callback function", "asynchronous programming", "write method", "end method", "Buffer class"}}
+{{index "callback function", ["asynchronous programming", "in Node.js"], "write method", "end method", "Buffer class"}}
 
 _Writable streams_ are a widely used concept in Node. Such objects have
 a `write` method that can be passed a string or a `Buffer` object to
@@ -614,9 +618,9 @@ closing. Both of these methods can also be given a callback as an
 additional argument, which they will call when the writing or closing
 has finished.
 
-{{index "createWriteStream function", "writeFile function"}}
+{{index "createWriteStream function", "writeFile function", [file, stream]}}
 
-It is possible to create a writable stream that points at a ((file))
+It is possible to create a writable stream that points at a file
 with the `createWriteStream` function from the `fs` module. Then you
 can use the `write` method on the resulting object to write the file
 one piece at a time, rather than in one shot as with `writeFile`.
@@ -696,18 +700,18 @@ the response may come in as multiple chunks.
 
 ## A file server
 
-{{index "file server example", "Node.js"}}
+{{index "file server example", "Node.js", [HTTP, server]}}
 
-Let's combine our newfound knowledge about ((HTTP)) ((server))s and
+Let's combine our newfound knowledge about HTTP ((server))s and
 working with the ((file system)) to create a bridge between the two:
 an HTTP server that allows ((remote access)) to a file system. Such a
 server has all kinds of uses—it allows web applications to store and
 share data, or it can give a group of people shared access to a bunch of
 files.
 
-{{index [path, URL], "GET method", "PUT method", "DELETE method"}}
+{{index [path, URL], "GET method", "PUT method", "DELETE method", [file, resource]}}
 
-When we treat ((file))s as HTTP ((resource))s, the HTTP methods `GET`,
+When we treat files as HTTP ((resource))s, the HTTP methods `GET`,
 `PUT`, and `DELETE` can be used to read, write, and delete the files,
 respectively. We will interpret the path in the request as the path of
 the file that the request refers to.
@@ -820,22 +824,22 @@ may, for example, include `../` to refer to a parent directory. So
 one obvious source of problems would be requests for paths like
 `/../secret_file`.
 
-{{index "path package", "resolve function", "cwd function", "process object", "403 (HTTP status code)", "sep binding", "backslash character", "slash character"}}
+{{index "path package", "resolve function", "cwd function", "process object", "403 (HTTP status code)", "sep binding", ["backslash character", "as path separator"], "slash character"}}
 
 To avoid such problems, `urlPath` uses the `resolve` function from the
 `path` module, which resolves relative paths. It then verifies that
 the result is _below_ the working directory. The `process.cwd`
 function (where `cwd` stands for "current working directory") can be
-used to find this working directory. The `sep` variable from the
+used to find this working directory. The `sep` binding from the
 `path` package is the system's path separator—a backslash on Windows
 and a forward slash on most other systems. When the path doesn't start
 with the base directory, the function throws an error response object,
 using the HTTP status code indicating that access to the resource is
 forbidden.
 
-{{index "file server example", "Node.js", "GET method"}}
+{{index "file server example", "Node.js", "GET method", [file, resource]}}
 
-We'll set up the `GET` method to return a list of ((file))s when
+We'll set up the `GET` method to return a list of files when
 reading a ((directory)) and to return the file's content when reading
 a regular file.
 
@@ -857,11 +861,11 @@ lives, installs a specific version of `mime`:
 $ npm install mime@2.2.0
 ```
 
-{{index "404 (HTTP status code)", "stat function"}}
+{{index "404 (HTTP status code)", "stat function", [file, resource]}}
 
 When a requested file does not exist, the correct HTTP status code to
 return is 404. We'll use the `stat` function, which looks up
-information about a file, to find out both whether the ((file)) exists
+information about a file, to find out both whether the file exists
 and whether it is a ((directory)).
 
 ```{includeCode: ">code/file_server.js"}
@@ -887,7 +891,7 @@ methods.GET = async function(request) {
 };
 ```
 
-{{index "createReadStream function", "asynchronous programming", "error handling", "ENOENT (status code)", "Error type", inheritance}}
+{{index "createReadStream function", ["asynchronous programming", "in Node.js"], "error handling", "ENOENT (status code)", "Error type", inheritance}}
 
 Because it has to touch the disk and thus might take a while, `stat`
 is asynchronous. Since we're using promises rather than callback
@@ -1004,12 +1008,12 @@ You can download that and, after installing its dependencies, run it
 with Node to start your own file server. And, of course, you can modify
 and extend it to solve this chapter's exercises or to experiment.
 
-{{index "body (HTTP)", "curl program"}}
+{{index "body (HTTP)", "curl program", [HTTP, client], [method, HTTP]}}
 
 The command line tool `curl`, widely available on ((Unix))-like
-systems (such as macOS and Linux), can be used to make ((HTTP))
+systems (such as macOS and Linux), can be used to make HTTP
 ((request))s. The following session briefly tests our server. The `-X`
-option is used to set the request's ((method)), and `-d` is used to
+option is used to set the request's method, and `-d` is used to
 include a request body.
 
 ```{lang: null}
@@ -1055,7 +1059,7 @@ callback functions, and Node will call them with an error value and
 
 ### Search tool
 
-{{index grep, search, "search tool (exercise)"}}
+{{index grep, "search problem", "search tool (exercise)"}}
 
 On ((Unix)) systems, there is a command line tool called `grep` that
 can be used to quickly search files for a ((regular expression)).
@@ -1070,7 +1074,7 @@ When that works, extend it so that when one of the arguments is a
 ((directory)), it searches through all files in that directory and its
 subdirectories.
 
-{{index "asynchronous programming", "synchronous programming"}}
+{{index ["asynchronous programming", "in Node.js"], "synchronous programming"}}
 
 Use asynchronous or synchronous file system functions as you see fit.
 Setting things up so that multiple asynchronous actions are requested

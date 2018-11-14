@@ -12,7 +12,7 @@ quote}}
 
 {{figure {url: "img/chapter_picture_3.jpg", alt: "Picture of fern leaves with a fractal shape", chapter: framed}}}
 
-{{index function, "code structure"}}
+{{index function, [code, "structure of"]}}
 
 Functions are the bread and butter of JavaScript programming. The
 concept of wrapping a piece of program in a value has many uses. It
@@ -35,9 +35,9 @@ too much.
 
 ## Defining a function
 
-{{index "square example", [function, definition]}}
+{{index "square example", [function, definition], [binding, definition]}}
 
-A function definition is a regular ((binding)) where the value of the
+A function definition is a regular binding where the value of the
 binding is a function. For example, this code defines `square` to
 refer to a function that produces the square of a given number:
 
@@ -51,7 +51,7 @@ console.log(square(12));
 ```
 
 {{indexsee "curly braces", braces}}
-{{index braces, block, syntax, "function keyword", [function, body], [function, "as value"]}}
+{{index [braces, "function body"], block, [syntax, function], "function keyword", [function, body], [function, "as value"], [parentheses, arguments]}}
 
 A function is created with an expression that starts with the keyword
 `function`. Functions have a set of _((parameter))s_ (in this case,
@@ -109,7 +109,7 @@ in the function itself.
 {{indexsee "top-level scope", "global scope"}}
 {{index "var keyword", "global scope", [binding, global], [binding, "scope of"]}}
 
-Each ((binding)) has a _((scope))_, which is the part of the program
+Each binding has a _((scope))_, which is the part of the program
 in which the binding is visible. For bindings defined outside of any
 function or block, the scope is the whole program—you can refer to
 such bindings wherever you want. These are called _global_.
@@ -214,9 +214,9 @@ This approach to binding visibility is called _((lexical scoping))_.
 
 ## Functions as values
 
-{{index [function, "as value"]}}
+{{index [function, "as value"], [binding, definition]}}
 
-A function ((binding)) usually simply acts as a name for a specific piece
+A function binding usually simply acts as a name for a specific piece
 of the program. Such a binding is defined once and never changed. This
 makes it easy to confuse the function and its name.
 
@@ -245,7 +245,7 @@ that can be done by passing around function values to other functions.
 
 ## Declaration notation
 
-{{index syntax, "function keyword", "square example", [function, definition], [function, declaration]}}
+{{index [syntax, function], "function keyword", "square example", [function, definition], [function, declaration]}}
 
 There is a slightly shorter way to create a function binding. When the
 `function` keyword is used at the start of a statement, it works
@@ -307,9 +307,9 @@ The arrow comes _after_ the list of parameters and is followed by the
 function's body. It expresses something like "this input (the
 ((parameter))s) produces this result (the body)".
 
-{{index braces, "square example"}}
+{{index [braces, "function body"], "square example", [parentheses, arguments]}}
 
-When there is only one parameter name, you can omit the ((parentheses)) around the
+When there is only one parameter name, you can omit the parentheses around the
 parameter list. If the body is a single expression,
 rather than a ((block)) in braces, that expression will be returned
 from the function. So, these two definitions of `square` do the same
@@ -320,8 +320,10 @@ const square1 = (x) => { return x * x; };
 const square2 = x => x * x;
 ```
 
+{{index [parentheses, arguments]}}
+
 When an arrow function has no parameters at all, its parameter list is
-just an empty set of ((parentheses)).
+just an empty set of parentheses.
 
 ```
 const horn = () => {
@@ -357,7 +359,7 @@ greet("Harry");
 console.log("Bye");
 ```
 
-{{index "control flow", "execution order", "console.log"}}
+{{index ["control flow", functions], "execution order", "console.log"}}
 
 A run through this program goes roughly like this: the call to `greet`
 causes control to jump to the start of that function (line 2). The
@@ -379,7 +381,7 @@ not in function
 not in function
 ```
 
-{{index "return keyword", memory}}
+{{index "return keyword", [memory, call stack]}}
 
 Because a function has to jump back to the place that called it when
 it returns, the computer must remember the context from which the call
@@ -458,7 +460,7 @@ console.log(minus(10, 5));
 ```
 
 {{id power}}
-{{index "optional argument", "default value", parameter, "= operator"}}
+{{index "optional argument", "default value", parameter, ["= operator", "for default value"]}}
 
 If you write an `=` operator after
 a parameter, followed by an expression, the value of that expression

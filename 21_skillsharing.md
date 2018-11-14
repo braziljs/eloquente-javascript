@@ -51,12 +51,14 @@ and a _((client))_ part, written for the ((browser)). The server
 stores the system's data and provides it to the client. It also serves
 the files that implement the client-side system.
 
+{{index [HTTP, client]}}
+
 The server keeps the list of ((talk))s proposed for the next meeting,
 and the client shows this list. Each talk has a presenter name, a
 title, a summary, and an array of ((comment))s associated with it. The
 client allows users to propose new talks (adding them to the list),
 delete talks, and comment on existing talks. Whenever the user makes
-such a change, the client makes an ((HTTP)) ((request)) to tell the
+such a change, the client makes an HTTP ((request)) to tell the
 server about it.
 
 {{figure {url: "img/skillsharing.png", alt: "Screenshot of the skill-sharing website",width: "10cm"}}}
@@ -78,10 +80,10 @@ happens to be one of the motivations for Node's design.
 
 ## Long polling
 
-{{index firewall, notification, "long polling", network}}
+{{index firewall, notification, "long polling", network, [browser, security]}}
 
 To be able to immediately notify a client that something changed, we
-need a ((connection)) to that client. Since web ((browser))s do not
+need a ((connection)) to that client. Since web browsers do not
 traditionally accept connections and clients are often behind
 ((router))s that would block such connections anyway, having the
 server initiate this connection is not practical.
@@ -135,17 +137,17 @@ control for each one, is a good fit for such a system.
 
 ## HTTP interface
 
-{{index "skill-sharing project"}}
+{{index "skill-sharing project", [interface, HTTP]}}
 
 Before we start designing either the server or the client, let's think
-about the point where they touch: the ((HTTP)) ((interface)) over
+about the point where they touch: the ((HTTP)) interface over
 which they communicate.
 
-{{index [path, URL]}}
+{{index [path, URL], [method, HTTP]}}
 
 We will use ((JSON)) as the format of our request and response body.
 Like in the file server from [Chapter ?](node#file_server), we'll try
-to make good use of HTTP ((method))s and ((header))s. The interface is
+to make good use of HTTP methods and ((header))s. The interface is
 centered around the `/talks` path. Paths that do not start with
 `/talks` will be used for serving ((static file))s—the HTML and
 JavaScript code for the client-side system.
@@ -168,7 +170,7 @@ Creating a new talk is done by making a `PUT` request to a URL like
 of the talk. The `PUT` request's body should contain a ((JSON)) object
 that has `presenter` and `summary` properties.
 
-{{index "encodeURIComponent function", [escaping, "in URLs"], whitespace}}
+{{index "encodeURIComponent function", [escaping, "in URLs"], [whitespace, "in URLs"]}}
 
 Since talk titles may contain spaces and other characters that may not
 appear normally in a URL, title strings must be encoded with the
@@ -274,15 +276,15 @@ code in this section runs on ((Node.js)).
 
 ### Routing
 
-{{index "createServer function", [path, URL]}}
+{{index "createServer function", [path, URL], [method, HTTP]}}
 
 Our server will use `createServer` to start an HTTP server. In the
 function that handles a new request, we must distinguish between the
-various kinds of requests (as determined by the ((method)) and the
+various kinds of requests (as determined by the method and the
 path) that we support. This can be done with a long chain of `if`
 statements, but there is a nicer way.
 
-{{index dispatching}}
+{{index dispatch}}
 
 A _((router))_ is a component that helps dispatch a request to the
 function that can handle it. You can tell the router, for example,
@@ -573,7 +575,7 @@ SkillShareServer.prototype.talkResponse = function() {
 };
 ```
 
-{{index "query string", "url module", parsing}}
+{{index "query string", "url package", parsing}}
 
 The handler itself needs to look at the request headers to see whether
 `If-None-Match` and `Prefer` headers are present. Node stores headers,
@@ -638,8 +640,10 @@ SkillShareServer.prototype.updated = function() {
 };
 ```
 
+{{index [HTTP, server]}}
+
 That concludes the server code. If we create an instance of
-`SkillShareServer` and start it on port 8000, the resulting ((HTTP))
+`SkillShareServer` and start it on port 8000, the resulting HTTP
 server serves files from the `public` subdirectory alongside a
 talk-managing interface under the `/talks` URL.
 
@@ -680,7 +684,9 @@ file:
 <script src="skillsharing_client.js"></script>
 ```
 
-It defines the document ((title)) and includes a ((style sheet)),
+{{index CSS}}
+
+It defines the document ((title)) and includes a style sheet,
 which defines a few styles to, among other things, make sure there is
 some space between talks.
 
@@ -1035,9 +1041,9 @@ installed the project's dependency with `npm install`.
 
 ### Disk persistence
 
-{{index "data loss", persistence}}
+{{index "data loss", persistence, [memory, persistence]}}
 
-The skill-sharing server keeps its data purely in ((memory)). This
+The skill-sharing server keeps its data purely in memory. This
 means that when it ((crash))es or is restarted for any reason, all
 talks and comments are lost.
 
@@ -1076,7 +1082,7 @@ hint}}
 
 ### Comment field resets
 
-{{index "comment field reset (exercise)", template, state}}
+{{index "comment field reset (exercise)", template, [state, "of application"]}}
 
 The wholesale redrawing of talks works pretty well because you usually
 can't tell the difference between a DOM node and its identical

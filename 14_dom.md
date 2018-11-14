@@ -28,7 +28,9 @@ reflect the changes.
 
 ## Document structure
 
-You can imagine an ((HTML)) document as a nested set of ((box))es.
+{{index [HTML, structure]}}
+
+You can imagine an HTML document as a nested set of ((box))es.
 Tags such as `<body>` and `</body>` enclose other ((tag))s, which in
 turn contain other tags or ((text)). Here's the example document from
 the [previous chapter](browser):
@@ -55,7 +57,7 @@ This page has the following structure:
 {{indexsee "Document Object Model", DOM}}
 
 The data structure the browser uses to represent the document follows
-this shape. For each box, there is an ((object)), which we can
+this shape. For each box, there is an object, which we can
 interact with to find out things such as what HTML tag it represents
 and which boxes and text it contains. This representation is called
 the _Document Object Model_, or ((DOM)) for short.
@@ -78,14 +80,14 @@ _children_, which in turn may have their own children. This shape is
 typical of nested structures where elements can contain subelements
 that are similar to themselves.
 
-{{index "documentElement property"}}
+{{index "documentElement property", [DOM, tree]}}
 
 We call a data structure a _((tree))_ when it has a branching
 structure, has no ((cycle))s (a node may not contain itself, directly
 or indirectly), and has a single, well-defined _((root))_. In the case
-of the ((DOM)), `document.documentElement` serves as the root.
+of the DOM, `document.documentElement` serves as the root.
 
-{{index sorting, "data structure", "syntax tree"}}
+{{index sorting, ["data structure", "tree"], "syntax tree"}}
 
 Trees come up a lot in computer science. In addition to representing
 recursive structures such as HTML documents or programs, they are
@@ -100,10 +102,10 @@ A typical tree has different kinds of ((node))s. The syntax tree for
 nodes. Application nodes may have children, whereas identifiers and
 values are _leaves_, or nodes without children.
 
-{{index "body property"}}
+{{index "body property", [HTML, structure]}}
 
 The same goes for the DOM. Nodes for _((element))s_, which represent
-((HTML)) tags, determine the structure of the document. These can have
+HTML tags, determine the structure of the document. These can have
 ((child node))s. An example of such a node is `document.body`. Some of
 these children can be ((leaf node))s, such as pieces of ((text)) or
 ((comment)) nodes.
@@ -128,13 +130,13 @@ relationships between nodes.
 
 ## The standard
 
-{{index "programming language", [interface, design]}}
+{{index "programming language", [interface, design], [DOM, interface]}}
 
 Using cryptic numeric codes to represent node types is not a very
 JavaScript-like thing to do. Later in this chapter, we'll see that
-other parts of the ((DOM)) interface also feel cumbersome and alien.
+other parts of the DOM interface also feel cumbersome and alien.
 The reason for this is that the DOM wasn't designed for just
-JavaScript. Rather, it tries to be a language-neutral ((interface))
+JavaScript. Rather, it tries to be a language-neutral interface
 that can be used in other systems as well—not just for HTML but also
 for ((XML)), which is a generic ((data format)) with an HTML-like
 syntax.
@@ -247,7 +249,7 @@ it represents.
 
 ## Finding elements
 
-{{index DOM, "body property", "hard-coding"}}
+{{index [DOM, querying], "body property", "hard-coding", [whitespace, "in HTML"]}}
 
 Navigating these ((link))s among parents, children, and siblings is
 often useful. But if we want to find a specific node in the document,
@@ -255,12 +257,12 @@ reaching it by starting at `document.body` and following a fixed path
 of properties is a bad idea. Doing so bakes assumptions into our
 program about the precise structure of the document—a structure you
 might want to change later. Another complicating factor is that text
-nodes are created even for the ((whitespace)) between nodes. The
+nodes are created even for the whitespace between nodes. The
 example document's `<body>` tag does not have just three children (`<h1>`
 and two `<p>` elements) but actually has seven: those three, plus the
 spaces before, after, and between them.
 
-{{index searching, "href attribute", "getElementsByTagName method"}}
+{{index "search problem", "href attribute", "getElementsByTagName method"}}
 
 So if we want to get the `href` attribute of the link in that
 document, we don't want to say something like "Get the second child of
@@ -303,9 +305,9 @@ node and retrieves all elements that have the given string in their
 
 ## Changing the document
 
-{{index "side effect", "removeChild method", "appendChild method", "insertBefore method", [DOM, construction]}}
+{{index "side effect", "removeChild method", "appendChild method", "insertBefore method", [DOM, construction], [DOM, modification]}}
 
-Almost everything about the ((DOM)) data structure can be changed. The
+Almost everything about the DOM data structure can be changed. The
 shape of the document tree can be modified by changing parent-child
 relationships. Nodes have a `remove` method to remove them from their
 current parent node. To add a child node to an element node, we can
@@ -451,10 +453,10 @@ if}}
 
 ## Attributes
 
-{{index "href attribute"}}
+{{index "href attribute", [DOM, attributes]}}
 
 Some element ((attribute))s, such as `href` for links, can be accessed
-through a ((property)) of the same name on the element's ((DOM))
+through a property of the same name on the element's ((DOM))
 object. This is the case for most commonly used standard attributes.
 
 {{index "data attribute", "getAttribute method", "setAttribute method", attribute}}
@@ -700,9 +702,10 @@ letters after them capitalized (`style.fontFamily`).
 {{index "rule (CSS)", "style (HTML tag)"}}
 
 {{indexsee "Cascading Style Sheets", CSS}}
+{{indexsee "style sheet", CSS}}
 
 The styling system for HTML is called ((CSS)), for _Cascading Style
-Sheets_. A _((style sheet))_ is a set of rules for how to style
+Sheets_. A _style sheet_ is a set of rules for how to style
 elements in a document. It can be given inside a `<style>` tag.
 
 ```{lang: "text/html"}
@@ -773,18 +776,18 @@ indirect children.
 
 ## Query selectors
 
-{{index complexity}}
+{{index complexity, CSS}}
 
-We won't be using ((style sheet))s all that much in this book.
+We won't be using style sheets all that much in this book.
 Understanding them is helpful when programming in the browser, but
 they are complicated enough to warrant a separate book.
 
-{{index "domain-specific language"}}
+{{index "domain-specific language", [DOM, querying]}}
 
 The main reason I introduced _((selector))_ syntax—the notation used
 in style sheets to determine which elements a set of styles apply
 to—is that we can use this same mini-language as an effective way to
-find ((DOM)) elements.
+find DOM elements.
 
 {{index "querySelectorAll method", "NodeList type"}}
 
@@ -848,7 +851,9 @@ of the nearest enclosing element whose `position` property isn't
 `static`, or relative to the document if no such enclosing element
 exists.
 
-We can use this to create an ((animation)). The following document
+{{index [animation, "spinning cat"]}}
+
+We can use this to create an animation. The following document
 displays a picture of a cat that moves around in an ((ellipse)):
 
 ```{lang: "text/html", startCode: true}
@@ -907,7 +912,7 @@ updating the screen and responding to user actions.
 
 {{index "smooth animation"}}
 
-The ((animation)) function is passed the current ((time)) as an
+The animation function is passed the current ((time)) as an
 argument. To ensure that the motion of the cat per millisecond is
 stable, it bases the speed at which the angle changes on the
 difference between the current time and the last time the function
@@ -990,7 +995,7 @@ style directly through its `style` property.
 
 {{index "table (HTML tag)"}}
 
-An ((HTML)) table is built with the following tag structure:
+An HTML table is built with the following tag structure:
 
 ```{lang: "text/html"}
 <table>
@@ -1145,9 +1150,9 @@ hint}}
 
 ### The cat's hat
 
-{{index "cat's hat (exercise)"}}
+{{index "cat's hat (exercise)", [animation, "spinning cat"]}}
 
-Extend the cat ((animation)) defined [earlier](dom#animation) so that
+Extend the cat animation defined [earlier](dom#animation) so that
 both the cat and his hat (`<img src="img/hat.png">`) orbit at opposite
 sides of the ellipse.
 

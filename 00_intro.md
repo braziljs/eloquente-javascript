@@ -196,7 +196,7 @@ could be written in English like this:
  8. Continue with instruction 3.
  9. Output the value of memory location 0.
 
-{{index readability, naming, variable}}
+{{index readability, naming, binding}}
 
 Although that is already more readable than the soup of bits, it is
 still rather obscure. Using names instead of numbers for the
@@ -244,7 +244,7 @@ console.log(total);
 // → 55
 ```
 
-{{index "while loop", loop, braces}}
+{{index "while loop", loop, [braces, block]}}
 
 This version gives us a few more improvements. Most important, there
 is no need to specify the way we want the program to jump back and

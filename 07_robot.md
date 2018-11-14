@@ -103,6 +103,8 @@ that can describe it. This model tells us where the robot is and where
 the parcels are. When the robot has decided to move somewhere, we need
 to update the model to reflect the new situation.
 
+{{index [state, in objects]}}
+
 If you're thinking in terms of ((object-oriented programming)), your
 first impulse might be to start defining objects for the various
 elements in the world: a ((class)) for the robot, one for a parcel,
@@ -119,7 +121,9 @@ application tends to leave you with a collection of interconnected
 objects that each have their own internal, changing state. Such
 programs are often hard to understand and thus easy to break.
 
-Instead, let's condense the village's ((state)) down to the minimal
+{{index [state, in objects]}}
+
+Instead, let's condense the village's state down to the minimal
 set of values that define it. There's the robot's current location and
 the collection of undelivered parcels, each of which has a current
 location and a destination address. That's it.
@@ -190,7 +194,7 @@ where the robot is at the post office and the parcel is undelivered.
 
 ## Persistent data
 
-{{index "persistent data structure", mutability, "data structure"}}
+{{index "persistent data structure", mutability, ["data structure", immutable]}}
 
 Data structures that don't change are called _((immutable))_ or
 _persistent_. They behave a lot like strings and numbers in that they
@@ -293,7 +297,7 @@ function randomRobot(state) {
 }
 ```
 
-{{index "Math.random function", "Math.floor function", array}}
+{{index "Math.random function", "Math.floor function", [array, "random element"]}}
 
 Remember that `Math.random()` returns a number between zero and
 one—but always below one. Multiplying such a number by the length of an
@@ -639,7 +643,9 @@ The class should work for values of any type, not just strings. It
 does _not_ have to be efficient when used with large amounts of
 values.
 
-The ((constructor)) shouldn't be part of the class's ((interface))
+{{index [interface, object]}}
+
+The ((constructor)) shouldn't be part of the class's interface
 (though you'll definitely want to use it internally). Instead, there
 is an empty instance, `PGroup.empty`, that can be used as a starting
 value.
@@ -672,7 +678,7 @@ if}}
 
 {{hint
 
-{{index "persistent map (exercise)", "Set class", array, "PGroup class"}}
+{{index "persistent map (exercise)", "Set class", [array, creation], "PGroup class"}}
 
 The most convenient way to represent the set of member values
 is still as an array since arrays are easy to copy.

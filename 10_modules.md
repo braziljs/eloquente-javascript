@@ -33,7 +33,7 @@ tudo puder tocar todo o resto, é difícil olhar uma determinada parte isolada. 
 usar qualquer funcionalidade do programa em outra situação, re-escrever será mais
 fácil do que tentar desenrolar a função de seu contexto.
 
-O termo "((grande bola de lama))" geralmente é usado para programas grandes e sem
+O termo "((grande bola de lama))" é geralmente usado para programas grandes e sem
 estrutura. Tudo fica junto e quando você tenta pegar uma parte, toda a coisa despenca
 e você fica com as mãos sujas.
 

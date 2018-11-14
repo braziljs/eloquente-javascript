@@ -1,52 +1,34 @@
 {{meta {load_files: ["code/chapter/19_paint.js"], zip: "html include=[\"css/paint.css\"]"}}}
 
-# Project: A Pixel Art Editor
+# Projeto: Um Editor de Pixel Art
 
 {{quote {author: "Joan Miro", chapter: true}
 
-I look at the many colors before me. I look at my blank canvas. Then,
-I try to apply colors like words that shape poems, like notes that
-shape music.
+
+Eu olho para as muitas cores diante de mim. Eu olho para minha tela em branco. Então, eu tento usar as cores como palavras que moldam de poemas, como as notas que formam a música.
 
 quote}}
 
 {{index "Miro, Joan", "drawing program example", "project chapter"}}
 
-{{figure {url: "img/chapter_picture_19.jpg", alt: "Picture of a tiled mosaic", chapter: "framed"}}}
+O material do capítulo anterior te dá todo os elementos que você precisa para construir uma ((aplicação web)) simples. Nesse capítulo, nós vamos fazer exatamente isso.
 
-The material from the previous chapters gives you all the elements you
-need to build a basic ((web application)). In this chapter, we will do
-just that.
+Nossa ((aplicação)) será um programa de ((desenho)) em ((pixel)), onde você pode modificar uma imagem pixel a pixel manipulando uma visão ampliada, uma grid de quadrados coloridos. Você pode usá-la para abrir ((aquivo))s de imagem, rabiscar sobre com o mouse e salvá-la. É assim como vai ficar:
 
-Our ((application)) will be a ((pixel)) ((drawing)) program, where you
-can modify a picture pixel by pixel by manipulating a zoomed-in view of it, shown as a grid of colored squares. You can use the program to open image ((file))s,
-scribble on them with your mouse or other pointer device, and save
-them. This is what it will look like:
 
-{{figure {url: "img/pixel_editor.png", alt: "The pixel editor interface, with colored pixels at the top and a number of controls below that", width: "8cm"}}}
+{{figure {url: "img/pixel_editor.png", alt: "A interface do editor de pixels, com pixels coloridos na parte superior e controles na parte inferior", width: "8cm"}}}
 
-Painting on a computer is great. You don't need to worry about
-materials, ((skill)), or talent. You just start smearing.
+Pintar pelo computador é ótimo. Você não tem que se preocupar com materiais, ((habilidades)), ou talento. Você apenas precisa começar a manchar.
 
-## Components
+## Componentes
 
 {{index drawing, "select (HTML tag)", "canvas (HTML tag)", component}}
 
-The interface for the application shows a big `<canvas>` element on
-top, with a number of form ((field))s below it. The user draws on the
-((picture)) by selecting a tool from a `<select>` field and then
-clicking, ((touch))ing, or ((dragging)) across the canvas. There are
-((tool))s for drawing single pixels or rectangles, for filling an
-area, and for picking a ((color)) from the picture.
+A interface para a aplicação mostra um grande elemento `<canvas>` na parte superior, com uma série de ((campos)) do formulário abaixo dele. O usuário desenha na ((imagem)) ao selecionar uma ferramenta de um campo `<select>` e em seguida ((clicando)), ((tocando)), ou ((arrastando)) em toda a tela. Existem ((ferramenta))s para desenhar um pixel unico ou retângulos, para preencher uma área, e para escolher uma ((cor)) da imagem.
 
-We will structure the editor interface as a number of
-_((component))s_, objects that are responsible for a piece of the
-((DOM)) and that may contain other components inside them.
+Nós vamos estruturar a interface do editor com _((componente))s_, objetos que são responsáveis por uma parte do ((DOM)), e que pode conter outros componentes dentro deles.
 
-The ((state)) of the application consists of the current picture, the
-selected tool, and the selected color. We'll set things up so that the
-state lives in a single value, and the interface components always
-base the way they look on the current state.
+O ((estado)) da aplicação consiste na imagem atual, a ferramenta selecionada, e a cor selecionada. Vamos configurar as coisas para que o estado viva em um único valor, e os componentes da interface sempre baseiem-se na maneira como eles se parecem no estado atual.
 
 To see why this is important, let's consider the
 alternative—distributing pieces of state throughout the interface. Up

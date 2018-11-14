@@ -411,7 +411,7 @@ Em seguida, o corpo da resposta (o próprio documento) é enviado com
 `response.write`. Você pode chamar esse método quantas vezes você quiser
 para enviar a resposta peça por peça, possibilitando que a informação seja
 transmitida para o cliente assim que ela esteja disponível. Finalmente,
-`response,end` assina o fim da resposta.
+`response.end` assina o fim da resposta.
 
 A chamada de `server.listen`  faz com que o servidor comece a esperar por
 conexões na porta 8000. Por isso você precisa se conectar a _localhost:8000_, ao

@@ -47,7 +47,7 @@ funcionalidades ele fornece para outros módulos (são as _((interfaces))_).
 
 {{index "big ball of mud"}}
 
-Interfaces de módulo têm muito em comum com interfaces de objetvo como vimos no
+Interfaces de módulo têm muito em comum com interfaces de objeto como vimos no
 [Capítulo ?](object#interface). Eles fazem parte do módulo disponível no mundo
 externo e mantém o resto privado. Restringindo o modo como os módulos interagem entre
 si, o sistema fica mais parecido com ((Lego)), onde as peças interagem através de

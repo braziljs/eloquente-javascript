@@ -194,33 +194,33 @@ em adicionar mais rigor ao seus programas, eu recomendo que você experimente.
 Neste livro, nos continuaremos utilizando o bruto, perigoso e não tipado
 código JavaScript puro.
 
-## Testing
+## Testando
 
 {{index "test suite", "run-time error", automation, testing}}
 
-If the language is not going to do much to help us find mistakes,
-we'll have to find them the hard way: by running the program and
-seeing whether it does the right thing.
+Se a linguagem não vai fazer muito para nos ajudar a encontrar erros,
+teremos que encontra-los da maneira mais difícil: executando o programa e 
+verificando se ele fez a coisa certa.
 
-Doing this by hand, again and again, is a really bad idea. Not only is
-it annoying, it also tends to be ineffective since it takes too much
-time to exhaustively test everything every time you make a change.
+Fazendo isso manualmente, de novo e de novo, é realmente uma má ideia. Não é apenas
+irritante, mas também tende a ser ineficiente, pois leva muito
+tempo para testar tudo exaustivamente sempre que você fizer uma mudança.
 
-Computers are good at repetitive tasks, and testing is the ideal
-repetitive task. Automated testing is the process of writing a program
-that tests another program. Writing tests is a bit more work than
-testing manually, but once you've done it, you gain a kind of
-superpower: it takes you only a few seconds to verify that your
-program still behaves properly in all the situations you wrote tests
-for. When you break something, you'll immediately notice, rather than
-randomly running into it at some later time.
+Computadores são bons em tarefas repetitivas, e testar é a tarefa
+repetitiva ideal. Automatização de testes é o processo de escrever um programa
+que testa outro programa. Escrever testes é um pouco mais trabalhoso que
+testar manualmente, mas uma vez feito, você ganha uma espécie de
+superpoder: leva apenas alguns segundos para verificar que seu
+programa continua se comportando bem a todas as situações para as quais você escreveu
+testes. Quando você quebra alguma coisa, você será avisado imediatamente, ao invés de
+aleatoriamente, em algum momento depois.
 
 {{index "toUpperCase method"}}
 
-Tests usually take the form of little labeled programs that verify
-some aspect of your code. For example, a set of tests for the
-(standard, probably already tested by someone else) `toUpperCase`
-method might look like this:
+Testes normalmente tem a forma de pequenos programas que verificam
+algum aspecto do seu código. Por exemplo, um conjunto de testes para o método
+(padrão e provavelmente já testado por outra pessoa) `toUpperCase`
+pode ser assim:
 
 ```
 function test(label, body) {
@@ -240,48 +240,46 @@ test("don't convert case-less characters", () => {
 
 {{index "domain-specific language"}}
 
-Writing tests like this tends to produce rather repetitive, awkward
-code. Fortunately, there exist pieces of software that help you build
-and run collections of tests (_((test suites))_) by providing a
-language (in the form of functions and methods) suited to expressing
-tests and by outputting informative information when a test fails.
-These are usually called _((test runners))_.
+Escrever testes como este tende a produzir um código muito repetitivo
+e desajeitado. Felizmente, existem softwares que ajudam você a escrever
+e rodar coleções de testes (_((test suites))_) fornecendo uma
+linguagem (na forma de funções e métodos) adequada para expressar
+testes e gerando informações utéis quando o teste falha.
+Estes são geralmente chamados de _((test runners))_.
 
 {{index "persistent data structure"}}
 
-Some code is easier to test than other code. Generally, the more
-external objects that the code interacts with, the harder it is to set
-up the context in which to test it. The style of programming shown in
-the [previous chapter](robot), which uses self-contained persistent
-values rather than changing objects, tends to be easy to test.
+Certos códigos são mais fáceis de tester que outros. Geralmente, quanto mais
+objetos externos o código interage, mais difícil é configurar o contexto no qual
+testá-lo. O estilo de programação mostrado no [capítulo anterior](robot), que usa valores
+persistentes independentes em vez de alterar objetos, tenden a ser mais fácil de testar.
 
-## Debugging
+## Depuração
 
 {{index debugging}}
 
-Once you notice there is something wrong with your program
-because it misbehaves or produces errors, the next step is to figure
-out _what_ the problem is.
+Uma vez que você nota que há algo errado com o seu programa
+porque ele se comporta mal ou produz erros, o próximo passo é descobrir
+_qual_ é o problema.
 
-Sometimes it is obvious. The ((error)) message will point at a
-specific line of your program, and if you look at the error
-description and that line of code, you can often see the problem.
+Algumas vezes é óbvio. A mensagem de ((erro)) vai apontar para
+a linha específica do seu programa, e se você olhar para a descrição
+do erro e essa linha do código, você pode identificar, com frequência, o problema.
 
 {{index "run-time error"}}
 
-But not always. Sometimes the line that triggered the problem is
-simply the first place where a flaky value produced elsewhere gets
-used in an invalid way. If you have been solving the ((exercises)) in
-earlier chapters, you will probably have already experienced such
-situations.
+Nem sempre. Às vezes, a linha que desencadeou o problema
+é simplesmente o primeiro lugar em que um valor esquisito produzido em outro lugar
+é usado de maneira inválida. Se você tiver resolvido os ((exercícios)) nos
+capítulos anteriores, provavelmente já terá experimentado tais
+situações.
 
 {{index "decimal number", "binary number"}}
 
-The following example program tries to convert a whole number to a
-string in a given base (decimal, binary, and so on) by repeatedly
-picking out the last ((digit)) and then dividing the number to get rid
-of this digit. But the strange output that it currently produces
-suggests that it has a ((bug)).
+O programa de exemplo a seguir tenta converter um número inteiro em uma
+sequência de caracteres em uma determinada base (decimal, binário e assim por diante) repetidamente escolhendo o último ((dígito)) e, em seguida, dividindo o número para se livrar
+desse dígito. Mas a saída estranha que ele atualmente produz
+sugere que tem um ((bug)).
 
 ```
 function numberToString(n, base = 10) {
@@ -302,25 +300,25 @@ console.log(numberToString(13, 10));
 
 {{index analysis}}
 
-Even if you see the problem already, pretend for a moment that you
-don't. We know that our program is malfunctioning, and we want to find
-out why.
+Mesmo se voce já veja o problema, finja por um momento que não.
+Nos sabemos que o programa está funcionando mal e queremos descobrir
+porquê.
 
 {{index "trial and error"}}
 
-This is where you must resist the urge to start making random changes
-to the code to see whether that makes it better. Instead, _think_. Analyze
-what is happening and come up with a ((theory)) of why it might be
-happening. Then, make additional observations to test this theory—or,
-if you don't yet have a theory, make additional observations to help
-you come up with one.
+É aqui que você deve resistir ao impulso de começar a fazer alterações
+aleatórias no código para ver se isso o torna melhor. Em vez disso, _pense_ Analise
+o que está acontecendo e crie uma ((teoria)) de porque isso pode estar
+acontecendo. Em seguida, faça as observações adicionais para testar essa teoria - ou,
+se você não ainda não tiver uma teoria, faça observações adicionais para ajudá-lo
+a criar uma.
 
 {{index "console.log", output, debugging, logging}}
 
-Putting a few strategic `console.log` calls into the program is a good
-way to get additional information about what the program is doing. In
-this case, we want `n` to take the values `13`, `1`, and then `0`.
-Let's write out its value at the start of the loop.
+Colocar algumas chamadas estratégicas de `console.log` no programa é uma boa
+maneira de obter informações adicionais sobre o que o programa está fazendo. Neste
+caso, queremos que `n` pegue os valores `13`, `1` e, em seguida, `0`. Vamos
+escrever seu valor no início do loop.
 
 ```{lang: null}
 13
@@ -333,25 +331,25 @@ Let's write out its value at the start of the loop.
 
 {{index rounding}}
 
-_Right_. Dividing 13 by 10 does not produce a whole number. Instead of
-`n /= base`, what we actually want is `n = Math.floor(n / base)` so
-that the number is properly "shifted" to the right.
+_Certo_. Dividir 13 por 10 não produz um número inteiro. Ao invés de
+`n /= base`, o que nós realmenten queremos é `n = Math.floor(n / base)` para
+que o número seja apropriadamente arredondado para cima.
 
 {{index "JavaScript console", "debugger statement"}}
 
-An alternative to using `console.log` to peek into the program's
-behavior is to use the _debugger_ capabilities of your browser.
-Browsers come with the ability to set a _((breakpoint))_ on a specific
-line of your code. When the execution of the program reaches a line
-with a breakpoint, it is paused, and you can inspect the values of
-bindings at that point. I won't go into details, as debuggers differ
-from browser to browser, but look in your browser's ((developer
-tools)) or search the Web for more information.
+Uma alternatia do uso de `console.log` para observar o comportamento
+do programa é usar os recursos de depuração do seu navegador.
+Navegadores vem com a capacidade de definir um _((breakpoint))_ em uma linha
+especifica do seu código. Quando a execução do programa chega até uma linha
+com um breakpoint, ela é pausada, e você pode inspecionar os valores atribuídos
+naquele ponto. Eu não vou entrar em detalhes, como os depuradores diferem
+de navegador para navegador, mas olhe no seu navegador ((ferramentas de
+desenvolvedor)) ou pesquise na Web para obter mais informações.
 
-Another way to set a breakpoint is to include a `debugger` statement
-(consisting of simply that keyword) in your program. If the
-((developer tools)) of your browser are active, the program will pause
-whenever it reaches such a statement.
+Outra forma de definir um breakpoint é incluir uma declaração `debugger`
+(consistindo simplesmente na palavra-chave) em seu programa. Se as
+((ferramentas de desenvolvedor)) do seu navegador estiverem ativas,
+o programa irá pausar sempre que atingir tal declaração.
 
 ## Error propagation
 

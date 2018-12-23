@@ -351,36 +351,36 @@ Outra forma de definir um breakpoint é incluir uma declaração `debugger`
 ((ferramentas de desenvolvedor)) do seu navegador estiverem ativas,
 o programa irá pausar sempre que atingir tal declaração.
 
-## Error propagation
+## Propagação de erros
 
 {{index input, output, "run-time error", error, validation}}
 
-Not all problems can be prevented by the programmer, unfortunately. If
-your program communicates with the outside world in any way, it is
-possible to get malformed input, to become overloaded with work, or to
-have the network fail.
+Nem todos os problemas podem ser evitados pelo programador, infelizmente. Se
+o seu programa se comunica com o mundo externo de alguma forma, é
+possível obter uma entrada malformada, sobrecarregar-se com trabalho, ou
+fazer com que a rede falhe.
 
 {{index "error recovery"}}
 
-If you're programming only for yourself, you can afford to just ignore
-such problems until they occur. But if you build something that is
-going to be used by anybody else, you usually want the program to do
-better than just crash. Sometimes the right thing to do is take the
-bad input in stride and continue running. In other cases, it is better
-to report to the user what went wrong and then give up. But in either
-situation, the program has to actively do something in response to the
-problem.
+Se você está programando apenas para si mesmo, você pode simplesmente ignorar
+tais problemas até que eles ocorram. Mas se você construir algo que
+será usado por qualquer outra pessoa, você geralmente quer que o programa faça
+melhor do que simplesmente travar. Às vezes, a coisa certa a fazer é pegar a
+entrada incorreta no tranco e continuar executando. Em outros casos, é melhor
+relatar ao usuário o que deu errado e desistir. Mas em qualquer
+situação, o programa tem que ativamente fazer algo em resposta ao
+problema.
 
 {{index "promptInteger function", validation}}
 
-Say you have a function `promptInteger` that asks the user for a whole
-number and returns it. What should it return if the user inputs
-"orange"?
+Digamos que você tenha uma função `promptInteger` que solicita ao usuário um número
+inteiro e o retorna. O que ela deve retornar se o usuário inserir
+"laranja"?
 
 {{index null, undefined, "return value", "special return value"}}
 
-One option is to make it return a special value. Common choices for
-such values are `null`, `undefined`, or -1.
+Uma opção é fazer retornar um valor especial. Escolhar comuns para
+esses valores são  `null`, `undefined`, or -1.
 
 ```{test: no}
 function promptNumber(question) {
@@ -392,21 +392,21 @@ function promptNumber(question) {
 console.log(promptNumber("How many trees do you see?"));
 ```
 
-Now any code that calls `promptNumber` must check whether an actual
-number was read and, failing that, must somehow recover—maybe by
-asking again or by filling in a default value. Or it could again
-return a special value to _its_ caller to indicate that it failed to
-do what it was asked.
+Agora qualquer código que chama `promptNumber` deve verificar se
+um número real foi lido e, não sendo verdade, de alguma forma deve se recuperar - talvez
+solicitando novamente ou definindo um valor padrão. Ou pode retornar novamente
+um valor epecial para quem chamou para indicar que não conseguiu
+fazer o que foi solicitado.
 
 {{index "error handling"}}
 
-In many situations, mostly when ((error))s are common and the caller
-should be explicitly taking them into account, returning a special
-value is a good way to indicate an error. It does, however, have its
-downsides. First, what if the function can already return every
-possible kind of value? In such a function, you'll have to do
-something like wrap the result in an object to be able to distinguish
-success from failure.
+Em muitas situações, principalmente quando ((erros))s são comuns e quem chama
+deve expliciamente levá-los em conta, retornando um valor
+especial é uma boa forma de indicar um erro. No entanto, tem suas
+desvantagens. Primeiro, e se a função já puder retornar todo
+o tipo possível valor? Em tal função, você terá que fazer
+algo como embrulhar o resultado em um objeto para poder distinguir
+sucesso de falha.
 
 ```
 function lastElement(array) {
@@ -420,11 +420,11 @@ function lastElement(array) {
 
 {{index "special return value", readability}}
 
-The second issue with returning special values is that it can lead to
-awkward code. If a piece of code calls `promptNumber` 10 times,
-it has to check 10 times whether `null` was returned. And if its
-response to finding `null` is to simply return `null` itself, callers
-of the function will in turn have to check for it, and so on.
+O segundo problema com o retorno de valores especiais é que isso pode levar a
+códigos estranhos. Se uma parte do código chamar o `promptNumber` 10 vezes,
+ele deve verificar 10 vezes se o valor `null` foi retornado. E se a sua
+resposta para encontrar `null` é simplesmente retornar `null`, os chamadores
+da função terão que checá-la, e assim por diante.
 
 ## Exceptions
 

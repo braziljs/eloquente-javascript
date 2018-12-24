@@ -762,16 +762,16 @@ Isto irá capturar apenas instâncias de `InputError` e deixar exceções não
 relacionadas. Se você reintroduzir o erro de digitação, o erro de atribuição
 indefinida será reportado corretamente.
 
-## Assertions
+## Asserções
 
 {{index "assert function", assertion, debugging}}
 
-_Assertions_ are checks inside a program that verify that something is
-the way it is supposed to be. They are used not to handle situations
-that can come up in normal operation but to find programmer mistakes.
+_Asserções_ são verificações dentro de um programa que verificam se algo é
+como deveria ser. Elas não são usadas ​​para lidar com situações
+que podem surgir em operação normal, mas para encontrar erros de programação.
 
-If, for example, `firstElement` is described as a function that should
-never be called on empty arrays, we might write it like this:
+Se, por exemplo, `firstElement` é descrito com uma função que nunca
+deve ser chamada com arrays vazios, poderíamos escrevê-la assim:
 
 ```
 function firstElement(array) {
@@ -784,36 +784,36 @@ function firstElement(array) {
 
 {{index validation, "run-time error", crash, assumption, array}}
 
-Now, instead of silently returning undefined (which you get when
-reading an array property that does not exist), this will loudly blow
-up your program as soon as you misuse it. This makes it less likely
-for such mistakes to go unnoticed and easier to find their cause when
-they occur.
+Agora, em vez de retornar silenciosamente indefinido (que você obtém
+ao ler uma propriedade de um array que não existe), isso explodirá
+seu programa logo que você usa-lo mal. Isso torna menos provável
+que tais erros passem despercebidos e mais fáceis de encontrar
+sua causa quando eles ocorrem.
 
-I do not recommend trying to write assertions for every possible kind
-of bad input. That'd be a lot of work and would lead to very noisy
-code. You'll want to reserve them for mistakes that are easy to make
-(or that you find yourself making).
+Eu não recomendo tentar escrever asserções para todos os possíveis tipos
+de entradas ruins. Isso seria muito trabalhoso e levaria a um código cheio
+de ruídos. Você vai querer reservá-las para erros que são fáceis de fazer
+(ou que você está fazendo).
 
-## Summary
+## Resumo
 
-Mistakes and bad input are facts of life. An important part of
-programming is finding, diagnosing, and fixing bugs. Problems can
-become easier to notice if you have an automated test suite or add
-assertions to your programs.
+Erros e entradas ruins são fatos da vida. Uma parte importante da
+programação é encontrar, diagnosticar, e corrigir erros. Problemas
+podem se tornar mais fáceis de serem percebidos se você tiver um conjunto
+de testes automatizados ou adicionar asserções para seus programas.
 
-Problems caused by factors outside the program's control should
-usually be handled gracefully. Sometimes, when the problem can be
-handled locally, special return values are a good way to track them.
-Otherwise, exceptions may be preferable.
+Problemas causadas por fatores externos ao controle do programa geralmente
+devem ser tratados elegantemente. Às vezes, quando o problema pode ser
+tratado localmente, os valores de retorno especiais são uma boa forma de rastreá-los.
+Caso contrário, exceções podem ser preferíveis.
 
-Throwing an exception causes the call stack to be unwound until the
-next enclosing `try/catch` block or until the bottom of the stack. The
-exception value will be given to the `catch` block that catches it,
-which should verify that it is actually the expected kind of exception
-and then do something with it. To help address the unpredictable
-control flow caused by exceptions, `finally` blocks can be used to
-ensure that a piece of code _always_ runs when a block finishes.
+Lançar uma exceção faz com que a pilha de chamadas seja desfeita até o
+proximos bloco `try/catch` ou até o final da pilha. O valor de
+exceção será dado ao bloco `catch` que o captura, que deve
+verificar se é realmente o tipo esperado de exceção e, em seguida,
+fazer algo com ela. Para ajudar a resolver o fluxo de controle
+imprevisível causado por exceções, os blocos `finally` podem ser usados para
+garantir que um trecho de código _sempre_ seja executado quando o bloco terminar.
 
 ## Exercises
 

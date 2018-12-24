@@ -426,34 +426,34 @@ ele deve verificar 10 vezes se o valor `null` foi retornado. E se a sua
 resposta para encontrar `null` é simplesmente retornar `null`, os chamadores
 da função terão que checá-la, e assim por diante.
 
-## Exceptions
+## Exceções
 
 {{index "error handling"}}
 
-When a function cannot proceed normally, what we would _like_ to do is
-just stop what we are doing and immediately jump to a place that knows
-how to handle the problem. This is what _((exception handling))_ does.
+Quando uma função não pode prosseguir normalmente, o que gostaríamos de fazer é
+simplesmente parar o que estamos fazendo e imediatamente pular para um lugar que saiba
+como lidar com o problema. Isso é o que a _((manipulação de execeções))_ faz.
 
 {{index "control flow", "raising (exception)", "throw keyword", "call stack"}}
 
-Exceptions are a mechanism that makes it possible for code that runs
-into a problem to _raise_ (or _throw_) an exception. An exception can
-be any value. Raising one somewhat resembles a super-charged return
-from a function: it jumps out of not just the current function but
-also its callers, all the way down to the first call that
-started the current execution. This is called _((unwinding the
-stack))_. You may remember the stack of function calls that was
-mentioned in [Chapter ?](functions#stack). An exception zooms down
-this stack, throwing away all the call contexts it encounters.
+Exceções são um mecanismo que faz isso possível ao código executado
+em um problema para alçar (ou lançar) uma exceção. Uma exceção pode
+ser qualquer valor. Lança-las se assemelha um pouco a um retorno super-carregado
+de uma função: ele salta não apenas da função atual,
+mas também de quem a chamou, até a primeira chamada que
+iniciou a execução atual. Isso é denominado de _((desenrolar da
+pilha))_. Você pode se lembrar da pilha de chamadas que foi
+mencionada no [Chapter ?](functions#stack). Uma exeção reduz
+a pilha, descartando todos os contextos encontrados.
 
 {{index "error handling", syntax, "catch keyword"}}
 
-If exceptions always zoomed right down to the bottom of the stack,
-they would not be of much use. They'd just provide a novel way to blow
-up your program. Their power lies in the fact that you can set
-"obstacles" along the stack to _catch_ the exception as it is zooming
-down. Once you've caught an exception, you can do something with it to
-address the problem and then continue to run the program.
+Se exceções fossem semprem lançadas até o final da pilha,
+elas não seriam muito úteis. Elas apenas forneceriam uma nova maneira de explodir
+seu programa. Seu poder reside no fato de que você pode definir
+"obstáculos" ao longo da pilha para _pegar_ a exceção, pois ela está
+subindo a pilha. Depois de detectar uma exceção, você pode fazer algo com ela para
+resolver o problema e continuar a executar o programa.
 
 Here's an example:
 
@@ -483,52 +483,52 @@ try {
 
 {{index "exception handling", block, "throw keyword", "try keyword", "catch keyword"}}
 
-The `throw` keyword is used to raise an exception. Catching one is
-done by wrapping a piece of code in a `try` block, followed by the
-keyword `catch`. When the code in the `try` block causes an exception
-to be raised, the `catch` block is evaluated, with the name in
-parentheses bound to the exception value. After the `catch` block
-finishes—or if the `try` block finishes without problems—the program
-proceeds beneath the entire `try/catch` statement.
+A palavra-chave `throw` é usada para lançar uma exceção. Capturar uma é
+feito envolvendo um pedaço de código em um bloco `try`, seguindo pela
+palavra-chave `catch`. Quando o código dentro do bloco `try` faz com que uma exceção
+seja lançada, o bloco `catch` é avaliada, com o nome em
+parenteses vinculado ao valor da exceção. Depois do bloco `catch`
+terminar-ou se o bloco `try` terminar sem problemas-o programa
+prossegue sob toda a instrução `try/catch`.
 
 {{index debugging, "call stack", "Error type"}}
 
-In this case, we used the `Error` ((constructor)) to create our
-exception value. This is a ((standard)) JavaScript constructor that
-creates an object with a `message` property. In most JavaScript
-environments, instances of this constructor also gather information
-about the call stack that existed when the exception was created, a
-so-called _((stack trace))_. This information is stored in the `stack`
-property and can be helpful when trying to debug a problem: it tells
-us the function where the problem occurred and which functions made
-the failing call.
+Neste caso, usamos o ((construtor)) `Error` para criar nosso
+valor de exceção. Este é um construtor ((padrão)) do JavaScript que
+cria um objeto com uma propriedade `message`. Na maioria dos ambientes
+JavaScript, as instâncias desse construtor também reúnem informações
+sobre a pilha de chamadas existente quando a exceção foi criada, o
+chamado _((stack trace))_. Essa informação é armazenada na prepriedade
+`stack` e pode ser útil ao tentar depurar um problema: ela nos
+diz a função onde o problema ocorreu e quais funções fizeram a chamada
+com falha.
 
 {{index "exception handling"}}
 
-Note that the `look` function completely ignores the possibility that
-`promptDirection` might go wrong. This is the big advantage of
-exceptions: error-handling code is necessary only at the point where
-the error occurs and at the point where it is handled. The functions
-in between can forget all about it.
+Note que a função `look` ignora completamente a possibilidade que
+`promptDirection` possa dar errado. Essa é a grande vantagem das
+exceções: o código de tratamento de erros é necessário apenas no ponto em que
+o erro ocorre e no ponto em que é manipulado. As funções
+intermediárias podem esquecer tudo isso.
 
-Well, almost...
+Bem, quase...
 
-## Cleaning up after exceptions
+## Limpando após exceções
 
 {{index "exception handling", "cleaning up"}}
 
-The effect of an exception is another kind of ((control flow)). Every
-action that might cause an exception, which is pretty much every
-function call and property access, might cause control to suddenly
-leave your code.
+O efeito de uma exceção é outro tipo de ((fluxo de controle)). Cada
+ação pode causar uma exceção, que é praticamente toda
+chamada de função e acesso a propriedade, pode fazer com que o controle saia
+de repente do seu código.
 
-This means when code has several side effects, even if its
-"regular" control flow looks like they'll always all happen, an
-exception might prevent some of them from taking place.
+Isso significa que quando o código tem vários efeitos colaterais, mesmo que o
+fluxo de controle "regular" pareça que eles sempre acontecerão, uma
+exceção pode impedir que alguns deles ocorram.
 
 {{index "banking example"}}
 
-Here is some really bad banking code.
+Aqui está um código báncario ruim.
 
 ```{includeCode: true}
 const accounts = {
@@ -552,34 +552,34 @@ function transfer(from, amount) {
 }
 ```
 
-The `transfer` function transfers a sum of money from a given account
-to another, asking for the name of the other account in the process.
-If given an invalid account name, `getAccount` throws an exception.
+A função `transfer` transfere a soma de dinheiro de uma dada conta
+para outra, pedindo pelo nome da outra conta no processo.
+Se um nome de conta inválido for informado, `getAccount` lança uma exceção.
 
-But `transfer` _first_ removes the money from the account and _then_
-calls `getAccount` before it adds it to another account. If it is
-broken off by an exception at that point, it'll just make the money
-disappear.
+Mas `transfer` _primeiro_ remove o dinheiro da conta e _então_
+chama `getAccount` antes de adiciona-lo a outra conta. Se ele for
+interrompido por uma exceção nesse ponto, isso fará com que o dinheiro
+desapareça.
 
-That code could have been written a little more intelligently, for
-example by calling `getAccount` before it starts moving money around.
-But often problems like this occur in more subtle ways. Even functions
-that don't look like they will throw an exception might do so in
-exceptional circumstances or when they contain a programmer mistake.
+Esse código poderia ter sido escrito de forma um pouco mais inteligente, por exemplo,
+chamando `getAccount` antes que de começar a movimentar o dinheiro.
+Mas muitas vezes problemas como esse ocorrem de maneiras mais sutís. Até mesmo
+funções que não parecem que lançarão uma exceção podem fazê-lo em
+circunstâncias excepcionais ou quando elas contêm um erro do programador.
 
-One way to address this is to use fewer side effects. Again, a
-programming style that computes new values instead of changing
-existing data helps. If a piece of code stops running in the middle of
-creating a new value, no one ever sees the half-finished value, and
-there is no problem.
+Uma maneira de resolver isso é usar menos efeitos colaterias. Novamente, um
+estilo de programação que calcula novos valoress em de alterar os
+dados existentes ajuda. Se um trecho de código parar de ser executado no meio da
+criação de um novo valor, ninguém verá o valor incompleto,
+e não haverá problema.
 
 {{index block, "try keyword", "finally keyword"}}
 
-But that isn't always practical. So there is another feature that
-`try` statements have. They may be followed by a `finally` block
-either instead of or in addition to a `catch` block. A `finally` block
-says "no matter _what_ happens, run this code after trying to run the
-code in the `try` block."
+Mas isso nem sempre é possível. Portanto, há outro recurso que
+declarações `try` possuem. Elas podem ser seguidas por um bloco `finally`
+em vez ou além de um bloco `catch`. Um bloco `finally`
+diz que "não importa _o que_ aconteça, execute este código depois de tentar executar o
+código no bloco `try`."
 
 ```{includeCode: true}
 function transfer(from, amount) {
@@ -598,22 +598,23 @@ function transfer(from, amount) {
 }
 ```
 
-This version of the function tracks its progress, and if, when
-leaving, it notices that it was aborted at a point where it had
-created an inconsistent program state, it repairs the damage it did.
+Essa versão da função monitora seu progresso, e se, ao
+sair, perceber que foi interrompida em um ponto em que
+criou um estado de programa inconsistente, ele repara o dano causado.
 
-Note that even though the `finally` code is run when an exception
-is thrown in the `try` block, it does not interfere with the exception.
-After the `finally` block runs, the stack continues unwinding.
+Note que mesmo que o código `finally` seja executado quando uma exceção
+é lançada no bloco `try`, isso não interfere na execução.
+Depois que o bloco `finally` é executado, a pilha continua se desenrolando.
 
 {{index "exception safety"}}
 
-Writing programs that operate reliably even when exceptions pop up in
-unexpected places is hard. Many people simply don't bother, and
-because exceptions are typically reserved for exceptional
-circumstances, the problem may occur so rarely that it is never even
-noticed. Whether that is a good thing or a really bad thing depends on
-how much damage the software will do when it fails.
+Escrever programas que funcionem de forma confiável mesmo quando as
+exceções surgem em locais inesperados é díficil. Muitas pessoas 
+simplesmente não se incomodam, e porque
+as exceções são normalmente reservadas para circunstâncias
+excepcionais, o problema pode ocorrer tão raramente que nunca é
+notado. Se isso é bom ou ruim, depende de quanto
+dano o software causará quando falhar.
 
 ## Selective catching
 

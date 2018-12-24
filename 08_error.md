@@ -616,59 +616,59 @@ excepcionais, o problema pode ocorrer tão raramente que nunca é
 notado. Se isso é bom ou ruim, depende de quanto
 dano o software causará quando falhar.
 
-## Selective catching
+## Captura seletiva
 
 {{index "uncaught exception", "exception handling", "JavaScript console", "developer tools", "call stack", error}}
 
-When an exception makes it all the way to the bottom of the stack
-without being caught, it gets handled by the environment. What this
-means differs between environments. In browsers, a description of the
-error typically gets written to the JavaScript console (reachable
-through the browser's Tools or Developer menu). Node.js, the
-browserless JavaScript environment we will discuss in [Chapter
-?](node), is more careful about data corruption. It aborts the whole
-process when an unhandled exception occurs.
+Quando uma exceção chega até o final da pilha
+sem ser capturada, ela é manipulada pelo ambiente. O que isto
+significa difere entre os ambientes. Nos navegadores, uma descrição do
+erro geralmente é gravada no console JavaScript (acessível
+através do menu Ferramentas ou Desenvolvedor do navegador). Node.js, o
+ambiente JavaScript sem navegador que discutiremos no [Chapter?](node),
+é mais cuidadoso com a corrupção de dados. Ele aborta o processo
+todo quando ocorre uma exceção não tratada.
 
 {{index crash, "error handling"}}
 
-For programmer mistakes, just letting the error go through is often
-the best you can do. An unhandled exception is a reasonable way to
-signal a broken program, and the JavaScript console will, on modern
-browsers, provide you with some information about which function calls
-were on the stack when the problem occurred.
+Para erros de programação, apenas deixar passar o erro é geralmente
+o melhor que você pode fazer. Uma exceção não tratada é uma maneira razoável de
+de sinalizar um programa quebrado, e o console JavaScript fornecerá, em navegadores
+modernos, algumas informações sobre quais chamadas de função
+estavam na pilha quando o problema ocorreu.
 
 {{index "user interface"}}
 
-For problems that are _expected_ to happen during routine use,
-crashing with an unhandled exception is a terrible strategy.
+Para problemas que são _esperados_ durante o uso rotineiro,
+travar com uma exceção não tratada é um estratégia terrível.
 
 {{index syntax, [function, application], "exception handling", "Error type"}}
 
-Invalid uses of the language, such as referencing a nonexistent
-((binding)), looking up a property on `null`, or calling something
-that's not a function, will also result in exceptions being raised.
-Such exceptions can also be caught.
+Usos inválidos da linguagem, como a referência a uma ((variável))
+inexistente, procurar uma propriedade em um valor `null`, ou chamar algo
+que não é uma função, também resultarão em exceções.
+Tais exceções também podem ser capturadas.
 
 {{index "catch keyword"}}
 
-When a `catch` body is entered, all we know is that _something_ in our
-`try` body caused an exception. But we don't know _what_ did or _which_
-exception it caused.
+Quan um escopo `catch` é acessado, tudo que nos sabemos é que _algo_ no nosso
+escopo `try` causou uma exceção. Mas nós não sabemos _o que_ causou ou _qual_ exceção
+foi causada.
 
 {{index "exception handling"}}
 
-JavaScript (in a rather glaring omission) doesn't provide direct
-support for selectively catching exceptions: either you catch them all
-or you don't catch any. This makes it tempting to _assume_ that the
-exception you get is the one you were thinking about when you wrote
-the `catch` block.
+JavaScript (em uma omissão gritante) não fornece suporte
+direto para capturar seletivamente exceções: ou você captura todas
+ou você não captura nenhuma. Isso torna tentador _supor_ que a
+exceção que você recebe é aquela em que você estava pensando quando escreveu
+o bloco `catch`.
 
 {{index "promptDirection function"}}
 
-But it might not be. Some other ((assumption)) might be violated, or
-you might have introduced a bug that is causing an exception. Here is
-an example that _attempts_ to keep on calling `promptDirection`
-until it gets a valid answer:
+Mas pode não ser. Alguma outra ((suposição)) pode estar errada, ou
+você pode ter introduzido um erro que está causando um exceção. Aqui está
+um exemplo que _tenta_ continuar chamando `promptDirection`
+até obter uma resposta válida.
 
 ```{test: no}
 for (;;) {
@@ -684,37 +684,37 @@ for (;;) {
 
 {{index "infinite loop", "for loop", "catch keyword", debugging}}
 
-The `for (;;)` construct is a way to intentionally create a loop that
-doesn't terminate on its own. We break out of the loop only when a
-valid direction is given. _But_ we misspelled `promptDirection`, which
-will result in an "undefined variable" error. Because the `catch`
-block completely ignores its exception value (`e`), assuming it knows
-what the problem is, it wrongly treats the binding error as indicating
-bad input. Not only does this cause an infinite loop, it 
-"buries" the useful error message about the misspelled binding.
+A construção `for (;;)` é uma forma de criar intencionalmente um loop que
+não termina sozinho. Nós saímos do loop apenas quando uma
+direção valida é dada. _Mas_ nos escrevemos incorretamente `promptDirection`, o que
+resultará em um erro de "varíavel indefinida". Como o bloco `catch`
+ignora completamente seu valor de exceção (`e`), supondo que ele conhece
+qual é o problema, ele erroneamente trata o erro de atribuição indicando
+entrada inválida. Isso não apenas causa um loop infinito, mas
+"oculta" a mensagem de erro útil sobre a atribuição incorreta.
 
-As a general rule, don't blanket-catch exceptions unless it is for the
-purpose of "routing" them somewhere—for example, over the network to
-tell another system that our program crashed. And even then, think
-carefully about how you might be hiding information.
+Como regra geral, não cubra as exceções, a menos que seja com o
+propósito de "direcionar" elas em algum lugar-por exemplo, pela rede, para
+avisar a outro sistema que o nosso programa falhou. E, mesmo assim, pense
+com cuidado sobre como você pode estar escondendo informações.
 
 {{index "exception handling"}}
 
-So we want to catch a _specific_ kind of exception. We can do this by
-checking in the `catch` block whether the exception we got is the one
-we are interested in and rethrowing it otherwise. But how do we
-recognize an exception?
+Então, nós queremos capturar um tipo _específico_ de exceção. Nós podemos fazer isso
+verificando no bloco `catch` se a exceção que obtivemos é aquela em que
+estamos interessados e relançando-a caso contrário. Mas como reconhecemos
+uma exceção?
 
-We could compare its `message` property against the ((error)) message
-we happen to expect. But that's a shaky way to write code—we'd be
-using information that's intended for human consumption (the message)
-to make a programmatic decision. As soon as someone changes (or
-translates) the message, the code will stop working.
+Nos poderíamos comparar sua propriedade `message` com a mensagem de ((erro))
+que esperamos. Mas está é uma maneira instável de escrever código-estaríamos
+usando informações destinadas ao consumo humano (a mensagem)
+para tomar uma decisão programática. Assim que alguém alterar (ou
+traduzir) a mensagem, o código deixará de funcionar.
 
 {{index "Error type", "instanceof operator", "promptDirection function"}}
 
-Rather, let's define a new type of error and use `instanceof` to
-identify it.
+Em vez disso, vamos definir um novo tipo de erro e usar `instanceof` para
+indenficá-lo.
 
 ```{includeCode: true}
 class InputError extends Error {}
@@ -729,12 +729,12 @@ function promptDirection(question) {
 
 {{index "throw keyword", inheritance}}
 
-The new error class extends `Error`. It doesn't define its own
-constructor, which means that it inherits the `Error` constructor,
-which expects a string message as argument. In fact, it doesn't define
-anything at all—the class is empty. `InputError` objects behave like
-`Error` objects, except that they have a different class by which we
-can recognize them.
+O nova classe de erro extende `Error`. Ela não define seu próprio
+construtor, o que significa que ele herda o construtor `Error`,
+que espera uma mensagem string como argumento. De fato, ela não define
+nada-a classe está vazia. Objetos `InputError` se comportam como
+objetos `Error`, exceto que eles possuem uma classe diferente pela qual
+podemos identifica-los.
 
 {{index "exception handling"}}
 
@@ -758,9 +758,9 @@ for (;;) {
 
 {{index debugging}}
 
-This will catch only instances of `InputError` and let unrelated
-exceptions through. If you reintroduce the typo, the undefined binding
-error will be properly reported.
+Isto irá capturar apenas instâncias de `InputError` e deixar exceções não
+relacionadas. Se você reintroduzir o erro de digitação, o erro de atribuição
+indefinida será reportado corretamente.
 
 ## Assertions
 

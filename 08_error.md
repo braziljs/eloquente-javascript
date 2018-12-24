@@ -815,21 +815,21 @@ fazer algo com ela. Para ajudar a resolver o fluxo de controle
 imprevisível causado por exceções, os blocos `finally` podem ser usados para
 garantir que um trecho de código _sempre_ seja executado quando o bloco terminar.
 
-## Exercises
+## Execícios
 
-### Retry
+### Tente novamente
 
 {{index "primitiveMultiply (exercise)", "exception handling", "throw keyword"}}
 
-Say you have a function `primitiveMultiply` that in 20 percent of
-cases multiplies two numbers and in the other 80 percent of cases raises an
-exception of type `MultiplicatorUnitFailure`. Write a function that
-wraps this clunky function and just keeps trying until a call
-succeeds, after which it returns the result.
+Digamos que você tem uma função `primitiveMultiply` que em 20 por cento dos
+caos multiplica dois números e nos outros 80 por cento dos casos gera uma
+exceção do tipo `MultiplicatorUnitFailure`. Escreva uma função que
+encapsula essa função desajeitada e continua tentando até uma chamada seja
+bem-sucedida, e após retorna o resultado.
 
 {{index "catch keyword"}}
 
-Make sure you handle only the exceptions you are trying to handle.
+Certifique-se de lidar apenas com as exceções que você está interessado.
 
 {{if interactive
 
@@ -857,24 +857,18 @@ if}}
 
 {{index "primitiveMultiply (exercise)", "try keyword", "catch keyword", "throw keyword"}}
 
-The call to `primitiveMultiply` should definitely happen in a `try`
-block. The corresponding `catch` block should rethrow the exception
-when it is not an instance of `MultiplicatorUnitFailure` and ensure
-the call is retried when it is.
-
-To do the retrying, you can either use a loop that stops only when a
-call succeeds—as in the [`look` example](error#look) earlier in this
-chapter—or use ((recursion)) and hope you don't get a string of
-failures so long that it overflows the stack (which is a pretty safe
-bet).
+A chamada para `primitiveMultiply` deve definitivamente ocorrer em um bloco
+`try`. O bloco `catch` correspondente deve relançar a exceção
+quando não é uma instancia de `MultiplicatorUnitFailure` e garantir
+que a chamada é repetida quando é.
 
 hint}}
 
-### The locked box
+### A caixa fechada
 
 {{index "locked box (exercise)"}}
 
-Consider the following (rather contrived) object:
+Considere o seguinte objeto (um pouco inventado):
 
 ```
 const box = {
@@ -891,16 +885,16 @@ const box = {
 
 {{index "private property", "access control"}}
 
-It is a ((box)) with a lock. There is an array in the box, but you can
-get at it only when the box is unlocked. Directly accessing the
-private `_content` property is forbidden.
+É uma caixa com um tranca. Existe um array na caixa, mas você pode
+acessá-lo somente quando a caixa estiver desbloqueada. Acessar diretamente a
+propriedade privada `_content` é proibido.
 
 {{index "finally keyword", "exception handling"}}
 
-Write a function called `withBoxUnlocked` that takes a function value
-as argument, unlocks the box, runs the function, and then ensures that
-the box is locked again before returning, regardless of whether the
-argument function returned normally or threw an exception.
+Escreva uma função chamda `withBoxUnlocked` que recebe um valor de função
+como argumento, desbloqueia a caixa, executa a função, e após garante que
+a caixa é bloqueada novamente antes de retornar, independentemente de a
+função de argumento ter retornado normalmente ou ter lançado uma exceção.
 
 {{if interactive
 
@@ -935,8 +929,8 @@ console.log(box.locked);
 // → true
 ```
 
-For extra points, make sure that if you call `withBoxUnlocked` when
-the box is already unlocked, the box stays unlocked.
+Para pontos extras, certifique-se de que, se você chamar `withBoxUnlocked` quando
+a caixa já estiver desbloqueada, a caixa permanecerá desbloqueada.
 
 if}}
 
@@ -944,12 +938,12 @@ if}}
 
 {{index "locked box (exercise)", "finally keyword", "try keyword"}}
 
-This exercise calls for a `finally` block. Your function should first
-unlock the box and then call the argument function from inside a `try`
-body. The `finally` block after it should lock the box again.
+Este exercício pede por um bloco `finally`. Sua função deve primeiro
+desbloquear a caixa e depois chamar o função de argumento de dentro do escopo
+`try`. O bloco `finally` depois disso deve bloquear a caixa novamente.
 
-To make sure we don't lock the box when it wasn't already locked,
-check its lock at the start of the function and unlock and lock
-it only when it started out locked.
+Para garantir que não bloqueamos a caixa quando ela ainda não estava bloqueada,
+verifique seu bloqueio no início da função e desbloqueie-a e bloqueie-a
+somente quando ela começou bloqueada.
 
 hint}}

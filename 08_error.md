@@ -36,9 +36,9 @@ de realmente executar o programa. E até, permite que você faça algumas
 coisas claramente sem sentido sem objeção, como o cálculo
 `true * "monkey"`.
 
-{{index syntax}}
+{{index [syntax, error], [property, access]}}
 
-Existem algumas coisas que o Javascript incomoda. Escrever um
+Existem algumas coisas que o Javascript se incomoda. Escrever um
 programa que não segue a ((gramática)) da linguagem vai
 fazer o computador imediatamente reclamar. Outras coisas, como chamar
 algo que não é uma função ou acessar uma ((propriedade)) em um
@@ -60,7 +60,7 @@ _((debugging))_.
 
 ## Mode estrito
 
-{{index "strict mode", syntax, function}}
+{{index "strict mode", [syntax, error], function}}
 
 {{indexsee "use strict", "strict mode"}}
 
@@ -90,7 +90,7 @@ não funciona quando a declaração em questão já existe como uma declaração
 global. Nesse caso, o loop irá silenciosamente sobreescrever o valor
 da declaração.
 
-{{index this, "global object", undefined, "strict mode"}}
+{{index "this binding", "global object", undefined, "strict mode"}}
 
 Outra mudança no modo estrito é que o `this` possui o
 valor `undefined` nas funções que não são chamadas como ((métodos)).
@@ -434,7 +434,7 @@ Quando uma função não pode prosseguir normalmente, o que gostaríamos de faze
 simplesmente parar o que estamos fazendo e imediatamente pular para um lugar que saiba
 como lidar com o problema. Isso é o que a _((manipulação de execeções))_ faz.
 
-{{index "control flow", "raising (exception)", "throw keyword", "call stack"}}
+{{index ["control flow", exceptions], "raising (exception)", "throw keyword", "call stack"}}
 
 Exceções são um mecanismo que faz isso possível ao código executado
 em um problema para alçar (ou lançar) uma exceção. Uma exceção pode
@@ -446,7 +446,7 @@ pilha))_. Você pode se lembrar da pilha de chamadas que foi
 mencionada no [Chapter ?](functions#stack). Uma exeção reduz
 a pilha, descartando todos os contextos encontrados.
 
-{{index "error handling", syntax, "catch keyword"}}
+{{index "error handling", [syntax, statement], "catch keyword"}}
 
 Se exceções fossem semprem lançadas até o final da pilha,
 elas não seriam muito úteis. Elas apenas forneceriam uma nova maneira de explodir
@@ -515,7 +515,7 @@ Bem, quase...
 
 ## Limpando após exceções
 
-{{index "exception handling", "cleaning up"}}
+{{index "exception handling", "cleaning up", ["control flow", exceptions]}}
 
 O efeito de uma exceção é outro tipo de ((fluxo de controle)). Cada
 ação pode causar uma exceção, que é praticamente toda
@@ -642,7 +642,7 @@ estavam na pilha quando o problema ocorreu.
 Para problemas que são _esperados_ durante o uso rotineiro,
 travar com uma exceção não tratada é um estratégia terrível.
 
-{{index syntax, [function, application], "exception handling", "Error type"}}
+{{index [function, application], "exception handling", "Error type", [binding, undefined]}}
 
 Usos inválidos da linguagem, como a referência a uma ((variável))
 inexistente, procurar uma propriedade em um valor `null`, ou chamar algo
@@ -782,7 +782,7 @@ function firstElement(array) {
 }
 ```
 
-{{index validation, "run-time error", crash, assumption, array}}
+{{index validation, "run-time error", crash, assumption}}
 
 Agora, em vez de retornar silenciosamente indefinido (que você obtém
 ao ler uma propriedade de um array que não existe), isso explodirá
@@ -851,6 +851,7 @@ function reliableMultiply(a, b) {
 console.log(reliableMultiply(8, 8));
 // → 64
 ```
+
 if}}
 
 {{hint
@@ -929,10 +930,10 @@ console.log(box.locked);
 // → true
 ```
 
+if}}
+
 Para pontos extras, certifique-se de que, se você chamar `withBoxUnlocked` quando
 a caixa já estiver desbloqueada, a caixa permanecerá desbloqueada.
-
-if}}
 
 {{hint
 

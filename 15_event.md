@@ -7,7 +7,7 @@ you will find strength.
 
 quote}}
 
-{{index stoicism, "Marcus Aurelius", input, timeline, "control flow"}}
+{{index stoicism, "Marcus Aurelius", input, timeline}}
 
 {{figure {url: "img/chapter_picture_15.jpg", alt: "Picture a Rube Goldberg machine", chapter: "framed"}}}
 
@@ -54,21 +54,21 @@ as _handlers_ for specific events.
 </script>
 ```
 
-{{index "click event", "addEventListener method", "window object"}}
+{{index "click event", "addEventListener method", "window object", [browser, window]}}
 
 The `window` binding refers to a built-in object provided by the
-browser. It represents the ((browser)) window that contains the
+browser. It represents the browser window that contains the
 document. Calling its `addEventListener` method registers the second
 argument to be called whenever the event described by its first
 argument occurs.
 
 ## Events and DOM nodes
 
-{{index "addEventListener method", "event handling", "window object"}}
+{{index "addEventListener method", "event handling", "window object", browser, [DOM, events]}}
 
-Each ((browser)) event handler is registered in a context. In the previous example we called
+Each browser event handler is registered in a context. In the previous example we called
 `addEventListener` on the `window` object to register a handler
-for the whole window. Such a method can also be found on ((DOM))
+for the whole window. Such a method can also be found on DOM
 elements and some other types of objects. Event listeners are
 called only when the event happens in the context of the object they are
 registered on.
@@ -348,9 +348,9 @@ properties of keyboard and mouse events.
 </script>
 ```
 
-{{index "button (HTML tag)", "tabindex attribute"}}
+{{index "button (HTML tag)", "tabindex attribute", [DOM, events]}}
 
-The ((DOM)) node where a key event originates depends on the element
+The DOM node where a key event originates depends on the element
 that has ((focus)) when the key is pressed. Most nodes cannot have
 focus unless you give them a `tabindex` attribute, but things like
 ((link))s, buttons, and form fields can. We'll come back to form
@@ -627,7 +627,7 @@ updates it to fill up as you scroll down:
 </script>
 ```
 
-{{index "unit (CSS)", scrolling, "position (CSS)", "fixed positioning", "absolute positioning", percent, "repeat method"}}
+{{index "unit (CSS)", scrolling, "position (CSS)", "fixed positioning", "absolute positioning", percentage, "repeat method"}}
 
 Giving an element a `position` of `fixed` acts much like an `absolute`
 position but also prevents it from scrolling along with the rest of
@@ -1118,13 +1118,13 @@ if}}
 
 {{hint
 
-{{index "text node", "childNodes property", "live data structure", "tabbed interface (exercise)"}}
+{{index "text node", "childNodes property", "live data structure", "tabbed interface (exercise)", [whitespace, "in HTML"]}}
 
 One pitfall you might run into is that you can't directly use the
 node's `childNodes` property as a collection of tab nodes. For one
 thing, when you add the buttons, they will also become child nodes and
 end up in this object because it is a live data structure. For
-another, the text nodes created for the ((whitespace)) between the
+another, the text nodes created for the whitespace between the
 nodes are also in `childNodes` but should not get their own tabs. You
 can use `children` instead of `childNodes` to ignore text nodes.
 

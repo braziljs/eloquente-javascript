@@ -71,9 +71,9 @@ coordinates may be fractional, allowing smooth ((motion)).
 
 ## The technology
 
-{{index "event handling", keyboard}}
+{{index "event handling", keyboard, [DOM, graphics]}}
 
-We will use the ((browser)) ((DOM)) to display the game, and we'll
+We will use the ((browser)) DOM to display the game, and we'll
 read user input by handling key events.
 
 {{index rectangle, "background (CSS)", "position (CSS)", graphics}}
@@ -89,23 +89,23 @@ We can represent the background as a table since it is an unchanging
 ((grid)) of squares. The free-moving elements can be overlaid using
 absolutely positioned elements.
 
-{{index performance}}
+{{index performance, [DOM, graphics]}}
 
 In games and other programs that should animate ((graphics)) and
 respond to user ((input)) without noticeable delay, ((efficiency)) is
-important. Although the ((DOM)) was not originally designed for
+important. Although the DOM was not originally designed for
 high-performance graphics, it is actually better at this than you
 would expect. You saw some ((animation))s in [Chapter
 ?](dom#animation). On a modern machine, a simple game like this
 performs well, even if we don't worry about ((optimization)) very
 much.
 
-{{index canvas}}
+{{index canvas, [DOM, graphics]}}
 
 In the [next chapter](canvas), we will explore another ((browser))
 technology, the `<canvas>` tag, which provides a more traditional way
 to draw graphics, working in terms of shapes and ((pixel))s rather
-than ((DOM)) elements.
+than DOM elements.
 
 ## Levels
 
@@ -181,15 +181,17 @@ class Level {
 }
 ```
 
-{{index "trim method", "split method"}}
+{{index "trim method", "split method", [whitespace, trimming]}}
 
-The `trim` method is used to remove ((whitespace)) at the start and
+The `trim` method is used to remove whitespace at the start and
 end of the plan string. This allows our example plan to start with a
 newline so that all the lines are directly below each other. The
 remaining string is split on ((newline character))s, and each line is
 spread into an array, producing arrays of characters.
 
-So `rows` holds an ((array)) of arrays of characters, the rows of the
+{{index [array, "as matrix"]}}
+
+So `rows` holds an array of arrays of characters, the rows of the
 plan. We can derive the level's width and height from these. But we
 must still separate the moving elements from the background grid.
 We'll call moving elements _actors_. They'll be stored in an array of
@@ -220,9 +222,11 @@ The position of the actor is stored as a `Vec` object. This is a
 two-dimensional vector, an object with `x` and `y` properties, as seen
 in the exercises of [Chapter ?](object#exercise_vector).
 
+{{index [state, in objects]}}
+
 As the game runs, actors will end up in different places or even
 disappear entirely (as coins do when collected). We'll use a `State`
-class to track the ((state)) of a running game.
+class to track the state of a running game.
 
 ```{includeCode: true}
 class State {
@@ -250,11 +254,11 @@ creates a new state and leaves the old one intact.
 
 ## Actors
 
-{{index actor, "Vec class"}}
+{{index actor, "Vec class", [interface, object]}}
 
 Actor objects represent the current position and state of a given
 moving element in our game. All actor objects conform to the same
-((interface)). Their `pos` property holds the coordinates of the
+interface. Their `pos` property holds the coordinates of the
 element's top-left corner, and their `size` property holds its size.
 
 Then they have an `update` method, which is used to compute their
@@ -407,7 +411,7 @@ Coin.prototype.size = new Vec(0.6, 0.6);
 
 In [Chapter ?](dom#sin_cos), we saw that `Math.sin` gives us the
 y-coordinate of a point on a circle. That coordinate goes back and
-forth in a smooth wave form as we move along the circle, which makes
+forth in a smooth waveform as we move along the circle, which makes
 the sine function useful for modeling a wavy motion.
 
 {{index pi}}
@@ -453,7 +457,7 @@ concepts and interfaces to be introduced. Since there is only so much
 code you can throw at a reader before their eyes glaze over, I've made
 an effort to keep the program small.
 
-{{index interface}}
+{{index [interface, design]}}
 
 Second, the various elements in this game are so closely tied together
 that if the behavior of one of them changed, it is unlikely that any
@@ -485,16 +489,16 @@ display ((module)).
 
 ## Drawing
 
-{{index "DOMDisplay class"}}
+{{index "DOMDisplay class", [DOM, graphics]}}
 
 The encapsulation of the ((drawing)) code is done by defining a
 _((display))_ object, which displays a given ((level)) and state. The
 display type we define in this chapter is called `DOMDisplay` because
-it uses ((DOM)) elements to show the level.
+it uses DOM elements to show the level.
 
-{{index "style attribute"}}
+{{index "style attribute", CSS}}
 
-We'll be using a ((style sheet)) to set the actual colors and other
+We'll be using a style sheet to set the actual colors and other
 fixed properties of the elements that make up the game. It would also
 be possible to directly assign to the elements' `style` property when
 we create them, but that would produce more verbose programs.
@@ -571,8 +575,6 @@ element). The strings in the grid are used as class names for the
 table cell (`<td>`) elements. The spread (triple dot) operator is used
 to pass arrays of child nodes to `elt` as separate arguments.
 
-{{index "style sheet"}}
-
 {{id game_css}}
 
 The following ((CSS)) makes the table look like the background we
@@ -605,7 +607,9 @@ the blue component is the largest, the resulting color will be bluish.
 You can see that in the `.lava` rule, the first number (red) is the
 largest.
 
-We draw each ((actor)) by creating a ((DOM)) element for it and
+{{index [DOM, graphics]}}
+
+We draw each ((actor)) by creating a DOM element for it and
 setting that element's position and size based on the actor's
 properties. The values have to be multiplied by `scale` to go from
 game units to pixels.
@@ -638,12 +642,12 @@ defined earlier.
 .player { background: rgb(64, 64, 64);   }
 ```
 
-{{index graphics, optimization, efficiency, state}}
+{{index graphics, optimization, efficiency, [state, "of application"], [DOM, graphics]}}
 
 The `syncState` method is used to make the display show a given state.
 It first removes the old actor graphics, if any, and then redraws the
 actors in their new positions. It may be tempting to try to reuse the
-((DOM)) elements for actors, but to make that work, we would need a
+DOM elements for actors, but to make that work, we would need a
 lot of additional bookkeeping to associate actors with DOM elements
 and to make sure we remove elements when their actors vanish. Since
 there will typically be only a handful of actors in the game,
@@ -659,7 +663,7 @@ DOMDisplay.prototype.syncState = function(state) {
 };
 ```
 
-{{index level, "class attribute", "style sheet"}}
+{{index level, "class attribute"}}
 
 By adding the level's current status as a class name to the wrapper,
 we can style the player actor slightly differently when the game is
@@ -684,14 +688,14 @@ white halo effect.
 
 {{id viewport}}
 
-{{index "position (CSS)", "max-width (CSS)", "overflow (CSS)", "max-height (CSS)", viewport, scrolling}}
+{{index "position (CSS)", "max-width (CSS)", "overflow (CSS)", "max-height (CSS)", viewport, scrolling, [DOM, graphics]}}
 
 We can't assume that the level always fits in the _viewport_—the
 element into which we draw the game. That is why the
 `scrollPlayerIntoView` call is needed. It ensures that if the level is
 protruding outside the viewport, we scroll that viewport to make sure
 the player is near its center. The following ((CSS)) gives the game's
-wrapping ((DOM)) element a maximum size and ensures that anything that
+wrapping DOM element a maximum size and ensures that anything that
 sticks out of the element's box is not visible. We also give it
 a relative position so that the actors inside it are
 positioned relative to the level's top-left corner.
@@ -782,7 +786,7 @@ We are now able to display our tiny level.
 
 if}}
 
-{{index "link (HTML tag)", "style sheet", CSS}}
+{{index "link (HTML tag)", CSS}}
 
 The `<link>` tag, when used with `rel="stylesheet"`, is a way to load
 a CSS file into a page. The file `game.css` contains the styles
@@ -790,7 +794,7 @@ necessary for our game.
 
 ## Motion and collision
 
-{{index physics, animation}}
+{{index physics, [animation, "platform game"]}}
 
 Now we're at the point where we can start adding motion—the most
 interesting aspect of the game. The basic approach, taken by most
@@ -815,7 +819,7 @@ We'll take a more modest approach in this chapter, handling only
 collisions between rectangular objects and handling them in a rather
 simplistic way.
 
-{{index bouncing, "collision detection", animation}}
+{{index bouncing, "collision detection", [animation, "platform game"]}}
 
 Before moving the ((player)) or a block of ((lava)), we test whether
 the motion would take it inside of a wall. If it does, we simply
@@ -968,7 +972,7 @@ Lava.prototype.update = function(time, state) {
 };
 ```
 
-{{index bouncing, multiplication, "Vect class", "collision detection"}}
+{{index bouncing, multiplication, "Vec class", "collision detection"}}
 
 This `update` method computes a new position by adding the product of the ((time)) step
 and the current speed to its old position. If no obstacle blocks that
@@ -1036,7 +1040,7 @@ Player.prototype.update = function(time, state, keys) {
 };
 ```
 
-{{index animation, keyboard}}
+{{index [animation, "platform game"], keyboard}}
 
 The horizontal motion is computed based on the state of the left and
 right arrow keys. When there's no wall blocking the new position
@@ -1113,7 +1117,7 @@ should be updated to true (`"keydown"`) or false (`"keyup"`).
 
 ## Running the game
 
-{{index "requestAnimationFrame function", animation}}
+{{index "requestAnimationFrame function", [animation, "platform game"]}}
 
 The `requestAnimationFrame` function, which we saw in [Chapter
 ?](dom#animationFrame), provides a good way to animate a game. But its
@@ -1121,7 +1125,7 @@ interface is quite primitive—using it requires us to track the time at
 which our function was called the last time around and call
 `requestAnimationFrame` again after every frame.
 
-{{index "runAnimation function", "callback function", [function, "as value"], [function, "higher-order"]}}
+{{index "runAnimation function", "callback function", [function, "as value"], [function, "higher-order"], [animation, "platform game"]}}
 
 Let's define a helper function that wraps those boring parts in a
 convenient interface and allows us to simply call `runAnimation`,
@@ -1151,21 +1155,21 @@ second). When the browser tab or window with our page is hidden,
 `requestAnimationFrame` calls will be suspended until the tab or
 window is shown again. In this case, the difference between `lastTime`
 and `time` will be the entire time in which the page was hidden.
-Advancing the game by that much in a single step will look silly and
+Advancing the game by that much in a single step would look silly and
 might cause weird side effects, such as the player falling through the
 floor.
 
 The function also converts the time steps to seconds, which are an
 easier quantity to think about than milliseconds.
 
-{{index "callback function", "runLevel function"}}
+{{index "callback function", "runLevel function", [animation, "platform game"]}}
 
 The `runLevel` function takes a `Level` object and a ((display))
 constructor and returns a promise. It displays the level (in
 `document.body`) and lets the user play through it. When the level is
 finished (lost or won), `runLevel` waits one more second (to let the
 user see what happens) and then clears the display, stops the
-((animation)), and resolves the promise to the game's end status.
+animation, and resolves the promise to the game's end status.
 
 ```{includeCode: true}
 function runLevel(level, Display) {
@@ -1346,9 +1350,9 @@ if}}
 
 {{hint
 
-{{index "pausing (exercise)"}}
+{{index "pausing (exercise)", [animation, "platform game"]}}
 
-An ((animation)) can be interrupted by returning `false` from the
+An animation can be interrupted by returning `false` from the
 function given to `runAnimation`. It can be continued by calling
 `runAnimation` again.
 
@@ -1450,7 +1454,9 @@ object—include it as constructor argument and add it as a property.
 Remember that `update` returns a _new_ object, rather than changing
 the old one.
 
-When handling ((collision)), find the player in `state.actors` and
+{{index "collision detection"}}
+
+When handling collision, find the player in `state.actors` and
 compare its position to the monster's position. To get the _bottom_ of
 the player, you have to add its vertical size to its vertical
 position. The creation of an updated state will resemble either

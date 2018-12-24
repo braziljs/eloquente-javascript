@@ -66,7 +66,7 @@ If we count the size of the definitions of `sum` and `range`, the
 second program is also big—even bigger than the first. But still, I'd
 argue that it is more likely to be correct.
 
-{{index abstraction, "domain-specific language"}}
+{{index [abstraction, "with higher-order functions"], "domain-specific language"}}
 
 It is more likely to be correct because the solution is expressed in a
 ((vocabulary)) that corresponds to the problem being solved. Summing a
@@ -133,7 +133,7 @@ at too low a level of abstraction.
 
 ## Abstracting repetition
 
-{{index array}}
+{{index [array, iteration]}}
 
 Plain functions, as we've seen them so far, are a good way to build
 abstractions. But sometimes they fall short.
@@ -160,7 +160,7 @@ function repeatLog(n) {
 }
 ```
 
-{{index [function, "higher-order"], loop, [array, traversal], [function, "as value"]}}
+{{index [function, "higher-order"], loop, [function, "as value"]}}
 
 {{indexsee "higher-order function", "function, higher-order"}}
 
@@ -193,11 +193,11 @@ console.log(labels);
 // → ["Unit 1", "Unit 2", "Unit 3", "Unit 4", "Unit 5"]
 ```
 
-{{index "loop body", braces}}
+{{index "loop body", [braces, body], [parentheses, arguments]}}
 
 This is structured a little like a `for` loop—it first describes the
 kind of loop and then provides a body. However, the body is now written
-as a function value, which is wrapped in the ((parentheses)) of the
+as a function value, which is wrapped in the parentheses of the
 call to `repeat`. This is why it has to be closed with the closing
 brace _and_ closing parenthesis. In cases like this example, where the
 body is a single small expression, you could also omit the
@@ -509,7 +509,7 @@ console.log(biggest);
 // → {name: "Han", …}
 ```
 
-There are a few more ((binding))s, and the program is four lines
+There are a few more bindings, and the program is four lines
 longer. But it is still very readable.
 
 {{index "average function", composability, [function, "higher-order"], "filter method", "map method", "reduce method"}}
@@ -559,10 +559,10 @@ intermediate results aren't represented as coherent values, it'd be a
 lot more work to extract something like `average` into a separate
 function.
 
-{{index efficiency}}
+{{index efficiency, [array, creation]}}
 
 In terms of what the computer is actually doing, these two approaches
-are also quite different. The first will build up new ((array))s when
+are also quite different. The first will build up new arrays when
 running `filter` and `map`, whereas the second computes only some
 numbers, doing less work. You can usually afford the readable
 approach, but if you're processing huge arrays, and doing so many
@@ -678,7 +678,7 @@ units), you can use `codePointAt(0)` to get its code.
 
 ## Recognizing text
 
-{{index "SCRIPTS data set", "countBy function", array}}
+{{index "SCRIPTS data set", "countBy function", [array, counting]}}
 
 We have a `characterScript` function and a way to correctly loop over
 characters. The next step is to count the characters that belong
@@ -778,7 +778,7 @@ predicate.
 
 ### Flattening
 
-{{index "flattening (exercise)", "reduce method", "concat method", array}}
+{{index "flattening (exercise)", "reduce method", "concat method", [array, flattening]}}
 
 Use the `reduce` method in combination with the `concat` method to
 "flatten" an array of arrays into a single array that has all the

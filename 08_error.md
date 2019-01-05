@@ -130,11 +130,10 @@ Nos somos avisados imediatamente que algo está errado. Isso é útil.
 Felizmente, os contrutores criados com a notação `class` vão
 sempre reclamar se eles são chamados sem `new`, fazendo isso menos
 problemático mesmo não utilizando o modo estrito.
-a problem even in non-strict mode.
 
 {{index parameter, [binding, naming], "with statement"}}
 
-O mode estrito faz mais algumas coisas. Não permite passar a uma função 
+O modo estrito faz mais algumas coisas. Não permite passar a uma função
 vários parâmetros com o mesmo nome e remove certos problemas
 caraterísticos da linguagem ao todo (como a declaração `with`, que é tão
 errado que não é mais discutido neste livro).
@@ -147,14 +146,14 @@ dói e pode ajudá-lo a indentificar um problema.
 ## Tipos
 
 Algumas linguagens querem saber os tipos de todas as suas variáveis e
-expressões antes mesmo de executar um programa. Elas vão te dizer 
+expressões antes mesmo de executar um programa. Elas vão te dizer
 imediatamente quando um tipo é usado de forma inconsistente. JavaScript considera
 os tipos apenas quando realmente executa o programa, e as vezes até mesmo
 tenta converter implicitamente valores para o tipo esperado, portanto não é
-grande ajuda.
+de grande ajuda.
 
 Ainda assim, os tipos fornecem uma estrutura útil falando de programas. Muitos
-erros surgem ao você ficar confuso sobre que tipo de valor 
+erros surgem ao você ficar confuso sobre que tipo de valor
 entra ou sai de uma função. Se você tiver essa informação
 escrita, é menos provável que você fique confuso.
 
@@ -172,7 +171,7 @@ Existem muitas convenções diferentes para anotar programas em JavaScript
 com tipos.
 
 Algo sobre os tipos é que eles introduzem sua própria
-complexidade para poder descrever o código o suficiente para ser útil. O que 
+complexidade para poder descrever o código o suficiente para ser útil. O que
 você acha que seria o tipo da função `ramdomPick` que retorna
 um elemento aleatório de uma array? Você precisaria passar uma _((variável
 tipo))_, _T_, que pode ser de qualquer tipo, de modo que você pode
@@ -199,7 +198,7 @@ código JavaScript puro.
 {{index "test suite", "run-time error", automation, testing}}
 
 Se a linguagem não vai fazer muito para nos ajudar a encontrar erros,
-teremos que encontra-los da maneira mais difícil: executando o programa e 
+teremos que encontra-los da maneira mais difícil: executando o programa e
 verificando se ele fez a coisa certa.
 
 Fazendo isso manualmente, de novo e de novo, é realmente uma má ideia. Não é apenas
@@ -264,11 +263,11 @@ _qual_ é o problema.
 
 Algumas vezes é óbvio. A mensagem de ((erro)) vai apontar para
 a linha específica do seu programa, e se você olhar para a descrição
-do erro e essa linha do código, você pode identificar, com frequência, o problema.
+do erro e essa linha do código, geralmente você pode identificar o problema.
 
 {{index "run-time error"}}
 
-Nem sempre. Às vezes, a linha que desencadeou o problema
+Mas nem sempre. Às vezes, a linha que desencadeou o problema
 é simplesmente o primeiro lugar em que um valor esquisito produzido em outro lugar
 é usado de maneira inválida. Se você tiver resolvido os ((exercícios)) nos
 capítulos anteriores, provavelmente já terá experimentado tais
@@ -277,7 +276,7 @@ situações.
 {{index "decimal number", "binary number"}}
 
 O programa de exemplo a seguir tenta converter um número inteiro em uma
-sequência de caracteres em uma determinada base (decimal, binário e assim por diante) repetidamente escolhendo o último ((dígito)) e, em seguida, dividindo o número para se livrar
+sequência de caracteres de determinada base (decimal, binário e assim por diante) repetidamente escolhendo o último ((dígito)) e, em seguida, dividindo o número para se livrar
 desse dígito. Mas a saída estranha que ele atualmente produz
 sugere que tem um ((bug)).
 
@@ -309,7 +308,7 @@ porquê.
 É aqui que você deve resistir ao impulso de começar a fazer alterações
 aleatórias no código para ver se isso o torna melhor. Em vez disso, _pense_. Analise
 o que está acontecendo e crie uma ((teoria)) de porque isso pode estar
-acontecendo. Em seguida, faça as observações adicionais para testar essa teoria - ou,
+acontecendo. Em seguida, faça as observações adicionais para testar essa teoria-ou,
 se você não ainda não tiver uma teoria, faça observações adicionais para ajudá-lo
 a criar uma.
 
@@ -342,9 +341,9 @@ do programa é usar os recursos de depuração do seu navegador.
 Navegadores vêm com a capacidade de definir um _((breakpoint))_ em uma linha
 específica do seu código. Quando a execução do programa chega até que uma linha
 com um breakpoint, ela é pausada, e você pode inspecionar os valores atribuídos
-naquele ponto. Eu não vou entrar em detalhes, como os depuradores diferem
-de navegador para navegador, mas olhe no seu navegador ((ferramentas de
-desenvolvedor)) ou pesquise na Web para obter mais informações.
+naquele ponto. Como os depuradores diferem de navegador para navegador,
+não vou entrar em detalhes, mas olhe nas ((ferramentas de desenvolvedor))
+do seu navegador ou pesquise na Web para obter mais informações.
 
 Outra forma de definir um breakpoint é incluir uma declaração `debugger`
 (consistindo simplesmente na palavra-chave) em seu programa. Se as
@@ -455,7 +454,7 @@ seu programa. Seu poder reside no fato de que você pode definir
 subindo a pilha. Depois de detectar uma exceção, você pode fazer algo com ela para
 resolver o problema e continuar a executar o programa.
 
-Here's an example:
+Aqui está um exemplo:
 
 {{id look}}
 ```
@@ -609,7 +608,7 @@ Depois que o bloco `finally` é executado, a pilha continua se desenrolando.
 {{index "exception safety"}}
 
 Escrever programas que funcionem de forma confiável mesmo quando as
-exceções surgem em locais inesperados é díficil. Muitas pessoas 
+exceções surgem em locais inesperados é díficil. Muitas pessoas
 simplesmente não se incomodam, e porque
 as exceções são normalmente reservadas para circunstâncias
 excepcionais, o problema pode ocorrer tão raramente que nunca é

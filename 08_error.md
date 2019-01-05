@@ -38,7 +38,7 @@ coisas claramente sem sentido sem objeção, como o cálculo
 
 {{index [syntax, error], [property, access]}}
 
-Existem algumas coisas que o Javascript se incomoda. Escrever um
+Existem algumas coisas que o JavaScript se incomoda. Escrever um
 programa que não segue a ((gramática)) da linguagem vai
 fazer o computador imediatamente reclamar. Outras coisas, como chamar
 algo que não é uma função ou acessar uma ((propriedade)) em um
@@ -47,13 +47,13 @@ programa tentar executar a ação.
 
 {{index NaN, error}}
 
-Mas algumas vezes, seus cálculos absurdos vão resultar apenas `NaN` (not a
-number) ou um valor undefined (indefinido), enquanto o programa alegrente continua,
+Mas algumas vezes, seus cálculos absurdos vão resultar apenas `NaN` (não é um
+número) ou um valor undefined (indefinido), enquanto o programa alegremente continua,
 convencido que está fazendo alguma coisa importante. O erro se
 manifestará só mais tarde, depois que o valor falso viajou através  
-de várias funções. Isso pode não desencadear um erro mas silenciosamente
+de várias funções. Isso pode não desencadear um erro, mas silenciosamente
 fazer com que a saída do programa esteja errada. Encontrar a fonte de tais
-pode ser difícil.
+problemas pode ser difícil.
 
 O processo de encontrar erros ou bugs em programas é chamado de
 _((debugging))_.
@@ -64,7 +64,7 @@ _((debugging))_.
 
 {{indexsee "use strict", "strict mode"}}
 
-JavaScript pode ser um _pouco_ mais rigoroso habilitando-se o _modo estrito_ ou 
+JavaScript pode ser um _pouco_ mais rigoroso habilitando-se o _modo estrito_ ou
 _strict mode_. Isto é feito colocando-se a string `"use strict"` no início de
 um arquivo ou do corpo de uma função. Aqui está um exemplo:
 
@@ -96,14 +96,14 @@ Outra mudança no modo estrito é que o `this` possui o
 valor `undefined` nas funções que não são chamadas como ((métodos)).
 Quando fazer tal chamada fora do modo estrito, `this` refere-se ao
 escopo do objeto global, que é um objeto cuja as propriedades são as
-variáveis globais. Então se você acidentalmente chmar um método ou construtor
+variáveis globais. Então se você acidentalmente chamar um método ou construtor
 incorretamente no modo estrito, o JavaScript irá lançar um erro assim
 que tentar ler algo de `this`, ao invés de simplesmenete escrever
 no escopo global.
 
 Por exemplo, considere o código a seguir, o qual chama um
 ((construtor)) sem a palavra-chave `new` de modo que seu `this`
-_não_ irá se referir ao objeto recem criado:
+_não_ irá se referir ao objeto recém criado:
 
 ```
 function Person(name) { this.name = name; }
@@ -249,10 +249,10 @@ Estes são geralmente chamados de _((test runners))_.
 
 {{index "persistent data structure"}}
 
-Certos códigos são mais fáceis de tester que outros. Geralmente, quanto mais
-objetos externos o código interage, mais difícil é configurar o contexto no qual
+Certos códigos são mais fáceis de testar que outros. Geralmente, quanto mais
+objetos externos o código interage, mais difícil é de configurar o contexto no qual
 testá-lo. O estilo de programação mostrado no [capítulo anterior](robot), que usa valores
-persistentes independentes em vez de alterar objetos, tenden a ser mais fácil de testar.
+persistentes independentes em vez de alterar objetos, tendem a ser mais fácil de testar.
 
 ## Depuração
 
@@ -307,7 +307,7 @@ porquê.
 {{index "trial and error"}}
 
 É aqui que você deve resistir ao impulso de começar a fazer alterações
-aleatórias no código para ver se isso o torna melhor. Em vez disso, _pense_ Analise
+aleatórias no código para ver se isso o torna melhor. Em vez disso, _pense_. Analise
 o que está acontecendo e crie uma ((teoria)) de porque isso pode estar
 acontecendo. Em seguida, faça as observações adicionais para testar essa teoria - ou,
 se você não ainda não tiver uma teoria, faça observações adicionais para ajudá-lo
@@ -332,15 +332,15 @@ escrever seu valor no início do loop.
 {{index rounding}}
 
 _Certo_. Dividir 13 por 10 não produz um número inteiro. Ao invés de
-`n /= base`, o que nós realmenten queremos é `n = Math.floor(n / base)` para
+`n /= base`, o que nós realmente queremos é `n = Math.floor(n / base)` para
 que o número seja apropriadamente arredondado para cima.
 
 {{index "JavaScript console", "debugger statement"}}
 
-Uma alternatia do uso de `console.log` para observar o comportamento
+Uma alternativa do uso de `console.log` para observar o comportamento
 do programa é usar os recursos de depuração do seu navegador.
-Navegadores vem com a capacidade de definir um _((breakpoint))_ em uma linha
-especifica do seu código. Quando a execução do programa chega até uma linha
+Navegadores vêm com a capacidade de definir um _((breakpoint))_ em uma linha
+específica do seu código. Quando a execução do programa chega até que uma linha
 com um breakpoint, ela é pausada, e você pode inspecionar os valores atribuídos
 naquele ponto. Eu não vou entrar em detalhes, como os depuradores diferem
 de navegador para navegador, mas olhe no seu navegador ((ferramentas de
@@ -379,8 +379,8 @@ inteiro e o retorna. O que ela deve retornar se o usuário inserir
 
 {{index null, undefined, "return value", "special return value"}}
 
-Uma opção é fazer retornar um valor especial. Escolhar comuns para
-esses valores são  `null`, `undefined`, or -1.
+Uma opção é fazer retornar um valor especial. Escolhas comuns para
+esses valores são  `null`, `undefined`, ou -1.
 
 ```{test: no}
 function promptNumber(question) {
@@ -403,8 +403,8 @@ fazer o que foi solicitado.
 Em muitas situações, principalmente quando ((erros))s são comuns e quem chama
 deve expliciamente levá-los em conta, retornando um valor
 especial é uma boa forma de indicar um erro. No entanto, tem suas
-desvantagens. Primeiro, e se a função já puder retornar todo
-o tipo possível valor? Em tal função, você terá que fazer
+desvantagens. Primeiro, e se a função já puder retornar todos
+os tipos possiveis de valores? Em tal função, você terá que fazer
 algo como embrulhar o resultado em um objeto para poder distinguir
 sucesso de falha.
 
@@ -436,14 +436,14 @@ como lidar com o problema. Isso é o que a _((manipulação de execeções))_ fa
 
 {{index ["control flow", exceptions], "raising (exception)", "throw keyword", "call stack"}}
 
-Exceções são um mecanismo que faz isso possível ao código executado
-em um problema para alçar (ou lançar) uma exceção. Uma exceção pode
+Exceções são mecanismos que possibilitam que o código lançe
+uma exceção quando encontrar um problema. Uma exceção pode
 ser qualquer valor. Lança-las se assemelha um pouco a um retorno super-carregado
 de uma função: ele salta não apenas da função atual,
 mas também de quem a chamou, até a primeira chamada que
 iniciou a execução atual. Isso é denominado de _((desenrolar da
 pilha))_. Você pode se lembrar da pilha de chamadas que foi
-mencionada no [Chapter ?](functions#stack). Uma exeção reduz
+mencionada no [Chapter ?](functions#stack). Uma exceção reduz
 a pilha, descartando todos os contextos encontrados.
 
 {{index "error handling", [syntax, statement], "catch keyword"}}
@@ -487,7 +487,7 @@ A palavra-chave `throw` é usada para lançar uma exceção. Capturar uma é
 feito envolvendo um pedaço de código em um bloco `try`, seguindo pela
 palavra-chave `catch`. Quando o código dentro do bloco `try` faz com que uma exceção
 seja lançada, o bloco `catch` é avaliada, com o nome em
-parenteses vinculado ao valor da exceção. Depois do bloco `catch`
+parênteses vinculado ao valor da exceção. Depois do bloco `catch`
 terminar-ou se o bloco `try` terminar sem problemas-o programa
 prossegue sob toda a instrução `try/catch`.
 
@@ -498,7 +498,7 @@ valor de exceção. Este é um construtor ((padrão)) do JavaScript que
 cria um objeto com uma propriedade `message`. Na maioria dos ambientes
 JavaScript, as instâncias desse construtor também reúnem informações
 sobre a pilha de chamadas existente quando a exceção foi criada, o
-chamado _((stack trace))_. Essa informação é armazenada na prepriedade
+chamado _((stack trace))_. Essa informação é armazenada na propriedade
 `stack` e pode ser útil ao tentar depurar um problema: ela nos
 diz a função onde o problema ocorreu e quais funções fizeram a chamada
 com falha.
@@ -528,7 +528,7 @@ exceção pode impedir que alguns deles ocorram.
 
 {{index "banking example"}}
 
-Aqui está um código báncario ruim.
+Aqui está um código bancário ruim.
 
 ```{includeCode: true}
 const accounts = {
@@ -562,13 +562,13 @@ interrompido por uma exceção nesse ponto, isso fará com que o dinheiro
 desapareça.
 
 Esse código poderia ter sido escrito de forma um pouco mais inteligente, por exemplo,
-chamando `getAccount` antes que de começar a movimentar o dinheiro.
+chamando `getAccount` antes de começar a movimentar o dinheiro.
 Mas muitas vezes problemas como esse ocorrem de maneiras mais sutís. Até mesmo
 funções que não parecem que lançarão uma exceção podem fazê-lo em
 circunstâncias excepcionais ou quando elas contêm um erro do programador.
 
 Uma maneira de resolver isso é usar menos efeitos colaterias. Novamente, um
-estilo de programação que calcula novos valoress em de alterar os
+estilo de programação que calcula novos valores em vez de alterar os
 dados existentes ajuda. Se um trecho de código parar de ser executado no meio da
 criação de um novo valor, ninguém verá o valor incompleto,
 e não haverá problema.
@@ -633,7 +633,7 @@ todo quando ocorre uma exceção não tratada.
 
 Para erros de programação, apenas deixar passar o erro é geralmente
 o melhor que você pode fazer. Uma exceção não tratada é uma maneira razoável de
-de sinalizar um programa quebrado, e o console JavaScript fornecerá, em navegadores
+sinalizar um programa quebrado, e o console JavaScript fornecerá, em navegadores
 modernos, algumas informações sobre quais chamadas de função
 estavam na pilha quando o problema ocorreu.
 
@@ -651,7 +651,7 @@ Tais exceções também podem ser capturadas.
 
 {{index "catch keyword"}}
 
-Quan um escopo `catch` é acessado, tudo que nos sabemos é que _algo_ no nosso
+Quando um escopo `catch` é acessado, tudo que nós sabemos é que _algo_ no nosso
 escopo `try` causou uma exceção. Mas nós não sabemos _o que_ causou ou _qual_ exceção
 foi causada.
 
@@ -686,7 +686,7 @@ for (;;) {
 
 A construção `for (;;)` é uma forma de criar intencionalmente um loop que
 não termina sozinho. Nós saímos do loop apenas quando uma
-direção valida é dada. _Mas_ nos escrevemos incorretamente `promptDirection`, o que
+direção valida é dada. _Mas_ nós escrevemos incorretamente `promptDirection`, o que
 resultará em um erro de "varíavel indefinida". Como o bloco `catch`
 ignora completamente seu valor de exceção (`e`), supondo que ele conhece
 qual é o problema, ele erroneamente trata o erro de atribuição indicando
@@ -706,7 +706,7 @@ estamos interessados e relançando-a caso contrário. Mas como reconhecemos
 uma exceção?
 
 Nos poderíamos comparar sua propriedade `message` com a mensagem de ((erro))
-que esperamos. Mas está é uma maneira instável de escrever código-estaríamos
+que esperamos. Mas esta é uma maneira instável de escrever código-estaríamos
 usando informações destinadas ao consumo humano (a mensagem)
 para tomar uma decisão programática. Assim que alguém alterar (ou
 traduzir) a mensagem, o código deixará de funcionar.
@@ -714,7 +714,7 @@ traduzir) a mensagem, o código deixará de funcionar.
 {{index "Error type", "instanceof operator", "promptDirection function"}}
 
 Em vez disso, vamos definir um novo tipo de erro e usar `instanceof` para
-indenficá-lo.
+indentificá-lo.
 
 ```{includeCode: true}
 class InputError extends Error {}
@@ -729,12 +729,12 @@ function promptDirection(question) {
 
 {{index "throw keyword", inheritance}}
 
-O nova classe de erro extende `Error`. Ela não define seu próprio
-construtor, o que significa que ele herda o construtor `Error`,
+A nova classe de erro estende `Error`. Ela não define seu próprio
+construtor, o que significa que ela herda o construtor `Error`,
 que espera uma mensagem string como argumento. De fato, ela não define
 nada-a classe está vazia. Objetos `InputError` se comportam como
 objetos `Error`, exceto que eles possuem uma classe diferente pela qual
-podemos identifica-los.
+podemos identificá-los.
 
 {{index "exception handling"}}
 
@@ -770,7 +770,7 @@ _Asserções_ são verificações dentro de um programa que verificam se algo é
 como deveria ser. Elas não são usadas ​​para lidar com situações
 que podem surgir em operação normal, mas para encontrar erros de programação.
 
-Se, por exemplo, `firstElement` é descrito com uma função que nunca
+Se, por exemplo, `firstElement` é descrito como uma função que nunca
 deve ser chamada com arrays vazios, poderíamos escrevê-la assim:
 
 ```
@@ -802,7 +802,7 @@ programação é encontrar, diagnosticar, e corrigir erros. Problemas
 podem se tornar mais fáceis de serem percebidos se você tiver um conjunto
 de testes automatizados ou adicionar asserções para seus programas.
 
-Problemas causadas por fatores externos ao controle do programa geralmente
+Problemas causados por fatores externos ao controle do programa geralmente
 devem ser tratados elegantemente. Às vezes, quando o problema pode ser
 tratado localmente, os valores de retorno especiais são uma boa forma de rastreá-los.
 Caso contrário, exceções podem ser preferíveis.
@@ -822,7 +822,7 @@ garantir que um trecho de código _sempre_ seja executado quando o bloco termina
 {{index "primitiveMultiply (exercise)", "exception handling", "throw keyword"}}
 
 Digamos que você tem uma função `primitiveMultiply` que em 20 por cento dos
-caos multiplica dois números e nos outros 80 por cento dos casos gera uma
+casos multiplica dois números e nos outros 80 por cento dos casos gera uma
 exceção do tipo `MultiplicatorUnitFailure`. Escreva uma função que
 encapsula essa função desajeitada e continua tentando até uma chamada seja
 bem-sucedida, e após retorna o resultado.
@@ -860,7 +860,7 @@ if}}
 
 A chamada para `primitiveMultiply` deve definitivamente ocorrer em um bloco
 `try`. O bloco `catch` correspondente deve relançar a exceção
-quando não é uma instancia de `MultiplicatorUnitFailure` e garantir
+quando não é uma instância de `MultiplicatorUnitFailure` e garantir
 que a chamada é repetida quando é.
 
 hint}}
@@ -892,7 +892,7 @@ propriedade privada `_content` é proibido.
 
 {{index "finally keyword", "exception handling"}}
 
-Escreva uma função chamda `withBoxUnlocked` que recebe um valor de função
+Escreva uma função chamada `withBoxUnlocked` que recebe um valor de função
 como argumento, desbloqueia a caixa, executa a função, e após garante que
 a caixa é bloqueada novamente antes de retornar, independentemente de a
 função de argumento ter retornado normalmente ou ter lançado uma exceção.

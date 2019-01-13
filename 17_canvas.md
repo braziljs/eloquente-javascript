@@ -43,7 +43,7 @@ Esse é um documento HTML que contém uma ((figura)) SVG simples:
 
 {{index "circle (SVG tag)", "rect (SVG tag)", "XML namespace", XML, "xmlns attribute"}}
 
-O atributo `xmlns` muda um elemento (e seus filhos) para um namespace _XML diferente_. Esse namespace, identificado por uma ((URL)), especifica a forma que estamos usando atualmente. As tags `<circle>` e `<rect>`, que não existem no HTML, têm significado no SVG – elas desenham formas usando o estilo e a posição especificados por seus atributos.
+O atributo `xmlns` muda um elemento (e seus filhos) para um  _namespace XML_. Esse namespace, identificado por uma ((URL)), especifica a forma que estamos usando atualmente. As tags `<circle>` e `<rect>`, que não existem no HTML, têm significado no SVG – elas desenham formas usando o estilo e a posição especificados por seus atributos.
 
 {{if book
 
@@ -72,7 +72,7 @@ Um novo canvas está vazio, o que significa que está completamente ((transparen
 
 {{index "2d (canvas context)", "webgl (canvas context)", OpenGL, [canvas, context], dimensions, [interface, canvas]}}
 
-A tag `<canvas>` serve para permitir estilos diferentes de desenho. Para de fato acessar uma interface de desenho, primeiro precisamos criar um context (contexto), um objeto cujos métodos fornecem a interface de desenho. Atualmente existem dois estilos de desenho com grande suporte: `"2d"`  para gráficos de duas dimensões e `"webgl"` para gráficos com três dimensões através da interface OpenGL.
+A tag `<canvas>` serve para permitir estilos diferentes de desenho. Para de fato acessar uma interface de desenho, primeiro precisamos criar um _context_ (contexto), um objeto cujos métodos fornecem a interface de desenho. Atualmente existem dois estilos de desenho com grande suporte: `"2d"`  para gráficos de duas dimensões e `"webgl"` para gráficos com três dimensões através da interface OpenGL.
 
 {{index rendering, graphics, efficiency}}
 
@@ -186,7 +186,7 @@ if}}
 
 {{index [path, canvas], filling, [path, closing], "fill method"}}
 
-Quando estiver preenchendo um caminho (usando o método `fill`), cada forma é preenchida separadamente. Um caminho pode conter várias formas – cada movimento do método `moveTo` inicia uma nova. Mas o caminho precisa ser _fechado_ (o que quer dizer que seu início e fim estão na mesma posição) antes de ser preenchido. Se o caminho já não e fechado, uma linha é adicionada do seu final para seu começo, e a forma concluída pelo caminho completado é preenchida.
+Quando estiver preenchendo um caminho (usando o método `fill`), cada forma é preenchida separadamente. Um caminho pode conter várias formas – cada movimento do método `moveTo` inicia uma nova. Mas o caminho precisa ser _fechado_ (o que quer dizer que seu início e fim estão na mesma posição) antes de ser preenchido. Se o caminho já não é fechado, uma linha é adicionada do seu final para seu começo, e a forma concluída pelo caminho completado é preenchida.
 
 ```{lang: "text/html"}
 <canvas></canvas>
@@ -331,7 +331,7 @@ const results = [
 
 {{index "pie chart example"}}
 
-Para desenhar um gráfico de piza, desenhamos um número de fatias de pizza, cada um feito de um ((arco)) e um par de ((linha))s até o centro desse arquivo. Podemos computar o ((ângulo)) usado em cada arco dividindo um círculo inteiro (2π) pelo total do número de respostas e então multiplicando esse número (o ângulo por resposta) pelo número de pessoas que escolheram determinada opção.
+Para desenhar um gráfico de pizza, desenhamos um número de fatias de pizza, cada um feito de um ((arco)) e um par de ((linha))s até o centro desse arquivo. Podemos computar o ((ângulo)) usado em cada arco dividindo um círculo inteiro (2π) pelo total do número de respostas e então multiplicando esse número (o ângulo por resposta) pelo número de pessoas que escolheram determinada opção.
 
 ```{lang: "text/html", sandbox: "pie"}
 <canvas width="200" height="200"></canvas>
@@ -460,7 +460,7 @@ Sabemos que cada _((sprite))_, cada subfigura, tem 24 ((pixel))s de largura e 30
 </script>
 ```
 
-O `cycle` conecta nossa posição na animação. A cada ((quadro)), ele é incrementado e então resetado entre 0 e 7 através  do operador restante. Essa conexão é então usada para computar a coordenada x que o sprite da posição atual tem na figura.
+O `cycle` conecta nossa posição na animação. A cada ((quadro)), ele é incrementado e então resetado entre 0 e 7 através do operador restante. Essa conexão é então usada para computar a coordenada x que o sprite da posição atual tem na figura.
 
 ## Transformação
 
@@ -472,7 +472,7 @@ Mas e se quisermos que nosso personagem ande a partir da esquerda ao invés da d
 
 {{index "scale method", scaling}}
 
-Chamar o método `scale` vai mudar a escala de tudo o que for desenhado. Esse método leva dois parâmetros, um para definir uma escala horizontal e outra para definir uma escala vertical.
+Chamar o método `scale` vai mudar a escala de tudo o que for desenhado. Esse método leva dois parâmetros, um para definir uma escala horizontal e outro para definir uma escala vertical.
 
 ```{lang: "text/html"}
 <canvas></canvas>
@@ -530,13 +530,13 @@ function flipHorizontally(context, around) {
 
 {{index "flipHorizontally method"}}
 
-Movemos o ((eixo)) y para onde queremos que nosso ((espelho)) esteja, aplicando a espelhagem, e finalmente movemos o eixo x de volta ao lugar apropriado no universe espelhado. A figura a seguir explica por que isso funciona:
+Movemos o ((eixo)) y para onde queremos que nosso ((espelho)) esteja, aplicando a espelhagem, e finalmente movemos o eixo x de volta ao lugar apropriado no universo espelhado. A figura a seguir explica por que isso funciona:
 
 {{figure {url: "img/mirror.svg", alt: "Espelhando em torno de uma linha vertical",width: "8cm"}}}
 
 {{index "translate method", "scale method", transformation, canvas}}
 
-A imagem acima mostra o sistema de coordenadas antes e depois da espelhagem na linha central. Os triângulos são numerados para ilustrar cada etapa. Se desenhássemos um triângulo em uma posição x positiva, iria, por padrão, estar no lugar onde o triângulo 1 está. Chamar o `flipHorizontally` primeiro faz a translação para a direita, que nos leva para o triângulo 2. Ela então escala, invertendo o triângulo para a posição 3. Não era para ele estar ali, se tivéssemos espelhado em determinada linha. O segundo `translate` conserta isso – ele “cancela” a translação inicial e faz  o triângulo 4 aparecer exatamente onde deveria.
+A imagem acima mostra o sistema de coordenadas antes e depois da espelhagem na linha central. Os triângulos são numerados para ilustrar cada etapa. Se desenhássemos um triângulo em uma posição x positiva, iria, por padrão, estar no lugar onde o triângulo 1 está. Chamar o `flipHorizontally` primeiro faz a translação para a direita, que nos leva para o triângulo 2. Ela então escala, invertendo o triângulo para a posição 3. Não era para ele estar ali, se tivéssemos espelhado em determinada linha. O segundo `translate` conserta isso – ele “cancela” a translação inicial e faz o triângulo 4 aparecer exatamente onde deveria.
 Agora podemos desenhar um personagem espelhado na posição (100,0) invertendo o mundo ao redor do centro vertical do personagem.
 
 ```{lang: "text/html"}
@@ -564,13 +564,13 @@ Transformações não vão embora. Tudo o que desenhamos após ((desenhar)) aque
 
 {{index "save method", "restore method", [state, "of canvas"]}}
 
-Os métodos `save` e `restore` no contexto de ((canvas)) 2D fazem esse gerenciamento da ((transformação)). Eles conceitualmente mantém uma pilha de estados de transformação. Quando você chama o `save`, o estado atual é colocado na pilha, e quando você chama `restore`, o estado no topo da pilha é tirado e usado como contexto da transformação atual. Você também pode usar o `resetTransform` para resetar a transformação completamente.
+Os métodos `save` e `restore` no contexto de ((canvas)) 2D fazem esse gerenciamento da ((transformação)). Eles conceitualmente mantêm uma pilha de estados de transformação. Quando você chama o `save`, o estado atual é colocado na pilha, e quando você chama `restore`, o estado no topo da pilha é tirado e usado como contexto da transformação atual. Você também pode usar o `resetTransform` para resetar a transformação completamente.
 
 {{index "branching recursion", "fractal example", recursion}}
 
 A função `branch` no exemplo a seguir ilustra o que você pode fazer com uma função que muda a transformação e então chama outra função (nesse caso, ela mesma), que continua desenhando com essa determinada transformação.
 
-Essa função desenha uma forma semelhante a uma àrvore desenhando uma linha, movendo o centro do sistema de coordenadas para o fim da linha, e chamando a si mesma duas vezes – primeiro rotacionando para a esquerda e então rotacionando para a direita. Toda chamada reduz o comprimento do galho desenhado, e a recurão pára quando o comprimento for menor que 8.
+Essa função desenha uma forma semelhante a uma àrvore desenhando uma linha, movendo o centro do sistema de coordenadas para o fim da linha, e chamando a si mesma duas vezes – primeiro rotacionando para a esquerda e então rotacionando para a direita. Toda chamada reduz o comprimento do galho desenhado, e a recursão para quando o comprimento for menor que 8.
 
 ```{lang: "text/html"}
 <canvas width="600" height="300"></canvas>
@@ -594,7 +594,7 @@ Essa função desenha uma forma semelhante a uma àrvore desenhando uma linha, m
 
 {{if book
 
-O resultado é uma fractal simples.
+O resultado é um fractal simples.
 
 {{figure {url: "img/canvas_tree.png", alt: "Uma figura recursiva",width: "5cm"}}}
 
@@ -645,10 +645,10 @@ class CanvasDisplay {
 }
 ```
 
-O método `setState` primeiro computa um novo viewport e depois desenha a cena do jogo na posição apropriada.
+O método `syncState` primeiro computa um novo viewport e depois desenha a cena do jogo na posição apropriada.
 
 ```{sandbox: "game", includeCode: true}
-CanvasDisplay.prototype.setState = function(state) {
+CanvasDisplay.prototype.syncState = function(state) {
   this.updateViewport(state);
   this.clearDisplay(state.status);
   this.drawBackground(state.level);
@@ -707,7 +707,7 @@ CanvasDisplay.prototype.clearDisplay = function(status) {
 
 {{index "Math.floor function", "Math.ceil function", rounding}}
 
-Para desenharmos o plano de fundo, percorremos os tiles (ladrilhos) que são visíveis no viewport atual, usando o mesmo truque usado no método `touches` do [capítulo anterior](game#touches).
+Para desenharmos o plano de fundo, percorremos os _tiles_ (ladrilhos) que são visíveis no viewport atual, usando o mesmo truque usado no método `touches` do [capítulo anterior](game#touches).
 
 ```{sandbox: "game", includeCode: true}
 let otherSprites = document.createElement("img");
@@ -737,21 +737,21 @@ CanvasDisplay.prototype.drawBackground = function(level) {
 
 {{index "drawImage method", sprite, tile}}
 
-Tiles que não estão vazios são desenhados com o `drawImage`. A imagem `otherSprites` contém as figuras usadas para elementos que não sejam o jogador. Ela contém, da esquerda para a direita, a tile da parede, da lava, e o sprite para uma moeda.
+_Tiles_ que não estão vazios são desenhados com o `drawImage`. A imagem `otherSprites` contém as figuras usadas para elementos que não sejam o jogador. Ela contém, da esquerda para a direita, a tile da parede, da lava, e o sprite para uma moeda.
 
 {{figure {url: "img/sprites_big.png", alt: "Sprites for our game",width: "1.4cm"}}}
 
 {{index scaling}}
 
-Os tiles do plano de fundo são 20 pixels por 20 pixels, já que vamos usar a mesma escala que usamos no `DOMDisplay`. Além disso, o deslocamento para os tiles da lava é 20 (o valor do `scale`), e o deslocamento para as paredes é 0.
+Os _tiles_ do plano de fundo são 20 pixels por 20 pixels, já que vamos usar a mesma escala que usamos no `DOMDisplay`. Além disso, o deslocamento para os tiles da lava é 20 (o valor do `scale`), e o deslocamento para as paredes é 0.
 
 {{index drawing, "load event", "drawImage method"}}
 
-Não nos importamos em esperar a imagem da sprite carregar. Chamar o `drawImage` com uma imagem que não foi carregada ainda simplesmente  não fará nada. Além disso, podemos acabar falhando em desenhar o jogo apropriadamente nos primeiros ((quadro))s, enquanto a imagem ainda estiver carregando, mas esse não é um problema sério. Já que continuamos atualizando a tela, a cena correta aparecerá assim que o carregamento terminar.
+Não nos importamos em esperar a imagem da sprite carregar. Chamar o `drawImage` com uma imagem que não foi carregada ainda simplesmente não fará nada. Além disso, podemos acabar falhando em desenhar o jogo apropriadamente nos primeiros ((quadro))s, enquanto a imagem ainda estiver carregando, mas esse não é um problema sério. Já que continuamos atualizando a tela, a cena correta aparecerá assim que o carregamento terminar.
 
 {{index "player", [animation, "platform game"], drawing}}
 
-O personagem ((caminhando)) mostrado mais cedo será usado para representar o jogador.  O código que o desenha precisa escolher a ((sprite)) correta e direcioná-la baseando-se no movimento atual do jogador. As primeiras oito sprites contêm uma animação caminhando. Quando o jogador estiver se movendo junto ao chão, vamos passar por elas baseando-se no tempo atual. Queremos trocar os quadros a cada 60 milissegundos, então o ((tempo)) precisa ser dividido por 60 primeiro. Quando o jogador estiver parado, desenhamos o novo sprite. Durante os pulos, que são reconhecidos pelo fato de que a velocidade vertical não é zero, usamos o décimo, que é a sprite mais à direita.
+O personagem ((caminhando)) mostrado mais cedo será usado para representar o jogador. O código que o desenha precisa escolher a ((sprite)) correta e direcioná-la baseando-se no movimento atual do jogador. As primeiras oito sprites contêm uma animação caminhando. Quando o jogador estiver se movendo junto ao chão, vamos passar por elas baseando-se no tempo atual. Queremos trocar os quadros a cada 60 milissegundos, então o ((tempo)) precisa ser dividido por 60 primeiro. Quando o jogador estiver parado, desenhamos o novo sprite. Durante os pulos, que são reconhecidos pelo fato de que a velocidade vertical não é zero, usamos o décimo, que é a sprite mais à direita.
 
 {{index "flipHorizontally function", "CanvasDisplay class"}}
 
@@ -809,7 +809,7 @@ CanvasDisplay.prototype.drawActors = function(actors) {
 };
 ```
 
-Quando ((desenhamos)) algo que não seja o ((jogador)), verificamos seu tipo para encontrar o deslocamento da sprite correta. O tile de ((lava)) tem o deslocamento de 20, o sprite da ((moeda)) tem deslocamento de 40 (duas vezes a `scale`).
+Quando ((desenhamos)) algo que não seja o ((jogador)), verificamos seu tipo para encontrar o deslocamento da sprite correta. O _tile_ de ((lava)) tem o deslocamento de 20, o sprite da ((moeda)) tem deslocamento de 40 (duas vezes a `scale`).
 
 {{index viewport}}
 
@@ -843,19 +843,19 @@ if}}
 
 ## Escolhendo uma interface gráfica
 
-Então, quando precisar gerar gráficos no navegador, você pode escolher entre plain HTML, ((SVG)) e ((canvas)). Não há uma _melhor_ abordagem que funciona em todas as situações. Cada opção tem seus pontos fortes e fracos.
+Então, quando precisar gerar gráficos no navegador, você pode escolher entre HTML, ((SVG)) e ((canvas)). Não há uma _melhor_ abordagem que funciona em todas as situações. Cada opção tem seus pontos fortes e fracos.
 
 {{index "text wrapping"}}
 
-Plain HTML tem a vantagem de ser simples. Ele também integra bem com ((texto)). Tanto o SVG quanto o canvas permite que você desenhe texto, mas não vão te ajudar a posicionar esse texto ou agrupá-lo quando ele tiver mais de uma linha. Em uma figura baseada em HTML, é muito mais fácil incluir blocos de texto.
+HTML tem a vantagem de ser simples. Ele também integra bem com ((texto)). Tanto o SVG quanto o canvas permite que você desenhe texto, mas não vão te ajudar a posicionar esse texto ou agrupá-lo quando ele tiver mais de uma linha. Em uma figura baseada em HTML, é muito mais fácil incluir blocos de texto.
 
 {{index zooming, SVG}}
 
-Os SVG podem ser usados para produzir ((gráficos)) ((nítidos)) que ficam bons em qualquer nível de zoom. Ao contrário do HTML, ele é feito para desenho e, portanto, é mais adequado para esse propósito.
+O SVG pode ser usado para produzir ((gráficos)) ((nítidos)) que ficam bons em qualquer nível de zoom. Ao contrário do HTML, ele é feito para desenho e, portanto, é mais adequado para esse propósito.
 
 {{index [DOM, graphics], SVG, "event handling", ["data structure", tree]}}
 
-Tanto o SVG quanto o HTML criam uma estrutura de dados (o DOM) que representa sua figura. Isso faz com que seja possível modificar os elementos após serem desenhados. Se precisar mudar uma forma pequena de uma ((figura)) grande várias vezes em resposta ao que o usário estiver fazendo ou como parte de uma ((animação)), fazer isso em um canvas pode ser desnecessariamente pesado. O DOM também nos permite registrar event handlers do mouse em todo elemento da figura (mesmo em formas desenhadas com o SVG). Você não pode fazer isso com o canvas.
+Tanto o SVG quanto o HTML criam uma estrutura de dados (o DOM) que representa sua figura. Isso faz com que seja possível modificar os elementos após serem desenhados. Se precisar mudar uma forma pequena de uma ((figura)) grande várias vezes em resposta ao que o usário estiver fazendo ou como parte de uma ((animação)), fazer isso em um canvas pode ser desnecessariamente pesado. O DOM também nos permite registrar _event handlers_ do mouse em todo elemento da figura (mesmo em formas desenhadas com o SVG). Você não pode fazer isso com o canvas.
 
 {{index performance, optimization}}
 
@@ -863,7 +863,7 @@ Mas a abordagem orientada a ((pixel)) do ((canvas)) pode ser uma vantagem quando
 
 {{index "ray tracer"}}
 
-Também existem eventos, como renderizar uma cena um pixel por vez (usando um ray tracer, que é um algoritmo de computação gráfica usado para renderização de imagens tridimencionais, por exemplo) ou pós-processar uma imagem com JavaScript (desfocando ou distorcendo a imagem), que só podem ser lidadas realisticamente por uma abordagem baseada em ((pixel))s.
+Também existem eventos, como renderizar uma cena um pixel por vez (usando um _ray tracer_, que é um algoritmo de computação gráfica usado para renderização de imagens tridimencionais, por exemplo) ou pós-processar uma imagem com JavaScript (desfocando ou distorcendo a imagem), que só podem ser lidadas realisticamente por uma abordagem baseada em ((pixel))s.
 
 Em alguns casos, você pode querer combinar várias dessas técnicas. Por exemplo, você pode querer desenhar um ((grafo)) com ((SVG)) ou ((canvas)), mas mostrar informações em ((texto)) posicionando um elemento HTML em cima da figura.
 
@@ -883,17 +883,17 @@ Retângulos e pedaços de texto podem ser desenhados com apenas uma chamada de m
 
 {{index stroking, filling}}
 
-Chamar o `beginPath` inicia um novo caminho. Vários outros métodos adicionam linhas e curvas ao caminho atual. Por exemplo, lineTo pode adicionar uma linha reta. Quando um caminho é finalizado, ele pode ser preenchido com o método `fill` ou delineado com o método `stroke`.
+Chamar o `beginPath` inicia um novo caminho. Vários outros métodos adicionam linhas e curvas ao caminho atual. Por exemplo, `lineTo` pode adicionar uma linha reta. Quando um caminho é finalizado, ele pode ser preenchido com o método `fill` ou delineado com o método `stroke`.
 
-Mover pixels para uma imagem ou de um canvas para outro canvas pode ser feito com o método `drawImage`. Por padrão, esse método desenha uma imagem fonte por completo, mas dar mais parâmetros ao método te permite copiar uma área específica da imagem. Usamos isso para nosso jogo copiando poses individuais de um personagem de jogo de uma imagem que continha tais poses.
+Mover pixels de uma imagem, ou de um canvas para outro, pode ser feito com o método `drawImage`. Por padrão, esse método desenha uma imagem fonte por completo, mas dar mais parâmetros ao método te permite copiar uma área específica da imagem. Usamos isso para nosso jogo copiando poses individuais de um personagem de jogo de uma imagem que continha tais poses.
 
-Transformações de permitem desenhar uma forma em várias orientações. Um desenho de contexto 2D tem uma transformação atual que pode ser mudada com os métodos `translate`, `scale` e `rotate`. Eles vão afetar todas as operações de desenho subsequentes. Um estado de transformação pode ser salvo com o método `save` e restaurado com o método `restore`.
+Transformações permitem desenhar uma forma em várias orientações. Um desenho de contexto 2D tem uma transformação atual que pode ser mudada com os métodos `translate`, `scale` e `rotate`. Eles vão afetar todas as operações de desenho subsequentes. Um estado de transformação pode ser salvo com o método `save` e restaurado com o método `restore`.
 
 Quando mostrar uma animação em um canvas, o método `clearRect` pode ser usado para limpar o canvas antes de redesenhá-lo.
 
 ## Exercícios
 
-### Forças
+### Formas
 
 {{index "shapes (exercise)"}}
 
@@ -907,13 +907,13 @@ Escreva um programa que desenhe as ((forma))s a seguir em um ((canvas)):
 
 3. Uma ((linha)) em zigue-zague
 
-4. Uma ((espiral)) feita de 10 segmentos de linha retos
+4. Uma ((espiral)) feita de 100 segmentos de linha retos
 
 5. Uma ((estrela)) amarela
 
-{{figure {url: "img/exercise_shapes.png", alt: "Formas a serem desenhados",width: "8cm"}}}
+{{figure {url: "img/exercise_shapes.png", alt: "Formas a serem desenhadas",width: "8cm"}}}
 
-Quando desenhar os dois últimos, pode querer dar uma olhada na explicação de `Math.cos` e `Math.sin` no [Capítulo 14](dom#sin_cos), que descreve como obter coordenadas de um círculo usando essas funções.
+Quando desenhar os dois últimos, você pode querer dar uma olhada na explicação de `Math.cos` e `Math.sin` no [Capítulo ?](dom#sin_cos), que descreve como obter coordenadas de um círculo usando essas funções.
 
 {{index readability, "hard-coding"}}
 
@@ -964,7 +964,7 @@ hint}}
 
 [Antes](canvas#pie_chart), nesse capítulo, vimos um programa de exemplo que desenhava um gráfico de pizza. Modifique esse programa para que o nome de cada categoria seja mostrado próximo à fatia que o representa. Tente encontrar uma forma bonita de automaticamente posicionar esse texto que poderia funcionar também pra outros conjuntos de dados. Você pode presumir que as categorias são grandes o suficiente para deixar bastante espaço para seus rótulos.
 
-Você pode precisar do `Math.sin` e `Math.cos` novamente, que estão descritos no [Capítulo 14](dom#sin_cos).
+Você pode precisar do `Math.sin` e `Math.cos` novamente, que estão descritos no [Capítulo ?](dom#sin_cos).
 
 {{if interactive
 
@@ -997,7 +997,7 @@ if}}
 
 {{index "fillText method", "textAlign property", "textBaseline property", "pie chart example"}}
 
-Você vai precisar chamar o `fillText` e definer as propriedades `textAlign` e `textBaseline` do contexto de forma que faça o texto acabar onde você quer.
+Você vai precisar chamar o `fillText` e definir as propriedades `textAlign` e `textBaseline` do contexto de forma que faça o texto acabar onde você quer.
 
 Uma forma sensível de posicionar os rótulos seria colocar o texto na linha que vem do centro da pizza até o meio da fatia. Você não quer colocar o texto diretamente do lado da pizza, mas sim mover o texto para o lado dela com alguns pixels de distância.
 
@@ -1013,7 +1013,7 @@ Para o `textBaseline`, o valor `"middle"` provavelmente é apropriado quando usa
 
 {{index "Math.cos function"}}
 
-Se não tiver certeza sobre como descobrir em qual lado do círculo determinado ângulo está, veja a explicação de `Math.cos` no [Capítulo 14](dom#sin_cos). O cosseno de um ângulo nos diz qual a qual coordenada x ele corresponde, o que nos diz exatamente de qual lado do círculo estamos.
+Se não tiver certeza sobre como descobrir em qual lado do círculo determinado ângulo está, veja a explicação de `Math.cos` no [Capítulo ?](dom#sin_cos). O cosseno de um ângulo nos diz a qual coordenada x ele corresponde, o que nos diz exatamente de qual lado do círculo estamos.
 
 hint}}
 
@@ -1021,7 +1021,7 @@ hint}}
 
 {{index [animation, "bouncing ball"], "requestAnimationFrame function", bouncing}}
 
-Use a técnica `requestAnimationFrame` que vimos no [Capítulo 14](dom#animationFrame) e no [Capítulo 16](game#runAnimation) para desenhar uma ((caixa)) com uma ((bola)) quicando nela. A bola se move a uma ((velocidade)) constante e se afasta de cada lado da caixa quando toca nelas.
+Use a técnica `requestAnimationFrame` que vimos no [Capítulo ?](dom#animationFrame) e no [Capítulo ?](game#runAnimation) para desenhar uma ((caixa)) com uma ((bola)) quicando nela. A bola se move a uma ((velocidade)) constante e se afasta de cada lado da caixa quando toca nelas.
 
 {{if interactive
 
@@ -1056,7 +1056,7 @@ if}}
 
 {{index "collision detection", "Vec class"}}
 
-Para modelar a posição e a ((velocidade)) da bola, você pode usar a classe `Vec` do [Capítulo 16](game#vector) [(que está disponível nessa página)]{if interactive}. Dê uma velocidade inicial, preferivelmente uma que não seja puramente vertical ou horizontal, e para cada ((quadro)) multiplique essa velocidade pela quantidade de tempo percorrido. Quando a bola chegar perdo demais de uma parede vertical, inverta o componente x em sua velocidade. Da mesma forma, inverta o componente y quando chegar a uma parede horizontal.
+Para modelar a posição e a ((velocidade)) da bola, você pode usar a classe `Vec` do [Capítulo ?](game#vector) [(que está disponível nessa página)]{if interactive}. Dê uma velocidade inicial, preferivelmente uma que não seja puramente vertical ou horizontal, e para cada ((quadro)) multiplique essa velocidade pela quantidade de tempo percorrido. Quando a bola chegar perto demais de uma parede vertical, inverta o componente x em sua velocidade. Da mesma forma, inverta o componente y quando chegar a uma parede horizontal.
 
 {{index "clearRect method", clearing}}
 
@@ -1064,13 +1064,13 @@ Após descobrir a nova posição e velocidade da bola, use `clearRect` para dele
 
 hint}}
 
-### Espelhamento pré-computacionada
+### Espelhamento pré-computacionado
 
 {{index optimization, "bitmap graphics", mirror}}
 
 Algo infeliz sobre ((transformações)) é que elas desaceleram o desenho de bitmaps. A posição e tamanho de cada ((pixel)) tem que ser transformado, e apesar de ser possível que os ((navegador))es fiquem mais inteligentes sobre essa transformação no futuro, eles atualmente causam um aumento mensurável no tempo que leva para desenhar um bitmap.
 
-Em um jogo como o nosso, onde estamos desenhando apesar uma sprite transformada, isso não é problema. Mas imagine que precisamos desenhar centenas de personagens ou milhares de partículas rotacionando a partir de uma explosão.
+Em um jogo como o nosso, onde estamos desenhando apenas uma sprite transformada, isso não é problema. Mas imagine que precisamos desenhar centenas de personagens ou milhares de partículas rotacionando a partir de uma explosão.
 
 Pense em uma forma que permita que desenhamos um personagem invertido sem carregar arquivos de imagem adicionais e sem ter que usar o método `drawImage` transformado em cada imagem.
 
@@ -1078,11 +1078,11 @@ Pense em uma forma que permita que desenhamos um personagem invertido sem carreg
 
 {{index mirror, scaling, "drawImage method"}}
 
-A chave para a solução é o fato de que podemos usar um element de ((canvas)) como imagem fonte quando usamos o `drawImage`. É possível criar um elemento `<canvas>` a mais, sem adicioná-lo ao documento, e desenhar nossas sprites invertidas uma vez. Quando desenharmos um quadro de verdade, só copiamos os sprites já invertidos para o canvas principal.
+A chave para a solução é o fato de que podemos usar um elemento de ((canvas)) como imagem fonte quando usamos o `drawImage`. É possível criar um elemento `<canvas>` a mais, sem adicioná-lo ao documento, e desenhar nossas sprites invertidas uma vez. Quando desenharmos um quadro de verdade, só copiamos os sprites já invertidos para o canvas principal.
 
 {{index "load event"}}
 
 Teríamos que tomar cuidado porque imagens não carregam instantaneamente. Temos que inverter a imagem apenas uma vez, e se fizermos isso antes da imagem carregar, ela não vai desenhar nada.
-Um handler `"load"` na imagem pode ser usado para desenhar as imagens invertidas no canvas extra. Esse canvas pode ser usado como uma forma de desenhá-lo imediatamente (ele será simplesmente branco até desenharmos o personagem nele).
+Um _handler_ `"load"` na imagem pode ser usado para desenhar as imagens invertidas no canvas extra. Esse canvas pode ser usado como uma forma de desenhá-lo imediatamente (ele será simplesmente branco até desenharmos o personagem nele).
 
 hint}}

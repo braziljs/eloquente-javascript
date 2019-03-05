@@ -246,7 +246,7 @@ A diferença de significado entre `undefined` e `null` é um acidente que foi cr
 
 ## Conversão Automática de Tipo
 
-Na introdução, mencionei que o JavaScript tentar fazer o seu melhor para aceitar quase todos os programas que você fornecer, inclusive aqueles que fazem coisas bem estranhas. Isso pode ser demonstrado com as seguintes expressões:
+Na introdução, mencionei que o JavaScript tenta fazer o seu melhor para aceitar quase todos os programas que você fornecer, inclusive aqueles que fazem coisas bem estranhas. Isso pode ser demonstrado com as seguintes expressões:
 
 ```js
 console.log(8 * null)

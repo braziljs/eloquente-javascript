@@ -10,7 +10,7 @@
 
 # Formulários e Campos de Formulário
 
-Formulários foram  introduzidos brevemente no [capítulo anterior](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/17-http.md) como uma forma de apresentar informações 
+Formulários foram  introduzidos brevemente no [capítulo anterior](./17-http.md) como uma forma de apresentar informações 
 fornecidas pelo usuário através do HTTP. Eles foram projetados para uma web pré-javaScript, atribuindo essa interação  com o servidor sempre fazendo a navegação para uma nova página.
 
 Mas  os seus elementos  são  parte do DOM como o resto da página, e os elementos DOM representam campos 
@@ -365,7 +365,7 @@ de eventos. As variáveis poderiam compartilhar todas as iterações do loop.
 
 _FileReaders_ também aciona um evento "error" ao ver o arquivo falhar por algum motivo. O próprio objeto de erro 
 vai acabar na propriedade de "error" de leitura. Se você não quer lembrar dos detalhes de mais uma interface 
-assíncrona inconsistente, você pode envolvê-lo em uma _Promise_ (ver [Capítulo 17](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/17-http.md)) como este:
+assíncrona inconsistente, você pode envolvê-lo em uma _Promise_ (ver [Capítulo 17](./17-http.md)) como este:
 
 ```javascript
 
@@ -624,4 +624,4 @@ uma nova grade a partir dos valores nas caixas de seleção antes de calcular o 
 Se você optar utilizar  manipuladores de eventos, você pode querer anexar atributos que identificam a posição 
 que cada caixa corresponde ao modo que é fácil descobrir qual célula de mudar.
 
-Para desenhar a rede de caixas de seleção, você ou pode usar um elemento `<table>` *(olhe o [Capítulo 13](https://github.com/braziljs/eloquente-javascript/blob/master/chapters/13-document-object-model.md))* ou simplesmente colocá-los todos no mesmo elemento e colocar `<br>` (quebra de linha) elementos entre as linhas.
+Para desenhar a rede de caixas de seleção, você ou pode usar um elemento `<table>` *(olhe o [Capítulo 13](./13-document-object-model.md))* ou simplesmente colocá-los todos no mesmo elemento e colocar `<br>` (quebra de linha) elementos entre as linhas.

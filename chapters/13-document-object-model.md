@@ -147,7 +147,7 @@ No exemplo seguinte, nós queremos escrever um script que substitua todas as ima
 Isso envolve não só remover as imagens, mas adicionar um novo nó de texto para substituí-las. Para isso, nós usamos o método `document.createTextNode`.
 
 ```html
-<p>The <img src="img/cat.png" alt="Cat"> in the
+<p>O <img src="img/cat.png" alt="Cat"> no
   <img src="img/hat.png" alt="Hat">.</p>
 
 <p><button onclick="replaceImages()">Substituir</button></p>

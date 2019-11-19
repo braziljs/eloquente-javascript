@@ -1,3 +1,4 @@
+
 Capítulo 10
 
 # Módulos
@@ -64,7 +65,7 @@ Funções são o único construtor em JavaScript que criam um novo escopo. Entã
 
 Considere este módulo trivial que associa nomes com o número dos dias da semana retornado pelo método `getDay` de um objeto *date*.
 
-```
+```javascript
 var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
              "Thursday", "Friday", "Saturday"];
 function dayName(number) {
@@ -79,7 +80,7 @@ A função `dayName` é parte desta interface, mas a variável `names` não. Nó
 
 Podemos fazer isso:
 
-```
+```javascript
 var dayName = function() {
   var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
                "Thursday", "Friday", "Saturday"];
@@ -96,7 +97,7 @@ Agora `names` é uma variável local dentro de uma função (anônima). Esta fun
 
 Um padrão similar é usado para isolar inteiramente código do mundo exterior. O módulo abaixo tem algum efeito, mas não fornece qualquer valor para outros módulos usarem.
 
-```
+```javascript
 (function() {
   function square(x) { return x * x; }
   var hundred = 100;
@@ -114,7 +115,7 @@ Por que a função namespace está encapsulada em uma par de parênteses? Isso t
 
 Agora imagine que o módulo dia-da-semana (*day-of-the-week*) precise fornecer não uma, mas duas funções, porque nós adicionamos uma função `dayNumber` que vai de um nome para um número. Nós podemos mais simplesmente retornar a função, mas devemos encapsular as duas funções em um objeto.
 
-```
+```javascript
 var weekDay = function() {
   var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
                "Thursday", "Friday", "Saturday"];
@@ -130,7 +131,7 @@ console.log(weekDay.name(weekDay.number("Sunday")));
 
 Para módulos maiores, juntar todos os módulos exportados em um objeto no fim da função se torna algo incômodo, e geralmente requer que façamos algo repetido. Isso pode ser melhorado declarando um objeto, usualmente nomeado `exports`, e adicionando propriedades a este objeto sempre que nós definirmos algo que precise ser exportado. Este objeto pode então ser retornado, ou aceito como um parâmetro armazenado em algum lugar pelo código exterior ao módulo.
 
-```
+```javascript
 (function(exports) {
   var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
                "Thursday", "Friday", "Saturday"];
@@ -167,7 +168,7 @@ Existem várias formas de se pegar dados (uma `string` de código) e rodá-los n
 
 A mais óbvia maneira é o operador padrão especial `eval`, que vai executar a string de código no escopo atual. Isso usualmente é uma ideia muito ruim, porque quebra algumas propriedades que escopos normalmente tem (ser isolado do mundo externo é a mais notável).
 
-```
+```javascript
 function evalAndReturnX(code) {
   eval(code);
   return x;
@@ -179,7 +180,7 @@ console.log(evalAndReturnX("var x = 2"));
 
 A melhor forma de converter dados dentro do programa é usar uma função construtora. Ela recebe como argumentos uma lista de nomes de argumentos separados por vírgula, e então uma string contendo o corpo da função.
 
-```
+```javascript
 var plusOne = new Function("n", "return n + 1;");
 console.log(plusOne(4));
 // → 5
@@ -191,7 +192,7 @@ Isso é precisamente o que precisamos - podemos encapsular o código para um mó
 
 Se a nova função construtora, usada pelo nosso módulo de carregamento, encapsula o código em uma função de qualquer forma, nós podemos omitir a função *namespace* encapsuladora atual dos arquivos. Nós também vamos fazer `exports` um argumento à função módulo, então o módulo não precisará de declarar isso. Isso remove um monte de barulho supérfluo do nosso módulo de exemplo:
 
-```
+```javascript
 var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
              "Thursday", "Friday", "Saturday"];
 
@@ -205,7 +206,7 @@ exports.number = function(name) {
 
 Essa é uma implementação mínima de `require`:
 
-```
+```javascript
 function require(name) {
   var code = new Function("exports", readFile(name));
   var exports = {};
@@ -219,7 +220,7 @@ console.log(require("weekDay").name(1));
 
 Quando usando este sistema, um módulo tipicamente começa com pequenas declarações de variáveis que carregam os módulos que ele precisa.
 
-```
+```javascript
 var weekDay = require("weekDay");
 var today = require("today");
 
@@ -234,7 +235,7 @@ O segundo problema é que não é possível para um módulo expor diretamente um
 
 A solução tradicional para isso é fornecer outra variável, `module`, que é um objeto que tem a propriedade `exports`. Essa propriedade inicialmente aponta para o objeto vazio criado por require, mas pode ser sobrescrita com outro valor para exportar algo a mais.
 
-```
+```javascript
 function require(name) {
   if (name in require.cache)
     return require.cache[name];
@@ -263,7 +264,7 @@ Outra solução é encapsular seu módulo em uma função, carregar os módulos 
 
 Nosso programa trivial com dependências, em AMD, se parece com isso:
 
-```
+```javascript
 define(["weekDay", "today"], function(weekDay, today) {
   console.log(weekDay.name(today.dayNumber()));
 });
@@ -273,7 +274,7 @@ A função `define` é o conceito central nessa abordagem. Ela primeiro recebe u
 
 Os módulos que são carregados dessa forma devem conter uma chamada a `define`. O valor usado para sua interface é qualquer valor retornado pela função que é o segundo argumento passado nessa chamada. Aqui está o módulo `weekDay` de novo.
 
-```
+```javascript
 define([], function() {
   var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
                "Thursday", "Friday", "Saturday"];
@@ -286,7 +287,7 @@ define([], function() {
 
 Para mostrar uma simples implementação de `define`, vamos supor que também temos uma função `backgroundReadFile`, que pega o nome do arquivo e uma função, e vai chamar a função com o conteúdo do arquivo assim que este for carregado.
 
-```
+```javascript
 function define(depNames, moduleFunction) {
   var deps = [], myMod = define.currentModule;
 
@@ -377,7 +378,7 @@ Existem duas abordagens populares para tais módulos. Uma é chamada "Módulos C
 
 Escreva um simples módulo similar ao módulo `weekDay`, que pode converter os números dos meses (*zero-based*, assim como o tipo `Date`) para nomes, e nomes para números. Dê a este módulo seu próprio namespace, pois ele vai precisar de um array interno com o nome dos meses, mas use JavaScript puro, sem nenhum sistema de carregamento de módulos.
 
-```
+```javascript
 // Your code here.
 
 console.log(month.name(2));

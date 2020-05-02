@@ -1,4 +1,4 @@
-# Program Structure
+# Estrutura do Programa
 
 {{quote {author: "_why", title: "Why's (Poignant) Guide to Ruby", chapter: true}
 
@@ -18,7 +18,7 @@ _programming_. We will expand our command of the JavaScript language
 beyond the nouns and sentence fragments we've seen so far, to the
 point where we can express meaningful prose.
 
-## Expressions and statements
+## Expressões e declarações
 
 {{index grammar, [syntax, expression], [code, "structure of"], grammar, [JavaScript, syntax]}}
 
@@ -79,7 +79,7 @@ in this book, every statement that needs a semicolon will always get
 one. I recommend you do the same, at least until you've learned more
 about the subtleties of missing semicolons.
 
-## Bindings
+## Ligações
 
 {{indexsee variable, binding}}
 {{index [syntax, statement], [binding, definition], "side effect", [memory, organization], [state, in binding]}}
@@ -191,7 +191,7 @@ binding, which points at the same value for as long as it lives. This
 is useful for bindings that give a name to a value so that you can
 easily refer to it later.
 
-## Binding names
+## Nomes das ligações
 
 {{index "underscore character", "dollar sign", [binding, naming]}}
 
@@ -222,7 +222,7 @@ Don't worry about memorizing this list. When creating a binding produces
 an unexpected syntax error, see whether you're trying to define a
 reserved word.
 
-## The environment
+## O ambiente
 
 {{index "standard environment", [browser, environment]}}
 
@@ -234,7 +234,7 @@ that provide ways to interact with the surrounding system. For
 example, in a browser, there are functions to interact with the
 currently loaded website and to read ((mouse)) and ((keyboard)) input.
 
-## Functions
+## Funções
 
 {{indexsee "application (of functions)", [function, application]}}
 {{indexsee "invoking (of functions)", [function, application]}}
@@ -270,7 +270,7 @@ The `prompt` function isn't used much in modern web programming,
 mostly because you have no control over the way the resulting dialog
 looks, but can be helpful in toy programs and experiments.
 
-## The console.log function
+## A função console.log
 
 {{index "JavaScript console", "developer tools", "Node.js", "console.log", output, [browser, environment]}}
 
@@ -306,7 +306,7 @@ property from the value held by the `console` binding. We'll
 find out exactly what this means in [Chapter ?](data#properties).
 
 {{id return_values}}
-## Return values
+## Retornar valores
 
 {{index [comparison, "of numbers"], "return value", "Math.max function", maximum}}
 
@@ -366,7 +366,7 @@ control flow:
 
 {{figure {url: "img/controlflow-straight.svg", alt: "Trivial control flow", width: "4cm"}}}
 
-## Conditional execution
+## Execução condicional
 
 {{index Boolean, ["control flow", conditional]}}
 
@@ -470,7 +470,7 @@ The schema for this program looks something like this:
 {{figure {url: "img/controlflow-nested-if.svg", alt: "Nested if control flow", width: "4cm"}}}
 
 {{id loops}}
-## while and do loops
+## Loops while e do
 
 Consider a program that outputs all ((even number))s from 0 to 12. One
 way to write this is as follows:
@@ -578,7 +578,7 @@ the `!` operator will convert a value to Boolean type before negating
 it, and all strings except `""` convert to `true`. This means the loop
 continues going round until you provide a non-empty name.
 
-## Indenting Code
+## Identação do código
 
 {{index [code, "structure of"], [whitespace, indentation], "programming style"}}
 
@@ -664,7 +664,7 @@ console.log(result);
 // → 1024
 ```
 
-## Breaking Out of a Loop
+## Saindo de um Loop
 
 {{index [loop, "termination of"], "break keyword"}}
 
@@ -718,7 +718,7 @@ the progress of a loop. When `continue` is encountered in a loop body,
 control jumps out of the body and continues with the loop's next
 iteration.
 
-## Updating bindings succinctly
+## Atualizando ligações resumidamente
 
 {{index assignment, "+= operator", "-= operator", "/= operator", "*= operator", [state, in binding], "side effect"}}
 
@@ -751,7 +751,7 @@ for (let number = 0; number <= 12; number += 2) {
 For `counter += 1` and `counter -= 1`, there are even shorter
 equivalents: `counter++` and `counter--`.
 
-## Dispatching on a value with switch
+## Enviando um valor com *switch*
 
 {{index [syntax, statement], "conditional execution", dispatch, ["if keyword", chaining]}}
 
@@ -801,7 +801,7 @@ and cloudy weather). But be careful—it is easy to forget such a
 `break`, which will cause the program to execute code you do not want
 executed.
 
-## Capitalization
+## Capitalização
 
 {{index capitalization, [binding, naming], [whitespace, syntax]}}
 
@@ -835,7 +835,7 @@ constructor. What a constructor is will become clear in [Chapter
 ?](object#constructors). For now, the important thing is not
 to be bothered by this apparent lack of ((consistency)).
 
-## Comments
+## Comentários
 
 {{index readability}}
 
@@ -880,7 +880,7 @@ information about a file or a chunk of program.
 const myNumber = 11213;
 ```
 
-## Summary
+## Sumário
 
 You now know that a program is built out of statements, which
 themselves sometimes contain more statements. Statements tend to
@@ -901,7 +901,7 @@ Functions are special values that encapsulate a piece of program. You
 can invoke them by writing `functionName(argument1, argument2)`. Such
 a function call is an expression and may produce a value.
 
-## Exercises
+## Exercícios
 
 {{index exercises}}
 
@@ -919,7 +919,7 @@ at the solutions only after you've solved the exercise, or at least
 after you've attacked it long and hard enough to have a slight
 headache.
 
-### Looping a triangle
+### *Looping* um triângulo
 
 {{index "triangle (exercise)"}}
 
@@ -1019,7 +1019,7 @@ of the `||` operator.
 
 hint}}
 
-### Chessboard
+### Tabuleiro de xadrez
 
 {{index "chessboard (exercise)", loop, [nesting, "of loops"], "newline character"}}
 

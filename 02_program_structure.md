@@ -1,30 +1,22 @@
 # Estrutura do Programa
 
-{{quote {author: "_why", title: "Why's (Poignant) Guide to Ruby", chapter: true}
+{{quote {author: "_why", title: "Guia (Pungente) para Ruby do Why", chapter: true}
 
-And my heart glows bright red under my filmy, translucent skin and
-they have to administer 10cc of JavaScript to get me to come back. (I
-respond well to toxins in the blood.) Man, that stuff will kick the
-peaches right out your gills!
+E meu coração brilha vívido vermelho sob minha pele transparente, translúcida e eles têm que administrar 10cc de JavaScript para me fazer voltar. (Eu respondo bem à toxinas em meu sangue.) Cara, essa coisa vai chutar os pêssegos para fora de suas brânquias!
 
 quote}}
 
-{{index why, "Poignant Guide"}}
+{{index porque, "Poignant Guide"}}
 
-{{figure {url: "img/chapter_picture_2.jpg", alt: "Picture of tentacles holding objects", chapter: framed}}}
+{{figure {url: "img/chapter_picture_2.jpg", alt: "Imagem de tentáculos segurando objetos", chapter: framed}}}
 
-In this chapter, we will start to do things that can actually be called
-_programming_. We will expand our command of the JavaScript language
-beyond the nouns and sentence fragments we've seen so far, to the
-point where we can express meaningful prose.
+Nesse capítulo, nós vamos começar a fazer coisas que podem realmente serem chamadas _programação_. Nós vamos expandir nosso domínio da linguagem JavaScript para além dos fragmentos de nomes e frases que nós vimos até agora, até o ponto onde poderemos expressar uma prosa significativa
 
 ## Expressões e declarações
 
 {{index grammar, [syntax, expression], [code, "structure of"], grammar, [JavaScript, syntax]}}
 
-In [Chapter ?](values), we made values and applied operators to them
-to get new values. Creating values like this is the main substance of
-any JavaScript program. But that substance has to be framed in a
+No [Capítulo ?](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. Criando valores como esses é a essência de qualquer programa JavaScript. But that substance has to be framed in a
 larger structure to be useful. So that's what we'll cover next.
 
 {{index "literal expression", [parentheses, expression]}}

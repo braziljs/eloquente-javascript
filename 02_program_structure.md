@@ -79,7 +79,7 @@ in this book, every statement that needs a semicolon will always get
 one. I recommend you do the same, at least until you've learned more
 about the subtleties of missing semicolons.
 
-## Ligações
+## Ligações/Variáveis
 
 {{indexsee variable, binding}}
 {{index [syntax, statement], [binding, definition], "side effect", [memory, organization], [state, in binding]}}
@@ -191,7 +191,7 @@ binding, which points at the same value for as long as it lives. This
 is useful for bindings that give a name to a value so that you can
 easily refer to it later.
 
-## Nomes das ligações
+## Nomes das ligações/variáveis
 
 {{index "underscore character", "dollar sign", [binding, naming]}}
 
@@ -222,7 +222,7 @@ Don't worry about memorizing this list. When creating a binding produces
 an unexpected syntax error, see whether you're trying to define a
 reserved word.
 
-## O ambiente
+## O Ambiente
 
 {{index "standard environment", [browser, environment]}}
 
@@ -306,7 +306,7 @@ property from the value held by the `console` binding. We'll
 find out exactly what this means in [Chapter ?](data#properties).
 
 {{id return_values}}
-## Retornar valores
+## Retorno de valores
 
 {{index [comparison, "of numbers"], "return value", "Math.max function", maximum}}
 
@@ -338,7 +338,7 @@ console.log(Math.min(2, 4) + 100);
 The [next chapter](functions) explains how to write your own
 functions.
 
-## Control flow
+## Controle de fluxo
 
 {{index "execution order", program, "control flow"}}
 
@@ -470,7 +470,7 @@ The schema for this program looks something like this:
 {{figure {url: "img/controlflow-nested-if.svg", alt: "Nested if control flow", width: "4cm"}}}
 
 {{id loops}}
-## Loops while e do
+## Loops While e Do
 
 Consider a program that outputs all ((even number))s from 0 to 12. One
 way to write this is as follows:
@@ -610,7 +610,7 @@ Most code ((editor)) programs[ (including the one in this book)]{if
 interactive} will help by automatically indenting new lines the proper
 amount.
 
-## for loops
+## For Loops
 
 {{index [syntax, statement], "while loop", "counter variable"}}
 
@@ -919,7 +919,7 @@ at the solutions only after you've solved the exercise, or at least
 after you've attacked it long and hard enough to have a slight
 headache.
 
-### *Looping* um triângulo
+### Triângulo com Loop
 
 {{index "triangle (exercise)"}}
 
@@ -1019,7 +1019,7 @@ of the `||` operator.
 
 hint}}
 
-### Tabuleiro de xadrez
+### Tabuleiro de Xadrez
 
 {{index "chessboard (exercise)", loop, [nesting, "of loops"], "newline character"}}
 

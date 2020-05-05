@@ -20,29 +20,25 @@ No [Capítulo ?](values), nós fizemos valores e aplicamos operadores a eles par
 
 {{index "literal expression", [parentheses, expression]}}
 
-A fragment of code that produces a value is called an
-_((expression))_. Every value that is written literally (such as `22`
-or `"psychoanalysis"`) is an expression. An expression between
-parentheses is also an expression, as is a ((binary operator))
-applied to two expressions or a ((unary operator)) applied to one.
+Um fragmento de código que produz um valor é chamado de
+_((expressão))_. Todo valor que é escrito literalmente (assim como `22`
+ou `"psicanálise"`) é uma expressão. Uma expressão entre
+parênteses também é uma expressão, assim como um ((operador binário))
+aplicado à duas expressões ou um ((operador unário)) aplicado à uma.
 
 {{index [nesting, "of expressions"], "human language"}}
 
-This shows part of the beauty of a language-based interface.
-Expressions can contain other expressions in a way similar to how subsentences in human languages are nested—a subsentence can
-contain its own subsentences, and so on. This allows us to build
-expressions that describe arbitrarily complex computations.
+Isso mostra parte da beleza de uma interface baseada em linguagem.
+Expressões podem conter outras expressões de forma similar à como subfrases na linguagem humana são aninhadas.—uma subfrase pode conter sua própria subfrase, e assim por diante. Isso nos permite criar expressões que descrevem cálculos arbitráriamente complexos.
 
 {{index statement, semicolon, program}}
 
-If an expression corresponds to a sentence fragment, a JavaScript
-_statement_ corresponds to a full sentence. A program is a list of
-statements.
+Se uma expressão corresponde à um fragmento de expressãot, uma _declaração_ JavaScript
+corresponde à uma expressão completa. Um programa é uma lista de declarações.
 
 {{index [syntax, statement]}}
 
-The simplest kind of statement is an expression with a semicolon after
-it. This is a program:
+A declaração mais simples é uma expressão com um ponto-e-vírgula após ela. Isso é um programa:
 
 ```
 1;

@@ -2,7 +2,7 @@
 
 {{quote {author: "_why", title: "Guia (Pungente) para Ruby do Why", chapter: true}
 
-E meu coração brilha vívido vermelho sob minha pele transparente, translúcida e eles têm que administrar 10cc de JavaScript para me fazer voltar. (Eu respondo bem à toxinas em meu sangue.) Cara, essa coisa vai chutar os pêssegos para fora de suas brânquias!
+>E meu coração brilha vívido vermelho sob minha pele transparente, translúcida e eles têm que administrar 10cc de JavaScript para me >fazer voltar. (Eu respondo bem à toxinas em meu sangue.) Cara, essa coisa vai chutar os pêssegos para fora de suas brânquias!
 
 quote}}
 
@@ -10,14 +10,13 @@ quote}}
 
 {{figure {url: "img/chapter_picture_2.jpg", alt: "Imagem de tentáculos segurando objetos", chapter: framed}}}
 
-Nesse capítulo, nós vamos começar a fazer coisas que podem realmente serem chamadas _programação_. Nós vamos expandir nosso domínio da linguagem JavaScript para além dos fragmentos de nomes e frases que nós vimos até agora, até o ponto onde poderemos expressar uma prosa significativa
+Nesse capítulo, nós vamos começar a fazer coisas que podem realmente serem chamadas _programação_. Nós vamos expandir nosso domínio da linguagem JavaScript para além dos fragmentos de nomes e frases que nós vimos até agora, até o ponto onde poderemos expressar uma prosa significativa.
 
 ## Expressões e declarações
 
 {{index grammar, [syntax, expression], [code, "structure of"], grammar, [JavaScript, syntax]}}
 
-No [Capítulo ?](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. Criando valores como esses é a essência de qualquer programa JavaScript. But that substance has to be framed in a
-larger structure to be useful. So that's what we'll cover next.
+No [Capítulo ?](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. Criando valores como esses é a essência de qualquer programa JavaScript. Mas essa essência deve ser enquadrada em uma estrutura maior para ser útil. Então é isso que abordaremos a seguir.
 
 {{index "literal expression", [parentheses, expression]}}
 

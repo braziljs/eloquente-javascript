@@ -45,26 +45,11 @@ A declaração mais simples é uma expressão com um ponto-e-vírgula após ela.
 !false;
 ```
 
-It is a useless program, though. An ((expression)) can be content to
-just produce a value, which can then be used by the enclosing code. A
-((statement)) stands on its own, so it amounts to something only if it
-affects the world. It could display something on the screen—that
-counts as changing the world—or it could change the internal state of
-the machine in a way that will affect the statements that come after
-it. These changes are called _((side effect))s_. The statements in the
-previous example just produce the values `1` and `true` and then
-immediately throw them away. This leaves no impression on the world at
-all. When you run this program, nothing observable happens.
+É um programa inútil, entretanto. Uma ((expressão)) pode se contentar apenas por produzir um valor, que pode então ser usado pelo código anexo. Uma ((declaração)) se sustenta sozinha, então ela se equivale a algo apenas se afetar o mundo. Ela poderia exibir algo na tela— que conta enquanto muda o mundo— ou poderia alterar o estado interno da máquina de uma forma que irá afetar as declarações que vierem depois dela. Essas mudanças são chamadas _((efeito(s) colateral))is_. As declarações no exemplo anterior apenas produz os valores `1` e `true` e então, imediatamente, os joga fora. Isso não deixa nenhuma impressão no mundo. Quando você executar esse programa, nada observável acontece.
 
 {{index "programming style", "automatic semicolon insertion", semicolon}}
 
-In some cases, JavaScript allows you to omit the semicolon at the end
-of a statement. In other cases, it has to be there, or the next
-((line)) will be treated as part of the same statement. The rules for
-when it can be safely omitted are somewhat complex and error-prone. So
-in this book, every statement that needs a semicolon will always get
-one. I recommend you do the same, at least until you've learned more
-about the subtleties of missing semicolons.
+Em alguns casos, JavaScript te permite omitir o ponto-e-vírgula ao final de uma declaração. Em outros casos, ele tem que estar ali, ou a próxima ((linha)) será tratada como parte da mesma declaração. As regras para quando for seguro omití-lo seão de alguma forma complexas e passíveis de erro. Então, nesse livro, toda declaração que necessitar de um pont-e-vírgula sempre receberá um. Eu recomento você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto-e-vírgula.
 
 ## Ligações/Variáveis
 

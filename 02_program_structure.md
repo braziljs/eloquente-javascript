@@ -16,7 +16,7 @@ Nesse capítulo, nós vamos começar a fazer coisas que podem realmente serem ch
 
 {{index grammar, [syntax, expression], [code, "structure of"], grammar, [JavaScript, syntax]}}
 
-No [Capítulo ?](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. Criando valores como esses é a essência de qualquer programa JavaScript. Mas essa essência deve ser enquadrada em uma estrutura maior para ser útil. Então é isso que abordaremos a seguir.
+No [Capítulo 1](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. Criando valores como esses é a essência de qualquer programa JavaScript. Mas essa essência deve ser enquadrada em uma estrutura maior para ser útil. Então é isso que abordaremos a seguir.
 
 {{index "literal expression", [parentheses, expression]}}
 
@@ -56,11 +56,11 @@ Em alguns casos, JavaScript te permite omitir o ponto-e-vírgula ao final de uma
 {{indexsee variable, binding}}
 {{index [syntax, statement], [binding, definition], "side effect", [memory, organization], [state, in binding]}}
 
-How does a program keep an internal state? How does it remember
-things? We have seen how to produce new values from old values, but
-this does not change the old values, and the new value has to be
-immediately used or it will dissipate again. To catch and hold values,
-JavaScript provides a thing called a _binding_, or _variable_:
+Como um programa mantém um estado interno? Como ele se lembra das coisas?
+Nós vimos como produzir novos valores à partir de valores antigos,
+mas isso não altera os valores antigos, e o novo valor deve ser
+imediatamente usado ou irá se dissipar novamente. Para capturar e manter valores,
+JavaScript nos dá uma coisa chamada de _ligação_, ou _variável_:
 
 ```
 let caught = 5 * 5;
@@ -68,17 +68,17 @@ let caught = 5 * 5;
 
 {{index "let keyword"}}
 
-That's a second kind of ((statement)). The special word
-(_((keyword))_) `let` indicates that this sentence is going to define
-a binding. It is followed by the name of the binding and, if we want
-to immediately give it a value, by an `=` operator and an expression.
+Essa é a segunda forma de ((declaração)). A palavra especial
+(_((paravra-chave))_) `let` indica que essa declaração irá definir
+uma ligação. É seguida pelo nome da ligação e, se quisermos
+imediatamente definir um valor, por um operador `=` e uma expressão.
 
-The previous statement creates a binding called `caught` and uses it
-to grab hold of the number that is produced by multiplying 5 by 5.
+A declaração anterior cria uma ligação chamada `caught` e a usa para
+capturar o numero que é produzido pela multiplicação 5 por 5.
 
-After a binding has been defined, its name can be used as an
-((expression)). The value of such an expression is the value the
-binding currently holds. Here's an example:
+Após uma ligação ser definira, seu nome pode ser usado como uma
+((expressão)). O valor de tal expressão é o valor que a ligação atualmente mantém
+Aqui está um exemplo:
 
 ```
 let ten = 10;
@@ -88,10 +88,10 @@ console.log(ten * ten);
 
 {{index "= operator", assignment, [binding, assignment]}}
 
-When a binding points at a value, that does not mean it is tied to
-that value forever. The `=` operator can be used at any time on
-existing bindings to disconnect them from their current value and have
-them point to a new one.
+Quando uma ligação aponta para um valor, não significa que ela está amarrada àquele valor
+para sempre. O operador `=` pode ser usado a qualquer momento em
+ligações existentes para desconectá-las de seu valor atual e apontá-las
+para um novo.
 
 ```
 let mood = "light";
@@ -104,15 +104,15 @@ console.log(mood);
 
 {{index [binding, "model of"], "tentacle (analogy)"}}
 
-You should imagine bindings as tentacles, rather than boxes. They do
-not _contain_ values; they _grasp_ them—two bindings can refer to the
-same value. A program can access only the values that it still has a
-reference to. When you need to remember something, you grow a tentacle
-to hold on to it or you reattach one of your existing tentacles to it.
+Você deveria imaginar ligações como tentáculos, invés de caixas.
+Elas não _contém_ valores; elas _pegam_ eles—duas ligações podem se referir ao
+mesmo valor. Um programa pode acessar apenas os valores que ainda possui referência. 
+Quando você necessita lembrar de algo, você produz um tentáculo para se agarrar a isso
+ou você reatribui um de seus tentáculos existentes à isso.
 
-Let's look at another example. To remember the number of dollars that
-Luigi still owes you, you create a binding. And then when he pays back
-$35, you give this binding a new value.
+Vamos observar para um outro exemplo. Para se lembrar o numero de dólares que
+Luigi ainda deve à você, você cria uma ligação. E então ele te paga
+$35, você atribui à essa ligação o novo valor.
 
 ```
 let luigisDebt = 140;
@@ -123,14 +123,15 @@ console.log(luigisDebt);
 
 {{index undefined}}
 
-When you define a binding without giving it a value, the tentacle has
-nothing to grasp, so it ends in thin air. If you ask for the value of
-an empty binding, you'll get the value `undefined`.
+Quando você define uma ligação sem atribur um valor à ela, o tentáculo
+Quando você define uma ligação sem atribuir um valor à ela, o tentáculo
+não possui nada para agarrar, então ele termina vazio. Se você perguntar pelo
+valor de uma ligação vazia, você irá receber o valor `undefined`.
 
 {{index "let keyword"}}
 
-A single `let` statement may define multiple bindings. The
-definitions must be separated by commas.
+Uma única declaração pode definir multiplas ligações. A
+definição de ser separada por vígulas.
 
 ```
 let one = 1, two = 2;
@@ -138,8 +139,8 @@ console.log(one + two);
 // → 3
 ```
 
-The words `var` and `const` can also be used to create bindings, in a
-way similar to `let`.
+As palavras `var` e `const` também podem ser usadas para criar ligações,
+de uma forma similar ao `let`.
 
 ```
 var name = "Ayda";
@@ -150,18 +151,17 @@ console.log(greeting + name);
 
 {{index "var keyword"}}
 
-The first, `var` (short for "variable"), is the way bindings were
-declared in pre-2015 JavaScript. I'll get back to the precise way it
-differs from `let` in the [next chapter](functions). For now,
-remember that it mostly does the same thing, but we'll rarely use it
-in this book because it has some confusing properties.
+O primeiro, `var` (abreviação para "variável"), é a forma como as ligações
+eram declaradas no JavaScript pre-2015. Eu irei precisar como ela difere de `let`
+no [próximo capítulo](functions). Por enquanto,
+se lembre que elas básicamente fazem a mesma coisa, mas nós raramente a usaremos nesse livro
+porque ela possui algumas propriedades confusas.
 
 {{index "const keyword", naming}}
 
-The word `const` stands for _((constant))_. It defines a constant
-binding, which points at the same value for as long as it lives. This
-is useful for bindings that give a name to a value so that you can
-easily refer to it later.
+A palavra `const` significa _((constante))_. Ela define uma ligação constante,
+a qual aponta para um mesmo valor pelo tempo que ela viver. Isso é útil para ligações
+que dão nome para um valor para que você possa se referenciar a ele posteriormente.
 
 ## Nomes das ligações/variáveis
 

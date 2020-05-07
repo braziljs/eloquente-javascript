@@ -2,7 +2,9 @@
 
 {{quote {author: "_why", title: "Guia (Pungente) para Ruby do Why", chapter: true}
 
->E meu coração brilha vívido vermelho sob minha pele transparente, translúcida e eles têm que administrar 10cc de JavaScript para me >fazer voltar. (Eu respondo bem à toxinas em meu sangue.) Cara, essa coisa vai chutar os pêssegos para fora de suas brânquias!
+>E meu coração brilha vívido vermelho sob minha pele transparente, translúcida e eles têm que administrar 10cc
+de JavaScript para me >fazer voltar. 
+(Eu respondo bem à toxinas em meu sangue.) Cara, essa coisa vai chutar os pêssegos para fora de suas brânquias!
 
 quote}}
 
@@ -10,13 +12,17 @@ quote}}
 
 {{figure {url: "img/chapter_picture_2.jpg", alt: "Imagem de tentáculos segurando objetos", chapter: framed}}}
 
-Nesse capítulo, nós vamos começar a fazer coisas que podem realmente serem chamadas _programação_. Nós vamos expandir nosso domínio da linguagem JavaScript para além dos fragmentos de nomes e frases que nós vimos até agora, até o ponto onde poderemos expressar uma prosa significativa.
+Nesse capítulo, nós vamos começar a fazer coisas que podem realmente serem chamadas _programação_. 
+Nós vamos expandir nosso domínio da linguagem JavaScript para além dos fragmentos de 
+nomes e frases que nós vimos até agora, até o ponto onde poderemos expressar uma prosa significativa.
 
 ## Expressões e declarações
 
 {{index grammar, [syntax, expression], [code, "structure of"], grammar, [JavaScript, syntax]}}
 
-No [Capítulo 1](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. Criando valores como esses é a essência de qualquer programa JavaScript. Mas essa essência deve ser enquadrada em uma estrutura maior para ser útil. Então é isso que abordaremos a seguir.
+No [Capítulo 1](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. 
+Criando valores como esses é a essência de qualquer programa JavaScript. 
+Mas essa essência deve ser enquadrada em uma estrutura maior para ser útil. Então é isso que abordaremos a seguir.
 
 {{index "literal expression", [parentheses, expression]}}
 
@@ -29,7 +35,9 @@ aplicado à duas expressões ou um ((operador unário)) aplicado à uma.
 {{index [nesting, "of expressions"], "human language"}}
 
 Isso mostra parte da beleza de uma interface baseada em linguagem.
-Expressões podem conter outras expressões de forma similar à como subfrases na linguagem humana são aninhadas.—uma subfrase pode conter sua própria subfrase, e assim por diante. Isso nos permite criar expressões que descrevem cálculos arbitráriamente complexos.
+Expressões podem conter outras expressões de forma similar à como subfrases 
+na linguagem humana são aninhadas.—uma subfrase pode conter sua própria subfrase, e assim por diante. 
+Isso nos permite criar expressões que descrevem cálculos arbitráriamente complexos.
 
 {{index statement, semicolon, program}}
 
@@ -45,11 +53,22 @@ A declaração mais simples é uma expressão com um ponto-e-vírgula após ela.
 !false;
 ```
 
-É um programa inútil, entretanto. Uma ((expressão)) pode se contentar apenas por produzir um valor, que pode então ser usado pelo código anexo. Uma ((declaração)) se sustenta sozinha, então ela se equivale a algo apenas se afetar o mundo. Ela poderia exibir algo na tela— que conta enquanto muda o mundo— ou poderia alterar o estado interno da máquina de uma forma que irá afetar as declarações que vierem depois dela. Essas mudanças são chamadas _((efeito(s) colateral))is_. As declarações no exemplo anterior apenas produz os valores `1` e `true` e então, imediatamente, os joga fora. Isso não deixa nenhuma impressão no mundo. Quando você executar esse programa, nada observável acontece.
+É um programa inútil, entretanto. Uma ((expressão)) pode se contentar apenas por produzir um valor, 
+que pode então ser usado pelo código anexo. Uma ((declaração)) se sustenta sozinha, 
+então ela se equivale a algo apenas se afetar o mundo. 
+Ela poderia exibir algo na tela— que conta enquanto muda o mundo— ou poderia alterar o 
+estado interno da máquina de uma forma que irá afetar as declarações que vierem depois dela. 
+Essas mudanças são chamadas _((efeito(s) colateral))is_. 
+As declarações no exemplo anterior apenas produz os valores `1` e `true` e então, imediatamente, os joga fora. 
+Isso não deixa nenhuma impressão no mundo. Quando você executar esse programa, nada observável acontece.
 
 {{index "programming style", "automatic semicolon insertion", semicolon}}
 
-Em alguns casos, JavaScript te permite omitir o ponto-e-vírgula ao final de uma declaração. Em outros casos, ele tem que estar ali, ou a próxima ((linha)) será tratada como parte da mesma declaração. As regras para quando for seguro omití-lo seão de alguma forma complexas e passíveis de erro. Então, nesse livro, toda declaração que necessitar de um pont-e-vírgula sempre receberá um. Eu recomento você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto-e-vírgula.
+Em alguns casos, JavaScript te permite omitir o ponto-e-vírgula ao final de uma declaração. 
+Em outros casos, ele tem que estar ali, ou a próxima ((linha)) será tratada como parte da mesma declaração. 
+As regras para quando for seguro omití-lo seão de alguma forma complexas e passíveis de erro. 
+Então, nesse livro, toda declaração que necessitar de um pont-e-vírgula sempre receberá um. 
+Eu recomento você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto-e-vírgula.
 
 ## Ligações/Variáveis
 
@@ -167,18 +186,18 @@ que dão nome para um valor para que você possa se referenciar a ele posteriorm
 
 {{index "underscore character", "dollar sign", [binding, naming]}}
 
-Binding names can be any word. Digits can be part of binding
-names—`catch22` is a valid name, for example—but the name must not
-start with a digit. A binding name may include dollar signs (`$`) or
-underscores (`_`) but no other punctuation or special characters.
+Nomes de ligações podem ser qualquer palavra. Dígitos podem ser parte do nome da ligação
+—`catch22` é um nome válido, por exemplo— mas o nome não deve começar com um dígito.
+O nome de uma ligação pode incluir sinal de dólar (`$`) ou
+underlines (`_`) mas nenhuma outra pontuação ou carácter especial.
 
 {{index [syntax, identifier], "implements (reserved word)", "interface (reserved word)", "package (reserved word)", "private (reserved word)", "protected (reserved word)", "public (reserved word)", "static (reserved word)", "void operator", "yield (reserved word)", "enum (reserved word)", "reserved word", [binding, naming]}}
 
-Words with a special meaning, such as `let`, are _((keyword))s_, and
-they may not be used as binding names. There are also a number of
-words that are "reserved for use" in ((future)) versions of
-JavaScript, which also can't be used as binding names. The full list
-of keywords and reserved words is rather long.
+Palavras com significado especial, assim como `let`, são _((palavra-chave))s_, e
+elas não devem ser usadas como nomes de ligações. Também existem uma quantidade de palavras
+que são "reservadas para uso" em ((futuras)) versões do
+JavaScript, que também não podem ser usadas como nomes de ligações. A lista completa
+de palavras-chave e palavras reservadas é um tanto longa.
 
 ```{lang: "text/plain"}
 break case catch class const continue debugger default
@@ -189,22 +208,20 @@ switch this throw true try typeof var void while with yield
 ```
 
 {{index [syntax, error]}}
-
+Não se preocupe em memorizar essa lista. Quando ao criar uma ligação poduzir um  
 Don't worry about memorizing this list. When creating a binding produces
-an unexpected syntax error, see whether you're trying to define a
-reserved word.
+an unexpected syntax error, verifique se você estpa tentando definir uma palavra reservada.
 
 ## O Ambiente
 
 {{index "standard environment", [browser, environment]}}
 
-The collection of bindings and their values that exist at a given time
-is called the _((environment))_. When a program starts up, this
-environment is not empty. It always contains bindings that are part of
-the language ((standard)), and most of the time, it also has bindings
-that provide ways to interact with the surrounding system. For
-example, in a browser, there are functions to interact with the
-currently loaded website and to read ((mouse)) and ((keyboard)) input.
+A coleção de ligações e seus valores que existem em um determinado momento
+é chamado de _((ambiente))_. Quando um programa inicia, esse ambiente
+néo é vazio. Ele sempre contém ligações que são parte da linguagem
+((padrão)), e na marioria das vezes, ele também possui ligações que fornecem formas
+de interagir com o sistema que o cerca. Por exempo, em um navegador, existem funções para
+interagir com o website aaualmente carregado e para ler as entradas do ((mouse)) e ((teclado)).
 
 ## Funções
 

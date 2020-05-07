@@ -143,7 +143,6 @@ console.log(luigisDebt);
 {{index undefined}}
 
 Quando você define uma ligação sem atribur um valor à ela, o tentáculo
-Quando você define uma ligação sem atribuir um valor à ela, o tentáculo
 não possui nada para agarrar, então ele termina vazio. Se você perguntar pelo
 valor de uma ligação vazia, você irá receber o valor `undefined`.
 
@@ -208,9 +207,8 @@ switch this throw true try typeof var void while with yield
 ```
 
 {{index [syntax, error]}}
-Não se preocupe em memorizar essa lista. Quando ao criar uma ligação poduzir um  
-Don't worry about memorizing this list. When creating a binding produces
-an unexpected syntax error, verifique se você estpa tentando definir uma palavra reservada.
+Não se preocupe em memorizar essa lista. Quando ao criar uma ligação poduzir o erro  
+_unexpected syntax_, verifique se você está tentando definir uma palavra reservada.
 
 ## O Ambiente
 
@@ -230,12 +228,12 @@ interagir com o website aaualmente carregado e para ler as entradas do ((mouse))
 {{indexsee "calling (of functions)", [function, application]}}
 {{index output, function, [function, application], [browser, environment]}}
 
-A lot of the values provided in the default environment have the type
-_((function))_. A function is a piece of program wrapped in a value.
-Such values can be _applied_ in order to run the wrapped program. For
-example, in a browser environment, the binding `prompt` holds a
-function that shows a little ((dialog box)) asking for user input. It
-is used like this:
+Uma grande quantidade de valores providos no ambiente padrão possuem o tipo
+_((função))_. Uma função é um pedaço do programa embrulhado em um valor.
+Tais valores podem ser _aplicados_ na intenção de executar o programa embrulhado.
+Por exemplo, no ambiente de um navegador, a ligação `prompt` possui uma função que exibe
+uma pequena ((caixa de diálogo) solicitando ao usuário uma entrada.
+Ele é usado dessa forma:
 
 ```
 prompt("Enter passcode");
@@ -245,38 +243,37 @@ prompt("Enter passcode");
 
 {{index parameter, [function, application], [parentheses, arguments]}}
 
-Executing a function is called _invoking_, _calling_, or _applying_
-it. You can call a function by putting parentheses after an
-expression that produces a function value. Usually you'll directly use
-the name of the binding that holds the function. The values between
-the parentheses are given to the program inside the function. In the
-example, the `prompt` function uses the string that we give it as the
-text to show in the dialog box. Values given to functions are called
-_((argument))s_. Different functions might need a different number or
-different types of arguments.
+Executar uma função é chamado _invoking_, _calling_, ou _applying_ (no português: _invocar_, _chamar_ ou _aplicar_)
+Você pode chamar uma função ao colocar parentêses após a expressão que produz o valor da expressão.
+Normalmente você vai usar diretamente o nome da ligação que possui a função. 
+Os valores entre os parênteses são dados ao programa dentro da função.
+No exemplo, a função `prompt` usa a _"string"_ que fornecemos à ela como o
+texto a ser exibido na caixa de diálogo. Valores dados às funções são chamados
+_((argumento))s_. Diferentes funções devem precisar de uma quantidade diferente ou
+diferentes tipos de argumentos.
 
-The `prompt` function isn't used much in modern web programming,
-mostly because you have no control over the way the resulting dialog
-looks, but can be helpful in toy programs and experiments.
+A função `prompt` não é muito usada na programação web moderna,
+principalmente porque você não tem controle sobre como visual do diálogo resultante irá parecer,
+mas pode ser útil em programas de teste e experimentos.
 
 ## A função console.log
 
 {{index "JavaScript console", "developer tools", "Node.js", "console.log", output, [browser, environment]}}
 
-In the examples, I used `console.log` to output values. Most JavaScript
-systems (including all modern web browsers and Node.js) provide a
-`console.log` function that writes out its arguments to _some_ text
-output device. In browsers, the output lands in the ((JavaScript
-console)). This part of the browser interface is hidden by default,
+Nos exemplos, Eu usei `console.log` para saída de valores. A maioria dos sistemas JavaScript
+(incluindo todos os navegadores modernos e Node.js) fornece uma função
+`console.log` que escreve seus argumentos para _algum_ dispositivo de saída de texto.
+Em navegadores, a saída repousa no ((console JavaScript)).
+Essa parte da interface dos navegadores é escondida por padrão,
+mas a maioria dos navegadores a exibem quando você pressiona F12 ou, em um Mac, 
 but most browsers open it when you press F12 or, on a Mac, [command]{keyname}-[option]{keyname}-I.
-If that does not work, search through the menus for an item named Developer
-Tools or similar.
+Se isso não funcionar, procure através dos menus por um item chamado Ferramentas de Desenvolvedor ou similar.
 
 {{if interactive
 
-When running the examples (or your own code) on the pages of this
-book, `console.log` output will be shown after the example, instead of
-in the browser's JavaScript console.
+Quando executando os exemplos (ou seu próprio código) nas páginas desse livro,
+a saída  `console.log` será mostrada após o exemplooutput will be shown after the example, ou invés do console
+JavaScript do navegador.
 
 ```
 let x = 30;
@@ -288,11 +285,10 @@ if}}
 
 {{index [object, property], [property, access]}}
 
-Though binding names cannot contain ((period character))s,
-`console.log` does have one. This is because `console.log` isn't a
-simple binding. It is actually an expression that retrieves the `log`
-property from the value held by the `console` binding. We'll
-find out exactly what this means in [Chapter ?](data#properties).
+Embora nomes de ligações não possam conter ((ponto-final))is,
+`console.log` possui um. Isso porque `console.log` não é uma simples ligação. 
+Ela é na verdade uma expressão que recupera a propriedade `log` do valor guardado pela ligação `console`.
+Nós vamos descobrir exatamente o que isso significa no [Chapter ?](data#properties).
 
 {{id return_values}}
 ## Retorno de valores

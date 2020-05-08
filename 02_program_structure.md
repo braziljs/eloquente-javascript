@@ -3,12 +3,12 @@
 {{quote {author: "_why", title: "Guia (Pungente) para Ruby do Why", chapter: true}
 
 >E meu coração brilha vívido vermelho sob minha pele transparente, translúcida e eles têm que administrar 10cc
-de JavaScript para me >fazer voltar. 
+de JavaScript para me fazer voltar. 
 (Eu respondo bem à toxinas em meu sangue.) Cara, essa coisa vai chutar os pêssegos para fora de suas brânquias!
 
 quote}}
 
-{{index porque, "Poignant Guide"}}
+{{index why, "Poignant Guide"}}
 
 {{figure {url: "img/chapter_picture_2.jpg", alt: "Imagem de tentáculos segurando objetos", chapter: framed}}}
 
@@ -326,11 +326,10 @@ O [próximo capítulo](functions) explica como escrever suas próprias funções
 
 {{index "execution order", program, "control flow"}}
 
-When your program contains more than one ((statement)), the statements
-are executed as if they are a story, from top to bottom. This example
-program has two statements. The first one asks the user for a number,
-and the second, which is executed after the first, shows the
-((square)) of that number.
+Quando seu programa contém mais de uma ((declaração)), as declarações
+são executadas como se fossem uma história, de cima para baixo. Esse exemplo de programa
+possui duas declarações. A primeira pede um número ao usuário, e a segunda,
+que é executada após a primeira, exibe o ((quadrado)) daquele número.
 
 ```
 let theNumber = Number(prompt("Pick a number"));
@@ -340,15 +339,14 @@ console.log("Your number is the square root of " +
 
 {{index [number, "conversion to"], "type coercion", "Number function", "String function", "Boolean function", [Boolean, "conversion to"]}}
 
-The function `Number` converts a value to a number. We need that
-conversion because the result of `prompt` is a string value, and we
-want a number. There are similar functions called `String` and
-`Boolean` that convert values to those types.
+A função `Number` converte o valor para um número. Nós precisamos dessa
+conversão pois o resultado da função `prompt` é um valor do tipo _string_, e nós
+queremos um número. Existem funções similares chamadas `String` e `Boolean`
+que convertem valores para esses tipos.
 
-Here is the rather trivial schematic representation of straight-line
-control flow:
+Aqui está uma representação esquemática mais comum do controle de fluxo em linha reta:
 
-{{figure {url: "img/controlflow-straight.svg", alt: "Trivial control flow", width: "4cm"}}}
+{{figure {url: "img/controlflow-straight.svg", alt: "Controle de fluxo comum", width: "4cm"}}}
 
 ## Execução condicional
 

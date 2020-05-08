@@ -352,19 +352,18 @@ Aqui está uma representação esquemática mais comum do controle de fluxo em l
 
 {{index Boolean, ["control flow", conditional]}}
 
-Not all programs are straight roads. We may, for example, want to
-create a branching road, where the program takes the proper branch
-based on the situation at hand. This is called _((conditional
-execution))_.
+Nem todos os programas são estradas retas. Nós podemos, por exemplo, querer
+criar uma estrada ramificada, onde o progama pega o ramo apropriado
+baseado na situação em que se encontra. Isso é chamado de _((execução condional))_.
 
-{{figure {url: "img/controlflow-if.svg", alt: "Conditional control flow",width: "4cm"}}}
+{{figure {url: "img/controlflow-if.svg", alt: "Controle de fluxo condicional",width: "4cm"}}}
 
 {{index [syntax, statement], "Number function", "if keyword"}}
 
-Conditional execution is created with the `if` keyword in JavaScript.
-In the simple case, we want some code to be executed if, and only if,
-a certain condition holds. We might, for example, want to show the
-square of the input only if the input is actually a number.
+Execução condicional é criada com a palavra-chave `if` no JavaScript.
+No simples caso, nós queremos que o código seja executado se, e somente se,
+uma certa condição for atendida. Podemos, por exemplo, querer exibir o quadrado de uma entrada
+apenas se a entrada for realmente um número.
 
 ```{test: wrap}
 let theNumber = Number(prompt("Pick a number"));
@@ -374,32 +373,31 @@ if (!Number.isNaN(theNumber)) {
 }
 ```
 
-With this modification, if you enter "parrot", no output is shown.
+Com essa modificação, se você inserir "parrot", nenhuma saída é exibida.
 
 {{index [parentheses, statement]}}
 
-The `if` keyword executes or skips a statement depending on the value
-of a Boolean expression. The deciding expression is written after the
-keyword, between parentheses, followed by the statement to
-execute.
+A palavra-chave `if` executa ou evita uma declaração dependendo do valor de uma
+expressão Booleana. A expressão decisiva é escrita após a palavra-chave, entre parentêses, seguida por
+uma declaração para executar.
 
 {{index "Number.isNaN function"}}
 
-The `Number.isNaN` function is a standard JavaScript function that
-returns `true` only if the argument it is given is `NaN`. The `Number`
-function happens to return `NaN` when you give it a string that
-doesn't represent a valid number. Thus, the condition translates to
-"unless `theNumber` is not-a-number, do this".
+A função `Number.isNaN` é uma função padrão do JavaScript que
+retorna `true` apenas se o argumento que é dado é `NaN`. A função `Number`
+retorna `NaN` quando você passa para ela uma _string_ que não representa um número válido.
+Portanto, a condição é traduzida para
+"a menos que `theNumber` seja _not-a-number_, faça isso".
 
 {{index grouping, "{} (block)", [braces, "block"]}}
 
-The statement after the `if` is wrapped in braces (`{` and
-`}`) in this example. The braces can be used to group any number of
-statements into a single statement, called a _((block))_. You could
-also have omitted them in this case, since they hold only a single
-statement, but to avoid having to think about whether they are needed, most JavaScript programmers use them in every wrapped
-statement like this. We'll mostly follow that convention in this book,
-except for the occasional one-liner.
+A declaração após o `if` é envolvido por chaves (`{` e `}`)
+nesse exemplo. As chaves podem ser usadas para agrupar qualquer quantidade de declarações
+em uma única declaração, chamado de _((bloco))_. Você poderia também
+ter omitido elas nesse caso, desde que elas possuíssem apenas uma declaração,
+mas para evitarmos termos que pensar sobre se são necessárias, a maioria dos programadores JavaScript usam elas em todos as
+declarações em bloco como essa. Nós iremos seguir essa conveção nesse livro,
+exceto pela ocasional declaração de linha única.
 
 ```
 if (1 + 1 == 2) console.log("It's true");
@@ -408,10 +406,10 @@ if (1 + 1 == 2) console.log("It's true");
 
 {{index "else keyword"}}
 
-You often won't just have code that executes when a condition holds
-true, but also code that handles the other case. This alternate path
-is represented by the second arrow in the diagram. You can use the `else` keyword, together with `if`, to create two separate, alternative
-execution paths.
+Você frequentemente não vai querer um código que apenas execute quando uma condição
+retornar verdadeira, mas também um código que cuida do outro caso. Esse caminho alternattivo
+é representado pela segunta flecha do diagrama. Você pode usar a palava-chave `else`, junto com `if`, para criar dois caminhos
+de execução, separados, alternativos.
 
 ```{test: wrap}
 let theNumber = Number(prompt("Pick a number"));
@@ -425,8 +423,8 @@ if (!Number.isNaN(theNumber)) {
 
 {{index ["if keyword", chaining]}}
 
-If you have more than two paths to choose from, you can "chain" multiple `if`/`else`
-pairs together. Here's an example:
+Se você possui mais que dois caminhos para escolher, você pode "encadear" multiplos pares de`if`/`else` juntos.
+Segue um exemplo:
 
 ```
 let num = Number(prompt("Pick a number"));
@@ -439,15 +437,13 @@ if (num < 10) {
   console.log("Large");
 }
 ```
+O programa vai primeiro checar se `num` é menos que 10. Se for,
+ele irá escolher essa ramificação, mostre `"Small"`, e pronto. Se não for,
+ele irá pegar a ramificação do `else`, que contém um segundo `if`. Se a segunda
+condição (`< 100`) for satisfeita, isso significa que o número esté entre 10 e 100, e `Medium` é exibido.
+Se não, a segunda e última ramificação `else` é escolhida.
 
-The program will first check whether `num` is less than 10. If it is,
-it chooses that branch, shows `"Small"`, and is done. If it isn't, it
-takes the `else` branch, which itself contains a second `if`. If the
-second condition (`< 100`) holds, that means the number is between 10
-and 100, and `"Medium"` is shown. If it doesn't, the second and last
-`else` branch is chosen.
-
-The schema for this program looks something like this:
+O esquema para esse programa se parece como algo assim:
 
 {{figure {url: "img/controlflow-nested-if.svg", alt: "Nested if control flow", width: "4cm"}}}
 

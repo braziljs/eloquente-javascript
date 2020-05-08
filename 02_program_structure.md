@@ -295,12 +295,12 @@ Nós vamos descobrir exatamente o que isso significa no [Chapter ?](data#propert
 
 {{index [comparison, "of numbers"], "return value", "Math.max function", maximum}}
 
-Showing a dialog box or writing text to the screen is a _((side
-effect))_. A lot of functions are useful because of the side effects
-they produce. Functions may also produce values, in which case they
-don't need to have a side effect to be useful. For example, the
-function `Math.max` takes any amount of number arguments and gives
-back the greatest.
+Exibir uma caixa de diálogo ou escever um texto na tela é um
+_((efeito colateral))_. Muitas funções são uteis por causa dos efeitos colaterais
+que elas produzem. Funções também podem produzir valores, nesse caso elas
+não necessitam de um efeito colateral para serem uteis. Por exemplo, a
+função `Math.max` recebe qualquer quantidade de argumentos numéricos e retorna
+o maior.
 
 ```
 console.log(Math.max(2, 4));
@@ -309,19 +309,18 @@ console.log(Math.max(2, 4));
 
 {{index [function, application], minimum, "Math.min function"}}
 
-When a function produces a value, it is said to _return_ that value.
-Anything that produces a value is an ((expression)) in JavaScript,
-which means function calls can be used within larger expressions. Here
-a call to `Math.min`, which is the opposite of `Math.max`, is used as
-part of a plus expression:
+Quando uma função produz um valor, dizemos que ela irá _retornar_ aquele valor.
+Qualquer coisa que produz um valor é uma ((expressão)) no JavaScript,
+o que significa que chamadas de funções podem ser usadas dentro de expressões maiores.
+Aqui uma chamada para `Math.min`, que é o oposto de `Math.max`, é usada como 
+parte de uma expressão de soma:
 
 ```
 console.log(Math.min(2, 4) + 100);
 // → 102
 ```
 
-The [next chapter](functions) explains how to write your own
-functions.
+O [próximo capítulo](functions) explica como escrever suas próprias funções.
 
 ## Controle de fluxo
 

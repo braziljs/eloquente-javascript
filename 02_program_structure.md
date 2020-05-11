@@ -450,8 +450,8 @@ O esquema para esse programa se parece como algo assim:
 {{id loops}}
 ## Loops While e Do
 
-Consider a program that outputs all ((even number))s from 0 to 12. One
-way to write this is as follows:
+Considere um programa que exibe todos ((numero(s) ímpare(s))) de 0 à 12. Uma
+forma de escrevê-lo é a seguinte:
 
 ```
 console.log(0);
@@ -465,20 +465,18 @@ console.log(12);
 
 {{index ["control flow", loop]}}
 
-That works, but the idea of writing a program is to make something
-_less_ work, not more. If we needed all even numbers less than 1,000,
-this approach would be unworkable. What we need is a way to run a
-piece of code multiple times. This form of control flow is called a
-_((loop))_.
+Ela funciona, mas a ideia de escrever um programa é fazer algo
+_menos_ trabalhoso, não mais. Se nós precisássemos todos os números ímpares menores que 1,000,
+essa abordagem seria impraticável. O que precisamos é uma forma de executar um pedaçõ de código
+multiplas vezes. Essa forma de controle de fluxo é chamada de _((loop))_.
 
-{{figure {url: "img/controlflow-loop.svg", alt: "Loop control flow",width: "4cm"}}}
+{{figure {url: "img/controlflow-loop.svg", alt: "Controle de fluxo em loop",width: "4cm"}}}
 
 {{index [syntax, statement], "counter variable"}}
 
-Looping control flow allows us to go back to some point in the program
-where we were before and repeat it with our current program state. If
-we combine this with a binding that counts, we can do something like
-this:
+O controle de fluxo em loop nos permite retornar à algum ponto no programa
+onde estávamos antes e repití-lo com nosso atual estado do programa. Se
+nós combinarmos isso com uma ligação que conta, poderíamos fazer algo assim:
 
 ```
 let number = 0;
@@ -493,28 +491,26 @@ while (number <= 12) {
 
 {{index "while loop", Boolean, [parentheses, statement]}}
 
-A ((statement)) starting with the keyword `while` creates a loop. The
-word `while` is followed by an ((expression)) in parentheses and
-then a statement, much like `if`. The loop keeps entering that
-statement as long as the expression produces a value that gives `true`
-when converted to Boolean.
+Uma ((declaração)) começando com a palavra-chave `while` cria um loop. A
+palavra `while` é seguida por uma ((expressão)) em parênteses e
+então uma declaração, muito parecido com `if`. O loop continua acessando aquela
+declaração enquanto a expreção produzir um valor que retorna `true`
+quando convertido para Booleano.
 
 {{index [state, in binding], [binding, as state]}}
 
-The `number` binding demonstrates the way a ((binding)) can track the
-progress of a program. Every time the loop repeats, `number` gets a
-value that is 2 more than its previous value. At the beginning of
-every repetition, it is compared with the number 12 to decide whether
-the program's work is finished.
+A ligação `number` demonstra a forma como uma ((ligação)) pode rastrear o
+progresso do programa. Toda vez que o loop repetir, `number` recebe um
+valor que é 2 à mais que seu estado anterior. No início de toda repetição,
+é comparado o número 12 para decidir se o trabalho do programa está concluído.
 
 {{index exponentiation}}
 
-As an example that actually does something useful, we can now write a
-program that calculates and shows the value of 2^10^ (2 to the 10th
-power). We use two bindings: one to keep track of our result and one
-to count how often we have multiplied this result by 2. The loop tests
-whether the second binding has reached 10 yet and, if not, updates
-both bindings.
+Como um exemplo que atualmente faz algo útil, nós podemos agora escrever um
+programa que calcula e exibe o valor de 2^10^ (2 pela 10ª potência). 
+Nós usamos duas ligações: uma para rastrear o resulta e uma para contar
+com qual frequência nós temos que múltiplicar esse resultado por 2. O loop testa
+se a segunda ligação já atingiu 19 e, se não, atualiza ambas ligações.
 
 ```
 let result = 1;
@@ -527,18 +523,17 @@ console.log(result);
 // → 1024
 ```
 
-The counter could also have started at `1` and checked for `<= 10`,
+O contador poderia também ter iniciado em `1` e chegado por `<= 10`,
+mas por razões que se tornarão aparentes no
 but for reasons that will become apparent in [Chapter
-?](data#array_indexing), it is a good idea to get used to
-counting from 0.
+?](data#array_indexing), é uma boa idéoa se acostumar a contrar à partir do 0.
 
 {{index "loop body", "do loop", ["control flow", loop]}}
 
-A `do` loop is a control structure similar to a `while` loop. It
-differs only on one point: a `do` loop always executes its body at
-least once, and it starts testing whether it should stop only after
-that first execution. To reflect this, the test appears after the body
-of the loop.
+Um loop `do` é uma estrutura de controle similar ao loop `while`. Ele
+difere apenas em um ponto: umm loop `do` sempre executa seu corpo pelos menos
+uma vez, e começa testando se deveria parar apenas depois da primeira execução.
+Para refletir isso, o teste aparece após o corpo do loop.
 
 ```
 let yourName;
@@ -550,11 +545,11 @@ console.log(yourName);
 
 {{index [Boolean, "conversion to"], "! operator"}}
 
-This program will force you to enter a name. It will ask again and
-again until it gets something that is not an empty string. Applying
-the `!` operator will convert a value to Boolean type before negating
-it, and all strings except `""` convert to `true`. This means the loop
-continues going round until you provide a non-empty name.
+Esse programa irá forçar você a inserir um nome. Irá perguntar novamente e
+novamente até receber algo que não seja uma _string_ vazia. Aplicando o
+operador `!` irá converter um valor para o tipo Booleano antes de negá-lo, e
+todas as string exceto `""` é convertida para `true`. Isso significa que o loop
+continua rodando até você fornece um nome não-vazio.
 
 ## Identação do código
 

@@ -546,29 +546,28 @@ console.log(yourName);
 {{index [Boolean, "conversion to"], "! operator"}}
 
 Esse programa irá forçar você a inserir um nome. Irá perguntar novamente e
-novamente até receber algo que não seja uma _string_ vazia. Aplicando o
+novamente, até receber algo que não seja uma _string_ vazia. Aplicando o
 operador `!` irá converter um valor para o tipo Booleano antes de negá-lo, e
 todas as string exceto `""` é convertida para `true`. Isso significa que o loop
-continua rodando até você fornece um nome não-vazio.
+continua rodando até você fornecer um nome não-vazio.
 
 ## Identação do código
 
 {{index [code, "structure of"], [whitespace, indentation], "programming style"}}
 
-In the examples, I've been adding spaces in front of statements that
-are part of some larger statement. These spaces are not required—the computer
-will accept the program just fine without them. In fact, even the
-((line)) breaks in programs are optional. You could write a program as
-a single long line if you felt like it.
+Nos exemplos, eu tenho adicionado espaços à frente das declarações isso
+faz parte de uma declaração ainda maior. Esses espaços não são obrigatórios-o computador
+irá aceitar muito bem o programa sem eles. De fato, mesmo as quebra de ((linhas))
+nos programas são opcionais. Você poderia escrever um programa como
+uma longa e única linha se você desejar.
 
-The role of this ((indentation)) inside ((block))s is to make the
-structure of the code stand out. In code where new blocks are opened
-inside other blocks, it can become hard to see where one block ends
-and another begins. With proper indentation, the visual shape of a
-program corresponds to the shape of the blocks inside it. I like to
-use two spaces for every open block, but tastes differ—some people use
-four spaces, and some people use ((tab character))s. The important
-thing is that each new block adds the same amount of space.
+O papel dessa ((identação)) dentro dos ((blocos)) é fazer a estrutura
+do código se destacar. No código onde novos blocos são abertos dentro de outros blocos,
+pode se tonar difícil de perceber onde um bloco termina e o outro começa.
+Com a identação apropriada, a forma visual de um programa corresponde à forma dos blocos dentro dele.
+Eu gosto de usar dois espaços para cada abertura bloco aberto, mas gostos diferem-algumas pessoas usam
+quatro espaços, e algumas usam ((caracter tab)). O mais importante é que cada novo bloco adicione
+a mesma quantidade de espaço.
 
 ```
 if (false != true) {
@@ -579,25 +578,22 @@ if (false != true) {
 }
 ```
 
-Most code ((editor)) programs[ (including the one in this book)]{if
-interactive} will help by automatically indenting new lines the proper
-amount.
+A maior parte dos programas ((editores)) de código[ (inclusive o usado nesse livro)]{if
+interactive} vai ajudar identando automaticamente as novas linhas com o espaçamento apropriado.
 
 ## For Loops
 
 {{index [syntax, statement], "while loop", "counter variable"}}
 
-Many loops follow the pattern shown in the `while` examples. First a
-"counter" binding is created to track the progress of the loop. Then
-comes a `while` loop, usually with a test expression that checks whether the
-counter has reached its end value. At the end of the loop body, the
-counter is updated to track progress.
+Muitos loops seguem o padrão mostrado nos exemplos do `while`. Primeiro
+uma ligação _"counter"_ é criada para rastrear o progresso do loop. Então
+vem o loop `while`, normalmente com uma expressão de teste que checa se o _counter_
+atingiu o valor final. No fim do corpo do loop, o _counter_ é atualizado para rastrear o progresso.
 
 {{index "for loop", loop}}
 
-Because this pattern is so common, JavaScript and similar languages
-provide a slightly shorter and more comprehensive form, the `for`
-loop.
+Pelo fato desse padrão ser tão comum, JavaScript e linguagens similares
+fornecem uma forma mais compreensível e ligeiramente mais curta, o loop `for`.
 
 ```
 for (let number = 0; number <= 12; number = number + 2) {
@@ -610,23 +606,22 @@ for (let number = 0; number <= 12; number = number + 2) {
 
 {{index ["control flow", loop], state}}
 
-This program is exactly equivalent to the
-[earlier](program_structure#loops) even-number-printing example. The
-only change is that all the ((statement))s that are related to the
-"state" of the loop are grouped together after `for`.
+Esse programa é exatamente equivalente ao exemplo [anterior](program_structure#loops) exibindo-número-ímpar.
+A única alteração é que as ((declarações)) que estão relacionadas ao
+"estado" do loop estão agrupados juntos, após o `for`.
 
 {{index [binding, as state], [parentheses, statement]}}
 
-The parentheses after a `for` keyword must contain two
-((semicolon))s. The part before the first semicolon _initializes_ the
-loop, usually by defining a binding. The second part is the
-((expression)) that _checks_ whether the loop must continue. The final
-part _updates_ the state of the loop after every iteration. In most
-cases, this is shorter and clearer than a `while` construct.
+Os parênteses após a palavra-chave `for` deve conter dois
+((ponto-e-vírgula)). A parte antes do primeiro ponto-e-vírgula _inicializa_ o,
+normalmente definindo uma ligação. A segunda parte é a
+((expressão)) que _checa_ se o loop deve continuar. A parte final
+_atualiza_ o estado do loop após cada iteração. Na maioria dos casos,
+isso é mais curto e claro que a contrução `while`.
 
 {{index exponentiation}}
 
-This is the code that computes 2^10^ using `for` instead of `while`:
+Esse é o código que computa 2^10^ usando `for` ao invés de `while`::
 
 ```{test: wrap}
 let result = 1;

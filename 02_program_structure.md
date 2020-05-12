@@ -636,12 +636,12 @@ console.log(result);
 
 {{index [loop, "termination of"], "break keyword"}}
 
-Having the looping condition produce `false` is not the only way a
-loop can finish. There is a special statement called `break` that has
-the effect of immediately jumping out of the enclosing loop.
+Ter uma condição do loop produzindo `false` não é a única forma
+que um loop pode sinalizar. Existe uma declaração especial chamada `break` que possui
+o efeito de imediatamente saltar para fora do loop.
 
-This program illustrates the `break` statement. It finds the first number
-that is both greater than or equal to 20 and divisible by 7.
+Esse programa ilustra a declaração `break`. Ela procura o primeiro número que é
+simultaneamente maior ou igual à 20 e divisivel por 7.
 
 ```
 for (let current = 20; ; current = current + 1) {
@@ -655,34 +655,34 @@ for (let current = 20; ; current = current + 1) {
 
 {{index "remainder operator", "% operator"}}
 
-Using the remainder (`%`) operator is an easy way to test whether a
-number is divisible by another number. If it is, the remainder of
-their division is zero.
+Usando o operador resto (`%`) é uma forma fácil de testar se o número é 
+divisivel por outro número. Se for, o resto da divisão é zero.
 
 {{index "for loop"}}
 
-The `for` construct in the example does not have a part that checks
-for the end of the loop. This means that the loop will never stop
-unless the `break` statement inside is executed.
+A contrução `for` no exemplo não possui a parte que checa
+pelo fim do loop. Isso significa que o loop nunca irá parar
+a menos que a declaração interna `break` seja executada.
 
-If you were to remove that `break` statement or you accidentally write
-an end condition that always produces `true`, your program would get
-stuck in an _((infinite loop))_. A program stuck in an infinite loop
-will never finish running, which is usually a bad thing.
+Se você remover a declaração `break` ou você acidentamente escreveu
+uma condição final que sempre produz `true`, seu programa ficará
+preso em um _((loop infinito))_. Um programa preso em um loop infinito
+nunca terminará a execução, o que normalmente é uma coisa ruim.
 
 {{if interactive
 
-If you create an infinite loop in one of the examples on these pages,
-you'll usually be asked whether you want to stop the script after a
-few seconds. If that fails, you will have to close the tab that you're
-working in, or on some browsers close your whole browser, to recover.
+Se você crear um loop infinito em um dos exemplos nessas páginas,
+você normalmente será questionado se quer finalizar o script após alguns segundos.
+Se isso falhar, você terá que fechar a aba que você está trabalhando,
+ou em alguns navegadores fechar todo o navegador, para recomeçar.
 
 if}}
 
 {{index "continue keyword"}}
 
-The `continue` keyword is similar to `break`, in that it influences
-the progress of a loop. When `continue` is encountered in a loop body,
+A palavra-chave `continue` é similar ao `break`, ao influenciar o progresso
+de um loop. Quando `continue` é encontrado no corpo de um loop,
+comanda um salto para fora do corpo e continua com a próxima iteração do loop.
 control jumps out of the body and continues with the loop's next
 iteration.
 
@@ -690,23 +690,21 @@ iteration.
 
 {{index assignment, "+= operator", "-= operator", "/= operator", "*= operator", [state, in binding], "side effect"}}
 
-Especially when looping, a program often needs to "update" a binding
-to hold a value based on that binding's previous value.
+Especialmente quando ao usar um loop, o programa com frequência necessita "atualizar" a ligação
+para receber o valor baseado no valor anterior da ligação.
 
 ```{test: no}
 counter = counter + 1;
 ```
-
-JavaScript provides a shortcut for this.
+JavaScript fornece um atalho para isso
 
 ```{test: no}
 counter += 1;
 ```
+Atalhos similares funcionam para muitos outros operadores, assim como `result *= 2`
+para dobrar `result` ou `conter -= 1` para contar regressivamente.
 
-Similar shortcuts work for many other operators, such as `result *= 2`
-to double `result` or `counter -= 1` to count downward.
-
-This allows us to shorten our counting example a little more.
+Isso nos permite abreviar um pouco mais nossos exemplos de contagem.
 
 ```
 for (let number = 0; number <= 12; number += 2) {
@@ -716,8 +714,8 @@ for (let number = 0; number <= 12; number += 2) {
 
 {{index "++ operator", "-- operator"}}
 
-For `counter += 1` and `counter -= 1`, there are even shorter
-equivalents: `counter++` and `counter--`.
+Para `counter += 1` e `counter -= 1`, existe ainda uma forma
+equivalente, mais curta: `counter++` e `counter--`.
 
 ## Enviando um valor com *switch*
 

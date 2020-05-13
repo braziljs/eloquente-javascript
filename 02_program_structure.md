@@ -721,7 +721,7 @@ equivalente, mais curta: `counter++` e `counter--`.
 
 {{index [syntax, statement], "conditional execution", dispatch, ["if keyword", chaining]}}
 
-It is not uncommon for code to look like this:
+Não é incomum um código se parece com isso:
 
 ```{test: no}
 if (x == "value1") action1();
@@ -732,11 +732,11 @@ else defaultAction();
 
 {{index "colon character", "switch keyword"}}
 
-There is a construct called `switch` that is intended to express such
-a "dispatch" in a more direct way. Unfortunately, the syntax
-JavaScript uses for this (which it inherited from the C/Java line of
-programming languages) is somewhat awkward—a chain of `if` statements
-may look better. Here is an example:
+Exsite uma construção chamada `switch` que tem a inteção de expressar
+o envio de uma forma mai direta. Infelizmente, a sintaxe que o JavaScritp usa para isso
+(que é herdada das linhas de linguagem de programação C/Java)
+é de alguma forma estranha -uma corrente de declarações `if` talvez 
+seria melhor apresentável. Aqui está um exemplo:
 
 ```
 switch (prompt("What is the weather like?")) {
@@ -756,25 +756,22 @@ switch (prompt("What is the weather like?")) {
 
 {{index fallthrough, "break keyword", "case keyword", "default keyword"}}
 
-You may put any number of `case` labels inside the block opened by
-`switch`. The program will start executing at the label that
-corresponds to the value that `switch` was given, or at `default` if
-no matching value is found. It will continue executing, even across
-other labels, until it reaches a `break` statement. In some cases,
-such as the `"sunny"` case in the example, this can be used to share
-some code between cases (it recommends going outside for both sunny
-and cloudy weather). But be careful—it is easy to forget such a
-`break`, which will cause the program to execute code you do not want
-executed.
+Você poderia inserir quantos rótulos de `case` quiser dentro de um bloco aberto por `switch`.  
+O programa irá iniciar a execução no rótulo que corresponde ao valor que foi dado ao `switch`,
+ou pelo `default` e nenhuma combinação de valores for encontrada. Ele irá continuar executando,
+mesmo através de outros rótulos, até encontrar uma declaração `break`. Em alguns casos,
+assim como o caso `sunny` no exemplo, ele pode ser usado para compartilhar algum código entre _"cases"_
+(ele retorna _"going outside"_ para ambos os climas _"sunny"_ e _"cloudy"_).
+Mas cuidado-é fácil de esquecer tal `break`, o que irá fazer o programa executar código que você
+não deseja que exetcute.
 
 ## Capitalização
 
 {{index capitalization, [binding, naming], [whitespace, syntax]}}
 
-Binding names may not contain spaces, yet it is often helpful to use
-multiple words to clearly describe what the binding represents. These
-are pretty much your choices for writing a binding name with several
-words in it:
+Nomes de ligações não podem conter espaços, mesmo assim usar multiplas palavras
+é um facilitador para descrever claramente o que as ligações representam.
+Isso é claramente uma decisão sua nomear uma ligação com várias palarvas:
 
 ```{lang: null}
 fuzzylittleturtle
@@ -785,21 +782,23 @@ fuzzyLittleTurtle
 
 {{index "camel case", "programming style", "underscore character"}}
 
-The first style can be hard to read. I rather like the look of the
+O primeiro estilo pode tornar díficil de ler. Eu particularmente 
+prefiro o visual dos underlines, embora esse estilo seja penoso para digitat.
+As funções ((padrões)) JavaScript, e a maior parte dos programadores JavaScript,
+seguem o último estilo-eles 
 underscores, though that style is a little painful to type. The
 ((standard)) JavaScript functions, and most JavaScript programmers,
-follow the bottom style—they capitalize every word except the first.
-It is not hard to get used to little things like that, and code with
-mixed naming styles can be jarring to read, so we follow this
-((convention)).
+follow the bottom style—they escrevem com a primeira letra maiúscula todas as palavras
+exceto a primeira.
+Não é dificil se acostumar com coisas pequenas como essa, e o código com estilos de nomes
+mistos podem se tornar duros de ser ler, então seguimos essa ((conveção)).
 
 {{index "Number function", constructor}}
 
-In a few cases, such as the `Number` function, the first letter of a
-binding is also capitalized. This was done to mark this function as a
-constructor. What a constructor is will become clear in [Chapter
-?](object#constructors). For now, the important thing is not
-to be bothered by this apparent lack of ((consistency)).
+Em poucos casos, como a função `Number`, a primeira letra de uma ligação também é maiúscula.
+Isso é feito para marcar essa função como contrutora. O que é uma função construtora ficará mais claro no
+[Capítulo ](object#constructors). Por enquanto, a coisa mais importante é não se incomodar
+com essa aparente falta de ((consistência)).
 
 ## Comentários
 

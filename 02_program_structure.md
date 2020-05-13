@@ -762,7 +762,7 @@ ou pelo `default` e nenhuma combinação de valores for encontrada. Ele irá con
 mesmo através de outros rótulos, até encontrar uma declaração `break`. Em alguns casos,
 assim como o caso `sunny` no exemplo, ele pode ser usado para compartilhar algum código entre _"cases"_
 (ele retorna _"going outside"_ para ambos os climas _"sunny"_ e _"cloudy"_).
-Mas cuidado-é fácil de esquecer tal `break`, o que irá fazer o programa executar código que você
+Mas cuidado-é fácil se esquecer de tal `break`, o que irá fazer o programa executar código que você
 não deseja que exetcute.
 
 ## Capitalização
@@ -804,18 +804,18 @@ com essa aparente falta de ((consistência)).
 
 {{index readability}}
 
-Often, raw code does not convey all the information you want a program
-to convey to human readers, or it conveys it in such a cryptic way
-that people might not understand it. At other times, you might just
-want to include some related thoughts as part of your program. This is
-what _((comment))s_ are for.
+Frequentemente, códigos brutos não transmitem toda a informação que você quer
+que um programa transmita para um leitor humano, ou eles transmitem de uma forma criptografada
+que pessoas podem não entender. Outras vezes, você poderia apenas
+desejar incluir alguns pensamentos relacionados como parte de seu programa.
+É para isso que _((comentário))s_ são feitos.
 
 {{index "slash character", "line comment"}}
 
-A comment is a piece of text that is part of a program but is
-completely ignored by the computer. JavaScript has two ways of writing
-comments. To write a single-line comment, you can use two slash
-characters (`//`) and then the comment text after it.
+Um comentário é um pedaço de texto que faz parte do programa mas é
+completamente ignorado pelo computador. JavaScript possui duas formas de escrever
+comentários. Escrever um comentário se única linha, você pode usar dois carácteres de barra
+(`//`) e então o texto de comentário após elas.
 
 ```{test: no}
 let accountBalance = calculateBalance(account);
@@ -830,10 +830,10 @@ addToReport(accountBalance, report);
 
 {{index "block comment"}}
 
-A `//` comment goes only to the end of the line. A section of text
-between `/*` and `*/` will be ignored in its entirety, regardless of
-whether it contains line breaks. This is useful for adding blocks of
-information about a file or a chunk of program.
+Um comentário `//` vai apenas até o final da linha. Uma seção de texto
+entre `/*` e `*/` será ignorado em sua totalidade, independentemente se
+possui quebras de linha. Isso é útil para se adicionar blocos de informação sobre um arquivo
+ou um pedaço de programa.
 
 ```
 /*
@@ -847,49 +847,45 @@ const myNumber = 11213;
 
 ## Sumário
 
-You now know that a program is built out of statements, which
-themselves sometimes contain more statements. Statements tend to
-contain expressions, which themselves can be built out of smaller
-expressions.
+Você sabe agora que um programa é construido por declarações, as quais
+algumas vezes possuem mais declarações. Declarações tendem a conter
+expressões, os quais podem ser contruidos de expressões menores.
 
-Putting statements after one another gives you a program that is
-executed from top to bottom. You can introduce disturbances in the
-flow of control by using conditional (`if`, `else`, and `switch`) and
-looping (`while`, `do`, and `for`) statements.
+Colocar declarações após outra declaração the dá um programa que é
+executado do topo para baixo. Você pode introduzir alterações no clontrole de fluxo
+ao utilizar declarações condicionais (`if`, `else`, e `switch`) e loops (`while`, `do`, e `for`)
 
-Bindings can be used to file pieces of data under a name, and they are
-useful for tracking state in your program. The environment is the set
-of bindings that are defined. JavaScript systems always put a number
-of useful standard bindings into your environment.
+Ligações podem ser usadas para arquivar pedaços de dados sob nome, e elas são
+úteis para rastrear estados em seu programa. O ambiente é o conjunto de ligações
+que são definidas. Sistemas JavaScript sempre coloca um número de ligações padrões úteis
+em seu ambiente.
 
-Functions are special values that encapsulate a piece of program. You
-can invoke them by writing `functionName(argument1, argument2)`. Such
-a function call is an expression and may produce a value.
+Funções são valores especiais que encapsulam um pedaço de programa. Você
+pode invocá-las ao escrever `functionName(argument1, argument2)`. Assim
+a chamada de função é uma expressão e pode produzir um valor.
 
 ## Exercícios
 
 {{index exercises}}
 
-If you are unsure how to test your solutions to the exercises, refer to the
+Se você não tem certeza como testar suas soluções para os exercícios, consulte o
 [Introduction](intro).
 
-Each exercise starts with a problem description. Read this description and try to
-solve the exercise. If you run into problems, consider reading the
-hints [after the exercise]{if interactive}[at the [end of the
-book](hints)]{if book}. Full solutions to the exercises are
-not included in this book, but you can find them online at
-[_https://eloquentjavascript.net/code_](https://eloquentjavascript.net/code#2).
-If you want to learn something from the exercises, I recommend looking
-at the solutions only after you've solved the exercise, or at least
-after you've attacked it long and hard enough to have a slight
-headache.
+Cada exercício começa com a descrição do problema. Leia essa descrição e tente resolvê-lo.
+Se você tiver problemas, considere a leitura das dicas
+[após o exercício]{if interactive}[no [fim do livro](dicas)]{if book}. 
+Soluções completas para os exercícios não estão inclusas nesse livro, mas podem ser encontradas
+online no [_https://eloquentjavascript.net/code_](https://eloquentjavascript.net/code#2).
+Se você deseja aprender algo dos exercícios, Eu recomendo consultar as soluções
+apenas após ter resolvido o exercício, ou pelo menos após tê-lo atacado 
+com força e por tempo suficiente a ponto de ter uma leve dor de cabeça.
 
 ### Triângulo com Loop
 
 {{index "triangle (exercise)"}}
 
-Write a ((loop)) that makes seven calls to `console.log` to output the
-following triangle:
+Escreva um ((loop)) que faça sete chamadas ao `console.log` para exibir o
+triângulo a seguir:
 
 ```{lang: null}
 #
@@ -902,9 +898,8 @@ following triangle:
 ```
 
 {{index [string, length]}}
-
-It may be useful to know that you can find the length of a string by
-writing `.length` after it.
+Pode ser útil saber que você pode descobrir o comprimento da string ao escrever
+`.length` após ela.
 
 ```
 let abc = "abc";
@@ -914,8 +909,8 @@ console.log(abc.length);
 
 {{if interactive
 
-Most exercises contain a piece of code that you can modify to solve
-the exercise. Remember that you can click code blocks to edit them.
+A maioria dos exercícios contém um pedaço de código que você pode modificar para solucionar
+o exercício. Lembre-se que você pode clicar os blocos e código e editá-los.
 
 ```
 // Your code here.
@@ -926,15 +921,15 @@ if}}
 
 {{index "triangle (exercise)"}}
 
-You can start with a program that prints out the numbers 1 to 7, which
-you can derive by making a few modifications to the [even number
-printing example](program_structure#loops) given earlier in the
-chapter, where the `for` loop was introduced.
+Você pode começar com um programa que imprima os números 1 à 7, que
+você pode derivar ao fazer umas poucas modificações ao 
+you can derive by making a few modifications to the [exemplo de impressão de números ímpares](program_structure#loops) 
+dado anteriormente no capítulo, onde o loop `for` foi introduzido.
 
-Now consider the equivalence between numbers and strings of hash
-characters. You can go from 1 to 2 by adding 1 (`+= 1`). You can go
-from `"#"` to `"##"` by adding a character (`+= "#"`). Thus, your
-solution can closely follow the number-printing program.
+Agora considere a equivalência entre números e strings de caractéres de cerquilha.
+Você pode ir de 1 à 2 ao adicionar ' (`+= 1`). Você pode ir de `"#"` para `"##"`
+ao adicionar um caracter (`+= "#"`). Desse modo, sua solução pode estar
+próxima do programa de impressão de número.
 
 hint}}
 
@@ -942,18 +937,17 @@ hint}}
 
 {{index "FizzBuzz (exercise)", loop, "conditional execution"}}
 
-Write a program that uses `console.log` to print all the numbers from
-1 to 100, with two exceptions. For numbers divisible by 3, print
-`"Fizz"` instead of the number, and for numbers divisible by 5 (and
-not 3), print `"Buzz"` instead.
+Escreva um programa que usa `console.log` para imprimir todos os números de 1 à 100,
+com duas exceções. Para números divisíveis por 3, imprima `"Fizz"` ao invés de um número,
+e para os números divisíveis por 5 (e não 3), imprima `"Buzz"`.
 
-When you have that working, modify your program to print `"FizzBuzz"`
-for numbers that are divisible by both 3 and 5 (and still print
-`"Fizz"` or `"Buzz"` for numbers divisible by only one of those).
+Quando conseguir fazer isso, modifique seu programa para imprimir `"FizzBuzz"`
+para números que são divisíveis por ambos 3 e 5 (e continue imprimindo `"Fizz"` ou `"Buzz"` para números divisíveis 
+por apenas um deles).
 
-(This is actually an ((interview question)) that has been claimed to
-weed out a significant percentage of programmer candidates. So if you
-solved it, your labor market value just went up.)
+(Isso é na realidade uma ((questão de entrevista)) que eliminou uma porcentagem  
+significante de candidatos à programadores. Então se você resolvê-lo, seu valor no mercado de trabalho
+acabou de subir).
 
 {{if interactive
 ```

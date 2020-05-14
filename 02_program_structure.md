@@ -959,22 +959,21 @@ if}}
 
 {{index "FizzBuzz (exercise)", "remainder operator", "% operator"}}
 
-Going over the numbers is clearly a looping job, and selecting what to
-print is a matter of conditional execution. Remember the trick of
-using the remainder (`%`) operator for checking whether a number is
-divisible by another number (has a remainder of zero).
+Exeminar os números é claramente um trabalho para um loop, e selecionar o que
+imprimir é uma questão de execução condicional. Lembre-se do truque de usar o
+operador resto (`%`) para checar se um número é divisivel por outro (possui um resto de zero).
 
-In the first version, there are three possible outcomes for every
-number, so you'll have to create an `if`/`else if`/`else` chain.
+Na primeira versão, existem três possíveis saídas para cada número,
+então você irá criar uma cadeia de `if`/`else if`/`else`.
 
 {{index "|| operator", ["if keyword", chaining]}}
 
-The second version of the program has a straightforward solution and a
-clever one. The simple solution is to add another conditional "branch" to
-precisely test the given condition. For the clever solution, build up a
-string containing the word or words to output and print either this
-word or the number if there is no word, potentially by making good use
-of the `||` operator.
+A segunda versão do programa possui uma solução direta e uma inteligente.
+A solução simples consiste em adicionar outro "ramo" condicional para
+precisamente testar a condição dada. Para a solução inteligente, construir uma _string_
+contendo a palavra ou palavras para saída e impressão dessa palavra ou número se não for uma palavra,
+potencialmente fazendo um bom uso do operador `||`.
+
 
 hint}}
 
@@ -982,12 +981,11 @@ hint}}
 
 {{index "chessboard (exercise)", loop, [nesting, "of loops"], "newline character"}}
 
-Write a program that creates a string that represents an 8×8 grid,
-using newline characters to separate lines. At each position of the
-grid there is either a space or a "#" character. The characters should
-form a chessboard.
+Escreva um programa que cria uma _string_ que representa uma grade 8x8,
+usando caracteres _newline_ para separar as linhas. À cada posição da grade
+existe um espaço ou um carácter "#". Os caracteres deverão formar um tabuleiro de xadrez.
 
-Passing this string to `console.log` should show something like this:
+Passando essa _string_ ao `console.log` deve exibir algo assim:
 
 ```{lang: null}
  # # # #
@@ -1000,9 +998,9 @@ Passing this string to `console.log` should show something like this:
 # # # # 
 ```
 
-When you have a program that generates this pattern, define a
-binding `size = 8` and change the program so that it works for
-any `size`, outputting a grid of the given width and height.
+Quando você tem um programa que gera esse padrão, defina uma
+ligação `size = 8` e altere o programa para que ele funcione para qualquer `tamanho`,
+resultando em uma grade com a largura e altura informada.
 
 {{if interactive
 ```
@@ -1014,26 +1012,25 @@ if}}
 
 {{index "chess board (exercise)"}}
 
-You can build the string by starting with an empty one (`""`) and
-repeatedly adding characters. A newline character is written `"\n"`.
+Você pode construir a _string_ ao iniciando por uma vazia (`""`) e
+repetidamente adicionando characters. Um caracter _newline_ é escrito com `"\n"`.
 
 {{index [nesting, "of loops"], [braces, "block"]}}
 
-To work with two ((dimensions)), you will need a ((loop)) inside of a
-loop. Put braces around the bodies of both loops to make it
-easy to see where they start and end. Try to properly indent these
-bodies. The order of the loops must follow the order in which we build
-up the string (line by line, left to right, top to bottom). So the
-outer loop handles the lines, and the inner loop handles the characters
-on a line.
+Para trabalhar com duas ((dimensões)), você irá precisar de um ((loop)) dentro de um loop.
+Coloque chaves em volta do corpo de embos os loops para tornar fácil de identificar
+onde eles começam e terminam. Tente identar apropriadamente o corpo dos loops.
+A ordem dos loops deve seguir a order que nós contruimos a _string_ 
+(linha por lina, esquerda para direita, de cima para baixo).
+Então o loop externo cuida das linhas, e o loop interno cuida dos caractéres da linha.
 
 {{index "counter variable", "remainder operator", "% operator"}}
 
-You'll need two bindings to track your progress. To know whether to
-put a space or a hash sign at a given position, you could test whether
-the sum of the two counters is even (`% 2`).
+Você irá precisar de duas ligações para rastrear seu progresso. Para saber se deve
+coloar um espaço ou uma cerquilha na posição dada, você poderia testar se a soma
+dos dois contadores é ímpar (`%2`).
 
-Terminating a line by adding a newline character must happen after the
-line has been built up, so do this after the inner loop but inside the outer loop.
+Terminando a linha ao adiconar um caracter _newline_ deve acontecer após a
+linha ter sido construida, então faça isso após o loop interno mas dentro do loop externo.
 
 hint}}

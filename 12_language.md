@@ -18,7 +18,7 @@ A principal coisa que quero mostrar neste capítulo é que não há ((mágica)) 
 
 {{index "Egg language", [abstraction, "in Egg"]}}
 
-Nós iremos construir uma linguagem de programação chamada *Egg*. Ela será uma minúscula e simples linguagem - mas uma que seja poderosa o suficiente para expressar qualquer cálculo que imaginar. Permitirá ((abstração)) simples baseadas em ((funções)).
+Nós iremos construir uma linguagem de programação chamada _Egg_. Ela será uma minúscula e simples linguagem - mas uma que seja poderosa o suficiente para expressar qualquer cálculo que imaginar. Permitirá ((abstração)) simples baseadas em ((funções)).
 
 {{id parsing}}
 
@@ -26,15 +26,15 @@ Nós iremos construir uma linguagem de programação chamada *Egg*. Ela será um
 
 {{index parsing, validation, [syntax, "of Egg"]}}
 
-A parte mais imediatamente visível de uma linguagem de programação é sua _sintaxe_, ou notação. Um _parser_ é um programa que lê um pedaço de texto e produz uma estrutura de dados que reflete a estrutura do programa contida naquele texto. Se o texto não formar um programa válido, o parser deverá apontar o erro.
+A parte mais imediatamente visível de uma linguagem de programação é sua _sintaxe_, ou notação. Um _parser_ é um programa que lê um pedaço de texto e produz uma estrutura de dados que reflete a estrutura do programa contida naquele texto. Se o texto não formar um programa válido, o _parser_ deverá apontar o erro.
 
 {{index "special form", [function, application]}}
 
-Nossa linguagem terá uma simples e uniforme sintaxe. Tudo em *Egg* é uma ((expressão)). Uma expressão pode ser o nome de uma variável, um número, uma *string* ou uma _função_. Funções são usadas para chamadas de função, mas também para construções como `if` ou `while`.
+Nossa linguagem terá uma simples e uniforme sintaxe. Tudo em _Egg_ é uma ((expressão)). Uma expressão pode ser o nome de uma variável, um número, uma _string_ ou uma _função_. Funções são usadas para chamadas de função, mas também para construções como `if` ou `while`.
 
 {{index "double-quote character", parsing, [escaping, "in strings"], [whitespace, syntax]}}
 
-Para manter o *parser* simples, strings em *Egg* não suportam nada como escapes de barra invertida. Uma *string* é simplesmente uma sequência de caracteres que não são aspas duplas, envolvidas com aspas duplas. Um número é uma sequência de dígitos. Nomes de variáveis podem consistir de qualquer caractere que não seja espaço em branco e que não tenha um significado especial para a sintaxe.
+Para manter o _parser_ simples, strings em _Egg_ não suportam nada como escapes de barra invertida. Uma _string_ é simplesmente uma sequência de caracteres que não são aspas duplas, envolvidas com aspas duplas. Um número é uma sequência de dígitos. Nomes de variáveis podem consistir de qualquer caractere que não seja espaço em branco e que não tenha um significado especial para a sintaxe.
 
 {{index "comma character", [parentheses, arguments]}}
 
@@ -49,17 +49,17 @@ do(define(x, 10),
 
 {{index block, [syntax, "of Egg"]}}
 
-A ((uniformidade)) da ((linguagem *Egg*)) significa que coisas que são ((operador))es em JavaScript (como `>`) são variáveis normais nesta linguagem, aplicadas apenas como outras ((funções)). E uma vez que a sintaxe não tem o conceito de bloco, nós precisamos de um construtor `do` para representar que estamos fazendo múltiplas coisas em sequência.
+A ((uniformidade)) da ((linguagem _Egg_)) significa que coisas que são ((operador))es em JavaScript (como `>`) são variáveis normais nesta linguagem, aplicadas apenas como outras ((funções)). Uma vez que a sintaxe não tem o conceito de bloco, nós precisamos de um construtor `do` para representar que estamos fazendo múltiplas coisas em sequência.
 
 {{index "type property", parsing, ["data structure", tree]}}
 
-A estrutura de dados que o *parser* irá usar para descrever um programa consiste de objetos de ((expressão)), cada um dos quais com uma propriedade `type` indicando qual o tipo de expressão e outras propriedades para descrever seu conteúdo.
+A estrutura de dados que o _parser_ irá usar para descrever um programa consiste de objetos de ((expressão)), cada um dos quais com uma propriedade `type` indicando qual o tipo de expressão e outras propriedades para descrever seu conteúdo.
 
 {{index identifier}}
 
-Expressões do tipo `"value"` representam números e *string* literais. Suas propriedades `value` contém uma *string* ou o valor do número que eles representam. Expressões do tipo `"word"` são usadas para identificadores (nomes). Tais objetos tem uma propriedade `name` que contém o nome do identificador como uma *string*. Finalmente, expressões `"apply"` representam funções. Elas tem uma propriedade `operator` que se refere à expressão que está sendo aplicada, assim como a propriedade `args` que contem um *array* dos argumentos da expressão.
+Expressões do tipo `"value"` representam números e _string_ literais. Suas propriedades `value` contêm uma _string_ ou o valor do número que eles representam. Expressões do tipo `"word"` são usadas para identificadores (nomes). Tais objetos têm uma propriedade `name` que contêm o nome do identificador como uma _string_. Finalmente, expressões `"apply"` representam funções. Elas têm uma propriedade `operator` que se refere à expressão que está sendo aplicada, assim como a propriedade `args` que contem um _array_ dos argumentos da expressão.
 
-A parte `>(x, 5)` do programa anterior seria representado assim:
+A parte `>(x, 5)` do programa anterior seria representada assim:
 
 ```{lang: "application/json"}
 {
@@ -80,21 +80,21 @@ Essa estrutura de dados é chamada de _((syntax tree))_. Se você imaginar os ob
 
 {{index parsing}}
 
-Compare isso com o *parser* que nós escrevemos para o formato de arquivo de configuração no [Capítulo ?](regexp#ini), que tinha uma estrutura simples: ele dividia a entrada em linhas e tratava estas linhas uma de cada vez. Havia apenas algumas formas simples que uma linha podia ter.
+Compare isso com o _parser_ que nós escrevemos para o formato de arquivo de configuração no [Capítulo ?](regexp#ini), que tinha uma estrutura simples: ele dividia a entrada em linhas e tratava estas linhas uma de cada vez. Havia apenas algumas formas simples que uma linha podia ter.
 
 {{index recursion, [nesting, "of expressions"]}}
 
-Aqui, nós devemos encontrar uma abordagem diferente. Expressões não são separadas em linhas, e possuem uma estrutura recursiva. Expressões de funções _contém_ outras expressões.
+Aqui, nós devemos encontrar uma abordagem diferente. Expressões não são separadas em linhas, e possuem uma estrutura recursiva. Expressões de funções _contêm_ outras expressões.
 
 {{index elegance}}
 
-Felizmente, este problema pode ser muito bem resolvido escrevendo uma função de *parser* que seja recursiva de maneira que reflita a natureza recursiva da linguagem.
+Felizmente, este problema pode ser muito bem resolvido escrevendo uma função de _parser_ que seja recursiva de maneira que reflita a natureza recursiva da linguagem.
 
 {{index "parseExpression function", "syntax tree"}}
 
-Nós definimos uma função `parseExpression`, que pega uma *string* como entrada e retorna um objeto que contém a estrutura de dados da expressão no início da *string*, junto com a parte da *string* deixada após a análise dessa expressão. Ao analisar subexpressões (o argumento para uma função, por exemplo), essa função pode ser chamada novamente, produzindo a expressão do argumento e o texto restante. Este texto, por sua vez, pode conter mais argumentos ou pode ser o parêntese de fechamento que encerra a lista de argumentos.
+Nós definimos uma função `parseExpression`, que pega uma _string_ como entrada e retorna um objeto que contêm a estrutura de dados da expressão no início da _string_, junto com a parte da _string_ deixada após a análise dessa expressão. Ao analisar subexpressões (o argumento para uma função, por exemplo), essa função pode ser chamada novamente, produzindo a expressão do argumento e o texto restante. Este texto, por sua vez, pode conter mais argumentos ou pode ser o parêntese de fechamento que encerra a lista de argumentos.
 
-Esta é a primeira parte do *parser*:
+Esta é a primeira parte do _parser_:
 
 ```{includeCode: true}
 function parseExpression(program) {
@@ -122,15 +122,15 @@ function skipSpace(string) {
 
 {{index "skipSpace function", [whitespace, syntax]}}
 
-Como *Egg*, assim como JavaScript, permite qualquer quantidade de espaço em branco entre seus elementos, temos que cortar repetidamente o espaço em branco no início da string do programa. É com isso que a função `skipSpace` ajuda.
+Como _Egg_, assim como JavaScript, permite qualquer quantidade de espaço em branco entre seus elementos, temos que cortar repetidamente o espaço em branco no início da string do programa. É com isso que a função `skipSpace` ajuda.
 
 {{index "literal expression", "SyntaxError type"}}
 
-Depois de pular qualquer espaço, `parseExpression` usa três expressões regulares para identificar os três elementos atômicos suportados por *Egg*: *string*, números e palavras. O *parser* constrói um tipo diferente de estrutura de dados, dependendo de qual deles corresponde. Se a entrada não corresponder a uma dessas três formas, não será uma expressão válida, e assim o *parser* emitirá um erro. Usamos `SyntaxError` em vez de `Error` como construtor de exceção, que é outro tipo de erro padrão, porque é um pouco mais específico - também é o tipo de erro emitido quando é feita uma tentativa de executar um programa JavaScript inválido.
+Depois de pular qualquer espaço, `parseExpression` usa três expressões regulares para identificar os três elementos atômicos suportados por _Egg_: _string_, números e palavras. O _parser_ constrói um tipo diferente de estrutura de dados, dependendo de qual deles corresponde. Se a entrada não corresponder a uma dessas três formas, não será uma expressão válida, e assim o _parser_ emitirá um erro. Usamos `SyntaxError` em vez de `Error` como construtor de exceção, que é outro tipo de erro padrão, porque é um pouco mais específico - também é o tipo de erro emitido quando é feita uma tentativa de executar um programa JavaScript inválido.
 
 {{index "parseApply function"}}
 
-Em seguida, cortamos a parte correspondente à *string* do programa e a passamos, junto com o objeto da expressão, para `parseApply`, que verifica se a expressão é uma função. Neste caso, ele analisa a lista de argumentos dentro dos parênteses.
+Em seguida, cortamos a parte correspondente à _string_ do programa e a passamos, junto com o objeto da expressão, para `parseApply`, que verifica se a expressão é uma função. Neste caso, ele analisa a lista de argumentos dentro dos parênteses.
 
 ```{includeCode: true}
 function parseApply(expr, program) {
@@ -161,13 +161,13 @@ Se o próximo caractere no programa não for um parêntese de abertura, este nã
 
 {{index recursion}}
 
-Caso contrário, ignora o parêntese de abertura e cria o objeto da ((*syntax tree*)) para esta expressão da função. Em seguida, recursivamente chama `parseExpression` para analisar cada argumento até que um parêntese de fechamento seja encontrado. A recursão é indireta, através da chamada de `parseApply` e `parseExpression`.
+Caso contrário, ignora o parêntese de abertura e cria o objeto da ((_syntax tree_)) para esta expressão da função. Em seguida, recursivamente chama `parseExpression` para analisar cada argumento até que um parêntese de fechamento seja encontrado. A recursão é indireta, através da chamada de `parseApply` e `parseExpression`.
 
 Como a expressão de uma função pode ser aplicada a si mesma (como em `multiplier(2)(1)`), `parseApply` deve, após analisar uma função, chamar a si mesmo novamente para verificar se outro par de parênteses se segue.
 
 {{index "syntax tree", "Egg language", "parse function"}}
 
-Isso é tudo que precisamos para analisar *Egg*. Nós o envolvemos em uma conveniente função *parse* que verifica se atingiu o final da sequência de entrada após analisar a expressão (um programa *Egg* é uma única expressão) e que nos fornece a estrutura de dados do programa.
+Isso é tudo que precisamos para analisar _Egg_. Nós o envolvemos em uma conveniente função _parse_ que verifica se atingiu o final da sequência de entrada após analisar a expressão (um programa _Egg_ é uma única expressão) e que nos fornece a estrutura de dados do programa.
 
 ```{includeCode: strip_log, test: join}
 function parse(program) {
@@ -193,7 +193,7 @@ Funciona! Ele não nos fornece uma informação muito útil quando falha e não 
 
 {{index "evaluate function", evaluation, interpretation, "syntax tree", "Egg language"}}
 
-O que nós podemos fazer com a árvore sintática de um programa? Executá-la, claro! E é isso que o *evaluator* faz. Você fornece a ele uma árvore sintática e um objeto de escopo que associa os nomes com valores, e ele avalia a expressão que a árvore representa e retorna o valor que esta produz.
+O que nós podemos fazer com a árvore sintática de um programa? Executá-la, claro! E é isso que o _evaluator_ faz. Você fornece a ele uma árvore sintática e um objeto de escopo que associa os nomes com valores, e ele avalia a expressão que a árvore representa e retorna o valor que esta produz.
 
 
 ```{includeCode: true}
@@ -234,21 +234,21 @@ O evaluator tem um código para cada um dos tipos de ((expressão)). Uma express
 
 Funções são mais complicadas. Se elas possuem um ((formato especial)), como `if`, não avaliamos nada e passamos as expressões de argumento, juntamente com o escopo, para a função que lida com esse formato. Se ela possuí uma forma normal, nós avaliamos o operador, comprovando que ele é um função, e chamamos ele com os argumentos avaliados.
 
-Nós usamos valores de função no JavaScript simples para representar valores de funções no *Egg*. Nós iremos voltar nisso mais [tarde](language.md#egg_fun), quando a forma especial chamada `fun` é definida.
+Nós usamos valores de função no JavaScript simples para representar valores de funções no _Egg_. Nós iremos voltar nisso mais [tarde](language.md#egg_fun), quando a forma especial chamada `fun` é definida.
 
 {{index readability, "evaluate function", recursion, parsing}}
 
-A estrutura recursiva de `evaluate` se assemelha a estrutura do *parser*, e ambos espelham a estrutura da própria linguagem. Também seria possível integrar o *evaluate* ao *parser* e avaliarmos durante a análise, mas dividí-los dessa maneira torna o programa mais claro.
+A estrutura recursiva de `evaluate` se assemelha à estrutura do _parser_, e ambos espelham a estrutura da própria linguagem. Também seria possível integrar o _evaluate_ ao _parser_ e avaliarmos durante a análise, mas dividí-los dessa maneira torna o programa mais claro.
 
 {{index "Egg language", interpretation}}
 
-Isso é realmente tudo o que é necessário para interpretar *Egg*. Simples assim. Mas, sem definir algumas formas especiais e adicionar alguns valores úteis ao ((ambiente)), você ainda não pode fazer muito com essa linguagem.
+Isso é realmente tudo o que é necessário para interpretar _Egg_. Simples assim. Mas, sem definir algumas formas especiais e adicionar alguns valores úteis ao ((ambiente)), você ainda não pode fazer muito com essa linguagem.
 
 ## Formas especiais
 
 {{index "special form", "specialForms object"}}
 
-O objeto `specialForms` é usado para definir uma sintaxe especial em *Egg*. Ele associa palavras com funções que avaliam tais formas. Ele atualmente está vazio. Vamos adicionar o `if`.
+O objeto `specialForms` é usado para definir uma sintaxe especial em _Egg_. Ele associa palavras com funções que avaliam tais formas. Ele atualmente está vazio. Vamos adicionar o `if`.
 
 ```{includeCode: true}
 specialForms.if = (args, scope) => {
@@ -264,11 +264,11 @@ specialForms.if = (args, scope) => {
 
 {{index "conditional execution", "ternary operator", "?: operator", "conditional operator"}}
 
-O construtor `if` em *Egg* espera exatamente três argumentos. Ele irá avaliar o primeiro, e se o resultado do valor não for `false`, ele irá avaliar o segundo. Caso contrário, o terceiro argumento será avaliádo. Esta forma `if` é mais similar ao ternário do JavaScript `?:` que o `if` em JavaScript. Ele é uma expressão, não uma declaração, e produz um valor, isto é, o resultado do segundo ou do terceiro argumento.
+O construtor `if` em _Egg_ espera exatamente três argumentos. Ele irá avaliar o primeiro, e se o resultado do valor não for `false`, ele irá avaliar o segundo. Caso contrário, o terceiro argumento será avaliado. Esta forma `if` é mais similar ao ternário do JavaScript `?:` do que o `if` em JavaScript. Ele é uma expressão, não uma declaração, e produz um valor, isto é, o resultado do segundo ou do terceiro argumento.
 
 {{index Boolean}}
 
-*Egg* também difere de JavaScript em como ele lida com o valor do condicional `if`. Ele não tratará coisas como zero ou uma *string* vazia como falso, apenas o valor exato `false`.
+_Egg_ também difere de JavaScript em como ele lida com o valor do condicional `if`. Ele não tratará coisas como zero ou uma _string_ vazia como falso, apenas o valor exato `false`.
 
 {{index "short-circuit evaluation"}}
 
@@ -343,7 +343,7 @@ console.log(evaluate(prog, topScope));
 
 {{index arithmetic, "Function constructor"}}
 
-Para fornecer ((operador))es ((aritméticos)) e ((de comparação)) básicos, também adicionaremos alguns valores de função ao ((escopo)). No interesse de manter o código curto, usaremos o construtor `Function` para sintetizar várias funções do operador em um loop, em vez de defini-las individualmente.
+Para fornecer ((operador))es ((aritméticos)) e ((de comparação)) básicos, também adicionaremos alguns valores de função ao ((escopo)). No interesse de manter o código curto, usaremos o construtor `Function` para sintetizar várias funções do operador em um _loop_, em vez de defini-las individualmente.
 
 ```{includeCode: true}
 for (let op of ["+", "-", "*", "/", "==", "<", ">"]) {
@@ -388,7 +388,7 @@ do(define(total, 0),
 
 {{index "summing example", "Egg language"}}
 
-Este é o programa que vimos várias vezes antes, que calcula a soma dos números de 1 a 10, expresso em *Egg*. É claramente mais feio que o programa equivalente em JavaScript - mas não é tão ruim para uma linguagem implementada em menos de 150 ((linhas de código)).
+Este é o programa que vimos várias vezes antes, que calcula a soma dos números de 1 a 10, expresso em _Egg_. É claramente mais feio que o programa equivalente em JavaScript - mas não é tão ruim para uma linguagem implementada em menos de 150 ((linhas de código)).
 
 {{id egg_fun}}
 
@@ -428,7 +428,7 @@ specialForms.fun = (args, scope) => {
 
 {{index "local scope"}}
 
-Funções em *Egg* possuem seu próprio escopo local. A função produzida por `fun` cria este escopo local e adiciona estes argumentos ligados a ele. Então ele avalia o corpo da função nesse escopo e retorna o resultado.
+Funções em _Egg_ possuem seu próprio escopo local. A função produzida por `fun` cria este escopo local e adiciona estes argumentos ligados a ele. Então ele avalia o corpo da função nesse escopo e retorna o resultado.
 
 ```{startCode: true}
 run(`
@@ -461,7 +461,7 @@ Tradicionalmente, ((compilar)) envolve converter o programa em ((código de máq
 
 {{index simplicity, "Function constructor", transpilation}}
 
-Seria possível escrever uma alternativa à estratégia de ((análise)) para *Egg*, que primeiro converte o programa para um programa em JavaScript, usa `Function` para invocar o compilador JavaScript nele, e então executar o resultado. Quando bem feito, isso faria com que *Egg* executasse mais rápido e ainda assim fosse bastante simples de implementar.
+Seria possível escrever uma alternativa à estratégia de ((análise)) para _Egg_, que primeiro converte o programa para um programa em JavaScript, usa `Function` para invocar o compilador JavaScript nele, e então executar o resultado. Quando bem feito, isso faria com que _Egg_ executasse mais rápido e ainda assim fosse bastante simples de implementar.
 
 Se você está interessado neste tópico e com força de vontade para investir mais tempo nele, eu encorajo você a tentar implementar um compilador como exercício.
 
@@ -469,9 +469,9 @@ Se você está interessado neste tópico e com força de vontade para investir m
 
 {{index "Egg language"}}
 
-Quando nós definimos `if` e `while`, você provavelmente notou que eles eram mais ou menos *wrappers* triviais em torno dos próprios `if` e `while` do JavaScript. Similarmente, os valores em *Egg* são apenas os velhos e regulares valores em JavaScript.
+Quando nós definimos `if` e `while`, você provavelmente notou que eles eram mais ou menos _wrappers_ triviais em torno dos próprios `if` e `while` do JavaScript. Similarmente, os valores em _Egg_ são apenas os velhos e regulares valores em JavaScript.
 
-Se você comparar a implementação de *Egg*, construída em cima do JavaScript, com a quantidade de trabalho e complexidade necessárias para criar uma linguagem de programação diretamente em cima das funcionalidades brutas fornecida por uma máquina, a diferença é enorme. Independentemente disso, este exemplo deu uma impressão ideal de como as ((linguagens de programação)) funcionam.
+Se você comparar a implementação de _Egg_, construída em cima do JavaScript, com a quantidade de trabalho e complexidade necessárias para criar uma linguagem de programação diretamente em cima das funcionalidades brutas fornecida por uma máquina, a diferença é enorme. Independentemente disso, este exemplo deu uma impressão ideal de como as ((linguagens de programação)) funcionam.
 
 E quando se trata de fazer algo, trapacear é mais eficaz do que fazer tudo sozinho. Embora a linguagem de brinquedo neste capítulo não faça nada que não poderia ser melhor em JavaScript, _há_ situações em que escrever pequenas linguagens ajuda a realizar um trabalho real.
 
@@ -507,7 +507,7 @@ Isto é o que geralmente é chamado de uma _((linguagem de domínio específica)
 
 {{index "Egg language", "arrays in egg (exercise)", [array, "in Egg"]}}
 
-Adicione suporte para *arrays* em *Egg* adicionando as seguintes três funções ao topo do escopo: `array(...values)` para construir um *array* contendo os valores passados como argumento, `length(array)` para pegar o tamanho do *array*, e `element(array, n)` para capturar o enésimo elemento do *array*.
+Adicione suporte para _arrays_ em _Egg_ adicionando as seguintes três funções ao topo do escopo: `array(...values)` para construir um _array_ contendo os valores passados como argumento, `length(array)` para pegar o tamanho do _array_, e `element(array, n)` para capturar o enésimo elemento do _array_.
 
 {{if interactive
 
@@ -539,11 +539,11 @@ if}}
 
 {{index "arrays in egg (exercise)"}}
 
-A maneira mais fácil de fazer isso é associar *arrays* em Egg com os *arrays* em JavaScript.
+A maneira mais fácil de fazer isso é associar _arrays_ em Egg com os _arrays_ em JavaScript.
 
 {{index "slice method"}}
 
-Os valores adicionados ao topo do escopo devem ser funções. Usando um *rest argument* (notação de três pontos), a definição de *array* pode ser _muito_ simples.
+Os valores adicionados ao topo do escopo devem ser funções. Usando um _rest argument_ (notação de três pontos), a definição de _array_ pode ser _muito_ simples.
 
 hint}}
 
@@ -551,7 +551,7 @@ hint}}
 
 {{index closure, [function, scope], "closure in egg (exercise)"}}
 
-A maneira como definimos `fun` permite que as funções em *Egg* façam referência ao escopo ao redor delas, permitindo que o corpo da função use valores locais visíveis no momento em que a função foi definida, assim como as funções JavaScript.
+A maneira como definimos `fun` permite que as funções em _Egg_ façam referência ao escopo ao redor delas, permitindo que o corpo da função use valores locais visíveis no momento em que a função foi definida, assim como as funções JavaScript.
 
 O programa a seguir ilustra isso: a função `f` retorna uma função que adiciona seu argumento ao argumento de `f`, o que significa que ela precisa acessar o ((escopo)) local dentro de `f` para ser capaz de usar a variável `a`.
 
@@ -569,11 +569,11 @@ Volte para a definição de `fun` e explique qual mecanismo faz com que isso fun
 
 {{index closure, "closure in egg (exercise)"}}
 
-Mais uma vez, estamos usando um mecanismo em JavaScript para obter o mesmo recurso em *Egg*. Formas especiais recebem o escopo local na qual são avaliadas, para que possam avaliar suas sub-formas nesse escopo. A função retornada por `fun` tem acesso ao argumento de `escopo` fornecido à função que a envolve e o utiliza para criar o ((escopo)) local de sua função quando esta é chamada.
+Mais uma vez, estamos usando um mecanismo em JavaScript para obter o mesmo recurso em _Egg_. Formas especiais recebem o escopo local na qual são avaliadas, para que possam avaliar suas sub-formas nesse escopo. A função retornada por `fun` tem acesso ao argumento de `escopo` fornecido à função que a envolve e o utiliza para criar o ((escopo)) local de sua função quando esta é chamada.
 
 {{index compilation}}
 
-Isso significa que o ((protótipo)) do escopo local será o escopo em que a função foi criada, o que torna possível acessar as variáveis nesse escopo a partir da função. Isso é tudo o que há para implementar um *clojure* (embora, para compilá-lo de uma maneira que seja realmente eficiente, você precisará trabalhar mais).
+Isso significa que o ((protótipo)) do escopo local será o escopo em que a função foi criada, o que torna possível acessar as variáveis nesse escopo a partir da função. Isso é tudo o que há para implementar um _clojure_ (embora, para compilá-lo de uma maneira que seja realmente eficiente, você precisará trabalhar mais).
 
 hint}}
 
@@ -581,7 +581,7 @@ hint}}
 
 {{index "hash character", "Egg language", "comments in egg (exercise)"}}
 
-Seria interessante se pudéssemos escrever ((comentário))s em *Egg*. Por exemplo, se encontrássemos um símbolo *hash* (`#`), nós poderíamos tratar o resto da linha como um comentário e ignorá-lo, similar ao `//` do JavaScript.
+Seria interessante se pudéssemos escrever ((comentário))s em _Egg_. Por exemplo, se encontrássemos um símbolo _hash_ (`#`), nós poderíamos tratar o resto da linha como um comentário e ignorá-lo, similar ao `//` do JavaScript.
 
 {{index "skipSpace function"}}
 
@@ -613,7 +613,7 @@ if}}
 
 Verifique se a sua solução lida com vários comentários seguidos, com potencial espaço em branco entre ou depois deles.
 
-Uma expressão regular é provavelmente a forma mais fácil de solucionar isso. Escreva algo que encontre "espaços em branco ou um comentário, zero ou mais vezes". Use o método `exec` ou `match` e observe o tamanho do primeiro elemento no *array* retornado (a correspondência inteira) para descobrir quantos caracteres serão removidos.
+Uma expressão regular é provavelmente a forma mais fácil de solucionar isso. Escreva algo que encontre "espaços em branco ou um comentário, zero ou mais vezes". Use o método `exec` ou `match` e observe o tamanho do primeiro elemento no _array_ retornado (a correspondência inteira) para descobrir quantos caracteres serão removidos.
 
 hint}}
 

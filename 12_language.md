@@ -1,11 +1,10 @@
 {{meta {load_files: ["code/chapter/12_language.js"], zip: "node/html"}}}
 
-# Project: A Programming Language
+# O projeto: Uma Linguagem de Programação
 
 {{quote {author: "Hal Abelson and Gerald Sussman", title: "Structure and Interpretation of Computer Programs", chapter: true}
 
-The evaluator, which determines the meaning of expressions in a
-programming language, is just another program.
+O evaluator, que determina o significado de uma expressão em uma linguagem de programação, é apenas outro programa.
 
 quote}}
 
@@ -13,21 +12,13 @@ quote}}
 
 {{figure {url: "img/chapter_picture_12.jpg", alt: "Picture of an egg with smaller eggs inside", chapter: "framed"}}}
 
-Building your own ((programming language)) is surprisingly easy (as
-long as you do not aim too high) and very enlightening.
+Construir sua própria ((linguagem de programação)) é surpreendentemente fácil (contanto que você não mire muito alto) e muito esclarecedor.
 
-The main thing I want to show in this chapter is that there is no
-((magic)) involved in building your own language. I've often felt that
-some human inventions were so immensely clever and complicated that
-I'd never be able to understand them. But with a little reading and
-experimenting, they often turn out to be quite mundane.
+A principal coisa que quero mostrar neste capítulo é que não há ((mágica)) envolvida na construção de sua própria linguagem de programação. Eu geralmente sentia que algumas invenções humanas eram tão inteligentes e complicadas que eu nunca seria capaz de entendê-las. Mas, com um pouco de leitura e experimentação, elas geralmente se mostram bastante mundanas.
 
 {{index "Egg language", [abstraction, "in Egg"]}}
 
-We will build a programming language called Egg. It will be a tiny,
-simple language—but one that is powerful enough to express any
-computation you can think of. It will allow simple ((abstraction))
-based on ((function))s.
+Nós iremos construir uma linguagem de programação chamada _Egg_. Ela será uma minúscula e simples linguagem - mas uma que seja poderosa o suficiente para expressar qualquer cálculo que imaginar. Permitirá ((abstração)) simples baseadas em ((funções)).
 
 {{id parsing}}
 
@@ -35,32 +26,19 @@ based on ((function))s.
 
 {{index parsing, validation, [syntax, "of Egg"]}}
 
-The most immediately visible part of a programming language is its
-_syntax_, or notation. A _parser_ is a program that reads a piece
-of text and produces a data structure that reflects the structure of
-the program contained in that text. If the text does not form a valid
-program, the parser should point out the error.
+A parte mais imediatamente visível de uma linguagem de programação é sua _sintaxe_, ou notação. Um _parser_ é um programa que lê um pedaço de texto e produz uma estrutura de dados que reflete a estrutura do programa contida naquele texto. Se o texto não formar um programa válido, o _parser_ deverá apontar o erro.
 
 {{index "special form", [function, application]}}
 
-Our language will have a simple and uniform syntax. Everything in Egg
-is an ((expression)). An expression can be the name of a binding, a
-number, a string, or an _application_. Applications are used for
-function calls but also for constructs such as `if` or `while`.
+Nossa linguagem terá uma simples e uniforme sintaxe. Tudo em _Egg_ é uma ((expressão)). Uma expressão pode ser o nome de uma variável, um número, uma _string_ ou uma _função_. Funções são usadas para chamadas de função, mas também para construções como `if` ou `while`.
 
 {{index "double-quote character", parsing, [escaping, "in strings"], [whitespace, syntax]}}
 
-To keep the parser simple, strings in Egg do not support anything like
-backslash escapes. A string is simply a sequence of characters that
-are not double quotes, wrapped in double quotes. A number is a
-sequence of digits. Binding names can consist of any character that is
-not whitespace and that does not have a special meaning in the syntax.
+Para manter o _parser_ simples, strings em _Egg_ não suportam nada como escapes de barra invertida. Uma _string_ é simplesmente uma sequência de caracteres que não são aspas duplas, envolvidas com aspas duplas. Um número é uma sequência de dígitos. Nomes de variáveis podem consistir de qualquer caractere que não seja espaço em branco e que não tenha um significado especial para a sintaxe.
 
 {{index "comma character", [parentheses, arguments]}}
 
-Applications are written the way they are in JavaScript, by putting
-parentheses after an expression and having any number of
-((argument))s between those parentheses, separated by commas.
+Funções são escritas da forma como são em JavaScript, colocando parênteses após a expressão e tendo qualquer número de ((argumento))s entre estes parênteses, separados por vírgulas.
 
 ```{lang: null}
 do(define(x, 10),
@@ -71,31 +49,17 @@ do(define(x, 10),
 
 {{index block, [syntax, "of Egg"]}}
 
-The ((uniformity)) of the ((Egg language)) means that things that are
-((operator))s in JavaScript (such as `>`) are normal bindings in this
-language, applied just like other ((function))s. And since the
-syntax has no concept of a block, we need a `do` construct to
-represent doing multiple things in sequence.
+A ((uniformidade)) da ((linguagem _Egg_)) significa que coisas que são ((operador))es em JavaScript (como `>`) são variáveis normais nesta linguagem, aplicadas apenas como outras ((funções)). Uma vez que a sintaxe não tem o conceito de bloco, nós precisamos de um construtor `do` para representar que estamos fazendo múltiplas coisas em sequência.
 
 {{index "type property", parsing, ["data structure", tree]}}
 
-The data structure that the parser will use to describe a program
-consists of ((expression)) objects, each of which has a `type`
-property indicating the kind of expression it is and other properties
-to describe its content.
+A estrutura de dados que o _parser_ irá usar para descrever um programa consiste de objetos de ((expressão)), cada um dos quais com uma propriedade `type` indicando qual o tipo de expressão e outras propriedades para descrever seu conteúdo.
 
 {{index identifier}}
 
-Expressions of type `"value"` represent literal strings or numbers.
-Their `value` property contains the string or number value that they
-represent. Expressions of type `"word"` are used for identifiers
-(names). Such objects have a `name` property that holds the
-identifier's name as a string. Finally, `"apply"` expressions
-represent applications. They have an `operator` property that refers
-to the expression that is being applied, as well as an `args` property that
-holds an array of argument expressions.
+Expressões do tipo `"value"` representam números e _string_ literais. Suas propriedades `value` contêm uma _string_ ou o valor do número que eles representam. Expressões do tipo `"word"` são usadas para identificadores (nomes). Tais objetos têm uma propriedade `name` que contêm o nome do identificador como uma _string_. Finalmente, expressões `"apply"` representam funções. Elas têm uma propriedade `operator` que se refere à expressão que está sendo aplicada, assim como a propriedade `args` que contem um _array_ dos argumentos da expressão.
 
-The `>(x, 5)` part of the previous program would be represented like this:
+A parte `>(x, 5)` do programa anterior seria representada assim:
 
 ```{lang: "application/json"}
 {
@@ -110,46 +74,27 @@ The `>(x, 5)` part of the previous program would be represented like this:
 
 {{indexsee "abstract syntax tree", "syntax tree", ["data structure", tree]}}
 
-Such a data structure is called a _((syntax tree))_. If you
-imagine the objects as dots and the links between them as lines
-between those dots, it has a ((tree))like shape. The fact that
-expressions contain other expressions, which in turn might contain
-more expressions, is similar to the way tree branches split and split
-again.
+Essa estrutura de dados é chamada de _((syntax tree))_. Se você imaginar os objetos como pontos e as conexões entre eles como as linhas entre os pontos, ele terá uma forma de árvore. O fato de que expressões podem conter outras expressões, que por sua vez podem conter mais expressões, é semelhante à maneira como os galhos das árvores se dividem e se dividem novamente.
 
 {{figure {url: "img/syntax_tree.svg", alt: "The structure of a syntax tree",width: "5cm"}}}
 
 {{index parsing}}
 
-Contrast this to the parser we wrote for the configuration file format
-in [Chapter ?](regexp#ini), which had a simple structure: it split the
-input into lines and handled those lines one at a time. There were
-only a few simple forms that a line was allowed to have.
+Compare isso com o _parser_ que nós escrevemos para o formato de arquivo de configuração no [Capítulo ?](regexp#ini), que tinha uma estrutura simples: ele dividia a entrada em linhas e tratava estas linhas uma de cada vez. Havia apenas algumas formas simples que uma linha podia ter.
 
 {{index recursion, [nesting, "of expressions"]}}
 
-Here we must find a different approach. Expressions are not separated
-into lines, and they have a recursive structure. Application
-expressions _contain_ other expressions.
+Aqui, nós devemos encontrar uma abordagem diferente. Expressões não são separadas em linhas, e possuem uma estrutura recursiva. Expressões de funções _contêm_ outras expressões.
 
 {{index elegance}}
 
-Fortunately, this problem can be solved very well by writing a parser
-function that is recursive in a way that reflects the recursive nature
-of the language.
+Felizmente, este problema pode ser muito bem resolvido escrevendo uma função de _parser_ que seja recursiva de maneira que reflita a natureza recursiva da linguagem.
 
 {{index "parseExpression function", "syntax tree"}}
 
-We define a function `parseExpression`, which takes a string as input
-and returns an object containing the data structure for the expression
-at the start of the string, along with the part of the string left
-after parsing this expression. When parsing subexpressions (the
-argument to an application, for example), this function can be called
-again, yielding the argument expression as well as the text that
-remains. This text may in turn contain more arguments or may be the
-closing parenthesis that ends the list of arguments.
+Nós definimos uma função `parseExpression`, que pega uma _string_ como entrada e retorna um objeto que contêm a estrutura de dados da expressão no início da _string_, junto com a parte da _string_ deixada após a análise dessa expressão. Ao analisar subexpressões (o argumento para uma função, por exemplo), essa função pode ser chamada novamente, produzindo a expressão do argumento e o texto restante. Este texto, por sua vez, pode conter mais argumentos ou pode ser o parêntese de fechamento que encerra a lista de argumentos.
 
-This is the first part of the parser:
+Esta é a primeira parte do _parser_:
 
 ```{includeCode: true}
 function parseExpression(program) {
@@ -177,30 +122,15 @@ function skipSpace(string) {
 
 {{index "skipSpace function", [whitespace, syntax]}}
 
-Because Egg, like JavaScript, allows any amount of whitespace
-between its elements, we have to repeatedly cut the whitespace off the
-start of the program string. That is what the `skipSpace` function
-helps with.
+Como _Egg_, assim como JavaScript, permite qualquer quantidade de espaço em branco entre seus elementos, temos que cortar repetidamente o espaço em branco no início da string do programa. É com isso que a função `skipSpace` ajuda.
 
 {{index "literal expression", "SyntaxError type"}}
 
-After skipping any leading space, `parseExpression` uses three
-((regular expression))s to spot the three atomic elements that Egg
-supports: strings, numbers, and words. The parser constructs a
-different kind of data structure depending on which one matches. If
-the input does not match one of these three forms, it is not a valid
-expression, and the parser throws an error. We use `SyntaxError`
-instead of `Error` as the exception constructor, which is another standard
-error type, because it is a little more specific—it is also the error
-type thrown when an attempt is made to run an invalid JavaScript
-program.
+Depois de pular qualquer espaço, `parseExpression` usa três expressões regulares para identificar os três elementos atômicos suportados por _Egg_: _string_, números e palavras. O _parser_ constrói um tipo diferente de estrutura de dados, dependendo de qual deles corresponde. Se a entrada não corresponder a uma dessas três formas, não será uma expressão válida, e assim o _parser_ emitirá um erro. Usamos `SyntaxError` em vez de `Error` como construtor de exceção, que é outro tipo de erro padrão, porque é um pouco mais específico - também é o tipo de erro emitido quando é feita uma tentativa de executar um programa JavaScript inválido.
 
 {{index "parseApply function"}}
 
-We then cut off the part that was matched from the program string and
-pass that, along with the object for the expression, to `parseApply`,
-which checks whether the expression is an application. If so, it
-parses a parenthesized list of arguments.
+Em seguida, cortamos a parte correspondente à _string_ do programa e a passamos, junto com o objeto da expressão, para `parseApply`, que verifica se a expressão é uma função. Neste caso, ele analisa a lista de argumentos dentro dos parênteses.
 
 ```{includeCode: true}
 function parseApply(expr, program) {
@@ -227,29 +157,17 @@ function parseApply(expr, program) {
 
 {{index parsing}}
 
-If the next character in the program is not an opening parenthesis,
-this is not an application, and `parseApply` returns the expression it
-was given.
+Se o próximo caractere no programa não for um parêntese de abertura, este não será uma função e `parseApply` retornará a expressão que foi fornecida.
 
 {{index recursion}}
 
-Otherwise, it skips the opening parenthesis and creates the ((syntax
-tree)) object for this application expression. It then recursively
-calls `parseExpression` to parse each argument until a closing
-parenthesis is found. The recursion is indirect, through `parseApply`
-and `parseExpression` calling each other.
+Caso contrário, ignora o parêntese de abertura e cria o objeto da ((_syntax tree_)) para esta expressão da função. Em seguida, recursivamente chama `parseExpression` para analisar cada argumento até que um parêntese de fechamento seja encontrado. A recursão é indireta, através da chamada de `parseApply` e `parseExpression`.
 
-Because an application expression can itself be applied (such as in
-`multiplier(2)(1)`), `parseApply` must, after it has parsed an
-application, call itself again to check whether another pair of
-parentheses follows.
+Como a expressão de uma função pode ser aplicada a si mesma (como em `multiplier(2)(1)`), `parseApply` deve, após analisar uma função, chamar a si mesmo novamente para verificar se outro par de parênteses se segue.
 
 {{index "syntax tree", "Egg language", "parse function"}}
 
-This is all we need to parse Egg. We wrap it in a convenient `parse`
-function that verifies that it has reached the end of the input string
-after parsing the expression (an Egg program is a single expression),
-and that gives us the program's data structure.
+Isso é tudo que precisamos para analisar _Egg_. Nós o envolvemos em uma conveniente função _parse_ que verifica se atingiu o final da sequência de entrada após analisar a expressão (um programa _Egg_ é uma única expressão) e que nos fornece a estrutura de dados do programa.
 
 ```{includeCode: strip_log, test: join}
 function parse(program) {
@@ -269,20 +187,14 @@ console.log(parse("+(a, 10)"));
 
 {{index "error message"}}
 
-It works! It doesn't give us very helpful information when it fails
-and doesn't store the line and column on which each expression starts,
-which might be helpful when reporting errors later, but it's good
-enough for our purposes.
+Funciona! Ele não nos fornece uma informação muito útil quando falha e não armazena a linha e a coluna em que cada expressão é iniciada, o que pode ser útil quando reportarmos erros mais tarde, mas está bom o suficiente para os nossos propósitos.
 
-## The evaluator
+## O evaluator
 
 {{index "evaluate function", evaluation, interpretation, "syntax tree", "Egg language"}}
 
-What can we do with the syntax tree for a program? Run it, of course!
-And that is what the evaluator does. You give it a syntax tree and a
-scope object that associates names with values, and it will evaluate
-the expression that the tree represents and return the value that this
-produces.
+O que nós podemos fazer com a árvore sintática de um programa? Executá-la, claro! E é isso que o _evaluator_ faz. Você fornece a ele uma árvore sintática e um objeto de escopo que associa os nomes com valores, e ele avalia a expressão que a árvore representa e retorna o valor que esta produz.
+
 
 ```{includeCode: true}
 const specialForms = Object.create(null);
@@ -316,45 +228,27 @@ function evaluate(expr, scope) {
 
 {{index "literal expression", scope}}
 
-The evaluator has code for each of the ((expression)) types. A literal
-value expression produces its value. (For example, the expression
-`100` just evaluates to the number 100.) For a binding, we must check
-whether it is actually defined in the scope and, if it is, fetch the
-binding's value.
+O evaluator tem um código para cada um dos tipos de ((expressão)). Uma expressão de valor literal produz seu valor. (Por exemplo, a expressão `100` apenas avalia o número 100). Para uma variável, devemos verificar se ela está realmente definida no escopo e, se estiver, trazer o valor desta.
 
 {{index [function, application]}}
 
-Applications are more involved. If they are a ((special form)), like
-`if`, we do not evaluate anything and pass the argument expressions,
-along with the scope, to the function that handles this form. If it is
-a normal call, we evaluate the operator, verify that it is a function,
-and call it with the evaluated arguments.
+Funções são mais complicadas. Se elas possuem um ((formato especial)), como `if`, não avaliamos nada e passamos as expressões de argumento, juntamente com o escopo, para a função que lida com esse formato. Se ela possuí uma forma normal, nós avaliamos o operador, comprovando que ele é um função, e chamamos ele com os argumentos avaliados.
 
-We use plain JavaScript function values to represent Egg's function
-values. We will come back to this [later](language#egg_fun), when the
-special form called `fun` is defined.
+Nós usamos valores de função no JavaScript simples para representar valores de funções no _Egg_. Nós iremos voltar nisso mais [tarde](language.md#egg_fun), quando a forma especial chamada `fun` é definida.
 
 {{index readability, "evaluate function", recursion, parsing}}
 
-The recursive structure of `evaluate` resembles the similar structure
-of the parser, and both mirror the structure of the language itself.
-It would also be possible to integrate the parser with the evaluator
-and evaluate during parsing, but splitting them up this way makes the
-program clearer.
+A estrutura recursiva de `evaluate` se assemelha à estrutura do _parser_, e ambos espelham a estrutura da própria linguagem. Também seria possível integrar o _evaluate_ ao _parser_ e avaliarmos durante a análise, mas dividí-los dessa maneira torna o programa mais claro.
 
 {{index "Egg language", interpretation}}
 
-This is really all that is needed to interpret Egg. It is that simple.
-But without defining a few special forms and adding some useful values
-to the ((environment)), you can't do much with this language yet.
+Isso é realmente tudo o que é necessário para interpretar _Egg_. Simples assim. Mas, sem definir algumas formas especiais e adicionar alguns valores úteis ao ((ambiente)), você ainda não pode fazer muito com essa linguagem.
 
-## Special forms
+## Formas especiais
 
 {{index "special form", "specialForms object"}}
 
-The `specialForms` object is used to define special syntax in Egg. It
-associates words with functions that evaluate such forms. It is
-currently empty. Let's add `if`.
+O objeto `specialForms` é usado para definir uma sintaxe especial em _Egg_. Ele associa palavras com funções que avaliam tais formas. Ele atualmente está vazio. Vamos adicionar o `if`.
 
 ```{includeCode: true}
 specialForms.if = (args, scope) => {
@@ -370,28 +264,17 @@ specialForms.if = (args, scope) => {
 
 {{index "conditional execution", "ternary operator", "?: operator", "conditional operator"}}
 
-Egg's `if` construct expects exactly three arguments. It will evaluate
-the first, and if the result isn't the value `false`, it will evaluate
-the second. Otherwise, the third gets evaluated. This `if` form is
-more similar to JavaScript's ternary `?:` operator than to
-JavaScript's `if`. It is an expression, not a statement, and it
-produces a value, namely, the result of the second or third argument.
+O construtor `if` em _Egg_ espera exatamente três argumentos. Ele irá avaliar o primeiro, e se o resultado do valor não for `false`, ele irá avaliar o segundo. Caso contrário, o terceiro argumento será avaliado. Esta forma `if` é mais similar ao ternário do JavaScript `?:` do que o `if` em JavaScript. Ele é uma expressão, não uma declaração, e produz um valor, isto é, o resultado do segundo ou do terceiro argumento.
 
 {{index Boolean}}
 
-Egg also differs from JavaScript in how it handles the condition value
-to `if`. It will not treat things like zero or the empty string as
-false, only the precise value `false`.
+_Egg_ também difere de JavaScript em como ele lida com o valor do condicional `if`. Ele não tratará coisas como zero ou uma _string_ vazia como falso, apenas o valor exato `false`.
 
 {{index "short-circuit evaluation"}}
 
-The reason we need to represent `if` as a special form, rather than a
-regular function, is that all arguments to functions are evaluated
-before the function is called, whereas `if` should evaluate only
-_either_ its second or its third argument, depending on the value of
-the first.
+A razão para a qual precisamos representar `if` como uma forma especial, ao invés de uma função regular, é que todos os argumentos para as funções são avaliados antes que a função seja chamada, enquanto que `if` deve avaliar _apenas_ seu segundo _ou_ terceiro argumento, dependendo do valor do primeiro.
 
-The `while` form is similar.
+A forma `while` é similar.
 
 ```{includeCode: true}
 specialForms.while = (args, scope) => {
@@ -408,9 +291,7 @@ specialForms.while = (args, scope) => {
 };
 ```
 
-Another basic building block is `do`, which executes all its arguments
-from top to bottom. Its value is the value produced by the last
-argument.
+Outro componente básico é o `do`, que executa todos os seus argumentos de cima para baixo. Seu valor é o valor produzido pelo último argumento.
 
 ```{includeCode: true}
 specialForms.do = (args, scope) => {
@@ -424,12 +305,7 @@ specialForms.do = (args, scope) => {
 
 {{index ["= operator", "in Egg"], [binding, "in Egg"]}}
 
-To be able to create bindings and give them new values, we also
-create a form called `define`. It expects a word as its first argument
-and an expression producing the value to assign to that word as its
-second argument. Since `define`, like everything, is an expression, it
-must return a value. We'll make it return the value that was assigned
-(just like JavaScript's `=` operator).
+Para podermos criar variáveis e fornecer a elas novos valores, também criamos uma forma chamada `define`. Ela espera uma palavra como seu primeiro argumento e uma expressão produzindo o valor a ser atribuído a essa palavra como seu segundo argumento. Uma vez que `define`, como tudo, é uma expressão, ele apenas retorna um valor. Vamos fazer com que ele retorne o valor atribuído (assim como o operador `=` do JavaScript).
 
 ```{includeCode: true}
 specialForms.define = (args, scope) => {
@@ -442,19 +318,13 @@ specialForms.define = (args, scope) => {
 };
 ```
 
-## The environment
+## O ambiente
 
 {{index "Egg language", "evaluate function", [binding, "in Egg"]}}
 
-The ((scope)) accepted by `evaluate` is an object with properties
-whose names correspond to binding names and whose values correspond to
-the values those bindings are bound to. Let's define an object to
-represent the ((global scope)).
+O ((escopo)) aceito pelo `evaluate` é um objeto com propriedades cujos nomes correspondem a nomes de variáveis e cujos valores correspondem aos valores aos quais essas variáveis estão associadas. Vamos definir um objeto para representar o ((escopo global)).
 
-To be able to use the `if` construct we just defined, we must have
-access to ((Boolean)) values. Since there are only two Boolean values,
-we do not need special syntax for them. We simply bind two names to
-the values `true` and `false` and use them.
+Para podermos usar a construção `if` que acabamos de definir, precisamos ter acesso aos valores ((Booleanos)). Como existem apenas dois valores Booleanos, não precisamos de uma sintaxe especial para eles. Nós simplesmente ligamos aos dois nomes os valores `true` e `false` e os usamos.
 
 ```{includeCode: true}
 const topScope = Object.create(null);
@@ -463,7 +333,7 @@ topScope.true = true;
 topScope.false = false;
 ```
 
-We can now evaluate a simple expression that negates a Boolean value.
+Agora podemos avaliar uma simples expressão que nega um valor Booleano.
 
 ```
 let prog = parse(`if(true, false, true)`);
@@ -473,11 +343,7 @@ console.log(evaluate(prog, topScope));
 
 {{index arithmetic, "Function constructor"}}
 
-To supply basic ((arithmetic)) and ((comparison)) ((operator))s, we
-will also add some function values to the ((scope)). In the interest
-of keeping the code short, we'll use `Function` to synthesize a bunch
-of operator functions in a loop, instead of defining them
-individually.
+Para fornecer ((operador))es ((aritméticos)) e ((de comparação)) básicos, também adicionaremos alguns valores de função ao ((escopo)). No interesse de manter o código curto, usaremos o construtor `Function` para sintetizar várias funções do operador em um _loop_, em vez de defini-las individualmente.
 
 ```{includeCode: true}
 for (let op of ["+", "-", "*", "/", "==", "<", ">"]) {
@@ -485,8 +351,7 @@ for (let op of ["+", "-", "*", "/", "==", "<", ">"]) {
 }
 ```
 
-A way to ((output)) values is also useful, so we'll wrap
-`console.log` in a function and call it `print`.
+Uma maneira de ((visualizar)) os valores também é útil, portanto, agruparemos `console.log` em uma função e chamaremos de `print`.
 
 ```{includeCode: true}
 topScope.print = value => {
@@ -497,9 +362,7 @@ topScope.print = value => {
 
 {{index parsing, "run function"}}
 
-That gives us enough elementary tools to write simple programs. The
-following function provides a convenient way to parse a program and
-run it in a fresh scope:
+Isso nos fornece ferramentas elementares suficientes para escrever programas simples. A função a seguir fornece uma maneira prática de analisar um programa e executá-lo em um novo escopo:
 
 ```{includeCode: true}
 function run(program) {
@@ -509,9 +372,7 @@ function run(program) {
 
 {{index "Object.create function", prototype}}
 
-We'll use object prototype chains to represent nested scopes so that
-the program can add bindings to its local scope without changing the
-top-level scope.
+Usaremos cadeias de protótipos de objetos para representar escopos aninhados, para que o programa possa adicionar variáveis ao seu escopo local sem alterar o escopo de nível superior.
 
 ```
 run(`
@@ -527,23 +388,17 @@ do(define(total, 0),
 
 {{index "summing example", "Egg language"}}
 
-This is the program we've seen several times before, which computes
-the sum of the numbers 1 to 10, expressed in Egg. It is clearly uglier
-than the equivalent JavaScript program—but not bad for a language
-implemented in less than 150 ((lines of code)).
+Este é o programa que vimos várias vezes antes, que calcula a soma dos números de 1 a 10, expresso em _Egg_. É claramente mais feio que o programa equivalente em JavaScript - mas não é tão ruim para uma linguagem implementada em menos de 150 ((linhas de código)).
 
 {{id egg_fun}}
 
-## Functions
+## Funções
 
 {{index function, "Egg language"}}
 
-A programming language without functions is a poor programming
-language indeed.
+Uma linguagem de programação sem funções é realmente uma pobre linguagem de programação.
 
-Fortunately, it isn't hard to add a `fun` construct, which treats its
-last argument as the function's body and uses all arguments before
-that as the names of the function's parameters.
+Felizmente, não é difícil adicionar um construtor `fun`, que trata seu último argumento como o corpo da função e usa todos os argumentos anteriores como nomes dos parâmetros da função.
 
 ```{includeCode: true}
 specialForms.fun = (args, scope) => {
@@ -573,10 +428,7 @@ specialForms.fun = (args, scope) => {
 
 {{index "local scope"}}
 
-Functions in Egg get their own local scope. The function produced by
-the `fun` form creates this local scope and adds the argument bindings
-to it. It then evaluates the function body in this scope and returns
-the result.
+Funções em _Egg_ possuem seu próprio escopo local. A função produzida por `fun` cria este escopo local e adiciona estes argumentos ligados a ele. Então ele avalia o corpo da função nesse escopo e retorna o resultado.
 
 ```{startCode: true}
 run(`
@@ -595,74 +447,39 @@ do(define(pow, fun(base, exp,
 // → 1024
 ```
 
-## Compilation
+## Compilação
 
 {{index interpretation, compilation}}
 
-What we have built is an interpreter. During evaluation, it acts
-directly on the representation of the program produced by the parser.
+O que nós construímos é um interpretador. Durante a avaliação, ele age diretamente sobre a representação do programa produzido pelo `parser`.
 
 {{index efficiency, performance, [binding, definition], [memory, speed]}}
 
-_Compilation_ is the process of adding another step between the
-parsing and the running of a program, which transforms the program
-into something that can be evaluated more efficiently by doing as much
-work as possible in advance. For example, in well-designed languages
-it is obvious, for each use of a binding, which binding is being
-referred to, without actually running the program. This can be used to
-avoid looking up the binding by name every time it is accessed,
-instead directly fetching it from some predetermined memory
-location.
+_Compilação_ é o processo de adicionar uma outra etapa entre a análise e a execução do programa, que transforma este em algo que pode ser avaliado com mais eficiência, fazendo o máximo de trabalho possível com antecedência. Por exemplo, em linguagens bem projetadas é óbvio, para cada uso de uma variável, qual variável está sendo referida, sem realmente executar o programa. Isso pode ser usado para evitar procurar uma variável pelo nome sempre que ela for acessada, em vez de buscá-la diretamente em algum local da memória predeterminado.
 
-Traditionally, ((compilation)) involves converting the program to
-((machine code)), the raw format that a computer's processor can
-execute. But any process that converts a program to a different
-representation can be thought of as compilation.
+Tradicionalmente, ((compilar)) envolve converter o programa em ((código de máquina)), o formato bruto que o processador de um computador pode executar. Mas, qualquer processo que converte um programa para uma diferente representação pode ser considerado como uma compilação.
 
 {{index simplicity, "Function constructor", transpilation}}
 
-It would be possible to write an alternative ((evaluation)) strategy
-for Egg, one that first converts the program to a JavaScript program,
-uses `Function` to invoke the JavaScript compiler on it, and then runs
-the result. When done right, this would make Egg run very fast while
-still being quite simple to implement.
+Seria possível escrever uma alternativa à estratégia de ((análise)) para _Egg_, que primeiro converte o programa para um programa em JavaScript, usa `Function` para invocar o compilador JavaScript nele, e então executar o resultado. Quando bem feito, isso faria com que _Egg_ executasse mais rápido e ainda assim fosse bastante simples de implementar.
 
-If you are interested in this topic and willing to spend some time on
-it, I encourage you to try to implement such a compiler as an
-exercise.
+Se você está interessado neste tópico e com força de vontade para investir mais tempo nele, eu encorajo você a tentar implementar um compilador como exercício.
 
-## Cheating
+## Trapaceando
 
 {{index "Egg language"}}
 
-When we defined `if` and `while`, you probably noticed that they were
-more or less trivial wrappers around JavaScript's own `if` and
-`while`. Similarly, the values in Egg are just regular old JavaScript
-values.
+Quando nós definimos `if` e `while`, você provavelmente notou que eles eram mais ou menos _wrappers_ triviais em torno dos próprios `if` e `while` do JavaScript. Similarmente, os valores em _Egg_ são apenas os velhos e regulares valores em JavaScript.
 
-If you compare the implementation of Egg, built on top of JavaScript,
-with the amount of work and complexity required to build a programming
-language directly on the raw functionality provided by a machine, the
-difference is huge. Regardless, this example ideally gave you an
-impression of the way ((programming language))s work.
+Se você comparar a implementação de _Egg_, construída em cima do JavaScript, com a quantidade de trabalho e complexidade necessárias para criar uma linguagem de programação diretamente em cima das funcionalidades brutas fornecida por uma máquina, a diferença é enorme. Independentemente disso, este exemplo deu uma impressão ideal de como as ((linguagens de programação)) funcionam.
 
-And when it comes to getting something done, cheating is more
-effective than doing everything yourself. Though the toy language in
-this chapter doesn't do anything that couldn't be done better in
-JavaScript, there _are_ situations where writing small languages helps
-get real work done.
+E quando se trata de fazer algo, trapacear é mais eficaz do que fazer tudo sozinho. Embora a linguagem de brinquedo neste capítulo não faça nada que não poderia ser melhor em JavaScript, _há_ situações em que escrever pequenas linguagens ajuda a realizar um trabalho real.
 
-Such a language does not have to resemble a typical programming
-language. If JavaScript didn't come equipped with regular expressions,
-for example, you could write your own parser and evaluator for regular
-expressions.
+Essa linguagem não precisa se parecer com uma típica linguagem de programação. Se JavaScript não vem equipado com expressões regulares, por exemplo, você poderá escrever seu próprio analisador e avaliador para expressões regulares.
 
 {{index "artificial intelligence"}}
 
-Or imagine you are building a giant robotic ((dinosaur)) and need to
-program its ((behavior)). JavaScript might not be the most effective
-way to do this. You might instead opt for a language that looks like
-this:
+Ou imagine que você está construindo um robô ((dinossauro)) gigante e precisa programar seu ((comportamento)). Pode ser que JavaScript não seja a forma mais efetiva para fazer isso. Como alternativa, talvez você opte por uma linguagem que se pareça com isso:
 
 ```{lang: null}
 behavior walk
@@ -682,23 +499,15 @@ behavior attack
 
 {{index expressivity}}
 
-This is what is usually called a _((domain-specific language))_, a
-language tailored to express a narrow domain of knowledge. Such a
-language can be more expressive than a general-purpose language
-because it is designed to describe exactly the things that need to be
-described in its domain, and nothing else.
+Isto é o que geralmente é chamado de uma _((linguagem de domínio específica))_, uma linguagem adaptada para expressar um domínio restrito de conhecimento. Essa linguagem pode ser mais expressiva do que uma linguagem de uso geral, porque foi projetada para descrever exatamente as coisas que precisam ser descritas em seu domínio e nada mais.
 
-## Exercises
+## Exercícios
 
 ### Arrays
 
 {{index "Egg language", "arrays in egg (exercise)", [array, "in Egg"]}}
 
-Add support for arrays to Egg by adding the following three
-functions to the top scope: `array(...values)` to construct an array
-containing the argument values, `length(array)` to get an array's
-length, and `element(array, n)` to fetch the n^th^ element from an
-array.
+Adicione suporte para _arrays_ em _Egg_ adicionando as seguintes três funções ao topo do escopo: `array(...values)` para construir um _array_ contendo os valores passados como argumento, `length(array)` para pegar o tamanho do _array_, e `element(array, n)` para capturar o enésimo elemento do _array_.
 
 {{if interactive
 
@@ -730,14 +539,11 @@ if}}
 
 {{index "arrays in egg (exercise)"}}
 
-The easiest way to do this is to represent Egg arrays with JavaScript
-arrays.
+A maneira mais fácil de fazer isso é associar _arrays_ em Egg com os _arrays_ em JavaScript.
 
 {{index "slice method"}}
 
-The values added to the top scope must be functions. By using a rest
-argument (with triple-dot notation), the definition of `array` can be
-_very_ simple.
+Os valores adicionados ao topo do escopo devem ser funções. Usando um _rest argument_ (notação de três pontos), a definição de _array_ pode ser _muito_ simples.
 
 hint}}
 
@@ -745,15 +551,9 @@ hint}}
 
 {{index closure, [function, scope], "closure in egg (exercise)"}}
 
-The way we have defined `fun` allows functions in Egg to reference
-the surrounding scope, allowing the function's body to use local
-values that were visible at the time the function was defined, just
-like JavaScript functions do.
+A maneira como definimos `fun` permite que as funções em _Egg_ façam referência ao escopo ao redor delas, permitindo que o corpo da função use valores locais visíveis no momento em que a função foi definida, assim como as funções JavaScript.
 
-The following program illustrates this: function `f` returns a
-function that adds its argument to `f`'s argument, meaning that it
-needs access to the local ((scope)) inside `f` to be able to use
-binding `a`.
+O programa a seguir ilustra isso: a função `f` retorna uma função que adiciona seu argumento ao argumento de `f`, o que significa que ela precisa acessar o ((escopo)) local dentro de `f` para ser capaz de usar a variável `a`.
 
 ```
 run(`
@@ -763,44 +563,29 @@ do(define(f, fun(a, fun(b, +(a, b)))),
 // → 9
 ```
 
-Go back to the definition of the `fun` form and explain which
-mechanism causes this to work.
+Volte para a definição de `fun` e explique qual mecanismo faz com que isso funcione.
 
 {{hint
 
 {{index closure, "closure in egg (exercise)"}}
 
-Again, we are riding along on a JavaScript mechanism to get the
-equivalent feature in Egg. Special forms are passed the local scope in
-which they are evaluated so that they can evaluate their subforms in
-that scope. The function returned by `fun` has access to the `scope`
-argument given to its enclosing function and uses that to create the
-function's local ((scope)) when it is called.
+Mais uma vez, estamos usando um mecanismo em JavaScript para obter o mesmo recurso em _Egg_. Formas especiais recebem o escopo local na qual são avaliadas, para que possam avaliar suas sub-formas nesse escopo. A função retornada por `fun` tem acesso ao argumento de `escopo` fornecido à função que a envolve e o utiliza para criar o ((escopo)) local de sua função quando esta é chamada.
 
 {{index compilation}}
 
-This means that the ((prototype)) of the local scope will be the scope
-in which the function was created, which makes it possible to access
-bindings in that scope from the function. This is all there is to
-implementing closure (though to compile it in a way that is actually
-efficient, you'd need to do some more work).
+Isso significa que o ((protótipo)) do escopo local será o escopo em que a função foi criada, o que torna possível acessar as variáveis nesse escopo a partir da função. Isso é tudo o que há para implementar um _clojure_ (embora, para compilá-lo de uma maneira que seja realmente eficiente, você precisará trabalhar mais).
 
 hint}}
 
-### Comments
+### Comentários
 
 {{index "hash character", "Egg language", "comments in egg (exercise)"}}
 
-It would be nice if we could write ((comment))s in Egg. For example,
-whenever we find a hash sign (`#`), we could treat the rest of the
-line as a comment and ignore it, similar to `//` in JavaScript.
+Seria interessante se pudéssemos escrever ((comentário))s em _Egg_. Por exemplo, se encontrássemos um símbolo _hash_ (`#`), nós poderíamos tratar o resto da linha como um comentário e ignorá-lo, similar ao `//` do JavaScript.
 
 {{index "skipSpace function"}}
 
-We do not have to make any big changes to the parser to support this.
-We can simply change `skipSpace` to skip comments as if they are
-((whitespace)) so that all the points where `skipSpace` is called will
-now also skip comments. Make this change.
+Nós não temos que fazer nenhuma grande mudança para o analisador suportar isso. Nós podemos simplesmente mudar `skipSpace` para pular comentários como se fossem ((espaços em branco)), para que todos os locais em que `skipSpace` é chamado, também pule comentários agora. Faça essa mudança.
 
 {{if interactive
 
@@ -826,47 +611,29 @@ if}}
 
 {{index "comments in egg (exercise)", [whitespace, syntax]}}
 
-Make sure your solution handles multiple comments in a row, with
-potentially whitespace between or after them.
+Verifique se a sua solução lida com vários comentários seguidos, com potencial espaço em branco entre ou depois deles.
 
-A ((regular expression)) is probably the easiest way to solve this.
-Write something that matches "whitespace or a comment, zero or more
-times". Use the `exec` or `match` method and look at the length of the
-first element in the returned array (the whole match) to find out how
-many characters to slice off.
+Uma expressão regular é provavelmente a forma mais fácil de solucionar isso. Escreva algo que encontre "espaços em branco ou um comentário, zero ou mais vezes". Use o método `exec` ou `match` e observe o tamanho do primeiro elemento no _array_ retornado (a correspondência inteira) para descobrir quantos caracteres serão removidos.
 
 hint}}
 
-### Fixing scope
+### Corrigindo escopo
 
 {{index [binding, definition], assignment, "fixing scope (exercise)"}}
 
-Currently, the only way to assign a binding a value is `define`.
-This construct acts as a way both to define new bindings and to give
-existing ones a new value.
+Atualmente, a única forma de atribuir à uma variável um valor é com `define`. Esta construção age como uma forma de, ao mesmo tempo, definir novas variáveis e dar a elas novos valores existentes.
 
 {{index "local binding"}}
 
-This ((ambiguity)) causes a problem. When you try to give a nonlocal
-binding a new value, you will end up defining a local one with the
-same name instead. Some languages work like this by design, but I've
-always found it an awkward way to handle ((scope)).
+Esta ((ambiguidade)) causa um problema. Ao tentar atribuir um valor novo a uma variável não local, você acabará definindo um local com o mesmo nome. Algumas linguagens funcionam assim por design, mas sempre achei uma forma estranha de lidar com ((escopo)).
 
 {{index "ReferenceError type"}}
 
-Add a special form `set`, similar to `define`, which gives a binding a
-new value, updating the binding in an outer scope if it doesn't
-already exist in the inner scope. If the binding is not defined at
-all, throw a `ReferenceError` (another standard error type).
+Adicione uma forma especial `set`, similar ao `define`, que dê a uma variável um novo valor, atualizando a variável no escopo externo se ela não existir no escopo interno. Se a variável não estiver definida, dispare um `ReferenceError` (outro tipo de erro padrão).
 
 {{index "hasOwnProperty method", prototype, "getPrototypeOf function"}}
 
-The technique of representing scopes as simple objects, which has made
-things convenient so far, will get in your way a little at this point.
-You might want to use the `Object.getPrototypeOf` function, which
-returns the prototype of an object. Also remember that scopes do not
-derive from `Object.prototype`, so if you want to call
-`hasOwnProperty` on them, you have to use this clumsy expression:
+A técnica de representar os escopos como objetos simples, o que tornou as coisas convenientes até agora, interferirá um pouco nesse ponto. Você pode usar a função `Object.getPrototypeOf`, que retorna o protótipo de um objeto. Lembre-se também que escopos não derivam de `Object.prototype`, então se você quiser chamar `hasOwnProperty` neles, você terá que usar esta expressão tosca:
 
 ```{test: no}
 Object.prototype.hasOwnProperty.call(scope, name);
@@ -895,17 +662,10 @@ if}}
 
 {{index [binding, "compilation of"], assignment, "getPrototypeOf function", "hasOwnProperty method", "fixing scope (exercise)"}}
 
-You will have to loop through one ((scope)) at a time, using
-`Object.getPrototypeOf` to go to the next outer scope. For each scope,
-use `hasOwnProperty` to find out whether the binding, indicated by the
-`name` property of the first argument to `set`, exists in that scope.
-If it does, set it to the result of evaluating the second argument to
-`set` and then return that value.
+Você terá que iterar um ((escopo)) por vez, usando `Object.getPrototypeOf` para ir até o escopo externo. Para cada escopo, use `hasOwnProperty` para descobrir se a variável, indicado pela propriedade `name` do primeiro argumento de `set`, existe naquele escopo. Se existir, insira-o como o resultado da avaliação do segundo argumento de `set` e, em seguida, retorne esse valor.
 
 {{index "global scope", "run-time error"}}
 
-If the outermost scope is reached (`Object.getPrototypeOf` returns
-null) and we haven't found the binding yet, it doesn't exist, and an
-error should be thrown.
+Se o escopo mais externo for atingido (`Object.getPrototypeOf` retorna nulo) e ainda não encontramos a variável, então ela não existe, e um erro deve ser disparado.
 
 hint}}

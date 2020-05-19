@@ -41,12 +41,12 @@ Isso nos permite criar expressões que descrevem cálculos arbitráriamente comp
 
 {{index statement, semicolon, program}}
 
-Se uma expressão corresponde à um fragmento de expressãot, uma _declaração_ JavaScript
+Se uma expressão corresponde à um fragmento de expressão, uma _declaração_ JavaScript
 corresponde à uma expressão completa. Um programa é uma lista de declarações.
 
 {{index [syntax, statement]}}
 
-A declaração mais simples é uma expressão com um ponto-e-vírgula após ela. Isso é um programa:
+A declaração mais simples é uma expressão com um ponto e vírgula após ela. Isso é um programa:
 
 ```
 1;
@@ -64,11 +64,11 @@ Isso não deixa nenhuma impressão no mundo. Quando você executar esse programa
 
 {{index "programming style", "automatic semicolon insertion", semicolon}}
 
-Em alguns casos, JavaScript te permite omitir o ponto-e-vírgula ao final de uma declaração. 
+Em alguns casos, JavaScript te permite omitir o ponto e vírgula ao final de uma declaração. 
 Em outros casos, ele tem que estar ali, ou a próxima ((linha)) será tratada como parte da mesma declaração. 
-As regras para quando for seguro omití-lo seão de alguma forma complexas e passíveis de erro. 
-Então, nesse livro, toda declaração que necessitar de um pont-e-vírgula sempre receberá um. 
-Eu recomento você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto-e-vírgula.
+As regras para quando for seguro omití-lo são de alguma forma complexas e passíveis de erro. 
+Então, nesse livro, toda declaração que necessitar de um ponto e vírgula sempre receberá um. 
+Eu recomento você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto e vírgula.
 
 ## Ligações/Variáveis
 
@@ -93,9 +93,9 @@ uma ligação. É seguida pelo nome da ligação e, se quisermos
 imediatamente definir um valor, por um operador `=` e uma expressão.
 
 A declaração anterior cria uma ligação chamada `caught` e a usa para
-capturar o numero que é produzido pela multiplicação 5 por 5.
+capturar o número que é produzido pela multiplicação 5 por 5.
 
-Após uma ligação ser definira, seu nome pode ser usado como uma
+Após uma ligação ser definida, seu nome pode ser usado como uma
 ((expressão)). O valor de tal expressão é o valor que a ligação atualmente mantém
 Aqui está um exemplo:
 
@@ -123,13 +123,13 @@ console.log(mood);
 
 {{index [binding, "model of"], "tentacle (analogy)"}}
 
-Você deveria imaginar ligações como tentáculos, invés de caixas.
-Elas não _contém_ valores; elas _pegam_ eles—duas ligações podem se referir ao
+Você deveria imaginar ligações como tentáculos, ao invés de caixas.
+Elas não _contêm_ valores; elas _pegam_ eles—duas ligações podem se referir ao
 mesmo valor. Um programa pode acessar apenas os valores que ainda possui referência. 
 Quando você necessita lembrar de algo, você produz um tentáculo para se agarrar a isso
 ou você reatribui um de seus tentáculos existentes à isso.
 
-Vamos observar para um outro exemplo. Para se lembrar o numero de dólares que
+Vamos observar para um outro exemplo. Para se lembrar o número de dólares que
 Luigi ainda deve à você, você cria uma ligação. E então ele te paga
 $35, você atribui à essa ligação o novo valor.
 
@@ -148,8 +148,8 @@ valor de uma ligação vazia, você irá receber o valor `undefined`.
 
 {{index "let keyword"}}
 
-Uma única declaração pode definir multiplas ligações. A
-definição de ser separada por vígulas.
+Uma única declaração pode definir múltiplas ligações. A
+definição de ser separada por vírgulas.
 
 ```
 let one = 1, two = 2;

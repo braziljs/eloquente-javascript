@@ -546,25 +546,25 @@ console.log(yourName);
 Esse programa irá forçar você a inserir um nome. Irá perguntar novamente e
 novamente, até receber algo que não seja uma _string_ vazia. Aplicando o
 operador `!` irá converter um valor para o tipo Booleano antes de negá-lo, e
-todas as string exceto `""` é convertida para `true`. Isso significa que o loop
+todas as _strings_ exceto `""` são convertidas para `true`. Isso significa que o _loop_
 continua rodando até você fornecer um nome não-vazio.
 
-## Identação do código
+## Indentação do código
 
 {{index [code, "structure of"], [whitespace, indentation], "programming style"}}
 
-Nos exemplos, eu tenho adicionado espaços à frente das declarações isso
-faz parte de uma declaração ainda maior. Esses espaços não são obrigatórios-o computador
+Nos exemplos, eu tenho adicionado espaços na frente das declarações que
+fazem parte de uma declaração ainda maior. Esses espaços não são obrigatórios-o computador
 irá aceitar muito bem o programa sem eles. De fato, mesmo as quebra de ((linhas))
 nos programas são opcionais. Você poderia escrever um programa como
 uma longa e única linha se você desejar.
 
-O papel dessa ((identação)) dentro dos ((blocos)) é fazer a estrutura
+O papel dessa ((indentação)) dentro dos ((blocos)) é fazer a estrutura
 do código se destacar. No código onde novos blocos são abertos dentro de outros blocos,
 pode se tonar difícil de perceber onde um bloco termina e o outro começa.
-Com a identação apropriada, a forma visual de um programa corresponde à forma dos blocos dentro dele.
-Eu gosto de usar dois espaços para cada abertura bloco aberto, mas gostos diferem-algumas pessoas usam
-quatro espaços, e algumas usam ((caracter tab)). O mais importante é que cada novo bloco adicione
+Com a indentação apropriada, a forma visual de um programa corresponde à forma dos blocos dentro dele.
+Eu gosto de usar dois espaços para cada bloco aberto, mas gostos diferem-algumas pessoas usam
+quatro espaços, e algumas usam ((caractere)). O mais importante é que cada novo bloco adicione
 a mesma quantidade de espaço.
 
 ```
@@ -577,21 +577,21 @@ if (false != true) {
 ```
 
 A maior parte dos programas ((editores)) de código[ (inclusive o usado nesse livro)]{if
-interactive} vai ajudar identando automaticamente as novas linhas com o espaçamento apropriado.
+interactive} vai ajudar indentando automaticamente as novas linhas com o espaçamento apropriado.
 
 ## For Loops
 
 {{index [syntax, statement], "while loop", "counter variable"}}
 
-Muitos loops seguem o padrão mostrado nos exemplos do `while`. Primeiro
+Muitos _loops_ seguem o padrão mostrado nos exemplos do `while`. Primeiro
 uma ligação _"counter"_ é criada para rastrear o progresso do loop. Então
 vem o loop `while`, normalmente com uma expressão de teste que checa se o _counter_
-atingiu o valor final. No fim do corpo do loop, o _counter_ é atualizado para rastrear o progresso.
+atingiu o valor final. No fim do corpo do _loop_, o _counter_ é atualizado para rastrear o progresso.
 
 {{index "for loop", loop}}
 
 Pelo fato desse padrão ser tão comum, JavaScript e linguagens similares
-fornecem uma forma mais compreensível e ligeiramente mais curta, o loop `for`.
+fornecem uma forma mais compreensível e ligeiramente mais curta, o _loop_ `for`.
 
 ```
 for (let number = 0; number <= 12; number = number + 2) {
@@ -606,12 +606,12 @@ for (let number = 0; number <= 12; number = number + 2) {
 
 Esse programa é exatamente equivalente ao exemplo [anterior](program_structure#loops) exibindo-número-ímpar.
 A única alteração é que as ((declarações)) que estão relacionadas ao
-"estado" do loop estão agrupados juntos, após o `for`.
+"estado" do _loop_ estão agrupadas juntas, após o `for`.
 
 {{index [binding, as state], [parentheses, statement]}}
 
-Os parênteses após a palavra-chave `for` deve conter dois
-((ponto-e-vírgula)). A parte antes do primeiro ponto-e-vírgula _inicializa_ o,
+Os parênteses após a palavra-chave `for` devem conter dois
+((ponto e vírgula)). A parte antes do primeiro ponto e vírgula _inicializa_ o _loop_,
 normalmente definindo uma ligação. A segunda parte é a
 ((expressão)) que _checa_ se o loop deve continuar. A parte final
 _atualiza_ o estado do loop após cada iteração. Na maioria dos casos,
@@ -619,7 +619,7 @@ isso é mais curto e claro que a contrução `while`.
 
 {{index exponentiation}}
 
-Esse é o código que computa 2^10^ usando `for` ao invés de `while`::
+Esse é o código que computa 2^10^ usando `for` ao invés de `while`:
 
 ```{test: wrap}
 let result = 1;
@@ -630,16 +630,16 @@ console.log(result);
 // → 1024
 ```
 
-## Saindo de um Loop
+## Saindo de um _Loop_
 
 {{index [loop, "termination of"], "break keyword"}}
 
-Ter uma condição do loop produzindo `false` não é a única forma
+Ter uma condição do _loop_ produzindo `false` não é a única forma
 que um loop pode sinalizar. Existe uma declaração especial chamada `break` que possui
 o efeito de imediatamente saltar para fora do loop.
 
 Esse programa ilustra a declaração `break`. Ela procura o primeiro número que é
-simultaneamente maior ou igual à 20 e divisivel por 7.
+simultaneamente maior ou igual a 20 e divisível por 7.
 
 ```
 for (let current = 20; ; current = current + 1) {
@@ -654,23 +654,23 @@ for (let current = 20; ; current = current + 1) {
 {{index "remainder operator", "% operator"}}
 
 Usando o operador resto (`%`) é uma forma fácil de testar se o número é 
-divisivel por outro número. Se for, o resto da divisão é zero.
+divisível por outro número. Se for, o resto da divisão é zero.
 
 {{index "for loop"}}
 
-A contrução `for` no exemplo não possui a parte que checa
+A construção `for` no exemplo não possui a parte que checa
 pelo fim do loop. Isso significa que o loop nunca irá parar
 a menos que a declaração interna `break` seja executada.
 
-Se você remover a declaração `break` ou você acidentamente escreveu
+Se você remover a declaração `break` ou você acidentalmente escreveu
 uma condição final que sempre produz `true`, seu programa ficará
 preso em um _((loop infinito))_. Um programa preso em um loop infinito
 nunca terminará a execução, o que normalmente é uma coisa ruim.
 
 {{if interactive
 
-Se você crear um loop infinito em um dos exemplos nessas páginas,
-você normalmente será questionado se quer finalizar o script após alguns segundos.
+Se você criar um _loop_ infinito em um dos exemplos nessas páginas,
+você normalmente será questionado se quer finalizar o _script_ após alguns segundos.
 Se isso falhar, você terá que fechar a aba que você está trabalhando,
 ou em alguns navegadores fechar todo o navegador, para recomeçar.
 
@@ -680,27 +680,25 @@ if}}
 
 A palavra-chave `continue` é similar ao `break`, ao influenciar o progresso
 de um loop. Quando `continue` é encontrado no corpo de um loop,
-comanda um salto para fora do corpo e continua com a próxima iteração do loop.
-control jumps out of the body and continues with the loop's next
-iteration.
+comanda um salto para fora do corpo e continua com a próxima iteração do _loop_.
 
 ## Atualizando ligações resumidamente
 
 {{index assignment, "+= operator", "-= operator", "/= operator", "*= operator", [state, in binding], "side effect"}}
 
-Especialmente quando ao usar um loop, o programa com frequência necessita "atualizar" a ligação
+Especialmente quando usar um _loop_, o programa com frequência necessita "atualizar" a ligação
 para receber o valor baseado no valor anterior da ligação.
 
 ```{test: no}
 counter = counter + 1;
 ```
-JavaScript fornece um atalho para isso
+JavaScript fornece um atalho para isso.
 
 ```{test: no}
 counter += 1;
 ```
 Atalhos similares funcionam para muitos outros operadores, assim como `result *= 2`
-para dobrar `result` ou `conter -= 1` para contar regressivamente.
+para dobrar `result` ou `counter -= 1` para contar regressivamente.
 
 Isso nos permite abreviar um pouco mais nossos exemplos de contagem.
 
@@ -715,11 +713,11 @@ for (let number = 0; number <= 12; number += 2) {
 Para `counter += 1` e `counter -= 1`, existe ainda uma forma
 equivalente, mais curta: `counter++` e `counter--`.
 
-## Enviando um valor com *switch*
+## Enviando um valor com _switch_
 
 {{index [syntax, statement], "conditional execution", dispatch, ["if keyword", chaining]}}
 
-Não é incomum um código se parece com isso:
+Não é incomum um código se parecer com isso:
 
 ```{test: no}
 if (x == "value1") action1();
@@ -730,8 +728,8 @@ else defaultAction();
 
 {{index "colon character", "switch keyword"}}
 
-Exsite uma construção chamada `switch` que tem a inteção de expressar
-o envio de uma forma mai direta. Infelizmente, a sintaxe que o JavaScritp usa para isso
+Existe uma construção chamada `switch` que tem a intenção de expressar
+o envio de uma forma mais direta. Infelizmente, a sintaxe que o JavaScript usa para isso
 (que é herdada das linhas de linguagem de programação C/Java)
 é de alguma forma estranha -uma corrente de declarações `if` talvez 
 seria melhor apresentável. Aqui está um exemplo:
@@ -761,15 +759,15 @@ mesmo através de outros rótulos, até encontrar uma declaração `break`. Em a
 assim como o caso `sunny` no exemplo, ele pode ser usado para compartilhar algum código entre _"cases"_
 (ele retorna _"going outside"_ para ambos os climas _"sunny"_ e _"cloudy"_).
 Mas cuidado-é fácil se esquecer de tal `break`, o que irá fazer o programa executar código que você
-não deseja que exetcute.
+não deseja que execute.
 
 ## Capitalização
 
 {{index capitalization, [binding, naming], [whitespace, syntax]}}
 
-Nomes de ligações não podem conter espaços, mesmo assim usar multiplas palavras
+Nomes de ligações não podem conter espaços, mesmo assim usar múltiplas palavras
 é um facilitador para descrever claramente o que as ligações representam.
-Isso é claramente uma decisão sua nomear uma ligação com várias palarvas:
+Isso é claramente uma decisão sua nomear uma ligação com várias palavras:
 
 ```{lang: null}
 fuzzylittleturtle
@@ -781,7 +779,7 @@ fuzzyLittleTurtle
 {{index "camel case", "programming style", "underscore character"}}
 
 O primeiro estilo pode tornar díficil de ler. Eu particularmente 
-prefiro o visual dos underlines, embora esse estilo seja penoso para digitat.
+prefiro o visual dos _underlines_, embora esse estilo seja penoso para digitar.
 As funções ((padrões)) JavaScript, e a maior parte dos programadores JavaScript,
 seguem o último estilo-eles 
 underscores, though that style is a little painful to type. The

@@ -807,8 +807,8 @@ desejar incluir alguns pensamentos relacionados como parte de seu programa.
 
 Um comentário é um pedaço de texto que faz parte do programa mas é
 completamente ignorado pelo computador. JavaScript possui duas formas de escrever
-comentários. Escrever um comentário se única linha, você pode usar dois carácteres de barra
-(`//`) e então o texto de comentário após elas.
+comentários. Para escrever um comentário de linha única, você pode usar dois carácteres de barra
+(`//`) e, então, o texto de comentário após elas.
 
 ```{test: no}
 let accountBalance = calculateBalance(account);
@@ -842,15 +842,15 @@ const myNumber = 11213;
 
 Você sabe agora que um programa é construido por declarações, as quais
 algumas vezes possuem mais declarações. Declarações tendem a conter
-expressões, os quais podem ser contruidos de expressões menores.
+expressões, as quais podem ser costruídas de expressões menores.
 
-Colocar declarações após outra declaração the dá um programa que é
-executado do topo para baixo. Você pode introduzir alterações no clontrole de fluxo
-ao utilizar declarações condicionais (`if`, `else`, e `switch`) e loops (`while`, `do`, e `for`)
+Colocar declarações após outra declaração te dá um programa que é
+executado do topo para baixo. Você pode introduzir alterações no controle de fluxo
+ao utilizar declarações condicionais (`if`, `else`, e `switch`) e _loops_ (`while`, `do`, e `for`)
 
-Ligações podem ser usadas para arquivar pedaços de dados sob nome, e elas são
+Ligações podem ser usadas para arquivar pedaços de dados em um nome, e elas são
 úteis para rastrear estados em seu programa. O ambiente é o conjunto de ligações
-que são definidas. Sistemas JavaScript sempre coloca um número de ligações padrões úteis
+que são definidas. Sistemas JavaScript sempre colocam um número de ligações padrões úteis
 em seu ambiente.
 
 Funções são valores especiais que encapsulam um pedaço de programa. Você
@@ -869,11 +869,11 @@ Se você tiver problemas, considere a leitura das dicas
 [após o exercício]{if interactive}[no [fim do livro](dicas)]{if book}. 
 Soluções completas para os exercícios não estão inclusas nesse livro, mas podem ser encontradas
 online no [_https://eloquentjavascript.net/code_](https://eloquentjavascript.net/code#2).
-Se você deseja aprender algo dos exercícios, Eu recomendo consultar as soluções
+Se você deseja aprender algo dos exercícios, eu recomendo consultar as soluções
 apenas após ter resolvido o exercício, ou pelo menos após tê-lo atacado 
 com força e por tempo suficiente a ponto de ter uma leve dor de cabeça.
 
-### Triângulo com Loop
+### Triângulo com _Loop_
 
 {{index "triangle (exercise)"}}
 
@@ -891,7 +891,7 @@ triângulo a seguir:
 ```
 
 {{index [string, length]}}
-Pode ser útil saber que você pode descobrir o comprimento da string ao escrever
+Pode ser útil saber que você pode descobrir o comprimento da _string_ ao escrever
 `.length` após ela.
 
 ```
@@ -902,7 +902,7 @@ console.log(abc.length);
 
 {{if interactive
 
-A maioria dos exercícios contém um pedaço de código que você pode modificar para solucionar
+A maioria dos exercícios contêm um pedaço de código que você pode modificar para solucionar
 o exercício. Lembre-se que você pode clicar os blocos e código e editá-los.
 
 ```

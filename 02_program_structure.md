@@ -270,8 +270,8 @@ Se isso não funcionar, procure através dos menus por um item chamado Ferrament
 
 {{if interactive
 
-Quando executando os exemplos (ou seu próprio código) nas páginas desse livro,
-a saída  `console.log` será mostrada após o exemplooutput will be shown after the example, ou invés do console
+Quando executar os exemplos (ou seu próprio código) nas páginas desse livro,
+a saída  `console.log` será mostrada após o exemplo, ou invés do console
 JavaScript do navegador.
 
 ```
@@ -286,7 +286,7 @@ if}}
 
 Embora nomes de ligações não possam conter ((ponto-final))is,
 `console.log` possui um. Isso porque `console.log` não é uma simples ligação. 
-Ela é na verdade uma expressão que recupera a propriedade `log` do valor guardado pela ligação `console`.
+Ela é, na verdade, uma expressão que recupera a propriedade `log` do valor guardado pela ligação `console`.
 Nós vamos descobrir exatamente o que isso significa no [Chapter ?](data#properties).
 
 {{id return_values}}
@@ -295,9 +295,9 @@ Nós vamos descobrir exatamente o que isso significa no [Chapter ?](data#propert
 {{index [comparison, "of numbers"], "return value", "Math.max function", maximum}}
 
 Exibir uma caixa de diálogo ou escever um texto na tela é um
-_((efeito colateral))_. Muitas funções são uteis por causa dos efeitos colaterais
+_((efeito colateral))_. Muitas funções são úteis por causa dos efeitos colaterais
 que elas produzem. Funções também podem produzir valores, nesse caso elas
-não necessitam de um efeito colateral para serem uteis. Por exemplo, a
+não necessitam de um efeito colateral para serem úteis. Por exemplo, a
 função `Math.max` recebe qualquer quantidade de argumentos numéricos e retorna
 o maior.
 
@@ -372,7 +372,7 @@ if (!Number.isNaN(theNumber)) {
 }
 ```
 
-Com essa modificação, se você inserir "parrot", nenhuma saída é exibida.
+Com essa modificação, se você inserir _"parrot"_, nenhuma saída é exibida.
 
 {{index [parentheses, statement]}}
 
@@ -386,7 +386,7 @@ A função `Number.isNaN` é uma função padrão do JavaScript que
 retorna `true` apenas se o argumento que é dado é `NaN`. A função `Number`
 retorna `NaN` quando você passa para ela uma _string_ que não representa um número válido.
 Portanto, a condição é traduzida para
-"a menos que `theNumber` seja _not-a-number_, faça isso".
+"a menos que `theNumber` não seja um número, faça isso".
 
 {{index grouping, "{} (block)", [braces, "block"]}}
 
@@ -395,7 +395,7 @@ nesse exemplo. As chaves podem ser usadas para agrupar qualquer quantidade de de
 em uma única declaração, chamado de _((bloco))_. Você poderia também
 ter omitido elas nesse caso, desde que elas possuíssem apenas uma declaração,
 mas para evitarmos termos que pensar sobre se são necessárias, a maioria dos programadores JavaScript usam elas em todos as
-declarações em bloco como essa. Nós iremos seguir essa conveção nesse livro,
+declarações em bloco como essa. Nós iremos seguir essa convenção nesse livro,
 exceto pela ocasional declaração de linha única.
 
 ```
@@ -406,8 +406,8 @@ if (1 + 1 == 2) console.log("It's true");
 {{index "else keyword"}}
 
 Você frequentemente não vai querer um código que apenas execute quando uma condição
-retornar verdadeira, mas também um código que cuida do outro caso. Esse caminho alternattivo
-é representado pela segunta flecha do diagrama. Você pode usar a palava-chave `else`, junto com `if`, para criar dois caminhos
+retornar verdadeira, mas também um código que cuida do outro caso. Esse caminho alternativo
+é representado pela segunda flecha do diagrama. Você pode usar a palava-chave `else`, junto com `if`, para criar dois caminhos
 de execução, separados, alternativos.
 
 ```{test: wrap}
@@ -422,7 +422,7 @@ if (!Number.isNaN(theNumber)) {
 
 {{index ["if keyword", chaining]}}
 
-Se você possui mais que dois caminhos para escolher, você pode "encadear" multiplos pares de`if`/`else` juntos.
+Se você possui mais que dois caminhos para escolher, você pode "encadear" múltiplos pares de`if`/`else` juntos.
 Segue um exemplo:
 
 ```
@@ -439,7 +439,7 @@ if (num < 10) {
 O programa vai primeiro checar se `num` é menos que 10. Se for,
 ele irá escolher essa ramificação, mostre `"Small"`, e pronto. Se não for,
 ele irá pegar a ramificação do `else`, que contém um segundo `if`. Se a segunda
-condição (`< 100`) for satisfeita, isso significa que o número esté entre 10 e 100, e `Medium` é exibido.
+condição (`< 100`) for satisfeita, isso significa que o número está entre 10 e 100, e `Medium` é exibido.
 Se não, a segunda e última ramificação `else` é escolhida.
 
 O esquema para esse programa se parece como algo assim:
@@ -465,16 +465,16 @@ console.log(12);
 {{index ["control flow", loop]}}
 
 Ela funciona, mas a ideia de escrever um programa é fazer algo
-_menos_ trabalhoso, não mais. Se nós precisássemos todos os números ímpares menores que 1,000,
-essa abordagem seria impraticável. O que precisamos é uma forma de executar um pedaçõ de código
-multiplas vezes. Essa forma de controle de fluxo é chamada de _((loop))_.
+_menos_ trabalhoso, não mais. Se nós precisássemos de todos os números ímpares menores que 1,000,
+essa abordagem seria impraticável. O que precisamos é uma forma de executar um pedaço de código
+múltiplas vezes. Essa forma de controle de fluxo é chamada de _((loop))_.
 
 {{figure {url: "img/controlflow-loop.svg", alt: "Controle de fluxo em loop",width: "4cm"}}}
 
 {{index [syntax, statement], "counter variable"}}
 
-O controle de fluxo em loop nos permite retornar à algum ponto no programa
-onde estávamos antes e repití-lo com nosso atual estado do programa. Se
+O controle de fluxo em _loop_ nos permite retornar à algum ponto no programa
+onde estávamos antes e repeti-lo com nosso atual estado do programa. Se
 nós combinarmos isso com uma ligação que conta, poderíamos fazer algo assim:
 
 ```
@@ -490,16 +490,16 @@ while (number <= 12) {
 
 {{index "while loop", Boolean, [parentheses, statement]}}
 
-Uma ((declaração)) começando com a palavra-chave `while` cria um loop. A
+Uma ((declaração)) começando com a palavra-chave `while` cria um _loop_. A
 palavra `while` é seguida por uma ((expressão)) em parênteses e
-então uma declaração, muito parecido com `if`. O loop continua acessando aquela
-declaração enquanto a expreção produzir um valor que retorna `true`
+então uma declaração, muito parecido com `if`. O _loop_ continua acessando aquela
+declaração enquanto a expressão produzir um valor que retorna `true`
 quando convertido para Booleano.
 
 {{index [state, in binding], [binding, as state]}}
 
 A ligação `number` demonstra a forma como uma ((ligação)) pode rastrear o
-progresso do programa. Toda vez que o loop repetir, `number` recebe um
+progresso do programa. Toda vez que o _loop_ repetir, `number` recebe um
 valor que é 2 à mais que seu estado anterior. No início de toda repetição,
 é comparado o número 12 para decidir se o trabalho do programa está concluído.
 
@@ -507,8 +507,8 @@ valor que é 2 à mais que seu estado anterior. No início de toda repetição,
 
 Como um exemplo que atualmente faz algo útil, nós podemos agora escrever um
 programa que calcula e exibe o valor de 2^10^ (2 pela 10ª potência). 
-Nós usamos duas ligações: uma para rastrear o resulta e uma para contar
-com qual frequência nós temos que múltiplicar esse resultado por 2. O loop testa
+Nós usamos duas ligações: uma para rastrear o resultado e uma para contar
+com qual frequência nós temos que múltiplicar esse resultado por 2. O _loop_ testa
 se a segunda ligação já atingiu 19 e, se não, atualiza ambas ligações.
 
 ```
@@ -523,16 +523,15 @@ console.log(result);
 ```
 
 O contador poderia também ter iniciado em `1` e chegado por `<= 10`,
-mas por razões que se tornarão aparentes no
-but for reasons that will become apparent in [Chapter
-?](data#array_indexing), é uma boa idéoa se acostumar a contrar à partir do 0.
+mas por razões que se tornarão aparentes no [Chapter?](data#array_indexing), 
+é uma boa idéia se acostumar a contar a partir do 0.
 
 {{index "loop body", "do loop", ["control flow", loop]}}
 
-Um loop `do` é uma estrutura de controle similar ao loop `while`. Ele
-difere apenas em um ponto: umm loop `do` sempre executa seu corpo pelos menos
+Um _loop_ `do` é uma estrutura de controle similar ao loop `while`. Ele
+difere apenas em um ponto: um _loop_ `do` sempre executa seu corpo pelos menos
 uma vez, e começa testando se deveria parar apenas depois da primeira execução.
-Para refletir isso, o teste aparece após o corpo do loop.
+Para refletir isso, o teste aparece após o corpo do _loop_.
 
 ```
 let yourName;

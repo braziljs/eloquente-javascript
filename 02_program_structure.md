@@ -188,7 +188,7 @@ que dão nome para um valor para que você possa se referenciar a ele posteriorm
 Nomes de ligações podem ser qualquer palavra. Dígitos podem ser parte do nome da ligação
 —`catch22` é um nome válido, por exemplo— mas o nome não deve começar com um dígito.
 O nome de uma ligação pode incluir sinal de dólar (`$`) ou
-underlines (`_`) mas nenhuma outra pontuação ou carácter especial.
+_underlines_ (`_`) mas nenhuma outra pontuação ou caractere especial.
 
 {{index [syntax, identifier], "implements (reserved word)", "interface (reserved word)", "package (reserved word)", "private (reserved word)", "protected (reserved word)", "public (reserved word)", "static (reserved word)", "void operator", "yield (reserved word)", "enum (reserved word)", "reserved word", [binding, naming]}}
 
@@ -216,10 +216,10 @@ _unexpected syntax_, verifique se você está tentando definir uma palavra reser
 
 A coleção de ligações e seus valores que existem em um determinado momento
 é chamado de _((ambiente))_. Quando um programa inicia, esse ambiente
-néo é vazio. Ele sempre contém ligações que são parte da linguagem
+não é vazio. Ele sempre contém ligações que são parte da linguagem
 ((padrão)), e na marioria das vezes, ele também possui ligações que fornecem formas
 de interagir com o sistema que o cerca. Por exempo, em um navegador, existem funções para
-interagir com o website aaualmente carregado e para ler as entradas do ((mouse)) e ((teclado)).
+interagir com o website ataualmente carregado e para ler as entradas do ((mouse)) e ((teclado)).
 
 ## Funções
 
@@ -265,8 +265,7 @@ Nos exemplos, Eu usei `console.log` para saída de valores. A maioria dos sistem
 `console.log` que escreve seus argumentos para _algum_ dispositivo de saída de texto.
 Em navegadores, a saída repousa no ((console JavaScript)).
 Essa parte da interface dos navegadores é escondida por padrão,
-mas a maioria dos navegadores a exibem quando você pressiona F12 ou, em um Mac, 
-but most browsers open it when you press F12 or, on a Mac, [command]{keyname}-[option]{keyname}-I.
+mas a maioria dos navegadores a exibem quando você pressiona F12 ou, em um Mac, [command]{keyname}-[option]{keyname}-I.
 Se isso não funcionar, procure através dos menus por um item chamado Ferramentas de Desenvolvedor ou similar.
 
 {{if interactive

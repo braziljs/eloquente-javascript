@@ -781,10 +781,7 @@ fuzzyLittleTurtle
 O primeiro estilo pode tornar díficil de ler. Eu particularmente 
 prefiro o visual dos _underlines_, embora esse estilo seja penoso para digitar.
 As funções ((padrões)) JavaScript, e a maior parte dos programadores JavaScript,
-seguem o último estilo-eles 
-underscores, though that style is a little painful to type. The
-((standard)) JavaScript functions, and most JavaScript programmers,
-follow the bottom style—they escrevem com a primeira letra maiúscula todas as palavras
+seguem o último estilo-eles escrevem com a primeira letra maiúscula todas as palavras
 exceto a primeira.
 Não é dificil se acostumar com coisas pequenas como essa, e o código com estilos de nomes
 mistos podem se tornar duros de ser ler, então seguimos essa ((conveção)).
@@ -792,7 +789,7 @@ mistos podem se tornar duros de ser ler, então seguimos essa ((conveção)).
 {{index "Number function", constructor}}
 
 Em poucos casos, como a função `Number`, a primeira letra de uma ligação também é maiúscula.
-Isso é feito para marcar essa função como contrutora. O que é uma função construtora ficará mais claro no
+Isso é feito para marcar essa função como construtora. O que é uma função construtora ficará mais claro no
 [Capítulo ](object#constructors). Por enquanto, a coisa mais importante é não se incomodar
 com essa aparente falta de ((consistência)).
 

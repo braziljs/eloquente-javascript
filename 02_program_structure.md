@@ -903,7 +903,7 @@ console.log(abc.length);
 {{if interactive
 
 A maioria dos exercícios contêm um pedaço de código que você pode modificar para solucionar
-o exercício. Lembre-se que você pode clicar os blocos e código e editá-los.
+o exercício. Lembre-se que você pode clicar nos blocos de código e editá-los.
 
 ```
 // Your code here.
@@ -915,13 +915,12 @@ if}}
 {{index "triangle (exercise)"}}
 
 Você pode começar com um programa que imprima os números 1 à 7, que
-você pode derivar ao fazer umas poucas modificações ao 
-you can derive by making a few modifications to the [exemplo de impressão de números ímpares](program_structure#loops) 
+você pode derivar ao fazer umas poucas modificações ao [exemplo de impressão de números ímpares](program_structure#loops) 
 dado anteriormente no capítulo, onde o loop `for` foi introduzido.
 
-Agora considere a equivalência entre números e strings de caractéres de cerquilha.
+Agora considere a equivalência entre números e _strings_ de caracteres de cerquilha.
 Você pode ir de 1 à 2 ao adicionar ' (`+= 1`). Você pode ir de `"#"` para `"##"`
-ao adicionar um caracter (`+= "#"`). Desse modo, sua solução pode estar
+ao adicionar um caractere (`+= "#"`). Desse modo, sua solução pode estar
 próxima do programa de impressão de número.
 
 hint}}
@@ -939,7 +938,7 @@ para números que são divisíveis por ambos 3 e 5 (e continue imprimindo `"Fizz
 por apenas um deles).
 
 (Isso é na realidade uma ((questão de entrevista)) que eliminou uma porcentagem  
-significante de candidatos à programadores. Então se você resolvê-lo, seu valor no mercado de trabalho
+significante de candidatos à programadores. Então, se você resolvê-lo, seu valor no mercado de trabalho
 acabou de subir).
 
 {{if interactive
@@ -952,9 +951,9 @@ if}}
 
 {{index "FizzBuzz (exercise)", "remainder operator", "% operator"}}
 
-Exeminar os números é claramente um trabalho para um loop, e selecionar o que
+Examinar os números é claramente um trabalho para um loop, e selecionar o que
 imprimir é uma questão de execução condicional. Lembre-se do truque de usar o
-operador resto (`%`) para checar se um número é divisivel por outro (possui um resto de zero).
+operador resto (`%`) para checar se um número é divisível por outro (possui um resto de zero).
 
 Na primeira versão, existem três possíveis saídas para cada número,
 então você irá criar uma cadeia de `if`/`else if`/`else`.
@@ -1005,17 +1004,17 @@ if}}
 
 {{index "chess board (exercise)"}}
 
-Você pode construir a _string_ ao iniciando por uma vazia (`""`) e
-repetidamente adicionando characters. Um caracter _newline_ é escrito com `"\n"`.
+Você pode construir a _string_ iniciando por uma vazia (`""`) e
+repetidamente adicionar caracteres. Um caracter _newline_ é escrito com `"\n"`.
 
 {{index [nesting, "of loops"], [braces, "block"]}}
 
 Para trabalhar com duas ((dimensões)), você irá precisar de um ((loop)) dentro de um loop.
-Coloque chaves em volta do corpo de embos os loops para tornar fácil de identificar
-onde eles começam e terminam. Tente identar apropriadamente o corpo dos loops.
-A ordem dos loops deve seguir a order que nós contruimos a _string_ 
+Coloque chaves em volta do corpo de ambos os _loops_ para tornar fácil de identificar
+onde eles começam e terminam. Tente indentar apropriadamente o corpo dos loops.
+A ordem dos loops deve seguir a order que nós contruímos a _string_ 
 (linha por lina, esquerda para direita, de cima para baixo).
-Então o loop externo cuida das linhas, e o loop interno cuida dos caractéres da linha.
+Então o loop externo cuida das linhas, e o loop interno cuida dos caracteres da linha.
 
 {{index "counter variable", "remainder operator", "% operator"}}
 
@@ -1023,7 +1022,7 @@ Você irá precisar de duas ligações para rastrear seu progresso. Para saber s
 coloar um espaço ou uma cerquilha na posição dada, você poderia testar se a soma
 dos dois contadores é ímpar (`%2`).
 
-Terminando a linha ao adiconar um caracter _newline_ deve acontecer após a
+Terminando a linha ao adiconar um caractere _newline_ deve acontecer após a
 linha ter sido construida, então faça isso após o loop interno mas dentro do loop externo.
 
 hint}}

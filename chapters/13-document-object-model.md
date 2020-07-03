@@ -32,9 +32,9 @@ A variável global `document` nos dá acesso à esses objetos. Sua propriedade `
 
 ## Árvores
 
-Relembre-se da sintaxe das árvores do [Capítulo 11](11-pratica-linguagem-de-programacao.md) por um momento. A estrutura delas é incrivelmente similar a estrutura de um documento do navegador. Cada nó pode se referir a outros nós, "filhos", os quais podem ter, por sua vez, seus próprios "filhos". Esse formato é típico de estruturas aninhadas, nas quais os elementos podem conter subelementos que são similares à eles mesmos.
+Relembre-se da sintaxe das árvores do [Capítulo 11](11-pratica-linguagem-de-programacao.md) por um momento. A estrutura delas é incrivelmente similar a estrutura de um documento do navegador. Cada nó pode se referir a outros nós "filhos", os quais podem ter, por sua vez, seus próprios "filhos". Esse formato é típico de estruturas aninhadas, nas quais os elementos podem conter subelementos que são similares à eles mesmos.
 
-Nós chamamos uma estrutura de dados de uma *árvore* quando ela possui uma estrutura de galhos, sem ciclos (um nó não deve conter ele mesmo, direta ou indiretamente) e possui uma única, bem definida, raiz. No caso do DOM, document.documentElement representa a raiz.
+Nós chamamos uma estrutura de dados de uma *árvore* quando ela possui uma estrutura de galhos, sem ciclos (um nó não deve conter ele mesmo, direta ou indiretamente) e possui uma única, e bem definida raiz. No caso do DOM, document.documentElement representa a raiz.
 
 Árvores aparecem muito em Ciências da Computação. Além de representar estruturas recursivas como documentos HTML ou programas, elas também são comumente usadas para manter conjuntos ordenados de dados, pois elementos podem ser tipicamente encontrados ou inseridos de maneira mais eficiente em uma árvore ordenada do que em um conjunto (ou "array") plano ordenado.
 
@@ -42,7 +42,7 @@ Uma árvore típica possui diferentes tipos de nós. A árvore de sintaxe para a
 
 O mesmo vale para o DOM. Nós de elementos comuns, os quais representam tags HTML, determinam a estrutura do documento. Esses podem possuir nós filhos. Um exemplo de um desses nós é o `document.body`. Alguns desses nós filhos podem ser folhas, assim como fragmentos de texto ou comentários (os quais são escritos entre `<!--` e `-->` em HTML).
 
-Cada objeto que é um nó do DOM tem a propriedade nodeType, a qual contém um código numérico que identifica o tipo do nó. Elementos comuns têm valor 1, o qual também é definido como a propriedade constante `document.ELEMENT_NODE`. Nós de texto, representando um intervalo de texto no documento, possuem o valor 3 (document.TEXT_NODE). Comentários têm valor 8 (document.COMMENT_NODE).
+Cada objeto que é um nó do DOM tem a propriedade nodeType, a qual contém um código numérico que identifica o tipo do nó. Elementos comuns têm valor 1, o qual também é definido como a propriedade constante `document.ELEMENT_NODE`. Nós de texto representando um intervalo de texto no documento, possuem o valor 3 (document.TEXT_NODE). Comentários têm valor 8 (document.COMMENT_NODE).
 
 Sendo assim, outra maneira de visualizar a árvore do nosso documento é:
 
@@ -52,9 +52,9 @@ Na imagem acima, as folhas são os nós de texto e as setas indicam a relação 
 
 ## O Padrão
 
-Usar estranhos códigos numéricos para representar tipos de nós não é algo muito ao estilo JavaScript de se fazer. Mais tarde neste capítulo, veremos que outras partes da interface DOM também se sentem estranhas, *não petencentes*. A razão para isso é que o DOM não foi concebido apenas para uso com o JavaScript, ao invés disso, ele tenta definir uma interface com uma linguagem neutra, a qual pode ser usada por outros sistemas—não somente HTML, mas também XML, o qual é um formato genérico de dados com um sintaxe semelhante ao HTML.
+Usar estranhos códigos numéricos para representar tipos de nós não é algo muito ao estilo JavaScript de se fazer. Mais tarde neste capítulo, veremos que outras partes da interface DOM também se sentem estranhas, *não pertencentes*. A razão para isso é que o DOM não foi concebido apenas para uso com o JavaScript, ao invés disso, ele tenta definir uma interface com uma linguagem neutra, a qual pode ser usada por outros sistemas—não somente HTML, mas também XML, o qual é um formato genérico de dados com um sintaxe semelhante ao HTML.
 
-Padrões são, geralmente, úteis, mas nesse caso, a vantagem (consistência entre diferentes linguagens), não é tão convincente. Possuir uma interface que é corretamente integrada com a linguagem que você está usando vai fazer você economizar mais tempo do que uma interface familiar entre diferentes linguagens.
+Padrões são geralmente úteis, mas nesse caso, a vantagem (consistência entre diferentes linguagens), não é tão convincente. Possuir uma interface que é corretamente integrada com a linguagem que você está usando vai fazer você economizar mais tempo do que uma interface familiar entre diferentes linguagens.
 
 Como um exemplo dessa integração *pobre*, considere a propriedade `childNodes` que os nós de elementos DOM possuem. Essa propriedade carrega um objeto parecido com um array, com uma propriedade `length` e propriedades identificadas por números para acessar os nós filhos. Mas ele é uma instância do tipo `NodeList`, não um array real, logo ele não possui métodos como `slice` e `forEach`.
 
@@ -70,7 +70,7 @@ Os nós DOM contêm uma variedade de ligações para outros nós próximos. O di
 
 Ainda que o diagrama mostre apenas uma ligação de cada tipo, todo nó possui uma propriedade `parentNode` que aponta para o nó que o contém (seu nó pai). Dessa mesma maneira, todo nó de um elemento (nó do tipo 1) possui a propriedade `childNodes` que aponta para um objeto parecido com um array, o qual contém seus nós filhos.
 
-Em teoria, você pode se mover para qualquer lugar na árvore usando apenas essas ligações entre nós pais e nós filhos, porém JavaScript também te dá acesso à outras ligações muito convenientes. As propriedades `firstChild` e `lastChild` apontam para o primeiro e último elemento filho, respectivamente, ou então possuem o valor `null` (nulo) para nós sem filhos. Similarmente, `previousSibling` e `nextSibling` apontam para os nós adjacentes, que são nós com o mesmo pai que aparecem imediatamente antes ou depois do nó em questão. No caso de usarmos a propriedade `previousSibling` para um primeiro nó filho, ela irá possuir um valor nulo, o mesmo acontece se usarmos a propriedade `nextSibling` para o último nó filho.
+Em teoria, você pode se mover para qualquer lugar na árvore usando apenas essas ligações entre nós pais e nós filhos, porém o JavaScript também te dá acesso à outras ligações muito convenientes. As propriedades `firstChild` e `lastChild` apontam para o primeiro e último elemento filho, respectivamente, ou então possuem o valor `null` (nulo) para nós sem filhos. Similarmente, `previousSibling` e `nextSibling` apontam para os nós adjacentes, que são nós com o mesmo pai que aparecem imediatamente antes ou depois do nó em questão. No caso de usarmos a propriedade `previousSibling` para um primeiro nó filho, ela irá possuir um valor nulo, o mesmo acontece se usarmos a propriedade `nextSibling` para o último nó filho.
 
 Quando lidamos com uma estrutura de dados aninhada como essa, funções recursivas são geralmente muito úteis. A função abaixo escaneia um documento procurando por nós de texto contendo uma determinada string e retorna `true` quando encontrar um.
 
@@ -123,7 +123,7 @@ Um terceiro método, similar a esse, é o `getElementsByClassName`, o qual, assi
 
 ## Alterando o Documento
 
-Quase tudo na estrutura de dados DOM pode ser alterado. Nós de elementos possuem uma variedade de métodos que podem ser usados para mudar seu conteúdo. O método `removeChild` remove um dado nó filho do documento. Para adicionar um filho, nós podemos usar o método `appendChild`, o qual coloca nó filho no fim da lista de filhos, ou até o método `insertBefore`, que insere um nó passado como primeiro argumento antes do nó passado como segundo argumento.
+Quase tudo na estrutura de dados DOM pode ser alterado. Nós de elementos possuem uma variedade de métodos que podem ser usados para mudar seu conteúdo. O método `removeChild` remove um dado nó filho do documento. Para adicionar um filho, nós podemos usar o método `appendChild`, o qual coloca o nó filho no fim da lista de filhos, ou até o método `insertBefore`, que insere um nó passado como primeiro argumento antes do nó passado como segundo argumento.
 
 ```html
 <p>Um</p>
@@ -136,7 +136,7 @@ Quase tudo na estrutura de dados DOM pode ser alterado. Nós de elementos possue
 </script>
 ```
 
-Um nó pode existir no documento em apenas um lugar. Sendo assim, inserir o parágrafo "Três" na frente do parágrafo "Um" vai apenas removê-lo do fim do documento e depois inseri-lo na frente, resultando em "Três/Um/Dois". Todas as operações que inserem um nó em algum lugar irão, como efeito colateral, fazer com que ele seja removido de sua posição atual (caso ele tenha uma).
+Um nó pode existir no documento em apenas um lugar. Sendo assim, inserir o parágrafo "Três" na frente do parágrafo "Um" vai apenas removê-lo do fim do documento e depois inseri-lo na frente, resultando em "Três/Um/Dois". Todas as operações que inserem um nó em algum lugar irão como efeito colateral, fazer com que ele seja removido de sua posição atual (caso ele tenha uma).
 
 O método `replaceChild` é usado para substituir um nó filho por outro. Ele aceita como argumentos dois nós: um novo nó e o nó à ser substituído. O nó substituído deverá ser um filho do elemento com o qual o método é chamado. Note que ambos `replaceChild` e `insertBefore` esperam o seu *novo* nó como primeiro argumento.
 
@@ -311,7 +311,7 @@ O tamanho e posição de um elemento pode ser acessado através de JavaScript. A
 
 A maneira mais efetiva de encontrar a posição precisa de um elemento na tela é o método `getBoundingClientRect`. Ele retorna um objeto com as propriedades `top` (topo), `bottom` (baixo), `left` (esquerda) e `right` (direita), que correspondem às posições dos pixels em relação ao canto esquerdo da tela. Se você quiser que eles sejam relativos ao documento como um todo, você deverá adicionar a posição atual de rolagem, encontrada à partir das variáveis globais `pageXOffset` e `pageYOffset`.
 
-Organizar um documento, fazer seu *layout*, pode ser muito trabalhoso. Para ganhar velocidade, os motores dos navegadores não fazem uma reorganização do documento imediatamente a cada vez que ele muda, ao invés disso eles esperam o máximo que podem. Quando um programa JavaScript que mudou o documento termina de rodar, o navegador irá ter que computar um novo *layout* para poder mostrar o documento alterado na tela. Quando um programa pede pela posição ou tamanho de algo, lendo propriedades como `offsetHeight` ou chamando `getBoundingClientRect`, prover a ele uma informação correta também requer computar um *layout*.
+Organizar um documento e fazer seu *layout* pode ser muito trabalhoso. Para ganhar velocidade, os motores dos navegadores não fazem uma reorganização do documento imediatamente a cada vez que ele muda, ao invés disso eles esperam o máximo que podem. Quando um programa JavaScript que mudou o documento termina de rodar, o navegador irá ter que computar um novo *layout* para poder mostrar o documento alterado na tela. Quando um programa pede pela posição ou tamanho de algo, lendo propriedades como `offsetHeight` ou chamando `getBoundingClientRect`, prover a ele uma informação correta também requer computar um *layout*.
 
 Um programa que repetidamente alterna entre ler informações sobre a organização (*layout*) do DOM e alterá-lo, força muitas reorganizações e consequentemente compromete o desempenho. O código à seguir mostra um exemplo disso. Ele contém dois programas diferentes que constroem uma linha de "X" caracteres com 2000 pixels de comprimento e mede quanto tempo cada um leva.
 
@@ -355,7 +355,7 @@ A maneira que uma tag `<img>` mostra uma imagem, e a maneira uma tag `<a>` faz c
 <p><a href="." style="color: green">Link verde</a></p>
 ```
 
-Um atributo `style` pode conter um ou mais declarações, as quais são propriedades (como por exemplo `color`) seguidas por dois pontos e um valor (assim como `green`). Caso existam múltiplas declarações, elas deverão ser separadas por pontos e vírgulas. Por exemplo, "`color: red;border:none`"
+Um atributo `style` pode conter uma ou mais declarações, as quais são propriedades (como por exemplo `color`) seguidas por dois pontos e um valor (assim como `green`). Caso existam múltiplas declarações, elas deverão ser separadas por pontos e vírgulas. Por exemplo, "`color: red;border:none`"
 
 Existem muitos aspectos que podem ser influenciados através dessa estilização. Por exemplo, a propriedade `display` controla quando um elemento é mostrado como um bloco ou em linha.
 
@@ -600,7 +600,7 @@ A função recursiva deve checar o tipo de nó. Aqui nós estamos interessados a
 
 ### O Chapéu do Gato
 
-Extenda a animação do gato definida anteriormente de modo que tanto o gato quando seu chapéu (`<img src="img/hat.png"`) façam a mesma órbita em lados diferentes da elipse.
+Extenda a animação do gato definida anteriormente de modo que tanto o gato quanto seu chapéu (`<img src="img/hat.png"`) façam a mesma órbita em lados diferentes da elipse.
 
 Ou faça o chapéu circular ao redor do gato. Você pode ainda alterar a animação de outra maneira que julgar interessante.
 

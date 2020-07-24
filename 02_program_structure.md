@@ -66,7 +66,7 @@ Isso não deixa nenhuma impressão no mundo. Quando você executar esse programa
 
 Em alguns casos, JavaScript te permite omitir o ponto e vírgula ao final de uma declaração. 
 Em outros casos, ele tem que estar ali, ou a próxima ((linha)) será tratada como parte da mesma declaração. 
-As regras para quando for seguro omití-lo são de alguma forma complexas e passíveis de erro. 
+As regras para quando for seguro omiti-lo são de alguma forma complexas e passíveis de erro. 
 Então, nesse livro, toda declaração que necessitar de um ponto e vírgula sempre receberá um. 
 Eu recomento você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto e vírgula.
 
@@ -88,7 +88,7 @@ let caught = 5 * 5;
 {{index "let keyword"}}
 
 Essa é a segunda forma de ((declaração)). A palavra especial
-(_((paravra-chave))_) `let` indica que essa declaração irá definir
+(_((palavra-chave))_) `let` indica que essa declaração irá definir
 uma ligação. É seguida pelo nome da ligação e, se quisermos
 imediatamente definir um valor, por um operador `=` e uma expressão.
 
@@ -109,7 +109,7 @@ console.log(ten * ten);
 
 Quando uma ligação aponta para um valor, não significa que ela está amarrada àquele valor
 para sempre. O operador `=` pode ser usado a qualquer momento em
-ligações existentes para desconectá-las de seu valor atual e apontá-las
+ligações existentes para desconecta-las de seu valor atual e apontá-las
 para um novo.
 
 ```
@@ -142,7 +142,7 @@ console.log(luigisDebt);
 
 {{index undefined}}
 
-Quando você define uma ligação sem atribur um valor à ela, o tentáculo
+Quando você define uma ligação sem atribuir um valor à ela, o tentáculo
 não possui nada para agarrar, então ele termina vazio. Se você perguntar pelo
 valor de uma ligação vazia, você irá receber o valor `undefined`.
 
@@ -172,7 +172,7 @@ console.log(greeting + name);
 O primeiro, `var` (abreviação para "variável"), é a forma como as ligações
 eram declaradas no JavaScript pre-2015. Eu irei precisar como ela difere de `let`
 no [próximo capítulo](functions). Por enquanto,
-se lembre que elas básicamente fazem a mesma coisa, mas nós raramente a usaremos nesse livro
+se lembre que elas basicamente fazem a mesma coisa, mas nós raramente a usaremos nesse livro
 porque ela possui algumas propriedades confusas.
 
 {{index "const keyword", naming}}
@@ -188,7 +188,7 @@ que dão nome para um valor para que você possa se referenciar a ele posteriorm
 Nomes de ligações podem ser qualquer palavra. Dígitos podem ser parte do nome da ligação
 —`catch22` é um nome válido, por exemplo— mas o nome não deve começar com um dígito.
 O nome de uma ligação pode incluir sinal de dólar (`$`) ou
-_underlines_ (`_`) mas nenhuma outra pontuação ou caractere especial.
+_underscores_ (`_`) mas nenhuma outra pontuação ou caractere especial.
 
 {{index [syntax, identifier], "implements (reserved word)", "interface (reserved word)", "package (reserved word)", "private (reserved word)", "protected (reserved word)", "public (reserved word)", "static (reserved word)", "void operator", "yield (reserved word)", "enum (reserved word)", "reserved word", [binding, naming]}}
 
@@ -207,7 +207,7 @@ switch this throw true try typeof var void while with yield
 ```
 
 {{index [syntax, error]}}
-Não se preocupe em memorizar essa lista. Quando ao criar uma ligação poduzir o erro  
+Não se preocupe em memorizar essa lista. Quando ao criar uma ligação produzir o erro  
 _unexpected syntax_, verifique se você está tentando definir uma palavra reservada.
 
 ## O Ambiente
@@ -217,9 +217,9 @@ _unexpected syntax_, verifique se você está tentando definir uma palavra reser
 A coleção de ligações e seus valores que existem em um determinado momento
 é chamado de _((ambiente))_. Quando um programa inicia, esse ambiente
 não é vazio. Ele sempre contém ligações que são parte da linguagem
-((padrão)), e na marioria das vezes, ele também possui ligações que fornecem formas
-de interagir com o sistema que o cerca. Por exempo, em um navegador, existem funções para
-interagir com o website ataualmente carregado e para ler as entradas do ((mouse)) e ((teclado)).
+((padrão)), e na maioria das vezes, ele também possui ligações que fornecem formas
+de interagir com o sistema que o cerca. Por exemplo, em um navegador, existem funções para
+interagir com o website atualmente carregado e para ler as entradas do ((mouse)) e ((teclado)).
 
 ## Funções
 
@@ -244,7 +244,7 @@ prompt("Enter passcode");
 {{index parameter, [function, application], [parentheses, arguments]}}
 
 Executar uma função é chamado _invoking_, _calling_, ou _applying_ (no português: _invocar_, _chamar_ ou _aplicar_)
-Você pode chamar uma função ao colocar parentêses após a expressão que produz o valor da expressão.
+Você pode chamar uma função ao colocar parênteses após a expressão que produz o valor da expressão.
 Normalmente você vai usar diretamente o nome da ligação que possui a função. 
 Os valores entre os parênteses são dados ao programa dentro da função.
 No exemplo, a função `prompt` usa a _"string"_ que fornecemos à ela como o
@@ -353,7 +353,7 @@ Aqui está uma representação esquemática mais comum do controle de fluxo em l
 
 Nem todos os programas são estradas retas. Nós podemos, por exemplo, querer
 criar uma estrada ramificada, onde o progama pega o ramo apropriado
-baseado na situação em que se encontra. Isso é chamado de _((execução condional))_.
+baseado na situação em que se encontra. Isso é chamado de _((execução condicional))_.
 
 {{figure {url: "img/controlflow-if.svg", alt: "Controle de fluxo condicional",width: "4cm"}}}
 
@@ -377,7 +377,7 @@ Com essa modificação, se você inserir _"parrot"_, nenhuma saída é exibida.
 {{index [parentheses, statement]}}
 
 A palavra-chave `if` executa ou evita uma declaração dependendo do valor de uma
-expressão Booleana. A expressão decisiva é escrita após a palavra-chave, entre parentêses, seguida por
+expressão Booleana. A expressão decisiva é escrita após a palavra-chave, entre parênteses, seguida por
 uma declaração para executar.
 
 {{index "Number.isNaN function"}}
@@ -407,7 +407,7 @@ if (1 + 1 == 2) console.log("It's true");
 
 Você frequentemente não vai querer um código que apenas execute quando uma condição
 retornar verdadeira, mas também um código que cuida do outro caso. Esse caminho alternativo
-é representado pela segunda flecha do diagrama. Você pode usar a palava-chave `else`, junto com `if`, para criar dois caminhos
+é representado pela segunda flecha do diagrama. Você pode usar a palavra-chave `else`, junto com `if`, para criar dois caminhos
 de execução, separados, alternativos.
 
 ```{test: wrap}
@@ -422,7 +422,7 @@ if (!Number.isNaN(theNumber)) {
 
 {{index ["if keyword", chaining]}}
 
-Se você possui mais que dois caminhos para escolher, você pode "encadear" múltiplos pares de`if`/`else` juntos.
+Se você possui mais que dois caminhos para escolher, você pode "encadear" múltiplos pares de `if`/`else` juntos.
 Segue um exemplo:
 
 ```
@@ -508,7 +508,7 @@ valor que é 2 à mais que seu estado anterior. No início de toda repetição,
 Como um exemplo que atualmente faz algo útil, nós podemos agora escrever um
 programa que calcula e exibe o valor de 2^10^ (2 pela 10ª potência). 
 Nós usamos duas ligações: uma para rastrear o resultado e uma para contar
-com qual frequência nós temos que múltiplicar esse resultado por 2. O _loop_ testa
+com qual frequência nós temos que multiplicar esse resultado por 2. O _loop_ testa
 se a segunda ligação já atingiu 19 e, se não, atualiza ambas ligações.
 
 ```
@@ -615,7 +615,7 @@ Os parênteses após a palavra-chave `for` devem conter dois
 normalmente definindo uma ligação. A segunda parte é a
 ((expressão)) que _checa_ se o loop deve continuar. A parte final
 _atualiza_ o estado do loop após cada iteração. Na maioria dos casos,
-isso é mais curto e claro que a contrução `while`.
+isso é mais curto e claro que a construção `while`.
 
 {{index exponentiation}}
 
@@ -778,13 +778,13 @@ fuzzyLittleTurtle
 
 {{index "camel case", "programming style", "underscore character"}}
 
-O primeiro estilo pode tornar díficil de ler. Eu particularmente 
-prefiro o visual dos _underlines_, embora esse estilo seja penoso para digitar.
+O primeiro estilo pode tornar difícil de ler. Eu particularmente 
+prefiro o visual dos _underscores_, embora esse estilo seja penoso para digitar.
 As funções ((padrões)) JavaScript, e a maior parte dos programadores JavaScript,
 seguem o último estilo-eles escrevem com a primeira letra maiúscula todas as palavras
 exceto a primeira.
-Não é dificil se acostumar com coisas pequenas como essa, e o código com estilos de nomes
-mistos podem se tornar duros de ser ler, então seguimos essa ((conveção)).
+Não é difícil se acostumar com coisas pequenas como essa, e o código com estilos de nomes
+mistos podem se tornar duros de ser ler, então seguimos essa ((convenção)).
 
 {{index "Number function", constructor}}
 
@@ -840,9 +840,9 @@ const myNumber = 11213;
 
 ## Sumário
 
-Você sabe agora que um programa é construido por declarações, as quais
+Você sabe agora que um programa é construído por declarações, as quais
 algumas vezes possuem mais declarações. Declarações tendem a conter
-expressões, as quais podem ser costruídas de expressões menores.
+expressões, as quais podem ser construídas de expressões menores.
 
 Colocar declarações após outra declaração te dá um programa que é
 executado do topo para baixo. Você pode introduzir alterações no controle de fluxo
@@ -1012,17 +1012,17 @@ repetidamente adicionar caracteres. Um caracter _newline_ é escrito com `"\n"`.
 Para trabalhar com duas ((dimensões)), você irá precisar de um ((loop)) dentro de um loop.
 Coloque chaves em volta do corpo de ambos os _loops_ para tornar fácil de identificar
 onde eles começam e terminam. Tente indentar apropriadamente o corpo dos loops.
-A ordem dos loops deve seguir a order que nós contruímos a _string_ 
-(linha por lina, esquerda para direita, de cima para baixo).
+A ordem dos loops deve seguir a ordem que nós construímos a _string_ 
+(linha por linha, esquerda para direita, de cima para baixo).
 Então o loop externo cuida das linhas, e o loop interno cuida dos caracteres da linha.
 
 {{index "counter variable", "remainder operator", "% operator"}}
 
 Você irá precisar de duas ligações para rastrear seu progresso. Para saber se deve
-coloar um espaço ou uma cerquilha na posição dada, você poderia testar se a soma
+colocar um espaço ou uma cerquilha na posição dada, você poderia testar se a soma
 dos dois contadores é ímpar (`%2`).
 
-Terminando a linha ao adiconar um caractere _newline_ deve acontecer após a
+Terminando a linha ao adicionar um caractere _newline_ deve acontecer após a
 linha ter sido construida, então faça isso após o loop interno mas dentro do loop externo.
 
 hint}}

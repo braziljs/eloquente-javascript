@@ -37,7 +37,7 @@ aplicado à duas expressões ou um ((operador unário)) aplicado à uma.
 Isso mostra parte da beleza de uma interface baseada em linguagem.
 Expressões podem conter outras expressões de forma similar à como subfrases 
 na linguagem humana são aninhadas.—uma subfrase pode conter sua própria subfrase, e assim por diante. 
-Isso nos permite criar expressões que descrevem cálculos arbitráriamente complexos.
+Isso nos permite criar expressões que descrevem cálculos arbitrariamente complexos.
 
 {{index statement, semicolon, program}}
 

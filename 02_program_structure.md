@@ -1,10 +1,9 @@
 # Estrutura do Programa
 
-{{quote {author: "_why", title: "Guia (Pungente) para Ruby do Why", chapter: true}
+{{quote {author: "_why", title: "Guia (comovente) de Ruby do Why", chapter: true}
 
->E meu coração brilha vívido vermelho sob minha pele transparente, translúcida e eles têm que administrar 10cc
-de JavaScript para me fazer voltar. 
-(Eu respondo bem à toxinas em meu sangue.) Cara, essa coisa vai chutar os pêssegos para fora de suas brânquias!
+>E meu coração irradia um vermelho intenso sob minha pele translúcida e eles tiveram que me administrar 10 mililitros de JavaScript para me fazer voltar. 
+(Eu respondo bem à toxinas no sangue.) Cara, esse negócio vai chutar para longe das suas guelras!
 
 quote}}
 
@@ -20,8 +19,8 @@ nomes e frases que nós vimos até agora, até o ponto onde poderemos expressar 
 
 {{index grammar, [syntax, expression], [code, "structure of"], grammar, [JavaScript, syntax]}}
 
-No [Capítulo 1](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. 
-Criando valores como esses é a essência de qualquer programa JavaScript. 
+No [Capítulo ?](values), nós fizemos valores e aplicamos operadores a eles para obtermos novos valores. 
+Criar valores como esses é a essência de qualquer programa JavaScript. 
 Mas essa essência deve ser enquadrada em uma estrutura maior para ser útil. Então é isso que abordaremos a seguir.
 
 {{index "literal expression", [parentheses, expression]}}
@@ -36,13 +35,13 @@ aplicado à duas expressões ou um ((operador unário)) aplicado à uma.
 
 Isso mostra parte da beleza de uma interface baseada em linguagem.
 Expressões podem conter outras expressões de forma similar à como subfrases 
-na linguagem humana são aninhadas.—uma subfrase pode conter sua própria subfrase, e assim por diante. 
+na linguagem humana são aninhadas. Uma subfrase pode conter sua própria subfrase, e assim por diante. 
 Isso nos permite criar expressões que descrevem cálculos arbitrariamente complexos.
 
 {{index statement, semicolon, program}}
 
-Se uma expressão corresponde à um fragmento de expressão, uma _declaração_ JavaScript
-corresponde à uma expressão completa. Um programa é uma lista de declarações.
+Se uma expressão corresponde a um fragmento de expressão, uma _declaração_ JavaScript
+corresponde a uma expressão completa. Um programa é uma lista de declarações.
 
 {{index [syntax, statement]}}
 
@@ -844,7 +843,7 @@ Você sabe agora que um programa é construído por declarações, as quais
 algumas vezes possuem mais declarações. Declarações tendem a conter
 expressões, as quais podem ser construídas de expressões menores.
 
-Colocar declarações após outra declaração te dá um programa que é
+Colocar declarações após as outras te dá um programa que é
 executado do topo para baixo. Você pode introduzir alterações no controle de fluxo
 ao utilizar declarações condicionais (`if`, `else`, e `switch`) e _loops_ (`while`, `do`, e `for`)
 
@@ -854,7 +853,7 @@ que são definidas. Sistemas JavaScript sempre colocam um número de ligações 
 em seu ambiente.
 
 Funções são valores especiais que encapsulam um pedaço de programa. Você
-pode invocá-las ao escrever `functionName(argument1, argument2)`. Assim
+pode invocá-las ao escrever `functionName(argument1, argument2)`. Assim,
 a chamada de função é uma expressão e pode produzir um valor.
 
 ## Exercícios
@@ -914,12 +913,12 @@ if}}
 
 {{index "triangle (exercise)"}}
 
-Você pode começar com um programa que imprima os números 1 à 7, que
+Você pode começar com um programa que imprima os números 1 a 7, que
 você pode derivar ao fazer umas poucas modificações ao [exemplo de impressão de números ímpares](program_structure#loops) 
 dado anteriormente no capítulo, onde o loop `for` foi introduzido.
 
 Agora considere a equivalência entre números e _strings_ de caracteres de cerquilha.
-Você pode ir de 1 à 2 ao adicionar ' (`+= 1`). Você pode ir de `"#"` para `"##"`
+Você pode ir de 1 a 2 ao adicionar ' (`+= 1`). Você pode ir de `"#"` para `"##"`
 ao adicionar um caractere (`+= "#"`). Desse modo, sua solução pode estar
 próxima do programa de impressão de número.
 
@@ -929,7 +928,7 @@ hint}}
 
 {{index "FizzBuzz (exercise)", loop, "conditional execution"}}
 
-Escreva um programa que usa `console.log` para imprimir todos os números de 1 à 100,
+Escreva um programa que usa `console.log` para imprimir todos os números de 1 a 100,
 com duas exceções. Para números divisíveis por 3, imprima `"Fizz"` ao invés de um número,
 e para os números divisíveis por 5 (e não 3), imprima `"Buzz"`.
 
@@ -991,7 +990,7 @@ Passando essa _string_ ao `console.log` deve exibir algo assim:
 ```
 
 Quando você tem um programa que gera esse padrão, defina uma
-ligação `size = 8` e altere o programa para que ele funcione para qualquer `tamanho`,
+ligação `size = 8` e altere o programa para que ele funcione para qualquer `size`,
 resultando em uma grade com a largura e altura informada.
 
 {{if interactive
@@ -1020,7 +1019,7 @@ Então o loop externo cuida das linhas, e o loop interno cuida dos caracteres da
 
 Você irá precisar de duas ligações para rastrear seu progresso. Para saber se deve
 colocar um espaço ou uma cerquilha na posição dada, você poderia testar se a soma
-dos dois contadores é ímpar (`%2`).
+dos dois contadores é ímpar (`% 2`).
 
 Terminando a linha ao adicionar um caractere _newline_ deve acontecer após a
 linha ter sido construida, então faça isso após o loop interno mas dentro do loop externo.

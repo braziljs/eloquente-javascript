@@ -54,20 +54,20 @@ A declaração mais simples é uma expressão com um ponto e vírgula após ela.
 
 É um programa inútil, entretanto. Uma ((expressão)) pode se contentar apenas por produzir um valor, 
 que pode então ser usado pelo código anexo. Uma ((declaração)) se sustenta sozinha, 
-então ela se equivale a algo apenas se afetar o mundo. 
-Ela poderia exibir algo na tela— que conta enquanto muda o mundo— ou poderia alterar o 
+então ela se equivale a algo apenas se afetar o "mundo". 
+Ela poderia exibir algo na tela, que conta enquanto muda o "mundo", ou poderia alterar o 
 estado interno da máquina de uma forma que irá afetar as declarações que vierem depois dela. 
-Essas mudanças são chamadas _((efeito(s) colateral))is_. 
-As declarações no exemplo anterior apenas produz os valores `1` e `true` e então, imediatamente, os joga fora. 
+Essas mudanças são chamadas de _((efeito(s) colateral))is_. 
+As declarações no exemplo anterior apenas produzem os valores `1` e `true` e, então, imediatamente, os joga fora. 
 Isso não deixa nenhuma impressão no mundo. Quando você executar esse programa, nada observável acontece.
 
 {{index "programming style", "automatic semicolon insertion", semicolon}}
 
-Em alguns casos, JavaScript te permite omitir o ponto e vírgula ao final de uma declaração. 
+Em alguns casos, o JavaScript te permite omitir o ponto e vírgula ao final de uma declaração. 
 Em outros casos, ele tem que estar ali, ou a próxima ((linha)) será tratada como parte da mesma declaração. 
 As regras para quando for seguro omiti-lo são de alguma forma complexas e passíveis de erro. 
 Então, nesse livro, toda declaração que necessitar de um ponto e vírgula sempre receberá um. 
-Eu recomento você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto e vírgula.
+Eu recomendo você fazer o mesmo, pelo menos até você aprender mais sobre a sutileza das ausências do ponto e vírgula.
 
 ## Ligações/Variáveis
 
@@ -78,7 +78,7 @@ Como um programa mantém um estado interno? Como ele se lembra das coisas?
 Nós vimos como produzir novos valores à partir de valores antigos,
 mas isso não altera os valores antigos, e o novo valor deve ser
 imediatamente usado ou irá se dissipar novamente. Para capturar e manter valores,
-JavaScript nos dá uma coisa chamada de _ligação_, ou _variável_:
+o JavaScript nos dá uma coisa chamada de _ligação_, ou _variável_:
 
 ```
 let caught = 5 * 5;
@@ -123,14 +123,14 @@ console.log(mood);
 {{index [binding, "model of"], "tentacle (analogy)"}}
 
 Você deveria imaginar ligações como tentáculos, ao invés de caixas.
-Elas não _contêm_ valores; elas _pegam_ eles—duas ligações podem se referir ao
+Elas não _contêm_ valores, elas _pegam_ eles, duas ligações podem se referir ao
 mesmo valor. Um programa pode acessar apenas os valores que ainda possui referência. 
 Quando você necessita lembrar de algo, você produz um tentáculo para se agarrar a isso
 ou você reatribui um de seus tentáculos existentes à isso.
 
-Vamos observar para um outro exemplo. Para se lembrar o número de dólares que
-Luigi ainda deve à você, você cria uma ligação. E então ele te paga
-$35, você atribui à essa ligação o novo valor.
+Vamos observar um outro exemplo. Para se lembrar o número de dólares que
+Luigi ainda deve à você, você cria uma ligação. Então, quando ele te paga
+$35, você atribui a essa ligação um novo valor.
 
 ```
 let luigisDebt = 140;
@@ -148,7 +148,7 @@ valor de uma ligação vazia, você irá receber o valor `undefined`.
 {{index "let keyword"}}
 
 Uma única declaração pode definir múltiplas ligações. A
-definição de ser separada por vírgulas.
+definição deve ser separada por vírgulas.
 
 ```
 let one = 1, two = 2;
@@ -169,7 +169,7 @@ console.log(greeting + name);
 {{index "var keyword"}}
 
 O primeiro, `var` (abreviação para "variável"), é a forma como as ligações
-eram declaradas no JavaScript pre-2015. Eu irei precisar como ela difere de `let`
+eram declaradas no JavaScript antes de 2015. Eu irei precisar como ela difere de `let`
 no [próximo capítulo](functions). Por enquanto,
 se lembre que elas basicamente fazem a mesma coisa, mas nós raramente a usaremos nesse livro
 porque ela possui algumas propriedades confusas.
@@ -185,7 +185,7 @@ que dão nome para um valor para que você possa se referenciar a ele posteriorm
 {{index "underscore character", "dollar sign", [binding, naming]}}
 
 Nomes de ligações podem ser qualquer palavra. Dígitos podem ser parte do nome da ligação
-—`catch22` é um nome válido, por exemplo— mas o nome não deve começar com um dígito.
+(`catch22` é um nome válido, por exemplo). Entretanto, o nome não deve começar com um dígito.
 O nome de uma ligação pode incluir sinal de dólar (`$`) ou
 _underscores_ (`_`) mas nenhuma outra pontuação ou caractere especial.
 
@@ -216,7 +216,7 @@ _unexpected syntax_, verifique se você está tentando definir uma palavra reser
 A coleção de ligações e seus valores que existem em um determinado momento
 é chamado de _((ambiente))_. Quando um programa inicia, esse ambiente
 não é vazio. Ele sempre contém ligações que são parte da linguagem
-((padrão)), e na maioria das vezes, ele também possui ligações que fornecem formas
+((padrão)) e, na maioria das vezes, ele também possui ligações que fornecem formas
 de interagir com o sistema que o cerca. Por exemplo, em um navegador, existem funções para
 interagir com o website atualmente carregado e para ler as entradas do ((mouse)) e ((teclado)).
 
@@ -227,11 +227,11 @@ interagir com o website atualmente carregado e para ler as entradas do ((mouse))
 {{indexsee "calling (of functions)", [function, application]}}
 {{index output, function, [function, application], [browser, environment]}}
 
-Uma grande quantidade de valores providos no ambiente padrão possuem o tipo
+Uma grande quantidade de valores fornecidos no ambiente padrão possuem o tipo
 _((função))_. Uma função é um pedaço do programa embrulhado em um valor.
 Tais valores podem ser _aplicados_ na intenção de executar o programa embrulhado.
 Por exemplo, no ambiente de um navegador, a ligação `prompt` possui uma função que exibe
-uma pequena ((caixa de diálogo) solicitando ao usuário uma entrada.
+uma pequena ((caixa de diálogo)) solicitando ao usuário uma entrada.
 Ele é usado dessa forma:
 
 ```
@@ -243,24 +243,24 @@ prompt("Enter passcode");
 {{index parameter, [function, application], [parentheses, arguments]}}
 
 Executar uma função é chamado _invoking_, _calling_, ou _applying_ (no português: _invocar_, _chamar_ ou _aplicar_)
-Você pode chamar uma função ao colocar parênteses após a expressão que produz o valor da expressão.
+Você pode chamar uma função colocando parênteses após a expressão que produz o valor da função.
 Normalmente você vai usar diretamente o nome da ligação que possui a função. 
 Os valores entre os parênteses são dados ao programa dentro da função.
-No exemplo, a função `prompt` usa a _"string"_ que fornecemos à ela como o
-texto a ser exibido na caixa de diálogo. Valores dados às funções são chamados
-_((argumento))s_. Diferentes funções devem precisar de uma quantidade diferente ou
+No exemplo, a função `prompt` usa a _string_ que fornecemos à ela como o
+texto a ser exibido na caixa de diálogo. Valores dados às funções são chamados de
+_((argumento))s_. Diferentes funções podem precisar de uma quantidade diferente ou
 diferentes tipos de argumentos.
 
 A função `prompt` não é muito usada na programação web moderna,
-principalmente porque você não tem controle sobre como visual do diálogo resultante irá parecer,
+principalmente porque você não tem controle sobre como o visual do diálogo resultante irá parecer,
 mas pode ser útil em programas de teste e experimentos.
 
 ## A função console.log
 
 {{index "JavaScript console", "developer tools", "Node.js", "console.log", output, [browser, environment]}}
 
-Nos exemplos, Eu usei `console.log` para saída de valores. A maioria dos sistemas JavaScript
-(incluindo todos os navegadores modernos e Node.js) fornece uma função
+Nos exemplos, eu usei `console.log` para saída de valores. A maioria dos sistemas JavaScript
+(incluindo todos os navegadores modernos e Node.js) fornecem uma função
 `console.log` que escreve seus argumentos para _algum_ dispositivo de saída de texto.
 Em navegadores, a saída repousa no ((console JavaScript)).
 Essa parte da interface dos navegadores é escondida por padrão,
@@ -270,7 +270,7 @@ Se isso não funcionar, procure através dos menus por um item chamado Ferrament
 {{if interactive
 
 Quando executar os exemplos (ou seu próprio código) nas páginas desse livro,
-a saída  `console.log` será mostrada após o exemplo, ou invés do console
+a saída  `console.log` será mostrada após o exemplo, ao invés do _console_
 JavaScript do navegador.
 
 ```
@@ -295,7 +295,7 @@ Nós vamos descobrir exatamente o que isso significa no [Chapter ?](data#propert
 
 Exibir uma caixa de diálogo ou escever um texto na tela é um
 _((efeito colateral))_. Muitas funções são úteis por causa dos efeitos colaterais
-que elas produzem. Funções também podem produzir valores, nesse caso elas
+que elas produzem. Funções também podem produzir valores e, nesse caso, elas
 não necessitam de um efeito colateral para serem úteis. Por exemplo, a
 função `Math.max` recebe qualquer quantidade de argumentos numéricos e retorna
 o maior.
@@ -371,7 +371,7 @@ if (!Number.isNaN(theNumber)) {
 }
 ```
 
-Com essa modificação, se você inserir _"parrot"_, nenhuma saída é exibida.
+Com essa modificação, se você inserir _"parrot"_ (em português "papagaio"), nenhuma saída é exibida.
 
 {{index [parentheses, statement]}}
 
@@ -383,13 +383,13 @@ uma declaração para executar.
 
 A função `Number.isNaN` é uma função padrão do JavaScript que
 retorna `true` apenas se o argumento que é dado é `NaN`. A função `Number`
-retorna `NaN` quando você passa para ela uma _string_ que não representa um número válido.
+retorna `NaN` quando você passar para ela uma _string_ que não representa um número válido.
 Portanto, a condição é traduzida para
 "a menos que `theNumber` não seja um número, faça isso".
 
 {{index grouping, "{} (block)", [braces, "block"]}}
 
-A declaração após o `if` é envolvido por chaves (`{` e `}`)
+A declaração após o `if` é envolvida por chaves (`{` e `}`)
 nesse exemplo. As chaves podem ser usadas para agrupar qualquer quantidade de declarações
 em uma única declaração, chamado de _((bloco))_. Você poderia também
 ter omitido elas nesse caso, desde que elas possuíssem apenas uma declaração,
@@ -405,9 +405,9 @@ if (1 + 1 == 2) console.log("It's true");
 {{index "else keyword"}}
 
 Você frequentemente não vai querer um código que apenas execute quando uma condição
-retornar verdadeira, mas também um código que cuida do outro caso. Esse caminho alternativo
+retornar verdadeiro, mas também um código que cuida do outro caso. Esse caminho alternativo
 é representado pela segunda flecha do diagrama. Você pode usar a palavra-chave `else`, junto com `if`, para criar dois caminhos
-de execução, separados, alternativos.
+de execução separados e alternativos.
 
 ```{test: wrap}
 let theNumber = Number(prompt("Pick a number"));
@@ -435,10 +435,10 @@ if (num < 10) {
   console.log("Large");
 }
 ```
-O programa vai primeiro checar se `num` é menos que 10. Se for,
-ele irá escolher essa ramificação, mostre `"Small"`, e pronto. Se não for,
-ele irá pegar a ramificação do `else`, que contém um segundo `if`. Se a segunda
-condição (`< 100`) for satisfeita, isso significa que o número está entre 10 e 100, e `Medium` é exibido.
+O programa vai primeiro checar se `num` é menor que 10. Se for,
+ele escolherá essa ramificação, mostre "Small" e pronto. Se não for,
+ele pegará a ramificação do `else`, que contém um segundo `if`. Se a segunda
+condição (`< 100`) for satisfeita, isso significa que o número está entre 10 e 100, e "Medium" é exibido.
 Se não, a segunda e última ramificação `else` é escolhida.
 
 O esquema para esse programa se parece como algo assim:
@@ -448,7 +448,7 @@ O esquema para esse programa se parece como algo assim:
 {{id loops}}
 ## Loops While e Do
 
-Considere um programa que exibe todos ((numero(s) ímpare(s))) de 0 à 12. Uma
+Considere um programa que exibe todos os ((numero(s) ímpare(s))) de 0 a 12. Uma
 forma de escrevê-lo é a seguinte:
 
 ```
@@ -463,8 +463,8 @@ console.log(12);
 
 {{index ["control flow", loop]}}
 
-Ela funciona, mas a ideia de escrever um programa é fazer algo
-_menos_ trabalhoso, não mais. Se nós precisássemos de todos os números ímpares menores que 1,000,
+Isso funciona, mas a ideia de escrever um programa é fazer algo
+_menos_ trabalhoso, não mais. Se nós precisássemos de todos os números ímpares menores que 1000,
 essa abordagem seria impraticável. O que precisamos é uma forma de executar um pedaço de código
 múltiplas vezes. Essa forma de controle de fluxo é chamada de _((loop))_.
 
@@ -472,7 +472,7 @@ múltiplas vezes. Essa forma de controle de fluxo é chamada de _((loop))_.
 
 {{index [syntax, statement], "counter variable"}}
 
-O controle de fluxo em _loop_ nos permite retornar à algum ponto no programa
+O controle de fluxo em _loop_ nos permite retornar a algum ponto no programa
 onde estávamos antes e repeti-lo com nosso atual estado do programa. Se
 nós combinarmos isso com uma ligação que conta, poderíamos fazer algo assim:
 
@@ -492,15 +492,15 @@ while (number <= 12) {
 Uma ((declaração)) começando com a palavra-chave `while` cria um _loop_. A
 palavra `while` é seguida por uma ((expressão)) em parênteses e
 então uma declaração, muito parecido com `if`. O _loop_ continua acessando aquela
-declaração enquanto a expressão produzir um valor que retorna `true`
+declaração enquanto a expressão produzir um valor que retorne `true`
 quando convertido para Booleano.
 
 {{index [state, in binding], [binding, as state]}}
 
 A ligação `number` demonstra a forma como uma ((ligação)) pode rastrear o
 progresso do programa. Toda vez que o _loop_ repetir, `number` recebe um
-valor que é 2 à mais que seu estado anterior. No início de toda repetição,
-é comparado o número 12 para decidir se o trabalho do programa está concluído.
+valor que é 2 a mais que seu estado anterior. No início de toda repetição,
+é comparado ao número 12 para decidir se o trabalho do programa está concluído.
 
 {{index exponentiation}}
 
@@ -508,7 +508,7 @@ Como um exemplo que atualmente faz algo útil, nós podemos agora escrever um
 programa que calcula e exibe o valor de 2^10^ (2 pela 10ª potência). 
 Nós usamos duas ligações: uma para rastrear o resultado e uma para contar
 com qual frequência nós temos que multiplicar esse resultado por 2. O _loop_ testa
-se a segunda ligação já atingiu 19 e, se não, atualiza ambas ligações.
+se a segunda ligação já atingiu 10 e, se não, atualiza ambas ligações.
 
 ```
 let result = 1;
@@ -521,8 +521,8 @@ console.log(result);
 // → 1024
 ```
 
-O contador poderia também ter iniciado em `1` e chegado por `<= 10`,
-mas por razões que se tornarão aparentes no [Chapter?](data#array_indexing), 
+O contador poderia também ter iniciado em `1` e checado por `<= 10`
+mas, por razões que se tornarão aparentes no [Chapter?](data#array_indexing), 
 é uma boa idéia se acostumar a contar a partir do 0.
 
 {{index "loop body", "do loop", ["control flow", loop]}}
@@ -542,19 +542,19 @@ console.log(yourName);
 
 {{index [Boolean, "conversion to"], "! operator"}}
 
-Esse programa irá forçar você a inserir um nome. Irá perguntar novamente e
+Esse programa forçará você a inserir um nome. Ele perguntará novamente e
 novamente, até receber algo que não seja uma _string_ vazia. Aplicando o
-operador `!` irá converter um valor para o tipo Booleano antes de negá-lo, e
+operador `!` converterá um valor para o tipo Booleano antes de negá-lo, e
 todas as _strings_ exceto `""` são convertidas para `true`. Isso significa que o _loop_
-continua rodando até você fornecer um nome não-vazio.
+continua rodando até você fornecer um nome não vazio.
 
 ## Indentação do código
 
 {{index [code, "structure of"], [whitespace, indentation], "programming style"}}
 
 Nos exemplos, eu tenho adicionado espaços na frente das declarações que
-fazem parte de uma declaração ainda maior. Esses espaços não são obrigatórios-o computador
-irá aceitar muito bem o programa sem eles. De fato, mesmo as quebra de ((linhas))
+fazem parte de uma declaração ainda maior. Esses espaços não são obrigatórios e o computador
+aceitará muito bem o programa sem eles. De fato, mesmo as quebra de ((linhas))
 nos programas são opcionais. Você poderia escrever um programa como
 uma longa e única linha se você desejar.
 
@@ -562,8 +562,8 @@ O papel dessa ((indentação)) dentro dos ((blocos)) é fazer a estrutura
 do código se destacar. No código onde novos blocos são abertos dentro de outros blocos,
 pode se tonar difícil de perceber onde um bloco termina e o outro começa.
 Com a indentação apropriada, a forma visual de um programa corresponde à forma dos blocos dentro dele.
-Eu gosto de usar dois espaços para cada bloco aberto, mas gostos diferem-algumas pessoas usam
-quatro espaços, e algumas usam ((caractere)). O mais importante é que cada novo bloco adicione
+Eu gosto de usar dois espaços para cada bloco aberto, mas gostos diferem. Algumas pessoas usam
+quatro espaços, e outras usam o ((caractere tab)). O mais importante é que cada novo bloco adicione
 a mesma quantidade de espaço.
 
 ```
@@ -576,20 +576,20 @@ if (false != true) {
 ```
 
 A maior parte dos programas ((editores)) de código[ (inclusive o usado nesse livro)]{if
-interactive} vai ajudar indentando automaticamente as novas linhas com o espaçamento apropriado.
+interactive} vão ajudar indentando automaticamente as novas linhas com o espaçamento apropriado.
 
-## For Loops
+## Loops for
 
 {{index [syntax, statement], "while loop", "counter variable"}}
 
 Muitos _loops_ seguem o padrão mostrado nos exemplos do `while`. Primeiro
-uma ligação _"counter"_ é criada para rastrear o progresso do loop. Então
+uma ligação _"counter"_ (em português: contador) é criada para rastrear o progresso do loop. Então
 vem o loop `while`, normalmente com uma expressão de teste que checa se o _counter_
 atingiu o valor final. No fim do corpo do _loop_, o _counter_ é atualizado para rastrear o progresso.
 
 {{index "for loop", loop}}
 
-Pelo fato desse padrão ser tão comum, JavaScript e linguagens similares
+Pelo fato desse padrão ser tão comum, o JavaScript e linguagens similares
 fornecem uma forma mais compreensível e ligeiramente mais curta, o _loop_ `for`.
 
 ```
@@ -634,7 +634,7 @@ console.log(result);
 {{index [loop, "termination of"], "break keyword"}}
 
 Ter uma condição do _loop_ produzindo `false` não é a única forma
-que um loop pode sinalizar. Existe uma declaração especial chamada `break` que possui
+que um loop pode finalizar. Existe uma declaração especial chamada `break` que possui
 o efeito de imediatamente saltar para fora do loop.
 
 Esse programa ilustra a declaração `break`. Ela procura o primeiro número que é
@@ -652,7 +652,7 @@ for (let current = 20; ; current = current + 1) {
 
 {{index "remainder operator", "% operator"}}
 
-Usando o operador resto (`%`) é uma forma fácil de testar se o número é 
+Usar o operador resto (`%`) é uma forma fácil de testar se o número é 
 divisível por outro número. Se for, o resto da divisão é zero.
 
 {{index "for loop"}}
@@ -670,8 +670,8 @@ nunca terminará a execução, o que normalmente é uma coisa ruim.
 
 Se você criar um _loop_ infinito em um dos exemplos nessas páginas,
 você normalmente será questionado se quer finalizar o _script_ após alguns segundos.
-Se isso falhar, você terá que fechar a aba que você está trabalhando,
-ou em alguns navegadores fechar todo o navegador, para recomeçar.
+Se isso falhar, você terá que fechar a aba que você está trabalhando
+ou, em alguns navegadores, fechar todo o navegador para recomeçar.
 
 if}}
 
@@ -730,7 +730,7 @@ else defaultAction();
 Existe uma construção chamada `switch` que tem a intenção de expressar
 o envio de uma forma mais direta. Infelizmente, a sintaxe que o JavaScript usa para isso
 (que é herdada das linhas de linguagem de programação C/Java)
-é de alguma forma estranha -uma corrente de declarações `if` talvez 
+é de alguma forma estranha. Uma corrente de declarações `if` talvez 
 seria melhor apresentável. Aqui está um exemplo:
 
 ```
@@ -752,12 +752,12 @@ switch (prompt("What is the weather like?")) {
 {{index fallthrough, "break keyword", "case keyword", "default keyword"}}
 
 Você poderia inserir quantos rótulos de `case` quiser dentro de um bloco aberto por `switch`.  
-O programa irá iniciar a execução no rótulo que corresponde ao valor que foi dado ao `switch`,
-ou pelo `default` e nenhuma combinação de valores for encontrada. Ele irá continuar executando,
+O programa iniciará a execução no rótulo que corresponde ao valor que foi dado ao `switch`,
+ou pelo `default` se nenhuma combinação de valores for encontrada. Ele irá continuar executando,
 mesmo através de outros rótulos, até encontrar uma declaração `break`. Em alguns casos,
 assim como o caso `sunny` no exemplo, ele pode ser usado para compartilhar algum código entre _"cases"_
 (ele retorna _"going outside"_ para ambos os climas _"sunny"_ e _"cloudy"_).
-Mas cuidado-é fácil se esquecer de tal `break`, o que irá fazer o programa executar código que você
+Mas cuidado, é fácil se esquecer de tal `break`, o que irá fazer o programa executar código que você
 não deseja que execute.
 
 ## Capitalização
@@ -777,10 +777,10 @@ fuzzyLittleTurtle
 
 {{index "camel case", "programming style", "underscore character"}}
 
-O primeiro estilo pode tornar difícil de ler. Eu particularmente 
+O primeiro estilo pode ser difícil de ler. Eu particularmente 
 prefiro o visual dos _underscores_, embora esse estilo seja penoso para digitar.
-As funções ((padrões)) JavaScript, e a maior parte dos programadores JavaScript,
-seguem o último estilo-eles escrevem com a primeira letra maiúscula todas as palavras
+As funções ((padrões)) JavaScript e a maior parte dos programadores JavaScript
+seguem o último estilo, escrevendo com a primeira letra maiúscula todas as palavras
 exceto a primeira.
 Não é difícil se acostumar com coisas pequenas como essa, e o código com estilos de nomes
 mistos podem se tornar duros de ser ler, então seguimos essa ((convenção)).
@@ -789,7 +789,7 @@ mistos podem se tornar duros de ser ler, então seguimos essa ((convenção)).
 
 Em poucos casos, como a função `Number`, a primeira letra de uma ligação também é maiúscula.
 Isso é feito para marcar essa função como construtora. O que é uma função construtora ficará mais claro no
-[Capítulo ](object#constructors). Por enquanto, a coisa mais importante é não se incomodar
+[Capítulo ?](object#constructors). Por enquanto, a coisa mais importante é não se incomodar
 com essa aparente falta de ((consistência)).
 
 ## Comentários

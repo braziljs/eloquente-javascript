@@ -10,36 +10,37 @@ Capítulo 9
 >
 > — Mestre Yuan-Ma, The Book of Programming
 
-A maneira como técnicas e convenções de programação sobrevivem e se disseminam, ocorrem de um modo caótico, evolucionário. Não é comum que a mais agradável e brilhante vença, mas sim aquelas que combinam bem com o trabalho e o nicho, por exemplo, sendo integradas com outra tecnologia de sucesso.
+A maneira como técnicas e convenções de programação sobrevivem e se disseminam, ocorrem de um modo caótico, evolucionário. Não é comum que a mais agradável e brilhante vença, mas sim aquelas que funcionam bem com o nicho ou as que aparentam ser integradas com outra tecnologia de sucesso.
 
-Neste capítulo, discutiremos uma dessas tecnologias, expressões regulares. Expressões regulares são um modo de descrever padrões em um conjunto de caracteres. Eles formam uma pequena linguagem à parte, que é incluída no JavaScript (assim como em várias outras linguagens de programação e ferramentas).
+Neste capítulo, discutiremos uma dessas tecnologias, expressões regulares. Expressões regulares são um modo de descrever padrões nos dados de uma *string*. Eles formam uma pequena linguagem à parte, que inclui JavaScript e várias outras linguagens e sistemas.
 
-Expressões regulares são ao mesmo tempo, extremamente úteis e estranhas. Conhecê-las apropriadamente facilitará muito vários tipos de processamento de textos. Mas a sintaxe utilizada para descrevê-las é ridiculamente enigmática. Além disso, a interface do JavaScript para elas é um tanto quanto desajeitada.
+Expressões regulares são ao mesmo tempo, estranhas e extremamente úteis. Sua sintaxe é enigmática é a interface que o
+JavaScript oferece para elas é desajeitada. Mas elas são uma ferramenta poderosa utilizada para inspecionar e processar *strings*. A compreensão adequada das expressões regulares fará de você um programador mais eficaz.  
 
 ----
 
-## Notação
+## Criando uma Expressão Regular
 
-Uma expressão regular é um objeto. Ele pode ser construído com o construtor RegExp ou escrito como um valor literal, encapsulando o padrão com o caractere barra ('/').
-
-```js
-var expReg1 = new RegExp("abc");
-var expReg2 = /abc/;
-```
-
-Este objeto representa um padrão, que no caso é uma letra "a" seguida de uma letra "b" e depois um "c".
-
-Ao usar o construtor RegExp, o padrão é escrito como um texto normal, de modo que as regras normais se aplicam para barras invertidas. Na segunda notação, usamos barras para delimitar o padrão. Alguns outros caracteres, como sinais de interrogação (?) e sinais de soma (+), são usados como marcadores especiais em expressões regulares, e precisam ser precedidos por uma barra invertida, para representarem o caractere original e não o comando de expressão regular.
+Uma expressão regular é um tipo de objeto. Ele pode ser construído com o construtor *RegExp* ou escrito como um valor literal, encapsulando o padrão com o caractere barra ('/').
 
 ```js
-var umMaisum = /1 \+ 1/;
+let re1 = new RegExp("abc");
+let re2 = /abc/;
 ```
 
-Saber exatamente quais caracteres devem ser escapados com uma barra invertida em uma expressão regular exige que você saiba todos os caracteres especiais e seus significados na sintaxe de expressões regulares. Por enquanto, pode não parecer fácil saber todos, então, se tiver dúvidas, escape todos os caracteres que não sejam letras e números ou um espaço em branco.
+Ambos os objetos acima representam o mesmo padrão: um caractere "a" seguido de um caractere "b" e depois de um caractere "c".
 
-## Testando por correspondências
+Ao usarmos o construtor *RegExp*, o padrão é escrito como uma *string* normal, de modo que as regras normais se aplicam para barras invertidas.
 
-Expressões regulares possuem vários métodos. O mais simples é test, onde dado um determinado texto, ele retorna um booleano que informa se o padrão fornecido na expressão foi encontrado nesse texto.
+A segunda notação, onde o padrão está entre barras, trata as barras invertidas de maneira um pouco diferente. Primeiro, como uma barra encerra o padrão, é necessário colocarmos uma barra invertida antes de inserirmos qualquer barra que queremos que faça parte do padrão. Além disso, as barras invertidas que não pertecem a códigos de caracteres especiais (como \n) serão preservadas ao invés de serem ignoradas, pois fazem parte de *strings* e alteram o significado do padrão. Alguns caracteres, como sinais de interrogação (?) e sinais de soma (+), possuem um significado especial em expressões regulares e devem ser precedidos por barras invertidas para representarem o próprio caractere, e não o comando de expressão regular.
+
+```js
+let eighteenPlus = /eighteen\+/;
+```
+
+## Teste de correspondências
+
+Expressões regulares possuem vários métodos. O mais simples é o *test*. Se você o passa como uma *string*, ele retorna um booleano que informa se a *string* mantém uma correspondência do padrão na expressão.
 
 ```js
 console.log( /abc/.test("abcde") );
@@ -48,15 +49,15 @@ console.log( /abc/.test("12345") );
 // → false
 ```
 
-Uma expressão regular que contenha apenas caracteres simples, representa essa mesma sequência de caracteres. Se "abc" existe em qualquer lugar (não apenas no início) do texto testado, o resultado será verdadeiro.
+Uma expressão regular que contenha apenas caracteres simples, representa essa mesma sequência de caracteres. Se "abc" existe em qualquer lugar (não apenas no início), *test* retornará verdadeiro.
 
 ## Encontrando um conjunto de caracteres
 
-Saber quando uma _string_contém "abc" pode muito bem ser feito usando a função indexOf. A diferença das expressões regulares é que elas permitem padrões mais complexos de busca.
+Saber quando uma *string* contém "abc" pode muito bem ser feito usando a função *indexOf*. A diferença das expressões regulares é que elas nos permite usar padrões mais complexos.
 
-Digamos que queremos achar qualquer número. Em uma expressão regular, colocar um conjunto de caracteres entre colchetes ("[]") faz com que a expressão ache qualquer dos caracteres dentro dos colchetes.
+Digamos que queremos encontrar qualquer número. Em uma expressão regular, colocar um conjunto de caracteres entre colchetes ("[]") faz com que a expressão encontre qualquer dos caracteres dentro dos colchetes.
 
-A expressão abaixo, acha todas as strings que contem um dígito numérico.
+Ambas as expressões abaixo encontram todas as *strings* que contem um dígito numérico.
 
 ```js
 console.log( /[0123456789]/.test("ano 1992") );
@@ -65,9 +66,9 @@ console.log( /[0-9]/.test("ano 1992") );
 // → true
 ```
 
-Dentro de colchetes, um hífen ("-") entre dois caracteres pode ser usado para indicar um conjunto entre dois caracteres. Uma vez que os códigos de caracteres Unicode de "0" a "9" contém todos os dígitos (códigos 48 a 57), [0-9] encontrará qualquer dígito.
+Dentro de colchetes, um hífen ("-") entre dois caracteres pode ser usado para indicar um conjunto de caracteres, onde a ordem é determinada pelo número *Unicode* do caractere. Os caracteres de "0" a "9" contém todos os dígitos (códigos 48 a 57), então [0-9] e encontra qualquer dígito.
 
-Existem alguns grupos de caracteres de uso comum, que já possuem atalhos incluídos na sintaxe de expressões regulares. Dígitos são um dos conjuntos que você pode escrever usando um atalho, barra invertida seguida de um "d" minúsculo (\d), com o mesmo significado que [0-9].
+Existem alguns grupos de caracteres de uso comum, que já possuem atalhos inclusos na sintaxe de expressões regulares. Dígitos são um dos conjuntos que você pode escrever usando um atalho, barra invertida seguida de um "d" minúsculo (\d), com o mesmo significado que [0-9].
 
 	- \d	caracteres numéricos
 	- \w	caracteres alfanuméricos ("letras")
@@ -77,26 +78,25 @@ Existem alguns grupos de caracteres de uso comum, que já possuem atalhos inclu�
 	- \S	caracteres que não representam espaços
 	- . (ponto)	todos os caracteres, exceto espaços
 
-Para cada um dos atalhos de conjuntos de caracteres, existe uma variação em letra maiúscula que significa o exato oposto.
 
 Então você pode registrar um formato de data e hora como "30/01/2003 15:20" com a seguinte expressão:
 
 ```js
-var dataHora = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
+let dataHora = /\d\d\/\d\d\/\d\d\d\d \d\d:\d\d/;
 console.log( dataHora.test("30/01/2003 15:20") );
 // → true
 console.log( dataHora.test("30/jan/2003 15:20") );
 // → false
 ```
 
-Parece confuso, certo? Muitas barras invertidas, sujando a expressão, que dificultam compreender qual o padrão procurado. Mas é assim mesmo o trabalho com expressões regulares.
+Parece confuso, certo? Muitas barras invertidas sujando a expressão e dificultando compreender qual é o padrão procurado. Veremos mais a frente uma versão melhorada desta expressão.
 
-Estes marcadores de categoria também podem ser usados dentro de colchetes, então [\d.] significa qualquer dígito ou ponto.
+Estes marcadores de categoria também podem ser usados dentro de colchetes, então [\d.] significa qualquer dígito ou caractere de ponto final. Mas o próprio ponto final, entre colchetes, perde seu significado especial. O mesmo vale para outros caracteres especiais, como +.
 
-Para "inverter" um conjunto de caracteres, buscar tudo menos o que você escreveu no padrão, um cento circunflexo ("^") é colocado no início do colchete de abertura.
+Para "inverter" um conjunto de caracteres e buscar tudo menos o que você escreveu no padrão, você pode colocar um acento circunflexo ("^") após abrir colchetes.
 
 ```js
-var naoBinario = /[^01]/;
+let naoBinario = /[^01]/;
 console.log( naoBinario.test("01101") );
 // → false
 console.log( naoBinario.test("01201") );
@@ -105,9 +105,9 @@ console.log( naoBinario.test("01201") );
 
 ## Partes repetidas em um padrão
 
-Já aprendemos a encontrar um dígito, mas o que realmente queremos é encontrar um número, uma sequência de um ou mais dígitos.
+Agora nós já sabemos como encontrar um dígito, mas e se o que queremos é encontrar um número, uma sequência de um ou mais dígitos?
 
-Quando se coloca um sinal de mais ("+") depois de algo em uma expressão regular, indicamos que pode existir mais de um. Então /\d+/ encontra um ou mais dígitos.
+Quando colocamos um sinal de mais ("+") depois de algo em uma expressão regular, indicamos que pode existir mais de um. Então /\d+/ encontra um ou mais dígitos.
 
 ```js
 console.log( /'\d+'/.test("'123'") );
@@ -120,9 +120,9 @@ console.log( /'\d*'/.test("''") );
 // → true
 ```
 
-O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Então, algo com um asterisco depois não impede um padrão de ser achado, apenas retornando zero resultados.
+O asterisco ("*") tem um significado similar, mas também permite não encontrar o padrão. Então, algo colocado com um asterisco depois dele, não impede um padrão de ser achado, ele apenas retornará zero resultados se não conseguir encontrar algum texto adequado.
 
-Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero ou uma vez. Neste exemplo, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente.
+Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero vezes ou apenas uma vez. No exemplo a seguir, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente.
 
 ```js
 var neighbor = /neighbou?r/;
@@ -132,59 +132,58 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-Para permitir que um padrão ocorra um número definido de vezes, chaves ("{}") são usadas. Colocando {4} depois de um elemento do padrão, mostra que ele deve ocorrer 4 vezes, exatamente. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
+Para permitir que um padrão ocorra um número definido de vezes, use chaves ("{}"). Colocando {4} depois de um elemento do padrão, requer que ele ocorra exatamente 4 vezes. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
 
-Segue outra versão do padrão mostrado acima, de data e hora. Ele permite, dias com um dígito, mês e hora como números e mais legível:
+Aqui está outra versão do padrão de data e hora que permite dias, meses e horas com um ou mais dígitos. Também são mais legíveis:
 
 ```js
-var dataHora = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
+let dataHora = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}/;
 console.log( dataHora.test("30/1/2003 8:45") );
 // → true
 ```
 
-Também é possível deixar em aberto o número mínimo ou máximo de ocorrências, omitindo o número correspondente. Então {,5} significa que deve ocorrer de 0 até 5 vezes e {5,} significa que deve ocorrer cinco ou mais vezes.
+Também é possível deixar em aberto o número mínimo ou máximo de ocorrências, omitindo o número após a vírgula. Então {5,} significa que deve ocorrer cinco ou mais vezes.
 
 ## Agrupando subexpressões
 
-Para usar um operador como "*" ou "+" em mais de um caractere de de uma vez, é necessário o uso de parênteses. Um pedaço de uma expressão regular que é delimitado por parênteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
+Para usar um operador como "*" ou "+" em mais de um caractere por vez, é necessário o uso de parênteses. Um pedaço de uma expressão regular que é delimitado por parênteses conta como uma única unidade, assim como os operadores aplicados a esse pedaço delimitado.
 
 ```js
-var cartoonCrying = /boo+(hoo+)+/i;
+let cartoonCrying = /boo+(hoo+)+/i;
 console.log( cartoonCrying.test("Boohoooohoohooo") );
 // → true
 ```
 
-O terceiro "+" se aplica a todo grupo (hoo+), encontrando uma ou mais sequências como essa.
+O terceiro e segundo "+" aplicam-se apenas ao segundo *o* em *boo hoo*, respectivamente.  O terceiro "+" se aplica a todo grupo (hoo+), combinando uma ou mais sequências como essa.
 
-O "i" no final da expressão do exemplo acima faz com que a expressão regular seja case-insensitive, permitindo-a encontrar a letra maiúscula "B" na _string_dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
+O "i" no final da expressão do exemplo acima faz com que a expressão regular seja case-insensitive, permitindo-a encontrar a letra maiúscula "B" na *string* dada, mesmo que a descrição do padrão tenha sido feita em letras minúsculas.
 
 ## Resultados e grupos
 
-O método test é a maneira mais simples de encontrar correspondências de uma expressão regular. Ela apenas informa se foi encontrado algo e mais nada. Expressões regulares também possuem o método exec (executar), que irá retornar null quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
+O método *test* é a maneira mais simples de encontrar correspondências de uma expressão regular. Ela apenas informa se foi encontrado algo e nada mais. Expressões regulares também possuem o método *exec* (executar), que irá retornar *null* quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
 
 ```js
-var match = /\d+/.exec("one two 100");
+let match = /\d+/.exec("one two 100");
 console.log(match);
 // → ["100"]
 console.log(match.index);
 // → 8
 ```
+Um objeto retornado pelo método *exec* possui um index de propriedades que informa aonde na *string* o resultado encontrado se inicia. Além disso, o objeto parece (e de fato é) um *array* de *strings*, cujo primeiro elemento é a *string* que foi encontrada. No exemplo anterior, esta é a sequência de dígitos que estávamos procurando.
 
-Valores _string_possuem um método que se comporta de maneira semelhante.
+Valores *string* possuem um método que se comporta de maneira semelhante.
 
 ```js
 console.log("one two 100".match(/\d+/));
-// → ["100", index: 8, input: "one two 100"]
+// → ["100"]
 ```
 
-Um objeto retornado pelo método exec ou match possui um index de propriedades que informa aonde na _string_o resultado encontrado se inicia. Além disso, o objeto se parece (e de fato é) um array de strings, onde o primeiro elemento é a _string_que foi achada, no exemplo acima, a sequência de dígitos numéricos.
-
-Quando uma expressão regular contém expressões agrupadas entre parênteses, o texto que corresponde a esses grupos também aparece no array. O primeiro elemento sempre é todo o resultado, seguido pelo resultado do primeiro grupo entre parênteses, depois o segundo grupo e assim em diante.
+Quando uma expressão regular contém expressões agrupadas entre parênteses, o texto que corresponde a esses grupos também aparece no *array*. O primeiro elemento sempre é todo o resultado, seguido pelo resultado do primeiro grupo entre parênteses, depois o segundo grupo e assim em diante.
 
 ```js
-var textoCitado = /'([^']*)'/;
-console.log( textoCitado.exec("'ela disse adeus'") );
-// → ["'ela disse adeus'", "ela disse adeus", index: 0, input: "'ela disse adeus'"]
+let textoCitado = /'([^']*)'/;
+console.log( textoCitado.exec("ela disse 'olá'") );
+// → ["'olá'", "olá"]
 ```
 
 Quando um grupo não termina sendo achado (se por exemplo, possui um sinal de interrogação depois dele), seu valor no array de resultado será undefined. Do mesmo modo, quando um grupo é achado várias vezes, apenas o último resultado encontrado estará no array.

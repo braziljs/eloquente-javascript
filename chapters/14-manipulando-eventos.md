@@ -14,7 +14,7 @@ Imaginem uma interface onde a única maneira de descobrir se uma tecla está sen
 
 É claro que ha sempre uma responsabilidade de verificar a fila e executá-las várias vezes, isso é necessário porque ha uma latência entre a pressão da tecla e a leitura da fila pelo programa com isso o software pode sentir que não esta tendo resposta. Esta abordagem é chamada de `polling`. A maioria dos programadores tentam evitar essa abordagem sempre que possível.
 
-A melhor mecanismo para o sistema subjacente é dar ao nosso código a chance de reagir a eventos que ocorrerem. Os browsers podem fazerem isto por que nos permite registrar funções como manipuladores para eventos específicos.
+O melhor mecanismo para o sistema subjacente é dar ao nosso código a chance de reagir a eventos que ocorrerem. Os browsers podem fazer isto por que nos permite registrar funções como manipuladores para eventos específicos.
 
 ````html
 <p>Click this document to activate the handler.</p>

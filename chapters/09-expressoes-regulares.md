@@ -195,17 +195,17 @@ console.log(/(\d)+/.exec("123"));
 // → ["123", "3"]
 ```
 
-Grupos podem ser muito úteis para extrair partes de uma string. Por exemplo, podemos não querer apenas verificar quando uma _string_contém uma data, mas também extraí-la, e construir um objeto que a representa. Se adicionarmos parênteses em volta do padrão de dígitos, poderemos selecionar a data no resultado da função exec.
+Grupos podem ser muito úteis para extrair partes de uma *string*. Por exemplo, podemos querer não apenas verificar quando uma *string* contém uma data, mas também extraí-la, e construir um objeto que a representa. Se adicionarmos parênteses em volta do padrão de dígitos, poderemos selecionar a data no resultado da função *exec*.
 
-Mas antes, um pequeno desvio.
+Mas antes, um pequeno desvio, na qual discutiremos a maneira integrada de representar os valores de data e hora em JavaScript.
 
-## O tipo _data_
+## O tipo *data*
 
-O JavaScript possui um objeto padrão para representar datas, ou melhor, pontos no tempo. Ele é chamado _Date_. Se você simplesmente criar uma data usando _new_, terá a data e hora atual.
+O JavaScript possui uma classe padrão para representar datas, ou melhor, pontos no tempo. Ele é chamado *Date*. Se você simplesmente criar uma data usando *new*, terá a data e hora atual.
 
 ```js
 console.log( new Date() );
-// → Fri Feb 21 2014 09:39:31 GMT-0300 (BRT)
+// → Mon Nov 13 2017 16:19:11 GMT+0300 (BRT)
 ```
 
 Também é possível criar um objeto para uma hora específica
@@ -217,11 +217,11 @@ console.log( new Date(1981, 6, 29, 18, 30, 50) );
 // → Wed Jul 29 1981 18:30:50 GMT-0300 (BRT)
 ```
 
-O JavaScript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias iniciam-se em um. É bem confuso, então, tenha cuidado.
+O JavaScript utiliza uma convenção onde a numeração dos meses se inicia em zero (então Dezembro é 11), mas os dias iniciam-se em um. É bem confuso e bobo, então, tenha cuidado.
 
 Os últimos quatro argumentos (horas, minutos, segundos e milissegundos) são opcionais, e assumem o valor de zero se não forem fornecidos.
 
-Internamente, objetos do tipo data são armazenados como o número de milissegundos desde o início de 1970. Usar o método _getTime_ em uma data retorna esse número, e ele é bem grande, como deve imaginar.
+Internamente, objetos do tipo data são armazenados como o número de milissegundos desde o início de 1970, no fuso horário UTC. Ele segue uma convenção definida pela "hora do Unix", que foi inventada nessa época. Você pode usar números negativos para tempos anteriores a 1970. Usar o método *getTime* em uma data retorna esse número, e ele é bem grande, como deve imaginar.
 
 ```js
 console.log( new Date(2014, 2, 21).getTime() );
@@ -230,23 +230,24 @@ console.log( new Date( 1395370800000 ) );
 // → Fri Mar 21 2014 00:00:00 GMT-0300 (BRT)
 ```
 
-Quando fornecemos apenas um argumento ao construtor do _Date_, ele é tratado como se fosse um número de milissegundos.
+Quando fornecemos apenas um argumento ao construtor do *Date*, ele é tratado como se fosse um número de milissegundos. Você pode obter a contagem atual de milissegundos criando um novo objeto *Date* usando o método *getTime* ou chamando a função *Date.now*.
 
-Objetos _Date_ possuem métodos como _getFullYear_ (_getYear_ retorna apenas os inúteis dois últimos dígitos do ano), _getMonth_, _getDate_, _getHours_, _getMinutes_ e _getSeconds_  para extrair os componentes da data.
+Objetos *Date* possuem métodos como *getFullYear*, *getMonth*, *getDate*, *getHours*, *getMinutes* e *getSeconds* para extrair seus componentes. Além de *getFullYear*, também há *getYear* que retorna o ano menos 1900 (98 ou 119) o que é quase inútil.
 
-Então agora, ao colocar parênteses em volta das partes que nos interessam, podemos facilmente extrair uma data de uma _string_.
+Então agora, ao colocarmos parênteses em volta das partes que nos interessam, podemos facilmente extrair uma data de uma *string*.
 
 ```js
 function buscaData(string) {
-  var dateTime = /(\d{1,2})\/(\d{1,2})\/(\d{4})/;
-  var match = dateTime.exec(string);
-  return new Date( Number(match[3]), Number(match[2] ), Number(match[1]) );
+  let [_, month, day, year] = 
+  /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(string);
+  return new Date(year, month -1, day);
 }
 console.log( buscaData("21/1/2014") );
 // → Fri Feb 21 2014 00:00:00 GMT-0300 (BRT)
 ```
+O _ (underline) é ignorado e usado apenas para pular o elemento completo de correspondência no *array* retornado por *exec*.
 
-## Limites de palavra e _string_
+## Limites de palavra e *string*
 
 A função _buscaData_ acima irá extrair facilmente a data de um texto como "100/1/30000", um resultado pode acontecer em qualquer lugar da _string_ fornecida, então, nesse caso, vai encontrar no segundo caractere e terminar no último
 

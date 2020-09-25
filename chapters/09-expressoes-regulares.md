@@ -249,29 +249,29 @@ O _ (underline) é ignorado e usado apenas para pular o elemento completo de cor
 
 ## Limites de palavra e *string*
 
-A função _buscaData_ acima irá extrair facilmente a data de um texto como "100/1/30000", um resultado pode acontecer em qualquer lugar da _string_ fornecida, então, nesse caso, vai encontrar no segundo caractere e terminar no último
+Infelizmente, a função *buscaData* acima também irá extrair a data absurda 00-1-3000 da *string* "100-1-30000", um resultado pode acontecer em qualquer lugar da *string* fornecida, então, nesse caso, vai encontrar no segundo caractere e terminar no penúltimo.
 
-Se quisermos nos assegurar que a busca seja em todo o texto, podemos adicionar os marcadores  "^" e "$". O primeiro acha o início da _string_ fornecida e o segundo o final dela. Então /^\d+$/ encontra apenas em uma _string_ feita de um ou mais dígitos, /^!/ encontra qualquer _string_ que começa com sinal de exclamação e /x^/ não acha nada (o início de uma _string_ não pode ser depois de um caractere).
+Se quisermos nos assegurar que a busca seja em todo a *string*, podemos adicionar os marcadores  "^" e "$". O acento circunflexo corresponde ao início da *string* fornecida, enquanto a sifrão  corresponde ao final dela. Então /^\d+$/ encontra apenas em uma *string* feita de um ou mais dígitos, /^!/ encontra qualquer *string* que começa com sinal de exclamação e /x^/ não corresponde a nenhuma *string* (não pode haver um x antes do início da *string*).
 
-Se, por outro lado, queremos ter certeza que a data inicia e termina no limite da palavra, usamos o marcador \b. Um limite de palavra é um ponto onde existe um caractere de um lado e um caractere que não seja de palavra de outro.
+Se, por outro lado, queremos ter certeza que a data inicia e termina no limite da palavra, usamos o marcador \b. Um limite de palavra pode ser no início ou fim de uma *string* ou qualquer ponto nela em que tenha um caractere de palavra de um lado e um caractere que não seja uma palavra de outro (como em \w).
 
 ```js
-console.log( /cat/.test("concatenate") );
+console.log( /cat/.test("concatenate"));
 // → true
-console.log( /\bcat\b/.test("concatenate") );
+console.log( /\bcat\b/.test("concatenate"));
 // → false
 ```
 
-Note que esses marcadores de limite não cobrem nenhum caractere real, eles apenas asseguram que o padrão de busca irá achar algo na posição desejada, informada nos marcadores.
+Note que esses marcadores de limite não cobrem nenhum caractere real, eles apenas asseguram que a expressão regular corresponda apenas quando uma certa condição for mantida no lugar onde ele aparece no padrão.
 
-## Alternativas
+## Padrões de escolha ----- parei aquiiiii
 
 Agora, queremos saber se um pedaço do texto contém não apenas um número, mas um número seguido por uma das palavras "porco", "vaca", "galinha" ou seus plurais também.
 
 Podemos escrever três expressões regulares, e testar cada uma, mas existe uma maneira mais simples. O caractere pipe ("|") indica uma opção entre o padrão à esquerda ou a direita. Então podemos fazer:
 
 ```js
-var contagemAnimal = /\b\d+ (porco|vaca|galinha)s?\b/;
+let contagemAnimal = /\b\d+ (porco|vaca|galinha)s?\b/;
 console.log( contagemAnimal.test("15 porcos") );
 // → true
 console.log( contagemAnimal.test("15 porcosgalinhas") );

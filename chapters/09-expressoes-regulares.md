@@ -264,38 +264,40 @@ console.log( /\bcat\b/.test("concatenate"));
 
 Note que esses marcadores de limite não cobrem nenhum caractere real, eles apenas asseguram que a expressão regular corresponda apenas quando uma certa condição for mantida no lugar onde ele aparece no padrão.
 
-## Padrões de escolha ----- parei aquiiiii
+## Padrões de escolha
 
-Agora, queremos saber se um pedaço do texto contém não apenas um número, mas um número seguido por uma das palavras "porco", "vaca", "galinha" ou seus plurais também.
+Digamos que queremos saber se um pedaço do texto contém não apenas um número, mas um número seguido por uma das palavras "porco", "vaca", "galinha" ou seus plurais também.
 
-Podemos escrever três expressões regulares, e testar cada uma, mas existe uma maneira mais simples. O caractere pipe ("|") indica uma opção entre o padrão à esquerda ou a direita. Então podemos fazer:
+Podemos escrever três expressões regulares, e testar cada uma, mas existe uma maneira mais simples. O caractere pipe ( | ) indica uma opção entre o padrão à esquerda ou a direita. Então podemos fazer:
 
 ```js
 let contagemAnimal = /\b\d+ (porco|vaca|galinha)s?\b/;
 console.log( contagemAnimal.test("15 porcos") );
 // → true
-console.log( contagemAnimal.test("15 porcosgalinhas") );
+console.log( contagemAnimal.test("15 porcosgalinhas"));
 // → false
 ```
 
-Parênteses podem ser usados para limitar a que parte do padrão que o pipe ("|") se aplica, e você pode colocar vários desses operadores lado a lado para expressar uma escolha entre mais de dois padrões.
+Parênteses podem ser usados para limitar a que parte do padrão que o pipe ( | ) se aplica, e você pode colocar vários desses operadores lado a lado para expressar uma escolha entre mais de dois padrões.
 
-## O mecanismo de procura
+## O mecanismo de correspondência
+
+Conceitualmente, quando usamos *exec* ou *test*, o mecanismo de expressão regular busca uma correspondência em sua *string*, tentando corresponder à expressão do início da *string* primeiro, depois do segundo caractere e assim por diante, até encontrar uma correspondência ou chegar ao fim da *string*. Ele retornará a primeira correspondência que pode ser encontrada ou não encontrará nenhuma correspondência.
+
+Para fazer a correspondência atual, o mecanismo trata a expressão regular como um diagrama de fluxo. Este é o diagrama para a expressão do conjunto de animais do exemplo anterior:
 
 ![O mecanismo de procura](../img/re_porcogalinhas.svg)
 
-Uma _string_ corresponde à expressão se um caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na sequência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais (menos os limites de palavra), continue no fluxo das caixas.
+Uma *string* corresponde à expressão se um caminho do início (esquerda) até o final (direita) do diagrama puder ser encontrado, com uma posição inicial e final correspondente, de modo que cada vez que passar em uma caixa, verificamos que a posição atual na sequência corresponde ao elemento descrito nela, e, para os elementos que correspondem caracteres reais (menos os limites de palavra), continue no fluxo das caixas.
 
-Então se encontrarmos "the 3 pigs" existe uma correspondência entre as posições 4 (o dígito "3") e 10 (o final da string).
+Portanto, se tentarmos combinar "os 3 porcos" da posição 4, nosso progresso através do fluxograma ficaria assim:
 
 - Na posição 4, existe um limite de palavra, então passamos a primeira caixa
-- Ainda na posição 4, encontramos um dígito, então ainda podemos passar a primeira caixa.
+- Ainda na posição 4, encontramos um dígito, então também podemos passar a segunda caixa.
 - Na posição 5, poderíamos voltar para antes da segunda caixa (dígitos), ou avançar através da caixa que contém um único caractere de espaço. Há um espaço aqui, não um dígito, por isso escolhemos o segundo caminho.
 - Estamos agora na posição 6 (o início de "porcos") e na divisão entre três caminhos do diagrama. Nós não temos "vaca" ou "galinha" aqui, mas nós temos "porco", por isso tomamos esse caminho.
-- Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa de "s".
-- Estamos na posição 10 (final da string) e só podemos achar um limite de palavra. O fim de uma _string_ conta como um limite de palavra, de modo que passamos a última caixa e achamos com sucesso a busca.
-
-O modo como o mecanismo de expressões regulares do JavaScript trata uma busca em uma _string_ é simples. Começa no início da _string_ e tenta achar um resultado nela. Nesse casso, existe um limite de palavra aqui, então passamos pela primeira caixa, mas não existe um dígito, então ele falha na segunda caixa. Continua no segundo caractere da _string_ e tenta novamente. E assim continua, até encontrar um resultado ou alcançar o fim da _string_ e concluir que não encontrou nenhum resultado
+- Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa "s".
+- Estamos na posição 10 (final da string) e só podemos achar um limite de palavra. O fim de uma *string* conta como um limite de palavra, de modo que passamos através da última caixa e combinamos com sucesso a *string*.
 
 ## Retrocedendo
 

@@ -58,7 +58,7 @@ então ela se equivale a algo apenas se afetar o "mundo".
 Ela poderia exibir algo na tela, que conta enquanto muda o "mundo", ou poderia alterar o 
 estado interno da máquina de uma forma que irá afetar as declarações que vierem depois dela. 
 Essas mudanças são chamadas de _((efeito(s) colateral))is_. 
-As declarações no exemplo anterior apenas produzem os valores `1` e `true` e, então, imediatamente, os joga fora. 
+As declarações no exemplo anterior apenas produzem os valores `1` e `true` e, então, imediatamente os joga fora. 
 Isso não deixa nenhuma impressão no mundo. Quando você executar esse programa, nada observável acontece.
 
 {{index "programming style", "automatic semicolon insertion", semicolon}}
@@ -123,8 +123,8 @@ console.log(mood);
 {{index [binding, "model of"], "tentacle (analogy)"}}
 
 Você deveria imaginar ligações como tentáculos, ao invés de caixas.
-Elas não _contêm_ valores, elas _pegam_ eles, duas ligações podem se referir ao
-mesmo valor. Um programa pode acessar apenas os valores que ainda possui referência. 
+Elas não _contêm_ valores, elas _pegam_ eles (duas ligações podem se referir ao
+mesmo valor). Um programa pode acessar apenas os valores que ainda possui referência. 
 Quando você necessita lembrar de algo, você produz um tentáculo para se agarrar a isso
 ou você reatribui um de seus tentáculos existentes à isso.
 
@@ -436,9 +436,9 @@ if (num < 10) {
 }
 ```
 O programa vai primeiro checar se `num` é menor que 10. Se for,
-ele escolherá essa ramificação, mostre "Small" e pronto. Se não for,
+ele escolherá essa ramificação, mostrando "Small" e pronto. Se não for,
 ele pegará a ramificação do `else`, que contém um segundo `if`. Se a segunda
-condição (`< 100`) for satisfeita, isso significa que o número está entre 10 e 100, e "Medium" é exibido.
+condição (`< 100`) for satisfeita, isso significa que o número está entre 10 e 100 e `"Medium"` é exibido.
 Se não, a segunda e última ramificação `else` é escolhida.
 
 O esquema para esse programa se parece como algo assim:
@@ -563,7 +563,7 @@ do código se destacar. No código onde novos blocos são abertos dentro de outr
 pode se tonar difícil de perceber onde um bloco termina e o outro começa.
 Com a indentação apropriada, a forma visual de um programa corresponde à forma dos blocos dentro dele.
 Eu gosto de usar dois espaços para cada bloco aberto, mas gostos diferem. Algumas pessoas usam
-quatro espaços, e outras usam o ((caractere tab)). O mais importante é que cada novo bloco adicione
+quatro espaços e outras usam o ((caractere tab)). O mais importante é que cada novo bloco adicione
 a mesma quantidade de espaço.
 
 ```
@@ -753,7 +753,7 @@ switch (prompt("What is the weather like?")) {
 
 Você poderia inserir quantos rótulos de `case` quiser dentro de um bloco aberto por `switch`.  
 O programa iniciará a execução no rótulo que corresponde ao valor que foi dado ao `switch`,
-ou pelo `default` se nenhuma combinação de valores for encontrada. Ele irá continuar executando,
+ou pelo `default` se nenhuma combinação de valores for encontrada. Ele continuará executando,
 mesmo através de outros rótulos, até encontrar uma declaração `break`. Em alguns casos,
 assim como o caso `sunny` no exemplo, ele pode ser usado para compartilhar algum código entre _"cases"_
 (ele retorna _"going outside"_ para ambos os climas _"sunny"_ e _"cloudy"_).

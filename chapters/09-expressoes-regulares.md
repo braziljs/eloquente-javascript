@@ -303,33 +303,33 @@ Portanto, se tentarmos combinar "os 3 porcos" da posição 4, nosso progresso at
 
 A expressão regular /\b([01]+b|\d+|[\da-f]h)\b/ encontra um número binário seguido por um "b", um número decimal, sem um caractere de sufixo, ou um número hexadecimal (de base 16, com as letras "a" a "f" para os algarismos de 10 a 15), seguido por um "h". Este é o diagrama equivalente:
 
-http://eloquentJavaScript.net/2nd_edition/preview/img/re_number.svg
+![Retrocedendo](../img/re_number.svg)
 
-Ao buscar esta expressão, muitas vezes o ramo superior será percorrido, mesmo que a entrada não contenha realmente um número binário. Quando busca a _string_ "103", é apenas no "3" que torna-se claro que estamos no local errado. A expressão é buscada não apenas no ramo que se está executando.
+Ao buscar esta expressão, muitas vezes o ramo superior será percorrido, mesmo que a entrada não contenha realmente um número binário. Quando busca a *string* "103", é apenas no "3" que torna-se claro que estamos no local errado. A *string* é buscada não apenas no ramo que se está executando.
 
-É o que acontece se a expressão retroage. Quando entra em um ramo, ela guarda em que ponto aconteceu (nesse caso, no início da _string_, na primeira caixa do diagrama), então ela retrocede e tenta outro ramo do diagrama se o atual não encontra nenhum resultado. Então para a _string_ "103", após encontrar o caractere "3", ela tentará o segundo ramo, teste de número decimal. E este, encontra um resultado.
+É o que acontece se a expressão retroage. Quando entra em um ramo, ela guarda em que ponto aconteceu (nesse caso, no início da *string*, na primeira caixa do diagrama), então ela retrocede e tenta outro ramo do diagrama se o atual não encontra nenhum resultado. Então para a *string* "103", após encontrar o caractere "3", ela tentará o segundo ramo do número decimal. E este, encontra um resultado.
 
 Quando mais de um ramo encontra um resultado, o primeiro (na ordem em que foi escrito na expressão regular) será considerado.
 
-Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se buscarmos /^.*x/  em "abcxe", a parte ".*" tentará achar toda a _string_. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da _string_. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
+Retroceder acontece também, de maneiras diferentes, quando buscamos por operadores repetidos. Se buscarmos /^.*x/  em "abcxe", a parte ".*" tentará achar toda a *string*. Depois, tentará achar apenas o que for seguido de um "x", e não existe um "x" no final da *string*. Então ela tentará achar desconsiderando um caractere, e outro, e outro. Quando acha o "x", sinaliza um resultado com sucesso, da posição 0 até 4.
 
-É possível escrever expressões regulares que fazem muitos retrocessos. O Problema ocorre quando um padrão encontra um pedaço da _string_ de entrada de muitas maneiras. Por exemplo, se confundimos e escrevemos nossa expressão regular para achar binários e números assim /([01]+)+b/.
+É possível escrever expressões regulares que fazem muitos retrocessos. O Problema ocorre quando um padrão encontra um pedaço da *string* de entrada de muitas maneiras. Por exemplo, se confundimos e escrevemos nossa expressão regular para achar binários e números assim /([01]+)+b/.
 
-http://eloquentJavaScript.net/2nd_edition/preview/img/re_slow.svg
+![retrocessos](../img/re_slow.svg)
 
-Ela tentará achar séries de zeros sem um "b" após elas, depois irá percorrer o circuito interno até passar por todos os dígitos. Quando perceber que não existe nenhum "b", retorna uma posição e passa pelo caminho de fora mais uma vez, e de novo, retrocedendo até o circuito interno mais uma vez. Continuará tentando todas as rotas possíveis através destes dois _loops_, em todos os caracteres. Para _strings_ mais longas o resultado demorará praticamente para sempre.
+Ela tentará achar séries de zeros sem um "b" após elas, depois irá percorrer o circuito interno até passar por todos os dígitos. Quando perceber que não existe nenhum "b", retorna uma posição e passa pelo caminho de fora mais uma vez, e de novo, retrocedendo até o circuito interno mais uma vez. Continuará tentando todas as rotas possíveis através destes dois *loops*, em todos os caracteres. Para *strings* mais longas o resultado demorará praticamente para sempre.
 
 
 ## O método _replace_
 
-_Strings_ possuem o método _replace_, que pode ser usado para substituir partes da _string_ com outra _string_
+*Strings* possuem o método *replace*, que pode ser usado para substituir partes da *string* com outra *string*.
 
 ```js
 console.log("papa".replace("p", "m"));
 // → mapa
 ```
 
-O primeiro argumento também pode ser uma expressão regular, que na primeira ocorrência de correspondência será substituída.
+O primeiro argumento também pode ser uma expressão regular, que na primeira ocorrência de correspondência será substituída. Quando a opção "g" ("global") é adicionada à expressão, todas as ocorrências serão substituídas, não só a primeira.
 
 ```js
 console.log("Borobudur".replace(/[ou]/, "a"));
@@ -338,37 +338,34 @@ console.log("Borobudur".replace(/[ou]/g, "a"));
 // → Barabadar
 ```
 
-Quando a opção "g" ("global") é adicionada à expressão, todas as ocorrências serão substituídas, não só a primeira.
+Seria melhor se essa opção fosse feita através de outro argumento adicional para substituir ou fornecer um método diferente, um *replaceAll*. Mas infelizmente a escolha depende de uma propriedade de expressão regular. 
 
-Seria melhor se essa opção fosse feita através de outro argumento, em vez de usar a opção própria de uma expressão regular. (Este é um exemplo de falha na sintaxe do JavaScript)
-
-A verdadeira utilidade do uso de expressões regulares com o método _replace_ é a opção de fazer referências aos grupos achados através da expressão. Por exemplo, se temos uma _string_ longa com nomes de pessoas, uma por linha, no formato "Sobrenome, Nome" e queremos trocar essa ordem e remover a vírgula, para obter o formato "Nome Sobrenome", podemos usar o seguinte código:
+A verdadeira utilidade do uso de expressões regulares com o método *replace* é a opção de fazer referências aos grupos combinados através da *string*. Por exemplo, se temos uma *string* longa com nomes de pessoas, uma por linha, no formato "Sobrenome, Nome" e queremos trocar essa ordem e remover a vírgula, para obter o formato "Nome Sobrenome", podemos usar o seguinte código:
 
 ```js
-console.log("Hopper, Grace\nMcCarthy, John\nRitchie, Dennis".replace(/([\w ]+), ([\w ]+)/g, "$2 $1"));
-// → Grace Hopper
+console.log("Lisvok, Barbara\nMcCarthy, John\nWadler, Phillip".replace(/([\w ]+), ([\w ]+)/g, "$2 $1"));
+// → Barbara Lisvok
 //   John McCarthy
-//   Dennis Ritchie
+//   Philip Wadler
 ```
 
-O "$1" e "$2" na _string_ de substituição referem-se as partes entre parênteses no padrão. "$1" será substituído pelo texto achado no primeiro grupo entre parênteses e "$2" pelo segundo, e assim em diante, até "$9".
+O "$1" e "$2" na *string* de substituição referem-se as partes entre parênteses no padrão. "$1" será substituído pelo texto encontrado no primeiro grupo entre parênteses e "$2" pelo segundo, e assim em diante, até "$9". A correspondência inteira pode ser referenciada com $&.
 
-Também é possível passar uma função, em vez de uma _string_ no segundo argumento do método _replace_. Para cada substituição, a função será chamada com os grupos achados (assim como o padrão) como argumentos, e o valor retornado pela função será inserido na nova _string_.
+Também é possível passar uma função, em vez de uma *string* no segundo argumento do método *replace*. Para cada substituição, a função será chamada com os grupos encontrados (assim como o padrão) como argumentos, e o valor retornado pela função será inserido na nova *string*.
 
-Segue um exemplo simples:
+Aqui está um pequeno exemplo:
 
 ```js
-var s = "the cia and fbi";
-console.log(s.replace(/\b(fbi|cia)\b/g, function(str) {
-  return str.toUpperCase();
-}));
+let s = "the cia and fbi";
+console.log(s.replace(/\b(fbi|cia)\b/g,
+  str => str.toUpperCase()));
 // → the CIA and FBI
 ```
 
-E outro exemplo:
+E outro exemplo mais interessante:
 
 ```js
-var stock = "1 lemon, 2 cabbages, and 101 eggs";
+let stock = "1 lemon, 2 cabbages, and 101 eggs";
 function minusOne(match, amount, unit) {
   amount = Number(amount) - 1;
   if (amount == 1) // only one left, remove the 's'
@@ -381,13 +378,13 @@ console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 // → no lemon, 1 cabbage, and 100 eggs
 ```
 
-Ele pega a _string_, acha todas as ocorrências de um número seguido por uma palavra alfanumérica e retorna uma nova _string_ onde cada achado é diminuído em um.
+Ele pega a *string*, encontra todas as ocorrências de um número seguido por uma palavra alfanumérica e retorna uma nova *string* onde em cada ocorrência é diminuído por um.
 
-O grupo (\d+) finaliza o argumento da função e o (\w+) limita a unidade. A função converte o valor em um número, desde que achado, \d+ faz ajustes caso exista apenas um ou zero esquerda.
+O grupo (\d+) finaliza o argumento *amount* da função e o (\w+) limita a unidade. A função converte o valor em um número, desde que encontrado, \d+ faz ajustes caso exista apenas um ou zero esquerda.
 
 ## Quantificador / Greed
 
-É simples usar o método _replace_ para escrever uma função que remove todos os comentários de um pedaço de código JavaScript. Veja uma primeira tentativa
+É simples usar o método *replace* para escrever uma função que remove todos os comentários de um pedaço de código JavaScript. Veja uma primeira tentativa
 
 ```js
 function stripComments(code) {

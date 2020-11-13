@@ -18,12 +18,12 @@ quote}}
 
 {{index "command line"}}
 
-So far, we have used the JavaScript language in a single environment:
-the browser. This chapter and the [next one](skillsharing) will
-briefly introduce ((Node.js)), a program that allows you to apply your
-JavaScript skills outside of the browser. With it, you can build
-anything from small command line tools to HTTP ((server))s that power
-dynamic ((website))s.
+Até agora, usamos a linguagem JavaScript em um único ambiente:
+o navegador. Este capítulo e o [next one](skillsharing) irão
+apresentar brevemente ((Node.js)), um programa que permite que você aplique suas
+Habilidades de JavaScript fora do navegador. Com ele, você pode construir
+qualquer coisa, desde pequenas ferramentas de linha de comando a ((server))s HTTP que alimentam
+((website))s dinâmicos.
 
 These chapters aim to teach you the main concepts that Node.js uses
 and to give you enough information to write useful programs for it.

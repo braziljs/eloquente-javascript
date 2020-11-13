@@ -4,11 +4,11 @@
 
 {{quote {author: "Master Yuan-Ma", title: "The Book of Programming", chapter: true}
 
-A student asked, 'The programmers of old used only simple machines and
-no programming languages, yet they made beautiful programs. Why do we
-use complicated machines and programming languages?'. Fu-Tzu replied,
-'The builders of old used only sticks and clay, yet they made
-beautiful huts.'
+Um aluno perguntou: 'Os programadores antigos usavam apenas máquinas simples e
+nenhuma linguagem de programação, mas eles fizeram programas bonitos. Por que nós
+usamos máquinas e linguagens de programação complicadas? '. Fu-Tzu respondeu,
+'Os construtores antigos usavam apenas paus e argila, mas eles fizeram
+lindas cabanas. '
 
 quote}}
 

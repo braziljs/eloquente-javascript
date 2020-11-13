@@ -25,10 +25,10 @@ Habilidades de JavaScript fora do navegador. Com ele, você pode construir
 qualquer coisa, desde pequenas ferramentas de linha de comando a ((server))s HTTP que alimentam
 ((website))s dinâmicos.
 
-These chapters aim to teach you the main concepts that Node.js uses
-and to give you enough information to write useful programs for it.
-They do not try to be a complete, or even a thorough, treatment of the
-platform.
+Estes capítulos têm como objetivo ensinar os principais conceitos que o Node.js usa
+para lhe dar informações suficientes para escrever programas para ele.
+Eles não tentam ser completos, ou mesmo meticulosos, tratamento da
+plataforma.
 
 {{if interactive
 

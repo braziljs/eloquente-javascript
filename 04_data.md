@@ -1,45 +1,35 @@
 {{meta {load_files: ["code/journal.js", "code/chapter/04_data.js"], zip: "node/html"}}}
 
-# Data Structures: Objects and Arrays
+# Estrutura de Dados: Objetos e Arrays
 
-{{quote {author: "Charles Babbage", title: "Passages from the Life of a Philosopher (1864)", chapter: true}
+{{quote {author: "Charles Babbage", title: "Passagens da vida de um filósofo (1864)", chapter: true}
 
-On two occasions I have been asked, 'Pray, Mr. Babbage, if you put
-into the machine wrong figures, will the right answers come out?'
-[...] I am not able rightly to apprehend the kind of confusion of
-ideas that could provoke such a question.
+Em duas ocasiões me questionaram:, 'Por favor, Sr. Babbage, se você inserir os números errados na máquina ela conseguirá sair as respostas certas? '
+[...] Eu não sou capaz de entender a confusão mental que poderia provocar essa pergunta.
 
 quote}}
 
 {{index "Babbage, Charles"}}
 
-{{figure {url: "img/chapter_picture_4.jpg", alt: "Picture of a weresquirrel", chapter: framed}}}
+<img 
+	src="img/chapter_picture_4.jpg" 
+	alt="Figura de um esquilo"
+	title="Esquilo com Livros">
 
 {{index object, "data structure"}}
 
-Numbers, Booleans, and strings are the atoms that ((data)) structures
-are built from. Many types of information require more than one
-atom, though. _Objects_ allow us to group values—including other
-objects—to build more complex structures.
+Números, Booleans e Strings são como os átomos(dados). Muitos tipos de informações requerem mais de um átomo, no entanto. _Objects_ nos permitem agrupar valores - incluindo outros objetos que nos fornecem condições para construir outras estruturas mais complexas..
 
-The programs we have built so far have been limited by the fact that
-they were operating only on simple data types. This chapter will
-introduce basic data structures. By the end of it, you'll know enough
-to start writing useful programs.
+Os programas que contruímos até agora foram limitados pelo fato de estavámos operando apenas tipos de dados mais simples. Este capítulo vai introduzir estrutura de dados básicas. Ao final, você saverá o suficiente para começar a escrever programas úteis.
 
-The chapter will work through a more or less realistic programming
-example, introducing concepts as they apply to the problem at hand.
-The example code will often build on functions and bindings that were
-introduced earlier in the text.
+O capítulo funcionará por meio de um exemplo de programação mais ou menos realista, introduzindo conceitos conforme se aplicam ao problema encontrado.
+O código de exemplo geralmente se baseia em funções e associações que foram introduzidas anteriormente no texto.
 
 {{if book
 
-The online coding ((sandbox)) for the book
+Caso queira fazer a codifição dos exemplos desse livro na guia sandbox
 ([_https://eloquentjavascript.net/code_](https://eloquentjavascript.net/code))
-provides a way to run code in the context of a specific chapter. If
-you decide to work through the examples in another environment, be
-sure to first download the full code for this chapter from the sandbox
-page.
+você terá uma forma de executar o código a partir do contexto de um capítulo espécifico. E se você decidir trabalhar com os exemplos em outro ambiente de desenvolvimento, certifique-se primeiro de fazer o download do código completo do capítulo que está no sandbox.
 
 if}}
 

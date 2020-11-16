@@ -32,18 +32,17 @@ plataforma.
 
 {{if interactive
 
-Whereas you could run the code in previous chapters directly on these
-pages, because it was either raw JavaScript or written for the
-browser, the code samples in this chapter are written for Node and
-often won't run in the browser.
+Considerando que você pode executar o código dos capítulos anteriores diretamente nestas
+páginas, porque era JavaScript bruto ou escrito para o 
+navegador, os exemplos de código neste capítulo são escritos para Node e
+muitas vezes não rodam no navegador.
 
 if}}
 
-If you want to follow along and run the code in this chapter, you'll
-need to install Node.js version 10.1 or higher. To do so, go to
-[_https://nodejs.org_](https://nodejs.org) and follow the installation
-instructions for your operating system. You can also find further
-((documentation)) for Node.js there.
+Se você quiser acompanhar e executar o código neste capítulo, você
+precisa instalar o Node.js versão 10.1 ou superior. Para fazer isso, vá para [_https://nodejs.org_](https://nodejs.org) e siga as instruções de
+instalação para o seu sistema operacional. Você também pode encontrar informações adicionais
+((documentation)) para Node.js lá.
 
 ## Background
 

@@ -44,38 +44,29 @@ precisa instalar o Node.js versão 10.1 ou superior. Para fazer isso, vá para [
 instalação para o seu sistema operacional. Você também pode encontrar informações adicionais
 ((documentation)) para Node.js lá.
 
-## Background
+## Plano de Fundo
 
 {{index responsiveness, input, [network, speed]}}
 
 Um dos problemas mais difíceis com sistemas de escrita que
-comunicar-se pela rede é gerenciar a entrada e
-
-One of the more difficult problems with writing systems that
-communicate over the network is managing input and ((output))—that
-is, the reading and writing of data to and from the network and ((hard
-drive)). Moving data around takes time, and ((scheduling)) it cleverly
-can make a big difference in how quickly a system responds to the user
-or to network requests.
+comunicam-se pela rede é gerenciar a entrada e ((output))
+—isto é, a leitura e gravação de dados de e para a rede e ((harddrive)). A movimentação de dados leva tempo, e ((scheduling)) ela
+habilmente
+pode fazer uma grande diferença na rapidez com que um sistema responde ao usuário
+ou a solicitações de rede.
 
 {{index ["asynchronous programming", "in Node.js"]}}
 
-In such programs, asynchronous programming is often helpful. It
-allows the program to send and receive data from and to multiple
-devices at the same time without complicated thread management and
-synchronization.
+Em tais programas, a programação assíncrona costuma ser útil. 
+permitindo que o programa envie e receba dados de e para vários
+dispositivos ao mesmo tempo, sem gerenciamento complicado de thread e sincronização.
 
 {{index "programming language", "Node.js", standard}}
 
-Node was initially conceived for the purpose of making asynchronous
-programming easy and convenient. JavaScript lends itself well to a
-system like Node. It is one of the few programming languages that does
-not have a built-in way to do in- and output. Thus, JavaScript could
-be fit onto Node's rather eccentric approach to in- and output without
-ending up with two inconsistent interfaces. In 2009, when Node was
-being designed, people were already doing callback-based programming
-in the browser, so the ((community)) around the language was used to
-an asynchronous programming style.
+O Node foi inicialmente concebido com o propósito de tornar 
+a programação assíncrona fácil e conveniente. JavaScript se comporta bem a um sistema como o Node. É uma das poucas linguagens de programação que não tem uma maneira embutida de fazer entrada e saída. Assim, JavaScript poderia
+se encaixar na abordagem bastante excêntrica do Node para entrada e saída sem terminar com duas interfaces inconsistentes. Em 2009, quando Node estava
+sendo projetado, as pessoas já estavam fazendo programação baseada em callback no navegador, de modo que a ((community)) em torno da linguagem estava acostumada a um estilo de programação assíncrona.
 
 ## The node command
 

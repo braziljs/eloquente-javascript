@@ -48,6 +48,9 @@ instalação para o seu sistema operacional. Você também pode encontrar inform
 
 {{index responsiveness, input, [network, speed]}}
 
+Um dos problemas mais difíceis com sistemas de escrita que
+comunicar-se pela rede é gerenciar a entrada e
+
 One of the more difficult problems with writing systems that
 communicate over the network is managing input and ((output))—that
 is, the reading and writing of data to and from the network and ((hard

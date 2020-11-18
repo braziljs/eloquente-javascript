@@ -6,7 +6,7 @@
 
 Um aluno perguntou: 'Os antigos programadores usavam apenas máquinas simples e
 nenhuma linguagem de programação, mas eles fizeram programas bonitos. Por que nós
-usamos máquinas e linguagens de programação complicadas? '. Fu-Tzu respondeu,
+usamos máquinas e linguagens de programação complicadas?'. Fu-Tzu respondeu,
 'Os construtores antigos usavam apenas paus e argila, mas eles fizeram
 lindas cabanas.
 
@@ -39,8 +39,8 @@ if}}
 
 Se você quiser acompanhar e executar o código neste capítulo, você
 precisa instalar o Node.js versão 10.1 ou superior. Para fazer isso, vá para [_https://nodejs.org_](https://nodejs.org) e siga as instruções de
-instalação para o seu sistema operacional. Você também pode encontrar informações adicionais
-((documentation)) para Node.js lá.
+instalação para o seu sistema operacional. Você também pode encontrar informações adicionais na
+((documentação)) para Node.js lá.
 
 ## Plano de Fundo
 
@@ -48,9 +48,7 @@ instalação para o seu sistema operacional. Você também pode encontrar inform
 
 Um dos problemas mais difíceis com sistemas de escrita que
 comunicam-se pela rede é gerenciar a entrada e ((saída)),
-isto é, a leitura e gravação de dados para a rede e ((disco rídigo)). A movimentação de dados leva tempo, e ((agenda))-la
-habilmente pode fazer uma grande diferença na rapidez com que um sistema responde ao usuário
-ou a solicitações de rede.
+isto é, a leitura e gravação de dados para a rede e ((disco rídigo)). A movimentação de dados leva tempo, e ((agenda))-la pode fazer uma grande diferença na rapidez com que um sistema responde ao usuário ou a solicitações de rede.
 
 {{index ["asynchronous programming", "in Node.js"]}}
 
@@ -61,7 +59,7 @@ dispositivos ao mesmo tempo, sem gerenciamento complicado de thread e sincroniza
 {{index "programming language", "Node.js", standard}}
 
 O Node foi inicialmente concebido com o propósito de tornar 
-a programação assíncrona fácil e prático. JavaScript se comporta bem em um sistema como o Node. É uma das poucas linguagens de programação que não tem uma maneira embutida de fazer entrada e saída. Assim, JavaScript poderia
+a programação assíncrona fácil e prática. JavaScript se comporta bem em um sistema como o Node. É uma das poucas linguagens de programação que não tem uma maneira embutida de fazer entrada e saída. Assim, JavaScript poderia
 se encaixar na abordagem bastante excêntrica do Node para entrada e saída sem terminar com duas interfaces inconsistentes. Em 2009, quando Node estava
 sendo projetado, as pessoas já estavam fazendo programação baseada em callback no navegador, de modo que a ((comunidade)) em torno da linguagem estava acostumada a um estilo de programação assíncrona.
 
@@ -69,7 +67,7 @@ sendo projetado, as pessoas já estavam fazendo programação baseada em callbac
 
 {{index "node program"}}
 
-Quando ((Node.js)) é instalado em um sistema, ele fornece um programa
+Quando o ((Node.js)) é instalado em um sistema, ele fornece um programa
 chamado `node`, que é usado para executar arquivos JavaScript. Digamos que você tem um
 arquivo `hello.js`, contendo este código:
 
@@ -78,8 +76,7 @@ let message = "Hello world";
 console.log(message);
 ```
 
-You can then run `node` from the ((command line)) like this to execute
-the program:
+Você então pode rodar `node` a partir de uma ((linha de comando)) como essa para executar o programa:
 
 ```{lang: null}
 $ node hello.js
@@ -88,18 +85,12 @@ Hello world
 
 {{index "console.log"}}
 
-The `console.log` method in Node does something similar to what it
-does in the browser. It prints out a piece of text. But in Node, the
-text will go to the process's ((standard output)) stream, rather than
-to a browser's ((JavaScript console)). When running `node` from the
-command line, that means you see the logged values in your
-((terminal)).
+O método `console.log` no Node faz algo semelhante ao que faz no navegador. Ele imprime um pedaço de texto. Mas em Node, o texto irá para a ((saída padrão)) do fluxo do processo, ao invés do ((console JavaScript)) de um navegador. Ao executar `node` da linha de comando, isso significa que você vê os valores registrados em seu ((terminal)).
 
 {{index "node program", "read-eval-print loop"}}
 
-If you run `node` without giving it a file, it provides you with a
-prompt at which you can type JavaScript code and immediately see the
-result.
+Se você executar `node` sem fornecer um arquivo, ele fornece um
+prompt no qual você pode digitar o código JavaScript e ver imediatamente o resultado.
 
 ```{lang: null}
 $ node
@@ -113,20 +104,12 @@ $
 
 {{index "process object", "global scope", [binding, global], "exit method", "status code"}}
 
-The `process` binding, just like the `console` binding, is available
-globally in Node. It provides various ways to inspect and manipulate
-the current program. The `exit` method ends the process and can be
-given an exit status code, which tells the program that started `node`
-(in this case, the command line shell) whether the program completed
-successfully (code zero) or encountered an error (any other code).
+O vínculo `process`, assim como o vínculo `console`, está disponível globalmente no Node. Ele fornece várias maneiras de inspecionar e manipular o programa atual. O método `exit` termina o processo e pode ser dado um código de status de saída, que diz ao programa que iniciou o `node`
+(neste caso, o shell da linha de comando) se o programa foi concluído com sucesso (código zero) ou encontrou um erro (qualquer outro código).
 
 {{index "command line", "argv property"}}
 
-To find the command line arguments given to your script, you can read
-`process.argv`, which is an array of strings. Note that it also
-includes the name of the `node` command and your script name, so the
-actual arguments start at index 2. If `showargv.js` contains the
-statement `console.log(process.argv)`, you could run it like this:
+Para encontrar os argumentos da linha de comando fornecidos ao seu script, você pode ler `process.argv`, que é uma matriz de strings. Observe que também inclui o nome do comando `node` e o nome do seu script, então os argumentos reais começam no índice 2. Se `showargv.js` contém a instrução `console.log (process.argv)`, você poderia executá-lo assim:
 
 ```{lang: null}
 $ node showargv.js one --and two
@@ -135,9 +118,9 @@ $ node showargv.js one --and two
 
 {{index [binding, global]}}
 
-All the ((standard)) JavaScript global bindings, such as `Array`,
-`Math`, and `JSON`, are also present in Node's environment.
-Browser-related functionality, such as `document` or `prompt`, is not.
+Todas as ligações ((padrão)) globais JavaScript, como `Array`,
+`Math` e` JSON`, também estão presentes no ambiente do Node.
+Funcionalidades relacionadas ao navegador, como `document` ou` prompt`, não.
 
 ## Modules
 

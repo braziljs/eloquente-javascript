@@ -2,33 +2,31 @@
 
 # Node.js
 
-{{quote {author: "Master Yuan-Ma", title: "The Book of Programming", chapter: true}
+{{quote {author: "Mestre Yuan-Ma", title: "O Livro da Programação", chapter: true}
 
-Um aluno perguntou: 'Os programadores antigos usavam apenas máquinas simples e
+Um aluno perguntou: 'Os antigos programadores usavam apenas máquinas simples e
 nenhuma linguagem de programação, mas eles fizeram programas bonitos. Por que nós
 usamos máquinas e linguagens de programação complicadas? '. Fu-Tzu respondeu,
 'Os construtores antigos usavam apenas paus e argila, mas eles fizeram
-lindas cabanas. '
+lindas cabanas.
 
 quote}}
 
 {{index "Yuan-Ma", "Book of Programming"}}
 
-{{figure {url: "img/chapter_picture_20.jpg", alt: "Picture of a telephone pole", chapter: "framed"}}}
+{{figure {url:"https://eloquentjavascript.net/img/chapter_picture_20.jpg", alt: "Picture of a telephone pole", chapter: "framed"}}}
 
 {{index "command line"}}
 
 Até agora, usamos a linguagem JavaScript em um único ambiente:
-o navegador. Este capítulo e o [next one](skillsharing) irão
-apresentar brevemente ((Node.js)), um programa que permite que você aplique suas
-Habilidades de JavaScript fora do navegador. Com ele, você pode construir
+o navegador. Este capítulo e o [próximo](skillsharing) irão
+apresentar brevemente ((Node.js)), um programa que permite que você aplique suas habilidades de JavaScript fora do navegador. Com ele, você pode construir
 qualquer coisa, desde pequenas ferramentas de linha de comando a ((server))s HTTP que alimentam
 ((website))s dinâmicos.
 
 Estes capítulos têm como objetivo ensinar os principais conceitos que o Node.js usa
 para lhe dar informações suficientes para escrever programas para ele.
-Eles não tentam ser completos, ou mesmo meticulosos, tratamento da
-plataforma.
+Eles não tentam ser completos, ou até mesmo meticulosos, no tratamento da plataforma.
 
 {{if interactive
 
@@ -49,32 +47,31 @@ instalação para o seu sistema operacional. Você também pode encontrar inform
 {{index responsiveness, input, [network, speed]}}
 
 Um dos problemas mais difíceis com sistemas de escrita que
-comunicam-se pela rede é gerenciar a entrada e ((output))
-—isto é, a leitura e gravação de dados de e para a rede e ((harddrive)). A movimentação de dados leva tempo, e ((scheduling)) ela
-habilmente
-pode fazer uma grande diferença na rapidez com que um sistema responde ao usuário
+comunicam-se pela rede é gerenciar a entrada e ((saída)),
+isto é, a leitura e gravação de dados para a rede e ((disco rídigo)). A movimentação de dados leva tempo, e ((agenda))-la
+habilmente pode fazer uma grande diferença na rapidez com que um sistema responde ao usuário
 ou a solicitações de rede.
 
 {{index ["asynchronous programming", "in Node.js"]}}
 
 Em tais programas, a programação assíncrona costuma ser útil. 
-permitindo que o programa envie e receba dados de e para vários
+permitindo que o programa envie e receba dados a vários
 dispositivos ao mesmo tempo, sem gerenciamento complicado de thread e sincronização.
 
 {{index "programming language", "Node.js", standard}}
 
 O Node foi inicialmente concebido com o propósito de tornar 
-a programação assíncrona fácil e conveniente. JavaScript se comporta bem a um sistema como o Node. É uma das poucas linguagens de programação que não tem uma maneira embutida de fazer entrada e saída. Assim, JavaScript poderia
+a programação assíncrona fácil e prático. JavaScript se comporta bem em um sistema como o Node. É uma das poucas linguagens de programação que não tem uma maneira embutida de fazer entrada e saída. Assim, JavaScript poderia
 se encaixar na abordagem bastante excêntrica do Node para entrada e saída sem terminar com duas interfaces inconsistentes. Em 2009, quando Node estava
-sendo projetado, as pessoas já estavam fazendo programação baseada em callback no navegador, de modo que a ((community)) em torno da linguagem estava acostumada a um estilo de programação assíncrona.
+sendo projetado, as pessoas já estavam fazendo programação baseada em callback no navegador, de modo que a ((comunidade)) em torno da linguagem estava acostumada a um estilo de programação assíncrona.
 
-## The node command
+## O comando do Node
 
 {{index "node program"}}
 
-When ((Node.js)) is installed on a system, it provides a program
-called `node`, which is used to run JavaScript files. Say you have a
-file `hello.js`, containing this code:
+Quando ((Node.js)) é instalado em um sistema, ele fornece um programa
+chamado `node`, que é usado para executar arquivos JavaScript. Digamos que você tem um
+arquivo `hello.js`, contendo este código:
 
 ```
 let message = "Hello world";

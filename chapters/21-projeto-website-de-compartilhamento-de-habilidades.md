@@ -8,7 +8,7 @@ Neste último capítulo do projeto o nosso objetivo é a criação de um site pa
 
 ![Unicyble](../img/unicycle.png)
 
-Assim como no capítulo anterior, o código neste capítulo é escrito em Node.js, e executá-lo diretamente em uma página HTML é improvável que funcione. O código completo para o projeto pode ser baixado [aqui](eloquentjavascript.net/code/skillsharing.zip).
+Assim como no capítulo anterior, o código neste capítulo é escrito em Node.js, e executá-lo diretamente em uma página HTML é improvável que funcione. O código completo para o projeto pode ser baixado [aqui](https://eloquentjavascript.net/code/skillsharing.zip).
 
 #### Projeto
 

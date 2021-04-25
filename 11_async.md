@@ -1,11 +1,11 @@
 {{meta {load_files: ["code/crow-tech.js", "code/chapter/11_async.js"]}}}
 
-# Asynchronous Programming
+# Programação Assíncrona
 
 {{quote {author: "Laozi", title: "Tao Te Ching", chapter: true}
 
-Who can wait quietly while the mud settles?\
-Who can remain still until the moment of action?
+Quem pode esperar quieto enquanto a lama assenta?\
+Quem pode permancer parado até o momento de agir?
 
 quote}}
 
@@ -13,178 +13,89 @@ quote}}
 
 {{figure {url: "img/chapter_picture_11.jpg", alt: "Picture of two crows on a branch", chapter: framed}}}
 
-The central part of a computer, the part that carries out the
-individual steps that make up our programs, is called the
-_((processor))_. The programs we have seen so far are things that will
-keep the processor busy until they have finished their work. The speed
-at which something like a loop that manipulates numbers can be
-executed depends pretty much entirely on the speed of the processor.
+A parte central de um computador, a parte que dá os passos individuais que compõe os nossos programas é chamada de **processador**. Os programas que vimos até agora são do tipo que mantém o processador ocupado até que eles tenham terminado seu trabalho. A velocidade na qual um _loop_ que manipula números é executado depende inteiramente do processador.
 
 {{index [memory, speed], [network, speed]}}
 
-But many programs interact with things outside of the processor. For
-example, they may communicate over a computer network or request
-data from the ((hard disk))—which is a lot slower than getting it from
-memory.
+Porém, muitos programas interagem com coisas fora do processador. Por exemplo, eles podem se comunicar através de uma rede de computadores ou pedir dados do disco rígido, o que é muito mais lento do que acessar da memória.
 
-When such a thing is happening, it would be a shame to let the
-processor sit idle—there might be some other work it could do in the
-meantime. In part, this is handled by your operating system, which
-will switch the processor between multiple running programs. But that
-doesn't help when we want a _single_ program to be able to make
-progress while it is waiting for a network request.
+Quando algo assim ocorre, seria uma pena deixar o processador ocioso — talvez tenha alguma tarefa que pode ser feita durante esse tempo. Em parte, o sistema operacional cuida dessa parte, ele fará com que o processador alterne entre os diversos programas que estão executando. Contudo, isso não ajuda quando queremos que um **único** programa faça progresso enquanto está esperando uma resposta da rede.
 
-## Asynchronicity
+## Assincronicidade
 
 {{index "synchronous programming"}}
 
-In a _synchronous_ programming model, things happen one at a time.
-When you call a function that performs a long-running action, it
-returns only when the action has finished and it can return the result.
-This stops your program for the time the action takes.
+Em um programa **síncrono**, as coisas acontecem uma de cada vez. Quando uma função com certo tempo de execução é chamada, o programa retorna apenas quando a ação tiver terminado e podemos retornar o resultado. Isso para o programa pelo tempo que a ação durar.
 
 {{index "asynchronous programming"}}
 
-An _asynchronous_ model allows multiple things to happen at the same
-time. When you start an action, your program continues to run. When
-the action finishes, the program is informed and gets access to the
-result (for example, the data read from disk).
+Um modelo **assíncrono** permite que várias coisas aconteçam ao mesmo tempo. Quando você começa uma ação, o seu programa continua executando. Quando a ação termina, o programa é informado e recebe acesso ao resultado (por exemplo, ler dados do disco).
 
-We can compare synchronous and asynchronous programming using a small
-example: a program that fetches two resources from the ((network)) and
-then combines results.
+Nós podemos comparar programação síncrona e assíncrona usando o seguinte exemplo: um programa busca dois recursos da rede e depois combina os resultados.
 
 {{index "synchronous programming"}}
 
-In a synchronous environment, where the request function returns only
-after it has done its work, the easiest way to perform this task is to
-make the requests one after the other. This has the drawback that the
-second request will be started only when the first has finished. The
-total time taken will be at least the sum of the two response times.
+Em um ambiente síncrono, uma função de _request_ retorna somente depois de fazer seu trabalho, assim a maneira mais fácil de realizar esse tipo de tarefa é ter uma _request_ após a outra. A desvantagem de fazer dessa forma é que a segunda _request_ irá começar apenas depois da primeira concluir. Portanto, o tempo total de execução será no mínimo a soma do tempo de resposta das duas _requests_.
 
 {{index parallelism}}
 
-The solution to this problem, in a synchronous system, is to start
-additional ((thread))s of control. A _thread_ is another running program
-whose execution may be interleaved with other programs by the
-operating system—since most modern computers contain multiple
-processors, multiple threads may even run at the same time, on
-different processors. A second thread could start the second request,
-and then both threads wait for their results to come back, after which
-they resynchronize to combine their results.
+A solução para esse problema, em um ambiente síncrono, é adicionar _threads_ de controle. Um _thread_ é um outro programa rodando cuja execução pode ser intercalada com outros programas pelo sistema operacional, já que a maioria dos computadores possuem múltiplos processadores, múltiplos _threads_  podem ser executados ao mesmo tempo em processadores diferentes. Um segundo _threads_  pode começar a segunda _request_ e então ambos os _threads_  esperam por seus resultados, após eles irão se ressincronizar e combinar seus resultados.
 
 {{index CPU, blocking, "asynchronous programming", timeline, "callback function"}}
 
-In the following diagram, the thick lines represent time the program
-spends running normally, and the thin lines represent time spent
-waiting for the network. In the synchronous model, the time taken by
-the network is _part_ of the timeline for a given thread of control.
-In the asynchronous model, starting a network action conceptually
-causes a _split_ in the timeline. The program that initiated the
-action continues running, and the action happens alongside it,
-notifying the program when it is finished.
+No diagrama a seguir, as linhas grossas representam o tempo que o programa gasta executando normalmente, e as linhas finas o tempo gasto esperando resposta da rede. No modelo síncrono, o tempo gasto pelas redes é parte da linha de tempo para um dado fio de controle. Já no modelo assíncrono, ao iniciar a ação nas redes ocorre conceitualmente uma divisão na linha do tempo. O programa que começou a ação continua executando e a ação ocorre em paralelo, notificando-o quando acabar
 
 {{figure {url: "img/control-io.svg", alt: "Control flow for synchronous and asynchronous programming",width: "8cm"}}}
 
 {{index ["control flow", asynchronous], "asynchronous programming", verbosity}}
 
-Another way to describe the difference is that waiting for actions to
-finish is _implicit_ in the synchronous model, while it is _explicit_,
-under our control, in the asynchronous one.
+Outro jeito de descrever essa diferença é que esperar a ação terminar está **implícita** no modelo síncrono, enquanto fica **explícito** e sob nosso controle no modelo assíncrono.
 
-Asynchronicity cuts both ways. It makes expressing programs that do
-not fit the straight-line model of control easier, but it can also
-make expressing programs that do follow a straight line more awkward.
-We'll see some ways to address this awkwardness later in the chapter.
+Assincronicidade possui aspectos positivos e negativos. Torna fazer programas que não se encaixam no modelo de linha reta mais fácil, porém faz com programas que seguem esse modelo linha reta fiquem mais estranhos. Vamos ver formas essa estranheza mais tarde neste capítulo.
 
-Both of the important JavaScript programming platforms—((browser))s
-and ((Node.js))—make operations that might take a while asynchronous,
-rather than relying on ((thread))s. Since programming with threads is
-notoriously hard (understanding what a program does is much more
-difficult when it's doing multiple things at once), this is generally
-considered a good thing.
+Ambas as plataformas de programação importantes de Javascript — navegador (_browser_) e  Node.js — fazem operações que podem ser assíncronas, ao invés de utilizarem fios. E como programação com fios é notoriamente difícil (entender o que um programa faz é muito mais complicado quando ele faz mais de uma coisa ao mesmo tempo), isso geralmente é visto como algo positivo.
 
-## Crow tech
+## Tecnologia dos Corvos
 
-Most people are aware of the fact that ((crow))s are very smart birds.
-They can use tools, plan ahead, remember things, and even communicate
-these things among themselves.
+A maior parte das pessoas estão cientes de que os corvos são aves muito espertas. Eles podem usar ferramentas, planejar com antecedência, lembrar de coisas e até comunicar essas coisas entre si.
 
-What most people don't know is that they are capable of many things
-that they keep well hidden from us. I've been told by a reputable (if
-somewhat eccentric) expert on ((corvid))s that crow technology is not
-far behind human technology, and they are catching up.
+O que a maior parte das pessoas não sabem é que eles são capazes de muitas outras coisas que escondem de nós. Já me disseram por um respeitável ( e talvez excêntrico) especialista em corvídeos que a tecnologia dos corvos não está muito distante da humana, e eles estão nos alcançando.
 
-For example, many crow cultures have the ability to construct
-computing devices. These are not electronic, as human computing
-devices are, but operate through the actions of tiny insects, a
-species closely related to the ((termite)), which has developed a
-((symbiotic relationship)) with the crows. The birds provide them with
-food, and in return the insects build and operate their complex
-colonies that, with the help of the living creatures inside them,
-perform computations.
+Por exemplo, muitos bandos de corvos tem a habilidade de construir dispositivos computacionais. Estes não são eletrônicos, como os dos humanos são, mas operam através da ação de pequenos insetos, uma espécie próxima aos cupins, que desenvolveu uma relação simbiótica com os corvos. Desta forma, as aves fornecem alimento a eles e em retorno os insetos constroem e operam complexas colônias que, com a ajuda das criaturas que vivem dentro delas, performam computações.
 
-Such colonies are usually located in big, long-lived nests. The birds
-and insects work together to build a network of bulbous clay
-structures, hidden between the twigs of the nest, in which the insects
-live and work.
+Tais colônias geralmente estão localizadas em grandes e longevos ninhos. As aves e os insetos trabalham em conjunto para construir uma rede de bulbosas estruturas de barro, que ficam escondidas entre os galhos do ninho, em que os insetos vivem e trabalham.
 
-To communicate with other devices, these machines use light signals.
-The crows embed pieces of reflective material in special communication
-stalks, and the insects aim these to reflect light at another nest,
-encoding data as a sequence of quick flashes. This means that only
-nests that have an unbroken visual connection can communicate.
+Para comunicar com outros dispositivos, essas máquinas usam sinais de luz. Os corvos colocam materiais reflexivos em suportes especiais para comunicação e os insetos posicionam eles para que reflitam luz em outro ninho, codificando os dados numa sequência de rápidos flashes. Isso significa que apenas ninhos que tem uma conexão visual clara podem se comunicar.
 
-Our friend the corvid expert has mapped the network of crow nests in
-the village of ((Hières-sur-Amby)), on the banks of the river Rhône.
-This map shows the nests and their connections:
+Nosso amigo, o especialista em corvídeos, fez um mapa das redes de ninhos de corvos no vilarejo de ((Hières-sur-Amby)), às margens do rio Rhône. Esse mapa mostra os ninhos e suas conexões:
 
 {{figure {url: "img/Hieres-sur-Amby.png", alt: "A network of crow nests in a small village"}}}
 
-In an astounding example of ((convergent evolution)), crow computers
-run JavaScript. In this chapter we'll write some basic networking
-functions for them.
+É um exemplo impressionante de convergência na evolução, computadores de corvos rodam JavaScript. Neste capítulo, iremos escrever algumas funções básicas de redes para eles.
 
-## Callbacks
+## _Callbacks_
 
 {{indexsee [function, callback], "callback function"}}
 
-One approach to ((asynchronous programming)) is to make functions that
-perform a slow action take an extra argument, a _((callback
-function))_. The action is started, and when it finishes, the callback
-function is called with the result.
+Uma forma de programação assíncrona é fazer funções que executam ações lentas recebam um argumento extra, uma função _callback_. A ação inicia e quando ela termina, a função _callback_ é chamada e executada.
 
 {{index "setTimeout function", waiting}}
 
-As an example, the `setTimeout` function, available both in Node.js
-and in browsers, waits a given number of milliseconds (a second is a
-thousand milliseconds) and then calls a function.
+Por exemplo, a função `setTimeout`, disponível tanto em Node.js quanto em navegadores, el espera um dado número de milissegundos (um segundo equivale a mil milissegundos) e então chama a função.
 
 ```{test: no}
 setTimeout(() => console.log("Tick"), 500);
 ```
 
-Waiting is not generally a very important type of work, but it can be
-useful when doing something like updating an animation or checking whether
-something is taking longer than a given amount of ((time)).
+Esperar não é em geral uma tarefa muito importante, mas pode ser útil ao fazer algo como atualizar uma animação ou verificar se algo está levando mais tempo do um dado tempo.
 
-Performing multiple asynchronous actions in a row using callbacks
-means that you have to keep passing new functions to handle the
-((continuation)) of the computation after the actions.
+Realizar várias ações assíncronas em sequência utilizando _callbacks_ significa que você precisa continuar passando novas funções para lidar com a continuação da computação após cada ação.
 
 {{index "hard disk"}}
 
-Most crow nest computers have a long-term data storage bulb, where
-pieces of information are etched into twigs so that they can be
-retrieved later. Etching, or finding a piece of data, takes a moment, so
-the interface to long-term storage is asynchronous and uses callback
-functions.
+A maioria dos computadores de ninho de corvo possuem bulbos de armazenamento de dados de longa duração, onde os pedaços de informação estão marcados em galhos para que possam ser acessados depois. Acessar, ou encontrar os pedaços de dados leva um momento, então a interface com o armazenamento de dados é assíncrono e utiliza funções _callback_.
 
-Storage bulbs store pieces of ((JSON))-encodable data under names. A
-((crow)) might store information about the places where it's hidden food under the name `"food caches"`, which could hold an array of
-names that point at other pieces of data, describing the actual cache.
-To look up a food ((cache)) in the storage bulbs of the _Big Oak_
-nest, a crow could run code like this:
+Bulbos de armazenamento guardam pedaços de dado codificação em ((JSON)) na forma de nomes. Um ((corvo)) pode guardar informações sobre lugares em que está escondido comida no nome de “_caches_ de comida”, que podem guardar um _array_ de nomes de lugares que apontam para outros pedaços de dados, descrevendo um verdadeiro _cache_. Para procurar um _cache_ de comida em um dos bulbos de armazenamento ninho _Big Oak_, um corvo poderia executar o seguinte código:
 
 {{index "readStorage function"}}
 
@@ -199,44 +110,24 @@ bigOak.readStorage("food caches", caches => {
 });
 ```
 
-(All binding names and strings have been translated from crow language
-to English.)
+( Todos os nomes e _strings_ foram traduzidas da linguagem dos corvos para Português.)
 
-This style of programming is workable, but the indentation level
-increases with each asynchronous action because you end up in another
-function. Doing more complicated things, such as running multiple actions
-at the same time, can get a little awkward.
+Esse estilo de programação é funcional, mas o nível de indentação aumenta a cada ação assíncrona porque você acaba em outra função. Fazendo coisas mais complicadas, como rodar ações múltiplas ao mesmo tempo pode ficar um pouco esquisito.
 
-Crow nest computers are built to communicate using
-((request))-((response)) pairs. That means one nest sends a message to
-another nest, which then immediately sends a message back, confirming
-receipt and possibly including a reply to a question asked in the
-message.
+Ninhos de corvos computacionais são construídos para se comunicar utilizando pares de _request_-respostas. Isso significa que um ninho deve mandar uma _request_ para outro, o qual deve imediatamente enviar uma mensagem de resposta, confirmando o recebimento e possivelmente incluindo a resposta da pergunta feita na mensagem.
 
-Each message is tagged with a _type_, which determines how it is
-handled. Our code can define handlers for specific request types, and
-when such a request comes in, the handler is called to produce a
-response.
+Cada mensagem é marcada com um tipo (_type_), o que vai determinar como ela será tratada. Nosso código pode definir tratadores específicos para tipos diferentes de _requests_, e quando uma _request_ chega, o tratador será chamado para produzir uma resposta.
 
 {{index "crow-tech module", "send method"}}
 
-The interface exported by the `"./crow-tech"` module provides
-callback-based functions for communication. Nests have a `send` method
-that sends off a request. It expects the name of the target nest, the
-type of the request, and the content of the request as its first three
-arguments, and it expects a function to call when a response comes in as its
-fourth and last argument.
+A interface exportada pelo módulo `./crow-tech` fornece funções baseadas em _callbacks_ para comunicação. Ninhos possuem o método `send` para enviar _requests_. Ele espera o nome do ninho de destino, o tipo da _request_ e conteúdo da _request_ como seu terceiro argumento. E no quarto e último argumento espera a função a ser chamada quando a resposta chegar.
 
 ```
 bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM",
             () => console.log("Note delivered."));
 ```
 
-But to make nests capable of receiving that request, we first have to
-define a ((request type)) named `"note"`. The code that handles the
-requests has to run not just on this nest-computer but on all nests
-that can receive messages of this type. We'll just assume that a crow
-flies over and installs our handler code on all the nests.
+Mas para tornar esses ninhos capazes de receber essa _request_, nós primeiro precisamos definir uma _request_ chamada “`note`”. O código que vai tratar com _requests_ precisa ser executado não apenas no ninho computacional mas em todos ninhos que podem receber mensagens desse tipo. Nós vamos apenas assumir que um corvo vôe e instale nosso código que trata essa _request_ em todos os ninhos.
 
 {{index "defineRequestType function"}}
 
@@ -249,51 +140,25 @@ defineRequestType("note", (nest, content, source, done) => {
 });
 ```
 
-The `defineRequestType` function defines a new type of request. The
-example adds support for `"note"` requests, which just sends a note to
-a given nest. Our implementation calls `console.log` so that we can
-verify that the request arrived. Nests have a `name` property that
-holds their name.
+A `defineRequestType` é uma função que define um novo tipo de _request_. O exemplo adiciona o suporte para _requests_ “`note`”, que apenas enviam uma nota para um dado ninho. Nossa implementação chama o `console.log` para que possamos verificar que a nossa nota chegou. Ninhos possuem uma propriedade `name`  guardada em seus nomes.
 
 {{index "asynchronous programming"}}
 
-The fourth argument given to the handler, `done`, is a callback
-function that it must call when it is done with the request. If we had
-used the handler's ((return value)) as the response value, that would
-mean that a request handler can't itself perform asynchronous actions.
-A function doing asynchronous work typically returns before the work
-is done, having arranged for a callback to be called when it
-completes. So we need some asynchronous mechanism—in this case,
-another ((callback function))—to signal when a response is available.
+O quarto argumento dado ao tratador, `done`, é a função de _callback_ que precisa ser chamada quando a _request_ termina. Se tivéssemos utilizado o retorno do tratador como resposta, isso iria significar que o tratador não pode por si só performar uma atividade assíncrona. Uma função realizando um trabalho assíncrono geralmente irá  retornar antes do trabalho terminar,tendo que fazer um arranjo para que o _callback_ seja chamada quando for completado. Portanto, iremos precisar de algum mecanismo assíncrono, nesse caso outra função _callback_ para sinalizar quando a resposta for válida.
 
-In a way, asynchronicity is _contagious_. Any function that calls a
-function that works asynchronously must itself be asynchronous, using
-a callback or similar mechanism to deliver its result. Calling a
-callback is somewhat more involved and error-prone than simply
-returning a value, so needing to structure large parts of your program
-that way is not great.
+De certo modo, assincronicidade é **contagiante**. Qualquer função que chama uma função que trabalha assincronicamente precisa por si só ser assíncrona. utilizando um _callback_ ou mecanismo similar para entregar resultado. Chamando um _callback_ é algo mais complicado e sujeito a erro do que simplesmente retornar um valor, logo necessita estruturar grandes partes do seu código, o que não é prático.
 
-## Promises
+## _Promises_
 
-Working with abstract concepts is often easier when those concepts can
-be represented by ((value))s. In the case of asynchronous actions, you
-could, instead of arranging for a function to be called at some point
-in the future, return an object that represents this future event.
+Trabalhar com conceitos abstratos é em geral mais fácil quando esses conceitos podem ser representados por valores. No caso de ações assíncronas, você poderia ao invés de arranjar que uma função fosse chamada em algum momento no futuro, retornar um objeto que represente esse evento no futuro.
 
 {{index "Promise class", "asynchronous programming"}}
 
-This is what the standard class `Promise` is for. A _promise_ is an
-asynchronous action that may complete at some point and produce a
-value. It is able to notify anyone who is interested when its value is
-available.
+É pra isso que a classe padrão `Promise` serve. Uma _promise_ é uma ação assíncrona que pode, em algum momento, produzir um valor. Ela pode notificar qualquer um que estiver interessado quando seu valor estiver disponível.
 
 {{index "Promise.resolve function", "resolving (a promise)"}}
 
-The easiest way to create a promise is by calling `Promise.resolve`.
-This function ensures that the value you give it is wrapped in a
-promise. If it's already a promise, it is simply returned—otherwise,
-you get a new promise that immediately finishes with your
-value as its result.
+A maneira mais fácil de criar uma _promise_ é chamando` Promise.resolve`. Essa função garante que o valor dado está dentro da _promise_. Se já for uma _promise_, pode ser simplesmente retornado — caso o contrário,  você recebe uma nova _promise_ que imediatamente termina com seu valor como resultado.
 
 ```
 let fifteen = Promise.resolve(15);
@@ -303,37 +168,19 @@ fifteen.then(value => console.log(`Got ${value}`));
 
 {{index "then method"}}
 
-To get the result of a promise, you can use its `then` method. This
-registers a ((callback function)) to be called when the promise
-resolves and produces a value. You can add multiple callbacks to a
-single promise, and they will be called, even if you add them after
-the promise has already _resolved_ (finished).
+Para conseguir o resultado da _promise_, pode-se utilizar o método` then`. Isso registra uma função _callback_ que pode ser chamada quando a _promise_ se resolve e produz um valor. Pode-se adicionar múltiplas _callbacks_ em uma única _promise_, elas serão chamadas, mesmo que sejam adicionadas depois da _promise_ ter sido **resolvida** (terminada).
 
-But that's not all the `then` method does. It returns another promise,
-which resolves to the value that the handler function returns or, if
-that returns a promise, waits for that promise and then resolves to
-its result.
+Porém, isso não é tudo o que o método `then` faz. Ele retorna outra _promise_, que resolve o valor que a função tratadora retorna ou, se retornar uma _promise_, espera a _promise_ e depois o seu resultado.
 
-It is useful to think of promises as a device to move values into an
-asynchronous reality. A normal value is simply there. A promised value
-is a value that _might_ already be there or might appear at some point
-in the future. Computations defined in terms of promises act on such
-wrapped values and are executed asynchronously as the values become
-available.
+É útil pensar em _promises_ como dispositivos para transportar o valor em uma realidade assíncrona. Um valor normal simplesmente está aqui. Um valor prometido é um valor que **pode** já estar aqui ou em algum ponto do futuro. Computações definidas em termos de _promises_ agem em cima desses valores e eles são executados assíncronamente quando o valor se mostra disponível.
 
 {{index "Promise class"}}
 
-To create a promise, you can use `Promise` as a constructor. It has a
-somewhat odd interface—the constructor expects a function as argument,
-which it immediately calls, passing it a function that it can use to
-resolve the promise. It works this way, instead of for example with a
-`resolve` method, so that only the code that created the promise can
-resolve it.
+Para criar uma _promise_, pode-se utilizar `Promise` como um construtor. Ele possui uma interface peculiar — o construtor espera uma função como argumento, que é chamada imediatamente, passando uma função que pode ser utilizada para resolver a _promise_. Funciona deste modo, ao invés do exemplo com o método`resolve`, para que apenas o código que criou a _promise_ possa resolvê-lo.
 
 {{index "storage function"}}
 
-This is how you'd create a promise-based interface for the
-`readStorage` function:
+Esta é a forma como seria criada uma _promise_ com a sua interface para a  função `readStorage`:
 
 ```{includeCode: "top_lines: 5"}
 function storage(nest, name) {
@@ -346,86 +193,39 @@ storage(bigOak, "enemies")
   .then(value => console.log("Got", value));
 ```
 
-This asynchronous function returns a meaningful value. This is the
-main advantage of promises—they simplify the use of asynchronous
-functions. Instead of having to pass around callbacks, promise-based
-functions look similar to regular ones: they take input as arguments
-and return their output. The only difference is that the output may
-not be available yet.
+Essa função assíncrona retorna um valor que tem um propósito. Essa é a vantagem principal das _promises_  — elas simplificam o uso de funções assíncronas. Ao invés de ficar utilizando _callbacks_, funções baseadas em _promises_ (_promise-based_) são parecidas com as convencionais, eles recebem um valor como argumento (_input_) e retornam outro (_output_). A única diferença é que o valor de saída (_output_) pode não estar disponível ainda.
 
-## Failure
+## Falhas
 
 {{index "exception handling"}}
 
-Regular JavaScript computations can fail by throwing an exception.
-Asynchronous computations often need something like that. A network
-request may fail, or some code that is part of the asynchronous
-computation may throw an exception.
+Processos computacionais usuais com Javascript podem falhar e por jogarem uma exceção. Computação assíncrona em geral precisa de algo semelhante. A _request_ na rede pode falhar, ou algum código na parte assíncrona pode causar uma exceção.
 
 {{index "callback function", error}}
 
-One of the most pressing problems with the callback style of
-asynchronous programming is that it makes it extremely difficult to
-make sure failures are properly reported to the callbacks.
+Um dos maiores problemas com o estilo _callback_ de programação assíncrona é que se torna extremamente difícil de fazer com que as falhas sejam corretamente reportadas aos _callbacks_.
 
-A widely used convention is that the first argument to the callback is
-used to indicate that the action failed, and the second contains the
-value produced by the action when it was successful. Such callback
-functions must always check whether they received an exception and
-make sure that any problems they cause, including exceptions thrown by
-functions they call, are caught and given to the right function.
+Uma convenção amplamente utilizada é que o primeiro argumento do _callback_ seja utilizado para indicar que a função falhou, o segundo contém o valor produzido pela ação quando ela foi bem sucedida. Tais funções de _callback_ precisam sempre verificar se elas receberam uma exceção e garantir que qualquer problema que ela cause, incluindo exceções jogadas por outras funções que ela chame, sejam capturadas e dadas para a função correta.
 
 {{index "rejecting (a promise)", "resolving (a promise)", "then method"}}
 
-Promises make this easier. They can be either resolved (the action
-finished successfully) or rejected (it failed). Resolve handlers (as
-registered with `then`) are called only when the action is successful,
-and rejections are automatically propagated to the new promise that is
-returned by `then`. And when a handler throws an exception, this
-automatically causes the promise produced by its `then` call to be
-rejected. So if any element in a chain of asynchronous actions fails,
-the outcome of the whole chain is marked as rejected, and no success
-handlers are called beyond the point where it failed.
+As _promises_ tornam o processo mais simples. Elas podem tanto ser resolvidas (a ação termina com sucesso) ou rejeitadas (se falharem). Tratadores de resolução (como registrados com `then`) são chamados apenas quando a ação é bem sucedida, e rejeições são automaticamente propagadas para a nova _promise_ que é retornada por `then` . E quando o tratador joga uma exceção, automaticamente faz com que a _promise_ produzida por seu `then` seja rejeitada. Deste modo, se qualquer um dos elementos da corrente assíncrona falhar, o resultado de toda a corrente é marcada como rejeitado, e nenhum tratador de sucesso é chamado para além do ponto em que ocorre a falha.
 
 {{index "Promise.reject function", "Promise class"}}
 
-Much like resolving a promise provides a value, rejecting one also
-provides one, usually called the _reason_ of the rejection. When an
-exception in a handler function causes the rejection, the exception
-value is used as the reason. Similarly, when a handler returns a
-promise that is rejected, that rejection flows into the next promise.
-There's a `Promise.reject` function that creates a new,
-immediately rejected promise.
+Da mesma forma que resolver uma _promise_ gera um valor, rejeitar também o faz, geralmente chamado de motivo da rejeição. Quando uma exceção na função tratadora causa uma rejeição, o valor da exceção é utilizado como causa. Semelhantemente, quando um tratador retorna uma _promise_ que foi rejeitada, a rejeição propaga para a próxima _promise_. Há a função ``` Promise.reject ``` que cria uma nova _promise_ que é rejeitada imediatamente.
 
 {{index "catch method"}}
 
-To explicitly handle such rejections, promises have a `catch` method
-that registers a handler to be called when the promise is rejected,
-similar to how `then` handlers handle normal resolution. It's also very
-much like `then` in that it returns a new promise, which resolves to
-the original promise's value if it resolves normally and to the
-result of the `catch` handler otherwise. If a `catch` handler throws
-an error, the new promise is also rejected.
+Para explicitar o tratamento dessas rejeições, _promises_ precisam ter um método `catch` que registre o tratador que vai ser chamado quando a _promise_ é rejeitada, da mesma forma como o tratador `then` lida com resoluções normais. É também muito semelhante com o `then`, que resolve o valor original da _promise_ se ela é resolvida normalmente e caso ao contrário, passa o resultado  ao tratador  `catch`. Se o `catch` jogar um erro, a nova _promise_ também é rejeitada.
 
 {{index "then method"}}
 
-As a shorthand, `then` also accepts a rejection handler as a second
-argument, so you can install both types of handlers in a single method
-call.
+Em suma, `then` também aceita uma rejeição como segundo argumento, então você pode instalar os dois tipos de tratadores em apenas uma chamada de método.
 
-A function passed to the `Promise` constructor receives a second
-argument, alongside the resolve function, which it can use to reject
-the new promise.
+Uma função passada para o construtor da `Promise` recebe apenas um segundo argumento, junto com a função de resolução, a qual pode ser usada para rejeitar uma nova _promise_.
 
-The chains of promise values created by calls to `then` and `catch`
-can be seen as a pipeline through which asynchronous values or
-failures move. Since such chains are created by registering handlers,
-each link has a success handler or a rejection handler (or both)
-associated with it. Handlers that don't match the type of outcome
-(success or failure) are ignored. But those that do match are called,
-and their outcome determines what kind of value comes next—success
-when it returns a non-promise value, rejection when it throws an
-exception, and the outcome of a promise when it returns one of those.
+A corrente de _promises_ cria valores que são chamados por `then` e `catch` que podem ser vistos como um canal pelo qual valores assíncronos ou falhas se movimentam. Já que suas correntes são criadas pelo registro de tratadores, cada elo tem um tratador de sucesso e rejeição (ou ambos) associados. Tratadores que não se igualam ao tipo da conclusão (sucesso ou falha) são ignorados. Contudo, aqueles que se igualam são chamados, e suas conclusões determinam o que vai vir em seguida — sucesso quando ela retornar um valor que não é uma _promise_, rejeição quando jogar uma exceção, e a conclusão de uma _promise_ quando ela retornar uma dessas.
 
 ```{test: no}
 new Promise((_, reject) => reject(new Error("Fail")))
@@ -441,50 +241,27 @@ new Promise((_, reject) => reject(new Error("Fail")))
 
 {{index "uncaught exception", "exception handling"}}
 
-Much like an uncaught exception is handled by the environment,
-JavaScript environments can detect when a promise rejection isn't
-handled and will report this as an error.
+De maneira parecida com uma exceção não capturada pelo ambiente, ambientes JavaScript podem detectar quando a rejeição de uma  _promise_ não é tratada e vai reportar um erro.
 
-## Networks are hard
+## Redes são Difíceis
 
 {{index [network, reliability]}}
 
-Occasionally, there isn't enough light for the ((crow))s' mirror
-systems to transmit a signal or something is blocking the path of the
-signal. It is possible for a signal to be sent but never received.
+De tempos em tempos, não há luz suficiente para o sistema de espelho dos corvos transmitir um sinal ou tem algo bloqueando o caminho do sinal. É possível que um sinal seja enviado e nunca recebido.
 
 {{index "send method", error, timeout}}
 
-As it is, that will just cause the callback given to `send` to never
-be called, which will probably cause the program to stop without even
-noticing there is a problem. It would be nice if, after a given period
-of not getting a response, a request would _time out_ and report
-failure.
+Deixando desse jeito, isso iria resultar no _callback_ do `send` nunca sendo chamado, o que iria provavelmente fazer com que o programa pare sem nunca perceber que há um problema. Seria legal se, após um dado tempo sem nenhuma resposta ( _timeout_ ), uma _request_ iria estourar o tempo limite e reportar uma falha.
 
-Often, transmission failures are random accidents, like a car's
-headlight interfering with the light signals, and simply retrying the
-request may cause it to succeed. So while we're at it, let's make our
-request function automatically retry the sending of the request a few
-times before it gives up.
+Geralmente, falhas em transmissões são acidentes aleatórios, como o farol de um carro interferindo num sinal de luz, e simplesmente tentando novamente a _request_ pode ser bem sucedida. Então, enquanto estamos nessa, vamos fazer com que nossa função de _request_ automaticamente tente novamente enviar a _request_ algumas vezes antes de desistir.
 
 {{index "Promise class", "callback function", [interface, object]}}
 
-And, since we've established that promises are a good thing, we'll
-also make our request function return a promise. In terms of what they
-can express, callbacks and promises are equivalent. Callback-based
-functions can be wrapped to expose a promise-based interface, and
-vice versa.
+E já que estabelecemos que _promises_ são coisas boas, nós vamos fazer que nossa função de _request_ retorne uma _promise_ . Em termos do que elas podem expressar, _callbacks_ e _promises_ são equivalentes. Funções baseadas em _promises_ pode ser envoltas para expor a interface de _promise_ e vice e versa.
 
-Even when a ((request)) and its ((response)) are successfully
-delivered, the response may indicate failure—for example, if the
-request tries to use a request type that hasn't been defined or the
-handler throws an error. To support this, `send` and
-`defineRequestType` follow the convention mentioned before, where the
-first argument passed to callbacks is the failure reason, if any, and
-the second is the actual result.
+Mesmo quando a _request_ e sua resposta são bem sucedidas, a resposta pode indicar falha — por exemplo, se a _request_ tenta usar um tipo de _request_ não definido ou o tratador joga um erro. Para dar esse suporte, `send` e `defineRequestType` seguem a convenção mencionada antes, onde o primeiro argumento é passado para as _callbacks_ é a razão da falha, se existir, e o segundo é o resultado de verdade.
 
-These can be translated to promise resolution and rejection by our
-wrapper.
+Isso pode ser traduzido em resolução e rejeição da _promise_ em nossa interface.
 
 {{index "Timeout class", "request function", retry}}
 
@@ -513,41 +290,21 @@ function request(nest, target, type, content) {
 
 {{index "Promise class", "resolving (a promise)", "rejecting (a promise)"}}
 
-Because promises can be resolved (or rejected) only once, this will
-work. The first time `resolve` or `reject` is called determines the
-outcome of the promise, and any further calls, such as the timeout
-arriving after the request finishes or a request coming back after
-another request finished, are ignored.
+Já que _promises_ podem ser resolvidas (ou rejeitadas) apenas uma vez, isso irá funcionar. A primeira vez que `resolve` ou `reject` são chamados determina o resultado da _promise_, e próximas chamadas causadas por uma _request_ retornando após a primeira são ignoradas.
 
 {{index recursion}}
 
-To build an asynchronous ((loop)), for the retries, we need to use a
-recursive function—a regular loop doesn't allow us to stop and wait
-for an asynchronous action. The `attempt` function makes a single
-attempt to send a request. It also sets a timeout that, if no response
-has come back after 250 milliseconds, either starts the next attempt
-or, if this was the fourth attempt, rejects the promise with an
-instance of `Timeout` as the reason.
+Para construir um _loop_ assíncrono, para múltiplas tentativas, nós precisamos utilizar uma função recursiva — um _loop_ convencional não permite que nós esperemos a respostas de uma ação assíncrona. A função `attempt` faz uma única tentativa para enviar a _request_. Ela também estabelece um tempo de resposta (_timeout_), para caso não haja resposta depois de 250 milissegundos, ou ela tenta a próxima tentativa ou, se for a terceira tentativa, rejeita a _promise_ com uma nova instânica de `Timeout` como o motivo.
 
 {{index idempotence}}
 
-Retrying every quarter-second and giving up when no response has come
-in after a second is definitely somewhat arbitrary. It is even
-possible, if the request did come through but the handler is just
-taking a bit longer, for requests to be delivered multiple times.
-We'll write our handlers with that problem in mind—duplicate messages
-should be harmless.
+Fazendo novas tentativas a cada quarto de segundo e desistindo quando não há resposta depois de três quartos de segundo é definitivamente arbitrário. É até possível que, se uma _request_ ocorresse mas a resposta de seus tratadores demorasse um pouco mais, a _request_ seria devolvida várias vezes. Nós vamos escrever os nossos tratadores com esse problema em mente — mensagens duplicadas devem ser inofensivas.
 
-In general, we will not be building a world-class, robust network
-today. But that's okay—crows don't have very high expectations yet
-when it comes to computing.
+Em geral, não vamos construir uma rede robusta e de excelência hoje. Contudo está tudo bem — corvos não têm grandes expectativas quando se trata de computação.
 
 {{index "defineRequestType function", "requestType function"}}
 
-To isolate ourselves from callbacks altogether, we'll go ahead and
-also define a wrapper for `defineRequestType` that allows the handler
-function to return a promise or plain value and wires that up to the
-callback for us.
+Para nos isolar das _callbacks_ completamente, nós vamos definir um embrulho para o `defineRequestType` que permite que o tratador retorne uma _promise_ ou valor puro e o ligue ele com uma _callback_.
 
 ```{includeCode: true}
 function requestType(name, handler) {
@@ -566,37 +323,21 @@ function requestType(name, handler) {
 
 {{index "Promise.resolve function"}}
 
-`Promise.resolve` is used to convert the value returned by `handler`
-to a promise if it isn't already.
+`Promise.resolved` é utilizado para converter o valor retornado pelo `handler` (tratador) para a _promise_ se ela não estiver pronta.
 
 {{index "try keyword", "callback function"}}
 
-Note that the call to `handler` had to be wrapped in a `try` block to
-make sure any exception it raises directly is given to the callback.
-This nicely illustrates the difficulty of properly handling errors
-with raw callbacks—it is easy to forget to properly route
-exceptions like that, and if you don't do it, failures won't get
-reported to the right callback. Promises make this mostly automatic
-and thus less error-prone.
+Perceba que a chamada do `handler` está embrulhado em um bloco `try` para garantir que qualquer exceção levantada seja diretamente direcionada para a _callback_. Isso ilustra claramente a dificuldade de tratar de maneira correta os erros com _callbacks_ cruas — é fácil de esquecer direcionar exceções dessa maneira, e se você não fizer, as falhas não irão ser reportadas para a _callback_ correta. _Promises_  fazem isso automaticamente e portanto menos capazes de produzir erros.
 
-## Collections of promises
+## Coleções de _Promises_
 
 {{index "neighbors property", "ping request"}}
 
-Each nest computer keeps an array of other nests within transmission
-distance in its `neighbors` property. To check which of those are
-currently reachable, you could write a function that tries to send a
-`"ping"` request (a request that simply asks for a response) to each
-of them and see which ones come back.
+Cada ninho computador mantêm uma lista de outros ninhos com os quais pode se comunicar em sua propriedade `neighbors`. Para verificar quais estão disponíveis, você pode escrever uma função que tenta enviar uma _request_  “`ping`”  (uma _request_ que só pede uma resposta) para cada um deles e vê de quais tem-se uma resposta.
 
 {{index "Promise.all function"}}
 
-When working with collections of promises running at the same time,
-the `Promise.all` function can be useful. It returns a promise that
-waits for all of the promises in the array to resolve and then
-resolves to an array of the values that these promises produced (in
-the same order as the original array). If any promise is rejected, the
-result of `Promise.all` is itself rejected.
+Quando trabalhando com coleções de _promises_ executando ao mesmo tempo, a função `Promise.all` pode ser útil. Ela retorna uma _promise_ que espera por todas as _promises_ da _array_ se resolverem e depois resolve os valores produzidos por essas _promises_ (na mesma ordem da _array_ original). Se qualquer uma dessa _promises_ é rejeitada, o resultado da ``` Promise.all ``` também é rejeitado.
 
 ```{includeCode: true}
 requestType("ping", () => "pong");
@@ -614,29 +355,17 @@ function availableNeighbors(nest) {
 
 {{index "then method"}}
 
-When a neighbor isn't available, we don't want the entire combined
-promise to fail since then we still wouldn't know anything. So the
-function that is mapped over the set of neighbors to turn them into
-request promises attaches handlers that make successful requests
-produce `true` and rejected ones produce `false`.
+Quando um vizinho não está disponível, nós não queremos que o conjunto de todas as  _promises_ fracasse, já que assim ainda não saberiamos de nada. Então, a função que é mapeada em cima do conjunto de vizinhos para os tornar _requests_ de _promises_ vínculadas ao uma tratador que faz _requests_ que fazem _requests_ bem sucedidas produzem um valor `true` e as rejeitadas produzem um valor `false`.
 
 {{index "filter method", "map method", "some method"}}
 
-In the handler for the combined promise, `filter` is used to remove
-those elements from the `neighbors` array whose corresponding value is
-false. This makes use of the fact that `filter` passes the array index
-of the current element as a second argument to its filtering function
-(`map`, `some`, and similar higher-order array methods do the same).
+No tratador para as _promises_ combinadas, `filter` é utilizado para remover aqueles elementos do _array_ dos `neighbors` correspondentes a um valor _false_. Isso utiliza o fato de a função `filter` passar o _index_ do _array_ como segundo argumento da função de filtragem (`map`, `some `, e outros métodos de alta ordem similares dos _arrays_ fazem a mesma coisa).
 
-## Network flooding
+## Fazendo um _flooding_ na Rede
 
-The fact that nests can talk only to their neighbors greatly inhibits
-the usefulness of this network.
+O fato de cada ninho pode apenas conversar com seus vizinhos inibe de maneira significativa a utilidade da rede.
 
-For broadcasting information to the whole network, one solution is to
-set up a type of request that is automatically forwarded to neighbors.
-These neighbors then in turn forward it to their neighbors, until the
-whole network has received the message.
+Para transmitir informação para toda a rede, uma solução é organizar um tipo de _request_ que automaticamente é encaminhada para os vizinhos. Esses vizinhos então encaminham para outros vizinhos, até que a rede inteira tenha recebido a mensagem.
 
 {{index "sendGossip function"}}
 
@@ -665,30 +394,19 @@ requestType("gossip", (nest, message, source) => {
 
 {{index "everywhere function", "gossip property"}}
 
-To avoid sending the same message around the network forever, each
-nest keeps an array of gossip strings that it has already seen. To
-define this array, we use the `everywhere` function—which runs code on
-every nest—to add a property to the nest's `state` object, which is
-where we'll keep nest-local state.
+Para evitar enviar a mesma mensagem pela rede para sempre, cada ninho possui um _array_ de _strings_ de fofocas que já foram enviadas. Para definir esse _array_, nós utilizamos a função `everywhere`, que executa o código em cada ninho, para adicionar a propriedades ao `state` do ojeto `nest`, o qual iremos armazenar o estado do ninho local.
 
-When a nest receives a duplicate gossip message, which is very likely
-to happen with everybody blindly resending them, it ignores it. But
-when it receives a new message, it excitedly tells all its neighbors
-except for the one who sent it the message.
+Quando um ninho recebe uma mensagem de fofoca duplicada, o que provavelmente pode acontecer com todo mundo a reenviando cegamente, ele a ignora. Mas se recebe uma nova mensagem, ele alegremente avisa os seus vizinhos, com exceção daquele que a enviou.
 
-This will cause a new piece of gossip to spread through the network
-like an ink stain in water. Even when some connections aren't
-currently working, if there is an alternative route to a given nest,
-the gossip will reach it through there.
+Isso irá causar uma nova fofoca para ser espalhada pela rede, como uma mancha de tinta na água. Mesmo quando algumas conexões estiverem funcionando, se há uma alternativa de rota para o dado ninho, a fofoca irá o alcançar lá.
 
 {{index "flooding"}}
 
-This style of network communication is called _flooding_—it floods the
-network with a piece of information until all nodes have it.
+Esse estilo de comunicação é chamado de _flooding_ (inundação) — ela inunda a rede com uma pedaço de informação até que todos os nós o tenham.
 
 {{if interactive
 
-We can call `sendGossip` to see a message flow through the village.
+Nós podemos chamar o `sendGossip` para ver a mensagem fluir através da vila.
 
 ```
 sendGossip(bigOak, "Kids with airgun in the park");
@@ -696,34 +414,21 @@ sendGossip(bigOak, "Kids with airgun in the park");
 
 if}}
 
-## Message routing
+## Roteando Mensagens
 
 {{index efficiency}}
 
-If a given node wants to talk to a single other node, flooding is not
-a very efficient approach. Especially when the network is big, that
-would lead to a lot of useless data transfers.
+Cada nó dado quer conversar com apenas outro nó, _flooding_ não é uma abordagem eficiente. Especialmente quando a rede é grande, o que ia levar a muitos dados inúteis sendo transferidos.
 
 {{index "routing"}}
 
-An alternative approach is to set up a way for messages to hop from
-node to node until they reach their destination. The difficulty with
-that is it requires knowledge about the layout of the network. To
-send a request in the direction of a faraway nest, it is necessary to
-know which neighboring nest gets it closer to its destination. Sending
-it in the wrong direction will not do much good.
+Uma alternativa a essa abordagem é organizar uma forma para que as mensagens pulem de nó em nó até que elas alcancem seu destino. A dificuldade é que isso requer conhecimento sobre o _layout_ (forma) da rede. Para enviar uma _request_ na direção de um ninho distante, é necessário saber qual ninho vizinho está mais perto do destino. Enviar ela numa direção errada não seria útil.
 
-Since each nest knows only about its direct neighbors, it doesn't have
-the information it needs to compute a route. We must somehow spread
-the information about these connections to all nests, preferably in a
-way that allows it to change over time, when nests are abandoned or
-new nests are built.
+Já que cada ninho conhece apenas seus vizinhos diretos, a informação não precisa ser da rota completa. Nós precisamos de alguma forma espalhar a informação sobre essas conexões para todos os ninhos, preferivelmente de uma forma que permita mudanças com o passar do tempo, quando ninhos forem abandonados ou novos construídos.
 
 {{index flooding}}
 
-We can use flooding again, but instead of checking whether a given
-message has already been received, we now check whether the new set of
-neighbors for a given nest matches the current set we have for it.
+Nós podemos utilizar a inundação novamente, mas ao invés de checar se uma dada mensagem já foi recebida, nós podemos agora checar se os novos vizinhos são os ninhos que procuramos.
 
 {{index "broadcastConnections function", "connections binding"}}
 
@@ -756,28 +461,19 @@ everywhere(nest => {
 
 {{index JSON, "== operator"}}
 
-The comparison uses `JSON.stringify` because `==`, on objects or
-arrays, will return true only when the two are the exact same value,
-which is not what we need here. Comparing the JSON strings is a crude
-but effective way to compare their content.
+A comparação utiliza `JSON.stringify` porque ==, em objetos ou _arrays_, irá retornar verdadeiro apenas quando os dois são exatamente o mesmo valor, o que não precisamos. Compar as _strings_ de JSON é um jeito cru, mas efetivo de comparar seu conteúdo.
 
-The nodes immediately start broadcasting their connections, which
-should, unless some nests are completely unreachable, quickly give
-every nest a map of the current network ((graph)).
+Os nós imediatamente começam a transmitir a suas conexões, o que deveria, a não ser que alguns ninhos estejam completamente fora de alcance, rapidamente dá a cada ninho um mapa do diagrama de rede.
 
 {{index pathfinding}}
 
-A thing you can do with graphs is find routes in them, as we saw in
-[Chapter ?](robot). If we have a route toward a message's
-destination, we know which direction to send it in.
+Algo que é possível fazer com diagramas é encontrar as rotas, como vimos no 
+[Chapter 7](robot). Se nós tivermos a rota para o destino da mensagem, nós sabemos para qual direção enviar.
 
 {{index "findRoute function"}}
 
-This `findRoute` function, which greatly resembles the `findRoute`
-from [Chapter ?](robot#findRoute), searches for a way to reach a given
-node in the network. But instead of returning the whole route, it just
-returns the next step. That next nest will itself, using its current
-information about the network, decide where _it_ sends the message.
+
+A função `findRoute`, que lembra bastante a `findRoute` do [Chapter 7](robot#findRoute), procura uma forma de alcançar um nó da rede. Mas, ao invés de retornar toda a rota, retorna apenas o próximo passo. Que o próximo ninho irá, usando a informação atual sobre a rede, decidir onde ele irá enviar a mensagem.
 
 ```{includeCode: true}
 function findRoute(from, to, connections) {
@@ -794,13 +490,7 @@ function findRoute(from, to, connections) {
   return null;
 }
 ```
-
-Now we can build a function that can send long-distance messages. If
-the message is addressed to a direct neighbor, it is delivered as
-usual. If not, it is packaged in an object and sent to a neighbor that
-is closer to the target, using the `"route"` request type, which will
-cause that neighbor to repeat the same behavior.
-
+Agora nós podemos construir uma função que envia mensagem de distâncias longas. Se a mensagem for endereçada a um vizinho próximo, ela retorna como de costume. Se não, ela é empacotada em um objeto e enviado a um vizinho que está mais próximo do alvo, utilizando o tipo de requisição "`route`", que irá fazer com que os vizinhos repitam o mesmo comportamento.
 {{index "routeRequest function"}}
 
 ```{includeCode: true}
@@ -823,8 +513,7 @@ requestType("route", (nest, {target, type, content}) => {
 
 {{if interactive
 
-We can now send a message to the nest in the church tower, which is
-four network hops removed.
+Nós podemos agora enviar mensagens para o ninho próximo da torre da igreja, que está há quatro pulos da rede removida.
 
 ```
 routeRequest(bigOak, "Church Tower", "note",
@@ -835,27 +524,18 @@ if}}
 
 {{index [network, abstraction], layering}}
 
-We've constructed several layers of functionality on top of a
-primitive communication system to make it convenient to use.
-This is a nice (though simplified) model of how real computer networks
-work.
+Nós construímos várias camadas de funcionalidade em cima de um sistema de comunicação primitivo para fazer seu uso conveniente. É um bom (apesar de simplificado) modelo de como uma rede de computadores funciona.
+Uma distinta propriedade de como as redes de computador é que elas não são confiáveis — abstrações construídas sobre elas podem ajudar, mas você não pode abstrair uma falha de rede. Então, programação de rede é tipicamente antecipar e lidar com suas falhas.
 
 {{index error}}
 
-A distinguishing property of computer networks is that they aren't
-reliable—abstractions built on top of them can help, but you can't
-abstract away network failure. So network programming is typically
-very much about anticipating and dealing with failures.
+Uma propriedade distinguidora das redes de computadores é que elas não são abstrações confiáveis que podem ajudar, porém não se pode abstrair um falha de rede. Logo, programar em rede acaba sendo sobre antecipar e lidar com falhas
 
-## Async functions
+## Funções Assíncronas
 
-To store important information, ((crow))s are known to duplicate it
-across nests. That way, when a hawk destroys a nest, the information
-isn't lost.
+Para armazenar informações importantes, os corvos são conhecidos por duplicar elas através dos ninhos. Deste modo, se um falcão destruir o ninho, a informação não é perdida.
 
-To retrieve a given piece of information that it doesn't have in its
-own storage bulb, a nest computer might consult random other nests in
-the network until it finds one that has it.
+Para reter uma parte da informação que não possui seu próprio bulbo de armazenamento, um ninho computador pode consultar aleatoriamente outros ninhos da rede, até encontrar um que o possua.
 
 {{index "findInStorage function", "network function"}}
 
@@ -893,35 +573,23 @@ function findInRemoteStorage(nest, name) {
 
 {{index "Map class", "Object.keys function", "Array.from function"}}
 
-Because `connections` is a `Map`, `Object.keys` doesn't work on it. It
-has a `keys` _method_, but that returns an iterator rather than an
-array. An iterator (or iterable value) can be converted to an array
-with the `Array.from` function.
+Porque `connections` é um `Map`, `Object.keys` não funciona nele. Se possui um **método** `keys`, mas retorna um iterador  ao invés de um _array_). O iterador (ou o valor iterável) pode ser convertido em um _array_ com a função `Array.from`.
 
 {{index "Promise class", recursion}}
 
-Even with promises this is some rather awkward code. Multiple
-asynchronous actions are chained together in non-obvious ways. We
-again need a recursive function (`next`) to model looping through the
-nests.
+Até para _promises_ esse código é esquisito. Múltiplas ações assíncronos estão encadeadas de manerias não óbvias. Nós precisamos novamente de uma função recursiva (``` next ```) para modelar o _looping_ (estrutura de repetição) através dos ninhos.
 
 {{index "synchronous programming", "asynchronous programming"}}
 
-And the thing the code actually does is completely linear—it always
-waits for the previous action to complete before starting the next
-one. In a synchronous programming model, it'd be simpler to express.
+E o que o código faz na verdade é completamente linear — ele sempre espera a função anterior ser completada antes de começar a próxima. Em um modelo de programação síncrona, seria mais simples de expressar.
 
 {{index "async function", "await keyword"}}
 
-The good news is that JavaScript allows you to write pseudo-synchronous
-code to describe asynchronous computation. An `async` function is a
-function that implicitly returns a
-promise and that can, in its body, `await` other promises in a way
-that _looks_ synchronous.
+A boa notícia é que o JavaScript permite que você escreva código pseudo-síncrono para descrever computação assíncrona. A função `async` é uma função que implicitamente retorna uma _promise_ que pode, dentro de sí, `await` outras _promises_ que parecem síncronas.
 
 {{index "findInStorage function"}}
 
-We can rewrite `findInStorage` like this:
+Nós podemos reescrever `findInStorage` da seguinte forma:
 
 ```
 async function findInStorage(nest, name) {
@@ -945,12 +613,7 @@ async function findInStorage(nest, name) {
 
 {{index "async function", "return keyword", "exception handling"}}
 
-An `async` function is marked by the word `async` before the
-`function` keyword. Methods can also be made `async` by writing
-`async` before their name. When such a function or method is called,
-it returns a promise. As soon as the body returns something, that
-promise is resolved. If it throws an exception, the promise is
-rejected.
+Uma função `async` é marcada pela palavra `async` antes da palavra-chave `function`. Métodos também podem ser transformados ao escrever `async` antes de seus nomes. Quando tal função ou método é chamado, ele retorna uma _promise_. Assim que o corpo retorna algo, a _promise_ é resolvida. Se ele joga uma exceção, a _promise_ é rejeitada.
 
 {{if interactive
 
@@ -963,33 +626,20 @@ if}}
 
 {{index "await keyword", ["control flow", asynchronous]}}
 
-Inside an `async` function, the word `await` can be put in front of an
-expression to wait for a promise to resolve and only then continue
-the execution of the function.
+Dentro de uma função `async`, a palavra `await` pode ser posta na frente de uma expressão para esperar a _promise_ ser resolvida e apenas aí continuar a execução da função.
 
-Such a function no longer, like a regular JavaScript function, runs
-from start to completion in one go. Instead, it can be _frozen_ at any
-point that has an `await`, and can be resumed at a later time.
+Tal função não mais, como numa função Javascript padrão, roda do começo ao fim de uma vez. Ao invés disso, ela fica congelada no ponto que possui o `await` e pode ser retomada depois.
 
-For non-trivial asynchronous code, this notation is usually more
-convenient than directly using promises. Even if you need to do
-something that doesn't fit the synchronous model, such as perform
-multiple actions at the same time, it is easy to combine `await` with
-the direct use of promises.
+Para código assíncronos não triviais, essa notação é geralmente mais conveniente que utilizar _promises_ diretamente. Mesmo que você precise fazer algo que não se encaixe no modelo síncrono, como múltiplas ações ao mesmo tempo, é mais simples combinar o termo `await` ao invés de utilizar _promises_ diretamente.
 
-## Generators
+## _Generators_
 
 {{index "async function"}}
 
-This ability of functions to be paused and then resumed again is not
-exclusive to `async` functions. JavaScript also has a feature called
-_((generator))_ functions. These are similar, but without the
-promises.
+Essa habilidade de pausar as funções e depois as retomar não é exclusiva de funções `async`. No JavaScript temos também um recurso chamado funções _generator_ (geradoras). Elas são similares, mas sem as _promises_.
 
-When you define a function with `function*` (placing an asterisk after
-the word `function`), it becomes a generator. When you call a
-generator, it returns an ((iterator)), which we already saw in
-[Chapter ?](object).
+
+Quando você define uma função com `function*` (colocando um asterisco depois da palavra `function`), ela se torna um _generator_. Quando você chama um _generator_, ele retorna um iterador, o qual já vimos no [Chapter 6](object).
 
 ```
 function* powers(n) {
@@ -1009,17 +659,9 @@ for (let power of powers(3)) {
 
 {{index "next method", "yield keyword"}}
 
-Initially, when you call `powers`, the function is frozen at its
-start. Every time you call `next` on the iterator, the function runs
-until it hits a `yield` expression, which pauses it and causes the
-yielded value to become the next value produced by the iterator. When
-the function returns (the one in the example never does), the iterator
-is done.
+Inicialmente, quando você chama `powers`, a função é congelada quando começa. Cada vez que você chama  `next`  no iterador, a função roda até que chega na expressão `yields`, que a pausa e faz com que o valor gerado seja o próximo valor produzido pelo iterador. Quando a função retorna ( a do exemplo nunca o faz), o iterador está terminado.
 
-Writing iterators is often much easier when you use generator
-functions. The iterator for the `Group` class (from the exercise in
-[Chapter ?](object#group_iterator)) can be written with this
-generator:
+Escrever iteradores é geralmente muito mais simples quando se utiliza funções geradoras. O iterador para a classe `Group` (do exercício do [Chapter 6](object#group_iterator))pode ser escrita com o gerador:
 
 {{index "Group class"}}
 
@@ -1040,47 +682,27 @@ class Group {
 
 {{index [state, in iterator]}}
 
-There's no longer a need to create an object to hold the iteration
-state—generators automatically save their local state every time
-they yield.
+Não há mais necessidade de criar um objeto para manter o estado de iteração — geradores automaticamente salvam o seu estado local toda a vez que eles geram.
 
-Such `yield` expressions may occur only directly in the generator
-function itself and not in an inner function you define inside of it.
-The state a generator saves, when yielding, is only its _local_
-environment and the position where it yielded.
+Tal expressão `yield` pode ocorrer apenas diretamente no próprio gerador da função e não numa função interna definida dentro dele. O estado que o gerador salva ao gerar, é apenas no ambiente local e na posição em que está sendo gerado.
 
 {{index "await keyword"}}
 
-An `async` function is a special type of generator. It produces a
-promise when called, which is resolved when it returns (finishes) and
-rejected when it throws an exception. Whenever it yields (awaits) a
-promise, the result of that promise (value or thrown exception) is the
-result of the `await` expression.
+Uma função `async` é um tipo especial de _generator_. Ela produz uma _promise_ quando é chamada, a qual quando é resolvida retorna (termina) e quando é rejeitada joga uma exceção. Sempre que ela gera (espera) uma _promise_, o resultado da _promise_ (valor ou exceção jogada) é o resultado da expressão _await_.
 
 ## The event loop
 
 {{index "asynchronous programming", scheduling, "event loop", timeline}}
 
-Asynchronous programs are executed piece by piece. Each piece may
-start some actions and schedule code to be executed when the action
-finishes or fails. In between these pieces, the program sits idle,
-waiting for the next action.
+Programas assíncronos são executados parte por parte. Cada parte pode começar com algumas ações e agendar para que o código seja executado quando a ação terminar ou falhar. Entre essas peças, o programa está ocioso, esperando pela próxima ação.
 
 {{index "setTimeout function"}}
 
-So callbacks are not directly called by the code that scheduled them.
-If I call `setTimeout` from within a function, that function will have
-returned by the time the callback function is called. And when the
-callback returns, control does not go back to the function that
-scheduled it.
+Então, _callbacks_ não são diretamente chamados pelo código que os agendou. Se eu chamar `setTimeout` de dentro da função, aquela função irá ter retornado na hora em que a função _callback_ for chamada. E quando o _callback_ retornar, o controle não retorna para a função que o agendou.
 
 {{index "Promise class", "catch keyword", "exception handling"}}
 
-Asynchronous behavior happens on its own empty function ((call
-stack)). This is one of the reasons that, without promises, managing
-exceptions across asynchronous code is hard. Since each callback
-starts with a mostly empty stack, your `catch` handlers won't be on
-the stack when they throw an exception.
+Comportamento assíncrono acontece na sua _stack_ de chamada de função vazia. Esta é uma das razões pelas quais, sem _promises_, controlar as exceções em um código assíncrono é difícil. Já que cada _callback_ começa com um _stack_ praticamente vazio, seus ``` catch ``` _handlers_ não vão estar em sua _stack_ quando jogarem uma exceção.
 
 ```
 try {
@@ -1095,17 +717,9 @@ try {
 
 {{index thread, queue}}
 
-No matter how closely together events—such as timeouts or incoming
-requests—happen, a JavaScript environment will run only one program at
-a time. You can think of this as it running a big loop _around_ your
-program, called the _event loop_. When there's nothing to be done,
-that loop is stopped. But as events come in, they are added to a queue,
-and their code is executed one after the other. Because no two things
-run at the same time, slow-running code might delay the handling of
-other events.
+Não importa o quão próximos os eventos — como os _timeouts_ ou _requests_ — ocorrem, um ambiente JavaScript sempre vai rodar apenas um programa de cada vez. Você pode pensar nisso como se ele estivesse rodando um grande _loop_ ao redor do seu programa, chamado de _loop_ de *evento*. Quando não há nada a ser feito, o _loop_ é parado. Mas, quando os eventos ocorrem, eles são adicionados a uma fila, e seu código é executado um depois do outro. Porque duas coisas não rodam ao mesmo tempo, código que roda devagar pode atrasar o tratamento de outros eventos.s.
 
-This example sets a timeout but then dallies until after the
-timeout's intended point of time, causing the timeout to be late.
+Esse exemplo coloca um _timeout_ mas depois espera até depois do ponto no tempo pretendido, fazendo com que o _timeout_ fique tarde.
 
 ```
 let start = Date.now();
@@ -1120,9 +734,7 @@ console.log("Wasted time until", Date.now() - start);
 
 {{index "resolving (a promise)", "rejecting (a promise)", "Promise class"}}
 
-Promises always resolve or reject as a new event. Even if a promise is
-already resolved, waiting for it will cause your callback to run after
-the current script finishes, rather than right away.
+_Promises_ sempre resolvem ou rejeitam como um novo evento. Mesmo que uma _promise_ esteja já resolvida, esperar for ela vai resultar no seu _callback_ rodar depois que o _script_ atual, ao invés do jeito correto.
 
 ```
 Promise.resolve("Done").then(console.log);
@@ -1131,22 +743,15 @@ console.log("Me first!");
 // → Done
 ```
 
-In later chapters we'll see various other types of events that run on
-the event loop.
+Nos próximos capítulos vamos ver vários tipos de outros eventos que rodam no evento _loop_.
 
-## Asynchronous bugs
+## _Bugs_ Assíncronos
 
 {{index "asynchronous programming", [state, transitions]}}
 
-When your program runs synchronously, in a single go, there are no
-state changes happening except those that the program itself
-makes. For asynchronous programs this is different—they may have
-_gaps_ in their execution during which other code can run.
+Quando seus programas rodam de forma síncrona, de uma vez só, não há mudanças no estado acontecendo, a não ser aquelas que o próprio programa faz. Para programa assíncronos isso é diferente — podem haver lacunas em suas execuções na qual outro código pode rodar.
 
-Let's look at an example. One of the hobbies of our crows is to count
-the number of chicks that hatch throughout the village every year.
-Nests store this count in their storage bulbs. The following code tries to
-enumerate the counts from all the nests for a given year:
+Vamos ver um exemplo. Um dos _hobbies_ dos corvos é contar o número de franguinhos que chocam pela vila todo ano. Ninhos armazenam essa contagem em seus bulbos de armazenamento. O código a seguir tenta enumerar as contagens de todos os ninhos ao longo de um dado ano.
 
 {{index "anyStorage function", "chicks function"}}
 
@@ -1169,18 +774,13 @@ async function chicks(nest, year) {
 
 {{index "async function"}}
 
-The `async name =>` part shows that ((arrow function))s can also be
-made `async` by putting the word `async` in front of them.
+A parte `async name =>`  mostra que funções em flecha também podem se tornar `async` ao colocar a palavra `async` na frente delas.
 
 {{index "Promise.all function"}}
 
-The code doesn't immediately look suspicious...it maps the `async`
-arrow function over the set of nests, creating an array of promises,
-and then uses `Promise.all` to wait for all of these before returning
-the list they build up.
+O código não parece imediatamente suspeito...ele mapeia a função flecha `async` através de um conjunto de ninhos, criando um _array_ de _promises_ e utiliza o `Promise.all` para esperar por todas aquelas antes de retornar a lista que eles contruíram.
 
-But it is seriously broken. It'll always return only a single line of
-output, listing the nest that was slowest to respond.
+Mas isso está seriamente errado. Ele sempre irá retornar apenas uma linha de saída, listando o ninho mais devagar a responder.
 
 {{if interactive
 
@@ -1190,31 +790,19 @@ chicks(bigOak, 2017).then(console.log);
 
 if}}
 
-Can you work out why?
+Você sabe dizer por quê?
 
 {{index "+= operator"}}
 
-The problem lies in the `+=` operator, which takes the _current_ value
-of `list` at the time where the statement starts executing and then,
-when the `await` finishes, sets the `list` binding to be that value
-plus the added string.
+O problema ocorre no operador +=, que pega o valor atual de `list` na hora em que a declaração começa a ser executada e então, quando o `await` termina, faz com que o valor de `list` seja o aquele valor mais a _string_ adicionada.
 
 {{index "await keyword"}}
 
-But between the time where the statement starts executing and the time
-where it finishes there's an asynchronous gap. The `map` expression
-runs before anything has been added to the list, so each of the `+=`
-operators starts from an empty string and ends up, when its storage
-retrieval finishes, setting `list` to a single-line list—the result of
-adding its line to the empty string.
+Mas entre o tempo em que a declaração começa a ser executada e o hora em que ela termina há uma lacuna assíncrona. A expressão `map` roda antes que qualquer coisa seja adicionada a lista, então o operador += começa em uma _string_ vazia e termina, quando a computação de estocagem acaba, fazendo `list` uma lista de uma linha — o resultado de adicionar sua linha a uma _string_ vazia.
 
 {{index "side effect"}}
 
-This could have easily been avoided by returning the lines from the
-mapped promises and calling `join` on the result of `Promise.all`,
-instead of building up the list by changing a binding. As usual,
-computing new values is less error-prone than changing existing
-values.
+Isso poderia ser facilmente evitada por retornar as linhas que foram mapeadas pelas _promises_ e chamando `join` no resultado de `Promise.all`, ao invés de construir uma lista encadeando uma ligação. Como de costume, computar novos valores tende a menos erros que mudar os existentes.
 
 {{index "chicks function"}}
 
@@ -1228,53 +816,29 @@ async function chicks(nest, year) {
 }
 ```
 
-Mistakes like this are easy to make, especially when using `await`,
-and you should be aware of where the gaps in your code occur. An
-advantage of JavaScript's _explicit_ asynchronicity (whether through
-callbacks, promises, or `await`) is that spotting these gaps is
-relatively easy.
+Erros assim são fáceis de cometer, especialmente quando utilizamos `await`, e você deve ficar atento de onde essas lacunas podem ocorrer. Uma vantagem a assincronicidade explícita do JavaScript (através de _callbacks_, _promises_ ou ``` await ```) é que encontrar essas lacunas é relativamente fácil.
 
-## Summary
+## Resumo
 
-Asynchronous programming makes it possible to express waiting for
-long-running actions without freezing the program during these
-actions. JavaScript environments typically implement this style of
-programming using callbacks, functions that are called when the
-actions complete. An event loop schedules such callbacks to be called
-when appropriate, one after the other, so that their execution does
-not overlap.
+Programação assíncrona torna possível expressar esperas por ações que rodam por muito tempo sem congelar o programa durante essas ações. Ambientes JavaScript tipicamente implementam esse estilo de programação uitilizando _callbacks_, funções que são chamadas quando certas ações são completadas. Um evento _loop_ agenda tais _callbacks_ para serem chamadas quando apropriado, uma depois da outra, para que na execução não ocorra sobreposições.
 
-Programming asynchronously is made easier by promises, objects that
-represent actions that might complete in the future, and `async`
-functions, which allow you to write an asynchronous program as if it
-were synchronous.
+Programando assíncronamente se torna mais fácil com _promises_, objetos que representam ações que pode ser completas no futuro e funções `async`, que permitem que você escreva um progama assíncrono como se fosse síncrono.
 
-## Exercises
+## Exercícios
 
-### Tracking the scalpel
+### Rastreando o Bisturi
 
 {{index "scalpel (exercise)"}}
 
-The village crows own an old scalpel that they occasionally use on
-special missions—say, to cut through screen doors or packaging. To be
-able to quickly track it down, every time the scalpel is moved to
-another nest, an entry is added to the storage of both the nest that
-had it and the nest that took it, under the name `"scalpel"`, with its
-new location as the value.
+A vila de corvos tem um velho bisturi que eles de vez em quando usam em missões especiais — por exemplo, para cortar telas de portas ou mochilas. Para poder rastreá-lo rapidamente, toda vez que o bisturi é transportado para outro ninho, um registro é adicionado na memória de ambos os ninhos, o que tinha e o que pegou, sob o nome de “`scapel`", com sua nova localização como valor.
 
-This means that finding the scalpel is a matter of following the
-breadcrumb trail of storage entries, until you find a nest where that
-points at the nest itself.
+Isso significa que para achar o bisturi basta seguir a trilha de registros, até achar o ninho em que o ponto é o próprio ninho.
 
 {{index "anyStorage function", "async function"}}
 
-Write an `async` function `locateScalpel` that does this, starting at
-the nest on which it runs. You can use the `anyStorage` function
-defined earlier to access storage in arbitrary nests. The scalpel has
-been going around long enough that you may assume that every nest has
-a `"scalpel"` entry in its data storage.
+Escreva uma função assíncrona (`async`) `locateScalpel` que começando no ninho em que é executada. Você pode usar a função `anyStorage` definida anteriormente par acessar a memória de ninhos arbitrários. O bisturi já foi transportado tanto que você pode assumir que todo ninho tem o registro “`scalpel`" no seu banco de dados
 
-Next, write the same function again without using `async` and `await`.
+A seguir, escreva a mesma função sem utilizar `async` e `await`.
 
 {{index "exception handling"}}
 
@@ -1298,39 +862,23 @@ locateScalpel(bigOak).then(console.log);
 
 if}}
 
-{{hint
+{{**Dica:**
 
 {{index "scalpel (exercise)"}}
 
-This can be done with a single loop that searches through the nests,
-moving forward to the next when it finds a value that doesn't match
-the current nest's name and returning the name when it finds a
-matching value. In the `async` function, a regular `for` or `while`
-loop can be used.
+Isso pode ser feito em um _loop_ único que busca pelos ninhos, movendo adiante para o próximo quando ele encontra o valor que não equivale ao nome do ninho atual e retorna o nome quando encontra o valor. Numa função `async`, um `for` ou `while` _loop_ pode ser utilizado.
 
 {{index recursion}}
 
-To do the same in a plain function, you will have to build your loop
-using a recursive function. The easiest way to do this is to have that
-function return a promise by calling `then` on the promise that
-retrieves the storage value. Depending on whether that value matches
-the name of the current nest, the handler returns that value or a
-further promise created by calling the loop function again.
+Para fazer o mesmo numa função normal, você vai ter que construir o _loop_ utilizando uma função recursiva. A maneira mais fácil de fazer isso é ter a função retornando uma  _promise_ chamando `then` na _promise_ que mantém o valor armazenado. Dependendo se o valor equivale ao nome do próximo ninho, o tratador retorna o valor ou uma próxima _promise_ chamando o _loop_ novamente
 
-Don't forget to start the loop by calling the recursive function once
-from the main function.
+Não se esqueça de começar o _loop_ chamando uma função recursiva uma vez na função principal.
 
 {{index "exception handling"}}
 
-In the `async` function, rejected promises are converted to exceptions
-by `await`. When an `async` function throws an exception, its promise
-is rejected. So that works.
+Na função `async`, _promises_ rejeitadas são convertidas por exceções pelo `await`. Quando a função `async` joga uma exceção, a _promise_ é rejeitada. Assim funciona.
 
-If you implemented the non-`async` function as outlined earlier, the way
-`then` works also automatically causes a failure to end up in the
-returned promise. If a request fails, the handler passed to `then`
-isn't called, and the promise it returns is rejected with the same
-reason.
+Se você implementar uma função comum como mostrado antes, o jeito que `then` funciona também automaticamente causa uma falha, o tratador passado no `then` não é chamado, e o retorna da _promise_ é rejeitado pela mesma razão.
 
 hint}}
 
@@ -1338,19 +886,11 @@ hint}}
 
 {{index "Promise class", "Promise.all function", "building Promise.all (exercise)"}}
 
-Given an array of ((promise))s, `Promise.all` returns a promise that
-waits for all of the promises in the array to finish. It then
-succeeds, yielding an array of result values. If a promise
-in the array fails, the promise returned by `all` fails too, with the
-failure reason from the failing promise.
+Dado um _array_ de _promises_, `Promise.all` retorna uma _promise_ que espera que todas as  _promises_ do _array_ terminarem. Se é bem sucedida, gera um _array_ dos valores dos resultados. Se uma  _promise_  no _array_ falha, a _promise_ retornada por `all` fracassa também, com a falha sendo a da  _promise_ que falhou.
 
-Implement something like this yourself as a regular function
-called `Promise_all`.
+Implementando algo como isso você mesmo, como uma função comum chamada `Promise_all`.
 
-Remember that after a promise has succeeded or failed, it can't
-succeed or fail again, and further calls to the functions that resolve
-it are ignored. This can simplify the way you handle failure of your
-promise.
+Lembrando que depois da  _promise_ ter sucesso ou falhar, ela não pode ter sucesso ou fracassar novamente, em próximas chamadas para funções que as resolvem são ignoradas. Isso pode simplificar a forma como você trata a falha da sua _promise_.
 
 {{if interactive
 
@@ -1386,29 +926,16 @@ Promise_all([soon(1), Promise.reject("X"), soon(3)])
 
 if}}
 
-{{hint
+{{**Dica:**
 
 {{index "Promise.all function", "Promise class", "then method", "building Promise.all (exercise)"}}
 
-The function passed to the `Promise` constructor will have to call
-`then` on each of the promises in the given array. When one of them
-succeeds, two things need to happen. The resulting value needs to be
-stored in the correct position of a result array, and we must check
-whether this was the last pending ((promise)) and finish our own
-promise if it was.
+A função para o construtor da  `Promise` vai ter que chamar o `then` de cada _promise_ no dado _array_. Quando uma for bem sucedida, duas coisas precisam acontecer. O valor resultando precisa ser armazenado na posição correta no _array_ resultante, e precisa verificar se esse é o último valor pendente da _promise_ e terminar a própria _promise_ se for.
 
 {{index "counter variable"}}
 
-The latter can be done with a counter that is initialized to the
-length of the input array and from which we subtract 1 every time a
-promise succeeds. When it reaches 0, we are done. Make sure you take
-into account the situation where the input array is empty (and thus no
-promise will ever resolve).
+A última pode ser feita com um contador  que é inicializado com o comprimento do _array_ de entrada e do qual nós subtraímos 1 cada vez que a _promise_ é bem sucedida. Quando atinge 0, nós terminamos. Garante que você vai levar em conta a situação em que a entrada do _array_ for vazio (assim nenhuma _promise_ vai ser resolvida).
 
-Handling failure requires some thought but turns out to be extremely
-simple. Just pass the `reject` function of the wrapping promise to
-each of the promises in the array as a `catch` handler or as a second
-argument to `then` so that a failure in one of them triggers the
-rejection of the whole wrapper promise.
+Tratar falhas requer raciocínio mas se torna extremamente simples. Apenas passe a função `reject` _wrapping_ a _promise_ para cada uma das _promises_ no _array_ como um tratador `catch` ou como um segundo argumento para o `then` para que a falha de uma acione a rejeição de toda a _wrapper_ _promise_.
 
 hint}}

@@ -122,53 +122,41 @@ Todas as ligações ((padrão)) globais JavaScript, como `Array`,
 `Math` e` JSON`, também estão presentes no ambiente do Node.
 Funcionalidades relacionadas ao navegador, como `document` ou` prompt`, não.
 
-## Modules
+## Módulos
 
 {{index "Node.js", "global scope", "module loader"}}
 
-Beyond the bindings I mentioned, such as `console` and `process`,
-Node puts few additional bindings in the global scope. If you want to access
-built-in functionality, you have to ask the module system for it.
+Além das ligações que mencionei, como `console` e `processo`,
+O Node coloca algumas ligações adicionais no escopo global. Se você quiser acessar
+funcionalidades embutidas, você deve solicitar ao sistema de módulos.
 
 {{index "require function"}}
 
-The ((CommonJS)) module system, based on the `require` function, was
-described in [Chapter ?](modules#commonjs). This system is built into
-Node and is used to load anything from built-in ((module))s to
-downloaded ((package))s to ((file))s that are part of your own
-program.
+O sistema de módulos ((CommonJS)), baseado na função `require`, foi
+descrito no [Chapter ?](modules#commonjs). Este sistema é integrado
+ao Node e é usado para carregar qualquer coisa desde ((módulo))s integrados a ((pacote))s baixados para ((arquivo))s que são parte de seus próprios programas.
 
 {{index [path, "file system"], "relative path", resolution}}
 
-When `require` is called, Node has to resolve the given string to an
-actual ((file)) that it can load. Pathnames that start with `/`,
-`./`, or `../` are resolved relative to the current module's path,
-where `.` stands for the current directory, `../` for one
-directory up, and `/` for the root of the file system. So if you ask
-for `"./graph"` from the file `/tmp/robot/robot.js`, Node will try to
-load the file `/tmp/robot/graph.js`.
+Quando `require` é chamado, o Node tem que resolver a string dada para um ((arquivo)) atual que pode carregar. Nomes de caminhos que começam com `/`, `./` ou `../` são resolvidos em relação ao caminho do módulo atual, onde `.` representa o diretório atual, `../ ` para um diretório para cima e `/` para a raiz do sistema de arquivos. Então se você perguntar
+para `"./graph"` do arquivo `/tmp/robot/robot.js`, o Node tentará
+carregar o arquivo `/tmp/robot/graph.js`.
 
 {{index "index.js"}}
 
-The `.js` ((extension)) may be omitted, and Node will add it if such a
-file exists. If the required path refers to a ((directory)), Node will
-try to load the file named `index.js` in that directory.
+A ((extensão)) `.js` pode ser omitida, e o Node irá adicioná-la se tal o arquivo existe. Se o caminho necessário se referir a um ((diretório)), o Node irá
+tente carregar o arquivo chamado `index.js` nesse diretório.
 
 {{index "node_modules directory", directory}}
 
-When a string that does not look like a relative or absolute path is
-given to `require`, it is assumed to refer to either a built-in
-((module)) or a module installed in a `node_modules` directory. For
-example, `require("fs")` will give you Node's built-in file system
-module. And `require("robot")` might try to load the library found in
-`node_modules/robot/`. A common way to install such libraries is by
-using ((NPM)), which we'll come back to in a moment.
+Quando uma string que não se parece com um caminho relativo ou absoluto é dado a `require`, presume-se que se refira a um
+((módulo)) ou um módulo instalado em um diretório `node_modules`. Por exemplo, `require("fs")` lhe dará o módulo de sistemas de arquivos embutidos do Node. E `require ("robot")` pode tentar carregar a biblioteca encontrada em `node_modules/robot/`. Uma maneira comum de instalar essas bibliotecas é usando ((NPM)), ao qual voltaremos em breve.
 
 {{index "require function", "Node.js", "garble example"}}
 
-Let's set up a small project consisting of two files. The first one,
-called `main.js`, defines a script that can be called from the
-((command line)) to reverse a string.
+Vamos configurar um pequeno projeto que consiste em dois arquivos. O primeiro,
+chamado `main.js`, define um script que pode ser chamado a partir da
+((linha de comando)) para reverter uma string.
 
 ```
 const {reverse} = require("./reverse");
@@ -181,9 +169,7 @@ console.log(reverse(argument));
 
 {{index reuse, "Array.from function", "join method"}}
 
-The file `reverse.js` defines a library for reversing strings, which
-can be used both by this command line tool and by other scripts that
-need direct access to a string-reversing function.
+O arquivo `reverse.js` define uma biblioteca para reverter strings, que pode ser usado por esta ferramenta de linha de comando e por outros scripts que precisa de acesso direto a uma função de reversão de string.
 
 ```
 exports.reverse = function(string) {
@@ -193,12 +179,10 @@ exports.reverse = function(string) {
 
 {{index "exports object", CommonJS, [interface, module]}}
 
-Remember that adding properties to `exports` adds them to the
-interface of the module. Since Node.js treats files as
-((CommonJS)) ((module))s, `main.js` can take the exported `reverse`
-function from `reverse.js`.
+Lembre-se de que adicionar propriedades a `exports` adiciona-as a interface do módulo. Como o Node.js trata os arquivos como
+((módulo))s ((CommonJS)), `main.js` pode levar a função exportada `reverse` do `reverse.js`.
 
-We can now call our tool like this:
+Agora podemos chamar nossa ferramenta assim:
 
 ```{lang: null}
 $ node main.js JavaScript

@@ -2,94 +2,81 @@
 
 # Node.js
 
-{{quote {author: "Master Yuan-Ma", title: "The Book of Programming", chapter: true}
+{{quote {author: "Mestre Yuan-Ma", title: "O Livro da Programação", chapter: true}
 
-A student asked, 'The programmers of old used only simple machines and
-no programming languages, yet they made beautiful programs. Why do we
-use complicated machines and programming languages?'. Fu-Tzu replied,
-'The builders of old used only sticks and clay, yet they made
-beautiful huts.'
+Um aluno perguntou: 'Os antigos programadores usavam apenas máquinas simples e
+nenhuma linguagem de programação, mas eles fizeram programas bonitos. Por que nós
+usamos máquinas e linguagens de programação complicadas?'. Fu-Tzu respondeu,
+'Os construtores antigos usavam apenas paus e argila, mas eles fizeram
+lindas cabanas.
 
 quote}}
 
 {{index "Yuan-Ma", "Book of Programming"}}
 
-{{figure {url: "img/chapter_picture_20.jpg", alt: "Picture of a telephone pole", chapter: "framed"}}}
+{{figure {url:"https://eloquentjavascript.net/img/chapter_picture_20.jpg", alt: "Picture of a telephone pole", chapter: "framed"}}}
 
 {{index "command line"}}
 
-So far, we have used the JavaScript language in a single environment:
-the browser. This chapter and the [next one](skillsharing) will
-briefly introduce ((Node.js)), a program that allows you to apply your
-JavaScript skills outside of the browser. With it, you can build
-anything from small command line tools to HTTP ((server))s that power
-dynamic ((website))s.
+Até agora, usamos a linguagem JavaScript em um único ambiente:
+o navegador. Este capítulo e o [próximo](skillsharing) irão
+apresentar brevemente ((Node.js)), um programa que permite que você aplique suas habilidades de JavaScript fora do navegador. Com ele, você pode construir
+qualquer coisa, desde pequenas ferramentas de linha de comando a ((server))s HTTP que alimentam
+((website))s dinâmicos.
 
-These chapters aim to teach you the main concepts that Node.js uses
-and to give you enough information to write useful programs for it.
-They do not try to be a complete, or even a thorough, treatment of the
-platform.
+Estes capítulos têm como objetivo ensinar os principais conceitos que o Node.js usa
+para lhe dar informações suficientes para escrever programas para ele.
+Eles não tentam ser completos, ou até mesmo meticulosos, no tratamento da plataforma.
 
 {{if interactive
 
-Whereas you could run the code in previous chapters directly on these
-pages, because it was either raw JavaScript or written for the
-browser, the code samples in this chapter are written for Node and
-often won't run in the browser.
+Considerando que você pode executar o código dos capítulos anteriores diretamente nestas
+páginas, porque era JavaScript bruto ou escrito para o 
+navegador, os exemplos de código neste capítulo são escritos para Node e
+muitas vezes não rodam no navegador.
 
 if}}
 
-If you want to follow along and run the code in this chapter, you'll
-need to install Node.js version 10.1 or higher. To do so, go to
-[_https://nodejs.org_](https://nodejs.org) and follow the installation
-instructions for your operating system. You can also find further
-((documentation)) for Node.js there.
+Se você quiser acompanhar e executar o código neste capítulo, você
+precisa instalar o Node.js versão 10.1 ou superior. Para fazer isso, vá para [_https://nodejs.org_](https://nodejs.org) e siga as instruções de
+instalação para o seu sistema operacional. Você também pode encontrar informações adicionais na
+((documentação)) para Node.js lá.
 
-## Background
+## Plano de Fundo
 
 {{index responsiveness, input, [network, speed]}}
 
-One of the more difficult problems with writing systems that
-communicate over the network is managing input and ((output))—that
-is, the reading and writing of data to and from the network and ((hard
-drive)). Moving data around takes time, and ((scheduling)) it cleverly
-can make a big difference in how quickly a system responds to the user
-or to network requests.
+Um dos problemas mais difíceis com sistemas de escrita que
+comunicam-se pela rede é gerenciar a entrada e ((saída)),
+isto é, a leitura e gravação de dados para a rede e ((disco rídigo)). A movimentação de dados leva tempo, e ((agenda))-la pode fazer uma grande diferença na rapidez com que um sistema responde ao usuário ou a solicitações de rede.
 
 {{index ["asynchronous programming", "in Node.js"]}}
 
-In such programs, asynchronous programming is often helpful. It
-allows the program to send and receive data from and to multiple
-devices at the same time without complicated thread management and
-synchronization.
+Em tais programas, a programação assíncrona costuma ser útil. 
+permitindo que o programa envie e receba dados a vários
+dispositivos ao mesmo tempo, sem gerenciamento complicado de thread e sincronização.
 
 {{index "programming language", "Node.js", standard}}
 
-Node was initially conceived for the purpose of making asynchronous
-programming easy and convenient. JavaScript lends itself well to a
-system like Node. It is one of the few programming languages that does
-not have a built-in way to do in- and output. Thus, JavaScript could
-be fit onto Node's rather eccentric approach to in- and output without
-ending up with two inconsistent interfaces. In 2009, when Node was
-being designed, people were already doing callback-based programming
-in the browser, so the ((community)) around the language was used to
-an asynchronous programming style.
+O Node foi inicialmente concebido com o propósito de tornar 
+a programação assíncrona fácil e prática. JavaScript se comporta bem em um sistema como o Node. É uma das poucas linguagens de programação que não tem uma maneira embutida de fazer entrada e saída. Assim, JavaScript poderia
+se encaixar na abordagem bastante excêntrica do Node para entrada e saída sem terminar com duas interfaces inconsistentes. Em 2009, quando Node estava
+sendo projetado, as pessoas já estavam fazendo programação baseada em callback no navegador, de modo que a ((comunidade)) em torno da linguagem estava acostumada a um estilo de programação assíncrona.
 
-## The node command
+## O comando do Node
 
 {{index "node program"}}
 
-When ((Node.js)) is installed on a system, it provides a program
-called `node`, which is used to run JavaScript files. Say you have a
-file `hello.js`, containing this code:
+Quando o ((Node.js)) é instalado em um sistema, ele fornece um programa
+chamado `node`, que é usado para executar arquivos JavaScript. Digamos que você tem um
+arquivo `hello.js`, contendo este código:
 
 ```
 let message = "Hello world";
 console.log(message);
 ```
 
-You can then run `node` from the ((command line)) like this to execute
-the program:
+Você então pode rodar `node` a partir de uma ((linha de comando)) como essa para executar o programa:
 
 ```{lang: null}
 $ node hello.js
@@ -98,18 +85,12 @@ Hello world
 
 {{index "console.log"}}
 
-The `console.log` method in Node does something similar to what it
-does in the browser. It prints out a piece of text. But in Node, the
-text will go to the process's ((standard output)) stream, rather than
-to a browser's ((JavaScript console)). When running `node` from the
-command line, that means you see the logged values in your
-((terminal)).
+O método `console.log` no Node faz algo semelhante ao que faz no navegador. Ele imprime um pedaço de texto. Mas em Node, o texto irá para a ((saída padrão)) do fluxo do processo, ao invés do ((console JavaScript)) de um navegador. Ao executar `node` da linha de comando, isso significa que você vê os valores registrados em seu ((terminal)).
 
 {{index "node program", "read-eval-print loop"}}
 
-If you run `node` without giving it a file, it provides you with a
-prompt at which you can type JavaScript code and immediately see the
-result.
+Se você executar `node` sem fornecer um arquivo, ele fornece um
+prompt no qual você pode digitar o código JavaScript e ver imediatamente o resultado.
 
 ```{lang: null}
 $ node
@@ -123,20 +104,12 @@ $
 
 {{index "process object", "global scope", [binding, global], "exit method", "status code"}}
 
-The `process` binding, just like the `console` binding, is available
-globally in Node. It provides various ways to inspect and manipulate
-the current program. The `exit` method ends the process and can be
-given an exit status code, which tells the program that started `node`
-(in this case, the command line shell) whether the program completed
-successfully (code zero) or encountered an error (any other code).
+O vínculo `process`, assim como o vínculo `console`, está disponível globalmente no Node. Ele fornece várias maneiras de inspecionar e manipular o programa atual. O método `exit` termina o processo e pode ser dado um código de status de saída, que diz ao programa que iniciou o `node`
+(neste caso, o shell da linha de comando) se o programa foi concluído com sucesso (código zero) ou encontrou um erro (qualquer outro código).
 
 {{index "command line", "argv property"}}
 
-To find the command line arguments given to your script, you can read
-`process.argv`, which is an array of strings. Note that it also
-includes the name of the `node` command and your script name, so the
-actual arguments start at index 2. If `showargv.js` contains the
-statement `console.log(process.argv)`, you could run it like this:
+Para encontrar os argumentos da linha de comando fornecidos ao seu script, você pode ler `process.argv`, que é uma matriz de strings. Observe que também inclui o nome do comando `node` e o nome do seu script, então os argumentos reais começam no índice 2. Se `showargv.js` contém a instrução `console.log (process.argv)`, você poderia executá-lo assim:
 
 ```{lang: null}
 $ node showargv.js one --and two
@@ -145,57 +118,45 @@ $ node showargv.js one --and two
 
 {{index [binding, global]}}
 
-All the ((standard)) JavaScript global bindings, such as `Array`,
-`Math`, and `JSON`, are also present in Node's environment.
-Browser-related functionality, such as `document` or `prompt`, is not.
+Todas as ligações ((padrão)) globais JavaScript, como `Array`,
+`Math` e` JSON`, também estão presentes no ambiente do Node.
+Funcionalidades relacionadas ao navegador, como `document` ou` prompt`, não.
 
-## Modules
+## Módulos
 
 {{index "Node.js", "global scope", "module loader"}}
 
-Beyond the bindings I mentioned, such as `console` and `process`,
-Node puts few additional bindings in the global scope. If you want to access
-built-in functionality, you have to ask the module system for it.
+Além das ligações que mencionei, como `console` e `processo`,
+O Node coloca algumas ligações adicionais no escopo global. Se você quiser acessar
+funcionalidades embutidas, você deve solicitar ao sistema de módulos.
 
 {{index "require function"}}
 
-The ((CommonJS)) module system, based on the `require` function, was
-described in [Chapter ?](modules#commonjs). This system is built into
-Node and is used to load anything from built-in ((module))s to
-downloaded ((package))s to ((file))s that are part of your own
-program.
+O sistema de módulos ((CommonJS)), baseado na função `require`, foi
+descrito no [Chapter ?](modules#commonjs). Este sistema é integrado
+ao Node e é usado para carregar qualquer coisa desde ((módulo))s integrados a ((pacote))s baixados para ((arquivo))s que são parte de seus próprios programas.
 
 {{index [path, "file system"], "relative path", resolution}}
 
-When `require` is called, Node has to resolve the given string to an
-actual ((file)) that it can load. Pathnames that start with `/`,
-`./`, or `../` are resolved relative to the current module's path,
-where `.` stands for the current directory, `../` for one
-directory up, and `/` for the root of the file system. So if you ask
-for `"./graph"` from the file `/tmp/robot/robot.js`, Node will try to
-load the file `/tmp/robot/graph.js`.
+Quando `require` é chamado, o Node tem que resolver a string dada para um ((arquivo)) atual que pode carregar. Nomes de caminhos que começam com `/`, `./` ou `../` são resolvidos em relação ao caminho do módulo atual, onde `.` representa o diretório atual, `../ ` para um diretório para cima e `/` para a raiz do sistema de arquivos. Então se você perguntar
+para `"./graph"` do arquivo `/tmp/robot/robot.js`, o Node tentará
+carregar o arquivo `/tmp/robot/graph.js`.
 
 {{index "index.js"}}
 
-The `.js` ((extension)) may be omitted, and Node will add it if such a
-file exists. If the required path refers to a ((directory)), Node will
-try to load the file named `index.js` in that directory.
+A ((extensão)) `.js` pode ser omitida, e o Node irá adicioná-la se tal o arquivo existe. Se o caminho necessário se referir a um ((diretório)), o Node irá
+tente carregar o arquivo chamado `index.js` nesse diretório.
 
 {{index "node_modules directory", directory}}
 
-When a string that does not look like a relative or absolute path is
-given to `require`, it is assumed to refer to either a built-in
-((module)) or a module installed in a `node_modules` directory. For
-example, `require("fs")` will give you Node's built-in file system
-module. And `require("robot")` might try to load the library found in
-`node_modules/robot/`. A common way to install such libraries is by
-using ((NPM)), which we'll come back to in a moment.
+Quando uma string que não se parece com um caminho relativo ou absoluto é dado a `require`, presume-se que se refira a um
+((módulo)) ou um módulo instalado em um diretório `node_modules`. Por exemplo, `require("fs")` lhe dará o módulo de sistemas de arquivos embutidos do Node. E `require ("robot")` pode tentar carregar a biblioteca encontrada em `node_modules/robot/`. Uma maneira comum de instalar essas bibliotecas é usando ((NPM)), ao qual voltaremos em breve.
 
 {{index "require function", "Node.js", "garble example"}}
 
-Let's set up a small project consisting of two files. The first one,
-called `main.js`, defines a script that can be called from the
-((command line)) to reverse a string.
+Vamos configurar um pequeno projeto que consiste em dois arquivos. O primeiro,
+chamado `main.js`, define um script que pode ser chamado a partir da
+((linha de comando)) para reverter uma string.
 
 ```
 const {reverse} = require("./reverse");
@@ -208,9 +169,7 @@ console.log(reverse(argument));
 
 {{index reuse, "Array.from function", "join method"}}
 
-The file `reverse.js` defines a library for reversing strings, which
-can be used both by this command line tool and by other scripts that
-need direct access to a string-reversing function.
+O arquivo `reverse.js` define uma biblioteca para reverter strings, que pode ser usado por esta ferramenta de linha de comando e por outros scripts que precisa de acesso direto a uma função de reversão de string.
 
 ```
 exports.reverse = function(string) {
@@ -220,12 +179,10 @@ exports.reverse = function(string) {
 
 {{index "exports object", CommonJS, [interface, module]}}
 
-Remember that adding properties to `exports` adds them to the
-interface of the module. Since Node.js treats files as
-((CommonJS)) ((module))s, `main.js` can take the exported `reverse`
-function from `reverse.js`.
+Lembre-se de que adicionar propriedades a `exports` adiciona-as a interface do módulo. Como o Node.js trata os arquivos como
+((módulo))s ((CommonJS)), `main.js` pode levar a função exportada `reverse` do `reverse.js`.
 
-We can now call our tool like this:
+Agora podemos chamar nossa ferramenta assim:
 
 ```{lang: null}
 $ node main.js JavaScript

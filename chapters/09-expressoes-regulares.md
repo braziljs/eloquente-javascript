@@ -32,7 +32,7 @@ Ambos os objetos acima representam o mesmo padrão: um caractere "a" seguido de 
 
 Ao usarmos o construtor *RegExp*, o padrão é escrito como uma *string* normal, de modo que as regras normais se aplicam para barras invertidas.
 
-A segunda notação, onde o padrão está entre barras, trata as barras invertidas de maneira um pouco diferente. Primeiro, como uma barra encerra o padrão, é necessário colocarmos uma barra invertida antes de inserirmos qualquer barra que queremos que faça parte do padrão. Além disso, as barras invertidas que não pertecem a códigos de caracteres especiais (como \n) serão preservadas ao invés de serem ignoradas, pois fazem parte de *strings* e alteram o significado do padrão. Alguns caracteres, como sinais de interrogação (?) e sinais de soma (+), possuem um significado especial em expressões regulares e devem ser precedidos por barras invertidas para representarem o próprio caractere, e não o comando de expressão regular.
+A segunda notação, onde o padrão está entre barras, trata as barras invertidas de maneira um pouco diferente. Primeiro, como uma barra encerra o padrão, é necessário colocarmos uma barra invertida antes de inserirmos qualquer barra que queremos que faça parte do padrão. Além disso, as barras invertidas que não pertencem a códigos de caracteres especiais (como \n) serão preservadas ao invés de serem ignoradas, pois fazem parte de *strings* e alteram o significado do padrão. Alguns caracteres, como sinais de interrogação (?) e sinais de soma (+), possuem um significado especial em expressões regulares e devem ser precedidos por barras invertidas para representarem o próprio caractere, e não o comando de expressão regular.
 
 ```js
 let eighteenPlus = /eighteen\+/;
@@ -292,11 +292,11 @@ Uma *string* corresponde à expressão se um caminho do início (esquerda) até 
 
 Portanto, se tentarmos combinar "os 3 porcos" da posição 4, nosso progresso através do fluxograma ficaria assim:
 
-- Na posição 4, existe um limite de palavra, então passamos a primeira caixa
-- Ainda na posição 4, encontramos um dígito, então também podemos passar a segunda caixa.
-- Na posição 5, poderíamos voltar para antes da segunda caixa (dígitos), ou avançar através da caixa que contém um único caractere de espaço. Há um espaço aqui, não um dígito, por isso escolhemos o segundo caminho.
-- Estamos agora na posição 6 (o início de "porcos") e na divisão entre três caminhos do diagrama. Nós não temos "vaca" ou "galinha" aqui, mas nós temos "porco", por isso tomamos esse caminho.
-- Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa "s".
+- Na posição 4, existe um limite de palavra, então passamos a primeira caixa;
+- Ainda na posição 4, encontramos um dígito, então também podemos passar a segunda caixa;
+- Na posição 5, poderíamos voltar para antes da segunda caixa (dígitos), ou avançar através da caixa que contém um único caractere de espaço. Há um espaço aqui, não um dígito, por isso escolhemos o segundo caminho;
+- Estamos agora na posição 6 (o início de "porcos") e na divisão entre três caminhos do diagrama. Nós não temos "vaca" ou "galinha" aqui, mas nós temos "porco", por isso tomamos esse caminho;
+- Na posição 9, depois da divisão em três caminhos, poderíamos também ignorar o "s" e ir direto para o limite da palavra, ou achar o "s" primeiro. Existe um "s", não um limite de palavra, então passamos a caixa "s";
 - Estamos na posição 10 (final da string) e só podemos achar um limite de palavra. O fim de uma *string* conta como um limite de palavra, de modo que passamos através da última caixa e combinamos com sucesso a *string*.
 
 ## Retrocedendo
@@ -320,7 +320,7 @@ Retroceder acontece também, de maneiras diferentes, quando buscamos por operado
 Ela tentará achar séries de zeros sem um "b" após elas, depois irá percorrer o circuito interno até passar por todos os dígitos. Quando perceber que não existe nenhum "b", retorna uma posição e passa pelo caminho de fora mais uma vez, e de novo, retrocedendo até o circuito interno mais uma vez. Continuará tentando todas as rotas possíveis através destes dois *loops*, em todos os caracteres. Para *strings* mais longas o resultado demorará praticamente para sempre.
 
 
-## O método _replace_
+## O método *replace*
 
 *Strings* possuem o método *replace*, que pode ser usado para substituir partes da *string* com outra *string*.
 
@@ -329,7 +329,7 @@ console.log("papa".replace("p", "m"));
 // → mapa
 ```
 
-O primeiro argumento também pode ser uma expressão regular, que na primeira ocorrência de correspondência será substituída. Quando a opção "g" ("global") é adicionada à expressão, todas as ocorrências serão substituídas, não só a primeira.
+O primeiro argumento também pode ser uma expressão regular; nesse caso,  a primeira correspondência da expressão regular será substituída. Quando a opção "g" ("global") é adicionada à expressão regular, todas as correspondências na string serão substituídas, não apenas a primeira.
 
 ```js
 console.log("Borobudur".replace(/[ou]/, "a"));
@@ -338,7 +338,7 @@ console.log("Borobudur".replace(/[ou]/g, "a"));
 // → Barabadar
 ```
 
-Seria melhor se essa opção fosse feita através de outro argumento adicional para substituir ou fornecer um método diferente, um *replaceAll*. Mas infelizmente a escolha depende de uma propriedade de expressão regular. 
+Teria sido sensato se a escolha entre substituir uma correspondência ou todas as correspondências fosse feita por meio de um argumento adicional *replace*, ou fornecendo um método diferente *replaceAll*. Mas infelizmente a escolha depende de uma propriedade de expressão regular. 
 
 A verdadeira utilidade do uso de expressões regulares com o método *replace* é a opção de fazer referências aos grupos combinados através da *string*. Por exemplo, se temos uma *string* longa com nomes de pessoas, uma por linha, no formato "Sobrenome, Nome" e queremos trocar essa ordem e remover a vírgula, para obter o formato "Nome Sobrenome", podemos usar o seguinte código:
 
@@ -351,7 +351,7 @@ console.log("Lisvok, Barbara\nMcCarthy, John\nWadler, Phillip".replace(/([\w ]+)
 
 O "$1" e "$2" na *string* de substituição referem-se as partes entre parênteses no padrão. "$1" será substituído pelo texto encontrado no primeiro grupo entre parênteses e "$2" pelo segundo, e assim em diante, até "$9". A correspondência inteira pode ser referenciada com $&.
 
-Também é possível passar uma função, em vez de uma *string* no segundo argumento do método *replace*. Para cada substituição, a função será chamada com os grupos encontrados (assim como o padrão) como argumentos, e o valor retornado pela função será inserido na nova *string*.
+Também é possível passar uma função, em vez de uma *string* no segundo argumento do método *replace*. Para cada substituição, a função será chamada com os grupos encontrados (bem como toda a correspondência) como argumentos, e o valor retornado pela função será inserido na nova *string*.
 
 Aqui está um pequeno exemplo:
 
@@ -380,15 +380,15 @@ console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 
 Ele pega a *string*, encontra todas as ocorrências de um número seguido por uma palavra alfanumérica e retorna uma nova *string* onde em cada ocorrência é diminuído por um.
 
-O grupo (\d+) finaliza o argumento *amount* da função e o (\w+) limita a unidade. A função converte o valor em um número, desde que encontrado, \d+ faz ajustes caso exista apenas um ou zero esquerda.
+O grupo (\d+) finaliza o argumento *amount* da função e o (\w+) limita a unidade. A função converte o valor em um número, desde que encontrado, \d+ faz ajustes caso reste apenas um ou zero.
 
 ## Quantificador / Greed
 
-É simples usar o método *replace* para escrever uma função que remove todos os comentários de um pedaço de código JavaScript. Veja uma primeira tentativa
+É possível usar o método *replace* para escrever uma função que remove todos os comentários de um pedaço de código JavaScript. Veja uma primeira tentativa:
 
 ```js
 function stripComments(code) {
-  return code.replace(/\/\/.*|\/\*[\w\W]*\*\//g, "");
+  return code.replace(/\/\/.*|\/\*[^]*\*\//g, "");
 }
 console.log(stripComments("1 + /* 2 */3"));
 // → 1 + 3
@@ -398,13 +398,13 @@ console.log(stripComments("1 /* a */+/* b */ 1"));
 // → 1  1
 ```
 
-A parte [\w\W] é uma maneira (feia) de encontrar qualquer caractere. Lembre-se que um ponto não encontra um caractere de quebra de linha / linha nova. Comentários podem conter mais de uma linha, então não podemos usar um ponto aqui. Achar algo que seja ou não um caractere de palavra, irá encontrar todos os caracteres possíveis.
+A parte antes do operador ou corresponde a dois caracteres de barra seguidos por qualquer número de caracteres que não sejam de nova linha. A parte dos comentários em várias linhas é mais envolvente. Usamos [^](qualquer caractere que não esteja no conjunto vazio de caracteres) como uma forma de corresponder a qualquer caractere. Não podemos simplesmente usar um ponto final aqui porque os comentários de bloco podem continuar em uma nova linha e o caractere de ponto final não corresponde a caracteres de uma nova linha.
 
-Mas o resultado do último exemplo parece errado. Porque?
+Mas o resultado da última linha parece errado. Por quê?
 
-A parte ".*" da expressão, como foi escrita na seção "Retrocedendo", acima, encontrará primeiro tudo que puder e depois, se falhar, volta atrás e tenta mais uma vez a partir daí. Nesse caso, primeiro procuramos no resto da _string_ e depois continuamos a partir daí. Encontrará uma ocorrência de "*/" depois volta quatro caracteres e acha um resultado. Isto não era o que desejávamos, queríamos um comentário de uma linha, para não ir até o final do código e encontrar o final do último comentário.
+A parte "[^]*" da expressão, como foi escrita na seção "Retrocedendo", acima, encontrará primeiro tudo que puder e depois, se falhar, volta atrás e tenta mais uma vez a partir daí. Nesse caso, primeiro tentamos combinar no resto da *string* e depois continuamos a partir daí. Ele encontrará uma ocorrência de "*/" depois volta quatro caracteres e acha um resultado. Isto não era o que desejávamos, queríamos um comentário de uma linha, para não ir até o final do código e encontrar o final do último comentário do bloco.
 
-Existem duas variações de operadores de repetição em expressões regulares ('+', '*', e '{}'). Por padrão, eles quantificam, significa que eles encontram o que podem e retrocedem a partir daí. Se você colocar uma interrogação depois deles, eles se tornam _non_greedy_, e começam encontrando o menor grupo possível e o resto que não contenha o grupo menor.
+Devido a esse comportamento, dizemos que os operadores de repetição em expressões regulares ('+', '*', e '{}') são gananciosos. Por padrão, eles quantificam, significa que eles encontram o que podem e retrocedem a partir daí. Se você colocar uma interrogação depois deles, eles se tornam _non_greedy_, e começam encontrando o menor grupo possível e o resto que não contenha o grupo menor.
 
 E é exatamente o que queremos nesse caso. Com o asterisco encontramos os grupos menores que tenham "*/" no fechamento, encontramos um bloco de comentários e nada mais.
 
@@ -415,6 +415,7 @@ function stripComments(code) {
 console.log(stripComments("1 /* a */+/* b */ 1"));
 // → 1 + 1
 ```
+Muitos bugs em programas de expressão regular podem ser rastreados até o uso não intencional de um operador ganancioso, onde um _non_greedy_ funcionaria melhor. Ao usar um operador de repetição, considere a variante _non_greedy_ primeiro.
 
 ## Criando objetos RegExp dinamicamente
 
@@ -423,33 +424,31 @@ Existem casos onde você pode não saber o padrão exato que você precisa quand
 Mas podemos construir uma _string_ e usar o construtor _RegExp_ para isso. Por exemplo:
 
 ```js
-var name = "harry";
-var text = "Harry is a suspicious character.";
-var regexp = new RegExp("\\b(" + name + ")\\b", "gi");
+let name = "harry";
+let text = "Harry is a suspicious character.";
+let regexp = new RegExp("\\b(" + name + ")\\b", "gi");
 console.log(text.replace(regexp, "_$1_"));
 // → _Harry_ is a suspicious character.
 ```
 
-Ao criar os marcos de limite "\b, usamos duas barras invertidas, porque estamos escrevendo-os em uma _string_ normal, não uma expressão regular com barras. As opções (global e case-insensitive) para a expressão regular podem ser inseridas como segundo argumento para o construtor RegExp.
+Ao criar os marcos de limite "\b", usamos duas barras invertidas, porque estamos escrevendo-os em uma *string* normal, não uma expressão regular com barras. O segundo argumento para o *RegExp* construtor contém as opções com a expressão regular - neste caso, o "gi" para global não diferencia maiúsculas de minúsculas.
 
-Mas e se o nome for "dea+hl[]rd" porque o usuário é um adolescente nerd? Isso irá gerar uma falsa expressão regular, por conter caracteres comando, que irá gerar um resultado estranho
+Mas e se o nome for "dea+hl[]rd" porque o nosso usuário é um adolescente nerd? Isso irá gerar uma falsa expressão regular, por conter caracteres comando, que irá gerar um resultado estranho.
 
-Para contornar isso, adicionamos contrabarras antes de qualquer caractere que não confiamos. Adicionar contrabarras antes de qualquer caractere alfabético é uma má idéia, porque coisas como "\b" ou "\n" possuem significado para uma expressão regular. Mas escapar tudo que não for alfanumérico ou espaço é seguro.
+Para contornar isso, adicionamos contrabarras antes de qualquer caractere que tenha um significado especial. 
 
 ```js
-var name = "dea+hl[]rd";
-var text = "This dea+hl[]rd guy is quite annoying.";
-var escaped = name.replace(/[^\w\s]/g, "\\$&");
-var regexp = new RegExp("\\b(" + escaped + ")\\b", "gi");
-console.log(text.replace(regexp, "_$1_"));
-// → This _dea+hl[]rd_ guy is quite annoying.
+let name = "dea+hl[]rd";
+let text = "This dea+hl[]rd guy is super annoying.";
+let escaped = name.replace(/[\\[.+*?(){|^$]/g, "\\$&");
+let regexp = new RegExp("\\b" + escaped + "\\b", "gi");
+console.log(text.replace(regexp, "_$&_"));
+// → This _dea+hl[]rd_ guy is super annoying.
 ```
-
-O marcador "$&" na _string_ de substituição age como se fosse "$1", mas será substituído em dodos os resultados ao invés do grupo encontrado.
 
 ## O método _search_
 
-O método _indexOf_ em _strings_ não pode ser invocado com uma expressão regular. Mas existe um outro método, _search_, que espera como argumento uma expressão regular, e como o _indexOf_, retorna o índice do primeiro resultado encontrado ou -1 se não encontra.
+O método *indexOf* em *strings* não pode ser chamado com uma expressão regular. Mas existe um outro método, *search*, que espera como argumento uma expressão regular. Por exemplo, o *indexOf* que retorna o índice do primeiro resultado encontrado ou -1 se não encontra.
 
 ```js
 console.log("  word".search(/\S/));
@@ -458,122 +457,131 @@ console.log("    ".search(/\S/));
 // → -1
 ```
 
-Infelizmente, não existe um modo de indicar onde a busca deve começar, com um índice (como o segundo argumento de _indexOf_), o que seria muito útil.
+Infelizmente, não existe um modo de indicar onde a busca deve começar, com um índice (como o segundo argumento de *indexOf*), o que seria muito útil.
 
-## A propriedade _lastIndex_
+## A propriedade *lastIndex*
 
-O método _exec_ também não possui um modo conveniente de iniciar a busca a partir de uma determinada posição. Mas ele fornece um método não muito prático.
+O método *exec* também não possui um modo conveniente de iniciar a busca a partir de uma determinada posição. Mas ele fornece um método não muito prático.
 
-Expressões regulares possuem propriedades (como _source_ que contém a _string_ que originou a expressão). Uma dessas propriedades, _lastIndex_, controla, em algumas circunstâncias, onde a busca começará.
+Expressões regulares possuem propriedades (como *source* que contém a *string* que originou a expressão). Uma dessas propriedades, *lastIndex*, controla, em algumas circunstâncias, onde a busca começará.
 
-Essas circunstâncias são que a expressão regular precisa ter a opção "global" (g) habilitada e precisa ser no método _exec_. Novamente, deveria ser da mesma maneira que permitir um argumento extra para o método _exec_, mas coesão não é uma característica que define a sintaxe de expressões regulares em JavaScript
+Essas circunstâncias são que a expressão regular precisa ter a opção "global" (g) ou sticky (y)  habilitada no método *exec*. Novamente, deveria ser da mesma maneira que permitir um argumento extra para o método *exec*, mas coesão não é uma característica que define a sintaxe de expressões regulares em JavaScript
 
 ```js
-var pattern = /y/g;
-pattern.lastIndex = 3;
-var match = pattern.exec("xyzzy");
-console.log(match.index);
-// → 4
-console.log(pattern.lastIndex);
-// → 5
+let global = /abc/g;
+console.log(global.exec("xyz abc"));
+// → ["abc"]
+let sticky = /abc/y;
+console.log(sticky.exec("xyz abc"));
+// → null
 ```
 
-A propriedade _lastIndex_ é atualizada ao ser executada após encontrar algo. Quando não encontra nada, _lastIndex_ é definida como zero, que também é o valor quando uma nova expressão é construída.
+Quando usamos uma expressão regular global para múltiplas chamadas ao método *exec*, esta mudança da propriedade *lastIndex* pode causar problemas, sua expressão pode iniciar por acidente em um índice deixado na ultima vez que foi executada.
 
-Quando usada uma expressão regular global para múltiplas chamadas ao método _exec_, esta mudança da propriedade _lastIndex_ pode causar problemas, sua expressão pode iniciar por acidente em um índice deixado na ultima vez que foi executada.
+```js
+let digit = /\d/g;
+console.log(digit.exec("here it is: 1"));
+// → ["1"]
+console.log(digit.exec("and now: 1"));
+// → null
+```
 
-Outro efeito interessante da opção global é que ela muda a maneira como o método _match_ funciona em uma _string_. Quando chamada com uma expressão global, em vez de retornar um array semelhante ao retornado pelo _exec_, _match_ encontrará todos os resultados do padrão na _string_ e retornará um array contendo todas as _strings_ encontradas.
+Outro efeito interessante da opção global é que ela muda a maneira como o método *match* funciona em uma *string*. Quando chamada com uma expressão global, em vez de retornar um array semelhante ao retornado pelo *exec*, *match* encontrará todos os resultados do padrão na *string* e retornará um array contendo todas as *strings* encontradas.
 
 ```js
 console.log("Banana".match(/an/g));
 // → ["an", "an"]
 ```
 
-Então tenha cuidado com expressões regulares globais. Os casos em que são necessárias - chamadas para substituir e lugares onde você deseja usar explicitamente _lastIndex_ - normalmente são os únicos lugares onde você deseja utilizá-las.
+Então tenha cuidado com expressões regulares globais. Use-as nos casos em que são necessárias, como em *replace* ou em lugares onde você deseja usar explicitamente o *lastIndex* que normalmente são os únicos lugares que você pode querer utilizá-las.
 
-Um padrão comum é buscar todas as ocorrências de um padrão em uma _string_, com acesso a todos os grupos encontrados e ao índice onde foram encontrados, usando _lastIndex_ e _exec_.
+## Loop sobre correpondências
+
+Um padrão comum é buscar todas as ocorrências de um padrão em uma *string*, com acesso a todos os grupos encontrados e ao índice onde foram encontrados, usando *lastIndex* e *exec*.
 
 ```js
-var input = "A text with 3 numbers in it... 42 and 88.";
-var re = /\b(\d+)\b/g;
-var match;
-while (match = re.exec(input))
-  console.log("Found", match[1], "at", match.index);
-// → Found 3 at 12
-//   Found 42 at 31
-//   Found 88 at 38
+let input = "A string with 3 numbers in it... 42 and 88.";
+let number = /\b\d+\b/g;
+let match;
+while (match = number.exec(input)) {
+  console.log("Found", match[0], "at", match.index);
+}
+// → Found 3 at 14
+//   Found 42 at 33
+//   Found 88 at 40
 ```
 
 Usa-se o fato que o valor de uma expressão de definição ('=') é o valor assinalado. Então usando-se `match = re.exec(input)` como a condição no bloco `while`, podemos buscar no início de cada iteração.
 
 ## Analisando um arquivo .ini
 
-Agora vamos ver um problema real que pede por uma expressão regular. Imagine que estamos escrevendo um programa que coleta informação automaticamente da internet dos nossos inimigos. (Não vamos escrever um programa aqui, apenas a parte que lê o arquivo de configuração, desculpe desapontá-los). Este arquivo tem a seguinte aparência:
+Para concluir o capítulo, veremos agora um problema real que exige o uso de expressões regulares. Imagine que estamos escrevendo um programa que coleta informação automaticamente da internet dos nossos inimigos. (Não vamos escrever um programa aqui, apenas a parte que lê o arquivo de configuração, desculpe desapontá-los). Este arquivo tem a seguinte aparência:
 
-```
-searchengine=http://www.google.com/search?q=$1
+```js
+searchengine=https://duckduckgo.com/?q=$1
 spitefulness=9.7
 
 ; comments are preceded by a semicolon...
-; these are sections, concerning individual enemies
+; each section concerns an individual enemy
 [larry]
 fullname=Larry Doe
 type=kindergarten bully
 website=http://www.geocities.com/CapeCanaveral/11451
 
-[gargamel]
-fullname=Gargamel
-type=evil sorcerer
-outputdir=/home/marijn/enemies/gargamel
+[davaeorn]
+fullname=Davaeorn
+type=evil wizard
+outputdir=/home/marijn/enemies/davaeorn
 ```
 
 As regras exatas desse formato (que é um formato muito usado, chamado arquivo .ini) são as seguintes:
 
-- Linhas em branco e linhas iniciadas com ponto e vírgula são ignoradas.
-- Linhas entre colchetes "[ ]" iniciam uma nova seção.
-- Linhas contendo um identificador alfanumérico seguido por um caractere = adicionam uma configuração à seção atual.
+- Linhas em branco e linhas iniciadas com ponto e vírgula são ignoradas;
+- Linhas entre colchetes "[ ]" iniciam uma nova seção;
+- Linhas contendo um identificador alfanumérico seguido por um caractere = adicionam uma configuração à seção atual;
 - Qualquer outra coisa é inválida.
 
-Nossa tarefa é converter uma _string_ como essa em um _array_ de objetos, cada uma com um nome e um _array_ de pares nome/valor. Precisaremos de um objeto para cada seção e outro para as configurações de seção.
+Nossa tarefa é converter uma *string* como essa em um *array* de objetos, cada uma com um nome e um *array* de pares nome/valor. Precisaremos de um objeto para cada seção e outro para as configurações de seção.
 
-Já que o formato precisa ser processado linha a linha, dividir em linhas separadas é um bom começo. Usamos o método _split_ antes para isso, _string.split("\n")_. Entretanto alguns sistemas operacionais não usam apenas um caractere de nova linha para separar linhas, mas um caractere de retorno seguido por um de nova linha ("_\r\n_").
+Já que o formato precisa ser processado linha a linha, dividir em linhas separadas é um bom começo. Nos vimos o método *split* no capítulo 4. Entretanto alguns sistemas operacionais não usam apenas um caractere de nova linha para separar linhas, mas um caractere de retorno seguido por um de nova linha ("_\r\n_").
 
-Desse modo o método _split_ ,em uma expressão regular com _/\r?\n/_ permite separar os dois modos, com "_\n_"e "_\r\n_" enre linhas.
+Desse modo o método _split_ ,em uma expressão regular com _/\r?\n/_ permite separar os dois modos, com "_\n_"e "_\r\n_" entre linhas.
 
 ```js
-function parseINI(texto) {
-  var categorias = [];
-  function novaCategoria(nome) {
-	var categ = {nome: nome, fields: []};
-	categorias.push(categ);
-	return categ;
-  }
-  var categoriaAtual = novaCategoria("TOP");
-
-  texto.split(/\r?\n/).forEach(function(linha) {
-	var encontrados;
-	if (/^\s*(;.*)?$/.test(linha))
-	  return;
-	else if (encontrados = linha.encontrados(/^\[(.*)\]$/))
-	  categoriaAtual = novaCategoria(encontrados[1]);
-	else if (encontrados = linha.encontrados(/^(\w+)=(.*)$/))
-	  categoriaAtual.fields.push({nome: encontrados[1],
-								   value: encontrados[2]});
-	else
-	  throw new Error("Linha '" + linha + "' is invalid.");
+function parseINI(string) {
+  // Start with an object to hold the top-level fields
+  let result = {};
+  let section = result;
+  string.split(/\r?\n/).forEach(line => {
+    let match;
+    if (match = line.match(/^(\w+)=(.*)$/)) {
+      section[match[1]] = match[2];
+    } else if (match = line.match(/^\[(.*)\]$/)) {
+      section = result[match[1]] = {};
+    } else if (!/^\s*(;.*)?$/.test(line)) {
+      throw new Error("Line '" + line + "' is not valid.");
+    }
   });
+  return result;
+}
 
-  return categorias;
+console.log(parseINI(`
+name=Vasilis
+[address]
+city=Tessaloniki`));
+// → {name: "Vasilis", address: {city: "Tessaloniki"}}
 }
 ```
 
-O código percorre cada linha no arquivo. Ele mantém um objeto "categoria atual", e quando encontra um diretiva normal, adiciona ela ao objeto. Quando encontra uma linha que inicia uma nova categoria, ela troca a categoria atual pela nova, para adicionar as diretivas seguintes. Finalmente, retorna um _array_ contendo todas as categorias que encontrou.
+O código percorre as linhas do arquivo e constrói um objeto. As propriedades na parte superior são armazenadas diretamente nesse objeto, enquanto as propriedades encontradas nas seções são armazenadas em um objeto de seção separado. A *section* de conexão aponta para o objeto da seção atual.
 
-Observe o uso recorrente de _ˆ_ e _$_ para certificar-se que a expressão busca em toda a linha, não apenas em parte dela. Esquecer isso é um erro comum, que resulta um código que funciona mas retorna resultados estranhos para algumas entradas.
+Existem dois tipos de linhas significativas - cabeçalhos de seção ou linhas de propriedade. Quando uma linha é uma propriedade regular, ela é armazenada na seção atual. Quando é um cabeçalho de seção, um novo objeto de seção é criado e a *section* é definida para apontar para ele.
 
-A expressão _/^\s*(;.*)?$/_ pode ser usada para testar linhas que podem ser ignoradas. Entende como funciona? A parte entre parênteses irá encontrar comentários e o _?_ depois certificará que também encontrará linhas apenas com espaços em branco.
+Observe o uso recorrente de *ˆ* e *$* para certificar-se que a expressão busca em toda a linha, não apenas em parte dela. Esquecer isso é um erro comum, que resulta um código que funciona mas retorna resultados estranhos para algumas entradas, o que pode ser um bug difícil de encontrar.
 
-O padrão _if (encontrados = texto.match(...))_ é parecido com o truque que foi usado como definição do _while_ antes. Geralmente não temos certeza se a expressão encontrará algo. Mas você só deseja fazer algo com o resultado se ele não for nulo, então você precisa testar ele antes. Para não quebrar a agradável sequencia de _ifs_ podemos definir o resultado a uma variável para o teste, e fazer a busca e testes em uma única linha.
+O padrão _if (encontrados = texto.match(...))_ é parecido com o truque que foi usado como definição do *while* antes. Geralmente não temos certeza se a expressão encontrará algo. Mas você só deseja fazer algo com o resultado se ele não for nulo, então você precisa testar ele antes. Para não quebrar a agradável sequência de *else if* atribuímos o resultado da correspondência a uma conexão e imediatamente usamos essa atribuição como teste para a declaração de *if*.
+
+Se uma linha não for um cabeçalho de seção ou uma propriedade, a função verifica se é um comentário ou uma linha vazia usando a expressão `/^\s*(;.*)?$/`. Você vê como isso funciona? A parte entre os parênteses corresponderá aos comentários e o "?" se certificará de que também corresponda às linhas que contêm apenas espaços em branco. Quando uma linha não corresponde a nenhuma das form esperadas, a função resulta em uma exceção.
 
 ## Caracteres internacionais
 
@@ -581,11 +589,41 @@ Devido a uma implementação inicial simplista e o fato que esta abordagem simpl
 
 Devido a um estranho acidente histórico, _\s_ (espaço em branco) é diferente, e irá encontrar todos os caracteres que o padrão Unicode considera como espaço em branco, como espaços sem quebra ou o separador de vogais do alfabeto Mongol.
 
-Algumas implementações de expressões regulares em outras linguagens de programação possuem uma sintaxe para buscar conjuntos específicos de caracteres Unicode, como todas as maiúsculas, todos de pontuação, caracteres de controle ou semelhantes. Existem planos para adicionar esse suporte ao JavaScript, mas infelizmente parece que isso não acontecerá tão cedo.
+Outro problema é que, por padrão, as expressões regulares funcionam em unidades de código, conforme discutido no Capítulo 5, e não em caracteres reais. Isso significa que os caracteres compostos por duas unidades de código se comportam de maneira estranha.
 
-## Uma ou mais ocorrências do padrão
+```js
+console.log(/🍎{3}/.test("🍎🍎🍎"));
+// → false
+console.log(/<.>/.test("<🌹>"));
+// → false
+console.log(/<.>/u.test("<🌹>"));
+// → true
 
-Expressões regulares são objetos que representam padrões em _strings_. Eles usam sua própria sintaxe para expressar esses padrões.
+```
+
+O problema é que o emoji 🍎 na primeira linha é tratado como duas unidades de código e a {3} parte é aplicada apenas à segunda. Da mesma forma, o ponto corresponde a uma única unidade de código, não aos dois que compõem o emoji que da rosa🌹.
+
+Você deve adicionar uma opção "*u*" (para o *Unicode*) à sua expressão regular que ele trate esses caracteres adequadamente. O comportamento incorreto permanece como padrão, infelizmente, porque alter-lo pode causar problemas para o código existente que depende dele.
+
+Embora isso tenha sido apenas padronizado e, no momento da escrita, não seja amplamente suportado ainda, é possível usar "*\p*" em uma expressão regular (que deve ter a opção Unicode habilitada) para combinar todos os caracteres aos quais o padrão Unicode atribui à determinada propriedade.
+
+```js
+console.log(/\p{Script=Greek}/u.test("α"));
+// → true
+console.log(/\p{Script=Arabic}/u.test("α"));
+// → false
+console.log(/\p{Alphabetic}/u.test("α"));
+// → true
+console.log(/\p{Alphabetic}/u.test("!"));
+// → false
+```
+
+O Unicode define várias propriedades úteis, embora encontrar aquela que você precisa nem sempre seja relevante. Você pode usar `\p{Property=Value}` para que corresponda a qualquer caractere que tenha o valor fornecido para essa propriedade. Se o nome da propriedade for deixado de fora, como em `\p{Name}`, o nome será considerado uma propriedade binária, como *Alphabetic* ou uma categoria, como *Number*.
+
+
+## Sumário
+
+Expressões regulares são objetos que representam padrões em *strings*. Eles usam sua própria sintaxe para expressar esses padrões.
 
 	/abc/	Sequência de caracteres
 	/[abc]/	Qualquer caractere do conjunto
@@ -606,121 +644,121 @@ Expressões regulares são objetos que representam padrões em _strings_. Eles u
 	/^/	Início da entrada
 	/$/	Final da Entrada
 
-Uma expressão regular possui um método _test_ para testar quando um padrão é encontrado em uma _string_, um método _exec_ que quando encontra um resultado retorna um _array_ com todos os grupos encontrados e uma propriedade _index_ que indica onde o resultado inicia.
+Uma expressão regular possui um método *test* para testar quando um padrão é encontrado em uma *string*, um método *exec* que quando encontra um resultado retorna um *array* com todos os grupos encontrados e uma propriedade *index* que indica onde o resultado inicia.
 
-_Strings_ possuem um método _match_ para testá-las contra uma expressão regular e um método _search_ para buscar por um resultado. O método _replace_  pode substituir resultados encontrados por um padrão. Como alternativa, uma função pode ser passada para montar o texto que será substituído de acordo com que foi achado.
+*Strings* possuem um método *match* para testá-las contra uma expressão regular e um método *search* para buscar por um resultado. O método *replace*  pode substituir as correspondências de um padrão por uma string ou função de substituição.
 
-Expressões regulares podem ter opções configuradas (_flags_), que são escritas após o fechamento da barra. A opção "_i_" faz a busca sem se importar se é maiúscula ou minúscula, a opção "_g_" faz a busca global, que, entre outras coisas, faz o método _replace_ substituir todas as ocorrências, em vez de só a primeira.
+Expressões regulares podem ter opções configuradas (*flags*), que são escritas após o fechamento da barra. A opção "*i*" faz a busca sem se importar se é maiúscula ou minúscula, a opção "*g*" faz a busca global, que, entre outras coisas, faz o método *replace* substituir todas as ocorrências, em vez de só a primeira. A opção "*y*" o torna aderente, o que significa que ele não pesquisará à frente e ignorará parte da *string* ao procurar por uma correspondência. A opção "*u*"  ativa o modo Unicode, que corrige uma série de problemas em torno do tratamento de caracteres que ocupam duas unidades de código.
 
-O construtor _RegExp_ pode ser usado para criar uma expressão regular dinâmica a partir de uma _string_.
-
-Expressões regulares são uma ferramenta precisa mas com um manuseio estranho. Elas simplificarão muito algumas tarefas simples, mas rapidamente se tornarão inviáveis quando aplicadas a tarefas mais complexas. Saber quando usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
+Expressões regulares são uma ferramenta precisa que possui um manuseio estranho. Elas simplificarão muito algumas tarefas simples, mas rapidamente se tornarão inviáveis quando aplicadas a tarefas mais complexas. Saber quando usá-las é útil. Parte do conhecimento de saber __quando__ usá-las é o conhecimento de saber __como__ usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
 
 ## Exercícios
 
-É quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expressão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como [debuggex.com](debuggex.com), para ver se a visualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias _strings_ diferentes.
+É quase inevitável que, no decorrer do trabalho, você irá ficar confuso e frustado por algum comportamento estranho de uma expressão regular. O que ajuda às vezes é colocar a sua expressão em uma ferramenta online como [debuggex.com](debuggex.com), para ver se a visualização corresponde à sua intenção inicial, e rapidamente ver como ela responde à várias *strings* diferentes.
 
 ## Regexp golf
 
-"Golf de Código" é um termo usado para o jogo de tentar escrever um programa com o menor número de caracteres possível. Parecido, o regexp golf é a prática de escrever pequenas expressões regulares para achar um determinado padrão (e apenas esse padrão).
+"*Code Golf*" é um termo usado para o jogo de tentar escrever um programa com o menor número de caracteres possível. Parecido, o *regexp golf* é a prática de escrever pequenas expressões regulares para achar um determinado padrão, e apenas esse padrão.
 
-Escreva uma expressão regular que testa quando qualquer das _sub-strings_ dadas ocorre em um texto. A expressão regular deverá achar apenas _strings_ contendo uma das _sub-strings_ dadas. Não se preocupe com limites de palavras a não ser que seja explicitamente pedido. Quando a sua expressão funcionar, veja se consegue fazê-la menor.
+Para cada um dos seguintes itens, escreva uma expressão regular que testa quando qualquer das *sub-strings* dadas que ocorrem em um *string*. A expressão regular deverá achar apenas *strings* contendo uma das *sub-strings* dadas. Não se preocupe com limites de palavras a não ser que seja explicitamente pedido. Quando a sua expressão funcionar, veja se consegue fazê-la ficar menor.
 
-	"car" e "cat"
-	"pop" e "prop"
-	"ferret", "ferry", e "ferrari"
-	Qualquer palavra terminando em "ious"
-	Um espaço em branco seguido por um ponto, vírgula, dois-pontos, ou ponto-e-vírgula
-	Uma palavra com mais de seis letras
-	Uma palavra sem a letra "e"
+	1. "car" e "cat"
+	2."pop" e "prop"
+	3."ferret", "ferry", e "ferrari"
+	4.Qualquer palavra terminando em "ious"
+	5.Um espaço em branco seguido por um ponto, vírgula, 6.dois-pontos, ou ponto-e-vírgula
+	7.Uma palavra com mais de seis letras
+	8.Uma palavra sem a letra "e" (ou E)
 
-Consulte a tabela no capítulo Sumário para achar algo rapidamente.
-Teste cada solução encontrada com alguns testes com _strings_.
+Consulte a tabela no capítulo *Sumário* para ajuda.
+Teste cada solução encontrada com alguns testes com *strings*.
 
 ```js
 // Fill in the regular expressions
 
 verify(/.../,
-	   ["my car", "bad cats"],
-	   ["camper", "high art"]);
+       ["my car", "bad cats"],
+       ["camper", "high art"]);
 
 verify(/.../,
-	   ["pop culture", "mad props"],
-	   ["plop"]);
+       ["pop culture", "mad props"],
+       ["plop", "prrrop"]);
 
 verify(/.../,
-	   ["ferret", "ferry", "ferrari"],
-	   ["ferrum", "transfer A"]);
+       ["ferret", "ferry", "ferrari"],
+       ["ferrum", "transfer A"]);
 
 verify(/.../,
-	   ["how delicious", "spacious room"],
-	   ["ruinous", "consciousness"]);
+       ["how delicious", "spacious room"],
+       ["ruinous", "consciousness"]);
 
 verify(/.../,
-	   ["bad punctuation ."],
-	   ["escape the dot"]);
+       ["bad punctuation ."],
+       ["escape the period"]);
 
 verify(/.../,
-	   ["hottentottententen"],
-	   ["no", "hotten totten tenten"]);
+       ["Siebentausenddreihundertzweiundzwanzig"],
+       ["no", "three small words"]);
 
 verify(/.../,
-	   ["red platypus", "wobbling nest"],
-	   ["earth bed", "learning ape"]);
+       ["red platypus", "wobbling nest"],
+       ["earth bed", "learning ape", "BEET"]);
 
 
 function verify(regexp, yes, no) {
-  // Ignore unfinished tests
+  // Ignore unfinished exercises
   if (regexp.source == "...") return;
-  yes.forEach(function(s) {
-	if (!regexp.test(s))
-	  console.log("Failure to match '" + s + "'");
-  });
-  no.forEach(function(s) {
-	if (regexp.test(s))
-	  console.log("Unexpected match for '" + s + "'");
-  });
+  for (let str of yes) if (!regexp.test(str)) {
+    console.log(`Failure to match '${str}'`);
+  }
+  for (let str of no) if (regexp.test(str)) {
+    console.log(`Unexpected match for '${str}'`);
+  }
 }
 ```
 
 ## Estilo de aspas
 
-Imagine que você escreveu um texto e usou aspas simples por toda parte. Agora você deseja substituir todas que realmente possuem algum texto com aspas duplas, mas não as usadas em contrações de texto com _aren't).
+Imagine que você escreveu um texto e usou aspas simples por toda parte. Agora você deseja substituir todas que realmente possuem algum texto com aspas duplas, mas não as usadas em contrações de texto com *aren't*.
 
 Pense em um padrão que faça distinção entre esses dois usos de aspas e faça uma chamada que substitua apenas nos lugares apropriados.
 
 ```js
-var text = "'I'm the cook,' he said, 'it's my job.'";
-// Altere esta chamada
-console.log(text.replace(/A/, "B"));
+let text = "'I'm the cook,' he said, 'it's my job.'";
+// Change this call.
+console.log(text.replace(/A/g, "B"));
 // → "I'm the cook," he said, "it's my job."
 ```
 
 **Dicas**
 
-A solução mais óbvia é substituir apenas as aspas que não estão cercadas de caracteres de palavra. A primeira expressão vem à mente é _/\W'\W/_, mas é preciso cuidado para lidar com o início da _string_ corretamente. Isso pode ser feito usando os marcadores "_ˆ_" e "_$_", como em _/(\W|^)'(\W|$)/_.
+A solução mais óbvia é substituir apenas as aspas que não estão cercadas de caracteres de palavra. A primeira expressão vem à mente é */\W'\W/*, Mas você também deve levar em consideração o início e o fim da linha. 
+
+Além disso, você deve garantir que a substituição também inclua os caracteres que foram correspondidos pelo padrão"\W" para que eles não sejam eliminados. Isso pode ser feito envolvendo-os entre parênteses e incluindo seus grupos substituindo pela *string* ( $1, $2). Os grupos que não tiverem correspondência serão substituídos por nada.
 
 ### Novamente números
 
-Séries de dígitos podem ser usados pela agradável expressão regular _/\d+/_.
+Séries de dígitos podem ser usados pela agradável expressão regular */\d+/*.
 
-Escreva uma expressão que encontre (apenas) números no estilo JavaScript. Isso significa que precisa suportar um sinal de menor ou maior, opcional, na frente do número, um ponto decimal e a notação exponencial —5e-3 ou 1E10—, novamente com o sinal opcional na frente dele.
+Escreva uma expressão que encontre (apenas) números no estilo JavaScript. Isso significa que precisa suportar um sinal de menor ou maior, opcional, na frente do número, um ponto decimal e a notação exponencial *—5e-3* ou *1E10—*, novamente com o sinal opcional na frente dele. . Observe também que não é necessário que haja dígitos antes ou depois do ponto, mas o número não pode ser apenas um ponto. Assim, *.5* e *5.* são números JavaScript válidos, mas apenas o ponto não é.
 
 ```js
 // Preencha esta expressão regular
-var number = /^...$/;
+let number = /^...$/;
 
 // Tests:
-["1", "-1", "+15", "1.55", ".5", "5.", "1.3e2", "1E-4",
- "1e+12"].forEach(function(s) {
-  if (!number.test(s))
-	console.log("Falhou em achar '" + s + "'");
-});
-["1a", "+-1", "1.2.3", "1+1", "1e4.5", ".5.", "1f5",
- "."].forEach(function(s) {
-  if (number.test(s))
-	console.log("Aceitou erroneamente '" + s + "'");
-});
+for (let str of ["1", "-1", "+15", "1.55", ".5", "5.",
+                 "1.3e2", "1E-4", "1e+12"]) {
+  if (!number.test(str)) {
+    console.log(`Failed to match '${str}'`);
+  }
+}
+for (let str of ["1a", "+-1", "1.2.3", "1+1", "1e4.5",
+                 ".5.", "1f5", "."]) {
+  if (number.test(str)) {
+    console.log(`Incorrectly accepted '${str}'`);
+  }
+}
 ```
 
 Dicas
@@ -731,4 +769,4 @@ Achar o sinal opcional na frente do número, como na frente do exponencial, pode
 
 A parte mais complicada deste exercício provavelmente é a dificuldade de achar "5." e ".5"  sem achar também o ".". Para isso, achamos que a melhor solução é usar o operador "|" para separar os dois casos, um ou mais dígitos opcionalmente seguidos por um ponto e zero ou mais dígitos, ou um ponto seguido por um ou mais dígitos.
 
-Finalmente, fazer o "e" _case-insensitive_, ou adicional a opção "i" à expressão regular ou usar "_[eE]_ ".
+Finalmente, fazer o "e" *case-insensitive*, ou adicional a opção "i" à expressão regular ou usar "*[eE]*".

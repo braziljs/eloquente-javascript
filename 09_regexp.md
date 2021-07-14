@@ -45,7 +45,7 @@ Expressões regulares possuem vários métodos. O mais simples é o _test_. Se v
 ```js
 console.log(/abc/.test("abcde"));
 // → true
-console.log(/abc/.test("12345"));
+console.log(/abc/.test("abxde"));
 // → false
 ```
 
@@ -96,9 +96,9 @@ Para "inverter" um conjunto de caracteres e buscar tudo menos o que você escrev
 
 ```js
 let naoBinario = /[^01]/;
-console.log(naoBinario.test("01101"));
+console.log(naoBinario.test("1100100010100110"));
 // → false
-console.log(naoBinario.test("01201"));
+console.log(naoBinario.test("1100100010200110"));
 // → true
 ```
 
@@ -119,9 +119,9 @@ console.log(/'\d*'/.test("''"));
 // → true
 ```
 
-O asterisco ("\*") tem um significado similar, mas também permite não encontrar o padrão. Então, algo colocado com um asterisco depois dele, não impede um padrão de ser achado, ele apenas retornará zero resultados se não conseguir encontrar algum texto adequado.
+O asterisco (\*) tem um significado similar, mas também permite não encontrar o padrão. Então, algo colocado com um asterisco depois dele, não impede um padrão de ser achado, ele apenas retornará zero resultados se não conseguir encontrar algum texto adequado.
 
-Uma interrogação ("?") define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero vezes ou apenas uma vez. No exemplo a seguir, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente.
+Uma interrogação (?) define uma parte do padrão de busca como "opcional", o que significa que ele pode ocorrer zero vezes ou apenas uma vez. No exemplo a seguir, é permitido que ocorra o caractere "u", mas o padrão também é encontrado quando ele está ausente.
 
 ```js
 let neighbor = /neighbou?r/;
@@ -131,7 +131,7 @@ console.log(neighbor.test("neighbor"));
 // → true
 ```
 
-Para permitir que um padrão ocorra um número definido de vezes, use chaves ("{}"). Colocando {4} depois de um elemento do padrão, requer que ele ocorra exatamente 4 vezes. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
+Para permitir que um padrão ocorra um número definido de vezes, use chaves ("{ }"). Colocando {4} depois de um elemento do padrão, requer que ele ocorra exatamente 4 vezes. Da mesma maneira, {2,4} é utilizado para definir que ele deve aparecer no mínimo 2 vezes e no máximo 4.
 
 Aqui está outra versão do padrão de data e hora que permite dias, meses e horas com um ou mais dígitos. Também são mais legíveis:
 
@@ -162,7 +162,7 @@ O "i" no final da expressão do exemplo acima faz com que a expressão regular s
 O método _test_ é a maneira mais simples de encontrar correspondências de uma expressão regular. Ela apenas informa se foi encontrado algo e nada mais. Expressões regulares também possuem o método _exec_ (executar), que irá retornar _null_ quando nenhum resultado for encontrado, e um objeto com informações se encontrar.
 
 ```js
-let match = /\d+/.exec("one two 100");
+let match = /\d+/.exec("um dois 100");
 console.log(match);
 // → ["100"]
 console.log(match.index);
@@ -199,7 +199,7 @@ Grupos podem ser muito úteis para extrair partes de uma _string_. Por exemplo, 
 
 Mas antes, um pequeno desvio, na qual discutiremos a maneira integrada de representar os valores de data e hora em JavaScript.
 
-## O tipo _data_
+## O tipo _Data_
 
 O JavaScript possui uma classe padrão para representar datas, ou melhor, pontos no tempo. Ele é chamado _Date_. Se você simplesmente criar uma data usando _new_, terá a data e hora atual.
 
@@ -591,7 +591,7 @@ Se uma linha não for um cabeçalho de seção ou uma propriedade, a função ve
 
 Devido a uma implementação inicial simplista e o fato que esta abordagem simplista mais tarde foi gravada em pedra como comportamento padrão, expressões regulares do JavaScript são um pouco estúpidas sobre caracteres que não parecem na língua inglesa. Por exemplo, "caracteres palavra", nesse contexto, atualmente significam apenas os 26 caracteres do alfabeto latino. Coisas como "é" ou "β", que definitivamente são caracteres de palavras, não encontrarão resultados com _\w_ (e serão encontradas com o marcador de letras maiúsculas _\W_).
 
-Devido a um estranho acidente histórico, _\s_ (espaço em branco) é diferente, e irá encontrar todos os caracteres que o padrão Unicode considera como espaço em branco, como espaços sem quebra ou o separador de vogais do alfabeto Mongol.
+Devido a um estranho acidente histórico, _\s_ (espaço em branco) é diferente, e irá encontrar todos os caracteres que o padrão _Unicode_ considera como espaço em branco, como espaços sem quebra ou o separador de vogais do alfabeto Mongol.
 
 Outro problema é que, por padrão, as expressões regulares funcionam em unidades de código, conforme discutido no Capítulo 5, e não em caracteres reais. Isso significa que os caracteres compostos por duas unidades de código se comportam de maneira estranha.
 
@@ -608,7 +608,7 @@ O problema é que o emoji 🍎 na primeira linha é tratado como duas unidades d
 
 Você deve adicionar uma opção "_u_" (para o _Unicode_) à sua expressão regular que ele trate esses caracteres adequadamente. O comportamento incorreto permanece como padrão, infelizmente, porque alter-lo pode causar problemas para o código existente que depende dele.
 
-Embora isso tenha sido apenas padronizado e, no momento da escrita, não seja amplamente suportado ainda, é possível usar "_\p_" em uma expressão regular (que deve ter a opção Unicode habilitada) para combinar todos os caracteres aos quais o padrão Unicode atribui à determinada propriedade.
+Embora isso tenha sido apenas padronizado e, no momento da escrita, não seja amplamente suportado ainda, é possível usar "_\p_" em uma expressão regular (que deve ter a opção _Unicode_ habilitada) para combinar todos os caracteres aos quais o padrão _Unicode_ atribui à determinada propriedade.
 
 ```js
 console.log(/\p{Script=Greek}/u.test("α"));
@@ -621,7 +621,7 @@ console.log(/\p{Alphabetic}/u.test("!"));
 // → false
 ```
 
-O Unicode define várias propriedades úteis, embora encontrar aquela que você precisa nem sempre seja relevante. Você pode usar `\p{Property=Value}` para que corresponda a qualquer caractere que tenha o valor fornecido para essa propriedade. Se o nome da propriedade for deixado de fora, como em `\p{Name}`, o nome será considerado uma propriedade binária, como _Alphabetic_ ou uma categoria, como _Number_.
+O _Unicode_ define várias propriedades úteis, embora encontrar aquela que você precisa nem sempre seja relevante. Você pode usar `\p{Property=Value}` para que corresponda a qualquer caractere que tenha o valor fornecido para essa propriedade. Se o nome da propriedade for deixado de fora, como em `\p{Name}`, o nome será considerado uma propriedade binária, como _Alphabetic_ ou uma categoria, como _Number_.
 
 ## Sumário
 
@@ -650,7 +650,7 @@ Uma expressão regular possui um método _test_ para testar quando um padrão é
 
 _Strings_ possuem um método _match_ para testá-las contra uma expressão regular e um método _search_ para buscar por um resultado. O método _replace_ pode substituir as correspondências de um padrão por uma string ou função de substituição.
 
-Expressões regulares podem ter opções configuradas (_flags_), que são escritas após o fechamento da barra. A opção "_i_" faz a busca sem se importar se é maiúscula ou minúscula, a opção "_g_" faz a busca global, que, entre outras coisas, faz o método _replace_ substituir todas as ocorrências, em vez de só a primeira. A opção "_y_" o torna aderente, o que significa que ele não pesquisará à frente e ignorará parte da _string_ ao procurar por uma correspondência. A opção "_u_" ativa o modo Unicode, que corrige uma série de problemas em torno do tratamento de caracteres que ocupam duas unidades de código.
+Expressões regulares podem ter opções configuradas (_flags_), que são escritas após o fechamento da barra. A opção "_i_" faz a busca sem se importar se é maiúscula ou minúscula, a opção "_g_" faz a busca global, que, entre outras coisas, faz o método _replace_ substituir todas as ocorrências, em vez de só a primeira. A opção "_y_" o torna aderente, o que significa que ele não pesquisará à frente e ignorará parte da _string_ ao procurar por uma correspondência. A opção "_u_" ativa o modo _Unicode_, que corrige uma série de problemas em torno do tratamento de caracteres que ocupam duas unidades de código.
 
 Expressões regulares são uma ferramenta precisa que possui um manuseio estranho. Elas simplificarão muito algumas tarefas simples, mas rapidamente se tornarão inviáveis quando aplicadas a tarefas mais complexas. Saber quando usá-las é útil. Parte do conhecimento de saber **quando** usá-las é o conhecimento de saber **como** usá-las e quando desistir do seu uso e procurar uma abordagem mais simples.
 

@@ -5,7 +5,7 @@
 {{quote {author: "Laozi", title: "Tao Te Ching", chapter: true}
 
 Quem pode esperar quieto enquanto a lama assenta?\
-Quem pode permancer parado até o momento de agir?
+Quem pode permanecer parado até o momento de agir?
 
 quote}}
 
@@ -144,7 +144,7 @@ A `defineRequestType` é uma função que define um novo tipo de _request_. O ex
 
 {{index "asynchronous programming"}}
 
-O quarto argumento dado ao tratador, `done`, é a função de _callback_ que precisa ser chamada quando a _request_ termina. Se tivéssemos utilizado o retorno do tratador como resposta, isso iria significar que o tratador não pode por si só performar uma atividade assíncrona. Uma função realizando um trabalho assíncrono geralmente irá  retornar antes do trabalho terminar,tendo que fazer um arranjo para que o _callback_ seja chamada quando for completado. Portanto, iremos precisar de algum mecanismo assíncrono, nesse caso outra função _callback_ para sinalizar quando a resposta for válida.
+O quarto argumento dado ao tratador, `done`, é a função de _callback_ que precisa ser chamada quando a _request_ termina. Se tivéssemos utilizado o retorno do tratador como resposta, isso iria significar que o tratador não pode por si só performar uma atividade assíncrona. Uma função realizando um trabalho assíncrono geralmente irá  retornar antes do trabalho terminar, tendo que fazer um arranjo para que o _callback_ seja chamada quando for completado. Portanto, iremos precisar de algum mecanismo assíncrono, nesse caso outra função _callback_ para sinalizar quando a resposta for válida.
 
 De certo modo, assincronicidade é **contagiante**. Qualquer função que chama uma função que trabalha assincronicamente precisa por si só ser assíncrona. utilizando um _callback_ ou mecanismo similar para entregar resultado. Chamando um _callback_ é algo mais complicado e sujeito a erro do que simplesmente retornar um valor, logo necessita estruturar grandes partes do seu código, o que não é prático.
 
@@ -172,11 +172,11 @@ Para conseguir o resultado da _promise_, pode-se utilizar o método` then`. Isso
 
 Porém, isso não é tudo o que o método `then` faz. Ele retorna outra _promise_, que resolve o valor que a função tratadora retorna ou, se retornar uma _promise_, espera a _promise_ e depois o seu resultado.
 
-É útil pensar em _promises_ como dispositivos para transportar o valor em uma realidade assíncrona. Um valor normal simplesmente está aqui. Um valor prometido é um valor que **pode** já estar aqui ou em algum ponto do futuro. Computações definidas em termos de _promises_ agem em cima desses valores e eles são executados assíncronamente quando o valor se mostra disponível.
+É útil pensar em _promises_ como dispositivos para transportar o valor em uma realidade assíncrona. Um valor normal simplesmente está aqui. Um valor prometido é um valor que **pode** já estar aqui ou em algum ponto do futuro. Computações definidas em termos de _promises_ agem em cima desses valores e eles são executados assincronamente quando o valor se mostra disponível.
 
 {{index "Promise class"}}
 
-Para criar uma _promise_, pode-se utilizar `Promise` como um construtor. Ele possui uma interface peculiar — o construtor espera uma função como argumento, que é chamada imediatamente, passando uma função que pode ser utilizada para resolver a _promise_. Funciona deste modo, ao invés do exemplo com o método`resolve`, para que apenas o código que criou a _promise_ possa resolvê-lo.
+Para criar uma _promise_, pode-se utilizar `Promise` como um construtor. Ele possui uma interface peculiar — o construtor espera uma função como argumento, que é chamada imediatamente, passando uma função que pode ser utilizada para resolver a _promise_. Funciona deste modo, ao invés do exemplo com o método `resolve`, para que apenas o código que criou a _promise_ possa resolvê-lo.
 
 {{index "storage function"}}
 
@@ -294,7 +294,7 @@ Já que _promises_ podem ser resolvidas (ou rejeitadas) apenas uma vez, isso ir�
 
 {{index recursion}}
 
-Para construir um _loop_ assíncrono, para múltiplas tentativas, nós precisamos utilizar uma função recursiva — um _loop_ convencional não permite que nós esperemos a respostas de uma ação assíncrona. A função `attempt` faz uma única tentativa para enviar a _request_. Ela também estabelece um tempo de resposta (_timeout_), para caso não haja resposta depois de 250 milissegundos, ou ela tenta a próxima tentativa ou, se for a terceira tentativa, rejeita a _promise_ com uma nova instânica de `Timeout` como o motivo.
+Para construir um _loop_ assíncrono, para múltiplas tentativas, nós precisamos utilizar uma função recursiva — um _loop_ convencional não permite que nós esperemos a respostas de uma ação assíncrona. A função `attempt` faz uma única tentativa para enviar a _request_. Ela também estabelece um tempo de resposta (_timeout_), para caso não haja resposta depois de 250 milissegundos, ou ela tenta a próxima tentativa ou, se for a terceira tentativa, rejeita a _promise_ com uma nova instância de `Timeout` como o motivo.
 
 {{index idempotence}}
 
@@ -577,7 +577,7 @@ Porque `connections` é um `Map`, `Object.keys` não funciona nele. Se possui um
 
 {{index "Promise class", recursion}}
 
-Até para _promises_ esse código é esquisito. Múltiplas ações assíncronos estão encadeadas de manerias não óbvias. Nós precisamos novamente de uma função recursiva (``` next ```) para modelar o _looping_ (estrutura de repetição) através dos ninhos.
+Até para _promises_ esse código é esquisito. Múltiplas ações assíncronos estão encadeadas de maneiras não óbvias. Nós precisamos novamente de uma função recursiva (``` next ```) para modelar o _looping_ (estrutura de repetição) através dos ninhos.
 
 {{index "synchronous programming", "asynchronous programming"}}
 
@@ -585,7 +585,7 @@ E o que o código faz na verdade é completamente linear — ele sempre espera a
 
 {{index "async function", "await keyword"}}
 
-A boa notícia é que o JavaScript permite que você escreva código pseudo-síncrono para descrever computação assíncrona. A função `async` é uma função que implicitamente retorna uma _promise_ que pode, dentro de sí, `await` outras _promises_ que parecem síncronas.
+A boa notícia é que o JavaScript permite que você escreva código pseudo-síncrono para descrever computação assíncrona. A função `async` é uma função que implicitamente retorna uma _promise_ que pode, dentro de si, `await` outras _promises_ que parecem síncronas.
 
 {{index "findInStorage function"}}
 
@@ -778,7 +778,7 @@ A parte `async name =>`  mostra que funções em flecha também podem se tornar 
 
 {{index "Promise.all function"}}
 
-O código não parece imediatamente suspeito...ele mapeia a função flecha `async` através de um conjunto de ninhos, criando um _array_ de _promises_ e utiliza o `Promise.all` para esperar por todas aquelas antes de retornar a lista que eles contruíram.
+O código não parece imediatamente suspeito...ele mapeia a função flecha `async` através de um conjunto de ninhos, criando um _array_ de _promises_ e utiliza o `Promise.all` para esperar por todas aquelas antes de retornar a lista que eles construíram.
 
 Mas isso está seriamente errado. Ele sempre irá retornar apenas uma linha de saída, listando o ninho mais devagar a responder.
 
@@ -820,9 +820,9 @@ Erros assim são fáceis de cometer, especialmente quando utilizamos `await`, e 
 
 ## Resumo
 
-Programação assíncrona torna possível expressar esperas por ações que rodam por muito tempo sem congelar o programa durante essas ações. Ambientes JavaScript tipicamente implementam esse estilo de programação uitilizando _callbacks_, funções que são chamadas quando certas ações são completadas. Um evento _loop_ agenda tais _callbacks_ para serem chamadas quando apropriado, uma depois da outra, para que na execução não ocorra sobreposições.
+Programação assíncrona torna possível expressar esperas por ações que rodam por muito tempo sem congelar o programa durante essas ações. Ambientes JavaScript tipicamente implementam esse estilo de programação utilizando _callbacks_, funções que são chamadas quando certas ações são completadas. Um evento _loop_ agenda tais _callbacks_ para serem chamadas quando apropriado, uma depois da outra, para que na execução não ocorra sobreposições.
 
-Programando assíncronamente se torna mais fácil com _promises_, objetos que representam ações que pode ser completas no futuro e funções `async`, que permitem que você escreva um progama assíncrono como se fosse síncrono.
+Programando assincronamente se torna mais fácil com _promises_, objetos que representam ações que pode ser completas no futuro e funções `async`, que permitem que você escreva um programa assíncrono como se fosse síncrono.
 
 ## Exercícios
 

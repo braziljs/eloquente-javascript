@@ -53,7 +53,7 @@ Outro jeito de descrever essa diferença é que esperar a ação terminar está 
 
 Assincronicidade possui aspectos positivos e negativos. Torna fazer programas que não se encaixam no modelo de linha reta mais fácil, porém faz com programas que seguem esse modelo linha reta fiquem mais estranhos. Vamos ver formas essa estranheza mais tarde neste capítulo.
 
-Ambas as plataformas de programação importantes de Javascript — navegador (_browser_) e  Node.js — fazem operações que podem ser assíncronas, ao invés de utilizarem fios. E como programação com fios é notoriamente difícil (entender o que um programa faz é muito mais complicado quando ele faz mais de uma coisa ao mesmo tempo), isso geralmente é visto como algo positivo.
+Ambas as plataformas de programação importantes de JavaScript — navegador (_browser_) e  Node.js — fazem operações que podem ser assíncronas, ao invés de utilizarem fios. E como programação com fios é notoriamente difícil (entender o que um programa faz é muito mais complicado quando ele faz mais de uma coisa ao mesmo tempo), isso geralmente é visto como algo positivo.
 
 ## Tecnologia dos Corvos
 
@@ -110,7 +110,7 @@ bigOak.readStorage("food caches", caches => {
 });
 ```
 
-( Todos os nomes e _strings_ foram traduzidas da linguagem dos corvos para Português.)
+(Todos os nomes e _strings_ foram traduzidas da linguagem dos corvos para Português.)
 
 Esse estilo de programação é funcional, mas o nível de indentação aumenta a cada ação assíncrona porque você acaba em outra função. Fazendo coisas mais complicadas, como rodar ações múltiplas ao mesmo tempo pode ficar um pouco esquisito.
 
@@ -120,14 +120,14 @@ Cada mensagem é marcada com um tipo (_type_), o que vai determinar como ela ser
 
 {{index "crow-tech module", "send method"}}
 
-A interface exportada pelo módulo `./crow-tech` fornece funções baseadas em _callbacks_ para comunicação. Ninhos possuem o método `send` para enviar _requests_. Ele espera o nome do ninho de destino, o tipo da _request_ e conteúdo da _request_ como seu terceiro argumento. E no quarto e último argumento espera a função a ser chamada quando a resposta chegar.
+A interface exportada pelo módulo "./crow-tech" fornece funções baseadas em _callbacks_ para comunicação. Ninhos possuem o método `send` para enviar _requests_. Ele espera o nome do ninho de destino, o tipo da _request_ e conteúdo da _request_ como seu terceiro argumento. E no quarto e último argumento espera a função a ser chamada quando a resposta chegar.
 
 ```
 bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM",
             () => console.log("Note delivered."));
 ```
 
-Mas para tornar esses ninhos capazes de receber essa _request_, nós primeiro precisamos definir uma _request_ chamada “`note`”. O código que vai tratar com _requests_ precisa ser executado não apenas no ninho computacional mas em todos ninhos que podem receber mensagens desse tipo. Nós vamos apenas assumir que um corvo vôe e instale nosso código que trata essa _request_ em todos os ninhos.
+Mas para tornar esses ninhos capazes de receber essa _request_, nós primeiro precisamos definir uma _request_ chamada `"note"`. O código que vai tratar com _requests_ precisa ser executado não apenas no ninho computacional mas em todos ninhos que podem receber mensagens desse tipo. Nós vamos apenas assumir que um corvo vôe e instale nosso código que trata essa _request_ em todos os ninhos.
 
 {{index "defineRequestType function"}}
 
@@ -140,7 +140,7 @@ defineRequestType("note", (nest, content, source, done) => {
 });
 ```
 
-A `defineRequestType` é uma função que define um novo tipo de _request_. O exemplo adiciona o suporte para _requests_ “`note`”, que apenas enviam uma nota para um dado ninho. Nossa implementação chama o `console.log` para que possamos verificar que a nossa nota chegou. Ninhos possuem uma propriedade `name`  guardada em seus nomes.
+A `defineRequestType` é uma função que define um novo tipo de _request_. O exemplo adiciona o suporte para _requests_ `"note"`, que apenas enviam uma nota para um dado ninho. Nossa implementação chama o `console.log` para que possamos verificar que a nossa nota chegou. Ninhos possuem uma propriedade `name`  guardada em seus nomes.
 
 {{index "asynchronous programming"}}
 
@@ -158,7 +158,7 @@ Trabalhar com conceitos abstratos é em geral mais fácil quando esses conceitos
 
 {{index "Promise.resolve function", "resolving (a promise)"}}
 
-A maneira mais fácil de criar uma _promise_ é chamando` Promise.resolve`. Essa função garante que o valor dado está dentro da _promise_. Se já for uma _promise_, pode ser simplesmente retornado — caso o contrário,  você recebe uma nova _promise_ que imediatamente termina com seu valor como resultado.
+A maneira mais fácil de criar uma _promise_ é chamando` Promise.resolve`. Essa função garante que o valor dado está dentro da _promise_. Se já for uma _promise_, pode ser simplesmente retornado — caso o contrário, você recebe uma nova _promise_ que imediatamente termina com seu valor como resultado.
 
 ```
 let fifteen = Promise.resolve(15);
@@ -180,7 +180,7 @@ Para criar uma _promise_, pode-se utilizar `Promise` como um construtor. Ele pos
 
 {{index "storage function"}}
 
-Esta é a forma como seria criada uma _promise_ com a sua interface para a  função `readStorage`:
+Esta é a forma como seria criada uma _promise_ com a sua interface para a função `readStorage`:
 
 ```{includeCode: "top_lines: 5"}
 function storage(nest, name) {
@@ -199,7 +199,7 @@ Essa função assíncrona retorna um valor que tem um propósito. Essa é a vant
 
 {{index "exception handling"}}
 
-Processos computacionais usuais com Javascript podem falhar e por jogarem uma exceção. Computação assíncrona em geral precisa de algo semelhante. A _request_ na rede pode falhar, ou algum código na parte assíncrona pode causar uma exceção.
+Processos computacionais usuais com JavaScript podem falhar e por jogarem uma exceção. Computação assíncrona em geral precisa de algo semelhante. A _request_ na rede pode falhar, ou algum código na parte assíncrona pode causar uma exceção.
 
 {{index "callback function", error}}
 
@@ -213,11 +213,11 @@ As _promises_ tornam o processo mais simples. Elas podem tanto ser resolvidas (a
 
 {{index "Promise.reject function", "Promise class"}}
 
-Da mesma forma que resolver uma _promise_ gera um valor, rejeitar também o faz, geralmente chamado de motivo da rejeição. Quando uma exceção na função tratadora causa uma rejeição, o valor da exceção é utilizado como causa. Semelhantemente, quando um tratador retorna uma _promise_ que foi rejeitada, a rejeição propaga para a próxima _promise_. Há a função ``` Promise.reject ``` que cria uma nova _promise_ que é rejeitada imediatamente.
+Da mesma forma que resolver uma _promise_ gera um valor, rejeitar também o faz, geralmente chamado de motivo da rejeição. Quando uma exceção na função tratadora causa uma rejeição, o valor da exceção é utilizado como causa. Semelhantemente, quando um tratador retorna uma _promise_ que foi rejeitada, a rejeição propaga para a próxima _promise_. Há a função `Promise.reject` que cria uma nova _promise_ que é rejeitada imediatamente.
 
 {{index "catch method"}}
 
-Para explicitar o tratamento dessas rejeições, _promises_ precisam ter um método `catch` que registre o tratador que vai ser chamado quando a _promise_ é rejeitada, da mesma forma como o tratador `then` lida com resoluções normais. É também muito semelhante com o `then`, que resolve o valor original da _promise_ se ela é resolvida normalmente e caso ao contrário, passa o resultado  ao tratador  `catch`. Se o `catch` jogar um erro, a nova _promise_ também é rejeitada.
+Para explicitar o tratamento dessas rejeições, _promises_ precisam ter um método `catch` que registre o tratador que vai ser chamado quando a _promise_ é rejeitada, da mesma forma como o tratador `then` lida com resoluções normais. É também muito semelhante com o `then`, que resolve o valor original da _promise_ se ela é resolvida normalmente e caso ao contrário, passa o resultado  ao tratador `catch`. Se o `catch` jogar um erro, a nova _promise_ também é rejeitada.
 
 {{index "then method"}}
 
@@ -333,7 +333,7 @@ Perceba que a chamada do `handler` está embrulhado em um bloco `try` para garan
 
 {{index "neighbors property", "ping request"}}
 
-Cada ninho computador mantêm uma lista de outros ninhos com os quais pode se comunicar em sua propriedade `neighbors`. Para verificar quais estão disponíveis, você pode escrever uma função que tenta enviar uma _request_  “`ping`”  (uma _request_ que só pede uma resposta) para cada um deles e vê de quais tem-se uma resposta.
+Cada ninho computador mantêm uma lista de outros ninhos com os quais pode se comunicar em sua propriedade `neighbors`. Para verificar quais estão disponíveis, você pode escrever uma função que tenta enviar uma _request_  `"ping"`  (uma _request_ que só pede uma resposta) para cada um deles e vê de quais tem-se uma resposta.
 
 {{index "Promise.all function"}}
 
@@ -355,7 +355,7 @@ function availableNeighbors(nest) {
 
 {{index "then method"}}
 
-Quando um vizinho não está disponível, nós não queremos que o conjunto de todas as  _promises_ fracasse, já que assim ainda não saberiamos de nada. Então, a função que é mapeada em cima do conjunto de vizinhos para os tornar _requests_ de _promises_ vínculadas ao uma tratador que faz _requests_ que fazem _requests_ bem sucedidas produzem um valor `true` e as rejeitadas produzem um valor `false`.
+Quando um vizinho não está disponível, nós não queremos que o conjunto de todas as  _promises_ fracasse, já que assim ainda não saberíamos de nada. Então, a função que é mapeada em cima do conjunto de vizinhos para os tornar _requests_ de _promises_ vinculadas ao uma tratador que faz _requests_ que fazem _requests_ bem sucedidas produzem um valor `true` e as rejeitadas produzem um valor `false`.
 
 {{index "filter method", "map method", "some method"}}
 
@@ -394,7 +394,7 @@ requestType("gossip", (nest, message, source) => {
 
 {{index "everywhere function", "gossip property"}}
 
-Para evitar enviar a mesma mensagem pela rede para sempre, cada ninho possui um _array_ de _strings_ de fofocas que já foram enviadas. Para definir esse _array_, nós utilizamos a função `everywhere`, que executa o código em cada ninho, para adicionar a propriedades ao `state` do ojeto `nest`, o qual iremos armazenar o estado do ninho local.
+Para evitar enviar a mesma mensagem pela rede para sempre, cada ninho possui um _array_ de _strings_ de fofocas que já foram enviadas. Para definir esse _array_, nós utilizamos a função `everywhere`, que executa o código em cada ninho, para adicionar a propriedades ao `state` do objeto `nest`, o qual iremos armazenar o estado do ninho local.
 
 Quando um ninho recebe uma mensagem de fofoca duplicada, o que provavelmente pode acontecer com todo mundo a reenviando cegamente, ele a ignora. Mas se recebe uma nova mensagem, ele alegremente avisa os seus vizinhos, com exceção daquele que a enviou.
 
@@ -461,19 +461,19 @@ everywhere(nest => {
 
 {{index JSON, "== operator"}}
 
-A comparação utiliza `JSON.stringify` porque ==, em objetos ou _arrays_, irá retornar verdadeiro apenas quando os dois são exatamente o mesmo valor, o que não precisamos. Compar as _strings_ de JSON é um jeito cru, mas efetivo de comparar seu conteúdo.
+A comparação utiliza `JSON.stringify` porque `==`, em objetos ou _arrays_, irá retornar verdadeiro apenas quando os dois são exatamente o mesmo valor, o que não precisamos. Comparar as _strings_ de JSON é um jeito cru, mas efetivo de comparar seu conteúdo.
 
 Os nós imediatamente começam a transmitir a suas conexões, o que deveria, a não ser que alguns ninhos estejam completamente fora de alcance, rapidamente dá a cada ninho um mapa do diagrama de rede.
 
 {{index pathfinding}}
 
 Algo que é possível fazer com diagramas é encontrar as rotas, como vimos no 
-[Chapter 7](robot). Se nós tivermos a rota para o destino da mensagem, nós sabemos para qual direção enviar.
+[Chapter ?](robot). Se nós tivermos a rota para o destino da mensagem, nós sabemos para qual direção enviar.
 
 {{index "findRoute function"}}
 
 
-A função `findRoute`, que lembra bastante a `findRoute` do [Chapter 7](robot#findRoute), procura uma forma de alcançar um nó da rede. Mas, ao invés de retornar toda a rota, retorna apenas o próximo passo. Que o próximo ninho irá, usando a informação atual sobre a rede, decidir onde ele irá enviar a mensagem.
+A função `findRoute`, que lembra bastante a `findRoute` do [Chapter ?](robot#findRoute), procura uma forma de alcançar um nó da rede. Mas, ao invés de retornar toda a rota, retorna apenas o próximo passo. Que o próximo ninho irá, usando a informação atual sobre a rede, decidir onde ele irá enviar a mensagem.
 
 ```{includeCode: true}
 function findRoute(from, to, connections) {
@@ -490,7 +490,7 @@ function findRoute(from, to, connections) {
   return null;
 }
 ```
-Agora nós podemos construir uma função que envia mensagem de distâncias longas. Se a mensagem for endereçada a um vizinho próximo, ela retorna como de costume. Se não, ela é empacotada em um objeto e enviado a um vizinho que está mais próximo do alvo, utilizando o tipo de requisição "`route`", que irá fazer com que os vizinhos repitam o mesmo comportamento.
+Agora nós podemos construir uma função que envia mensagem de distâncias longas. Se a mensagem for endereçada a um vizinho próximo, ela retorna como de costume. Se não, ela é empacotada em um objeto e enviado a um vizinho que está mais próximo do alvo, utilizando o tipo de requisição `"route"`, que irá fazer com que os vizinhos repitam o mesmo comportamento.
 {{index "routeRequest function"}}
 
 ```{includeCode: true}
@@ -573,11 +573,11 @@ function findInRemoteStorage(nest, name) {
 
 {{index "Map class", "Object.keys function", "Array.from function"}}
 
-Porque `connections` é um `Map`, `Object.keys` não funciona nele. Se possui um **método** `keys`, mas retorna um iterador  ao invés de um _array_). O iterador (ou o valor iterável) pode ser convertido em um _array_ com a função `Array.from`.
+Porque `connections` é um `Map`, `Object.keys` não funciona nele. Se possui um **método** `keys`, mas retorna um iterador ao invés de um _array_). O iterador (ou o valor iterável) pode ser convertido em um _array_ com a função `Array.from`.
 
 {{index "Promise class", recursion}}
 
-Até para _promises_ esse código é esquisito. Múltiplas ações assíncronos estão encadeadas de maneiras não óbvias. Nós precisamos novamente de uma função recursiva (``` next ```) para modelar o _looping_ (estrutura de repetição) através dos ninhos.
+Até para _promises_ esse código é esquisito. Múltiplas ações assíncronos estão encadeadas de maneiras não óbvias. Nós precisamos novamente de uma função recursiva (`next`) para modelar o _looping_ (estrutura de repetição) através dos ninhos.
 
 {{index "synchronous programming", "asynchronous programming"}}
 
@@ -628,7 +628,7 @@ if}}
 
 Dentro de uma função `async`, a palavra `await` pode ser posta na frente de uma expressão para esperar a _promise_ ser resolvida e apenas aí continuar a execução da função.
 
-Tal função não mais, como numa função Javascript padrão, roda do começo ao fim de uma vez. Ao invés disso, ela fica congelada no ponto que possui o `await` e pode ser retomada depois.
+Tal função não mais, como numa função JavaScript padrão, roda do começo ao fim de uma vez. Ao invés disso, ela fica congelada no ponto que possui o `await` e pode ser retomada depois.
 
 Para código assíncronos não triviais, essa notação é geralmente mais conveniente que utilizar _promises_ diretamente. Mesmo que você precise fazer algo que não se encaixe no modelo síncrono, como múltiplas ações ao mesmo tempo, é mais simples combinar o termo `await` ao invés de utilizar _promises_ diretamente.
 
@@ -639,7 +639,7 @@ Para código assíncronos não triviais, essa notação é geralmente mais conve
 Essa habilidade de pausar as funções e depois as retomar não é exclusiva de funções `async`. No JavaScript temos também um recurso chamado funções _generator_ (geradoras). Elas são similares, mas sem as _promises_.
 
 
-Quando você define uma função com `function*` (colocando um asterisco depois da palavra `function`), ela se torna um _generator_. Quando você chama um _generator_, ele retorna um iterador, o qual já vimos no [Chapter 6](object).
+Quando você define uma função com `function*` (colocando um asterisco depois da palavra `function`), ela se torna um _generator_. Quando você chama um _generator_, ele retorna um iterador, o qual já vimos no [Chapter ?](object).
 
 ```
 function* powers(n) {
@@ -659,9 +659,9 @@ for (let power of powers(3)) {
 
 {{index "next method", "yield keyword"}}
 
-Inicialmente, quando você chama `powers`, a função é congelada quando começa. Cada vez que você chama  `next`  no iterador, a função roda até que chega na expressão `yields`, que a pausa e faz com que o valor gerado seja o próximo valor produzido pelo iterador. Quando a função retorna ( a do exemplo nunca o faz), o iterador está terminado.
+Inicialmente, quando você chama `powers`, a função é congelada quando começa. Cada vez que você chama `next` no iterador, a função roda até que chega na expressão `yields`, que a pausa e faz com que o valor gerado seja o próximo valor produzido pelo iterador. Quando a função retorna (a do exemplo nunca o faz), o iterador está terminado.
 
-Escrever iteradores é geralmente muito mais simples quando se utiliza funções geradoras. O iterador para a classe `Group` (do exercício do [Chapter 6](object#group_iterator))pode ser escrita com o gerador:
+Escrever iteradores é geralmente muito mais simples quando se utiliza funções geradoras. O iterador para a classe `Group` (do exercício do [Chapter ?](object#group_iterator))pode ser escrita com o gerador:
 
 {{index "Group class"}}
 
@@ -862,7 +862,7 @@ locateScalpel(bigOak).then(console.log);
 
 if}}
 
-{{**Dica:**
+{{dica:
 
 {{index "scalpel (exercise)"}}
 
@@ -886,11 +886,11 @@ hint}}
 
 {{index "Promise class", "Promise.all function", "building Promise.all (exercise)"}}
 
-Dado um _array_ de _promises_, `Promise.all` retorna uma _promise_ que espera que todas as  _promises_ do _array_ terminarem. Se é bem sucedida, gera um _array_ dos valores dos resultados. Se uma  _promise_  no _array_ falha, a _promise_ retornada por `all` fracassa também, com a falha sendo a da  _promise_ que falhou.
+Dado um _array_ de _promises_, `Promise.all` retorna uma _promise_ que espera que todas as _promises_ do _array_ terminarem. Se é bem sucedida, gera um _array_ dos valores dos resultados. Se uma _promise_ no _array_ falha, a _promise_ retornada por `all` fracassa também, com a falha sendo a da _promise_ que falhou.
 
 Implementando algo como isso você mesmo, como uma função comum chamada `Promise_all`.
 
-Lembrando que depois da  _promise_ ter sucesso ou falhar, ela não pode ter sucesso ou fracassar novamente, em próximas chamadas para funções que as resolvem são ignoradas. Isso pode simplificar a forma como você trata a falha da sua _promise_.
+Lembrando que depois da _promise_ ter sucesso ou falhar, ela não pode ter sucesso ou fracassar novamente, em próximas chamadas para funções que as resolvem são ignoradas. Isso pode simplificar a forma como você trata a falha da sua _promise_.
 
 {{if interactive
 
@@ -926,15 +926,15 @@ Promise_all([soon(1), Promise.reject("X"), soon(3)])
 
 if}}
 
-{{**Dica:**
+{{dica:
 
 {{index "Promise.all function", "Promise class", "then method", "building Promise.all (exercise)"}}
 
-A função para o construtor da  `Promise` vai ter que chamar o `then` de cada _promise_ no dado _array_. Quando uma for bem sucedida, duas coisas precisam acontecer. O valor resultando precisa ser armazenado na posição correta no _array_ resultante, e precisa verificar se esse é o último valor pendente da _promise_ e terminar a própria _promise_ se for.
+A função para o construtor da `Promise` vai ter que chamar o `then` de cada _promise_ no dado _array_. Quando uma for bem sucedida, duas coisas precisam acontecer. O valor resultando precisa ser armazenado na posição correta no _array_ resultante, e precisa verificar se esse é o último valor pendente da _promise_ e terminar a própria _promise_ se for.
 
 {{index "counter variable"}}
 
-A última pode ser feita com um contador  que é inicializado com o comprimento do _array_ de entrada e do qual nós subtraímos 1 cada vez que a _promise_ é bem sucedida. Quando atinge 0, nós terminamos. Garante que você vai levar em conta a situação em que a entrada do _array_ for vazio (assim nenhuma _promise_ vai ser resolvida).
+A última pode ser feita com um contador que é inicializado com o comprimento do _array_ de entrada e do qual nós subtraímos 1 cada vez que a _promise_ é bem sucedida. Quando atinge 0, nós terminamos. Garante que você vai levar em conta a situação em que a entrada do _array_ for vazio (assim nenhuma _promise_ vai ser resolvida).
 
 Tratar falhas requer raciocínio mas se torna extremamente simples. Apenas passe a função `reject` _wrapping_ a _promise_ para cada uma das _promises_ no _array_ como um tratador `catch` ou como um segundo argumento para o `then` para que a falha de uma acione a rejeição de toda a _wrapper_ _promise_.
 

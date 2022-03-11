@@ -32,14 +32,14 @@ fundamentalmente tedioso e frustrante.
 
 Felizmente, se você conseguir superar este fato, e talvez até gostar do rigor
 de pensar em termos com os quais máquinas burras consigam lidar, a 
-programação pode ser recompensadora. Ela permite que voce faça em segundos 
+programação pode ser recompensadora. Ela permite que você faça em segundos 
 coisas que levariam _para sempre_ se feitas à mão. É uma forma de fazer seu 
 computador fazer o que ele não conseguia antes. E ela oferece um maravilhoso 
 exercício de pensamento abstrato.
 
 
 A maior parte da programação é feita com ((linguagens de programação).
-Uma _linguagem de programação_ é uma linguagem construida artificialmente
+Uma _linguagem de programação_ é uma linguagem construída artificialmente
 usada para dar instruções a computadores. É interessante que a forma mais
 eficiente de nos comunicarmos com um computador  empreste tão pesadamente da
 forma como nos comunicamos uns com os outros. Como linguagens humanas, 
@@ -48,7 +48,7 @@ de novas formas, tornando possível expressar sempre novos conceitos.
 
 {{index [JavaScript, "availability of"], "casual computing"}}
 
-Em algum momento, interfaces baseadas em linguagem, como os prompts BASIC e 
+Em algum momento, interfaces baseadas em linguagem, como os _prompts_ BASIC e 
 DOS dos anos 1980 e 90, eram o método principal de interagir com computadores.
 Elas foram largamente substituídos por interfaces visuais, que são mais fáceis
 de aprender apesar de  oferecem menos liberdade. Linguagens de computador ainda 
@@ -74,7 +74,7 @@ você pode simplesmente se perder nele.
 
 {{index learning}}
 
-Terá momentos em que ler este livro será terrívelmente frustrante.
+Terá momentos em que ler este livro será terrivelmente frustrante.
 Se você é novo na programação, haverá muito material novo para digerir. Muito
 deste material será então combinado em formas que vão precisar que você faça
 novas conexões.
@@ -119,7 +119,7 @@ peso e cresce facilmente sob seus dedos digitando.
 
 Mas sem cuidado, o tamanho do programa e sua ((complexidade)) crescerão fora de
 controle, confundindo até mesmo a pessoa que o criou. Manter programas sob
-controle é o problema principal da progrmação. Quando um programa funciona, é
+controle é o problema principal da programação. Quando um programa funciona, é
 bonito. A arte de programar é a habilidade de controlar complexidade. Um grande
 programa é feito sob controle para ser simples em sua complexidade.
 
@@ -293,14 +293,14 @@ JavaScript foi apresentado em 1995 como uma forma de adicionar programas a
 páginas da web no navegador Netscape. A linguagem foi então adotada por
 todos os outros maiores navegadores web gráficos. Ele tornou possíveis 
 aplicações web modernas com as quais você pode interagir diretamente
-sem recarregar a página para cada ação. Javascript é também usado em websites
+sem recarregar a página para cada ação. JavaScript é também usado em websites
 mais tradicionais para fornecer várias formas de interatividade e inteligência.
 
 {{index Java, naming}}
 
 É importante notar que JavaScript não tem quase nada a ver com a linguagem de
 programação chamada Java. O nome parecido foi inspirado por considerações de
-marketing ao invés de bom julgamento. Quando Javascript foi apresentado, a
+marketing ao invés de bom julgamento. Quando JavaScript foi apresentado, a
 linguagem Java estava sendo pesadamente comercializada e ganhando popularidade.
 Alguém pensou que seria uma boa ideia pegar uma carona no sucesso. Agora nós
 estamos presos ao nome.
@@ -309,7 +309,7 @@ estamos presos ao nome.
 
 Depois de sua adoção fora do Netscape, um documento ((padrão)) foi escrito para
 descrever a forma como a linguagem JavaScript deveria funcionar para que vários
-softwares que alegavam suporte a Javascript estavam realmente falando sobre a
+softwares que alegavam suporte a JavaScript estavam realmente falando sobre a
 mesma linguagem. Isto é chamado de padrão ECMAScript, em favor da organização
 Internacional Ecma que fez a padronização. Na prática, os termos ECMAScript e
 JavaScript podem ser usados de forma intercambiável-são dois nomes para a mesma
@@ -334,7 +334,7 @@ Esta flexibilidade também tem suas vantagens, no entanto. Ela deixa espaço par
 muitas técnicas que são impossíveis em linguagens mais rígidas, e como vocẽ
 verá (por exemplo no [capítulo ?](modules)), ela poderá ser usada para superar as
 deficiências do JavaScript. Depois de ((aprender)) a linguagem devidamente e
-trabalhar com ela um pouco, eu aprendi a realmente _gostar_ de Javascript.
+trabalhar com ela um pouco, eu aprendi a realmente _gostar_ de JavaScript.
 
 {{index future, [JavaScript, "versions of"], ECMAScript, "ECMAScript 6"}}
 
@@ -421,7 +421,7 @@ executar o código para um determinado capítulo.
 ## Visão geral deste livro
 
 Este livro contém três partes. Os primeiros 12 capítulos discutem a linguagem
-Javascript. Os próximos sete capítulos são sobre ((navegadores)) web e a forma
+JavaScript. Os próximos sete capítulos são sobre ((navegadores)) web e a forma
 como JavaScript é usado para programá-los. Finalmente, os dois capítulos
 dedicados ao ((Node.js)), outro ambiente onde programar JavaScript.
 
@@ -448,7 +448,7 @@ assíncrona](async) (lidando com eventos que levam tempo). O [segundo capítulo 
 projeto](language) conclui a primeira parte do livro.
 
 A segunda parte, Capítulos [?](browser) até [?](paint), descreve as ferramentas
-que o Javascript tem acesso no navegador. Você aprenderá a exibir coisas na tela
+que o JavaScript tem acesso no navegador. Você aprenderá a exibir coisas na tela
 (Capítulos [?](dom) e [?](canvas)), responder a entrada do usuário ([Capítulo
 ?](event)), e se comunicar através da rede ([Capítulo ?](http)). Novamente,
 existem dois capítulos de projeto nesta parte.

@@ -2,44 +2,29 @@
 
 {{quote {author: "Donald Knuth", chapter: true}
 
-People think that computer science is the art of geniuses but the
-actual reality is the opposite, just many people doing things that
-build on each other, like a wall of mini stones.
+As pessoas pensam que Ciência da Computação é a arte de gênios. Na realidade é o oposto, são várias pessoas fazendo coisas que dependem uma das outras, como um muro de pequenas pedras.
 
 quote}}
 
 {{index "Knuth, Donald"}}
 
-{{figure {url: "img/chapter_picture_3.jpg", alt: "Picture of fern leaves with a fractal shape", chapter: framed}}}
+{{figure {url: "img/chapter_picture_3.jpg", alt: "Foto de folhas de samambaia com um formato fractal", chapter: framed}}}
 
 {{index function, [code, "structure of"]}}
 
-Functions are the bread and butter of JavaScript programming. The
-concept of wrapping a piece of program in a value has many uses. It
-gives us a way to structure larger programs, to reduce repetition, to
-associate names with subprograms, and to isolate these subprograms
-from each other.
+Funções são o pão e manteira da programação JavaScript. O conceito deencapsular um pedaço de um programa em um valor tem muitos usos. Issonôs dá um caminho para estruturas grandes programas, reduzir repetições, associar nomes com subprogramas, e isolar estes subprogramas uns dos outro.
 
-The most obvious application of functions is defining new
-((vocabulary)). Creating new words in prose is usually bad style. But
-in programming, it is indispensable.
+A aplicação mais óbvia das funções é quando queremos definir novos vocabulários. Criar novas palavras no nosso dia a dia geralmente não é uma boa ideia, porém em programação é indispensável.
 
 {{index abstraction, vocabulary}}
 
-Typical adult English speakers have some 20,000 words in their
-vocabulary. Few programming languages come with 20,000 commands built
-in. And the vocabulary that _is_ available tends to be more precisely
-defined, and thus less flexible, than in human language. Therefore, we
-usually _have_ to introduce new concepts to avoid repeating ourselves
-too much.
+Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se _tem_ disponível tende a ser bem definido e, por isso, menos flexível do que a linguagem usada por humanos. Por isso, normalmente _temos_ que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
 
-## Defining a function
+## Definindo uma função
 
 {{index "square example", [function, definition], [binding, definition]}}
 
-A function definition is a regular binding where the value of the
-binding is a function. For example, this code defines `square` to
-refer to a function that produces the square of a given number:
+Uma definição de função nada mais é do que uma definição normal de uma variável, na qual o valor recebido pela variável é uma função. Por exemplo, o código a seguir define uma variável `square` que se refere a uma função que retorna o quadrado do número dado:
 
 ```
 const square = function(x) {
@@ -53,18 +38,11 @@ console.log(square(12));
 {{indexsee "curly braces", braces}}
 {{index [braces, "function body"], block, [syntax, function], "function keyword", [function, body], [function, "as value"], [parentheses, arguments]}}
 
-A function is created with an expression that starts with the keyword
-`function`. Functions have a set of _((parameter))s_ (in this case,
-only `x`) and a _body_, which contains the statements that are to be
-executed when the function is called. The function body of a function
-created this way must always be wrapped in braces, even when it
-consists of only a single ((statement)).
+Uma função é criada por meio de uma expressão que se inicia com a palavra-chave `function`. Funções podem receber uma série de parâmetros (nesse caso, somente `x`) e um _corpo_, contendo as declarações que serão executadas quando a função for invocada. O corpo da função deve estar sempre envolvido por chaves, mesmo quando for formado por apenas uma simples declaração (como no exemplo anterior).
 
 {{index "power example"}}
 
-A function can have multiple parameters or no parameters at all. In
-the following example, `makeNoise` does not list any parameter names,
-whereas `power` lists two:
+Uma função pode receber múltiplos parâmetros ou nenhum parâmetro. No exemplo a seguir, `makeNoise` não recebe nenhum parâmetro, enquanto `power` recebe dois:
 
 ```
 const makeNoise = function() {
@@ -88,31 +66,18 @@ console.log(power(2, 10));
 
 {{index "return value", "return keyword", undefined}}
 
-Some functions produce a value, such as `power` and `square`, and some
-don't, such as `makeNoise`, whose only result is a ((side effect)). A
-`return` statement determines the value the function returns. When
-control comes across such a statement, it immediately jumps out of the
-current function and gives the returned value to the code that called
-the function. A `return` keyword without an expression after it will
-cause the function to return `undefined`. Functions that don't have a
-`return` statement at all, such as `makeNoise`, similarly return
-`undefined`.
+Algumas funções produzem um valor, como as funções `power` e `square` acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após, irá fazer com que o retorno da função seja `undefined`. Funções que não possuem `return` declarado, retornam `undefined` da mesma forma. 
 
 {{index parameter, [function, application], [binding, "from parameter"]}}
 
-Parameters to a function behave like regular bindings, but their
-initial values are given by the _caller_ of the function, not the code
-in the function itself.
+Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor inicial é informado por quem invocou a função e não pelo código da função em si.
 
 ## Bindings and scopes
 
 {{indexsee "top-level scope", "global scope"}}
 {{index "var keyword", "global scope", [binding, global], [binding, "scope of"]}}
 
-Each binding has a _((scope))_, which is the part of the program
-in which the binding is visible. For bindings defined outside of any
-function or block, the scope is the whole program—you can refer to
-such bindings wherever you want. These are called _global_.
+Cada ligação tem um escopo, no qual é parte de um programada em que a ligação é visível. Para ligações definidas fora de qualquer função ou bloco, o escopo é o programa inteiro, voçê pode referenciar estas ligações onde você quiser. Ele são chamados de  _global_.
 
 {{index "local scope", [binding, local]}}
 

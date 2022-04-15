@@ -175,13 +175,11 @@ if (safeMode) {
 
 No [Chapter ?](higher_order), nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
 
-## Declaration notation
+## Notação por declaração
 
 {{index [syntax, function], "function keyword", "square example", [function, definition], [function, declaration]}}
 
-There is a slightly shorter way to create a function binding. When the
-`function` keyword is used at the start of a statement, it works
-differently.
+Existe uma maneira um pouco mais curta de criar uma variável de função. Quando a palavra-chave `function` é usada no início de uma instrução, ela funciona de forma diferente.
 
 ```{test: wrap}
 function square(x) {
@@ -191,11 +189,9 @@ function square(x) {
 
 {{index future, "execution order"}}
 
-This is a function _declaration_. The statement defines the binding
-`square` and points it at the given function. It is slightly easier
-to write and doesn't require a semicolon after the function.
+Isto é uma declaração de função. Ela define a variável `squase` e aponta para a função dada. É um pouco mais fácil para escrever e não requer um ponto e vírgula após a função.
 
-There is one subtlety with this form of function definition.
+Há uma sutileza nessa forma de definir a função.
 
 ```
 console.log("The future says:", future());
@@ -205,13 +201,7 @@ function future() {
 }
 ```
 
-The preceding code works, even though the function is defined _below_ the code
-that uses it. Function declarations are not part of the regular
-top-to-bottom flow of control. They are conceptually moved to the top
-of their scope and can be used by all the code in that scope. This is
-sometimes useful because it offers the freedom to order code in a
-way that seems meaningful, without worrying about having to define all
-functions before they are used.
+O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
 
 ## Arrow functions
 

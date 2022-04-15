@@ -537,20 +537,15 @@ find(1, "1")
 
 A identação indica a profundidade da pilha de chamadas. A primeira vez que `find` é chamado, ele começa chamando a si mesmo para explorar a solução que começa com `(1 + 5)`. Essa chamada recorrerá ainda mais para explorar _toda_ solução que produz um número menor ou igual ao número alvo. Como não encontra um que atinja o número alvo, ele retorna `null` de volta à primeira chamada. Lá o operador `||` faz com que a chamada que explora `(1 * 3)` aconteça. Essa busca tem mais sorte - sua primeira chamada recursiva, por meio de mais uma outra chamada recursiva, atinge o número alvo. Essa chamada mais interna retorna uma string, e cada um dos operadores `||` nas chamadas intermediárias passa essa string adiante, retornando a solução.
 
-## Growing functions
+## Funções Crescentes
 
 {{index [function, definition]}}
 
-There are two more or less natural ways for functions to be introduced
-into programs.
+Existem duas maneiras mais ou menos naturais de introduzir funções em programas.
 
 {{index repetition}}
 
-The first is that you find yourself writing similar code multiple
-times. You'd prefer not to do that. Having more code means more space
-for mistakes to hide and more material to read for people trying to
-understand the program. So you take the repeated functionality, find a
-good name for it, and put it into a function.
+A primeira é que você se encontra escrevendo código semelhante várias vezes. Você preferiria não fazer isso. Ter mais código significa mais espaço para esconder erros e mais material para ler para as pessoas que tentam entender o programa. Então você pega a funcionalidade repetida, encontra um bom nome para ela e a coloca em uma função.
 
 The second way is that you find you need some functionality that you
 haven't written yet and that sounds like it deserves its own function.
@@ -558,26 +553,22 @@ You'll start by naming the function, and then you'll write its body.
 You might even start writing code that uses the function before you
 actually define the function itself.
 
+A segunda maneira é que você acha que precisa de alguma funcionalidade que você ainda não escreveu mas mesmo assim soa que isso merece uma função própria. Você vai dar um nome para função e depois escreverá seu corpo. Você pode começar a escrever o código que usa uma função antes de realmente definir uma função em si.
+
 {{index [function, naming], [binding, naming]}}
 
-How difficult it is to find a good name for a function is a good
-indication of how clear a concept it is that you're trying to wrap.
-Let's go through an example.
+O quão difícil é encontrar um bom nome para uma função é uma boa indicação de quão claro é o conceito que você está tentando encapsular. Vamos a um exemplo.
 
 {{index "farm example"}}
 
-We want to write a program that prints two numbers: the numbers of
-cows and chickens on a farm, with the words `Cows` and `Chickens`
-after them and zeros padded before both numbers so that they are
-always three digits long.
+Queremos escrever um programa que imprima dois números: os números de vacas e galinhas em uma fazenda, com as palavras 'Cows' e 'Chickens' depois deles e zeros preenchidos antes de ambos os números para que eles tenham sempre três dígitos.
 
 ```{lang: null}
 007 Cows
 011 Chickens
 ```
 
-This asks for a function of two arguments—the number of cows and the
-number of chickens. Let's get coding.
+Isso pede por uma função de dois argumentos – o número de vacas e o número de galinhas. Vamos começar a codificação.
 
 ```
 function printFarmInventory(cows, chickens) {
@@ -597,20 +588,13 @@ printFarmInventory(7, 11);
 
 {{index ["length property", "for string"], "while loop"}}
 
-Writing `.length` after a string expression will give us the length of
-that string. Thus, the `while` loops keep adding zeros in front of the
-number strings until they are at least three characters long.
+Escrever `.length` após uma expressão de string nos dará o comprimento dessa string. Assim, os loops `while` continuam adicionando zeros na frente das strings numéricas até que tenham pelo menos três caracteres.
 
-Mission accomplished! But just as we are about to send the farmer the
-code (along with a hefty invoice), she calls and tells us she's also
-started keeping pigs, and couldn't we please extend the software to
-also print pigs?
+Missão cumprida! Mas quando estamos prestes a enviar o código ao fazendeiro (junto com uma fatura pesada), ele nos liga e nos diz que também começou a criar porcos, e não poderíamos modificar o software para também imprimir porcos?
 
 {{index "copy-paste programming"}}
 
-We sure can. But just as we're in the process of copying and pasting
-those four lines one more time, we stop and reconsider. There has to
-be a better way. Here's a first attempt:
+Com certeza podemos. Mas assim que estamos copiando e colando essas quatro linhas mais uma vez, paramos e reconsideramos. Tem que haver uma maneira melhor. Aqui está uma primeira tentativa:
 
 ```
 function printZeroPaddedWithLabel(number, label) {
@@ -632,14 +616,11 @@ printFarmInventory(7, 11, 3);
 
 {{index [function, naming]}}
 
-It works! But that name, `printZeroPaddedWithLabel`, is a little
-awkward. It conflates three things—printing, zero-padding, and adding
-a label—into a single function.
+Funciona! Mas esse nome, `printZeroPaddedWithLabel`, é um pouco estranho. Ele combina três coisas – impressão, preenchimento de zero e adição de uma etiqueta – em uma única função.
 
 {{index "zeroPad function"}}
 
-Instead of lifting out the repeated part of our program wholesale,
-let's try to pick out a single _concept_.
+Em vez de eliminar a parte repetida de nosso programa inteiramente, vamos tentar escolher um único conceito.
 
 ```
 function zeroPad(number, width) {
@@ -661,26 +642,14 @@ printFarmInventory(7, 16, 3);
 
 {{index readability, "pure function"}}
 
-A function with a nice, obvious name like `zeroPad` makes it easier
-for someone who reads the code to figure out what it does. And such a
-function is useful in more situations than just this specific program.
-For example, you could use it to help print nicely aligned tables of
-numbers.
+
+Uma função com um nome bonito e óbvio como `zeroPad` torna mais fácil para alguém que lê o código descobrir o que ele faz. E tal função é útil em mais situações do que apenas neste programa específico. Por exemplo, você pode usá-lo para ajudar a imprimir tabelas de números bem alinhadas.
 
 {{index [interface, design]}}
 
-How smart and versatile _should_ our function be? We could write
-anything, from a terribly simple function that can only pad a number
-to be three characters wide to a complicated generalized
-number-formatting system that handles fractional numbers, negative
-numbers, alignment of decimal dots, padding with different characters,
-and so on.
+Quão inteligente e versátil deveria ser nossa função? Poderíamos escrever qualquer coisa, desde uma função terrivelmente simples que só pode preencher um número com três caracteres de largura a um complicado sistema generalizado de formatação de números que lida com números fracionários, números negativos, alinhamento de pontos decimais, preenchimento com caracteres diferentes e assim por diante.
 
-A useful principle is to not add cleverness unless you are absolutely
-sure you're going to need it. It can be tempting to write general
-"((framework))s" for every bit of functionality you come across.
-Resist that urge. You won't get any real work done—you'll just be
-writing code that you never use.
+Um princípio útil é não adicionar complexidade a menos que você tenha certeza absoluta de que vai precisar dela. Pode ser tentador escrever estruturas para cada funcionalidade que você encontrar. Resista a esse impulso. Você não terá nenhum trabalho real feito - você estará apenas escrevendo um código que você nunca usa.
 
 {{id pure}}
 ## Funções e Efeitos Colaterais

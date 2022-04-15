@@ -203,15 +203,11 @@ function future() {
 
 O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
 
-## Arrow functions
+## Funções de seta
 
 {{index function, "arrow function"}}
 
-There's a third notation for functions, which looks very different
-from the others. Instead of the `function` keyword, it uses an arrow
-(`=>`) made up of an equal sign and a greater-than character (not to be
-confused with the greater-than-or-equal operator, which is written
-`>=`).
+Há uma terceira forma de declaras funções, no qual parece bem diferente das outras. Ao invés de usar a chave `function`, isto usa uma flecha `=>` composto por um sinal de igual e um caractere maior que (não deve ser confundido com o operador maior que ou igual, que é escrito `>=`.
 
 ```{test: wrap}
 const power = (base, exponent) => {
@@ -225,17 +221,11 @@ const power = (base, exponent) => {
 
 {{index [function, body]}}
 
-The arrow comes _after_ the list of parameters and is followed by the
-function's body. It expresses something like "this input (the
-((parameter))s) produces this result (the body)".
+A seta vem após a lista de parâmetros e é seguida pelo corpo da função. Expressa algo como "essa entrada (os parâmetros) produz esse resultado (o corpo)".
 
 {{index [braces, "function body"], "square example", [parentheses, arguments]}}
 
-When there is only one parameter name, you can omit the parentheses around the
-parameter list. If the body is a single expression,
-rather than a ((block)) in braces, that expression will be returned
-from the function. So, these two definitions of `square` do the same
-thing:
+Quando há apenas um nome de parâmetro, você pode omitir os parênteses na lista de parâmetros. Se o corpo for uma única expressão, em vez de um bloco entre chaves, essa expressão será retornada da função. Então, essas duas definições de `square` fazem a mesma coisa:
 
 ```
 const square1 = (x) => { return x * x; };
@@ -244,8 +234,7 @@ const square2 = x => x * x;
 
 {{index [parentheses, arguments]}}
 
-When an arrow function has no parameters at all, its parameter list is
-just an empty set of parentheses.
+Quando uma função de seta não tem nenhum parâmetro, sua lista de parâmetros é apenas um conjunto vazio de parênteses.
 
 ```
 const horn = () => {
@@ -255,12 +244,7 @@ const horn = () => {
 
 {{index verbosity}}
 
-There's no deep reason to have both arrow functions and
-`function` expressions in the language. Apart from a minor detail,
-which we'll discuss in [Chapter ?](object), they do the same thing.
-Arrow functions were added in 2015, mostly to make it possible to
-write small function expressions in a less verbose way. We'll be using
-them a lot in [Chapter ?](higher_order).
+Não há nenhuma razão profunda para ter funções de seta e expressões utilizando a chave `function` na linguagem. Além de um pequeno detalhe, no qual vamos discutir no [Chapter ?](object), eles fazem a mesma coisa. Funções de seta foram adicionadas em 2015, principalmente para tornar possível escrever expressões de função de uma forma menos detalhada. Vamos usá-los muito em [Chapter ?](higher_order).
 
 {{id stack}}
 

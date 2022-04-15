@@ -152,22 +152,15 @@ O código dentro da função `ingredient` pode ver a variável `factor` de fora 
 
 O conjunto de variáveis visíveis dentro de um bloco é determinado pelo local onde o bloco está no texto do programa. Cada escopo local pode também ver todo os escopos locais que à contem, e todos os escopos podem ver o escopo global. Deste forma a visibilidade dessa variável é chamada de escopo léxico.
 
-## Functions as values
+## Funções como valores
 
 {{index [function, "as value"], [binding, definition]}}
 
-A function binding usually simply acts as a name for a specific piece
-of the program. Such a binding is defined once and never changed. This
-makes it easy to confuse the function and its name.
+As variáveis de função, normalmente, atuam apenas como nomes para um pedaço específico de um programa. Tais variáveis são definidas uma vez e nunca se alteram. Isso faz com que seja fácil confundir a função com seu próprio nome.
 
 {{index [binding, assignment]}}
 
-But the two are different. A function value can do all the things that
-other values can do—you can use it in arbitrary ((expression))s, not
-just call it. It is possible to store a function value in a new
-binding, pass it as an argument to a function, and so on. Similarly, a
-binding that holds a function is still just a regular binding and can,
-if not constant, be assigned a new value, like so:
+Entretanto, são duas coisas distintas. Um valor de função pode fazer todas as coisas que outros valores podem fazer - você pode usá-lo em expressões arbitrárias e não apenas invocá-la. É possível armazenar um valor de função em um novo local, passá-lo como argumento para outra função e assim por diante. Não muito diferente, uma variável que faz referência a uma função continua sendo apenas uma variável regular e pode ser atribuída a um novo valor, como mostra o exemplo abaixo:
 
 ```{test: no}
 let launchMissiles = function() {
@@ -180,8 +173,7 @@ if (safeMode) {
 
 {{index [function, "higher-order"]}}
 
-In [Chapter ?](higher_order), we will discuss the interesting things
-that can be done by passing around function values to other functions.
+No [Chapter ?](higher_order), nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
 
 ## Declaration notation
 

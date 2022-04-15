@@ -376,14 +376,12 @@ console.log("C", "O", 2);
 
 {{index "call stack", "local binding", [function, "as value"], scope}}
 
-The ability to treat functions as values, combined with the fact that
-local bindings are re-created every time a function is called, brings
-up an interesting question. What happens to local bindings when the
-function call that created them is no longer active?
+A habilidade de tratar funções como valores, combinada com o fato de que variáveis locais são recriadas toda vez que uma função é invocada; isso traz à tona uma questão interessante.
 
-The following code shows an example of this. It defines a function,
-`wrapValue`, that creates a local binding. It then returns a function
-that accesses and returns this local binding.
+O que acontece com as variáveis locais quando a função que as criou não está mais ativa?
+
+O código a seguir mostra um exemplo disso. Ele define uma função `wrapValue` que cria uma variável local e retorna uma função que acessa e retorna essa variável.
+
 
 ```
 function wrapValue(n) {
@@ -399,22 +397,15 @@ console.log(wrap2());
 // → 2
 ```
 
-This is allowed and works as you'd hope—both instances of the binding
-can still be accessed. This situation is a good demonstration of the
-fact that local bindings are created anew for every call, and
-different calls can't trample on one another's local bindings.
+Isso é permitido e funciona como você espera: a variável ainda pode ser acessada. Várias instâncias da variável podem coexistir, o que é uma boa demonstração do conceito de que variáveis locais são realmente recriadas para cada nova chamada, sendo que as chamadas não interferem nas variáveis locais umas das outras.
 
-This feature—being able to reference a specific instance of a local
-binding in an enclosing scope—is called _((closure))_. A function that
-references bindings from local scopes around it is called _a_ closure. This behavior
-not only frees you from having to worry about lifetimes of bindings
-but also makes it possible to use function values in some creative
-ways.
+A funcionalidade capaz de referenciar uma instância específica de uma variável local após a execução de uma função é chamada de _closure_. Uma função que _closes over_ (fecha sobre) variáveis locais é chamada de _closure_.
+
+Esse comportamento faz com que você não tenha que se preocupar com o tempo de vida das variáveis, como também permite usos criativos de valores de função.
 
 {{index "multiplier function"}}
 
-With a slight change, we can turn the previous example into a way to
-create functions that multiply by an arbitrary amount.
+Com uma pequena mudança, podemos transformar o exemplo anterior, possibilitando a criação de funções que se multiplicam por uma quantidade arbitrária.
 
 ```
 function multiplier(factor) {
@@ -428,21 +419,13 @@ console.log(twice(5));
 
 {{index [binding, "from parameter"]}}
 
-The explicit `local` binding from the `wrapValue` example isn't really
-needed since a parameter is itself a local binding.
+A variável explícita `local` do exemplo na função `wrapValue` não é necessária, pois o parâmetro em si já é uma variável local.
 
 {{index [function, "model of"]}}
 
-Thinking about programs like this takes some practice. A good mental
-model is to think of function values as containing both the code in
-their body and the environment in which they are created. When called,
-the function body sees the environment in which it was created, not the
-environment in which it is called.
+Pensar em programas que funcionam dessa forma requer um pouco de prática. Um bom modelo mental é pensar que a valores de uma função são provenientes de seu corpo e do local de onde ela foi criada. Quando executada, o corpo da função vê o local em que foi criada, e não de onde foi chamada.
 
-In the example, `multiplier` is called and creates an environment in
-which its `factor` parameter is bound to 2. The function value it
-returns, which is stored in `twice`, remembers this environment. So
-when that is called, it multiplies its argument by 2.
+No exemplo, `multiplier` é chamada e criada em um local em que o parâmetro `factor` está fixo como 2. O valor da função é retornado, no qual é salvo na variável `twice`, lembre-se desse ambiente que ela foi criada. Quando ela for chamada, o valor do argumento será multiplicado por 2.
 
 ## Recursion
 

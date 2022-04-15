@@ -382,7 +382,6 @@ O que acontece com as variáveis locais quando a função que as criou não est�
 
 O código a seguir mostra um exemplo disso. Ele define uma função `wrapValue` que cria uma variável local e retorna uma função que acessa e retorna essa variável.
 
-
 ```
 function wrapValue(n) {
   let local = n;
@@ -431,11 +430,7 @@ No exemplo, `multiplier` é chamada e criada em um local em que o parâmetro `fa
 
 {{index "power example", "stack overflow", recursion, [function, application]}}
 
-It is perfectly okay for a function to call itself, as long as it
-doesn't do it so often that it overflows the stack. A function that calls
-itself is called _recursive_. Recursion allows some functions to be
-written in a different style. Take, for example, this alternative
-implementation of `power`:
+É perfeitamente aceitável uma função invocar a si mesma, contanto que se tenha cuidado para não sobrecarregar a pilha de chamadas. Uma função que invoca a si mesma é denominada *recursiva*. A recursividade permite que as funções sejam escritas em um estilo diferente. Veja neste exemplo uma implementação alternativa de `power`:
 
 ```{test: wrap}
 function power(base, exponent) {
@@ -452,38 +447,21 @@ console.log(power(2, 3));
 
 {{index loop, readability, mathematics}}
 
-This is rather close to the way mathematicians define exponentiation
-and arguably describes the concept more clearly than the looping
-variant. The function calls itself multiple times with ever smaller
-exponents to achieve the repeated multiplication.
+Essa é a maneira mais próxima da forma como os matemáticos definem a exponenciação, descrevendo o conceito de uma forma mais elegante do que a variação que usa um laço de repetição. A função chama a si mesma várias vezes com diferentes argumentos para alcançar a multiplicação repetida.
 
 {{index [function, application], efficiency}}
 
-But this implementation has one problem: in typical JavaScript
-implementations, it's about three times slower than the looping version.
-Running through a simple loop is generally cheaper than calling a
-function multiple times.
+Entretanto, há um grave problema: em implementações típicas no JavaScript, a versão recursiva é aproximadamente dez vezes mais lenta do que a variação que utiliza um laço de repetição. Percorrer um laço de repetição simples é mais rápido do que invocar uma função múltiplas vezes.
 
 {{index optimization}}
 
-The dilemma of speed versus ((elegance)) is an interesting one. You
-can see it as a kind of continuum between human-friendliness and
-machine-friendliness. Almost any program can be made faster by making
-it bigger and more convoluted. The programmer has to decide on an
-appropriate balance.
+O dilema velocidade versus elegância é bastante interessante. Você pode interpretá-lo como uma forma de transição gradual entre acessibilidade para humanos e máquina. Praticamente todos os programas podem se tornar mais rápidos quando se tornam maiores e mais complexos, cabendo ao desenvolvedor decidir qual o balanço ideal entre ambos.
 
-In the case of the `power` function, the inelegant (looping) version
-is still fairly simple and easy to read. It doesn't make much sense to
-replace it with the recursive version. Often, though, a program deals
-with such complex concepts that giving up some efficiency in order to
-make the program more straightforward is helpful.
+No caso da implementação de `power`, a versão menos elegante (usando laço de repetição) é bem simples e fácil de ser lida, não fazendo sentido substituí-la pela versão recursiva. Porém, frequentemente lidamos com aplicações mais complexas e sacrificar um pouco a eficiência para tornar o código mais legível e simples acaba se tornando uma escolha atrativa.
 
 {{index profiling}}
 
-Worrying about efficiency can be a distraction. It's yet another
-factor that complicates program design, and when you're doing
-something that's already difficult, that extra thing to worry about
-can be paralyzing.
+Se preocupar com eficiência pode ser uma distração. Acaba sendo outro fator que complica o design de um pograma, quando você está fazendo algo que já é difícil, as preocupações extras podem ser paralisantes.
 
 {{index "premature optimization"}}
 

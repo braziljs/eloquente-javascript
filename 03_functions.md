@@ -720,46 +720,23 @@ Resist that urge. You won't get any real work done—you'll just be
 writing code that you never use.
 
 {{id pure}}
-## Functions and side effects
+## Funções e Efeitos Colaterais
 
 {{index "side effect", "pure function", [function, purity]}}
 
-Functions can be roughly divided into those that are called for their
-side effects and those that are called for their return value. (Though
-it is definitely also possible to both have side effects and return a
-value.)
+Funções podem ser divididas naquelas que são invocadas para produzir um efeito colateral e naquelas que são invocadas para gerar um valor de retorno (embora também seja possível termos funções que produzam efeitos colaterais e que retornem um valor).
 
 {{index reuse}}
 
-The first helper function in the ((farm example)),
-`printZeroPaddedWithLabel`, is called for its side effect: it prints a
-line. The second version, `zeroPad`, is called for its return value.
-It is no coincidence that the second is useful in more situations than
-the first. Functions that create values are easier to combine in new
-ways than functions that directly perform side effects.
+A primeira função auxiliar no exemplo da fazenda, `printZeroPaddedWithLabel`, é invocada para produzir um efeito colateral: imprimir uma linha. A segunda versão, `zeroPad`, é chamada para produzir um valor de retorno. Não é coincidência que a segunda versão é útil em mais situações do que a primeira. Funções que criam valores são mais fáceis de serem combinadas de diferentes maneiras do que funções que produzem efeitos colaterais diretamente.
 
 {{index substitution}}
 
-A _pure_ function is a specific kind of value-producing function that
-not only has no side effects but also doesn't rely on side effects
-from other code—for example, it doesn't read global bindings whose
-value might change. A pure function has the pleasant property that,
-when called with the same arguments, it always produces the same value
-(and doesn't do anything else). A call to such a function can be
-substituted by its return value without changing the meaning of the
-code. When you are not sure that a pure function is working correctly,
-you can test it by simply calling it and know that if it works in
-that context, it will work in any context. Nonpure functions tend to
-require more scaffolding to test.
+Uma função "pura" é um tipo específico de função que produz valores e que não gera efeitos colaterais, como também não depende de efeitos colaterais de outros códigos — por exemplo, ela não utiliza variáveis globais que podem ser alteradas por outros códigos. Uma função pura tem a característica de, ser sempre chamada com os mesmos argumentos, produzir o mesmo valor (e não fará nada além disso). Isso acaba fazendo com que seja fácil de entendermos como ela funciona. Uma chamada para tal função pode ser mentalmente substituída pelo seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função pura está funcionando corretamente, você pode testá-la simplesmente invocando-a. Sabendo que ela funciona nesse contexto, funcionará em qualquer outro contexto. Funções que não são "puras" podem retornar valores diferentes baseados em vários tipos de fatores e produzem efeitos colaterais que podem fazer com que seja difícil de testar e pensar sobre elas.
 
 {{index optimization, "console.log"}}
 
-Still, there's no need to feel bad when writing functions that are not
-pure or to wage a holy war to purge them from your code. Side effects
-are often useful. There'd be no way to write a pure version of
-`console.log`, for example, and `console.log` is good to have. Some
-operations are also easier to express in an efficient way when we use
-side effects, so computing speed can be a reason to avoid purity.
+Mesmo assim, não há necessidade de se sentir mal ao escrever funções que não são "puras" ou começar uma "guerra santa" para eliminar códigos impuros. Efeitos colaterais são úteis em algumas situações. Não existe uma versão "pura" de `console.log`, por exemplo, e `console.log` certamente é útil. Algumas operações são também mais fáceis de se expressar de forma mais eficiente quando usamos efeitos colaterais, portanto a velocidade de computação pode ser uma boa razão para se evitar a "pureza".
 
 ## Summary
 

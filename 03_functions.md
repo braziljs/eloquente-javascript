@@ -20,7 +20,7 @@ A aplicação mais óbvia das funções é quando queremos definir novos vocabul
 
 Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se _tem_ disponível tende a ser bem definido e, por isso, menos flexível do que a linguagem usada por humanos. Por isso, normalmente _temos_ que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
 
-## Definindo uma função
+## Definindo uma Função
 
 {{index "square example", [function, definition], [binding, definition]}}
 
@@ -72,7 +72,7 @@ Algumas funções produzem um valor, como as funções `power` e `square` acima,
 
 Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor inicial é informado por quem invocou a função e não pelo código da função em si.
 
-## Variáveis e escopos
+## Variáveis e Escopos
 
 {{indexsee "top-level scope", "global scope"}}
 {{index "var keyword", "global scope", [binding, global], [binding, "scope of"]}}
@@ -118,7 +118,7 @@ console.log(n);
 
 {{id scoping}}
 
-### Escopo aninhado
+### Escopo Aninhado
 
 {{index [nesting, "of functions"], [nesting, "of scope"], scope, "inner function", "lexical scoping"}}
 
@@ -152,7 +152,7 @@ O código dentro da função `ingredient` pode ver a variável `factor` de fora 
 
 O conjunto de variáveis visíveis dentro de um bloco é determinado pelo local onde o bloco está no texto do programa. Cada escopo local pode também ver todo os escopos locais que à contem, e todos os escopos podem ver o escopo global. Deste forma a visibilidade dessa variável é chamada de escopo léxico.
 
-## Funções como valores
+## Funções como Valores
 
 {{index [function, "as value"], [binding, definition]}}
 
@@ -175,7 +175,7 @@ if (safeMode) {
 
 No [Chapter ?](higher_order), nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
 
-## Notação por declaração
+## Notação por Declaração
 
 {{index [syntax, function], "function keyword", "square example", [function, definition], [function, declaration]}}
 
@@ -203,7 +203,7 @@ function future() {
 
 O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
 
-## Funções de seta
+## Funções de Seta
 
 {{index function, "arrow function"}}
 
@@ -300,7 +300,7 @@ console.log(chicken() + " came first.");
 // → ??
 ```
 
-## Optional Arguments
+## Argumentos Opcionais
 
 {{index argument, [function, application]}}
 

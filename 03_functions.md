@@ -675,17 +675,17 @@ Mesmo assim, não há necessidade de se sentir mal ao escrever funções que nã
 Esse capítulo te ensinou voçê como escrever suas próprias funções. A palavra chave `function`, quando usada como uma expressão, pode criar uma função de valor. Quando usada como declaração, pode ser usada para declarar uma variável e dar a função como valor. Funções de flecha (Arrow functions) são também outras formas de criar funções.
 
 ```
-// Define f to hold a function value
+// Defina f para manter o valor de uma funcão
 const f = function(a) {
   console.log(a + 2);
 };
 
-// Declare g to be a function
+// Declare g para ser uma funcão
 function g(a, b) {
   return a * b * 3.5;
 }
 
-// A less verbose function value
+// Uma funcão de valor menos verbosa
 let h = a => a % 3;
 ```
 
@@ -693,21 +693,18 @@ Um aspecto chave para entender funções, é entender os escopos. Cada bloco cri
 
 Separar as tarefas que sua aplicação executa em diferentes funções é útil. Você não terá que se repetir demais, funcões podem organizar uma aplicação agrupando elas em pedaços de código que fazem coisas mais específicas.
 
-## Exercises
+## Exercícios
 
-### Minimum
+### Mínimo
 
 {{index "Math object", "minimum (exercise)", "Math.min function", minimum}}
 
-The [previous chapter](program_structure#return_values) introduced the
-standard function `Math.min` that returns its smallest argument. We
-can build something like that now. Write a function `min` that takes
-two arguments and returns their minimum.
+O [capítulo anterior](program_structure#return_values) introduziu a função padrão `Math.min` que retorna seu menor argumento. Podemos construir algo assim agora. Escreva uma função `min` que receba dois argumentos e retorne seu mínimo.
 
 {{if interactive
 
 ```{test: no}
-// Your code here.
+// Seu código aqui.
 
 console.log(min(0, 10));
 // → 0
@@ -720,44 +717,36 @@ if}}
 
 {{index "minimum (exercise)"}}
 
-If you have trouble putting braces and
-parentheses in the right place to get a valid function definition,
-start by copying one of the examples in this chapter and modifying it.
+Se você tiver problemas para colocar chaves e parênteses no lugar certo para obter uma definição de função válida, comece copiando um dos exemplos deste capítulo e modificando-o.
 
 {{index "return keyword"}}
 
-A function may contain multiple `return` statements.
+Uma função pode conter várias instruções `return`.
 
 hint}}
 
-### Recursion
+### Recursão
 
 {{index recursion, "isEven (exercise)", "even number"}}
 
-We've seen that `%` (the remainder operator) can be used to test
-whether a number is even or odd by using `% 2` to see whether it's
-divisible by two. Here's another way to define whether a positive
-whole number is even or odd:
+Vimos que `%` (o operador de resto) pode ser usado para testar se um número é par ou ímpar usando `% 2` para ver se é divisível por dois. Aqui está outra maneira de definir se um número inteiro positivo é par ou ímpar:
 
-- Zero is even.
+- Zero é par.
 
-- One is odd.
+- Um é impar.
 
-- For any other number _N_, its evenness is the same as _N_ - 2.
+- Para qualquer outro número _N_, sua uniformidade é a mesma que _N_ - 2.
 
-Define a recursive function `isEven` corresponding to this
-description. The function should accept a single parameter (a
-positive, whole number) and return a Boolean.
+Defina uma função recursiva `isEven` correspondente a esta descrição. A função deve aceitar um único parâmetro (um número inteiro positivo) e retornar um booleano.
 
 {{index "stack overflow"}}
 
-Test it on 50 and 75. See how it behaves on -1. Why? Can you think of
-a way to fix this?
+Teste-o em 50 e 75. Veja como ele se comporta em -1. Por quê? Você pode pensar em uma maneira de corrigir isso?
 
 {{if interactive
 
 ```{test: no}
-// Your code here.
+// Seu código aqui.
 
 console.log(isEven(50));
 // → true
@@ -773,48 +762,28 @@ if}}
 
 {{index "isEven (exercise)", ["if keyword", chaining], recursion}}
 
-Your function will likely look somewhat similar to the inner `find`
-function in the recursive `findSolution`
-[example](functions#recursive_puzzle) in this chapter, with an
-`if`/`else if`/`else` chain that tests which of the three cases
-applies. The final `else`, corresponding to the third case, makes the
-recursive call. Each of the branches should contain a `return`
-statement or in some other way arrange for a specific value to be
-returned.
+Sua função provavelmente será um pouco semelhante à função interna `find` no [exemplo](functions#recursive_puzzle) `findSolution` recursivo neste capítulo, com uma cadeia `if`/`else if`/`else` que testa qual dos três casos se aplica. O `else` final, correspondente ao terceiro caso, faz a chamada recursiva. Cada uma das ramificações deve conter uma instrução `return` ou, de alguma outra forma, fazer com que um valor específico seja retornado.
 
 {{index "stack overflow"}}
 
-When given a negative number, the function will recurse again and
-again, passing itself an ever more negative number, thus getting
-further and further away from returning a result. It will eventually
-run out of stack space and abort.
+Quando dado um número negativo, a função irá recorrer repetidamente, passando a si mesma um número cada vez mais negativo, ficando cada vez mais longe de retornar um resultado. Eventualmente, ele ficará sem espaço na pilha e será abortado.
 
 hint}}
 
-### Bean counting
+### Contagem de feijões
 
 {{index "bean counting (exercise)", [string, indexing], "zero-based counting", ["length property", "for string"]}}
 
-You can get the Nth character, or letter, from a string by writing
-`"string"[N]`. The returned value will be a string containing only one
-character (for example, `"b"`). The first character has position 0,
-which causes the last one to be found at position `string.length - 1`.
-In other words, a two-character string has length 2, and its
-characters have positions 0 and 1.
+Você pode obter o enésimo caractere, ou letra, de uma string escrevendo `"string"[N]`. O valor retornado será uma string contendo apenas um caractere (por exemplo, `"b"`). O primeiro caractere tem a posição 0, o que faz com que o último seja encontrado na posição `string.length - 1`. Em outras palavras, uma string de dois caracteres tem comprimento 2 e seus caracteres têm posições 0 e 1.
 
-Write a function `countBs` that takes a string as its only argument
-and returns a number that indicates how many uppercase "B" characters
-there are in the string.
+Escreva uma função `countBs` que receba uma string como seu único argumento e retorne um número que indica quantos caracteres "B" maiúsculos existem na string.
 
-Next, write a function called `countChar` that behaves like `countBs`,
-except it takes a second argument that indicates the character that is
-to be counted (rather than counting only uppercase "B" characters).
-Rewrite `countBs` to make use of this new function.
+Em seguida, escreva uma função chamada `countChar` que se comporte como `countBs`, exceto que leva um segundo argumento que indica o caractere que deve ser contado (em vez de contar apenas caracteres "B" maiúsculos). Reescreva `countBs` para usar esta nova função.
 
 {{if interactive
 
 ```{test: no}
-// Your code here.
+// Seu código aqui.
 
 console.log(countBs("BBC"));
 // → 2
@@ -828,15 +797,10 @@ if}}
 
 {{index "bean counting (exercise)", ["length property", "for string"], "counter variable"}}
 
-Your function will need a ((loop)) that looks at every character in
-the string. It can run an index from zero to one below its length (`<
-string.length`). If the character at the current position is the same
-as the one the function is looking for, it adds 1 to a counter
-variable. Once the loop has finished, the counter can be returned.
+Sua função precisará de um loop que examine todos os caracteres da string. Ele pode executar um índice de zero a um abaixo de seu comprimento (`< string.length`). Se o caractere na posição atual for o mesmo que a função está procurando, ela adiciona 1 a uma variável de contador. Uma vez que o loop tenha terminado, o contador pode ser retornado.
 
 {{index "local binding"}}
 
-Take care to make all the bindings used in the function _local_ to the
-function by properly declaring them with the `let` or `const` keyword.
+Tome cuidado para fazer todas as variáveis usadas na função _local_ declarando-as corretamente com a palavra-chave `let` ou `const`.
 
 hint}}

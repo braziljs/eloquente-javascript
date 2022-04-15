@@ -1,4 +1,4 @@
-# Functions
+# Funções
 
 {{quote {author: "Donald Knuth", chapter: true}
 
@@ -72,32 +72,20 @@ Algumas funções produzem um valor, como as funções `power` e `square` acima,
 
 Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor inicial é informado por quem invocou a função e não pelo código da função em si.
 
-## Bindings and scopes
+## Variáveis e escopos
 
 {{indexsee "top-level scope", "global scope"}}
 {{index "var keyword", "global scope", [binding, global], [binding, "scope of"]}}
 
-Cada ligação tem um escopo, no qual é parte de um programada em que a ligação é visível. Para ligações definidas fora de qualquer função ou bloco, o escopo é o programa inteiro, voçê pode referenciar estas ligações onde você quiser. Ele são chamados de  _global_.
+Cada variável tem um escopo, no qual é parte de um programada em que a variável é visível. Para variáveis definidas fora de qualquer função ou bloco, o escopo é o programa inteiro, voçê pode referenciar estas variáveis onde quiser. Ele são chamadas de variáveis globais.
 
 {{index "local scope", [binding, local]}}
 
-But bindings created for function ((parameter))s or declared inside a
-function can be referenced only in that function, so they are known as
-_local_ bindings. Every time the function is called, new instances of these
-bindings are created. This provides some isolation between
-functions—each function call acts in its own little world (its local
-environment) and can often be understood without knowing a lot about
-what's going on in the global environment.
+Mas variáveis criadas para serem parâmetros de função ou declaradass dentro um função podem ser referenciadas apenas dentro das mesmas, estas variáveis são conhecidas como variáveis locais. Todo momento que a função é chamada, novas instancias dessas variáveis são criadas. Isto provê isolamento entre funções, cada chamada dessa função cria um pequeno mundo próprio (ambiente local) e pode frequentemente ser entendido sem saber muito sobre o que está acontencedo no ambiente global.
 
 {{index "let keyword", "const keyword", "var keyword"}}
 
-Bindings declared with `let` and `const` are in fact local to the
-_((block))_ that they are declared in, so if you create one of those
-inside of a loop, the code before and after the loop cannot "see" it.
-In pre-2015 JavaScript, only functions created new scopes, so
-old-style bindings, created with the `var` keyword, are visible
-throughout the whole function that they appear in—or throughout the
-global scope, if they are not in a function.
+Variáveis declaras com `let` e `const` são de fato locais para o escopo que elas foram declaradas, então se você criar uma destas dentro de um `loop`, o código antes e depois do `loop` não "enxergarão" ela. No JavaScript pré-2015, apenas funções criavam novos escopos, então variáveis antigas criadas com a chava `var`, são visíveis através de toda função que elas aparecerem ou até mesmo no escopo global, se elas não estiverem dentro de uma função.
 
 ```
 let x = 10;
@@ -107,19 +95,14 @@ if (true) {
   console.log(x + y + z);
   // → 60
 }
-// y is not visible here
+// y não é visível aqui
 console.log(x + z);
 // → 40
 ```
 
 {{index [binding, visibility]}}
 
-Each ((scope)) can "look out" into the scope around it, so `x` is
-visible inside the block in the example. The exception is when
-multiple bindings have the same name—in that case, code can see only
-the innermost one. For example, when the code inside the `halve`
-function refers to `n`, it is seeing its _own_ `n`, not the global
-`n`.
+Cada escopo pode "ficar de olho" no escopo ao redor dela, então `x` é visível dentro do bloco no exemplo. A exceção é quando multiplas variáveis tem o mesmo nome, neste caso, o código pode ver apenas a mais próxima. Por exemplo, quando o código dentro da função `halve` se refere a `n`, a função está vendo sua própria variável `n`, não a variável `n` global.
 
 ```
 const halve = function(n) {
@@ -135,13 +118,11 @@ console.log(n);
 
 {{id scoping}}
 
-### Nested scope
+### Escopo aninhado
 
 {{index [nesting, "of functions"], [nesting, "of scope"], scope, "inner function", "lexical scoping"}}
 
-JavaScript distinguishes not just _global_ and _local_
-bindings. Blocks and functions can be created inside other blocks and
-functions, producing multiple degrees of locality.
+O JavaScript não se distingue apenas pela diferenciação entre variáveis *locais* e *globais*. Funções também podem ser criadas dentro de outras funções, criando vários níveis de “localidades”.
 
 {{index "landscape example"}}
 

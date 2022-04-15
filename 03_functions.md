@@ -126,8 +126,7 @@ O JavaScript não se distingue apenas pela diferenciação entre variáveis *loc
 
 {{index "landscape example"}}
 
-For example, this function—which outputs the ingredients needed to
-make a batch of hummus—has another function inside it:
+Por exemplo, este função, no qual retorna os ingredientes necessários para preparar um prato de homus, tem outro função dentro dela:
 
 ```
 const hummus = function(factor) {
@@ -149,14 +148,9 @@ const hummus = function(factor) {
 
 {{index [function, scope], scope}}
 
-The code inside the `ingredient` function can see the `factor` binding
-from the outer function. But its local bindings, such as `unit` or
-`ingredientAmount`, are not visible in the outer function.
+O código dentro da função `ingredient` pode ver a variável `factor` de fora da função. Mas as variáveis locais, como `unit` or `ingredientAmount`, não são visíveis na função de fora.
 
-The set of bindings visible inside a block is determined by the place of
-that block in the program text. Each local scope can also see all the
-local scopes that contain it, and all scopes can see the global scope.
-This approach to binding visibility is called _((lexical scoping))_.
+O conjunto de variáveis visíveis dentro de um bloco é determinado pelo local onde o bloco está no texto do programa. Cada escopo local pode também ver todo os escopos locais que à contem, e todos os escopos podem ver o escopo global. Deste forma a visibilidade dessa variável é chamada de escopo léxico.
 
 ## Functions as values
 

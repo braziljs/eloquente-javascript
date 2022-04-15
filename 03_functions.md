@@ -207,7 +207,7 @@ O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o c�
 
 {{index function, "arrow function"}}
 
-Há uma terceira forma de declaras funções, no qual parece bem diferente das outras. Ao invés de usar a chave `function`, isto usa uma flecha `=>` composto por um sinal de igual e um caractere maior que (não deve ser confundido com o operador maior que ou igual, que é escrito `>=`.
+Há uma terceira forma de declaras funções chamada `Arrow function` (Função de seta), no qual parece bem diferente das outras. Ao invés de usar a chave `function`, isto usa uma flecha `=>` composto por um sinal de igual e um caractere maior que (não deve ser confundido com o operador maior que ou igual, que é escrito `>=`.
 
 ```{test: wrap}
 const power = (base, exponent) => {
@@ -248,14 +248,12 @@ Não há nenhuma razão profunda para ter funções de seta e expressões utiliz
 
 {{id stack}}
 
-## The call stack
+## A Pilha de Chamadas
 
 {{indexsee stack, "call stack"}}
 {{index "call stack", [function, application]}}
 
-The way control flows through functions is somewhat involved. Let's
-take a closer look at it. Here is a simple program that makes a few
-function calls:
+Será muito útil observarmos como o fluxo de controle flui por meio das execuções das funções. Aqui, temos um simples programa fazendo algumas chamadas de funções:
 
 ```
 function greet(who) {
@@ -267,15 +265,9 @@ console.log("Bye");
 
 {{index ["control flow", functions], "execution order", "console.log"}}
 
-A run through this program goes roughly like this: the call to `greet`
-causes control to jump to the start of that function (line 2). The
-function calls `console.log`, which takes control, does its job, and
-then returns control to line 2. There it reaches the end of the
-`greet` function, so it returns to the place that called it, which is
-line 4. The line after that calls `console.log` again. After that
-returns, the program reaches its end.
+A execução desse programa funciona da seguinte forma: a chamada à função `greet` faz com que o controle pule para o início dessa função (linha 2). Em seguida, é invocado `console.log`, que assume o controle, faz seu trabalho e então retorna o controle para a linha 2 novamente. O controle chega ao fim da função `greet` e retorna para o local onde a função foi invocada originalmente (linha 4). Por fim, o controle executa uma nova chamada a `console.log`.
 
-We could show the flow of control schematically like this:
+Podemos representar o fluxo de controle, esquematicamente, assim:
 
 ```{lang: null}
 not in function
@@ -289,26 +281,13 @@ not in function
 
 {{index "return keyword", [memory, call stack]}}
 
-Because a function has to jump back to the place that called it when
-it returns, the computer must remember the context from which the call
-happened. In one case, `console.log` has to return to the `greet`
-function when it is done. In the other case, it returns to the end of
-the program.
+Devido ao fato de que a função deve retornar ao local onde foi chamada após finalizar a sua execução, o computador precisa se lembrar do contexto no qual a função foi invocada originalmente. Em um dos casos, `console.log` retorna o controle para a função `greet`. No outro caso, ela retorna para o final do programa.
 
-The place where the computer stores this context is the _((call
-stack))_. Every time a function is called, the current context is
-stored on top of this stack. When a function returns, it removes the
-top context from the stack and uses that context to continue execution.
+O local onde o computador armazena esse contexto é chamado de _call stack_ (pilha de chamadas). Toda vez que uma função é invocada, o contexto atual é colocado no topo dessa "pilha" de contextos. Quando a função finaliza sua execução, o contexto no topo da pilha é removido e utilizado para continuar o fluxo de execução.
 
 {{index "infinite loop", "stack overflow", recursion}}
 
-Storing this stack requires space in the computer's memory. When the
-stack grows too big, the computer will fail with a message like "out
-of stack space" or "too much recursion". The following code
-illustrates this by asking the computer a really hard question that
-causes an infinite back-and-forth between two functions. Rather, it
-_would_ be infinite, if the computer had an infinite stack. As it is,
-we will run out of space, or "blow the stack".
+O armazenamento dessa pilha de contextos necessita de espaço na memória do computador. Quando a pilha começar a ficar muito grande, o computador reclamará com uma mensagem do tipo _out of stack space_ (sem espaço na pilha) ou _too much recursion_ (muitas recursões). O código a seguir demonstra esse problema fazendo uma pergunta muito difícil para o computador, que resultará em um ciclo infinito de chamadas entre duas funções. Se o computador tivesse uma pilha de tamanho infinito, isso poderia ser possível, no entanto, eventualmente chegaremos ao limite de espaço e explodiremos a "pilha".
 
 ```{test: no}
 function chicken() {

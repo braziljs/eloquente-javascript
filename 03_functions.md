@@ -426,7 +426,7 @@ Pensar em programas que funcionam dessa forma requer um pouco de prática. Um bo
 
 No exemplo, `multiplier` é chamada e criada em um local em que o parâmetro `factor` está fixo como 2. O valor da função é retornado, no qual é salvo na variável `twice`, lembre-se desse ambiente que ela foi criada. Quando ela for chamada, o valor do argumento será multiplicado por 2.
 
-## Recursion
+## Recursão
 
 {{index "power example", "stack overflow", recursion, [function, application]}}
 
@@ -738,13 +738,9 @@ Uma função "pura" é um tipo específico de função que produz valores e que 
 
 Mesmo assim, não há necessidade de se sentir mal ao escrever funções que não são "puras" ou começar uma "guerra santa" para eliminar códigos impuros. Efeitos colaterais são úteis em algumas situações. Não existe uma versão "pura" de `console.log`, por exemplo, e `console.log` certamente é útil. Algumas operações são também mais fáceis de se expressar de forma mais eficiente quando usamos efeitos colaterais, portanto a velocidade de computação pode ser uma boa razão para se evitar a "pureza".
 
-## Summary
+## Resumo
 
-This chapter taught you how to write your own functions. The
-`function` keyword, when used as an expression, can create a function
-value. When used as a statement, it can be used to declare a binding
-and give it a function as its value. Arrow functions are yet another
-way to create functions.
+Esse capítulo te ensinou voçê como escrever suas próprias funções. A palavra chave `function`, quando usada como uma expressão, pode criar uma função de valor. Quando usada como declaração, pode ser usada para declarar uma variável e dar a função como valor. Funções de flecha (Arrow functions) são também outras formas de criar funções.
 
 ```
 // Define f to hold a function value
@@ -761,16 +757,9 @@ function g(a, b) {
 let h = a => a % 3;
 ```
 
-A key aspect in understanding functions is understanding scopes. Each
-block creates a new scope. Parameters and bindings declared in a given
-scope are local and not visible from the outside. Bindings declared
-with `var` behave differently—they end up in the nearest function
-scope or the global scope.
+Um aspecto chave para entender funções, é entender os escopos. Cada bloco cria um novo escopo. Parâmetros e variáveis declarados em um determinado escopo são locais e não são visíveis de fora. Variáveis craidas com `var` se comportam diferente - elas vão parar no escopo de função mais próxima ou no escopo global.
 
-Separating the tasks your program performs into different functions is
-helpful. You won't have to repeat yourself as much, and functions can
-help organize a program by grouping code into pieces that do specific
-things.
+Separar as tarefas que sua aplicação executa em diferentes funções é útil. Você não terá que se repetir demais, funcões podem organizar uma aplicação agrupando elas em pedaços de código que fazem coisas mais específicas.
 
 ## Exercises
 

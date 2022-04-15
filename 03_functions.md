@@ -173,7 +173,7 @@ if (safeMode) {
 
 {{index [function, "higher-order"]}}
 
-No [Chapter ?](higher_order), nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
+No [Capítulo ?](higher_order), nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
 
 ## Notação por Declaração
 
@@ -244,7 +244,7 @@ const horn = () => {
 
 {{index verbosity}}
 
-Não há nenhuma razão profunda para ter funções de seta e expressões utilizando a chave `function` na linguagem. Além de um pequeno detalhe, no qual vamos discutir no [Chapter ?](object), eles fazem a mesma coisa. Funções de seta foram adicionadas em 2015, principalmente para tornar possível escrever expressões de função de uma forma menos detalhada. Vamos usá-los muito em [Chapter ?](higher_order).
+Não há nenhuma razão profunda para ter funções de seta e expressões utilizando a chave `function` na linguagem. Além de um pequeno detalhe, no qual vamos discutir no [Capítulo ?](object), eles fazem a mesma coisa. Funções de seta foram adicionadas em 2015, principalmente para tornar possível escrever expressões de função de uma forma menos detalhada. Vamos usá-los muito em [Capítulo ?](higher_order).
 
 {{id stack}}
 
@@ -304,7 +304,7 @@ console.log(chicken() + " came first.");
 
 {{index argument, [function, application]}}
 
-The following code is allowed and executes without any problem:
+O código abaixo é permitido e executa sem problemas:
 
 ```
 function square(x) { return x * x; }
@@ -312,25 +312,20 @@ console.log(square(4, true, "hedgehog"));
 // → 16
 ```
 
-We defined `square` with only one ((parameter)). Yet when we call it
-with three, the language doesn't complain. It ignores the extra
-arguments and computes the square of the first one.
+Nós definimos `squase` com apenas um argumento. No entando, quando ela é chamada com três, a linguagem não reclama. É ignorado os argumentos adicionais e executa a função `square` apenas com o primeiro.
 
 {{index undefined}}
 
-JavaScript is extremely broad-minded about the number of arguments you
-pass to a function. If you pass too many, the extra ones are ignored.
-If you pass too few, the missing parameters get assigned the value
-`undefined`.
+O JavaScript é extremamente tolerante com a quantidade de argumentos que você passa para uma função. Se você passar mais argumentos que o necessário, os extras serão ignorados. Se você passar menos argumentos, os parâmetros faltantes simplesmente receberão o valor `undefined`.
 
-The downside of this is that it is possible—likely, even—that you'll
-accidentally pass the wrong number of arguments to functions. And no
-one will tell you about it.
+A desvantagem disso é que, possivelmente - e provavelmente - você passará um número errado de argumentos, de forma acidental, para as funções e nada irá alertá-lo sobre isso.
 
 The upside is that this behavior can be used to allow a function to be
 called with different numbers of arguments. For example, this `minus`
 function tries to imitate the `-` operator by acting on either one or
 two arguments:
+
+A vantagem é que esse comportamento pode ser usado em funções que aceitam argumentos opcionais. Por exemplo, esta função `minus` tenta imitar o operador `-` executando com 1 ou menos argumentos.
 
 ```
 function minus(a, b) {
@@ -347,15 +342,11 @@ console.log(minus(10, 5));
 {{id power}}
 {{index "optional argument", "default value", parameter, ["= operator", "for default value"]}}
 
-If you write an `=` operator after
-a parameter, followed by an expression, the value of that expression
-will replace the argument when it is not given.
+Se você escreve um operador `=` depois de um parâmetro, seguindo de uma expressão, o valor da expressão vai substituir o argumento quando não é definido.
 
 {{index "power example"}}
 
-For example, this version of `power` makes its second argument
-optional. If you don't provide it or pass the value `undefined`, it will default to two, and the
-function will behave like `square`.
+Por exemplo, essa versão de `power` faz isso com o segundo argumento opcional. Se você não enviar nada ou o valor for `undefined`, isso será por padrão dois, e a função vai se comportar como `square`.
 
 ```{test: wrap}
 function power(base, exponent = 2) {
@@ -374,11 +365,7 @@ console.log(power(2, 6));
 
 {{index "console.log"}}
 
-In the [next chapter](data#rest_parameters), we will see a way in
-which a function body can get at the whole list of arguments it was
-passed. This is helpful because it makes it possible for a function to
-accept any number of arguments. For example, `console.log` does
-this—it outputs all of the values it is given.
+No [próximo capítulo](data#rest_parameters), veremos uma maneira de acessar a lista que contém todos os argumentos que foram passados para uma função. Isso é útil, pois torna possível uma função aceitar qualquer número de argumentos. Por exemplo, `console.log` tira proveito disso, imprimindo todos os valores que foram passados.
 
 ```
 console.log("C", "O", 2);

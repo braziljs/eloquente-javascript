@@ -465,34 +465,20 @@ Se preocupar com eficiência pode ser uma distração. Acaba sendo outro fator q
 
 {{index "premature optimization"}}
 
-Therefore, always start by writing something that's correct and easy
-to understand. If you're worried that it's too slow—which it usually
-isn't since most code simply isn't executed often enough to take any
-significant amount of time—you can measure afterward and improve it
-if necessary.
+Portando, sempre comece escrevendo algo que é correto e fácil de entender. Se você está preocupado que isso é muito lento - o que geralmente não é, já que a maioria dos códigos simplesmente não é executada com frequência suficiente para levar um tempo significativo - você pode medir depois e melhorá-lo, se necessário.
 
 {{index "branching recursion"}}
 
-Recursion is not always just an inefficient alternative to looping.
-Some problems really are easier to solve with recursion than with
-loops. Most often these are problems that require exploring or
-processing several "branches", each of which might branch out again
-into even more branches.
+A recursão nem sempre é apenas uma alternativa ineficiente ao loop. Alguns problemas são realmente mais fáceis de resolver com recursão do que com loops. Na maioria das vezes, esses são problemas que exigem a exploração ou processamento de várias "ramificações", cada uma das quais pode se ramificar novamente em ainda mais ramificações.
 
 {{id recursive_puzzle}}
 {{index recursion, "number puzzle example"}}
 
-Consider this puzzle: by starting from the number 1 and repeatedly
-either adding 5 or multiplying by 3, an infinite set of numbers
-can be produced. How would you write a function that, given a number,
-tries to find a sequence of such additions and multiplications that
-produces that number?
+Considere este quebra-cabeça: começando do número 1 e adicionando repetidamente 5 ou multiplicando por 3, um conjunto infinito de números pode ser produzido. Como você escreveria uma função que, dado um número, tenta encontrar uma sequência de tais adições e multiplicações que produza esse número?
 
-For example, the number 13 could be reached by first multiplying by 3
-and then adding 5 twice, whereas the number 15 cannot be reached at
-all.
+Por exemplo, o número 13 pode ser alcançado multiplicando-se primeiro por 3 e depois adicionando 5 duas vezes, enquanto o número 15 não pode ser alcançado.
 
-Here is a recursive solution:
+Uma solução utilizando recursão seria:
 
 ```
 function findSolution(target) {
@@ -513,12 +499,9 @@ console.log(findSolution(24));
 // → (((1 * 3) + 5) * 3)
 ```
 
-Note that this program doesn't necessarily find the _shortest_
-sequence of operations. It is satisfied when it finds any sequence at
-all.
+Observe que este programa não necessariamente encontra a sequência de operações mais curta. Já é satisfatório quando encontra qualquer sequência.
 
-It is okay if you don't see how it works right away. Let's work
-through it, since it makes for a great exercise in recursive thinking.
+Tudo bem se você não ver como funciona imediatamente. Vamos trabalhar com isso, já que é um ótimo exercício de pensamento recursivo.
 
 The inner function `find` does the actual recursing. It takes two
 ((argument))s: the current number and a string that records how we
@@ -526,25 +509,15 @@ reached this number. If it finds a solution, it returns a string that
 shows how to get to the target. If no solution can be found starting
 from this number, it returns `null`.
 
+A função interna `find` faz a recursividade real. São necessários dois argumentos: o número atual e uma string que registra como chegamos a esse número. Se encontrar uma solução, ele retorna uma string que mostra como chegar ao destino. Se nenhuma solução puder ser encontrada a partir deste número, ele retornará `null`.
+
 {{index null, "|| operator", "short-circuit evaluation"}}
 
-To do this, the function performs one of three actions. If the current
-number is the target number, the current history is a way to reach
-that target, so it is returned. If the current number is greater than
-the target, there's no sense in further exploring this branch because
-both adding and multiplying will only make the number bigger, so it
-returns `null`. Finally, if we're still below the target number,
-the function tries both possible paths that start from the current
-number by calling itself twice, once for addition and once for
-multiplication. If the first call returns something that is not
-`null`, it is returned. Otherwise, the second call is returned,
-regardless of whether it produces a string or `null`.
+Para fazer isso, a função executa uma das três ações. Se o número atual for o número alvo, o histórico atual é uma maneira de atingir esse número, portanto, ele é retornado. Se o número atual for maior que o alvo, não há sentido em explorar mais essa ramificação porque tanto a adição quanto a multiplicação só tornarão o número maior, então ele retornará `null`. Finalmente, se ainda estivermos abaixo do número alvo, a função tenta os dois caminhos possíveis que começam no número atual chamando a si mesma duas vezes, uma para adição e outra para multiplicação. Se a primeira chamada retornar algo que não seja `null`, ele será retornado. Caso contrário, a segunda chamada é retornada, independentemente de produzir uma string ou `null`.
 
 {{index "call stack"}}
 
-To better understand how this function produces the effect we're
-looking for, let's look at all the calls to `find` that are made when
-searching for a solution for the number 13.
+Para entender melhor como esta função produz o efeito que estamos procurando, vamos ver todas as chamadas para `find` que são feitas ao buscar uma solução para o número 13.
 
 ```{lang: null}
 find(1, "1")
@@ -562,17 +535,7 @@ find(1, "1")
         found!
 ```
 
-The indentation indicates the depth of the call stack. The first time
-`find` is called, it starts by calling itself to explore the solution
-that starts with `(1 + 5)`. That call will further recurse to explore
-_every_ continued solution that yields a number less than or equal to
-the target number. Since it doesn't find one that hits the target, it
-returns `null` back to the first call. There the `||` operator causes
-the call that explores `(1 * 3)` to happen. This search has more
-luck—its first recursive call, through yet _another_ recursive call,
-hits upon the target number. That innermost call returns a string, and
-each of the `||` operators in the intermediate calls passes that string
-along, ultimately returning the solution.
+A identação indica a profundidade da pilha de chamadas. A primeira vez que `find` é chamado, ele começa chamando a si mesmo para explorar a solução que começa com `(1 + 5)`. Essa chamada recorrerá ainda mais para explorar _toda_ solução que produz um número menor ou igual ao número alvo. Como não encontra um que atinja o número alvo, ele retorna `null` de volta à primeira chamada. Lá o operador `||` faz com que a chamada que explora `(1 * 3)` aconteça. Essa busca tem mais sorte - sua primeira chamada recursiva, por meio de mais uma outra chamada recursiva, atinge o número alvo. Essa chamada mais interna retorna uma string, e cada um dos operadores `||` nas chamadas intermediárias passa essa string adiante, retornando a solução.
 
 ## Growing functions
 

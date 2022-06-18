@@ -1,12 +1,16 @@
 # O Modelo de Objeto de Documentos (DOM)
 
+> "Que pena! Mesma história de sempre! Depois de terminar de construir sua casa, você percebe que acidentalmente aprendeu algo que realmente deveria saber – antes de começar."
+>
+> — Friedrich Nietzsche, Beyond Good and Evil (Além do bem e do mal)
+
 Quando você abre uma página web em seu navegador, ele resgata o texto em HTML da página e o interpreta, de maneira semelhante ao que nosso interpretador do [Capítulo 11](11-pratica-linguagem-de-programacao.md) fazia. O navegador constrói um modelo da estrutura do documento e depois usa esse modelo para desenhar a página na tela.
 
 Um dos "brinquedos" que um programa em JavaScript possui disponível em sua caixa de ferramentas é essa representação do documento. Você pode lê-la e também alterá-la. Essa representação age como uma estrutura viva de dados: quando modificada, a página na tela é atualizada para refletir as mudanças.
 
 ## Estrutura do Documento
 
-Você pode imaginar um documento HTML como um conjunto de caixas aninhadas. Tags como <body> e </body> encapsulam outras tags, as quais, por sua vez, contêm outras tags ou texto. Aqui está o documento de exemplo do último capítulo:
+Você pode imaginar um documento HTML como um conjunto de caixas aninhadas. Tags como ```<body> e </body>``` encapsulam outras tags, as quais, por sua vez, contêm outras tags ou texto. Aqui está o documento de exemplo do último capítulo:
 
 ```html
 <html>

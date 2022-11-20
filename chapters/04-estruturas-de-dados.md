@@ -242,7 +242,7 @@ Para variáveis binárias (booleanos), o coeficiente _phi_ (_ϕ_) fornece uma bo
 
 _ϕ_ pode ser calculado usando a seguinte fórmula, onde _n_ se refere à tabela:
 
-![](https://github.com/HeltonMulinaria/eloquente-javascript/blob/master/img/cap4_frac_sqrt.png)
+![](../img/cap4_frac_sqrt.png)
 
 A notação _n01_ indica o número de ocorrências nas quais a primeira variável (transformar-se em esquilo) é falsa (0) e a segunda variável (pizza) é verdadeira (1). Nesse exemplo, _n01_ é igual a 9.
 

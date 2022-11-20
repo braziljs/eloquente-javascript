@@ -12,7 +12,7 @@ quote}}
 
 {{index function, [code, "structure of"]}}
 
-Funções são o pão e manteira da programação JavaScript. O conceito deencapsular um pedaço de um programa em um valor tem muitos usos. Issonôs dá um caminho para estruturas grandes programas, reduzir repetições, associar nomes com subprogramas, e isolar estes subprogramas uns dos outro.
+Funções são o pão e manteiga da programação JavaScript. O conceito de encapsular um pedaço de um programa em um valor tem muitos usos. Isso nos dá um caminho para estruturar grandes programas, reduzir repetições, associar nomes com subprogramas, e isolar estes subprogramas uns dos outros.
 
 A aplicação mais óbvia das funções é quando queremos definir novos vocabulários. Criar novas palavras no nosso dia a dia geralmente não é uma boa ideia, porém em programação é indispensável.
 
@@ -66,7 +66,7 @@ console.log(power(2, 10));
 
 {{index "return value", "return keyword", undefined}}
 
-Algumas funções produzem um valor, como as funções `power` e `square` acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após, irá fazer com que o retorno da função seja `undefined`. Funções que não possuem `return` declarado, retornam `undefined` da mesma forma. 
+Algumas funções produzem um valor, como as funções `power` e `square` acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após, irá fazer com que o retorno da função seja `undefined`. Funções que não possuem `return` declarado, retornam `undefined` da mesma forma.
 
 {{index parameter, [function, application], [binding, "from parameter"]}}
 
@@ -77,15 +77,15 @@ Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor
 {{indexsee "top-level scope", "global scope"}}
 {{index "var keyword", "global scope", [binding, global], [binding, "scope of"]}}
 
-Cada variável tem um escopo, no qual é parte de um programada em que a variável é visível. Para variáveis definidas fora de qualquer função ou bloco, o escopo é o programa inteiro, voçê pode referenciar estas variáveis onde quiser. Ele são chamadas de variáveis globais.
+Cada variável tem um escopo, no qual é parte de um programa em que a variável é visível. Para variáveis definidas fora de qualquer função ou bloco, o escopo é o programa inteiro, você pode referenciar estas variáveis onde quiser. Elas são chamadas de variáveis globais.
 
 {{index "local scope", [binding, local]}}
 
-Mas variáveis criadas para serem parâmetros de função ou declaradass dentro um função podem ser referenciadas apenas dentro das mesmas, estas variáveis são conhecidas como variáveis locais. Todo momento que a função é chamada, novas instancias dessas variáveis são criadas. Isto provê isolamento entre funções, cada chamada dessa função cria um pequeno mundo próprio (ambiente local) e pode frequentemente ser entendido sem saber muito sobre o que está acontencedo no ambiente global.
+Mas variáveis criadas para serem parâmetros de função ou declaradass dentro uma função podem ser referenciadas apenas dentro das mesmas, estas variáveis são conhecidas como variáveis locais. Todo momento que a função é chamada, novas instâncias dessas variáveis são criadas. Isto provê isolamento entre funções, cada chamada dessa função cria um pequeno mundo próprio (ambiente local) e pode frequentemente ser entendido sem saber muito sobre o que está acontencedo no ambiente global.
 
 {{index "let keyword", "const keyword", "var keyword"}}
 
-Variáveis declaras com `let` e `const` são de fato locais para o escopo que elas foram declaradas, então se você criar uma destas dentro de um `loop`, o código antes e depois do `loop` não "enxergarão" ela. No JavaScript pré-2015, apenas funções criavam novos escopos, então variáveis antigas criadas com a chava `var`, são visíveis através de toda função que elas aparecerem ou até mesmo no escopo global, se elas não estiverem dentro de uma função.
+Variáveis declaradas com `let` e `const` são de fato locais para o escopo que elas foram declaradas, então se você criar uma destas dentro de um `loop`, o código antes e depois do `loop` não "enxergarão" ela. No JavaScript pré-2015, apenas funções criavam novos escopos, então variáveis antigas criadas com a palavra-chave `var`, são visíveis através de toda função que elas aparecerem ou até mesmo no escopo global, se elas não estiverem dentro de uma função.
 
 ```
 let x = 10;
@@ -95,14 +95,14 @@ if (true) {
   console.log(x + y + z);
   // → 60
 }
-// y não é visível aqui
+// y is not visible here
 console.log(x + z);
 // → 40
 ```
 
 {{index [binding, visibility]}}
 
-Cada escopo pode "ficar de olho" no escopo ao redor dela, então `x` é visível dentro do bloco no exemplo. A exceção é quando multiplas variáveis tem o mesmo nome, neste caso, o código pode ver apenas a mais próxima. Por exemplo, quando o código dentro da função `halve` se refere a `n`, a função está vendo sua própria variável `n`, não a variável `n` global.
+Cada escopo pode "ficar de olho" no escopo ao redor dele, então `x` é visível dentro do bloco no exemplo. A exceção é quando múltiplas variáveis têm o mesmo nome, neste caso, o código pode ver apenas a mais próxima. Por exemplo, quando o código dentro da função `halve` se refere a `n`, a função está vendo sua própria variável `n`, não a variável `n` global.
 
 ```
 const halve = function(n) {
@@ -122,11 +122,11 @@ console.log(n);
 
 {{index [nesting, "of functions"], [nesting, "of scope"], scope, "inner function", "lexical scoping"}}
 
-O JavaScript não se distingue apenas pela diferenciação entre variáveis *locais* e *globais*. Funções também podem ser criadas dentro de outras funções, criando vários níveis de “localidades”.
+O JavaScript não se distingue apenas pela diferenciação entre variáveis _locais_ e _globais_. Funções também podem ser criadas dentro de outras funções, criando vários níveis de “localidades”.
 
 {{index "landscape example"}}
 
-Por exemplo, este função, no qual retorna os ingredientes necessários para preparar um prato de homus, tem outro função dentro dela:
+Por exemplo, essa função, no qual retorna os ingredientes necessários para preparar um prato de homus, tem outra função dentro dela:
 
 ```
 const hummus = function(factor) {
@@ -150,7 +150,7 @@ const hummus = function(factor) {
 
 O código dentro da função `ingredient` pode ver a variável `factor` de fora da função. Mas as variáveis locais, como `unit` or `ingredientAmount`, não são visíveis na função de fora.
 
-O conjunto de variáveis visíveis dentro de um bloco é determinado pelo local onde o bloco está no texto do programa. Cada escopo local pode também ver todo os escopos locais que à contem, e todos os escopos podem ver o escopo global. Deste forma a visibilidade dessa variável é chamada de escopo léxico.
+O conjunto de variáveis visíveis dentro de um bloco é determinado pelo local onde o bloco está no texto do programa. Cada escopo local pode também ver todo os escopos locais que à contem, e todos os escopos podem ver o escopo global. Desta forma a visibilidade dessa variável é chamada de escopo léxico.
 
 ## Funções como Valores
 
@@ -189,7 +189,7 @@ function square(x) {
 
 {{index future, "execution order"}}
 
-Isto é uma declaração de função. Ela define a variável `squase` e aponta para a função dada. É um pouco mais fácil para escrever e não requer um ponto e vírgula após a função.
+Isto é uma declaração de função. Ela define a variável `square` e aponta para a função dada. É um pouco mais fácil para escrever e não requer um ponto e vírgula após a função.
 
 Há uma sutileza nessa forma de definir a função.
 
@@ -201,13 +201,13 @@ function future() {
 }
 ```
 
-O exemplo acima funciona, mesmo sabendo que a função foi definida *após* o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
+O exemplo acima funciona, mesmo sabendo que a função foi definida _após_ o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
 
 ## Funções de Seta
 
 {{index function, "arrow function"}}
 
-Há uma terceira forma de declaras funções chamada `Arrow function` (Função de seta), no qual parece bem diferente das outras. Ao invés de usar a chave `function`, isto usa uma flecha `=>` composto por um sinal de igual e um caractere maior que (não deve ser confundido com o operador maior que ou igual, que é escrito `>=`.
+Há uma terceira forma de declarar funções, chamada _Arrow function_ (Função de seta), que parece bem diferente das outras. Ao invés de usar a palavra-chave `function`, isto usa uma flecha `=>` composta por um sinal de igual e um caractere maior que (não deve ser confundido com o operador maior que ou igual, que é escrito `>=`.
 
 ```{test: wrap}
 const power = (base, exponent) => {
@@ -244,7 +244,7 @@ const horn = () => {
 
 {{index verbosity}}
 
-Não há nenhuma razão profunda para ter funções de seta e expressões utilizando a chave `function` na linguagem. Além de um pequeno detalhe, no qual vamos discutir no [Capítulo ?](object), eles fazem a mesma coisa. Funções de seta foram adicionadas em 2015, principalmente para tornar possível escrever expressões de função de uma forma menos detalhada. Vamos usá-los muito em [Capítulo ?](higher_order).
+Não há nenhuma razão profunda para ter funções de seta e expressões utilizando a palavra-chave `function` na linguagem. Além de um pequeno detalhe, no qual vamos discutir no [Capítulo ?](object), eles fazem a mesma coisa. Funções de seta foram adicionadas em 2015, principalmente para tornar possível escrever expressões de função de uma forma menos detalhada. Vamos usá-los muito em [Capítulo ?](higher_order).
 
 {{id stack}}
 
@@ -312,7 +312,7 @@ console.log(square(4, true, "hedgehog"));
 // → 16
 ```
 
-Nós definimos `squase` com apenas um argumento. No entando, quando ela é chamada com três, a linguagem não reclama. É ignorado os argumentos adicionais e executa a função `square` apenas com o primeiro.
+Nós definimos `square` com apenas um argumento. No entanto, quando ela é chamada com três, a linguagem não reclama. É ignorado os argumentos adicionais e executa a função `square` apenas com o primeiro.
 
 {{index undefined}}
 
@@ -320,12 +320,7 @@ O JavaScript é extremamente tolerante com a quantidade de argumentos que você 
 
 A desvantagem disso é que, possivelmente - e provavelmente - você passará um número errado de argumentos, de forma acidental, para as funções e nada irá alertá-lo sobre isso.
 
-The upside is that this behavior can be used to allow a function to be
-called with different numbers of arguments. For example, this `minus`
-function tries to imitate the `-` operator by acting on either one or
-two arguments:
-
-A vantagem é que esse comportamento pode ser usado em funções que aceitam argumentos opcionais. Por exemplo, esta função `minus` tenta imitar o operador `-` executando com 1 ou menos argumentos.
+A vantagem é que esse comportamento pode ser usado em funções que aceitam argumentos opcionais. Por exemplo, esta função `minus` tenta imitar o operador `-` executando com um ou dois.
 
 ```
 function minus(a, b) {
@@ -342,7 +337,7 @@ console.log(minus(10, 5));
 {{id power}}
 {{index "optional argument", "default value", parameter, ["= operator", "for default value"]}}
 
-Se você escreve um operador `=` depois de um parâmetro, seguindo de uma expressão, o valor da expressão vai substituir o argumento quando não é definido.
+Se você escreve um operador `=` depois de um parâmetro, seguido de uma expressão, o valor da expressão vai substituir o argumento quando não é definido.
 
 {{index "power example"}}
 
@@ -430,7 +425,7 @@ No exemplo, `multiplier` é chamada e criada em um local em que o parâmetro `fa
 
 {{index "power example", "stack overflow", recursion, [function, application]}}
 
-É perfeitamente aceitável uma função invocar a si mesma, contanto que se tenha cuidado para não sobrecarregar a pilha de chamadas. Uma função que invoca a si mesma é denominada *recursiva*. A recursividade permite que as funções sejam escritas em um estilo diferente. Veja neste exemplo uma implementação alternativa de `power`:
+É perfeitamente aceitável uma função invocar a si mesma, contanto que se tenha cuidado para não sobrecarregar a pilha de chamadas. Uma função que invoca a si mesma é denominada _recursiva_. A recursividade permite que as funções sejam escritas em um estilo diferente. Veja neste exemplo uma implementação alternativa de `power`:
 
 ```{test: wrap}
 function power(base, exponent) {
@@ -465,11 +460,11 @@ Se preocupar com eficiência pode ser uma distração. Acaba sendo outro fator q
 
 {{index "premature optimization"}}
 
-Portando, sempre comece escrevendo algo que é correto e fácil de entender. Se você está preocupado que isso é muito lento - o que geralmente não é, já que a maioria dos códigos simplesmente não é executada com frequência suficiente para levar um tempo significativo - você pode medir depois e melhorá-lo, se necessário.
+Portanto, sempre comece escrevendo algo que é correto e fácil de entender. Se você está preocupado que isso é muito lento - o que geralmente não é, já que a maioria dos códigos simplesmente não é executada com frequência suficiente para levar um tempo significativo - você pode medir depois e melhorá-lo, se necessário.
 
 {{index "branching recursion"}}
 
-A recursão nem sempre é apenas uma alternativa ineficiente ao loop. Alguns problemas são realmente mais fáceis de resolver com recursão do que com loops. Na maioria das vezes, esses são problemas que exigem a exploração ou processamento de várias "ramificações", cada uma das quais pode se ramificar novamente em ainda mais ramificações.
+A recursão nem sempre é apenas uma alternativa ineficiente ao _loop_. Alguns problemas são realmente mais fáceis de resolver com recursão do que com loops. Na maioria das vezes, esses são problemas que exigem a exploração ou processamento de várias "ramificações", cada uma das quais pode se ramificar novamente em ainda mais ramificações.
 
 {{id recursive_puzzle}}
 {{index recursion, "number puzzle example"}}
@@ -503,12 +498,6 @@ Observe que este programa não necessariamente encontra a sequência de operaç�
 
 Tudo bem se você não ver como funciona imediatamente. Vamos trabalhar com isso, já que é um ótimo exercício de pensamento recursivo.
 
-The inner function `find` does the actual recursing. It takes two
-((argument))s: the current number and a string that records how we
-reached this number. If it finds a solution, it returns a string that
-shows how to get to the target. If no solution can be found starting
-from this number, it returns `null`.
-
 A função interna `find` faz a recursividade real. São necessários dois argumentos: o número atual e uma string que registra como chegamos a esse número. Se encontrar uma solução, ele retorna uma string que mostra como chegar ao destino. Se nenhuma solução puder ser encontrada a partir deste número, ele retornará `null`.
 
 {{index null, "|| operator", "short-circuit evaluation"}}
@@ -535,7 +524,7 @@ find(1, "1")
         found!
 ```
 
-A identação indica a profundidade da pilha de chamadas. A primeira vez que `find` é chamado, ele começa chamando a si mesmo para explorar a solução que começa com `(1 + 5)`. Essa chamada recorrerá ainda mais para explorar _toda_ solução que produz um número menor ou igual ao número alvo. Como não encontra um que atinja o número alvo, ele retorna `null` de volta à primeira chamada. Lá o operador `||` faz com que a chamada que explora `(1 * 3)` aconteça. Essa busca tem mais sorte - sua primeira chamada recursiva, por meio de mais uma outra chamada recursiva, atinge o número alvo. Essa chamada mais interna retorna uma string, e cada um dos operadores `||` nas chamadas intermediárias passa essa string adiante, retornando a solução.
+A indentação indica a profundidade da pilha de chamadas. A primeira vez que `find` é chamado, ele começa chamando a si mesmo para explorar a solução que começa com `(1 + 5)`. Essa chamada recorrerá ainda mais para explorar _toda_ solução que produz um número menor ou igual ao número alvo. Como não encontra um que atinja o número alvo, ele retorna `null` de volta à primeira chamada. Lá o operador `||` faz com que a chamada que explora `(1 * 3)` aconteça. Essa busca tem mais sorte - sua primeira chamada recursiva, por meio de mais uma outra chamada recursiva, atinge o número alvo. Essa chamada mais interna retorna uma string, e cada um dos operadores `||` nas chamadas intermediárias passa essa string adiante, retornando a solução.
 
 ## Funções Crescentes
 
@@ -547,12 +536,6 @@ Existem duas maneiras mais ou menos naturais de introduzir funções em programa
 
 A primeira é que você se encontra escrevendo código semelhante várias vezes. Você preferiria não fazer isso. Ter mais código significa mais espaço para esconder erros e mais material para ler para as pessoas que tentam entender o programa. Então você pega a funcionalidade repetida, encontra um bom nome para ela e a coloca em uma função.
 
-The second way is that you find you need some functionality that you
-haven't written yet and that sounds like it deserves its own function.
-You'll start by naming the function, and then you'll write its body.
-You might even start writing code that uses the function before you
-actually define the function itself.
-
 A segunda maneira é que você acha que precisa de alguma funcionalidade que você ainda não escreveu mas mesmo assim soa que isso merece uma função própria. Você vai dar um nome para função e depois escreverá seu corpo. Você pode começar a escrever o código que usa uma função antes de realmente definir uma função em si.
 
 {{index [function, naming], [binding, naming]}}
@@ -561,7 +544,7 @@ O quão difícil é encontrar um bom nome para uma função é uma boa indicaç�
 
 {{index "farm example"}}
 
-Queremos escrever um programa que imprima dois números: os números de vacas e galinhas em uma fazenda, com as palavras 'Cows' e 'Chickens' depois deles e zeros preenchidos antes de ambos os números para que eles tenham sempre três dígitos.
+Queremos escrever um programa que imprima dois números: os números de vacas e galinhas em uma fazenda, com as palavras `Cows` (vacas) e `Chickens` (galinhas) depois deles e zeros preenchidos antes de ambos os números para que eles tenham sempre três dígitos.
 
 ```{lang: null}
 007 Cows
@@ -642,8 +625,7 @@ printFarmInventory(7, 16, 3);
 
 {{index readability, "pure function"}}
 
-
-Uma função com um nome bonito e óbvio como `zeroPad` torna mais fácil para alguém que lê o código descobrir o que ele faz. E tal função é útil em mais situações do que apenas neste programa específico. Por exemplo, você pode usá-lo para ajudar a imprimir tabelas de números bem alinhadas.
+Uma função com um nome bonito e óbvio como `zeroPad` torna mais fácil para alguém que lê o código descobrir o que ele faz. E tal função é útil em mais situações do que apenas neste programa específico. Por exemplo, você pode usá-la para ajudar a imprimir tabelas de números bem alinhadas.
 
 {{index [interface, design]}}
 
@@ -652,6 +634,7 @@ Quão inteligente e versátil deveria ser nossa função? Poderíamos escrever q
 Um princípio útil é não adicionar complexidade a menos que você tenha certeza absoluta de que vai precisar dela. Pode ser tentador escrever estruturas para cada funcionalidade que você encontrar. Resista a esse impulso. Você não terá nenhum trabalho real feito - você estará apenas escrevendo um código que você nunca usa.
 
 {{id pure}}
+
 ## Funções e Efeitos Colaterais
 
 {{index "side effect", "pure function", [function, purity]}}
@@ -672,24 +655,24 @@ Mesmo assim, não há necessidade de se sentir mal ao escrever funções que nã
 
 ## Resumo
 
-Esse capítulo te ensinou voçê como escrever suas próprias funções. A palavra chave `function`, quando usada como uma expressão, pode criar uma função de valor. Quando usada como declaração, pode ser usada para declarar uma variável e dar a função como valor. Funções de flecha (Arrow functions) são também outras formas de criar funções.
+Esse capítulo ensinou você como escrever suas próprias funções. A palavra-chave `function`, quando usada como uma expressão, pode criar uma função de valor. Quando usada como declaração, pode ser usada para declarar uma variável e dar a função como valor. Funções de flecha (_Arrow functions_) são também outras formas de criar funções.
 
 ```
-// Defina f para manter o valor de uma funcão
+// Define f to hold a function value
 const f = function(a) {
   console.log(a + 2);
 };
 
-// Declare g para ser uma funcão
+// Declare g to be a function
 function g(a, b) {
   return a * b * 3.5;
 }
 
-// Uma funcão de valor menos verbosa
+// A less verbose function value
 let h = a => a % 3;
 ```
 
-Um aspecto chave para entender funções, é entender os escopos. Cada bloco cria um novo escopo. Parâmetros e variáveis declarados em um determinado escopo são locais e não são visíveis de fora. Variáveis craidas com `var` se comportam diferente - elas vão parar no escopo de função mais próxima ou no escopo global.
+Um aspecto chave para entender funções é entender os escopos. Cada bloco cria um novo escopo. Parâmetros e variáveis declarados em um determinado escopo são locais e não são visíveis de fora. Variáveis criadas com `var` se comportam diferente - elas vão parar no escopo de função mais próxima ou no escopo global.
 
 Separar as tarefas que sua aplicação executa em diferentes funções é útil. Você não terá que se repetir demais, funcões podem organizar uma aplicação agrupando elas em pedaços de código que fazem coisas mais específicas.
 
@@ -704,13 +687,14 @@ O [capítulo anterior](program_structure#return_values) introduziu a função pa
 {{if interactive
 
 ```{test: no}
-// Seu código aqui.
+// Your code here.
 
 console.log(min(0, 10));
 // → 0
 console.log(min(0, -10));
 // → -10
 ```
+
 if}}
 
 {{hint
@@ -731,11 +715,11 @@ hint}}
 
 Vimos que `%` (o operador de resto) pode ser usado para testar se um número é par ou ímpar usando `% 2` para ver se é divisível por dois. Aqui está outra maneira de definir se um número inteiro positivo é par ou ímpar:
 
-- Zero é par.
+-   Zero é par.
 
-- Um é impar.
+-   Um é impar.
 
-- Para qualquer outro número _N_, sua uniformidade é a mesma que _N_ - 2.
+-   Para qualquer outro número _N_, sua uniformidade é a mesma que _N_ - 2.
 
 Defina uma função recursiva `isEven` correspondente a esta descrição. A função deve aceitar um único parâmetro (um número inteiro positivo) e retornar um booleano.
 
@@ -746,7 +730,7 @@ Teste-o em 50 e 75. Veja como ele se comporta em -1. Por quê? Você pode pensar
 {{if interactive
 
 ```{test: no}
-// Seu código aqui.
+// Your code here.
 
 console.log(isEven(50));
 // → true
@@ -783,7 +767,7 @@ Em seguida, escreva uma função chamada `countChar` que se comporte como `count
 {{if interactive
 
 ```{test: no}
-// Seu código aqui.
+// Your code here.
 
 console.log(countBs("BBC"));
 // → 2

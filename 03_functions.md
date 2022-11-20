@@ -1,45 +1,30 @@
-# Functions
+# Funções
 
 {{quote {author: "Donald Knuth", chapter: true}
 
-People think that computer science is the art of geniuses but the
-actual reality is the opposite, just many people doing things that
-build on each other, like a wall of mini stones.
+As pessoas pensam que Ciência da Computação é a arte de gênios. Na realidade é o oposto, são várias pessoas fazendo coisas que dependem uma das outras, como um muro de pequenas pedras.
 
 quote}}
 
 {{index "Knuth, Donald"}}
 
-{{figure {url: "img/chapter_picture_3.jpg", alt: "Picture of fern leaves with a fractal shape", chapter: framed}}}
+{{figure {url: "img/chapter_picture_3.jpg", alt: "Foto de folhas de samambaia com um formato fractal", chapter: framed}}}
 
 {{index function, [code, "structure of"]}}
 
-Functions are the bread and butter of JavaScript programming. The
-concept of wrapping a piece of program in a value has many uses. It
-gives us a way to structure larger programs, to reduce repetition, to
-associate names with subprograms, and to isolate these subprograms
-from each other.
+Funções são o pão e manteiga da programação JavaScript. O conceito de encapsular um pedaço de um programa em um valor tem muitos usos. Isso nos dá um caminho para estruturar grandes programas, reduzir repetições, associar nomes com subprogramas, e isolar estes subprogramas uns dos outros.
 
-The most obvious application of functions is defining new
-((vocabulary)). Creating new words in prose is usually bad style. But
-in programming, it is indispensable.
+A aplicação mais óbvia das funções é quando queremos definir novos vocabulários. Criar novas palavras no nosso dia a dia geralmente não é uma boa ideia, porém em programação é indispensável.
 
 {{index abstraction, vocabulary}}
 
-Typical adult English speakers have some 20,000 words in their
-vocabulary. Few programming languages come with 20,000 commands built
-in. And the vocabulary that _is_ available tends to be more precisely
-defined, and thus less flexible, than in human language. Therefore, we
-usually _have_ to introduce new concepts to avoid repeating ourselves
-too much.
+Um adulto típico tem por volta de 20.000 palavras em seu vocabulário. Apenas algumas linguagens de programação possuem 20.000 conceitos embutidos, sendo que o vocabulário que se _tem_ disponível tende a ser bem definido e, por isso, menos flexível do que a linguagem usada por humanos. Por isso, normalmente _temos_ que adicionar conceitos do nosso próprio vocabulário para evitar repetição.
 
-## Defining a function
+## Definindo uma Função
 
 {{index "square example", [function, definition], [binding, definition]}}
 
-A function definition is a regular binding where the value of the
-binding is a function. For example, this code defines `square` to
-refer to a function that produces the square of a given number:
+Uma definição de função nada mais é do que uma definição normal de uma variável, na qual o valor recebido pela variável é uma função. Por exemplo, o código a seguir define uma variável `square` que se refere a uma função que retorna o quadrado do número dado:
 
 ```
 const square = function(x) {
@@ -53,18 +38,11 @@ console.log(square(12));
 {{indexsee "curly braces", braces}}
 {{index [braces, "function body"], block, [syntax, function], "function keyword", [function, body], [function, "as value"], [parentheses, arguments]}}
 
-A function is created with an expression that starts with the keyword
-`function`. Functions have a set of _((parameter))s_ (in this case,
-only `x`) and a _body_, which contains the statements that are to be
-executed when the function is called. The function body of a function
-created this way must always be wrapped in braces, even when it
-consists of only a single ((statement)).
+Uma função é criada por meio de uma expressão que se inicia com a palavra-chave `function`. Funções podem receber uma série de parâmetros (nesse caso, somente `x`) e um _corpo_, contendo as declarações que serão executadas quando a função for invocada. O corpo da função deve estar sempre envolvido por chaves, mesmo quando for formado por apenas uma simples declaração (como no exemplo anterior).
 
 {{index "power example"}}
 
-A function can have multiple parameters or no parameters at all. In
-the following example, `makeNoise` does not list any parameter names,
-whereas `power` lists two:
+Uma função pode receber múltiplos parâmetros ou nenhum parâmetro. No exemplo a seguir, `makeNoise` não recebe nenhum parâmetro, enquanto `power` recebe dois:
 
 ```
 const makeNoise = function() {
@@ -88,51 +66,26 @@ console.log(power(2, 10));
 
 {{index "return value", "return keyword", undefined}}
 
-Some functions produce a value, such as `power` and `square`, and some
-don't, such as `makeNoise`, whose only result is a ((side effect)). A
-`return` statement determines the value the function returns. When
-control comes across such a statement, it immediately jumps out of the
-current function and gives the returned value to the code that called
-the function. A `return` keyword without an expression after it will
-cause the function to return `undefined`. Functions that don't have a
-`return` statement at all, such as `makeNoise`, similarly return
-`undefined`.
+Algumas funções produzem um valor, como as funções `power` e `square` acima, e outras não, como no exemplo de `makeNoise`, que produz apenas um “efeito colateral”. A declaração `return` é usada para determinar o valor de retorno da função. Quando o controle de execução interpreta essa declaração, ele sai imediatamente do contexto da função atual e disponibiliza o valor retornado para o código que invocou a função. A palavra-chave `return` sem uma expressão após, irá fazer com que o retorno da função seja `undefined`. Funções que não possuem `return` declarado, retornam `undefined` da mesma forma.
 
 {{index parameter, [function, application], [binding, "from parameter"]}}
 
-Parameters to a function behave like regular bindings, but their
-initial values are given by the _caller_ of the function, not the code
-in the function itself.
+Os parâmetros de uma função comportam-se como variáveis regulares. Seu valor inicial é informado por quem invocou a função e não pelo código da função em si.
 
-## Bindings and scopes
+## Variáveis e Escopos
 
 {{indexsee "top-level scope", "global scope"}}
 {{index "var keyword", "global scope", [binding, global], [binding, "scope of"]}}
 
-Each binding has a _((scope))_, which is the part of the program
-in which the binding is visible. For bindings defined outside of any
-function or block, the scope is the whole program—you can refer to
-such bindings wherever you want. These are called _global_.
+Cada variável tem um escopo, no qual é parte de um programa em que a variável é visível. Para variáveis definidas fora de qualquer função ou bloco, o escopo é o programa inteiro, você pode referenciar estas variáveis onde quiser. Elas são chamadas de variáveis globais.
 
 {{index "local scope", [binding, local]}}
 
-But bindings created for function ((parameter))s or declared inside a
-function can be referenced only in that function, so they are known as
-_local_ bindings. Every time the function is called, new instances of these
-bindings are created. This provides some isolation between
-functions—each function call acts in its own little world (its local
-environment) and can often be understood without knowing a lot about
-what's going on in the global environment.
+Mas variáveis criadas para serem parâmetros de função ou declaradass dentro uma função podem ser referenciadas apenas dentro das mesmas, estas variáveis são conhecidas como variáveis locais. Todo momento que a função é chamada, novas instâncias dessas variáveis são criadas. Isto provê isolamento entre funções, cada chamada dessa função cria um pequeno mundo próprio (ambiente local) e pode frequentemente ser entendido sem saber muito sobre o que está acontencedo no ambiente global.
 
 {{index "let keyword", "const keyword", "var keyword"}}
 
-Bindings declared with `let` and `const` are in fact local to the
-_((block))_ that they are declared in, so if you create one of those
-inside of a loop, the code before and after the loop cannot "see" it.
-In pre-2015 JavaScript, only functions created new scopes, so
-old-style bindings, created with the `var` keyword, are visible
-throughout the whole function that they appear in—or throughout the
-global scope, if they are not in a function.
+Variáveis declaradas com `let` e `const` são de fato locais para o escopo que elas foram declaradas, então se você criar uma destas dentro de um `loop`, o código antes e depois do `loop` não "enxergarão" ela. No JavaScript pré-2015, apenas funções criavam novos escopos, então variáveis antigas criadas com a palavra-chave `var`, são visíveis através de toda função que elas aparecerem ou até mesmo no escopo global, se elas não estiverem dentro de uma função.
 
 ```
 let x = 10;
@@ -149,12 +102,7 @@ console.log(x + z);
 
 {{index [binding, visibility]}}
 
-Each ((scope)) can "look out" into the scope around it, so `x` is
-visible inside the block in the example. The exception is when
-multiple bindings have the same name—in that case, code can see only
-the innermost one. For example, when the code inside the `halve`
-function refers to `n`, it is seeing its _own_ `n`, not the global
-`n`.
+Cada escopo pode "ficar de olho" no escopo ao redor dele, então `x` é visível dentro do bloco no exemplo. A exceção é quando múltiplas variáveis têm o mesmo nome, neste caso, o código pode ver apenas a mais próxima. Por exemplo, quando o código dentro da função `halve` se refere a `n`, a função está vendo sua própria variável `n`, não a variável `n` global.
 
 ```
 const halve = function(n) {
@@ -170,18 +118,15 @@ console.log(n);
 
 {{id scoping}}
 
-### Nested scope
+### Escopo Aninhado
 
 {{index [nesting, "of functions"], [nesting, "of scope"], scope, "inner function", "lexical scoping"}}
 
-JavaScript distinguishes not just _global_ and _local_
-bindings. Blocks and functions can be created inside other blocks and
-functions, producing multiple degrees of locality.
+O JavaScript não se distingue apenas pela diferenciação entre variáveis _locais_ e _globais_. Funções também podem ser criadas dentro de outras funções, criando vários níveis de “localidades”.
 
 {{index "landscape example"}}
 
-For example, this function—which outputs the ingredients needed to
-make a batch of hummus—has another function inside it:
+Por exemplo, essa função, no qual retorna os ingredientes necessários para preparar um prato de homus, tem outra função dentro dela:
 
 ```
 const hummus = function(factor) {
@@ -203,31 +148,19 @@ const hummus = function(factor) {
 
 {{index [function, scope], scope}}
 
-The code inside the `ingredient` function can see the `factor` binding
-from the outer function. But its local bindings, such as `unit` or
-`ingredientAmount`, are not visible in the outer function.
+O código dentro da função `ingredient` pode ver a variável `factor` de fora da função. Mas as variáveis locais, como `unit` or `ingredientAmount`, não são visíveis na função de fora.
 
-The set of bindings visible inside a block is determined by the place of
-that block in the program text. Each local scope can also see all the
-local scopes that contain it, and all scopes can see the global scope.
-This approach to binding visibility is called _((lexical scoping))_.
+O conjunto de variáveis visíveis dentro de um bloco é determinado pelo local onde o bloco está no texto do programa. Cada escopo local pode também ver todo os escopos locais que à contem, e todos os escopos podem ver o escopo global. Desta forma a visibilidade dessa variável é chamada de escopo léxico.
 
-## Functions as values
+## Funções como Valores
 
 {{index [function, "as value"], [binding, definition]}}
 
-A function binding usually simply acts as a name for a specific piece
-of the program. Such a binding is defined once and never changed. This
-makes it easy to confuse the function and its name.
+As variáveis de função, normalmente, atuam apenas como nomes para um pedaço específico de um programa. Tais variáveis são definidas uma vez e nunca se alteram. Isso faz com que seja fácil confundir a função com seu próprio nome.
 
 {{index [binding, assignment]}}
 
-But the two are different. A function value can do all the things that
-other values can do—you can use it in arbitrary ((expression))s, not
-just call it. It is possible to store a function value in a new
-binding, pass it as an argument to a function, and so on. Similarly, a
-binding that holds a function is still just a regular binding and can,
-if not constant, be assigned a new value, like so:
+Entretanto, são duas coisas distintas. Um valor de função pode fazer todas as coisas que outros valores podem fazer - você pode usá-lo em expressões arbitrárias e não apenas invocá-la. É possível armazenar um valor de função em um novo local, passá-lo como argumento para outra função e assim por diante. Não muito diferente, uma variável que faz referência a uma função continua sendo apenas uma variável regular e pode ser atribuída a um novo valor, como mostra o exemplo abaixo:
 
 ```{test: no}
 let launchMissiles = function() {
@@ -240,16 +173,13 @@ if (safeMode) {
 
 {{index [function, "higher-order"]}}
 
-In [Chapter ?](higher_order), we will discuss the interesting things
-that can be done by passing around function values to other functions.
+No [Capítulo ?](higher_order), nós vamos discutir as coisas maravilhosas que podem ser feitas quando passamos valores de função para outras funções.
 
-## Declaration notation
+## Notação por Declaração
 
 {{index [syntax, function], "function keyword", "square example", [function, definition], [function, declaration]}}
 
-There is a slightly shorter way to create a function binding. When the
-`function` keyword is used at the start of a statement, it works
-differently.
+Existe uma maneira um pouco mais curta de criar uma variável de função. Quando a palavra-chave `function` é usada no início de uma instrução, ela funciona de forma diferente.
 
 ```{test: wrap}
 function square(x) {
@@ -259,11 +189,9 @@ function square(x) {
 
 {{index future, "execution order"}}
 
-This is a function _declaration_. The statement defines the binding
-`square` and points it at the given function. It is slightly easier
-to write and doesn't require a semicolon after the function.
+Isto é uma declaração de função. Ela define a variável `square` e aponta para a função dada. É um pouco mais fácil para escrever e não requer um ponto e vírgula após a função.
 
-There is one subtlety with this form of function definition.
+Há uma sutileza nessa forma de definir a função.
 
 ```
 console.log("The future says:", future());
@@ -273,23 +201,13 @@ function future() {
 }
 ```
 
-The preceding code works, even though the function is defined _below_ the code
-that uses it. Function declarations are not part of the regular
-top-to-bottom flow of control. They are conceptually moved to the top
-of their scope and can be used by all the code in that scope. This is
-sometimes useful because it offers the freedom to order code in a
-way that seems meaningful, without worrying about having to define all
-functions before they are used.
+O exemplo acima funciona, mesmo sabendo que a função foi definida _após_ o código que a executa. Isso ocorre porque as declarações de funções não fazem parte do fluxo normal de controle, que é executado de cima para baixo. Elas são conceitualmente movidas para o topo do escopo que as contém e podem ser usadas por qualquer código no mesmo escopo. Isso pode ser útil em algumas situações, porque nos permite ter a liberdade de ordenar o código de uma maneira que seja mais expressiva, sem nos preocuparmos muito com o fato de ter que definir todas as funções antes de usá-las.
 
-## Arrow functions
+## Funções de Seta
 
 {{index function, "arrow function"}}
 
-There's a third notation for functions, which looks very different
-from the others. Instead of the `function` keyword, it uses an arrow
-(`=>`) made up of an equal sign and a greater-than character (not to be
-confused with the greater-than-or-equal operator, which is written
-`>=`).
+Há uma terceira forma de declarar funções, chamada _Arrow function_ (Função de seta), que parece bem diferente das outras. Ao invés de usar a palavra-chave `function`, isto usa uma flecha `=>` composta por um sinal de igual e um caractere maior que (não deve ser confundido com o operador maior que ou igual, que é escrito `>=`.
 
 ```{test: wrap}
 const power = (base, exponent) => {
@@ -303,17 +221,11 @@ const power = (base, exponent) => {
 
 {{index [function, body]}}
 
-The arrow comes _after_ the list of parameters and is followed by the
-function's body. It expresses something like "this input (the
-((parameter))s) produces this result (the body)".
+A seta vem após a lista de parâmetros e é seguida pelo corpo da função. Expressa algo como "essa entrada (os parâmetros) produz esse resultado (o corpo)".
 
 {{index [braces, "function body"], "square example", [parentheses, arguments]}}
 
-When there is only one parameter name, you can omit the parentheses around the
-parameter list. If the body is a single expression,
-rather than a ((block)) in braces, that expression will be returned
-from the function. So, these two definitions of `square` do the same
-thing:
+Quando há apenas um nome de parâmetro, você pode omitir os parênteses na lista de parâmetros. Se o corpo for uma única expressão, em vez de um bloco entre chaves, essa expressão será retornada da função. Então, essas duas definições de `square` fazem a mesma coisa:
 
 ```
 const square1 = (x) => { return x * x; };
@@ -322,8 +234,7 @@ const square2 = x => x * x;
 
 {{index [parentheses, arguments]}}
 
-When an arrow function has no parameters at all, its parameter list is
-just an empty set of parentheses.
+Quando uma função de seta não tem nenhum parâmetro, sua lista de parâmetros é apenas um conjunto vazio de parênteses.
 
 ```
 const horn = () => {
@@ -333,23 +244,16 @@ const horn = () => {
 
 {{index verbosity}}
 
-There's no deep reason to have both arrow functions and
-`function` expressions in the language. Apart from a minor detail,
-which we'll discuss in [Chapter ?](object), they do the same thing.
-Arrow functions were added in 2015, mostly to make it possible to
-write small function expressions in a less verbose way. We'll be using
-them a lot in [Chapter ?](higher_order).
+Não há nenhuma razão profunda para ter funções de seta e expressões utilizando a palavra-chave `function` na linguagem. Além de um pequeno detalhe, no qual vamos discutir no [Capítulo ?](object), eles fazem a mesma coisa. Funções de seta foram adicionadas em 2015, principalmente para tornar possível escrever expressões de função de uma forma menos detalhada. Vamos usá-los muito em [Capítulo ?](higher_order).
 
 {{id stack}}
 
-## The call stack
+## A Pilha de Chamadas
 
 {{indexsee stack, "call stack"}}
 {{index "call stack", [function, application]}}
 
-The way control flows through functions is somewhat involved. Let's
-take a closer look at it. Here is a simple program that makes a few
-function calls:
+Será muito útil observarmos como o fluxo de controle flui por meio das execuções das funções. Aqui, temos um simples programa fazendo algumas chamadas de funções:
 
 ```
 function greet(who) {
@@ -361,15 +265,9 @@ console.log("Bye");
 
 {{index ["control flow", functions], "execution order", "console.log"}}
 
-A run through this program goes roughly like this: the call to `greet`
-causes control to jump to the start of that function (line 2). The
-function calls `console.log`, which takes control, does its job, and
-then returns control to line 2. There it reaches the end of the
-`greet` function, so it returns to the place that called it, which is
-line 4. The line after that calls `console.log` again. After that
-returns, the program reaches its end.
+A execução desse programa funciona da seguinte forma: a chamada à função `greet` faz com que o controle pule para o início dessa função (linha 2). Em seguida, é invocado `console.log`, que assume o controle, faz seu trabalho e então retorna o controle para a linha 2 novamente. O controle chega ao fim da função `greet` e retorna para o local onde a função foi invocada originalmente (linha 4). Por fim, o controle executa uma nova chamada a `console.log`.
 
-We could show the flow of control schematically like this:
+Podemos representar o fluxo de controle, esquematicamente, assim:
 
 ```{lang: null}
 not in function
@@ -383,26 +281,13 @@ not in function
 
 {{index "return keyword", [memory, call stack]}}
 
-Because a function has to jump back to the place that called it when
-it returns, the computer must remember the context from which the call
-happened. In one case, `console.log` has to return to the `greet`
-function when it is done. In the other case, it returns to the end of
-the program.
+Devido ao fato de que a função deve retornar ao local onde foi chamada após finalizar a sua execução, o computador precisa se lembrar do contexto no qual a função foi invocada originalmente. Em um dos casos, `console.log` retorna o controle para a função `greet`. No outro caso, ela retorna para o final do programa.
 
-The place where the computer stores this context is the _((call
-stack))_. Every time a function is called, the current context is
-stored on top of this stack. When a function returns, it removes the
-top context from the stack and uses that context to continue execution.
+O local onde o computador armazena esse contexto é chamado de _call stack_ (pilha de chamadas). Toda vez que uma função é invocada, o contexto atual é colocado no topo dessa "pilha" de contextos. Quando a função finaliza sua execução, o contexto no topo da pilha é removido e utilizado para continuar o fluxo de execução.
 
 {{index "infinite loop", "stack overflow", recursion}}
 
-Storing this stack requires space in the computer's memory. When the
-stack grows too big, the computer will fail with a message like "out
-of stack space" or "too much recursion". The following code
-illustrates this by asking the computer a really hard question that
-causes an infinite back-and-forth between two functions. Rather, it
-_would_ be infinite, if the computer had an infinite stack. As it is,
-we will run out of space, or "blow the stack".
+O armazenamento dessa pilha de contextos necessita de espaço na memória do computador. Quando a pilha começar a ficar muito grande, o computador reclamará com uma mensagem do tipo _out of stack space_ (sem espaço na pilha) ou _too much recursion_ (muitas recursões). O código a seguir demonstra esse problema fazendo uma pergunta muito difícil para o computador, que resultará em um ciclo infinito de chamadas entre duas funções. Se o computador tivesse uma pilha de tamanho infinito, isso poderia ser possível, no entanto, eventualmente chegaremos ao limite de espaço e explodiremos a "pilha".
 
 ```{test: no}
 function chicken() {
@@ -415,11 +300,11 @@ console.log(chicken() + " came first.");
 // → ??
 ```
 
-## Optional Arguments
+## Argumentos Opcionais
 
 {{index argument, [function, application]}}
 
-The following code is allowed and executes without any problem:
+O código abaixo é permitido e executa sem problemas:
 
 ```
 function square(x) { return x * x; }
@@ -427,25 +312,15 @@ console.log(square(4, true, "hedgehog"));
 // → 16
 ```
 
-We defined `square` with only one ((parameter)). Yet when we call it
-with three, the language doesn't complain. It ignores the extra
-arguments and computes the square of the first one.
+Nós definimos `square` com apenas um argumento. No entanto, quando ela é chamada com três, a linguagem não reclama. É ignorado os argumentos adicionais e executa a função `square` apenas com o primeiro.
 
 {{index undefined}}
 
-JavaScript is extremely broad-minded about the number of arguments you
-pass to a function. If you pass too many, the extra ones are ignored.
-If you pass too few, the missing parameters get assigned the value
-`undefined`.
+O JavaScript é extremamente tolerante com a quantidade de argumentos que você passa para uma função. Se você passar mais argumentos que o necessário, os extras serão ignorados. Se você passar menos argumentos, os parâmetros faltantes simplesmente receberão o valor `undefined`.
 
-The downside of this is that it is possible—likely, even—that you'll
-accidentally pass the wrong number of arguments to functions. And no
-one will tell you about it.
+A desvantagem disso é que, possivelmente - e provavelmente - você passará um número errado de argumentos, de forma acidental, para as funções e nada irá alertá-lo sobre isso.
 
-The upside is that this behavior can be used to allow a function to be
-called with different numbers of arguments. For example, this `minus`
-function tries to imitate the `-` operator by acting on either one or
-two arguments:
+A vantagem é que esse comportamento pode ser usado em funções que aceitam argumentos opcionais. Por exemplo, esta função `minus` tenta imitar o operador `-` executando com um ou dois.
 
 ```
 function minus(a, b) {
@@ -462,15 +337,11 @@ console.log(minus(10, 5));
 {{id power}}
 {{index "optional argument", "default value", parameter, ["= operator", "for default value"]}}
 
-If you write an `=` operator after
-a parameter, followed by an expression, the value of that expression
-will replace the argument when it is not given.
+Se você escreve um operador `=` depois de um parâmetro, seguido de uma expressão, o valor da expressão vai substituir o argumento quando não é definido.
 
 {{index "power example"}}
 
-For example, this version of `power` makes its second argument
-optional. If you don't provide it or pass the value `undefined`, it will default to two, and the
-function will behave like `square`.
+Por exemplo, essa versão de `power` faz isso com o segundo argumento opcional. Se você não enviar nada ou o valor for `undefined`, isso será por padrão dois, e a função vai se comportar como `square`.
 
 ```{test: wrap}
 function power(base, exponent = 2) {
@@ -489,11 +360,7 @@ console.log(power(2, 6));
 
 {{index "console.log"}}
 
-In the [next chapter](data#rest_parameters), we will see a way in
-which a function body can get at the whole list of arguments it was
-passed. This is helpful because it makes it possible for a function to
-accept any number of arguments. For example, `console.log` does
-this—it outputs all of the values it is given.
+No [próximo capítulo](data#rest_parameters), veremos uma maneira de acessar a lista que contém todos os argumentos que foram passados para uma função. Isso é útil, pois torna possível uma função aceitar qualquer número de argumentos. Por exemplo, `console.log` tira proveito disso, imprimindo todos os valores que foram passados.
 
 ```
 console.log("C", "O", 2);
@@ -504,14 +371,11 @@ console.log("C", "O", 2);
 
 {{index "call stack", "local binding", [function, "as value"], scope}}
 
-The ability to treat functions as values, combined with the fact that
-local bindings are re-created every time a function is called, brings
-up an interesting question. What happens to local bindings when the
-function call that created them is no longer active?
+A habilidade de tratar funções como valores, combinada com o fato de que variáveis locais são recriadas toda vez que uma função é invocada; isso traz à tona uma questão interessante.
 
-The following code shows an example of this. It defines a function,
-`wrapValue`, that creates a local binding. It then returns a function
-that accesses and returns this local binding.
+O que acontece com as variáveis locais quando a função que as criou não está mais ativa?
+
+O código a seguir mostra um exemplo disso. Ele define uma função `wrapValue` que cria uma variável local e retorna uma função que acessa e retorna essa variável.
 
 ```
 function wrapValue(n) {
@@ -527,22 +391,15 @@ console.log(wrap2());
 // → 2
 ```
 
-This is allowed and works as you'd hope—both instances of the binding
-can still be accessed. This situation is a good demonstration of the
-fact that local bindings are created anew for every call, and
-different calls can't trample on one another's local bindings.
+Isso é permitido e funciona como você espera: a variável ainda pode ser acessada. Várias instâncias da variável podem coexistir, o que é uma boa demonstração do conceito de que variáveis locais são realmente recriadas para cada nova chamada, sendo que as chamadas não interferem nas variáveis locais umas das outras.
 
-This feature—being able to reference a specific instance of a local
-binding in an enclosing scope—is called _((closure))_. A function that
-references bindings from local scopes around it is called _a_ closure. This behavior
-not only frees you from having to worry about lifetimes of bindings
-but also makes it possible to use function values in some creative
-ways.
+A funcionalidade capaz de referenciar uma instância específica de uma variável local após a execução de uma função é chamada de _closure_. Uma função que _closes over_ (fecha sobre) variáveis locais é chamada de _closure_.
+
+Esse comportamento faz com que você não tenha que se preocupar com o tempo de vida das variáveis, como também permite usos criativos de valores de função.
 
 {{index "multiplier function"}}
 
-With a slight change, we can turn the previous example into a way to
-create functions that multiply by an arbitrary amount.
+Com uma pequena mudança, podemos transformar o exemplo anterior, possibilitando a criação de funções que se multiplicam por uma quantidade arbitrária.
 
 ```
 function multiplier(factor) {
@@ -556,31 +413,19 @@ console.log(twice(5));
 
 {{index [binding, "from parameter"]}}
 
-The explicit `local` binding from the `wrapValue` example isn't really
-needed since a parameter is itself a local binding.
+A variável explícita `local` do exemplo na função `wrapValue` não é necessária, pois o parâmetro em si já é uma variável local.
 
 {{index [function, "model of"]}}
 
-Thinking about programs like this takes some practice. A good mental
-model is to think of function values as containing both the code in
-their body and the environment in which they are created. When called,
-the function body sees the environment in which it was created, not the
-environment in which it is called.
+Pensar em programas que funcionam dessa forma requer um pouco de prática. Um bom modelo mental é pensar que a valores de uma função são provenientes de seu corpo e do local de onde ela foi criada. Quando executada, o corpo da função vê o local em que foi criada, e não de onde foi chamada.
 
-In the example, `multiplier` is called and creates an environment in
-which its `factor` parameter is bound to 2. The function value it
-returns, which is stored in `twice`, remembers this environment. So
-when that is called, it multiplies its argument by 2.
+No exemplo, `multiplier` é chamada e criada em um local em que o parâmetro `factor` está fixo como 2. O valor da função é retornado, no qual é salvo na variável `twice`, lembre-se desse ambiente que ela foi criada. Quando ela for chamada, o valor do argumento será multiplicado por 2.
 
-## Recursion
+## Recursão
 
 {{index "power example", "stack overflow", recursion, [function, application]}}
 
-It is perfectly okay for a function to call itself, as long as it
-doesn't do it so often that it overflows the stack. A function that calls
-itself is called _recursive_. Recursion allows some functions to be
-written in a different style. Take, for example, this alternative
-implementation of `power`:
+É perfeitamente aceitável uma função invocar a si mesma, contanto que se tenha cuidado para não sobrecarregar a pilha de chamadas. Uma função que invoca a si mesma é denominada _recursiva_. A recursividade permite que as funções sejam escritas em um estilo diferente. Veja neste exemplo uma implementação alternativa de `power`:
 
 ```{test: wrap}
 function power(base, exponent) {
@@ -597,69 +442,38 @@ console.log(power(2, 3));
 
 {{index loop, readability, mathematics}}
 
-This is rather close to the way mathematicians define exponentiation
-and arguably describes the concept more clearly than the looping
-variant. The function calls itself multiple times with ever smaller
-exponents to achieve the repeated multiplication.
+Essa é a maneira mais próxima da forma como os matemáticos definem a exponenciação, descrevendo o conceito de uma forma mais elegante do que a variação que usa um laço de repetição. A função chama a si mesma várias vezes com diferentes argumentos para alcançar a multiplicação repetida.
 
 {{index [function, application], efficiency}}
 
-But this implementation has one problem: in typical JavaScript
-implementations, it's about three times slower than the looping version.
-Running through a simple loop is generally cheaper than calling a
-function multiple times.
+Entretanto, há um grave problema: em implementações típicas no JavaScript, a versão recursiva é aproximadamente dez vezes mais lenta do que a variação que utiliza um laço de repetição. Percorrer um laço de repetição simples é mais rápido do que invocar uma função múltiplas vezes.
 
 {{index optimization}}
 
-The dilemma of speed versus ((elegance)) is an interesting one. You
-can see it as a kind of continuum between human-friendliness and
-machine-friendliness. Almost any program can be made faster by making
-it bigger and more convoluted. The programmer has to decide on an
-appropriate balance.
+O dilema velocidade versus elegância é bastante interessante. Você pode interpretá-lo como uma forma de transição gradual entre acessibilidade para humanos e máquina. Praticamente todos os programas podem se tornar mais rápidos quando se tornam maiores e mais complexos, cabendo ao desenvolvedor decidir qual o balanço ideal entre ambos.
 
-In the case of the `power` function, the inelegant (looping) version
-is still fairly simple and easy to read. It doesn't make much sense to
-replace it with the recursive version. Often, though, a program deals
-with such complex concepts that giving up some efficiency in order to
-make the program more straightforward is helpful.
+No caso da implementação de `power`, a versão menos elegante (usando laço de repetição) é bem simples e fácil de ser lida, não fazendo sentido substituí-la pela versão recursiva. Porém, frequentemente lidamos com aplicações mais complexas e sacrificar um pouco a eficiência para tornar o código mais legível e simples acaba se tornando uma escolha atrativa.
 
 {{index profiling}}
 
-Worrying about efficiency can be a distraction. It's yet another
-factor that complicates program design, and when you're doing
-something that's already difficult, that extra thing to worry about
-can be paralyzing.
+Se preocupar com eficiência pode ser uma distração. Acaba sendo outro fator que complica o design de um pograma, quando você está fazendo algo que já é difícil, as preocupações extras podem ser paralisantes.
 
 {{index "premature optimization"}}
 
-Therefore, always start by writing something that's correct and easy
-to understand. If you're worried that it's too slow—which it usually
-isn't since most code simply isn't executed often enough to take any
-significant amount of time—you can measure afterward and improve it
-if necessary.
+Portanto, sempre comece escrevendo algo que é correto e fácil de entender. Se você está preocupado que isso é muito lento - o que geralmente não é, já que a maioria dos códigos simplesmente não é executada com frequência suficiente para levar um tempo significativo - você pode medir depois e melhorá-lo, se necessário.
 
 {{index "branching recursion"}}
 
-Recursion is not always just an inefficient alternative to looping.
-Some problems really are easier to solve with recursion than with
-loops. Most often these are problems that require exploring or
-processing several "branches", each of which might branch out again
-into even more branches.
+A recursão nem sempre é apenas uma alternativa ineficiente ao _loop_. Alguns problemas são realmente mais fáceis de resolver com recursão do que com loops. Na maioria das vezes, esses são problemas que exigem a exploração ou processamento de várias "ramificações", cada uma das quais pode se ramificar novamente em ainda mais ramificações.
 
 {{id recursive_puzzle}}
 {{index recursion, "number puzzle example"}}
 
-Consider this puzzle: by starting from the number 1 and repeatedly
-either adding 5 or multiplying by 3, an infinite set of numbers
-can be produced. How would you write a function that, given a number,
-tries to find a sequence of such additions and multiplications that
-produces that number?
+Considere este quebra-cabeça: começando do número 1 e adicionando repetidamente 5 ou multiplicando por 3, um conjunto infinito de números pode ser produzido. Como você escreveria uma função que, dado um número, tenta encontrar uma sequência de tais adições e multiplicações que produza esse número?
 
-For example, the number 13 could be reached by first multiplying by 3
-and then adding 5 twice, whereas the number 15 cannot be reached at
-all.
+Por exemplo, o número 13 pode ser alcançado multiplicando-se primeiro por 3 e depois adicionando 5 duas vezes, enquanto o número 15 não pode ser alcançado.
 
-Here is a recursive solution:
+Uma solução utilizando recursão seria:
 
 ```
 function findSolution(target) {
@@ -680,38 +494,19 @@ console.log(findSolution(24));
 // → (((1 * 3) + 5) * 3)
 ```
 
-Note that this program doesn't necessarily find the _shortest_
-sequence of operations. It is satisfied when it finds any sequence at
-all.
+Observe que este programa não necessariamente encontra a sequência de operações mais curta. Já é satisfatório quando encontra qualquer sequência.
 
-It is okay if you don't see how it works right away. Let's work
-through it, since it makes for a great exercise in recursive thinking.
+Tudo bem se você não ver como funciona imediatamente. Vamos trabalhar com isso, já que é um ótimo exercício de pensamento recursivo.
 
-The inner function `find` does the actual recursing. It takes two
-((argument))s: the current number and a string that records how we
-reached this number. If it finds a solution, it returns a string that
-shows how to get to the target. If no solution can be found starting
-from this number, it returns `null`.
+A função interna `find` faz a recursividade real. São necessários dois argumentos: o número atual e uma string que registra como chegamos a esse número. Se encontrar uma solução, ele retorna uma string que mostra como chegar ao destino. Se nenhuma solução puder ser encontrada a partir deste número, ele retornará `null`.
 
 {{index null, "|| operator", "short-circuit evaluation"}}
 
-To do this, the function performs one of three actions. If the current
-number is the target number, the current history is a way to reach
-that target, so it is returned. If the current number is greater than
-the target, there's no sense in further exploring this branch because
-both adding and multiplying will only make the number bigger, so it
-returns `null`. Finally, if we're still below the target number,
-the function tries both possible paths that start from the current
-number by calling itself twice, once for addition and once for
-multiplication. If the first call returns something that is not
-`null`, it is returned. Otherwise, the second call is returned,
-regardless of whether it produces a string or `null`.
+Para fazer isso, a função executa uma das três ações. Se o número atual for o número alvo, o histórico atual é uma maneira de atingir esse número, portanto, ele é retornado. Se o número atual for maior que o alvo, não há sentido em explorar mais essa ramificação porque tanto a adição quanto a multiplicação só tornarão o número maior, então ele retornará `null`. Finalmente, se ainda estivermos abaixo do número alvo, a função tenta os dois caminhos possíveis que começam no número atual chamando a si mesma duas vezes, uma para adição e outra para multiplicação. Se a primeira chamada retornar algo que não seja `null`, ele será retornado. Caso contrário, a segunda chamada é retornada, independentemente de produzir uma string ou `null`.
 
 {{index "call stack"}}
 
-To better understand how this function produces the effect we're
-looking for, let's look at all the calls to `find` that are made when
-searching for a solution for the number 13.
+Para entender melhor como esta função produz o efeito que estamos procurando, vamos ver todas as chamadas para `find` que são feitas ao buscar uma solução para o número 13.
 
 ```{lang: null}
 find(1, "1")
@@ -729,59 +524,34 @@ find(1, "1")
         found!
 ```
 
-The indentation indicates the depth of the call stack. The first time
-`find` is called, it starts by calling itself to explore the solution
-that starts with `(1 + 5)`. That call will further recurse to explore
-_every_ continued solution that yields a number less than or equal to
-the target number. Since it doesn't find one that hits the target, it
-returns `null` back to the first call. There the `||` operator causes
-the call that explores `(1 * 3)` to happen. This search has more
-luck—its first recursive call, through yet _another_ recursive call,
-hits upon the target number. That innermost call returns a string, and
-each of the `||` operators in the intermediate calls passes that string
-along, ultimately returning the solution.
+A indentação indica a profundidade da pilha de chamadas. A primeira vez que `find` é chamado, ele começa chamando a si mesmo para explorar a solução que começa com `(1 + 5)`. Essa chamada recorrerá ainda mais para explorar _toda_ solução que produz um número menor ou igual ao número alvo. Como não encontra um que atinja o número alvo, ele retorna `null` de volta à primeira chamada. Lá o operador `||` faz com que a chamada que explora `(1 * 3)` aconteça. Essa busca tem mais sorte - sua primeira chamada recursiva, por meio de mais uma outra chamada recursiva, atinge o número alvo. Essa chamada mais interna retorna uma string, e cada um dos operadores `||` nas chamadas intermediárias passa essa string adiante, retornando a solução.
 
-## Growing functions
+## Funções Crescentes
 
 {{index [function, definition]}}
 
-There are two more or less natural ways for functions to be introduced
-into programs.
+Existem duas maneiras mais ou menos naturais de introduzir funções em programas.
 
 {{index repetition}}
 
-The first is that you find yourself writing similar code multiple
-times. You'd prefer not to do that. Having more code means more space
-for mistakes to hide and more material to read for people trying to
-understand the program. So you take the repeated functionality, find a
-good name for it, and put it into a function.
+A primeira é que você se encontra escrevendo código semelhante várias vezes. Você preferiria não fazer isso. Ter mais código significa mais espaço para esconder erros e mais material para ler para as pessoas que tentam entender o programa. Então você pega a funcionalidade repetida, encontra um bom nome para ela e a coloca em uma função.
 
-The second way is that you find you need some functionality that you
-haven't written yet and that sounds like it deserves its own function.
-You'll start by naming the function, and then you'll write its body.
-You might even start writing code that uses the function before you
-actually define the function itself.
+A segunda maneira é que você acha que precisa de alguma funcionalidade que você ainda não escreveu mas mesmo assim soa que isso merece uma função própria. Você vai dar um nome para função e depois escreverá seu corpo. Você pode começar a escrever o código que usa uma função antes de realmente definir uma função em si.
 
 {{index [function, naming], [binding, naming]}}
 
-How difficult it is to find a good name for a function is a good
-indication of how clear a concept it is that you're trying to wrap.
-Let's go through an example.
+O quão difícil é encontrar um bom nome para uma função é uma boa indicação de quão claro é o conceito que você está tentando encapsular. Vamos a um exemplo.
 
 {{index "farm example"}}
 
-We want to write a program that prints two numbers: the numbers of
-cows and chickens on a farm, with the words `Cows` and `Chickens`
-after them and zeros padded before both numbers so that they are
-always three digits long.
+Queremos escrever um programa que imprima dois números: os números de vacas e galinhas em uma fazenda, com as palavras `Cows` (vacas) e `Chickens` (galinhas) depois deles e zeros preenchidos antes de ambos os números para que eles tenham sempre três dígitos.
 
 ```{lang: null}
 007 Cows
 011 Chickens
 ```
 
-This asks for a function of two arguments—the number of cows and the
-number of chickens. Let's get coding.
+Isso pede por uma função de dois argumentos – o número de vacas e o número de galinhas. Vamos começar a codificação.
 
 ```
 function printFarmInventory(cows, chickens) {
@@ -801,20 +571,13 @@ printFarmInventory(7, 11);
 
 {{index ["length property", "for string"], "while loop"}}
 
-Writing `.length` after a string expression will give us the length of
-that string. Thus, the `while` loops keep adding zeros in front of the
-number strings until they are at least three characters long.
+Escrever `.length` após uma expressão de string nos dará o comprimento dessa string. Assim, os loops `while` continuam adicionando zeros na frente das strings numéricas até que tenham pelo menos três caracteres.
 
-Mission accomplished! But just as we are about to send the farmer the
-code (along with a hefty invoice), she calls and tells us she's also
-started keeping pigs, and couldn't we please extend the software to
-also print pigs?
+Missão cumprida! Mas quando estamos prestes a enviar o código ao fazendeiro (junto com uma fatura pesada), ele nos liga e nos diz que também começou a criar porcos, e não poderíamos modificar o software para também imprimir porcos?
 
 {{index "copy-paste programming"}}
 
-We sure can. But just as we're in the process of copying and pasting
-those four lines one more time, we stop and reconsider. There has to
-be a better way. Here's a first attempt:
+Com certeza podemos. Mas assim que estamos copiando e colando essas quatro linhas mais uma vez, paramos e reconsideramos. Tem que haver uma maneira melhor. Aqui está uma primeira tentativa:
 
 ```
 function printZeroPaddedWithLabel(number, label) {
@@ -836,14 +599,11 @@ printFarmInventory(7, 11, 3);
 
 {{index [function, naming]}}
 
-It works! But that name, `printZeroPaddedWithLabel`, is a little
-awkward. It conflates three things—printing, zero-padding, and adding
-a label—into a single function.
+Funciona! Mas esse nome, `printZeroPaddedWithLabel`, é um pouco estranho. Ele combina três coisas – impressão, preenchimento de zero e adição de uma etiqueta – em uma única função.
 
 {{index "zeroPad function"}}
 
-Instead of lifting out the repeated part of our program wholesale,
-let's try to pick out a single _concept_.
+Em vez de eliminar a parte repetida de nosso programa inteiramente, vamos tentar escolher um único conceito.
 
 ```
 function zeroPad(number, width) {
@@ -865,76 +625,37 @@ printFarmInventory(7, 16, 3);
 
 {{index readability, "pure function"}}
 
-A function with a nice, obvious name like `zeroPad` makes it easier
-for someone who reads the code to figure out what it does. And such a
-function is useful in more situations than just this specific program.
-For example, you could use it to help print nicely aligned tables of
-numbers.
+Uma função com um nome bonito e óbvio como `zeroPad` torna mais fácil para alguém que lê o código descobrir o que ele faz. E tal função é útil em mais situações do que apenas neste programa específico. Por exemplo, você pode usá-la para ajudar a imprimir tabelas de números bem alinhadas.
 
 {{index [interface, design]}}
 
-How smart and versatile _should_ our function be? We could write
-anything, from a terribly simple function that can only pad a number
-to be three characters wide to a complicated generalized
-number-formatting system that handles fractional numbers, negative
-numbers, alignment of decimal dots, padding with different characters,
-and so on.
+Quão inteligente e versátil deveria ser nossa função? Poderíamos escrever qualquer coisa, desde uma função terrivelmente simples que só pode preencher um número com três caracteres de largura a um complicado sistema generalizado de formatação de números que lida com números fracionários, números negativos, alinhamento de pontos decimais, preenchimento com caracteres diferentes e assim por diante.
 
-A useful principle is to not add cleverness unless you are absolutely
-sure you're going to need it. It can be tempting to write general
-"((framework))s" for every bit of functionality you come across.
-Resist that urge. You won't get any real work done—you'll just be
-writing code that you never use.
+Um princípio útil é não adicionar complexidade a menos que você tenha certeza absoluta de que vai precisar dela. Pode ser tentador escrever estruturas para cada funcionalidade que você encontrar. Resista a esse impulso. Você não terá nenhum trabalho real feito - você estará apenas escrevendo um código que você nunca usa.
 
 {{id pure}}
-## Functions and side effects
+
+## Funções e Efeitos Colaterais
 
 {{index "side effect", "pure function", [function, purity]}}
 
-Functions can be roughly divided into those that are called for their
-side effects and those that are called for their return value. (Though
-it is definitely also possible to both have side effects and return a
-value.)
+Funções podem ser divididas naquelas que são invocadas para produzir um efeito colateral e naquelas que são invocadas para gerar um valor de retorno (embora também seja possível termos funções que produzam efeitos colaterais e que retornem um valor).
 
 {{index reuse}}
 
-The first helper function in the ((farm example)),
-`printZeroPaddedWithLabel`, is called for its side effect: it prints a
-line. The second version, `zeroPad`, is called for its return value.
-It is no coincidence that the second is useful in more situations than
-the first. Functions that create values are easier to combine in new
-ways than functions that directly perform side effects.
+A primeira função auxiliar no exemplo da fazenda, `printZeroPaddedWithLabel`, é invocada para produzir um efeito colateral: imprimir uma linha. A segunda versão, `zeroPad`, é chamada para produzir um valor de retorno. Não é coincidência que a segunda versão é útil em mais situações do que a primeira. Funções que criam valores são mais fáceis de serem combinadas de diferentes maneiras do que funções que produzem efeitos colaterais diretamente.
 
 {{index substitution}}
 
-A _pure_ function is a specific kind of value-producing function that
-not only has no side effects but also doesn't rely on side effects
-from other code—for example, it doesn't read global bindings whose
-value might change. A pure function has the pleasant property that,
-when called with the same arguments, it always produces the same value
-(and doesn't do anything else). A call to such a function can be
-substituted by its return value without changing the meaning of the
-code. When you are not sure that a pure function is working correctly,
-you can test it by simply calling it and know that if it works in
-that context, it will work in any context. Nonpure functions tend to
-require more scaffolding to test.
+Uma função "pura" é um tipo específico de função que produz valores e que não gera efeitos colaterais, como também não depende de efeitos colaterais de outros códigos — por exemplo, ela não utiliza variáveis globais que podem ser alteradas por outros códigos. Uma função pura tem a característica de, ser sempre chamada com os mesmos argumentos, produzir o mesmo valor (e não fará nada além disso). Isso acaba fazendo com que seja fácil de entendermos como ela funciona. Uma chamada para tal função pode ser mentalmente substituída pelo seu resultado, sem alterar o significado do código. Quando você não tem certeza se uma função pura está funcionando corretamente, você pode testá-la simplesmente invocando-a. Sabendo que ela funciona nesse contexto, funcionará em qualquer outro contexto. Funções que não são "puras" podem retornar valores diferentes baseados em vários tipos de fatores e produzem efeitos colaterais que podem fazer com que seja difícil de testar e pensar sobre elas.
 
 {{index optimization, "console.log"}}
 
-Still, there's no need to feel bad when writing functions that are not
-pure or to wage a holy war to purge them from your code. Side effects
-are often useful. There'd be no way to write a pure version of
-`console.log`, for example, and `console.log` is good to have. Some
-operations are also easier to express in an efficient way when we use
-side effects, so computing speed can be a reason to avoid purity.
+Mesmo assim, não há necessidade de se sentir mal ao escrever funções que não são "puras" ou começar uma "guerra santa" para eliminar códigos impuros. Efeitos colaterais são úteis em algumas situações. Não existe uma versão "pura" de `console.log`, por exemplo, e `console.log` certamente é útil. Algumas operações são também mais fáceis de se expressar de forma mais eficiente quando usamos efeitos colaterais, portanto a velocidade de computação pode ser uma boa razão para se evitar a "pureza".
 
-## Summary
+## Resumo
 
-This chapter taught you how to write your own functions. The
-`function` keyword, when used as an expression, can create a function
-value. When used as a statement, it can be used to declare a binding
-and give it a function as its value. Arrow functions are yet another
-way to create functions.
+Esse capítulo ensinou você como escrever suas próprias funções. A palavra-chave `function`, quando usada como uma expressão, pode criar uma função de valor. Quando usada como declaração, pode ser usada para declarar uma variável e dar a função como valor. Funções de flecha (_Arrow functions_) são também outras formas de criar funções.
 
 ```
 // Define f to hold a function value
@@ -951,27 +672,17 @@ function g(a, b) {
 let h = a => a % 3;
 ```
 
-A key aspect in understanding functions is understanding scopes. Each
-block creates a new scope. Parameters and bindings declared in a given
-scope are local and not visible from the outside. Bindings declared
-with `var` behave differently—they end up in the nearest function
-scope or the global scope.
+Um aspecto chave para entender funções é entender os escopos. Cada bloco cria um novo escopo. Parâmetros e variáveis declarados em um determinado escopo são locais e não são visíveis de fora. Variáveis criadas com `var` se comportam diferente - elas vão parar no escopo de função mais próxima ou no escopo global.
 
-Separating the tasks your program performs into different functions is
-helpful. You won't have to repeat yourself as much, and functions can
-help organize a program by grouping code into pieces that do specific
-things.
+Separar as tarefas que sua aplicação executa em diferentes funções é útil. Você não terá que se repetir demais, funcões podem organizar uma aplicação agrupando elas em pedaços de código que fazem coisas mais específicas.
 
-## Exercises
+## Exercícios
 
-### Minimum
+### Mínimo
 
 {{index "Math object", "minimum (exercise)", "Math.min function", minimum}}
 
-The [previous chapter](program_structure#return_values) introduced the
-standard function `Math.min` that returns its smallest argument. We
-can build something like that now. Write a function `min` that takes
-two arguments and returns their minimum.
+O [capítulo anterior](program_structure#return_values) introduziu a função padrão `Math.min` que retorna seu menor argumento. Podemos construir algo assim agora. Escreva uma função `min` que receba dois argumentos e retorne seu mínimo.
 
 {{if interactive
 
@@ -983,45 +694,38 @@ console.log(min(0, 10));
 console.log(min(0, -10));
 // → -10
 ```
+
 if}}
 
 {{hint
 
 {{index "minimum (exercise)"}}
 
-If you have trouble putting braces and
-parentheses in the right place to get a valid function definition,
-start by copying one of the examples in this chapter and modifying it.
+Se você tiver problemas para colocar chaves e parênteses no lugar certo para obter uma definição de função válida, comece copiando um dos exemplos deste capítulo e modificando-o.
 
 {{index "return keyword"}}
 
-A function may contain multiple `return` statements.
+Uma função pode conter várias instruções `return`.
 
 hint}}
 
-### Recursion
+### Recursão
 
 {{index recursion, "isEven (exercise)", "even number"}}
 
-We've seen that `%` (the remainder operator) can be used to test
-whether a number is even or odd by using `% 2` to see whether it's
-divisible by two. Here's another way to define whether a positive
-whole number is even or odd:
+Vimos que `%` (o operador de resto) pode ser usado para testar se um número é par ou ímpar usando `% 2` para ver se é divisível por dois. Aqui está outra maneira de definir se um número inteiro positivo é par ou ímpar:
 
-- Zero is even.
+-   Zero é par.
 
-- One is odd.
+-   Um é impar.
 
-- For any other number _N_, its evenness is the same as _N_ - 2.
+-   Para qualquer outro número _N_, sua uniformidade é a mesma que _N_ - 2.
 
-Define a recursive function `isEven` corresponding to this
-description. The function should accept a single parameter (a
-positive, whole number) and return a Boolean.
+Defina uma função recursiva `isEven` correspondente a esta descrição. A função deve aceitar um único parâmetro (um número inteiro positivo) e retornar um booleano.
 
 {{index "stack overflow"}}
 
-Test it on 50 and 75. See how it behaves on -1. Why? Can you think of
-a way to fix this?
+Teste-o em 50 e 75. Veja como ele se comporta em -1. Por quê? Você pode pensar em uma maneira de corrigir isso?
 
 {{if interactive
 
@@ -1042,43 +746,23 @@ if}}
 
 {{index "isEven (exercise)", ["if keyword", chaining], recursion}}
 
-Your function will likely look somewhat similar to the inner `find`
-function in the recursive `findSolution`
-[example](functions#recursive_puzzle) in this chapter, with an
-`if`/`else if`/`else` chain that tests which of the three cases
-applies. The final `else`, corresponding to the third case, makes the
-recursive call. Each of the branches should contain a `return`
-statement or in some other way arrange for a specific value to be
-returned.
+Sua função provavelmente será um pouco semelhante à função interna `find` no [exemplo](functions#recursive_puzzle) `findSolution` recursivo neste capítulo, com uma cadeia `if`/`else if`/`else` que testa qual dos três casos se aplica. O `else` final, correspondente ao terceiro caso, faz a chamada recursiva. Cada uma das ramificações deve conter uma instrução `return` ou, de alguma outra forma, fazer com que um valor específico seja retornado.
 
 {{index "stack overflow"}}
 
-When given a negative number, the function will recurse again and
-again, passing itself an ever more negative number, thus getting
-further and further away from returning a result. It will eventually
-run out of stack space and abort.
+Quando dado um número negativo, a função irá recorrer repetidamente, passando a si mesma um número cada vez mais negativo, ficando cada vez mais longe de retornar um resultado. Eventualmente, ele ficará sem espaço na pilha e será abortado.
 
 hint}}
 
-### Bean counting
+### Contagem de feijões
 
 {{index "bean counting (exercise)", [string, indexing], "zero-based counting", ["length property", "for string"]}}
 
-You can get the Nth character, or letter, from a string by writing
-`"string"[N]`. The returned value will be a string containing only one
-character (for example, `"b"`). The first character has position 0,
-which causes the last one to be found at position `string.length - 1`.
-In other words, a two-character string has length 2, and its
-characters have positions 0 and 1.
+Você pode obter o enésimo caractere, ou letra, de uma string escrevendo `"string"[N]`. O valor retornado será uma string contendo apenas um caractere (por exemplo, `"b"`). O primeiro caractere tem a posição 0, o que faz com que o último seja encontrado na posição `string.length - 1`. Em outras palavras, uma string de dois caracteres tem comprimento 2 e seus caracteres têm posições 0 e 1.
 
-Write a function `countBs` that takes a string as its only argument
-and returns a number that indicates how many uppercase "B" characters
-there are in the string.
+Escreva uma função `countBs` que receba uma string como seu único argumento e retorne um número que indica quantos caracteres "B" maiúsculos existem na string.
 
-Next, write a function called `countChar` that behaves like `countBs`,
-except it takes a second argument that indicates the character that is
-to be counted (rather than counting only uppercase "B" characters).
-Rewrite `countBs` to make use of this new function.
+Em seguida, escreva uma função chamada `countChar` que se comporte como `countBs`, exceto que leva um segundo argumento que indica o caractere que deve ser contado (em vez de contar apenas caracteres "B" maiúsculos). Reescreva `countBs` para usar esta nova função.
 
 {{if interactive
 
@@ -1097,15 +781,10 @@ if}}
 
 {{index "bean counting (exercise)", ["length property", "for string"], "counter variable"}}
 
-Your function will need a ((loop)) that looks at every character in
-the string. It can run an index from zero to one below its length (`<
-string.length`). If the character at the current position is the same
-as the one the function is looking for, it adds 1 to a counter
-variable. Once the loop has finished, the counter can be returned.
+Sua função precisará de um loop que examine todos os caracteres da string. Ele pode executar um índice de zero a um abaixo de seu comprimento (`< string.length`). Se o caractere na posição atual for o mesmo que a função está procurando, ela adiciona 1 a uma variável de contador. Uma vez que o loop tenha terminado, o contador pode ser retornado.
 
 {{index "local binding"}}
 
-Take care to make all the bindings used in the function _local_ to the
-function by properly declaring them with the `let` or `const` keyword.
+Tome cuidado para fazer todas as variáveis usadas na função _local_ declarando-as corretamente com a palavra-chave `let` ou `const`.
 
 hint}}

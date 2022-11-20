@@ -6,19 +6,21 @@ Um dos "brinquedos" que um programa em JavaScript possui disponível em sua caix
 
 ## Estrutura do Documento
 
-Você pode imaginar um documento HTML como um conjunto de caixas aninhadas. Tags como <body> e </body> encapsulam outras tags, as quais, por sua vez, contêm outras tags ou texto. Aqui está o documento de exemplo do último capítulo:
+Você pode imaginar um documento HTML como um conjunto de caixas aninhadas. Tags como `<body>` e `</body>` encapsulam outras tags, as quais, por sua vez, contêm outras tags ou texto. Aqui está o documento de exemplo do último capítulo:
 
 ```html
 <html>
-  <head>
-    <title>Minha home page</title>
-  </head>
-  <body>
-    <h1>Minha home page</h1>
-    <p>Olá, eu sou Marijn e essa é minha home page.</p>
-    <p>Eu também escrevi um livro! leia-o
-      <a href="http://eloquentjavascript.net">aqui</a>.</p>
-  </body>
+	<head>
+		<title>Minha home page</title>
+	</head>
+	<body>
+		<h1>Minha home page</h1>
+		<p>Olá, eu sou Marijn e essa é minha home page.</p>
+		<p>
+			Eu também escrevi um livro! leia-o
+			<a href="http://eloquentjavascript.net">aqui</a>.
+		</p>
+	</body>
 </html>
 ```
 
@@ -26,7 +28,7 @@ Essa página tem a seguinte estrutura:
 
 ![Caixas HTML](../img/html-boxes.jpg)
 
-A estrutura de dados que o navegador usa para representar o documento segue este formato. Para cada caixa há um objeto, com o qual podemos interagir para descobrir coisas como: qual tag HTML ele representa e quais caixas e textos ele contém. Essa representação é chamada de Modelo de Objeto de Documentos, também apelidada de DOM  (do inglês *Document Object Model*).
+A estrutura de dados que o navegador usa para representar o documento segue este formato. Para cada caixa há um objeto, com o qual podemos interagir para descobrir coisas como: qual tag HTML ele representa e quais caixas e textos ele contém. Essa representação é chamada de Modelo de Objeto de Documentos, também apelidada de DOM (do inglês _Document Object Model_).
 
 A variável global `document` nos dá acesso à esses objetos. Sua propriedade `documentElement` se refere ao objeto que representa a tag <html>. Essa propriedade também nos fornece as propriedades `head` e `body`, alocando objetos para esses elementos.
 
@@ -34,11 +36,11 @@ A variável global `document` nos dá acesso à esses objetos. Sua propriedade `
 
 Relembre-se da sintaxe das árvores do [Capítulo 11](11-pratica-linguagem-de-programacao.md) por um momento. A estrutura delas é incrivelmente similar a estrutura de um documento do navegador. Cada nó pode se referir a outros nós "filhos", os quais podem ter, por sua vez, seus próprios "filhos". Esse formato é típico de estruturas aninhadas, nas quais os elementos podem conter subelementos que são similares à eles mesmos.
 
-Nós chamamos uma estrutura de dados de uma *árvore* quando ela possui uma estrutura de galhos, sem ciclos (um nó não deve conter ele mesmo, direta ou indiretamente) e possui uma única, e bem definida raiz. No caso do DOM, document.documentElement representa a raiz.
+Nós chamamos uma estrutura de dados de uma _árvore_ quando ela possui uma estrutura de galhos, sem ciclos (um nó não deve conter ele mesmo, direta ou indiretamente) e possui uma única, e bem definida raiz. No caso do DOM, document.documentElement representa a raiz.
 
 Árvores aparecem muito em Ciências da Computação. Além de representar estruturas recursivas como documentos HTML ou programas, elas também são comumente usadas para manter conjuntos ordenados de dados, pois elementos podem ser tipicamente encontrados ou inseridos de maneira mais eficiente em uma árvore ordenada do que em um conjunto (ou "array") plano ordenado.
 
-Uma árvore típica possui diferentes tipos de nós. A árvore de sintaxe para a [Egg Language](11-pratica-linguagem-de-programacao.md) continha variáveis, valores e nós de aplicação. Nós de aplicação sempre têm filhos, diferentemente das variáveis e valores, que eram *folhas*, ou seja, nós sem filhos.
+Uma árvore típica possui diferentes tipos de nós. A árvore de sintaxe para a [Egg Language](11-pratica-linguagem-de-programacao.md) continha variáveis, valores e nós de aplicação. Nós de aplicação sempre têm filhos, diferentemente das variáveis e valores, que eram _folhas_, ou seja, nós sem filhos.
 
 O mesmo vale para o DOM. Nós de elementos comuns, os quais representam tags HTML, determinam a estrutura do documento. Esses podem possuir nós filhos. Um exemplo de um desses nós é o `document.body`. Alguns desses nós filhos podem ser folhas, assim como fragmentos de texto ou comentários (os quais são escritos entre `<!--` e `-->` em HTML).
 
@@ -52,15 +54,15 @@ Na imagem acima, as folhas são os nós de texto e as setas indicam a relação 
 
 ## O Padrão
 
-Usar estranhos códigos numéricos para representar tipos de nós não é algo muito ao estilo JavaScript de se fazer. Mais tarde neste capítulo, veremos que outras partes da interface DOM também se sentem estranhas, *não pertencentes*. A razão para isso é que o DOM não foi concebido apenas para uso com o JavaScript, ao invés disso, ele tenta definir uma interface com uma linguagem neutra, a qual pode ser usada por outros sistemas—não somente HTML, mas também XML, o qual é um formato genérico de dados com um sintaxe semelhante ao HTML.
+Usar estranhos códigos numéricos para representar tipos de nós não é algo muito ao estilo JavaScript de se fazer. Mais tarde neste capítulo, veremos que outras partes da interface DOM também se sentem estranhas, _não pertencentes_. A razão para isso é que o DOM não foi concebido apenas para uso com o JavaScript, ao invés disso, ele tenta definir uma interface com uma linguagem neutra, a qual pode ser usada por outros sistemas—não somente HTML, mas também XML, o qual é um formato genérico de dados com um sintaxe semelhante ao HTML.
 
 Padrões são geralmente úteis, mas nesse caso, a vantagem (consistência entre diferentes linguagens), não é tão convincente. Possuir uma interface que é corretamente integrada com a linguagem que você está usando vai fazer você economizar mais tempo do que uma interface familiar entre diferentes linguagens.
 
-Como um exemplo dessa integração *pobre*, considere a propriedade `childNodes` que os nós de elementos DOM possuem. Essa propriedade carrega um objeto parecido com um array, com uma propriedade `length` e propriedades identificadas por números para acessar os nós filhos. Mas ele é uma instância do tipo `NodeList`, não um array real, logo ele não possui métodos como `slice` e `forEach`.
+Como um exemplo dessa integração _pobre_, considere a propriedade `childNodes` que os nós de elementos DOM possuem. Essa propriedade carrega um objeto parecido com um array, com uma propriedade `length` e propriedades identificadas por números para acessar os nós filhos. Mas ele é uma instância do tipo `NodeList`, não um array real, logo ele não possui métodos como `slice` e `forEach`.
 
-Além disso existem outros problemas que são simplesmente ocasionados por um design falho. Por exemplo: não há nenhuma maneira de criar um novo nó e imediatamente adicionar nós filhos ou atributos à ele. Ao invés disso, você precisa primeiro criá-lo, depois adicionar os filhos, um por um, e só então definir os atributos um à um usando *side effects*. Códigos que interagem muito com o DOM tendem à ficar muito longos, repetitivos e feios.
+Além disso existem outros problemas que são simplesmente ocasionados por um design falho. Por exemplo: não há nenhuma maneira de criar um novo nó e imediatamente adicionar nós filhos ou atributos à ele. Ao invés disso, você precisa primeiro criá-lo, depois adicionar os filhos, um por um, e só então definir os atributos um à um usando _side effects_. Códigos que interagem muito com o DOM tendem à ficar muito longos, repetitivos e feios.
 
-Porém nenhuma dessas falhas é fatal, pois JavaScript nos permite criar nossas próprias abstrações. É fácil escrever algumas funções auxiliares que permitem que você expresse as operações que quer fazer de maneira mais curta. Na verdade, muitas *libraries* dedicadas à programação em browsers já vêm com essas ferramentas.
+Porém nenhuma dessas falhas é fatal, pois JavaScript nos permite criar nossas próprias abstrações. É fácil escrever algumas funções auxiliares que permitem que você expresse as operações que quer fazer de maneira mais curta. Na verdade, muitas _libraries_ dedicadas à programação em browsers já vêm com essas ferramentas.
 
 ## Movendo-se Através da Árvore
 
@@ -111,11 +113,11 @@ Para encontrar um nó único específico, você pode dar à ele um atributo `id`
 
 ```html
 <p>Minha avestruz Gertrude:</p>
-<p><img id="gertrude" src="img/ostrich.png"></p>
+<p><img id="gertrude" src="img/ostrich.png" /></p>
 
 <script>
-  var ostrich = document.getElementById("gertrude");
-  console.log(ostrich.src);
+	var ostrich = document.getElementById("gertrude");
+	console.log(ostrich.src);
 </script>
 ```
 
@@ -131,14 +133,14 @@ Quase tudo na estrutura de dados DOM pode ser alterado. Nós de elementos possue
 <p>Três</p>
 
 <script>
-  var paragraphs = document.body.getElementsByTagName("p");
-  document.body.insertBefore(paragraphs[2], paragraphs[0]);
+	var paragraphs = document.body.getElementsByTagName("p");
+	document.body.insertBefore(paragraphs[2], paragraphs[0]);
 </script>
 ```
 
 Um nó pode existir no documento em apenas um lugar. Sendo assim, inserir o parágrafo "Três" na frente do parágrafo "Um" vai apenas removê-lo do fim do documento e depois inseri-lo na frente, resultando em "Três/Um/Dois". Todas as operações que inserem um nó em algum lugar irão como efeito colateral, fazer com que ele seja removido de sua posição atual (caso ele tenha uma).
 
-O método `replaceChild` é usado para substituir um nó filho por outro. Ele aceita como argumentos dois nós: um novo nó e o nó à ser substituído. O nó substituído deverá ser um filho do elemento com o qual o método é chamado. Note que ambos `replaceChild` e `insertBefore` esperam o seu *novo* nó como primeiro argumento.
+O método `replaceChild` é usado para substituir um nó filho por outro. Ele aceita como argumentos dois nós: um novo nó e o nó à ser substituído. O nó substituído deverá ser um filho do elemento com o qual o método é chamado. Note que ambos `replaceChild` e `insertBefore` esperam o seu _novo_ nó como primeiro argumento.
 
 ## Criando Nós
 
@@ -147,30 +149,32 @@ No exemplo seguinte, nós queremos escrever um script que substitua todas as ima
 Isso envolve não só remover as imagens, mas adicionar um novo nó de texto para substituí-las. Para isso, nós usamos o método `document.createTextNode`.
 
 ```html
-<p>The <img src="img/cat.png" alt="Cat"> in the
-  <img src="img/hat.png" alt="Hat">.</p>
+<p>
+	The <img src="img/cat.png" alt="Cat" /> in the
+	<img src="img/hat.png" alt="Hat" />.
+</p>
 
 <p><button onclick="replaceImages()">Substituir</button></p>
 
 <script>
-  function replaceImages() {
-    var images = document.body.getElementsByTagName("img");
-    for (var i = images.length - 1; i >= 0; i--) {
-      var image = images[i];
-      if (image.alt) {
-        var text = document.createTextNode(image.alt);
-        image.parentNode.replaceChild(text, image);
-      }
-    }
-  }
+	function replaceImages() {
+		var images = document.body.getElementsByTagName("img");
+		for (var i = images.length - 1; i >= 0; i--) {
+			var image = images[i];
+			if (image.alt) {
+				var text = document.createTextNode(image.alt);
+				image.parentNode.replaceChild(text, image);
+			}
+		}
+	}
 </script>
 ```
 
 Dada uma string, o método `createTextNode` nos dá um nó do DOM de tipo 3 (um nó de texto), que podemos inserir no nosso documento para que seja mostrado na tela.
 
-O *loop* (ou repetição) que percorre as imagens começa no fim da lista de nós. Isso é necessário porque a lista de nós retornada por um método como `getElementsByTagName` (ou uma propriedade como `childNodes`) é *viva*—isto é, atualizada em tempo real conforme o documento muda. Se nós começássemos pelo início do documento, remover a primeira imagem faria com que a lista perdesse seu primeiro elemento, então na segunda vez que o *loop* se repetisse, quando `i` é um, ele iria parar, pois o comprimento da coleção agora também é um.
+O _loop_ (ou repetição) que percorre as imagens começa no fim da lista de nós. Isso é necessário porque a lista de nós retornada por um método como `getElementsByTagName` (ou uma propriedade como `childNodes`) é _viva_—isto é, atualizada em tempo real conforme o documento muda. Se nós começássemos pelo início do documento, remover a primeira imagem faria com que a lista perdesse seu primeiro elemento, então na segunda vez que o _loop_ se repetisse, quando `i` é um, ele iria parar, pois o comprimento da coleção agora também é um.
 
-Se você quiser um conjunto sólido de nós, em oposição a um conjunto em tempo real, você pode converter o conjunto para um *array* de verdade, chamando o método `slice`.
+Se você quiser um conjunto sólido de nós, em oposição a um conjunto em tempo real, você pode converter o conjunto para um _array_ de verdade, chamando o método `slice`.
 
 ```JavaScript
 var arrayish = {0: "um", 1: "dois", length: 2};
@@ -182,7 +186,7 @@ real.forEach(function(elt) { console.log(elt); });
 
 Para criar nós comuns de elementos (tipo 1), você pode usar o método `document.createElement`. Esse método pega o nome de uma tag e retorna um novo nó vazio do tipo fornecido.
 
-O exemplo à seguir define uma função `elt`, a qual cria um nó de elemento e trata o resto dos argumentos como filhos para aquele nó. Essa função é depois usada para adicionar uma simples atribuição para uma citação (em inglês, *quote*).
+O exemplo à seguir define uma função `elt`, a qual cria um nó de elemento e trata o resto dos argumentos como filhos para aquele nó. Essa função é depois usada para adicionar uma simples atribuição para uma citação (em inglês, _quote_).
 
 ```JavaScript
 <blockquote id="quote">
@@ -223,11 +227,11 @@ HTML permite que você defina qualquer atributo que você queira em nós. Isso p
 <p data-classified="unclassified">Eu tenho dois pés.</p>
 
 <script>
-  var paras = document.body.getElementsByTagName("p");
-  Array.prototype.forEach.call(paras, function(para) {
-    if (para.getAttribute("data-classified") == "secret")
-      para.parentNode.removeChild(para);
-  });
+	var paras = document.body.getElementsByTagName("p");
+	Array.prototype.forEach.call(paras, function (para) {
+		if (para.getAttribute("data-classified") == "secret")
+			para.parentNode.removeChild(para);
+	});
 </script>
 ```
 
@@ -256,9 +260,9 @@ function highlightCode(node, keywords) {
 
 A função `highlightCode` pega um nó `<pre>` e uma expressão regular (com a opção "global" ligada) que identifica as palavras reservadas da linguagem de programação que o elemento contém.
 
-A propriedade `textContent` é usada para pegar todo o texto dentro do nó e depois é definida para uma string vazia, a qual tem o efeito de esvaziar o nó. Nós fazemos um *loop* por todas as ocorrências das palavras chaves da linguagem, e fazemos o texto entre essas ocorrências como nós normais de texto e cercamos as palavras chaves com a tag `<bold>`, fazendo com que elas fiquem em negrito.
+A propriedade `textContent` é usada para pegar todo o texto dentro do nó e depois é definida para uma string vazia, a qual tem o efeito de esvaziar o nó. Nós fazemos um _loop_ por todas as ocorrências das palavras chaves da linguagem, e fazemos o texto entre essas ocorrências como nós normais de texto e cercamos as palavras chaves com a tag `<bold>`, fazendo com que elas fiquem em negrito.
 
-Nós podemos sublinhar automaticamente todos os códigos de programas na página fazendo um *looping* entre todos os elementos `<pre>` que possuem o atributo `data-language` e então chamando a função `highlightCode` em cada um e depois aplicando uma expressão regular adequada para a linguagem que se quer destacar.
+Nós podemos sublinhar automaticamente todos os códigos de programas na página fazendo um _looping_ entre todos os elementos `<pre>` que possuem o atributo `data-language` e então chamando a função `highlightCode` em cada um e depois aplicando uma expressão regular adequada para a linguagem que se quer destacar.
 
 ```JavaScript
 var languages = {
@@ -291,56 +295,54 @@ Existe um atributo comumente usado, `class`, o qual é uma palavra reservada na 
 
 ## Layout
 
-Você provavelmente notou que tipos diferentes de elementos são dispostos de maneiras diferentes. Alguns, como parágrafos (`<p>`) ou cabeçalhos (`<h1>`), ocupam toda a largura do documento e são mostrados em linhas separadas. Esses são chamados de elementos *bloco*. Outros, como links (`<a>`) ou o elemento `<strong>`, usado no exemplo acima, são mostrados na mesma linha, juntamente com o texto que os cerca. Esses elementos são chamados elementos *inline* (em linha).
+Você provavelmente notou que tipos diferentes de elementos são dispostos de maneiras diferentes. Alguns, como parágrafos (`<p>`) ou cabeçalhos (`<h1>`), ocupam toda a largura do documento e são mostrados em linhas separadas. Esses são chamados de elementos _bloco_. Outros, como links (`<a>`) ou o elemento `<strong>`, usado no exemplo acima, são mostrados na mesma linha, juntamente com o texto que os cerca. Esses elementos são chamados elementos _inline_ (em linha).
 
 Para qualquer documento, navegadores são capazes de computar um layout, o qual dá para cada elemento um tamanho e uma posição baseando-se em seu tipo e conteúdo. Esse layout é depois usado para desenhar o documento na tela.
 
-O tamanho e posição de um elemento pode ser acessado através de JavaScript. As propriedades `offsetWidth` e `offsetHeight` irão fornecer à você o espaço que o elemento ocupa em *pixels*. Um *pixel* é a unidade básica de medida em um navegador e tipicamente corresponde ao menor ponto que sua tela pode mostrar. Do mesmo modo, `clientWidth` e `clientHeight` irão fornecer o espaço *dentro* do elemento, ignorando a largura da borda.
+O tamanho e posição de um elemento pode ser acessado através de JavaScript. As propriedades `offsetWidth` e `offsetHeight` irão fornecer à você o espaço que o elemento ocupa em _pixels_. Um _pixel_ é a unidade básica de medida em um navegador e tipicamente corresponde ao menor ponto que sua tela pode mostrar. Do mesmo modo, `clientWidth` e `clientHeight` irão fornecer o espaço _dentro_ do elemento, ignorando a largura da borda.
 
 ```html
-<p style="border: 3px solid red">
-  Estou encaixotado em
-</p>
+<p style="border: 3px solid red">Estou encaixotado em</p>
 
 <script>
-  var para = document.body.getElementsByTagName("p")[0];
-  console.log("clientHeight:", para.clientHeight);
-  console.log("offsetHeight:", para.offsetHeight);
+	var para = document.body.getElementsByTagName("p")[0];
+	console.log("clientHeight:", para.clientHeight);
+	console.log("offsetHeight:", para.offsetHeight);
 </script>
 ```
 
 A maneira mais efetiva de encontrar a posição precisa de um elemento na tela é o método `getBoundingClientRect`. Ele retorna um objeto com as propriedades `top` (topo), `bottom` (baixo), `left` (esquerda) e `right` (direita), que correspondem às posições dos pixels em relação ao canto esquerdo da tela. Se você quiser que eles sejam relativos ao documento como um todo, você deverá adicionar a posição atual de rolagem, encontrada à partir das variáveis globais `pageXOffset` e `pageYOffset`.
 
-Organizar um documento e fazer seu *layout* pode ser muito trabalhoso. Para ganhar velocidade, os motores dos navegadores não fazem uma reorganização do documento imediatamente a cada vez que ele muda, ao invés disso eles esperam o máximo que podem. Quando um programa JavaScript que mudou o documento termina de rodar, o navegador irá ter que computar um novo *layout* para poder mostrar o documento alterado na tela. Quando um programa pede pela posição ou tamanho de algo, lendo propriedades como `offsetHeight` ou chamando `getBoundingClientRect`, prover a ele uma informação correta também requer computar um *layout*.
+Organizar um documento e fazer seu _layout_ pode ser muito trabalhoso. Para ganhar velocidade, os motores dos navegadores não fazem uma reorganização do documento imediatamente a cada vez que ele muda, ao invés disso eles esperam o máximo que podem. Quando um programa JavaScript que mudou o documento termina de rodar, o navegador irá ter que computar um novo _layout_ para poder mostrar o documento alterado na tela. Quando um programa pede pela posição ou tamanho de algo, lendo propriedades como `offsetHeight` ou chamando `getBoundingClientRect`, prover a ele uma informação correta também requer computar um _layout_.
 
-Um programa que repetidamente alterna entre ler informações sobre a organização (*layout*) do DOM e alterá-lo, força muitas reorganizações e consequentemente compromete o desempenho. O código à seguir mostra um exemplo disso. Ele contém dois programas diferentes que constroem uma linha de "X" caracteres com 2000 pixels de comprimento e mede quanto tempo cada um leva.
+Um programa que repetidamente alterna entre ler informações sobre a organização (_layout_) do DOM e alterá-lo, força muitas reorganizações e consequentemente compromete o desempenho. O código à seguir mostra um exemplo disso. Ele contém dois programas diferentes que constroem uma linha de "X" caracteres com 2000 pixels de comprimento e mede quanto tempo cada um leva.
 
 ```html
 <p><span id="one"></span></p>
 <p><span id="two"></span></p>
 
 <script>
-  function time(name, action) {
-    var start = Date.now(); // Tempo atual milissegundos
-    action();
-    console.log(name, "took", Date.now() - start, "ms");
-  }
+	function time(name, action) {
+		var start = Date.now(); // Tempo atual milissegundos
+		action();
+		console.log(name, "took", Date.now() - start, "ms");
+	}
 
-  time("naive", function() {
-    var target = document.getElementById("one");
-    while (target.offsetWidth < 2000)
-      target.appendChild(document.createTextNode("X"));
-  });
-  // → naive levou 32 ms
+	time("naive", function () {
+		var target = document.getElementById("one");
+		while (target.offsetWidth < 2000)
+			target.appendChild(document.createTextNode("X"));
+	});
+	// → naive levou 32 ms
 
-  time("clever", function() {
-    var target = document.getElementById("two");
-    target.appendChild(document.createTextNode("XXXXX"));
-    var total = Math.ceil(2000 / (target.offsetWidth / 5));
-    for (var i = 5; i < total; i++)
-      target.appendChild(document.createTextNode("X"));
-  });
-  // → clever levou 1 ms
+	time("clever", function () {
+		var target = document.getElementById("two");
+		target.appendChild(document.createTextNode("XXXXX"));
+		var total = Math.ceil(2000 / (target.offsetWidth / 5));
+		for (var i = 5; i < total; i++)
+			target.appendChild(document.createTextNode("X"));
+	});
+	// → clever levou 1 ms
 </script>
 ```
 
@@ -370,14 +372,12 @@ A tag `block` vai acabar em sua própria linha, pois elementos em blocos não s�
 Código JavaScript pode manipular diretamente o estilo de um elemento através da propriedade `style` do nó. Essa propriedade carrega um objeto que possui todas as propriedades possíveis para o atributo `style`. Os valores dessas propriedades são strings, os quais nós podemos escrever para mudar um aspecto em particular do estilo do elemento.
 
 ```html
-<p id="para" style="color: purple">
-  Texto bonito
-</p>
+<p id="para" style="color: purple">Texto bonito</p>
 
 <script>
-  var para = document.getElementById("para");
-  console.log(para.style.color);
-  para.style.color = "magenta";
+	var para = document.getElementById("para");
+	console.log(para.style.color);
+	para.style.color = "magenta";
 </script>
 ```
 
@@ -385,19 +385,19 @@ Alguns nomes de propriedades de estilo contêm traços, como font-family. Devido
 
 ## Estilos em Cascata
 
-O sistema de estilos para HTML é chamado de CSS, que é uma abreviação para *Cascading Style Sheets* (Folhas de Estilo em Cascata, em português). Uma folha de estilos é um conjunto de regras de como estilizar os elementos no documento. Ela pode ser fornecida dentro de uma tag `<style>`.
+O sistema de estilos para HTML é chamado de CSS, que é uma abreviação para _Cascading Style Sheets_ (Folhas de Estilo em Cascata, em português). Uma folha de estilos é um conjunto de regras de como estilizar os elementos no documento. Ela pode ser fornecida dentro de uma tag `<style>`.
 
 ```html
 <style>
-  strong {
-    font-style: italic;
-    color: grey;
-  }
+	strong {
+		font-style: italic;
+		color: grey;
+	}
 </style>
 <p>Agora <strong>textos com tag strong</strong> são itálicos e cinza.</p>
 ```
 
-A palavra *cascata* no nome refere-se ao fato de que múltiplas regras são combinadas para produzir o estilo final de um elemento, aplicando-se em "cascata". No exemplo acima, o estilo padrão para as tags `<strong>`, o qual dá à eles `font-weight: bold`, é sobreposto pela regra na tag `<style>`, que adiciona `font-style` e `color`.
+A palavra _cascata_ no nome refere-se ao fato de que múltiplas regras são combinadas para produzir o estilo final de um elemento, aplicando-se em "cascata". No exemplo acima, o estilo padrão para as tags `<strong>`, o qual dá à eles `font-weight: bold`, é sobreposto pela regra na tag `<style>`, que adiciona `font-style` e `color`.
 
 Quando múltiplas regras definem um valor para a mesma propriedade, a regra lida mais recentemente tem um nível de preferência maior e vence. Então se a regra na tag `<style>` incluísse `font-weight: normal`, conflitando com a regra `font-weight` padrão, o texto seria normal e não em negrito. Estilos em um atributo `style` aplicados diretamente ao nó possuem maior preferência e sempre vencem.
 
@@ -405,16 +405,16 @@ Quando múltiplas regras definem um valor para a mesma propriedade, a regra lida
 
 ```css
 .subtle {
-  color: grey;
-  font-size: 80%;
+	color: grey;
+	font-size: 80%;
 }
 #header {
-  background: blue;
-  color: white;
+	background: blue;
+	color: white;
 }
 /* Elementos p, com classes a e b, e id main */
 p.a.b#main {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 ```
 
@@ -426,30 +426,33 @@ A notação `p > a {...}` aplica os estilos passados para todas as tags `<a>` qu
 
 Nós não iremos usar muitas folhas de estilo neste livro. Ainda assim, entendê-las é crucial para programar no navegador, explicar todas as propriedades que elas suportam de maneira correta e a interação entre essas propriedades levaria dois ou três livros somente para isso.
 
-A razão principal pela qual eu introduzi a sintaxe de *seletores*—a notação usada em folhas de estilo para definir a qual elemento um conjunto de regras se aplica—é que nós podemos usar essa mesma mini linguagem para definir uma maneira eficaz de encontrar elementos do DOM.
+A razão principal pela qual eu introduzi a sintaxe de _seletores_—a notação usada em folhas de estilo para definir a qual elemento um conjunto de regras se aplica—é que nós podemos usar essa mesma mini linguagem para definir uma maneira eficaz de encontrar elementos do DOM.
 
 O método querySelectorAll, que é definido em tanto no objeto `document` quanto nos nós de elementos, leva apenas uma string seletora e retorna um objeto parecido um array, contendo todos os elementos que encontra.
 
 ```html
-<p>Se você sair por aí caçando
-  <span class="animal">coelhos</span></p>
+<p>Se você sair por aí caçando <span class="animal">coelhos</span></p>
 <p>E você souber que vai cair</p>
-<p>Diga à eles que <span class="character">enquanto fumava narguilé,
-  <span class="animal">uma lagarta</span></span></p>
+<p>
+	Diga à eles que
+	<span class="character"
+		>enquanto fumava narguilé, <span class="animal">uma lagarta</span></span
+	>
+</p>
 <p>Lhe deu a ordem</p>
 
 <script>
-  function count(selector) {
-    return document.querySelectorAll(selector).length;
-  }
-  console.log(count("p"));           // Todos os elementos <p>
-  // → 4
-  console.log(count(".animal"));     // Classe animal
-  // → 2
-  console.log(count("p .animal"));   // Animal dentro de <p>
-  // → 2
-  console.log(count("p > .animal")); // Filhos diretos de <p>
-  // → 1
+	function count(selector) {
+		return document.querySelectorAll(selector).length;
+	}
+	console.log(count("p")); // Todos os elementos <p>
+	// → 4
+	console.log(count(".animal")); // Classe animal
+	// → 2
+	console.log(count("p .animal")); // Animal dentro de <p>
+	// → 2
+	console.log(count("p > .animal")); // Filhos diretos de <p>
+	// → 1
 </script>
 ```
 
@@ -467,20 +470,20 @@ Nós podemos usar essa técnica para criar uma animação. O documento abaixo mo
 
 ```html
 <p style="text-align: center">
-  <img src="img/cat.png" style="position: relative">
+	<img src="img/cat.png" style="position: relative" />
 </p>
 <script>
-  var cat = document.querySelector("img");
-  var angle = 0, lastTime = null;
-  function animate(time) {
-    if (lastTime != null)
-      angle += (time - lastTime) * 0.001;
-    lastTime = time;
-    cat.style.top = (Math.sin(angle) * 20) + "px";
-    cat.style.left = (Math.cos(angle) * 200) + "px";
-    requestAnimationFrame(animate);
-  }
-  requestAnimationFrame(animate);
+	var cat = document.querySelector("img");
+	var angle = 0,
+		lastTime = null;
+	function animate(time) {
+		if (lastTime != null) angle += (time - lastTime) * 0.001;
+		lastTime = time;
+		cat.style.top = Math.sin(angle) * 20 + "px";
+		cat.style.left = Math.cos(angle) * 200 + "px";
+		requestAnimationFrame(animate);
+	}
+	requestAnimationFrame(animate);
 </script>
 ```
 
@@ -492,13 +495,13 @@ Se nós apenas atualizássemos o DOM em um loop, a página iria congelar e nada 
 
 Nossa função de animação recebe como argumento o tempo atual, o qual é comparado com o tempo recebido anteriormente (nesse caso, a variável `lastTime`) para ter certeza que o movimento do gato por milissegundo é estável, e então a animação se move suavemente. Se ela se movesse uma porcentagem fixa à cada passo, o movimento iria sofrer atraso se, por exemplo, outra tarefa que exige muito processamento no mesmo computador acabasse impedindo com que a função fosse executada por uma fração de segundo.
 
-`Math.cos` (cosseno) e `Math.sin` (seno) são úteis para achar pontos que se localizam em um círculo ao redor de um ponto (0,0) com o raio de uma unidade. Ambas as funções interpretam seu argumento como a posição nesse círculo, com 0 significando o ponto na extrema direita do círculo, indo em sentido horário até 2π (cerca de 6.28) nos levou ao redor de todo o círculo. `Math.cos` informa a coordenada x (no plano cartesiano) do ponto que corresponde à dada posição no círculo, enquanto `Math.sin` informa a coordenada y. Posições (ou ângulos) maiores que 2π ou abaixo de 0 são válidos—a rotação se repete, de modo que *a*+2π refere-se ao mesmo ângulo que *a*
+`Math.cos` (cosseno) e `Math.sin` (seno) são úteis para achar pontos que se localizam em um círculo ao redor de um ponto (0,0) com o raio de uma unidade. Ambas as funções interpretam seu argumento como a posição nesse círculo, com 0 significando o ponto na extrema direita do círculo, indo em sentido horário até 2π (cerca de 6.28) nos levou ao redor de todo o círculo. `Math.cos` informa a coordenada x (no plano cartesiano) do ponto que corresponde à dada posição no círculo, enquanto `Math.sin` informa a coordenada y. Posições (ou ângulos) maiores que 2π ou abaixo de 0 são válidos—a rotação se repete, de modo que _a_+2π refere-se ao mesmo ângulo que _a_
 
 ![Usando seno e cosseno para computador cordenadas](../img/cos_sin.svg)
 
 A animação do gato mantém um contador, `angle`, para o ângulo atual da animação, e incrementa-o proporcionalmente ao tempo decorrido a cada vez que a função `animate` é chamada. Ela pode usar esse ângulo para computar a posição atual do elemento de imagem. A propriedade de estilo `top` é computada com `Math.sin` e multiplicada por 20, que é o raio vertical do nosso círculo. O estilo `left` é baseado em `Math.cos` e multiplicado por 200, de maneira que o círculo é muito mais largo do que alto, resultando em uma rotação elíptica.
 
-Note que os estilos geralmente precisam de *unidades*. Nesse caso, nós temos que inserir "`px`" para o número com o intuito de dizer ao navegador que nós estamos contando em pixels (não em centímetros, "ems" ou outras unidades). Isso é algo fácil de esquecer. Usar números sem unidades vai resultar em uma regra de estilo ignorada—exceto se o número for 0, que sempre significa a mesma coisa, não importando a unidade.
+Note que os estilos geralmente precisam de _unidades_. Nesse caso, nós temos que inserir "`px`" para o número com o intuito de dizer ao navegador que nós estamos contando em pixels (não em centímetros, "ems" ou outras unidades). Isso é algo fácil de esquecer. Usar números sem unidades vai resultar em uma regra de estilo ignorada—exceto se o número for 0, que sempre significa a mesma coisa, não importando a unidade.
 
 ## Resumo
 
@@ -506,7 +509,7 @@ Programas JavaScript podem inspecionar e interferir com o documento atual cujo n
 
 O DOM é organizado como uma árvore, na qual elementos são organizados hierarquicamente de acordo com a estrutura do documento. Os objetos representando elementos possuem propriedades como `parentNode` e `childNodes`, que podem ser usadas para navegar pela árvore.
 
-A maneira com que um documento é mostrada pode ser influenciada através da *estilização*, tanto anexando estilos diretamente à um nó ou definindo regras que aplicam-se à certos nós. Existem muitas propriedades de estilo diferentes, assim como `color` ou `display`. JavaScript pode manipular o estilo de um elemento diretamente através de sua propriedade `style`.
+A maneira com que um documento é mostrada pode ser influenciada através da _estilização_, tanto anexando estilos diretamente à um nó ou definindo regras que aplicam-se à certos nós. Existem muitas propriedades de estilo diferentes, assim como `color` ou `display`. JavaScript pode manipular o estilo de um elemento diretamente através de sua propriedade `style`.
 
 ## Exercícios
 
@@ -516,22 +519,22 @@ Nós construímos tabelas de texto plano no [Capítulo 6](06-a-vida-secreta-dos-
 
 ```html
 <table>
-  <tr>
-    <th>nome</th>
-    <th>altura</th>
-    <th>país</th>
-  </tr>
-  <tr>
-    <td>Kilimanjaro</td>
-    <td>5895</td>
-    <td>Tanzania</td>
-  </tr>
+	<tr>
+		<th>nome</th>
+		<th>altura</th>
+		<th>país</th>
+	</tr>
+	<tr>
+		<td>Kilimanjaro</td>
+		<td>5895</td>
+		<td>Tanzania</td>
+	</tr>
 </table>
 ```
 
-Para cada *sequência* (linha), a tag `<table>` contém uma tag `<tr>`. Dentro dessa tag nós podemos colocar elementos célula: ou células de cabeçalho (`<th>`) ou células comuns (`<td>`).
+Para cada _sequência_ (linha), a tag `<table>` contém uma tag `<tr>`. Dentro dessa tag nós podemos colocar elementos célula: ou células de cabeçalho (`<th>`) ou células comuns (`<td>`).
 
-A mesma fonte de dados usada no [Capítulo 6](06-a-vida-secreta-dos-objetos.md) está disponível novamente na variável `MOUNTAINS`, disponível em nossa *sandbox* e também [disponível para download](../code/mountains.js) na nossa lista de conjunto de dados no website([eloquentjavascript.net/code](http://eloquentjavascript.net/code)).
+A mesma fonte de dados usada no [Capítulo 6](06-a-vida-secreta-dos-objetos.md) está disponível novamente na variável `MOUNTAINS`, disponível em nossa _sandbox_ e também [disponível para download](../code/mountains.js) na nossa lista de conjunto de dados no website([eloquentjavascript.net/code](http://eloquentjavascript.net/code)).
 
 Escreva uma função buildTable que, dado um array de objetos com um mesmo conjunto de propriedades, construa uma estrutura DOM representando uma tabela. A tabela deve ter uma sequência (linha) de cabeçalho com os nomes das propriedades dentro de elementos `<th>` e uma linha subsequente por objeto no array, com seus valores das propriedades em elementos `<td>`.
 
@@ -541,24 +544,32 @@ Uma vez que você fez a parte básica funcionar, alinhe as células que contêm 
 
 ```html
 <style>
-  /* Define uma visualização mais limpa para tabelas */
-  table  { border-collapse: collapse; }
-  td, th { border: 1px solid black; padding: 3px 8px; }
-  th     { text-align: left; }
+	/* Define uma visualização mais limpa para tabelas */
+	table {
+		border-collapse: collapse;
+	}
+	td,
+	th {
+		border: 1px solid black;
+		padding: 3px 8px;
+	}
+	th {
+		text-align: left;
+	}
 </style>
 
 <script>
-  function buildTable(data) {
-    // Seu código aqui.
-  }
+	function buildTable(data) {
+		// Seu código aqui.
+	}
 
-  document.body.appendChild(buildTable(MOUNTAINS));
+	document.body.appendChild(buildTable(MOUNTAINS));
 </script>
 ```
 
 **Dicas**
 
-Use `document.createElement` para criar novos nós de elementos, `document.createTextNode` para criar nós de texto e  o método `appendChild` para colocar nós dentro de outros nós.
+Use `document.createElement` para criar novos nós de elementos, `document.createTextNode` para criar nós de texto e o método `appendChild` para colocar nós dentro de outros nós.
 
 Você deve fazer um loop através das palavras chaves uma vez para preencher a linha do topo e depois novamente para cada objeto no array para construir linhas com os dados.
 
@@ -572,21 +583,20 @@ Para encontrar o nome de tag de um elemento, use sua propriedade `tagName`. Mas 
 
 ```html
 <h1>Cabeçalho com um elemento <span>span</span>.</h1>
-<p>Um parágrafo com <span>um</span>, <span>dois</span>
-  spans.</p>
+<p>Um parágrafo com <span>um</span>, <span>dois</span> spans.</p>
 
 <script>
-  function byTagName(node, tagName) {
-    // Seu código aqui.
-  }
+	function byTagName(node, tagName) {
+		// Seu código aqui.
+	}
 
-  console.log(byTagName(document.body, "h1").length);
-  // → 1
-  console.log(byTagName(document.body, "span").length);
-  // → 3
-  var para = document.querySelector("p");
-  console.log(byTagName(para, "span").length);
-  // → 2
+	console.log(byTagName(document.body, "h1").length);
+	// → 1
+	console.log(byTagName(document.body, "span").length);
+	// → 3
+	var para = document.querySelector("p");
+	console.log(byTagName(para, "span").length);
+	// → 2
 </script>
 ```
 
@@ -607,12 +617,12 @@ Ou faça o chapéu circular ao redor do gato. Você pode ainda alterar a animaç
 Para tornar mais fácil a tarefa de posicionar múltiplos objetos, é provavelmente uma boa idéia optar por posicionamento absoluto. Isso significa que as propriedades `top` e `left` são contadas relativamente ao topo esquerdo do documento. Para evitar usar coordenadas negativas, você pode simplesmente adicionar um número fixo de pixels para os valores das posições.
 
 ```html
-<img src="img/cat.png" id="cat" style="position: absolute">
-<img src="img/hat.png" id="hat" style="position: absolute">
+<img src="img/cat.png" id="cat" style="position: absolute" />
+<img src="img/hat.png" id="hat" style="position: absolute" />
 
 <script>
-  var cat = document.querySelector("#cat");
-  var hat = document.querySelector("#hat");
-  // Seu código aqui.
+	var cat = document.querySelector("#cat");
+	var hat = document.querySelector("#hat");
+	// Seu código aqui.
 </script>
 ```

@@ -9,7 +9,7 @@ profissão, objetos são a maneira de viver, o sujeito das guerras santas, e um
 jargão apaixonante que ainda não perdeu o seu poder.
 
 Para um estrangeiro, isso provavelmente é um pouco confuso. Vamos começar com
-uma rápida história dos objetos como constrtutores da programação.
+uma rápida história dos objetos como construtores da programação.
 
 ## História
 Essa história, como a maioria das histórias de programação, começa com um

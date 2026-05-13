@@ -40,6 +40,6 @@ Tradução em Português Brasileiro do livro [Eloquent JavaScript](https://eloqu
 ## Créditos
 
 - **Autor:** Marijn Haverbeke
-- **Tradução:** Joao Stein
+- **Tradução:** Comunidade BrazilJS
 - [Versão original em inglês](https://eloquentjavascript.net/)
 - Licenciado sob [Creative Commons BY-NC 3.0](http://creativecommons.org/licenses/by-nc/3.0/)

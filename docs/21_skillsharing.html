@@ -1,0 +1,621 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projeto: Website de Compartilhamento de Habilidades :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":21}</script></head>
+
+<article>
+<nav><a href="20_node.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>Projeto: Website de Compartilhamento de Habilidades</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-Gh8yJEcdWg" href="#p-Gh8yJEcdWg" tabindex="-1" role="presentation"></a>Se você tem conhecimento, deixe que outros acendam suas velas nele.</p>
+
+<footer>Margaret Fuller</footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_21.jpg" alt="Illustration showing two unicycles leaned against a mailbox"></figure>
+
+<p><a class="p_ident" id="p-zYcnUzDiFo" href="#p-zYcnUzDiFo" tabindex="-1" role="presentation"></a>Um encontro de <em>compartilhamento de habilidades</em> é um evento onde pessoas com um interesse em comum se reúnem e fazem pequenas apresentações informais sobre coisas que conhecem. Em um encontro de compartilhamento de habilidades sobre jardinagem, alguém pode explicar como cultivar aipo. Ou em um grupo de compartilhamento de habilidades sobre programação, você poderia aparecer e contar às pessoas sobre Node.js.</p>
+
+<p><a class="p_ident" id="p-wtAGebcenX" href="#p-wtAGebcenX" tabindex="-1" role="presentation"></a>Neste capítulo final de projeto, nosso objetivo é configurar um website para gerenciar palestras dadas em um encontro de compartilhamento de habilidades. Imagine um pequeno grupo de pessoas se reunindo regularmente no escritório de um dos membros para falar sobre monociclo. O organizador anterior dos encontros se mudou para outra cidade, e ninguém se ofereceu para assumir essa tarefa. Queremos um sistema que permita aos participantes propor e discutir palestras entre si sem um organizador ativo.</p>
+
+<p><a class="p_ident" id="p-lIDpTk/7Uj" href="#p-lIDpTk/7Uj" tabindex="-1" role="presentation"></a>Assim como no <a href="20_node.html">capítulo anterior</a>, parte do código neste capítulo é escrito para Node.js, e executá-lo diretamente na página HTML que você está vendo provavelmente não funcionará. O código completo do projeto pode ser baixado de <a href="https://eloquentjavascript.net/code/skillsharing.zip"><em>https://eloquentjavascript.net/code/skillsharing.zip</em></a>.</p>
+
+<h2><a class="h_ident" id="h-WbA1NnIRqT" href="#h-WbA1NnIRqT" tabindex="-1" role="presentation"></a>Design</h2>
+
+<p><a class="p_ident" id="p-ekWLpKBa74" href="#p-ekWLpKBa74" tabindex="-1" role="presentation"></a>Há uma parte <em>servidor</em> neste projeto, escrita para Node.js, e uma parte <em>cliente</em>, escrita para o navegador. O servidor armazena os dados do sistema e os fornece ao cliente. Ele também serve os arquivos que implementam o sistema do lado do cliente.</p>
+
+<p><a class="p_ident" id="p-gFX7uKDYp7" href="#p-gFX7uKDYp7" tabindex="-1" role="presentation"></a>O servidor mantém a lista de palestras propostas para o próximo encontro, e o cliente mostra essa lista. Cada palestra tem um nome de apresentador, um título, um resumo e um array de comentários associados a ela. O cliente permite que usuários proponham novas palestras (adicionando-as à lista), deletem palestras e comentem em palestras existentes. Sempre que o usuário faz tal mudança, o cliente faz uma requisição HTTP para dizer ao servidor sobre ela.</p><figure><img src="img/skillsharing.png" alt="Screenshot of the skill-sharing website"></figure>
+
+<p><a class="p_ident" id="p-0Oj4jq0VjJ" href="#p-0Oj4jq0VjJ" tabindex="-1" role="presentation"></a>A aplicação será configurada para mostrar uma visão <em>ao vivo</em> das palestras propostas atualmente e seus comentários. Sempre que alguém, em algum lugar, submete uma nova palestra ou adiciona um comentário, todas as pessoas que têm a página aberta em seus navegadores devem imediatamente ver a mudança. Isso apresenta um pequeno desafio — não há como um servidor web abrir uma conexão com um cliente, nem há uma boa forma de saber quais clientes estão atualmente olhando um determinado website.</p>
+
+<p><a class="p_ident" id="p-0ArLJjg4k+" href="#p-0ArLJjg4k+" tabindex="-1" role="presentation"></a>Uma solução comum para este problema é chamada <em>long polling</em>, que é uma das motivações para o design do Node.</p>
+
+<h2><a class="h_ident" id="h-Yxu7U155Cs" href="#h-Yxu7U155Cs" tabindex="-1" role="presentation"></a>Long polling</h2>
+
+<p><a class="p_ident" id="p-cI0mkopnL4" href="#p-cI0mkopnL4" tabindex="-1" role="presentation"></a>Para poder notificar imediatamente um cliente de que algo mudou, precisamos de uma conexão com aquele cliente. Como navegadores web tradicionalmente não aceitam conexões e clientes frequentemente estão atrás de roteadores que bloqueariam tais conexões de qualquer forma, ter o servidor iniciando essa conexão não é prático.</p>
+
+<p><a class="p_ident" id="p-lY5+aYjuBb" href="#p-lY5+aYjuBb" tabindex="-1" role="presentation"></a>Podemos arranjar para que o cliente abra a conexão e a mantenha por perto para que o servidor possa usá-la para enviar informações quando precisar. Mas uma requisição HTTP permite apenas um fluxo simples de informações: o cliente envia uma requisição, o servidor volta com uma única resposta, e isso é tudo. Uma tecnologia chamada <em>WebSockets</em> torna possível abrir conexões para troca de dados arbitrários, mas usar tais sockets adequadamente é um tanto complicado.</p>
+
+<p><a class="p_ident" id="p-ujXrPVXqxG" href="#p-ujXrPVXqxG" tabindex="-1" role="presentation"></a>Neste capítulo, usamos uma técnica mais simples, long polling, onde clientes continuamente pedem ao servidor novas informações usando requisições HTTP regulares, e o servidor atrasa sua resposta quando não tem nada novo para reportar.</p>
+
+<p><a class="p_ident" id="p-ok1wEkrRjk" href="#p-ok1wEkrRjk" tabindex="-1" role="presentation"></a>Enquanto o cliente se certificar de que constantemente tem uma requisição de polling aberta, ele receberá informações do servidor rapidamente após elas se tornarem disponíveis. Por exemplo, se Fatma tem nossa aplicação de compartilhamento de habilidades aberta em seu navegador, esse navegador terá feito uma requisição para atualizações e estará esperando uma resposta para essa requisição. Quando Iman submete uma palestra sobre Monociclo Extremo Ladeira Abaixo, o servidor notará que Fatma está esperando por atualizações e enviará uma resposta contendo a nova palestra para sua requisição pendente. O navegador de Fatma receberá os dados e atualizará a tela para mostrar a palestra.</p>
+
+<p><a class="p_ident" id="p-O+RNrY8jSa" href="#p-O+RNrY8jSa" tabindex="-1" role="presentation"></a>Para prevenir que conexões expirem (sejam abortadas por falta de atividade), técnicas de long polling geralmente definem um tempo máximo para cada requisição, após o qual o servidor responderá de qualquer forma, mesmo que não tenha nada para reportar. O cliente pode então iniciar uma nova requisição. Reiniciar periodicamente a requisição também torna a técnica mais robusta, permitindo que clientes se recuperem de falhas de conexão temporárias ou problemas no servidor.</p>
+
+<p><a class="p_ident" id="p-0K285Z12sQ" href="#p-0K285Z12sQ" tabindex="-1" role="presentation"></a>Um servidor ocupado que está usando long polling pode ter milhares de requisições esperando, e portanto conexões TCP, abertas. Node, que torna fácil gerenciar muitas conexões sem criar uma thread de controle separada para cada uma, é uma boa escolha para tal sistema.</p>
+
+<h2><a class="h_ident" id="h-aG9vy9Iins" href="#h-aG9vy9Iins" tabindex="-1" role="presentation"></a>Interface HTTP</h2>
+
+<p><a class="p_ident" id="p-QpUVZhDCyh" href="#p-QpUVZhDCyh" tabindex="-1" role="presentation"></a>Antes de começarmos a projetar o servidor ou o cliente, vamos pensar no ponto onde eles se tocam: a interface HTTP pela qual se comunicam.</p>
+
+<p><a class="p_ident" id="p-JsOl/BHxj9" href="#p-JsOl/BHxj9" tabindex="-1" role="presentation"></a>Usaremos JSON como formato do corpo de nossas requisições e respostas. Assim como no servidor de arquivos do <a href="20_node.html#file_server">Capítulo 20</a>, tentaremos fazer bom uso dos métodos e cabeçalhos HTTP. A interface é centrada no caminho <code>/talks</code>. Caminhos que não começam com <code>/talks</code> serão usados para servir arquivo estáticos — o código HTML e JavaScript para o sistema do lado do cliente.</p>
+
+<p><a class="p_ident" id="p-epWRmkgiUG" href="#p-epWRmkgiUG" tabindex="-1" role="presentation"></a>Uma requisição <code>GET</code> para <code>/talks</code> retorna um documento JSON assim:</p>
+
+<pre class="snippet" data-language="json" ><a class="c_ident" id="c-LnKGb3Adty" href="#c-LnKGb3Adty" tabindex="-1" role="presentation"></a>[{<span class="tok-string">&quot;title&quot;</span>: <span class="tok-string">&quot;Unituning&quot;</span>,
+  <span class="tok-string">&quot;presenter&quot;</span>: <span class="tok-string">&quot;Jamal&quot;</span>,
+  <span class="tok-string">&quot;summary&quot;</span>: <span class="tok-string">&quot;Modifying your cycle for extra style&quot;</span>,
+  <span class="tok-string">&quot;comments&quot;</span>: []}]</pre>
+
+<p><a class="p_ident" id="p-bJX1hIO/qJ" href="#p-bJX1hIO/qJ" tabindex="-1" role="presentation"></a>Criar uma nova palestra é feito com uma requisição <code>PUT</code> para uma URL como <code>/talks/Unituning</code>, onde a parte após a segunda barra é o título da palestra. O corpo da requisição <code>PUT</code> deve conter um objeto JSON com propriedades <code>presenter</code> e <code>summary</code>.</p>
+
+<p><a class="p_ident" id="p-8o2v8BleM6" href="#p-8o2v8BleM6" tabindex="-1" role="presentation"></a>Como títulos de palestras podem conter espaços e outros caracteres que normalmente não aparecem em uma URL, strings de título devem ser codificadas com a função <code>encodeURIComponent</code> ao construir tal URL.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-vixRLAECCO" href="#c-vixRLAECCO" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;/talks/&quot;</span> + encodeURIComponent(<span class="tok-string">&quot;How to Idle&quot;</span>));
+<span class="tok-comment">// → /talks/How%20to%20Idle</span></pre>
+
+<p><a class="p_ident" id="p-H2+kJXXeug" href="#p-H2+kJXXeug" tabindex="-1" role="presentation"></a>Uma requisição para criar uma palestra sobre ficar parado pode parecer algo assim:</p>
+
+<pre class="snippet" data-language="http" ><a class="c_ident" id="c-G609VIyy0C" href="#c-G609VIyy0C" tabindex="-1" role="presentation"></a><span class="tok-keyword">PUT</span> <span class="tok-string2">/talks/How%20to%20Idle</span> <span class="tok-keyword">HTTP/1.1</span>
+<span class="tok-atom">Content-Type:</span><span class="tok-string"> application/json</span>
+<span class="tok-atom">Content-Length:</span><span class="tok-string"> 92</span>
+
+{&quot;presenter&quot;: &quot;Maureen&quot;,
+ &quot;summary&quot;: &quot;Standing still on a unicycle&quot;}</pre>
+
+<p><a class="p_ident" id="p-l2Yt/z50qX" href="#p-l2Yt/z50qX" tabindex="-1" role="presentation"></a>Tais URLs também suportam requisições <code>GET</code> para recuperar a representação JSON de uma palestra e requisições <code>DELETE</code> para deletar uma palestra.</p>
+
+<p><a class="p_ident" id="p-BeSfvpomoU" href="#p-BeSfvpomoU" tabindex="-1" role="presentation"></a>Adicionar um comentário a uma palestra é feito com uma requisição <code>POST</code> para uma URL como <code>/<wbr>talks/<wbr>Unituning/<wbr>comments</code>, com um corpo JSON que tem propriedades <code>author</code> e <code>message</code>.</p>
+
+<pre class="snippet" data-language="http" ><a class="c_ident" id="c-JUbwWgr3xI" href="#c-JUbwWgr3xI" tabindex="-1" role="presentation"></a><span class="tok-keyword">POST</span> <span class="tok-string2">/talks/Unituning/comments</span> <span class="tok-keyword">HTTP/1.1</span>
+<span class="tok-atom">Content-Type:</span><span class="tok-string"> application/json</span>
+<span class="tok-atom">Content-Length:</span><span class="tok-string"> 72</span>
+
+{&quot;author&quot;: &quot;Iman&quot;,
+ &quot;message&quot;: &quot;Will you talk about raising a cycle?&quot;}</pre>
+
+<p><a class="p_ident" id="p-zILR+078I9" href="#p-zILR+078I9" tabindex="-1" role="presentation"></a>Para suportar long polling, requisições <code>GET</code> para <code>/talks</code> podem incluir cabeçalhos extras que informam ao servidor para atrasar a resposta se nenhuma nova informação estiver disponível. Usaremos um par de cabeçalhos normalmente destinados a gerenciar cache: <code>ETag</code> e <code>If-None-Match</code>.</p>
+
+<p><a class="p_ident" id="p-HULT/RQ9Cs" href="#p-HULT/RQ9Cs" tabindex="-1" role="presentation"></a>Servidores podem incluir um cabeçalho <code>ETag</code> (“entity tag”) em uma resposta. Seu valor é uma string que identifica a versão atual do recurso. Clientes, quando requisitam aquele recurso novamente mais tarde, podem fazer uma <em>requisição condicional</em> incluindo um cabeçalho <code>If-None-Match</code> cujo valor contém aquela mesma string. Se o recurso não mudou, o servidor responderá com código de status 304, que significa “não modificado”, dizendo ao cliente que sua versão em cache ainda está atual. Quando a tag não corresponde, o servidor responde normalmente.</p>
+
+<p><a class="p_ident" id="p-cVeMNkAxqn" href="#p-cVeMNkAxqn" tabindex="-1" role="presentation"></a>Precisamos de algo assim, onde o cliente pode dizer ao servidor qual versão da lista de palestras ele tem, e o servidor responde apenas quando essa lista mudou. Mas em vez de retornar imediatamente uma resposta 304, o servidor deve atrasar a resposta e retornar apenas quando algo novo estiver disponível ou uma certa quantidade de tempo tiver passado. Para distinguir requisições de long polling de requisições condicionais normais, damos a elas outro cabeçalho, <code>Prefer: wait=90</code>, que diz ao servidor que o cliente está disposto a esperar até 90 segundos pela resposta.</p>
+
+<p><a class="p_ident" id="p-hvoaaSk/PS" href="#p-hvoaaSk/PS" tabindex="-1" role="presentation"></a>O servidor manterá um número de versão que atualiza toda vez que as palestras mudam e usará isso como valor do <code>ETag</code>. Clientes podem fazer requisições assim para serem notificados quando as palestras mudarem:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-MdsHfCtACY" href="#c-MdsHfCtACY" tabindex="-1" role="presentation"></a>GET /talks HTTP/1.1
+If-None-Match: &quot;4&quot;
+Prefer: wait=90
+
+(tempo passa)
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+ETag: &quot;5&quot;
+Content-Length: 295
+
+[...]</pre>
+
+<p><a class="p_ident" id="p-IlDPFdbWd6" href="#p-IlDPFdbWd6" tabindex="-1" role="presentation"></a>O protocolo descrito aqui não faz nenhum controle de acesso. Qualquer pessoa pode comentar, modificar palestras e até mesmo deletá-las. (Como a internet está cheia de vândalos, colocar tal sistema online sem proteção adicional provavelmente não terminaria bem.)</p>
+
+<h2><a class="h_ident" id="h-ezt1wyTg7T" href="#h-ezt1wyTg7T" tabindex="-1" role="presentation"></a>O servidor</h2>
+
+<p><a class="p_ident" id="p-s9X8wC06PV" href="#p-s9X8wC06PV" tabindex="-1" role="presentation"></a>Vamos começar construindo a parte do servidor do programa. O código nesta seção roda no Node.js.</p>
+
+<h3><a class="i_ident" id="i-HTWWoEJ76X" href="#i-HTWWoEJ76X" tabindex="-1" role="presentation"></a>Roteamento</h3>
+
+<p><a class="p_ident" id="p-StFggbKrNw" href="#p-StFggbKrNw" tabindex="-1" role="presentation"></a>Nosso servidor usará o <code>createServer</code> do Node para iniciar um servidor HTTP. Na função que trata uma nova requisição, devemos distinguir entre os vários tipos de requisição (conforme determinado pelo método e o caminho) que suportamos. Isso pode ser feito com uma longa cadeia de instruções <code>if</code>, mas há uma forma mais elegante.</p>
+
+<p><a class="p_ident" id="p-a0hwgcA1Im" href="#p-a0hwgcA1Im" tabindex="-1" role="presentation"></a>Um <em>roteador</em> é um componente que ajuda a despachar uma requisição para a função que pode tratá-la. Você pode dizer ao roteador, por exemplo, que requisições <code>PUT</code> com um caminho que corresponde à expressão regular <code>/<wbr>^\/<wbr>talks\/<wbr>([^\/<wbr>]+)$/<wbr></code> (<code>/talks/</code> seguido por um título de palestra) podem ser tratadas por uma determinada função. Além disso, ele pode ajudar a extrair as partes significativas do caminho (neste caso o título da palestra), envolvidas em parênteses na expressão regular, e passá-las para a função de tratamento.</p>
+
+<p><a class="p_ident" id="p-eTYKGQwpHv" href="#p-eTYKGQwpHv" tabindex="-1" role="presentation"></a>Existem vários bons pacotes de roteamento no NPM, mas aqui escreveremos o nosso para ilustrar o princípio.</p>
+
+<p><a class="p_ident" id="p-/MitrkIWRz" href="#p-/MitrkIWRz" tabindex="-1" role="presentation"></a>Este é <code>router.mjs</code>, que vamos posteriormente importar de nosso módulo do servidor:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-DdjroKRGYC" href="#c-DdjroKRGYC" tabindex="-1" role="presentation"></a><span class="tok-keyword">export</span> <span class="tok-keyword">class</span> Router {
+  <span class="tok-definition">constructor</span>() {
+    <span class="tok-keyword">this</span>.routes = [];
+  }
+  <span class="tok-definition">add</span>(<span class="tok-definition">method</span>, <span class="tok-definition">url</span>, <span class="tok-definition">handler</span>) {
+    <span class="tok-keyword">this</span>.routes.push({<span class="tok-definition">method</span>, <span class="tok-definition">url</span>, <span class="tok-definition">handler</span>});
+  }
+  <span class="tok-keyword">async</span> <span class="tok-definition">resolve</span>(<span class="tok-definition">request</span>, <span class="tok-definition">context</span>) {
+    <span class="tok-keyword">let</span> {pathname} = <span class="tok-keyword">new</span> URL(request.url, <span class="tok-string">&quot;http://d&quot;</span>);
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> {method, url, handler} <span class="tok-keyword">of</span> <span class="tok-keyword">this</span>.routes) {
+      <span class="tok-keyword">let</span> <span class="tok-definition">match</span> = url.exec(pathname);
+      <span class="tok-keyword">if</span> (!match || request.method != method) <span class="tok-keyword">continue</span>;
+      <span class="tok-keyword">let</span> <span class="tok-definition">parts</span> = match.slice(<span class="tok-number">1</span>).map(decodeURIComponent);
+      <span class="tok-keyword">return</span> handler(context, ...parts, request);
+    }
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-NXGU1Z29dz" href="#p-NXGU1Z29dz" tabindex="-1" role="presentation"></a>O módulo exporta a classe <code>Router</code>. Um objeto roteador permite registrar manipuladores para métodos e padrões de URL específicos com seu método <code>add</code>. Quando uma requisição é resolvida com o método <code>resolve</code>, o roteador chama o manipulador cujo método e URL correspondem à requisição e retorna seu resultado.</p>
+
+<p><a class="p_ident" id="p-Guj5hpfwcu" href="#p-Guj5hpfwcu" tabindex="-1" role="presentation"></a>Funções de tratamento são chamadas com o valor <code>context</code> dado a <code>resolve</code>. Usaremos isso para dar a elas acesso ao estado do nosso servidor. Adicionalmente, elas recebem as strings de correspondência para quaisquer grupos que definiram em sua expressão regular, e o objeto de requisição. As strings precisam ser decodificadas de URL, pois a URL bruta pode conter códigos estilo <code>%20</code>.</p>
+
+<h3><a class="i_ident" id="i-9pPm5hupqM" href="#i-9pPm5hupqM" tabindex="-1" role="presentation"></a>Servindo arquivos</h3>
+
+<p><a class="p_ident" id="p-knW8pzuKOc" href="#p-knW8pzuKOc" tabindex="-1" role="presentation"></a>Quando uma requisição não corresponde a nenhum dos tipos de requisição definidos em nosso roteador, o servidor deve interpretá-la como uma requisição para um arquivo no diretório <code>public</code>. Seria possível usar o servidor de arquivos definido no <a href="20_node.html#file_server">Capítulo 20</a> para servir tais arquivos, mas não precisamos nem queremos suportar requisições <code>PUT</code> e <code>DELETE</code> em arquivos, e gostaríamos de ter recursos avançados como suporte a cache. Vamos usar um servidor de arquivos estáticos sólido e bem testado do NPM.</p>
+
+<p><a class="p_ident" id="p-SAOqiBsxzW" href="#p-SAOqiBsxzW" tabindex="-1" role="presentation"></a>Optei por <code>serve-static</code>. Este não é o único tal servidor no NPM, mas funciona bem e atende nossos propósitos. O pacote <code>serve-static</code> exporta uma função que pode ser chamada com um diretório raiz para produzir uma função manipuladora de requisição. A função manipuladora aceita os argumentos <code>request</code> e <code>response</code> fornecidos pelo servidor de <code>&quot;node:http&quot;</code>, e um terceiro argumento, uma função que ela chamará se nenhum arquivo corresponder à requisição. Queremos que nosso servidor primeiro verifique requisições que devemos tratar especialmente, conforme definido no roteador, então envolvemos isso em outra função.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-lpYEW+IClx" href="#c-lpYEW+IClx" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">createServer</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:http&quot;</span>;
+<span class="tok-keyword">import</span> <span class="tok-definition">serveStatic</span> <span class="tok-keyword">from</span> <span class="tok-string">&quot;serve-static&quot;</span>;
+
+<span class="tok-keyword">function</span> <span class="tok-definition">notFound</span>(<span class="tok-definition">request</span>, <span class="tok-definition">response</span>) {
+  response.writeHead(<span class="tok-number">404</span>, <span class="tok-string">&quot;Not found&quot;</span>);
+  response.end(<span class="tok-string">&quot;&lt;h1&gt;Not found&lt;/h1&gt;&quot;</span>);
+}
+
+<span class="tok-keyword">class</span> SkillShareServer {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">talks</span>) {
+    <span class="tok-keyword">this</span>.talks = talks;
+    <span class="tok-keyword">this</span>.version = <span class="tok-number">0</span>;
+    <span class="tok-keyword">this</span>.waiting = [];
+
+    <span class="tok-keyword">let</span> <span class="tok-definition">fileServer</span> = serveStatic(<span class="tok-string">&quot;./public&quot;</span>);
+    <span class="tok-keyword">this</span>.server = createServer((<span class="tok-definition">request</span>, <span class="tok-definition">response</span>) =&gt; {
+      serveFromRouter(<span class="tok-keyword">this</span>, request, response, () =&gt; {
+        fileServer(request, response,
+                   () =&gt; notFound(request, response));
+      });
+    });
+  }
+  <span class="tok-definition">start</span>(<span class="tok-definition">port</span>) {
+    <span class="tok-keyword">this</span>.server.listen(port);
+  }
+  <span class="tok-definition">stop</span>() {
+    <span class="tok-keyword">this</span>.server.close();
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-NyNeQH3kS+" href="#p-NyNeQH3kS+" tabindex="-1" role="presentation"></a>A função <code>serveFromRouter</code> tem a mesma interface que <code>fileServer</code>, recebendo argumentos <code>(request, response, next)</code>. Podemos usar isso para “encadear” vários manipuladores de requisição, permitindo que cada um trate a requisição ou passe a responsabilidade para o próximo manipulador. O manipulador final, <code>notFound</code>, simplesmente responde com um erro “not found”.</p>
+
+<p><a class="p_ident" id="p-+B9wzP6bX3" href="#p-+B9wzP6bX3" tabindex="-1" role="presentation"></a>Nossa função <code>serveFromRouter</code> usa uma convenção semelhante à do servidor de arquivos do <a href="20_node.html">capítulo anterior</a> para respostas — manipuladores no roteador retornam promises que resolvem para objetos descrevendo a resposta.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-IVmjRqYXq0" href="#c-IVmjRqYXq0" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">Router</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;./router.mjs&quot;</span>;
+
+<span class="tok-keyword">const</span> <span class="tok-definition">router</span> = <span class="tok-keyword">new</span> Router();
+<span class="tok-keyword">const</span> <span class="tok-definition">defaultHeaders</span> = {<span class="tok-string">&quot;Content-Type&quot;</span>: <span class="tok-string">&quot;text/plain&quot;</span>};
+
+<span class="tok-keyword">async</span> <span class="tok-keyword">function</span> <span class="tok-definition">serveFromRouter</span>(<span class="tok-definition">server</span>, <span class="tok-definition">request</span>,
+                               <span class="tok-definition">response</span>, <span class="tok-definition">next</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">resolved</span> = <span class="tok-keyword">await</span> router.resolve(request, server)
+    .catch(<span class="tok-definition">error</span> =&gt; {
+      <span class="tok-keyword">if</span> (error.status != <span class="tok-keyword">null</span>) <span class="tok-keyword">return</span> error;
+      <span class="tok-keyword">return</span> {<span class="tok-definition">body</span>: String(err), <span class="tok-definition">status</span>: <span class="tok-number">500</span>};
+    });
+  <span class="tok-keyword">if</span> (!resolved) <span class="tok-keyword">return</span> next();
+  <span class="tok-keyword">let</span> {body, status = <span class="tok-number">200</span>, headers = defaultHeaders} =
+    <span class="tok-keyword">await</span> resolved;
+  response.writeHead(status, headers);
+  response.end(body);
+}</pre>
+
+<h3><a class="i_ident" id="i-Nnjr1ZJBU6" href="#i-Nnjr1ZJBU6" tabindex="-1" role="presentation"></a>Palestras como recursos</h3>
+
+<p><a class="p_ident" id="p-me4SBO+rVu" href="#p-me4SBO+rVu" tabindex="-1" role="presentation"></a>As palestras que foram propostas são armazenadas na propriedade <code>talks</code> do servidor, um objeto cujos nomes de propriedade são os títulos das palestras. Adicionaremos alguns manipuladores ao nosso roteador que expõem essas como recursos HTTP sob <code>/<wbr>talks/<wbr>&lt;título&gt;</code>.</p>
+
+<p><a class="p_ident" id="p-MtAO8claFC" href="#p-MtAO8claFC" tabindex="-1" role="presentation"></a>O manipulador para requisições que fazem <code>GET</code> em uma única palestra deve procurar a palestra e responder com os dados JSON da palestra ou com uma resposta de erro 404.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-4ftntao2tl" href="#c-4ftntao2tl" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">talkPath</span> = <span class="tok-string2">/^\/talks\/([^\/]+)$/</span>;
+
+router.add(<span class="tok-string">&quot;GET&quot;</span>, talkPath, <span class="tok-keyword">async</span> (<span class="tok-definition">server</span>, <span class="tok-definition">title</span>) =&gt; {
+  <span class="tok-keyword">if</span> (Object.hasOwn(server.talks, title)) {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">body</span>: JSON.stringify(server.talks[title]),
+            <span class="tok-definition">headers</span>: {<span class="tok-string">&quot;Content-Type&quot;</span>: <span class="tok-string">&quot;application/json&quot;</span>}};
+  } <span class="tok-keyword">else</span> {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">404</span>, <span class="tok-definition">body</span>: <span class="tok-string2">`No talk '</span>${title}<span class="tok-string2">' found`</span>};
+  }
+});</pre>
+
+<p><a class="p_ident" id="p-HkmQthjzJ5" href="#p-HkmQthjzJ5" tabindex="-1" role="presentation"></a>Deletar uma palestra é feito removendo-a do objeto <code>talks</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-hHVMqh7is7" href="#c-hHVMqh7is7" tabindex="-1" role="presentation"></a>router.add(<span class="tok-string">&quot;DELETE&quot;</span>, talkPath, <span class="tok-keyword">async</span> (<span class="tok-definition">server</span>, <span class="tok-definition">title</span>) =&gt; {
+  <span class="tok-keyword">if</span> (Object.hasOwn(server.talks, title)) {
+    <span class="tok-keyword">delete</span> server.talks[title];
+    server.updated();
+  }
+  <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">204</span>};
+});</pre>
+
+<p><a class="p_ident" id="p-i5MISHLxKa" href="#p-i5MISHLxKa" tabindex="-1" role="presentation"></a>O método <code>updated</code>, que definiremos <a href="21_skillsharing.html#updated">mais adiante</a>, notifica requisições de long polling em espera sobre a mudança.</p>
+
+<p><a class="p_ident" id="p-PJr3WraMqi" href="#p-PJr3WraMqi" tabindex="-1" role="presentation"></a>Um manipulador que precisa ler corpos de requisição é o manipulador <code>PUT</code>, que é usado para criar novas palestras. Ele tem que verificar se os dados que recebeu têm propriedades <code>presenter</code> e <code>summary</code>, que são strings. Quaisquer dados vindos de fora do sistema podem ser sem sentido, e não queremos corromper nosso modelo de dados interno ou causar um crash quando requisições ruins chegam.</p>
+
+<p><a class="p_ident" id="p-C3RdQfjE0H" href="#p-C3RdQfjE0H" tabindex="-1" role="presentation"></a>Se os dados parecerem válidos, o manipulador armazena um objeto representando a nova palestra no objeto <code>talks</code>, possivelmente sobrescrevendo uma palestra existente com este título, e novamente chama <code>updated</code>.</p>
+
+<p><a class="p_ident" id="p-uhbO1wQaCg" href="#p-uhbO1wQaCg" tabindex="-1" role="presentation"></a>Para ler o corpo do stream de requisição, usaremos a função <code>json</code> de <code>&quot;node:stream/<wbr>consumers&quot;</code>, que coleta os dados no stream e os analisa como JSON. Existem exportações similares chamadas <code>text</code> (para ler o conteúdo como string) e <code>buffer</code> (para lê-lo como dados binários) neste pacote. Como <code>json</code> é um nome muito genérico, a importação o renomeia para <code>readJSON</code> para evitar confusão.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-CS0P1nVQpO" href="#c-CS0P1nVQpO" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {json <span class="tok-keyword">as</span> <span class="tok-definition">readJSON</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:stream/consumers&quot;</span>;
+
+router.add(<span class="tok-string">&quot;PUT&quot;</span>, talkPath,
+           <span class="tok-keyword">async</span> (<span class="tok-definition">server</span>, <span class="tok-definition">title</span>, <span class="tok-definition">request</span>) =&gt; {
+  <span class="tok-keyword">let</span> <span class="tok-definition">talk</span> = <span class="tok-keyword">await</span> readJSON(request);
+  <span class="tok-keyword">if</span> (!talk ||
+      <span class="tok-keyword">typeof</span> talk.presenter != <span class="tok-string">&quot;string&quot;</span> ||
+      <span class="tok-keyword">typeof</span> talk.summary != <span class="tok-string">&quot;string&quot;</span>) {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">400</span>, <span class="tok-definition">body</span>: <span class="tok-string">&quot;Bad talk data&quot;</span>};
+  }
+  server.talks[title] = {
+    <span class="tok-definition">title</span>,
+    <span class="tok-definition">presenter</span>: talk.presenter,
+    <span class="tok-definition">summary</span>: talk.summary,
+    <span class="tok-definition">comments</span>: []
+  };
+  server.updated();
+  <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">204</span>};
+});</pre>
+
+<p><a class="p_ident" id="p-b33qJx+Vsm" href="#p-b33qJx+Vsm" tabindex="-1" role="presentation"></a>Adicionar um comentário a uma palestra funciona de forma semelhante. Usamos <code>readJSON</code> para obter o conteúdo da requisição, validamos os dados resultantes e os armazenamos como comentário quando parecem válidos.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-4SE8JFXmeR" href="#c-4SE8JFXmeR" tabindex="-1" role="presentation"></a>router.add(<span class="tok-string">&quot;POST&quot;</span>, <span class="tok-string2">/^\/talks\/([^\/]+)\/comments$/</span>,
+           <span class="tok-keyword">async</span> (<span class="tok-definition">server</span>, <span class="tok-definition">title</span>, <span class="tok-definition">request</span>) =&gt; {
+  <span class="tok-keyword">let</span> <span class="tok-definition">comment</span> = <span class="tok-keyword">await</span> readJSON(request);
+  <span class="tok-keyword">if</span> (!comment ||
+      <span class="tok-keyword">typeof</span> comment.author != <span class="tok-string">&quot;string&quot;</span> ||
+      <span class="tok-keyword">typeof</span> comment.message != <span class="tok-string">&quot;string&quot;</span>) {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">400</span>, <span class="tok-definition">body</span>: <span class="tok-string">&quot;Bad comment data&quot;</span>};
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (Object.hasOwn(server.talks, title)) {
+    server.talks[title].comments.push(comment);
+    server.updated();
+    <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">204</span>};
+  } <span class="tok-keyword">else</span> {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">404</span>, <span class="tok-definition">body</span>: <span class="tok-string2">`No talk '</span>${title}<span class="tok-string2">' found`</span>};
+  }
+});</pre>
+
+<p><a class="p_ident" id="p-R+bf2mXy5i" href="#p-R+bf2mXy5i" tabindex="-1" role="presentation"></a>Tentar adicionar um comentário a uma palestra inexistente retorna um erro 404.</p>
+
+<h3><a class="i_ident" id="i-s6v1Mpbwj9" href="#i-s6v1Mpbwj9" tabindex="-1" role="presentation"></a>Suporte a long polling</h3>
+
+<p><a class="p_ident" id="p-AZEXJOejWt" href="#p-AZEXJOejWt" tabindex="-1" role="presentation"></a>O aspecto mais interessante do servidor é a parte que trata long polling. Quando uma requisição <code>GET</code> chega para <code>/talks</code>, ela pode ser uma requisição regular ou uma requisição de long polling.</p>
+
+<p><a class="p_ident" id="p-Ojg04PR+Bl" href="#p-Ojg04PR+Bl" tabindex="-1" role="presentation"></a>Haverá múltiplos lugares nos quais temos que enviar um array de palestras ao cliente, então primeiro definimos um método auxiliar que constrói tal array e inclui um cabeçalho <code>ETag</code> na resposta.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-XiOFQSm9fc" href="#c-XiOFQSm9fc" tabindex="-1" role="presentation"></a>SkillShareServer.prototype.talkResponse = <span class="tok-keyword">function</span>() {
+  <span class="tok-keyword">let</span> <span class="tok-definition">talks</span> = Object.keys(<span class="tok-keyword">this</span>.talks)
+    .map(<span class="tok-definition">title</span> =&gt; <span class="tok-keyword">this</span>.talks[title]);
+  <span class="tok-keyword">return</span> {
+    <span class="tok-definition">body</span>: JSON.stringify(talks),
+    <span class="tok-definition">headers</span>: {<span class="tok-string">&quot;Content-Type&quot;</span>: <span class="tok-string">&quot;application/json&quot;</span>,
+              <span class="tok-string">&quot;ETag&quot;</span>: <span class="tok-string2">`&quot;</span>${<span class="tok-keyword">this</span>.version}<span class="tok-string2">&quot;`</span>,
+              <span class="tok-string">&quot;Cache-Control&quot;</span>: <span class="tok-string">&quot;no-store&quot;</span>}
+  };
+};</pre>
+
+<p><a class="p_ident" id="p-ucRvpIuxqP" href="#p-ucRvpIuxqP" tabindex="-1" role="presentation"></a>O manipulador em si precisa olhar os cabeçalhos da requisição para ver se os cabeçalhos <code>If-None-Match</code> e <code>Prefer</code> estão presentes. Node armazena cabeçalhos, cujos nomes são especificados como insensíveis a maiúsculas, sob seus nomes em minúsculas.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-/t9cPK34U3" href="#c-/t9cPK34U3" tabindex="-1" role="presentation"></a>router.add(<span class="tok-string">&quot;GET&quot;</span>, <span class="tok-string2">/^\/talks$/</span>, <span class="tok-keyword">async</span> (<span class="tok-definition">server</span>, <span class="tok-definition">request</span>) =&gt; {
+  <span class="tok-keyword">let</span> <span class="tok-definition">tag</span> = <span class="tok-string2">/&quot;(.*)&quot;/</span>.exec(request.headers[<span class="tok-string">&quot;if-none-match&quot;</span>]);
+  <span class="tok-keyword">let</span> <span class="tok-definition">wait</span> = <span class="tok-string2">/\bwait=(\d+)/</span>.exec(request.headers[<span class="tok-string">&quot;prefer&quot;</span>]);
+  <span class="tok-keyword">if</span> (!tag || tag[<span class="tok-number">1</span>] != server.version) {
+    <span class="tok-keyword">return</span> server.talkResponse();
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (!wait) {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">304</span>};
+  } <span class="tok-keyword">else</span> {
+    <span class="tok-keyword">return</span> server.waitForChanges(Number(wait[<span class="tok-number">1</span>]));
+  }
+});</pre>
+
+<p><a class="p_ident" id="p-UBEiHy0y9V" href="#p-UBEiHy0y9V" tabindex="-1" role="presentation"></a>Se nenhuma tag foi dada ou uma tag foi dada que não corresponde à versão atual do servidor, o manipulador responde com a lista de palestras. Se a requisição é condicional e as palestras não mudaram, consultamos o cabeçalho <code>Prefer</code> para ver se devemos atrasar a resposta ou responder imediatamente.</p>
+
+<p><a class="p_ident" id="p-IZWzc27+bC" href="#p-IZWzc27+bC" tabindex="-1" role="presentation"></a>Funções de callback para requisições atrasadas são armazenadas no array <code>waiting</code> do servidor para que possam ser notificadas quando algo acontecer. O método <code>waitForChanges</code> também define imediatamente um temporizador para responder com status 304 quando a requisição esperou tempo suficiente.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-4a/A2U+gT3" href="#c-4a/A2U+gT3" tabindex="-1" role="presentation"></a>SkillShareServer.prototype.waitForChanges = <span class="tok-keyword">function</span>(<span class="tok-definition">time</span>) {
+  <span class="tok-keyword">return</span> <span class="tok-keyword">new</span> Promise(<span class="tok-definition">resolve</span> =&gt; {
+    <span class="tok-keyword">this</span>.waiting.push(resolve);
+    setTimeout(() =&gt; {
+      <span class="tok-keyword">if</span> (!<span class="tok-keyword">this</span>.waiting.includes(resolve)) <span class="tok-keyword">return</span>;
+      <span class="tok-keyword">this</span>.waiting = <span class="tok-keyword">this</span>.waiting.filter(<span class="tok-definition">r</span> =&gt; r != resolve);
+      resolve({<span class="tok-definition">status</span>: <span class="tok-number">304</span>});
+    }, time * <span class="tok-number">1000</span>);
+  });
+};</pre>
+
+<p id="updated"><a class="p_ident" id="p-XFpMsS4oYh" href="#p-XFpMsS4oYh" tabindex="-1" role="presentation"></a>Registrar uma mudança com <code>updated</code> incrementa a propriedade <code>version</code> e acorda todas as requisições em espera.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-mZ7p2D8VNW" href="#c-mZ7p2D8VNW" tabindex="-1" role="presentation"></a>SkillShareServer.prototype.updated = <span class="tok-keyword">function</span>() {
+  <span class="tok-keyword">this</span>.version++;
+  <span class="tok-keyword">let</span> <span class="tok-definition">response</span> = <span class="tok-keyword">this</span>.talkResponse();
+  <span class="tok-keyword">this</span>.waiting.forEach(<span class="tok-definition">resolve</span> =&gt; resolve(response));
+  <span class="tok-keyword">this</span>.waiting = [];
+};</pre>
+
+<p><a class="p_ident" id="p-4RmV2Kx67X" href="#p-4RmV2Kx67X" tabindex="-1" role="presentation"></a>Isso conclui o código do servidor. Se criarmos uma instância de <code>SkillShareServer</code> e a iniciarmos na porta 8000, o servidor HTTP resultante serve arquivos do subdiretório <code>public</code> junto com uma interface de gerenciamento de palestras sob a URL <code>/talks</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-aaqy/FYjqn" href="#c-aaqy/FYjqn" tabindex="-1" role="presentation"></a><span class="tok-keyword">new</span> SkillShareServer({}).start(<span class="tok-number">8000</span>);</pre>
+
+<h2><a class="h_ident" id="h-kKjgRWlMNz" href="#h-kKjgRWlMNz" tabindex="-1" role="presentation"></a>O cliente</h2>
+
+<p><a class="p_ident" id="p-58d14bxxcv" href="#p-58d14bxxcv" tabindex="-1" role="presentation"></a>A parte do cliente do website de compartilhamento de habilidades consiste em três arquivos: uma pequena página HTML, uma folha de estilo e um arquivo JavaScript.</p>
+
+<h3><a class="i_ident" id="i-n3OM6EV/KR" href="#i-n3OM6EV/KR" tabindex="-1" role="presentation"></a>HTML</h3>
+
+<p><a class="p_ident" id="p-9Ugrrbt+ah" href="#p-9Ugrrbt+ah" tabindex="-1" role="presentation"></a>É uma convenção amplamente usada para servidores web tentar servir um arquivo chamado <code>index.html</code> quando uma requisição é feita diretamente a um caminho que corresponde a um diretório. O módulo de servidor de arquivos que usamos, <code>serve-static</code>, suporta essa convenção. Quando uma requisição é feita para o caminho <code>/</code>, o servidor procura o arquivo <code>./<wbr>public/<wbr>index.<wbr>html</code> (<code>./public</code> sendo a raiz que demos a ele) e retorna esse arquivo se encontrado.</p>
+
+<p><a class="p_ident" id="p-FRJJwxqdyV" href="#p-FRJJwxqdyV" tabindex="-1" role="presentation"></a>Assim, se queremos que uma página apareça quando um navegador é apontado para nosso servidor, devemos colocá-la em <code>public/<wbr>index.<wbr>html</code>. Este é nosso arquivo index:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-ysNDoq7Ue1" href="#c-ysNDoq7Ue1" tabindex="-1" role="presentation"></a><span class="tok-meta">&lt;!doctype html&gt;</span>
+&lt;<span class="tok-typeName">meta</span> charset=<span class="tok-string">&quot;utf-8&quot;</span>&gt;
+&lt;<span class="tok-typeName">title</span>&gt;Skill Sharing&lt;/<span class="tok-typeName">title</span>&gt;
+&lt;<span class="tok-typeName">link</span> rel=<span class="tok-string">&quot;stylesheet&quot;</span> href=<span class="tok-string">&quot;skillsharing.css&quot;</span>&gt;
+
+&lt;<span class="tok-typeName">h1</span>&gt;Skill Sharing&lt;/<span class="tok-typeName">h1</span>&gt;
+
+&lt;<span class="tok-typeName">script</span> src=<span class="tok-string">&quot;skillsharing_client.js&quot;</span>&gt;&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-jAl5fs8kBH" href="#p-jAl5fs8kBH" tabindex="-1" role="presentation"></a>Ele define o título do documento e inclui uma folha de estilo, que define alguns estilos para, entre outras coisas, garantir que haja algum espaço entre as palestras. Depois adiciona um cabeçalho no topo da página e carrega o script que contém a aplicação do lado do cliente.</p>
+
+<h3><a class="i_ident" id="i-ZsNBs+ljTH" href="#i-ZsNBs+ljTH" tabindex="-1" role="presentation"></a>Ações</h3>
+
+<p><a class="p_ident" id="p-J5skzUWTYb" href="#p-J5skzUWTYb" tabindex="-1" role="presentation"></a>O estado da aplicação consiste na lista de palestras e no nome do usuário, e vamos armazená-lo em um objeto <code>{talks, user}</code>. Não permitimos que a interface do usuário manipule diretamente o estado ou envie requisições HTTP. Em vez disso, ela pode emitir <em>ações</em> que descrevem o que o usuário está tentando fazer.</p>
+
+<p><a class="p_ident" id="p-bBXbQ+AmoG" href="#p-bBXbQ+AmoG" tabindex="-1" role="presentation"></a>A função <code>handleAction</code> recebe tal ação e a faz acontecer. Como nossas atualizações de estado são tão simples, mudanças de estado são tratadas na mesma função.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-TZfLAx6p12" href="#c-TZfLAx6p12" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">handleAction</span>(<span class="tok-definition">state</span>, <span class="tok-definition">action</span>) {
+  <span class="tok-keyword">if</span> (action.type == <span class="tok-string">&quot;setUser&quot;</span>) {
+    localStorage.setItem(<span class="tok-string">&quot;userName&quot;</span>, action.user);
+    <span class="tok-keyword">return</span> {...state, <span class="tok-definition">user</span>: action.user};
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (action.type == <span class="tok-string">&quot;setTalks&quot;</span>) {
+    <span class="tok-keyword">return</span> {...state, <span class="tok-definition">talks</span>: action.talks};
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (action.type == <span class="tok-string">&quot;newTalk&quot;</span>) {
+    fetchOK(talkURL(action.title), {
+      <span class="tok-definition">method</span>: <span class="tok-string">&quot;PUT&quot;</span>,
+      <span class="tok-definition">headers</span>: {<span class="tok-string">&quot;Content-Type&quot;</span>: <span class="tok-string">&quot;application/json&quot;</span>},
+      <span class="tok-definition">body</span>: JSON.stringify({
+        <span class="tok-definition">presenter</span>: state.user,
+        <span class="tok-definition">summary</span>: action.summary
+      })
+    }).catch(reportError);
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (action.type == <span class="tok-string">&quot;deleteTalk&quot;</span>) {
+    fetchOK(talkURL(action.talk), {<span class="tok-definition">method</span>: <span class="tok-string">&quot;DELETE&quot;</span>})
+      .catch(reportError);
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (action.type == <span class="tok-string">&quot;newComment&quot;</span>) {
+    fetchOK(talkURL(action.talk) + <span class="tok-string">&quot;/comments&quot;</span>, {
+      <span class="tok-definition">method</span>: <span class="tok-string">&quot;POST&quot;</span>,
+      <span class="tok-definition">headers</span>: {<span class="tok-string">&quot;Content-Type&quot;</span>: <span class="tok-string">&quot;application/json&quot;</span>},
+      <span class="tok-definition">body</span>: JSON.stringify({
+        <span class="tok-definition">author</span>: state.user,
+        <span class="tok-definition">message</span>: action.message
+      })
+    }).catch(reportError);
+  }
+  <span class="tok-keyword">return</span> state;
+}</pre>
+
+<p><a class="p_ident" id="p-7o2b4Chv+J" href="#p-7o2b4Chv+J" tabindex="-1" role="presentation"></a>Armazenaremos o nome do usuário em <code>localStorage</code> para que possa ser restaurado quando a página é carregada.</p>
+
+<p><a class="p_ident" id="p-238gl/3QR7" href="#p-238gl/3QR7" tabindex="-1" role="presentation"></a>As ações que precisam envolver o servidor fazem requisições de rede, usando <code>fetch</code>, para a interface HTTP descrita anteriormente. Usamos uma função wrapper, <code>fetchOK</code>, que garante que a promise retornada seja rejeitada quando o servidor retorna um código de erro.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-IM58YE2b7h" href="#c-IM58YE2b7h" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">fetchOK</span>(<span class="tok-definition">url</span>, <span class="tok-definition">options</span>) {
+  <span class="tok-keyword">return</span> fetch(url, options).then(<span class="tok-definition">response</span> =&gt; {
+    <span class="tok-keyword">if</span> (response.status &lt; <span class="tok-number">400</span>) <span class="tok-keyword">return</span> response;
+    <span class="tok-keyword">else</span> <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> Error(response.statusText);
+  });
+}</pre>
+
+<p><a class="p_ident" id="p-eO6KOGYCF5" href="#p-eO6KOGYCF5" tabindex="-1" role="presentation"></a>Esta função auxiliar é usada para construir uma URL para uma palestra com um determinado título.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-KDfsRI9rOO" href="#c-KDfsRI9rOO" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">talkURL</span>(<span class="tok-definition">title</span>) {
+  <span class="tok-keyword">return</span> <span class="tok-string">&quot;talks/&quot;</span> + encodeURIComponent(title);
+}</pre>
+
+<p><a class="p_ident" id="p-5CwuSC1QlT" href="#p-5CwuSC1QlT" tabindex="-1" role="presentation"></a>Quando a requisição falha, não queremos que nossa página fique parada sem fazer nada sem explicação. A função chamada <code>reportError</code>, que usamos como o manipulador <code>catch</code>, mostra ao usuário um diálogo rústico para informar que algo deu errado.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-upWq63EA/j" href="#c-upWq63EA/j" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">reportError</span>(<span class="tok-definition">error</span>) {
+  alert(String(error));
+}</pre>
+
+<h3><a class="i_ident" id="i-XWtoQanm6m" href="#i-XWtoQanm6m" tabindex="-1" role="presentation"></a>Renderizando componentes</h3>
+
+<p><a class="p_ident" id="p-NO4peIhrWm" href="#p-NO4peIhrWm" tabindex="-1" role="presentation"></a>Usaremos uma abordagem semelhante à que vimos no <a href="19_paint.html">Capítulo 19</a>, dividindo a aplicação em componentes. No entanto, como alguns dos componentes nunca precisam ser atualizados ou são sempre totalmente redesenhados quando atualizados, vamos defini-los não como classes mas como funções que retornam diretamente um nó DOM. Por exemplo, aqui está um componente que mostra o campo onde o usuário pode inserir seu nome:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-XPxLoKIFvt" href="#c-XPxLoKIFvt" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">renderUserField</span>(<span class="tok-definition">name</span>, <span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">return</span> elt(<span class="tok-string">&quot;label&quot;</span>, {}, <span class="tok-string">&quot;Your name: &quot;</span>, elt(<span class="tok-string">&quot;input&quot;</span>, {
+    <span class="tok-definition">type</span>: <span class="tok-string">&quot;text&quot;</span>,
+    <span class="tok-definition">value</span>: name,
+    <span class="tok-definition">onchange</span>(<span class="tok-definition">event</span>) {
+      dispatch({<span class="tok-definition">type</span>: <span class="tok-string">&quot;setUser&quot;</span>, <span class="tok-definition">user</span>: event.target.value});
+    }
+  }));
+}</pre>
+
+<p><a class="p_ident" id="p-1yojTnwKNx" href="#p-1yojTnwKNx" tabindex="-1" role="presentation"></a>A função <code>elt</code> usada para construir elementos DOM é a que usamos no <a href="19_paint.html">Capítulo 19</a>.</p>
+
+<p><a class="p_ident" id="p-gQp+8IAKWE" href="#p-gQp+8IAKWE" tabindex="-1" role="presentation"></a>Uma função semelhante é usada para renderizar palestras, que incluem uma lista de comentários e um formulário para adicionar um novo comentário.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-VdTnp45oFj" href="#c-VdTnp45oFj" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">renderTalk</span>(<span class="tok-definition">talk</span>, <span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">return</span> elt(
+    <span class="tok-string">&quot;section&quot;</span>, {<span class="tok-definition">className</span>: <span class="tok-string">&quot;talk&quot;</span>},
+    elt(<span class="tok-string">&quot;h2&quot;</span>, <span class="tok-keyword">null</span>, talk.title, <span class="tok-string">&quot; &quot;</span>, elt(<span class="tok-string">&quot;button&quot;</span>, {
+      <span class="tok-definition">type</span>: <span class="tok-string">&quot;button&quot;</span>,
+      <span class="tok-definition">onclick</span>() {
+        dispatch({<span class="tok-definition">type</span>: <span class="tok-string">&quot;deleteTalk&quot;</span>, <span class="tok-definition">talk</span>: talk.title});
+      }
+    }, <span class="tok-string">&quot;Delete&quot;</span>)),
+    elt(<span class="tok-string">&quot;div&quot;</span>, <span class="tok-keyword">null</span>, <span class="tok-string">&quot;by &quot;</span>,
+        elt(<span class="tok-string">&quot;strong&quot;</span>, <span class="tok-keyword">null</span>, talk.presenter)),
+    elt(<span class="tok-string">&quot;p&quot;</span>, <span class="tok-keyword">null</span>, talk.summary),
+    ...talk.comments.map(renderComment),
+    elt(<span class="tok-string">&quot;form&quot;</span>, {
+      <span class="tok-definition">onsubmit</span>(<span class="tok-definition">event</span>) {
+        event.preventDefault();
+        <span class="tok-keyword">let</span> <span class="tok-definition">form</span> = event.target;
+        dispatch({<span class="tok-definition">type</span>: <span class="tok-string">&quot;newComment&quot;</span>,
+                  <span class="tok-definition">talk</span>: talk.title,
+                  <span class="tok-definition">message</span>: form.elements.comment.value});
+        form.reset();
+      }
+    }, elt(<span class="tok-string">&quot;input&quot;</span>, {<span class="tok-definition">type</span>: <span class="tok-string">&quot;text&quot;</span>, <span class="tok-definition">name</span>: <span class="tok-string">&quot;comment&quot;</span>}), <span class="tok-string">&quot; &quot;</span>,
+       elt(<span class="tok-string">&quot;button&quot;</span>, {<span class="tok-definition">type</span>: <span class="tok-string">&quot;submit&quot;</span>}, <span class="tok-string">&quot;Add comment&quot;</span>)));
+}</pre>
+
+<p><a class="p_ident" id="p-WlAZ87mhGU" href="#p-WlAZ87mhGU" tabindex="-1" role="presentation"></a>O manipulador do evento <code>&quot;submit&quot;</code> chama <code>form.reset</code> para limpar o conteúdo do formulário após criar uma ação <code>&quot;newComment&quot;</code>.</p>
+
+<p><a class="p_ident" id="p-Td3g4o/sjB" href="#p-Td3g4o/sjB" tabindex="-1" role="presentation"></a>Ao criar pedaços moderadamente complexos de DOM, esse estilo de programação começa a parecer bastante confuso. Para evitar isso, as pessoas frequentemente usam uma <em>linguagem de template</em>, que permite escrever sua interface como um arquivo HTML com alguns marcadores especiais para indicar onde os elementos dinâmicos vão. Ou usam <em>JSX</em>, um dialeto não padrão de JavaScript que permite escrever algo muito próximo de tags HTML em seu programa como se fossem expressões JavaScript. Ambas as abordagens usam ferramentas adicionais para pré-processar o código antes de poder ser executado, o que evitaremos neste capítulo.</p>
+
+<p><a class="p_ident" id="p-OKOFZNjCtd" href="#p-OKOFZNjCtd" tabindex="-1" role="presentation"></a>Comentários são simples de renderizar.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-N9+wrVgBuY" href="#c-N9+wrVgBuY" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">renderComment</span>(<span class="tok-definition">comment</span>) {
+  <span class="tok-keyword">return</span> elt(<span class="tok-string">&quot;p&quot;</span>, {<span class="tok-definition">className</span>: <span class="tok-string">&quot;comment&quot;</span>},
+             elt(<span class="tok-string">&quot;strong&quot;</span>, <span class="tok-keyword">null</span>, comment.author),
+             <span class="tok-string">&quot;: &quot;</span>, comment.message);
+}</pre>
+
+<p><a class="p_ident" id="p-7MfCritB5W" href="#p-7MfCritB5W" tabindex="-1" role="presentation"></a>Finalmente, o formulário que o usuário pode usar para criar uma nova palestra é renderizado assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-CrmrTqBxyk" href="#c-CrmrTqBxyk" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">renderTalkForm</span>(<span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">title</span> = elt(<span class="tok-string">&quot;input&quot;</span>, {<span class="tok-definition">type</span>: <span class="tok-string">&quot;text&quot;</span>});
+  <span class="tok-keyword">let</span> <span class="tok-definition">summary</span> = elt(<span class="tok-string">&quot;input&quot;</span>, {<span class="tok-definition">type</span>: <span class="tok-string">&quot;text&quot;</span>});
+  <span class="tok-keyword">return</span> elt(<span class="tok-string">&quot;form&quot;</span>, {
+    <span class="tok-definition">onsubmit</span>(<span class="tok-definition">event</span>) {
+      event.preventDefault();
+      dispatch({<span class="tok-definition">type</span>: <span class="tok-string">&quot;newTalk&quot;</span>,
+                <span class="tok-definition">title</span>: title.value,
+                <span class="tok-definition">summary</span>: summary.value});
+      event.target.reset();
+    }
+  }, elt(<span class="tok-string">&quot;h3&quot;</span>, <span class="tok-keyword">null</span>, <span class="tok-string">&quot;Submit a Talk&quot;</span>),
+     elt(<span class="tok-string">&quot;label&quot;</span>, <span class="tok-keyword">null</span>, <span class="tok-string">&quot;Title: &quot;</span>, title),
+     elt(<span class="tok-string">&quot;label&quot;</span>, <span class="tok-keyword">null</span>, <span class="tok-string">&quot;Summary: &quot;</span>, summary),
+     elt(<span class="tok-string">&quot;button&quot;</span>, {<span class="tok-definition">type</span>: <span class="tok-string">&quot;submit&quot;</span>}, <span class="tok-string">&quot;Submit&quot;</span>));
+}</pre>
+
+<h3><a class="i_ident" id="i-QESJMin8/J" href="#i-QESJMin8/J" tabindex="-1" role="presentation"></a>Polling</h3>
+
+<p><a class="p_ident" id="p-HVGVdRfMOj" href="#p-HVGVdRfMOj" tabindex="-1" role="presentation"></a>Para iniciar a aplicação, precisamos da lista atual de palestras. Como o carregamento inicial está intimamente relacionado ao processo de long polling — o <code>ETag</code> do carregamento deve ser usado ao fazer polling — escreveremos uma função que continua fazendo polling ao servidor para <code>/talks</code> e chama uma função de callback quando um novo conjunto de palestras está disponível.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-y9uqyFVtpt" href="#c-y9uqyFVtpt" tabindex="-1" role="presentation"></a><span class="tok-keyword">async</span> <span class="tok-keyword">function</span> <span class="tok-definition">pollTalks</span>(<span class="tok-definition">update</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">tag</span> = undefined;
+  <span class="tok-keyword">for</span> (;;) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">response</span>;
+    <span class="tok-keyword">try</span> {
+      response = <span class="tok-keyword">await</span> fetchOK(<span class="tok-string">&quot;/talks&quot;</span>, {
+        <span class="tok-definition">headers</span>: tag &amp;&amp; {<span class="tok-string">&quot;If-None-Match&quot;</span>: tag,
+                         <span class="tok-string">&quot;Prefer&quot;</span>: <span class="tok-string">&quot;wait=90&quot;</span>}
+      });
+    } <span class="tok-keyword">catch</span> (<span class="tok-definition">e</span>) {
+      console.log(<span class="tok-string">&quot;Request failed: &quot;</span> + e);
+      <span class="tok-keyword">await</span> <span class="tok-keyword">new</span> Promise(<span class="tok-definition">resolve</span> =&gt; setTimeout(resolve, <span class="tok-number">500</span>));
+      <span class="tok-keyword">continue</span>;
+    }
+    <span class="tok-keyword">if</span> (response.status == <span class="tok-number">304</span>) <span class="tok-keyword">continue</span>;
+    tag = response.headers.get(<span class="tok-string">&quot;ETag&quot;</span>);
+    update(<span class="tok-keyword">await</span> response.json());
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-52fNMeisS0" href="#p-52fNMeisS0" tabindex="-1" role="presentation"></a>Esta é uma função <code>async</code> para que iterar e esperar pela requisição seja mais fácil. Ela executa um loop infinito que, a cada iteração, recupera a lista de palestras — normalmente ou, se esta não for a primeira requisição, com os cabeçalhos incluídos que a tornam uma requisição de long polling.</p>
+
+<p><a class="p_ident" id="p-iygT3mgbyA" href="#p-iygT3mgbyA" tabindex="-1" role="presentation"></a>Quando uma requisição falha, a função espera um momento e depois tenta novamente. Dessa forma, se sua conexão de rede cair por um tempo e depois voltar, a aplicação pode se recuperar e continuar atualizando. A promise resolvida via <code>setTimeout</code> é uma forma de forçar a função <code>async</code> a esperar.</p>
+
+<p><a class="p_ident" id="p-9vM4JnDt9w" href="#p-9vM4JnDt9w" tabindex="-1" role="presentation"></a>Quando o servidor retorna uma resposta 304, isso significa que uma requisição de long polling expirou, então a função deve simplesmente iniciar imediatamente a próxima requisição. Se a resposta é uma resposta 200 normal, seu corpo é lido como JSON e passado ao callback, e seu valor de cabeçalho <code>ETag</code> é armazenado para a próxima iteração.</p>
+
+<h3><a class="i_ident" id="i-fXC9K6epRQ" href="#i-fXC9K6epRQ" tabindex="-1" role="presentation"></a>A aplicação</h3>
+
+<p><a class="p_ident" id="p-7P18Tn9fjd" href="#p-7P18Tn9fjd" tabindex="-1" role="presentation"></a>O componente a seguir amarra toda a interface de usuário:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-PzYGJXojtl" href="#c-PzYGJXojtl" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> SkillShareApp {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+    <span class="tok-keyword">this</span>.dispatch = dispatch;
+    <span class="tok-keyword">this</span>.talkDOM = elt(<span class="tok-string">&quot;div&quot;</span>, {<span class="tok-definition">className</span>: <span class="tok-string">&quot;talks&quot;</span>});
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;div&quot;</span>, <span class="tok-keyword">null</span>,
+                   renderUserField(state.user, dispatch),
+                   <span class="tok-keyword">this</span>.talkDOM,
+                   renderTalkForm(dispatch));
+    <span class="tok-keyword">this</span>.syncState(state);
+  }
+
+  <span class="tok-definition">syncState</span>(<span class="tok-definition">state</span>) {
+    <span class="tok-keyword">if</span> (state.talks != <span class="tok-keyword">this</span>.talks) {
+      <span class="tok-keyword">this</span>.talkDOM.textContent = <span class="tok-string">&quot;&quot;</span>;
+      <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">talk</span> <span class="tok-keyword">of</span> state.talks) {
+        <span class="tok-keyword">this</span>.talkDOM.appendChild(
+          renderTalk(talk, <span class="tok-keyword">this</span>.dispatch));
+      }
+      <span class="tok-keyword">this</span>.talks = state.talks;
+    }
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-Cc2QOTI6iH" href="#p-Cc2QOTI6iH" tabindex="-1" role="presentation"></a>Quando as palestras mudam, este componente redesenha todas elas. Isso é simples mas também desperdiçado. Voltaremos a isso nos exercícios.</p>
+
+<p><a class="p_ident" id="p-zntguFiplV" href="#p-zntguFiplV" tabindex="-1" role="presentation"></a>Podemos iniciar a aplicação assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-6Z6pm4dZOv" href="#c-6Z6pm4dZOv" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">runApp</span>() {
+  <span class="tok-keyword">let</span> <span class="tok-definition">user</span> = localStorage.getItem(<span class="tok-string">&quot;userName&quot;</span>) || <span class="tok-string">&quot;Anon&quot;</span>;
+  <span class="tok-keyword">let</span> <span class="tok-definition">state</span>, <span class="tok-definition">app</span>;
+  <span class="tok-keyword">function</span> <span class="tok-definition">dispatch</span>(<span class="tok-definition">action</span>) {
+    state = handleAction(state, action);
+    app.syncState(state);
+  }
+
+  pollTalks(<span class="tok-definition">talks</span> =&gt; {
+    <span class="tok-keyword">if</span> (!app) {
+      state = {<span class="tok-definition">user</span>, <span class="tok-definition">talks</span>};
+      app = <span class="tok-keyword">new</span> SkillShareApp(state, dispatch);
+      document.body.appendChild(app.dom);
+    } <span class="tok-keyword">else</span> {
+      dispatch({<span class="tok-definition">type</span>: <span class="tok-string">&quot;setTalks&quot;</span>, <span class="tok-definition">talks</span>});
+    }
+  }).catch(reportError);
+}
+
+runApp();</pre>
+
+<p><a class="p_ident" id="p-UETeKNea99" href="#p-UETeKNea99" tabindex="-1" role="presentation"></a>Se você executar o servidor e abrir duas janelas do navegador para <a href="http://localhost:8000/"><em>http://localhost:8000</em></a> lado a lado, poderá ver que as ações que você realiza em uma janela são imediatamente visíveis na outra.</p>
+
+<h2><a class="h_ident" id="h-0CpJUZuhQJ" href="#h-0CpJUZuhQJ" tabindex="-1" role="presentation"></a>Exercícios</h2>
+
+<p><a class="p_ident" id="p-BDjYk1ca0L" href="#p-BDjYk1ca0L" tabindex="-1" role="presentation"></a>Os exercícios a seguir envolverão modificar o sistema definido neste capítulo. Para trabalhar neles, certifique-se de que você baixou o código (<a href="https://eloquentjavascript.net/code/skillsharing.zip"><em>https://eloquentjavascript.net/code/skillsharing.zip</em></a>), instalou Node (<a href="https://nodejs.org"><em>https://nodejs.org</em></a>), e instalou a dependência do projeto com <code>npm install</code>.</p>
+
+<h3><a class="i_ident" id="i-JBqoJenA1D" href="#i-JBqoJenA1D" tabindex="-1" role="presentation"></a>Persistência em disco</h3>
+
+<p><a class="p_ident" id="p-NaBEWK7Pnw" href="#p-NaBEWK7Pnw" tabindex="-1" role="presentation"></a>O servidor de compartilhamento de habilidades mantém seus dados puramente em memória. Isso significa que quando ele trava ou é reiniciado por qualquer razão, todas as palestras e comentários são perdidos.</p>
+
+<p><a class="p_ident" id="p-n1ic8Kdg2t" href="#p-n1ic8Kdg2t" tabindex="-1" role="presentation"></a>Estenda o servidor para que ele armazene os dados de palestras em disco e recarregue automaticamente os dados quando for reiniciado. Não se preocupe com eficiência — faça a coisa mais simples que funcione.</p>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-OKMDcSsIYa" href="#p-OKMDcSsIYa" tabindex="-1" role="presentation"></a>A solução mais simples que consigo pensar é codificar o objeto <code>talks</code> inteiro como JSON e despejá-lo em um arquivo com <code>writeFile</code>. Já existe um método (<code>updated</code>) que é chamado toda vez que os dados do servidor mudam. Ele pode ser estendido para escrever os novos dados no disco.</p>
+
+<p><a class="p_ident" id="p-QfPR/ROZgB" href="#p-QfPR/ROZgB" tabindex="-1" role="presentation"></a>Escolha um nome de arquivo, por exemplo <code>./talks.json</code>. Quando o servidor inicia, ele pode tentar ler esse arquivo com <code>readFile</code>, e se tiver sucesso, o servidor pode usar o conteúdo do arquivo como seus dados iniciais.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-tyE1YU8SY/" href="#i-tyE1YU8SY/" tabindex="-1" role="presentation"></a>Reinicialização de campo de comentário</h3>
+
+<p><a class="p_ident" id="p-0wMvSgXEHq" href="#p-0wMvSgXEHq" tabindex="-1" role="presentation"></a>O redesenho completo de palestras funciona muito bem porque normalmente não se pode distinguir entre um nó DOM e sua substituição idêntica. Mas existem exceções. Se você começar a digitar algo no campo de comentário de uma palestra em uma janela do navegador e depois, em outra, adicionar um comentário a essa palestra, o campo na primeira janela será redesenhado, removendo tanto seu conteúdo quanto seu foco.</p>
+
+<p><a class="p_ident" id="p-jaPlwPSJPY" href="#p-jaPlwPSJPY" tabindex="-1" role="presentation"></a>Quando múltiplas pessoas estão adicionando comentários ao mesmo tempo, isso seria irritante. Você consegue encontrar uma forma de resolver isso?</p>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-ZrfLPih90b" href="#p-ZrfLPih90b" tabindex="-1" role="presentation"></a>A melhor forma de fazer isso é provavelmente tornar o componente de palestra um objeto, com um método <code>syncState</code>, para que possam ser atualizados para mostrar uma versão modificada da palestra. Durante operação normal, a única forma de uma palestra ser alterada é adicionando mais comentários, então o método <code>syncState</code> pode ser relativamente simples.</p>
+
+<p><a class="p_ident" id="p-85IIt8oLhC" href="#p-85IIt8oLhC" tabindex="-1" role="presentation"></a>A parte difícil é que quando uma lista alterada de palestras chega, temos que reconciliar a lista existente de componentes DOM com as palestras na nova lista — deletando componentes cuja palestra foi deletada e atualizando componentes cuja palestra mudou.</p>
+
+<p><a class="p_ident" id="p-lmuC7kvEph" href="#p-lmuC7kvEph" tabindex="-1" role="presentation"></a>Para fazer isso, pode ser útil manter uma estrutura de dados que armazene os componentes de palestras sob os títulos das palestras para que você possa facilmente descobrir se um componente existe para uma determinada palestra. Você pode então iterar sobre o novo array de palestras, e para cada uma delas, sincronizar um componente existente ou criar um novo. Para deletar componentes de palestras deletadas, você também terá que iterar sobre os componentes e verificar se as palestras correspondentes ainda existem.</p>
+
+</div></details><nav><a href="20_node.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

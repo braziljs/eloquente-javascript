@@ -1,0 +1,768 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projeto: Um Editor de Pixel Art :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":19,"load_files":["code/chapter/19_paint.js"]}</script></head>
+
+<article>
+<nav><a href="18_http.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="20_node.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>Projeto: Um Editor de Pixel Art</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-UgAnLq4lWU" href="#p-UgAnLq4lWU" tabindex="-1" role="presentation"></a>Olho para as muitas cores diante de mim. Olho para minha tela em branco. Então, tento aplicar cores como palavras que formam poemas, como notas que formam música.</p>
+
+<footer>Joan Miró</footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_19.jpg" alt="Illustration showing a mosaic of black tiles, with jars of other tiles next to it"></figure>
+
+<p><a class="p_ident" id="p-+Mu2EkW6In" href="#p-+Mu2EkW6In" tabindex="-1" role="presentation"></a>O material dos capítulos anteriores lhe dá todos os elementos necessários para construir uma aplicação web básica. Neste capítulo, faremos exatamente isso.</p>
+
+<p><a class="p_ident" id="p-+YKKNMOa/q" href="#p-+YKKNMOa/q" tabindex="-1" role="presentation"></a>Nossa aplicação será um programa de desenho de pixels que permite modificar uma imagem pixel por pixel manipulando uma visão ampliada dela, mostrada como uma grade de quadrados coloridos. Você pode usar o programa para abrir arquivos de imagem, rabiscar neles com o mouse ou outro dispositivo apontador e salvá-los. É assim que ele vai parecer:</p><figure><img src="img/pixel_editor.png" alt="Screenshot of the pixel editor interface, with a grid of colored pixels at the top and a number of controls, in the form of HTML fields and buttons, below that"></figure>
+
+<p><a class="p_ident" id="p-0LAI1DBk10" href="#p-0LAI1DBk10" tabindex="-1" role="presentation"></a>Pintar em um computador é ótimo. Você não precisa se preocupar com materiais, habilidade ou talento. É só começar a borrar e ver onde você chega.</p>
+
+<h2><a class="h_ident" id="h-R1d5BlCWEM" href="#h-R1d5BlCWEM" tabindex="-1" role="presentation"></a>Componentes</h2>
+
+<p><a class="p_ident" id="p-RhN5uya33z" href="#p-RhN5uya33z" tabindex="-1" role="presentation"></a>A interface da aplicação mostra um grande elemento <code>&lt;canvas&gt;</code> no topo, com vários campos de formulário abaixo dele. O usuário desenha na imagem selecionando uma ferramenta em um campo <code>&lt;select&gt;</code> e depois clicando, tocando ou arrastando sobre o canvas. Existem ferramentas para desenhar pixels individuais ou retângulos, para preencher uma área e para selecionar uma cor da imagem.</p>
+
+<p><a class="p_ident" id="p-Td0vo3I8NX" href="#p-Td0vo3I8NX" tabindex="-1" role="presentation"></a>Vamos estruturar a interface do editor como vários <em>componentes</em>, objetos que são responsáveis por uma parte do DOM e que podem conter outros componentes dentro de si.</p>
+
+<p><a class="p_ident" id="p-SrTnB+AZOR" href="#p-SrTnB+AZOR" tabindex="-1" role="presentation"></a>O estado da aplicação consiste na imagem atual, na ferramenta selecionada e na cor selecionada. Vamos configurar as coisas para que o estado viva em um único valor e os componentes da interface sempre baseiem sua aparência no estado atual.</p>
+
+<p><a class="p_ident" id="p-L657j0cCRZ" href="#p-L657j0cCRZ" tabindex="-1" role="presentation"></a>Para ver por que isso é importante, vamos considerar a alternativa — distribuir partes do estado pela interface. Até certo ponto, isso é mais fácil de programar. Podemos simplesmente colocar um campo de cor e ler seu valor quando precisarmos saber a cor atual.</p>
+
+<p><a class="p_ident" id="p-hnm5ryPFGa" href="#p-hnm5ryPFGa" tabindex="-1" role="presentation"></a>Mas então adicionamos o seletor de cor — uma ferramenta que permite clicar na imagem para selecionar a cor de um determinado pixel. Para manter o campo de cor mostrando a cor correta, essa ferramenta precisaria saber que o campo de cor existe e atualizá-lo sempre que escolher uma nova cor. Se você adicionar outro lugar que torne a cor visível (talvez o cursor do mouse pudesse mostrá-la), teria que atualizar seu código de mudança de cor para manter isso sincronizado também.</p>
+
+<p><a class="p_ident" id="p-0IgKH0xx/J" href="#p-0IgKH0xx/J" tabindex="-1" role="presentation"></a>Na prática, isso cria um problema onde cada parte da interface precisa saber sobre todas as outras partes, o que não é muito modular. Para aplicações pequenas como a deste capítulo, isso pode não ser um problema. Para projetos maiores, pode se tornar um verdadeiro pesadelo.</p>
+
+<p><a class="p_ident" id="p-tlKieYSWG7" href="#p-tlKieYSWG7" tabindex="-1" role="presentation"></a>Para evitar esse pesadelo por princípio, vamos ser rigorosos sobre o <em>fluxo de dados</em>. Existe um estado, e a interface é desenhada com base nesse estado. Um componente da interface pode responder a ações do usuário atualizando o estado, momento em que os componentes têm a chance de se sincronizar com este novo estado.</p>
+
+<p><a class="p_ident" id="p-4hc2Kj+vcN" href="#p-4hc2Kj+vcN" tabindex="-1" role="presentation"></a>Na prática, cada componente é configurado de forma que, quando recebe um novo estado, ele também notifica seus componentes filhos, na medida em que precisem ser atualizados. Configurar isso é um pouco trabalhoso. Tornar isso mais conveniente é o principal ponto de venda de muitas bibliotecas de programação para navegador. Mas para uma aplicação pequena como esta, podemos fazer sem tal infraestrutura.</p>
+
+<p><a class="p_ident" id="p-N/sUYxkusr" href="#p-N/sUYxkusr" tabindex="-1" role="presentation"></a>Atualizações ao estado são representadas como objetos, que chamaremos de <em>ações</em>. Componentes podem criar tais ações e <em>despachar</em>-las — dá-las a uma função central de gerenciamento de estado. Essa função calcula o próximo estado, após o que os componentes da interface se atualizam para este novo estado.</p>
+
+<p><a class="p_ident" id="p-oOs4A4Xq0r" href="#p-oOs4A4Xq0r" tabindex="-1" role="presentation"></a>Estamos pegando a tarefa confusa de rodar uma interface de usuário e aplicando estrutura a ela. Embora as partes relacionadas ao DOM ainda estejam cheias de efeito colaterals, elas são sustentadas por uma espinha dorsal conceitualmente simples: o ciclo de atualização de estado. O estado determina a aparência do DOM, e a única forma de eventos DOM mudarem o estado é despachando ações ao estado.</p>
+
+<p><a class="p_ident" id="p-BXSkf3h6FK" href="#p-BXSkf3h6FK" tabindex="-1" role="presentation"></a>Existem <em>muitas</em> variantes desta abordagem, cada uma com seus próprios benefícios e problemas, mas a ideia central é a mesma: mudanças de estado devem passar por um único canal bem definido, não acontecer em todo lugar.</p>
+
+<p><a class="p_ident" id="p-qDOoakw8WU" href="#p-qDOoakw8WU" tabindex="-1" role="presentation"></a>Nossos componentes serão classes conformando a uma interface. Seu construtor recebe um estado — que pode ser o estado completo da aplicação ou algum valor menor se não precisar de acesso a tudo — e usa isso para construir uma propriedade <code>dom</code>. Este é o elemento DOM que representa o componente. A maioria dos construtores também receberá alguns outros valores que não mudam ao longo do tempo, como a função que podem usar para despachar uma ação.</p>
+
+<p><a class="p_ident" id="p-z0hnbEIfgy" href="#p-z0hnbEIfgy" tabindex="-1" role="presentation"></a>Cada componente tem um método <code>syncState</code> que é usado para sincronizá-lo com um novo valor de estado. O método recebe um argumento, o estado, que é do mesmo tipo que o primeiro argumento de seu construtor.</p>
+
+<h2><a class="h_ident" id="h-manjwzrYLY" href="#h-manjwzrYLY" tabindex="-1" role="presentation"></a>O estado</h2>
+
+<p><a class="p_ident" id="p-8ph2qJl2B+" href="#p-8ph2qJl2B+" tabindex="-1" role="presentation"></a>O estado da aplicação será um objeto com propriedades <code>picture</code>, <code>tool</code> e <code>color</code>. A imagem é em si um objeto que armazena a largura, altura e conteúdo de pixels da imagem. Os pixels são armazenados em um único array, linha por linha, de cima para baixo.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-FaXS4E1Q9/" href="#c-FaXS4E1Q9/" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> Picture {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">width</span>, <span class="tok-definition">height</span>, <span class="tok-definition">pixels</span>) {
+    <span class="tok-keyword">this</span>.width = width;
+    <span class="tok-keyword">this</span>.height = height;
+    <span class="tok-keyword">this</span>.pixels = pixels;
+  }
+  <span class="tok-keyword">static</span> <span class="tok-definition">empty</span>(<span class="tok-definition">width</span>, <span class="tok-definition">height</span>, <span class="tok-definition">color</span>) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">pixels</span> = <span class="tok-keyword">new</span> Array(width * height).fill(color);
+    <span class="tok-keyword">return</span> <span class="tok-keyword">new</span> Picture(width, height, pixels);
+  }
+  <span class="tok-definition">pixel</span>(<span class="tok-definition">x</span>, <span class="tok-definition">y</span>) {
+    <span class="tok-keyword">return</span> <span class="tok-keyword">this</span>.pixels[x + y * <span class="tok-keyword">this</span>.width];
+  }
+  <span class="tok-definition">draw</span>(<span class="tok-definition">pixels</span>) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">copy</span> = <span class="tok-keyword">this</span>.pixels.slice();
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> {x, y, color} <span class="tok-keyword">of</span> pixels) {
+      copy[x + y * <span class="tok-keyword">this</span>.width] = color;
+    }
+    <span class="tok-keyword">return</span> <span class="tok-keyword">new</span> Picture(<span class="tok-keyword">this</span>.width, <span class="tok-keyword">this</span>.height, copy);
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-QLUy0WS9tJ" href="#p-QLUy0WS9tJ" tabindex="-1" role="presentation"></a>Queremos poder tratar uma imagem como um valor imutável, por razões às quais voltaremos mais adiante no capítulo. Mas também precisamos às vezes atualizar um monte de pixels de uma vez. Para poder fazer isso, a classe tem um método <code>draw</code> que espera um array de pixels atualizados — objetos com propriedades <code>x</code>, <code>y</code> e <code>color</code> — e cria uma nova imagem com esses pixels sobrescritos. Este método usa <code>slice</code> sem argumentos para copiar o array de pixels inteiro — o início do slice é padrão 0, e o fim é padrão o comprimento do array.</p>
+
+<p><a class="p_ident" id="p-zT6W90pZ7W" href="#p-zT6W90pZ7W" tabindex="-1" role="presentation"></a>O método <code>empty</code> usa duas funcionalidades de array que não vimos antes. O construtor <code>Array</code> pode ser chamado com um número para criar um array vazio do comprimento dado. O método <code>fill</code> pode então ser usado para preencher este array com um valor dado. Estes são usados para criar um array no qual todos os pixels têm a mesma cor.</p>
+
+<p><a class="p_ident" id="p-t2tj6GW+D2" href="#p-t2tj6GW+D2" tabindex="-1" role="presentation"></a>Cores são armazenadas como strings contendo código de cors CSS tradicionais compostos por um sinal de hash (<code>#</code>) seguido por seis dígitos hexadecimais (base 16) — dois para o componente vermelho, dois para o componente verde e dois para o componente azul. Esta é uma forma um tanto críptica e inconveniente de escrever cores, mas é o formato que o campo de entrada de cor HTML usa, e pode ser usado na propriedade <code>fillStyle</code> de um contexto de desenho canvas, então para as formas como usaremos cores neste programa, é prático o suficiente.</p>
+
+<p><a class="p_ident" id="p-ZWZidzURcY" href="#p-ZWZidzURcY" tabindex="-1" role="presentation"></a>Preto, onde todos os componentes são zero, é escrito <code>&quot;#000000&quot;</code>, e rosa brilhante se parece com <code>&quot;#ff00ff&quot;</code>, onde os componentes vermelho e azul têm o valor máximo de 255, escrito <code>ff</code> em dígitos hexadecimais (que usam <em>a</em> a <em>f</em> para representar dígitos 10 a 15).</p>
+
+<p><a class="p_ident" id="p-Z8mU4eKPKu" href="#p-Z8mU4eKPKu" tabindex="-1" role="presentation"></a>Vamos permitir que a interface despache ações como objetos cujas propriedades sobrescrevem as propriedades do estado anterior. O campo de cor, quando o usuário o muda, poderia despachar um objeto como <code>{color: field.<wbr>value}</code>, a partir do qual esta função de atualização pode calcular um novo estado.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-9ilVJcm5s/" href="#c-9ilVJcm5s/" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">updateState</span>(<span class="tok-definition">state</span>, <span class="tok-definition">action</span>) {
+  <span class="tok-keyword">return</span> {...state, ...action};
+}</pre>
+
+<p><a class="p_ident" id="p-BOOQSBagsu" href="#p-BOOQSBagsu" tabindex="-1" role="presentation"></a>Este padrão, no qual spread de objeto é usado para primeiro adicionar as propriedades de um objeto existente e então sobrescrever algumas delas, é comum em código JavaScript que usa objetos imutáveis.</p>
+
+<h2><a class="h_ident" id="h-eBK42ekM+f" href="#h-eBK42ekM+f" tabindex="-1" role="presentation"></a>Construção de DOM</h2>
+
+<p><a class="p_ident" id="p-TNgu9vHUtl" href="#p-TNgu9vHUtl" tabindex="-1" role="presentation"></a>Uma das principais coisas que componentes de interface fazem é criar estrutura DOM. Novamente não queremos usar os métodos verbosos do DOM diretamente para isso, então aqui está uma versão ligeiramente expandida da função <code>elt</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bpc/osm9kD" href="#c-bpc/osm9kD" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">elt</span>(<span class="tok-definition">type</span>, <span class="tok-definition">props</span>, ...<span class="tok-definition">children</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">dom</span> = document.createElement(type);
+  <span class="tok-keyword">if</span> (props) Object.assign(dom, props);
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">child</span> <span class="tok-keyword">of</span> children) {
+    <span class="tok-keyword">if</span> (<span class="tok-keyword">typeof</span> child != <span class="tok-string">&quot;string&quot;</span>) dom.appendChild(child);
+    <span class="tok-keyword">else</span> dom.appendChild(document.createTextNode(child));
+  }
+  <span class="tok-keyword">return</span> dom;
+}</pre>
+
+<p><a class="p_ident" id="p-ruJv82o9VT" href="#p-ruJv82o9VT" tabindex="-1" role="presentation"></a>A principal diferença entre esta versão e a que usamos no <a href="16_game.html#domdisplay">Capítulo 16</a> é que ela atribui <em>propriedades</em> a nós DOM, não <em>atributos</em>. Isso significa que não podemos usá-la para definir atributos arbitrários, mas <em>podemos</em> usá-la para definir propriedades cujo valor não é uma string, como <code>onclick</code>, que pode ser definido como uma função para registrar um manipulador de evento de clique.</p>
+
+<p><a class="p_ident" id="p-PXJGjjVkbX" href="#p-PXJGjjVkbX" tabindex="-1" role="presentation"></a>Isso permite este estilo conveniente para registrar manipuladores de eventos:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-UrXW9qBNM+" href="#c-UrXW9qBNM+" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">body</span>&gt;
+  &lt;<span class="tok-typeName">script</span>&gt;
+    document.body.appendChild(elt(<span class="tok-string">&quot;button&quot;</span>, {
+      <span class="tok-definition">onclick</span>: () =&gt; console.log(<span class="tok-string">&quot;click&quot;</span>)
+    }, <span class="tok-string">&quot;The button&quot;</span>));
+  &lt;/<span class="tok-typeName">script</span>&gt;
+&lt;/<span class="tok-typeName">body</span>&gt;</pre>
+
+<h2><a class="h_ident" id="h-7+1EztRRxz" href="#h-7+1EztRRxz" tabindex="-1" role="presentation"></a>O canvas</h2>
+
+<p><a class="p_ident" id="p-NjMaoSRf0J" href="#p-NjMaoSRf0J" tabindex="-1" role="presentation"></a>O primeiro componente que vamos definir é a parte da interface que exibe a imagem como uma grade de caixas coloridas. Este componente é responsável por duas coisas: mostrar uma imagem e comunicar eventos de ponteiro nessa imagem ao resto da aplicação.</p>
+
+<p><a class="p_ident" id="p-PVLm5XIZbL" href="#p-PVLm5XIZbL" tabindex="-1" role="presentation"></a>Portanto, podemos defini-lo como um componente que só sabe sobre a imagem atual, não o estado completo da aplicação. Porque ele não sabe como a aplicação funciona no geral, não pode despachar ações diretamente. Em vez disso, ao responder a eventos de ponteiro, ele chama uma função de callback fornecida pelo código que o criou, que tratará as partes específicas da aplicação.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-uknkIx/3Hs" href="#c-uknkIx/3Hs" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">scale</span> = <span class="tok-number">10</span>;
+
+<span class="tok-keyword">class</span> PictureCanvas {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">picture</span>, <span class="tok-definition">pointerDown</span>) {
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;canvas&quot;</span>, {
+      <span class="tok-definition">onmousedown</span>: <span class="tok-definition">event</span> =&gt; <span class="tok-keyword">this</span>.mouse(event, pointerDown),
+      <span class="tok-definition">ontouchstart</span>: <span class="tok-definition">event</span> =&gt; <span class="tok-keyword">this</span>.touch(event, pointerDown)
+    });
+    <span class="tok-keyword">this</span>.syncState(picture);
+  }
+  <span class="tok-definition">syncState</span>(<span class="tok-definition">picture</span>) {
+    <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.picture == picture) <span class="tok-keyword">return</span>;
+    <span class="tok-keyword">this</span>.picture = picture;
+    drawPicture(<span class="tok-keyword">this</span>.picture, <span class="tok-keyword">this</span>.dom, scale);
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-z+2PTO2VCG" href="#p-z+2PTO2VCG" tabindex="-1" role="presentation"></a>Desenhamos cada pixel como um quadrado de 10 por 10, conforme determinado pela constante <code>scale</code>. Para evitar trabalho desnecessário, o componente mantém registro de sua imagem atual e só faz um redesenho quando <code>syncState</code> recebe uma nova imagem.</p>
+
+<p><a class="p_ident" id="p-E7u1ruAwoZ" href="#p-E7u1ruAwoZ" tabindex="-1" role="presentation"></a>A função de desenho real define o tamanho do canvas com base na escala e no tamanho da imagem e o preenche com uma série de quadrados, um para cada pixel.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-kMF9hx2xSw" href="#c-kMF9hx2xSw" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">drawPicture</span>(<span class="tok-definition">picture</span>, <span class="tok-definition">canvas</span>, <span class="tok-definition">scale</span>) {
+  canvas.width = picture.width * scale;
+  canvas.height = picture.height * scale;
+  <span class="tok-keyword">let</span> <span class="tok-definition">cx</span> = canvas.getContext(<span class="tok-string">&quot;2d&quot;</span>);
+
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">y</span> = <span class="tok-number">0</span>; y &lt; picture.height; y++) {
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">x</span> = <span class="tok-number">0</span>; x &lt; picture.width; x++) {
+      cx.fillStyle = picture.pixel(x, y);
+      cx.fillRect(x * scale, y * scale, scale, scale);
+    }
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-Bw5Y6/F7b+" href="#p-Bw5Y6/F7b+" tabindex="-1" role="presentation"></a>Quando o botão esquerdo do mouse é pressionado enquanto o mouse está sobre o canvas da imagem, o componente chama o callback <code>pointerDown</code>, dando-lhe a posição do pixel que foi clicado — em coordenadas da imagem. Isso será usado para implementar a interação do mouse com a imagem. O callback pode retornar outra função de callback para ser notificada quando o ponteiro é movido para um pixel diferente enquanto o botão está pressionado.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-G1LWj2jAqP" href="#c-G1LWj2jAqP" tabindex="-1" role="presentation"></a>PictureCanvas.prototype.mouse = <span class="tok-keyword">function</span>(<span class="tok-definition">downEvent</span>, <span class="tok-definition">onDown</span>) {
+  <span class="tok-keyword">if</span> (downEvent.button != <span class="tok-number">0</span>) <span class="tok-keyword">return</span>;
+  <span class="tok-keyword">let</span> <span class="tok-definition">pos</span> = pointerPosition(downEvent, <span class="tok-keyword">this</span>.dom);
+  <span class="tok-keyword">let</span> <span class="tok-definition">onMove</span> = onDown(pos);
+  <span class="tok-keyword">if</span> (!onMove) <span class="tok-keyword">return</span>;
+  <span class="tok-keyword">let</span> <span class="tok-definition">move</span> = <span class="tok-definition">moveEvent</span> =&gt; {
+    <span class="tok-keyword">if</span> (moveEvent.buttons == <span class="tok-number">0</span>) {
+      <span class="tok-keyword">this</span>.dom.removeEventListener(<span class="tok-string">&quot;mousemove&quot;</span>, move);
+    } <span class="tok-keyword">else</span> {
+      <span class="tok-keyword">let</span> <span class="tok-definition">newPos</span> = pointerPosition(moveEvent, <span class="tok-keyword">this</span>.dom);
+      <span class="tok-keyword">if</span> (newPos.x == pos.x &amp;&amp; newPos.y == pos.y) <span class="tok-keyword">return</span>;
+      pos = newPos;
+      onMove(newPos);
+    }
+  };
+  <span class="tok-keyword">this</span>.dom.addEventListener(<span class="tok-string">&quot;mousemove&quot;</span>, move);
+};
+
+<span class="tok-keyword">function</span> <span class="tok-definition">pointerPosition</span>(<span class="tok-definition">pos</span>, <span class="tok-definition">domNode</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">rect</span> = domNode.getBoundingClientRect();
+  <span class="tok-keyword">return</span> {<span class="tok-definition">x</span>: Math.floor((pos.clientX - rect.left) / scale),
+          <span class="tok-definition">y</span>: Math.floor((pos.clientY - rect.top) / scale)};
+}</pre>
+
+<p><a class="p_ident" id="p-Vbf/OtEiex" href="#p-Vbf/OtEiex" tabindex="-1" role="presentation"></a>Como sabemos o tamanho dos pixels e podemos usar <code>getBoundingClientRect</code> para encontrar a posição do canvas na tela, é possível converter de coordenadas de eventos do mouse (<code>clientX</code> e <code>clientY</code>) para coordenadas da imagem. Estas são sempre arredondadas para baixo para que se refiram a um pixel específico.</p>
+
+<p><a class="p_ident" id="p-ajwdwhT5WX" href="#p-ajwdwhT5WX" tabindex="-1" role="presentation"></a>Com eventos de toque, temos que fazer algo semelhante, mas usando eventos diferentes e nos certificando de chamar <code>preventDefault</code> no evento <code>&quot;touchstart&quot;</code> para prevenir deslizamento.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-HUiWca6Gb7" href="#c-HUiWca6Gb7" tabindex="-1" role="presentation"></a>PictureCanvas.prototype.touch = <span class="tok-keyword">function</span>(<span class="tok-definition">startEvent</span>,
+                                         <span class="tok-definition">onDown</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">pos</span> = pointerPosition(startEvent.touches[<span class="tok-number">0</span>], <span class="tok-keyword">this</span>.dom);
+  <span class="tok-keyword">let</span> <span class="tok-definition">onMove</span> = onDown(pos);
+  startEvent.preventDefault();
+  <span class="tok-keyword">if</span> (!onMove) <span class="tok-keyword">return</span>;
+  <span class="tok-keyword">let</span> <span class="tok-definition">move</span> = <span class="tok-definition">moveEvent</span> =&gt; {
+    <span class="tok-keyword">let</span> <span class="tok-definition">newPos</span> = pointerPosition(moveEvent.touches[<span class="tok-number">0</span>],
+                                 <span class="tok-keyword">this</span>.dom);
+    <span class="tok-keyword">if</span> (newPos.x == pos.x &amp;&amp; newPos.y == pos.y) <span class="tok-keyword">return</span>;
+    pos = newPos;
+    onMove(newPos);
+  };
+  <span class="tok-keyword">let</span> <span class="tok-definition">end</span> = () =&gt; {
+    <span class="tok-keyword">this</span>.dom.removeEventListener(<span class="tok-string">&quot;touchmove&quot;</span>, move);
+    <span class="tok-keyword">this</span>.dom.removeEventListener(<span class="tok-string">&quot;touchend&quot;</span>, end);
+  };
+  <span class="tok-keyword">this</span>.dom.addEventListener(<span class="tok-string">&quot;touchmove&quot;</span>, move);
+  <span class="tok-keyword">this</span>.dom.addEventListener(<span class="tok-string">&quot;touchend&quot;</span>, end);
+};</pre>
+
+<p><a class="p_ident" id="p-zAvQn9i4a3" href="#p-zAvQn9i4a3" tabindex="-1" role="presentation"></a>Para eventos de toque, <code>clientX</code> e <code>clientY</code> não estão disponíveis diretamente no objeto do evento, mas podemos usar as coordenadas do primeiro objeto de toque na propriedade <code>touches</code>.</p>
+
+<h2><a class="h_ident" id="h-fXC9K6epRQ" href="#h-fXC9K6epRQ" tabindex="-1" role="presentation"></a>A aplicação</h2>
+
+<p><a class="p_ident" id="p-TcuaToEn9r" href="#p-TcuaToEn9r" tabindex="-1" role="presentation"></a>Para tornar possível construir a aplicação peça por peça, vamos implementar o componente principal como um invólucro ao redor de um canvas de imagem e um conjunto dinâmico de ferramentas e controles que passamos ao seu construtor.</p>
+
+<p><a class="p_ident" id="p-Fyl0ZWyHxG" href="#p-Fyl0ZWyHxG" tabindex="-1" role="presentation"></a>Os <em>controles</em> são os elementos de interface que aparecem abaixo da imagem. Eles serão fornecidos como um array de construtores de componentes.</p>
+
+<p><a class="p_ident" id="p-c8yFi3HUuS" href="#p-c8yFi3HUuS" tabindex="-1" role="presentation"></a>As <em>ferramentas</em> fazem coisas como desenhar pixels ou preencher uma área. A aplicação mostra o conjunto de ferramentas disponíveis como um campo <code>&lt;select&gt;</code>. A ferramenta atualmente selecionada determina o que acontece quando o usuário interage com a imagem com um dispositivo apontador. O conjunto de ferramentas disponíveis é fornecido como um objeto que mapeia os nomes que aparecem no campo dropdown para funções que implementam as ferramentas. Tais funções recebem uma posição na imagem, um estado atual da aplicação e uma função <code>dispatch</code> como argumentos. Elas podem retornar uma função de manipulador de movimento que é chamada com uma nova posição e um estado atual quando o ponteiro se move para um pixel diferente.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bksTXX2fO6" href="#c-bksTXX2fO6" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> PixelEditor {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">state</span>, <span class="tok-definition">config</span>) {
+    <span class="tok-keyword">let</span> {tools, controls, dispatch} = config;
+    <span class="tok-keyword">this</span>.state = state;
+
+    <span class="tok-keyword">this</span>.canvas = <span class="tok-keyword">new</span> PictureCanvas(state.picture, <span class="tok-definition">pos</span> =&gt; {
+      <span class="tok-keyword">let</span> <span class="tok-definition">tool</span> = tools[<span class="tok-keyword">this</span>.state.tool];
+      <span class="tok-keyword">let</span> <span class="tok-definition">onMove</span> = tool(pos, <span class="tok-keyword">this</span>.state, dispatch);
+      <span class="tok-keyword">if</span> (onMove) <span class="tok-keyword">return</span> <span class="tok-definition">pos</span> =&gt; onMove(pos, <span class="tok-keyword">this</span>.state);
+    });
+    <span class="tok-keyword">this</span>.controls = controls.map(
+      <span class="tok-definition">Control</span> =&gt; <span class="tok-keyword">new</span> Control(state, config));
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;div&quot;</span>, {}, <span class="tok-keyword">this</span>.canvas.dom, elt(<span class="tok-string">&quot;br&quot;</span>),
+                   ...<span class="tok-keyword">this</span>.controls.reduce(
+                     (<span class="tok-definition">a</span>, <span class="tok-definition">c</span>) =&gt; a.concat(<span class="tok-string">&quot; &quot;</span>, c.dom), []));
+  }
+  <span class="tok-definition">syncState</span>(<span class="tok-definition">state</span>) {
+    <span class="tok-keyword">this</span>.state = state;
+    <span class="tok-keyword">this</span>.canvas.syncState(state.picture);
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">ctrl</span> <span class="tok-keyword">of</span> <span class="tok-keyword">this</span>.controls) ctrl.syncState(state);
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-9VJy4UvsGr" href="#p-9VJy4UvsGr" tabindex="-1" role="presentation"></a>O manipulador de ponteiro dado a <code>PictureCanvas</code> chama a ferramenta atualmente selecionada com os argumentos apropriados e, se isso retornar um manipulador de movimento, o adapta para também receber o estado.</p>
+
+<p><a class="p_ident" id="p-9+dVWRruwQ" href="#p-9+dVWRruwQ" tabindex="-1" role="presentation"></a>Todos os controles são construídos e armazenados em <code>this.controls</code> para que possam ser atualizados quando o estado da aplicação muda. A chamada a <code>reduce</code> introduz espaços entre os elementos DOM dos controles. Dessa forma, eles não parecem tão apertados juntos.</p>
+
+<p><a class="p_ident" id="p-IUwA51Yy5Q" href="#p-IUwA51Yy5Q" tabindex="-1" role="presentation"></a>O primeiro controle é o menu de seleção de ferramenta. Ele cria um elemento <code>&lt;select&gt;</code> com uma opção para cada ferramenta e configura um manipulador de evento <code>&quot;change&quot;</code> que atualiza o estado da aplicação quando o usuário seleciona uma ferramenta diferente.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-ErM/S5/GMa" href="#c-ErM/S5/GMa" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> ToolSelect {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">state</span>, {tools, dispatch}) {
+    <span class="tok-keyword">this</span>.select = elt(<span class="tok-string">&quot;select&quot;</span>, {
+      <span class="tok-definition">onchange</span>: () =&gt; dispatch({<span class="tok-definition">tool</span>: <span class="tok-keyword">this</span>.select.value})
+    }, ...Object.keys(tools).map(<span class="tok-definition">name</span> =&gt; elt(<span class="tok-string">&quot;option&quot;</span>, {
+      <span class="tok-definition">selected</span>: name == state.tool
+    }, name)));
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;label&quot;</span>, <span class="tok-keyword">null</span>, <span class="tok-string">&quot;🖌 Tool: &quot;</span>, <span class="tok-keyword">this</span>.select);
+  }
+  <span class="tok-definition">syncState</span>(<span class="tok-definition">state</span>) { <span class="tok-keyword">this</span>.select.value = state.tool; }
+}</pre>
+
+<p><a class="p_ident" id="p-kz6QqbNqaA" href="#p-kz6QqbNqaA" tabindex="-1" role="presentation"></a>Ao envolver o texto do rótulo e o campo em um elemento <code>&lt;label&gt;</code>, dizemos ao navegador que o rótulo pertence àquele campo, para que você possa, por exemplo, clicar no rótulo para focar o campo.</p>
+
+<p><a class="p_ident" id="p-gS8XkY1MrO" href="#p-gS8XkY1MrO" tabindex="-1" role="presentation"></a>Também precisamos poder mudar a cor, então vamos adicionar um controle para isso. Um elemento HTML <code>&lt;input&gt;</code> com um atributo <code>type</code> de <code>color</code> nos dá um campo de formulário especializado em selecionar cores. O valor de tal campo é sempre um código de cor CSS no formato <code>&quot;#RRGGBB&quot;</code> (vermelho, verde e azul, dois dígitos por cor). O navegador mostrará uma interface de seletor de cor quando o usuário interagir com ele.</p>
+
+<p><a class="p_ident" id="p-Nj3phIe6p1" href="#p-Nj3phIe6p1" tabindex="-1" role="presentation"></a>Este controle cria tal campo e o conecta para ficar sincronizado com a propriedade <code>color</code> do estado da aplicação.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-CNKBIFujc0" href="#c-CNKBIFujc0" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> ColorSelect {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">state</span>, {dispatch}) {
+    <span class="tok-keyword">this</span>.input = elt(<span class="tok-string">&quot;input&quot;</span>, {
+      <span class="tok-definition">type</span>: <span class="tok-string">&quot;color&quot;</span>,
+      <span class="tok-definition">value</span>: state.color,
+      <span class="tok-definition">onchange</span>: () =&gt; dispatch({<span class="tok-definition">color</span>: <span class="tok-keyword">this</span>.input.value})
+    });
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;label&quot;</span>, <span class="tok-keyword">null</span>, <span class="tok-string">&quot;🎨 Color: &quot;</span>, <span class="tok-keyword">this</span>.input);
+  }
+  <span class="tok-definition">syncState</span>(<span class="tok-definition">state</span>) { <span class="tok-keyword">this</span>.input.value = state.color; }
+}</pre>
+
+<h2><a class="h_ident" id="h-AXj1HTUJe1" href="#h-AXj1HTUJe1" tabindex="-1" role="presentation"></a>Ferramentas de desenho</h2>
+
+<p><a class="p_ident" id="p-QvN0gjfrkB" href="#p-QvN0gjfrkB" tabindex="-1" role="presentation"></a>Antes de podermos desenhar qualquer coisa, precisamos implementar as ferramentas que controlarão a funcionalidade de eventos de mouse ou toque no canvas.</p>
+
+<p><a class="p_ident" id="p-A6JANDHcF/" href="#p-A6JANDHcF/" tabindex="-1" role="presentation"></a>A ferramenta mais básica é a ferramenta de desenho, que muda qualquer pixel que você clicar ou tocar para a cor atualmente selecionada. Ela despacha uma ação que atualiza a imagem para uma versão na qual o pixel apontado recebe a cor atualmente selecionada.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-CZoPfAkoSo" href="#c-CZoPfAkoSo" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">draw</span>(<span class="tok-definition">pos</span>, <span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">function</span> <span class="tok-definition">drawPixel</span>({x, y}, <span class="tok-definition">state</span>) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">drawn</span> = {<span class="tok-definition">x</span>, <span class="tok-definition">y</span>, <span class="tok-definition">color</span>: state.color};
+    dispatch({<span class="tok-definition">picture</span>: state.picture.draw([drawn])});
+  }
+  drawPixel(pos, state);
+  <span class="tok-keyword">return</span> drawPixel;
+}</pre>
+
+<p><a class="p_ident" id="p-4U2f0gM5Az" href="#p-4U2f0gM5Az" tabindex="-1" role="presentation"></a>A função chama imediatamente a função <code>drawPixel</code> mas também a retorna para que seja chamada novamente para pixels recém-tocados quando o usuário arrasta ou desliza sobre a imagem.</p>
+
+<p><a class="p_ident" id="p-Ut3ixtzIAj" href="#p-Ut3ixtzIAj" tabindex="-1" role="presentation"></a>Para desenhar formas maiores, pode ser útil criar retângulos rapidamente. A ferramenta <code>rectangle</code> desenha um retângulo entre o ponto onde você começa a arrastar e o ponto para o qual arrasta.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-cHtZqBzkqi" href="#c-cHtZqBzkqi" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">rectangle</span>(<span class="tok-definition">start</span>, <span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">function</span> <span class="tok-definition">drawRectangle</span>(<span class="tok-definition">pos</span>) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">xStart</span> = Math.min(start.x, pos.x);
+    <span class="tok-keyword">let</span> <span class="tok-definition">yStart</span> = Math.min(start.y, pos.y);
+    <span class="tok-keyword">let</span> <span class="tok-definition">xEnd</span> = Math.max(start.x, pos.x);
+    <span class="tok-keyword">let</span> <span class="tok-definition">yEnd</span> = Math.max(start.y, pos.y);
+    <span class="tok-keyword">let</span> <span class="tok-definition">drawn</span> = [];
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">y</span> = yStart; y &lt;= yEnd; y++) {
+      <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">x</span> = xStart; x &lt;= xEnd; x++) {
+        drawn.push({<span class="tok-definition">x</span>, <span class="tok-definition">y</span>, <span class="tok-definition">color</span>: state.color});
+      }
+    }
+    dispatch({<span class="tok-definition">picture</span>: state.picture.draw(drawn)});
+  }
+  drawRectangle(start);
+  <span class="tok-keyword">return</span> drawRectangle;
+}</pre>
+
+<p><a class="p_ident" id="p-uO4gf53T2d" href="#p-uO4gf53T2d" tabindex="-1" role="presentation"></a>Um detalhe importante nesta implementação é que ao arrastar, o retângulo é redesenhado na imagem a partir do estado <em>original</em>. Dessa forma, você pode aumentar e diminuir o retângulo novamente enquanto o cria, sem os retângulos intermediários ficando na imagem final. Esta é uma das razões pelas quais objetos de imagem imutáveis são úteis — veremos outra razão mais adiante.</p>
+
+<p><a class="p_ident" id="p-lJMEyoC/fp" href="#p-lJMEyoC/fp" tabindex="-1" role="presentation"></a>Implementar o preenchimento é um pouco mais complexo. Esta é uma ferramenta que preenche o pixel sob o ponteiro e todos os pixels adjacentes que têm a mesma cor. “Adjacente” significa diretamente adjacente horizontal ou verticalmente, não diagonalmente. Esta imagem ilustra o conjunto de pixels coloridos quando a ferramenta de preenchimento é usada no pixel marcado:</p><figure><img src="img/flood-grid.svg" alt="Diagram of a pixel grid showing the area filled by a flood fill operation"></figure>
+
+<p><a class="p_ident" id="p-d1t6BaQ3Fe" href="#p-d1t6BaQ3Fe" tabindex="-1" role="presentation"></a>Curiosamente, a forma como faremos isso se parece um pouco com o código de busca de caminhos do <a href="07_robot.html">Capítulo 7</a>. Enquanto aquele código buscava em um grafo para encontrar uma rota, este código busca em uma grade para encontrar todos os pixels “conectados”. O problema de manter o rastreamento de um conjunto ramificado de possíveis rotas é semelhante.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-phleJauNOp" href="#c-phleJauNOp" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">around</span> = [{<span class="tok-definition">dx</span>: -<span class="tok-number">1</span>, <span class="tok-definition">dy</span>: <span class="tok-number">0</span>}, {<span class="tok-definition">dx</span>: <span class="tok-number">1</span>, <span class="tok-definition">dy</span>: <span class="tok-number">0</span>},
+                {<span class="tok-definition">dx</span>: <span class="tok-number">0</span>, <span class="tok-definition">dy</span>: -<span class="tok-number">1</span>}, {<span class="tok-definition">dx</span>: <span class="tok-number">0</span>, <span class="tok-definition">dy</span>: <span class="tok-number">1</span>}];
+
+<span class="tok-keyword">function</span> <span class="tok-definition">fill</span>({x, y}, <span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">targetColor</span> = state.picture.pixel(x, y);
+  <span class="tok-keyword">let</span> <span class="tok-definition">drawn</span> = [{<span class="tok-definition">x</span>, <span class="tok-definition">y</span>, <span class="tok-definition">color</span>: state.color}];
+  <span class="tok-keyword">let</span> <span class="tok-definition">visited</span> = <span class="tok-keyword">new</span> Set();
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">done</span> = <span class="tok-number">0</span>; done &lt; drawn.length; done++) {
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> {dx, dy} <span class="tok-keyword">of</span> around) {
+      <span class="tok-keyword">let</span> <span class="tok-definition">x</span> = drawn[done].x + dx, <span class="tok-definition">y</span> = drawn[done].y + dy;
+      <span class="tok-keyword">if</span> (x &gt;= <span class="tok-number">0</span> &amp;&amp; x &lt; state.picture.width &amp;&amp;
+          y &gt;= <span class="tok-number">0</span> &amp;&amp; y &lt; state.picture.height &amp;&amp;
+          !visited.has(x + <span class="tok-string">&quot;,&quot;</span> + y) &amp;&amp;
+          state.picture.pixel(x, y) == targetColor) {
+        drawn.push({<span class="tok-definition">x</span>, <span class="tok-definition">y</span>, <span class="tok-definition">color</span>: state.color});
+        visited.add(x + <span class="tok-string">&quot;,&quot;</span> + y);
+      }
+    }
+  }
+  dispatch({<span class="tok-definition">picture</span>: state.picture.draw(drawn)});
+}</pre>
+
+<p><a class="p_ident" id="p-4D49KF8tpZ" href="#p-4D49KF8tpZ" tabindex="-1" role="presentation"></a>O array de pixels desenhados funciona como a lista de trabalho da função. Para cada pixel alcançado, temos que ver se algum pixel adjacente tem a mesma cor e não foi já pintado. O contador do loop fica atrás do comprimento do array <code>drawn</code> conforme novos pixels são adicionados. Quaisquer pixels à frente dele ainda precisam ser explorados. Quando ele alcança o comprimento, não restam pixels inexplorados, e a função termina.</p>
+
+<p><a class="p_ident" id="p-0ZpUpSnHT0" href="#p-0ZpUpSnHT0" tabindex="-1" role="presentation"></a>A ferramenta final é um seletor de cor, que permite apontar para uma cor na imagem para usá-la como a cor de desenho atual.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-JK2K2M0XJH" href="#c-JK2K2M0XJH" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">pick</span>(<span class="tok-definition">pos</span>, <span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+  dispatch({<span class="tok-definition">color</span>: state.picture.pixel(pos.x, pos.y)});
+}</pre>
+
+<p><a class="p_ident" id="p-gDmXy5TRCr" href="#p-gDmXy5TRCr" tabindex="-1" role="presentation"></a>Agora podemos testar nossa aplicação!</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-OAsV4NrCrn" href="#c-OAsV4NrCrn" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">div</span>&gt;&lt;/<span class="tok-typeName">div</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">state</span> = {
+    <span class="tok-definition">tool</span>: <span class="tok-string">&quot;draw&quot;</span>,
+    <span class="tok-definition">color</span>: <span class="tok-string">&quot;#000000&quot;</span>,
+    <span class="tok-definition">picture</span>: Picture.empty(<span class="tok-number">60</span>, <span class="tok-number">30</span>, <span class="tok-string">&quot;#f0f0f0&quot;</span>)
+  };
+  <span class="tok-keyword">let</span> <span class="tok-definition">app</span> = <span class="tok-keyword">new</span> PixelEditor(state, {
+    <span class="tok-definition">tools</span>: {<span class="tok-definition">draw</span>, <span class="tok-definition">fill</span>, <span class="tok-definition">rectangle</span>, <span class="tok-definition">pick</span>},
+    <span class="tok-definition">controls</span>: [ToolSelect, ColorSelect],
+    <span class="tok-definition">dispatch</span>(<span class="tok-definition">action</span>) {
+      state = updateState(state, action);
+      app.syncState(state);
+    }
+  });
+  document.querySelector(<span class="tok-string">&quot;div&quot;</span>).appendChild(app.dom);
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<h2><a class="h_ident" id="h-arkObtRBYQ" href="#h-arkObtRBYQ" tabindex="-1" role="presentation"></a>Salvando e carregando</h2>
+
+<p><a class="p_ident" id="p-YgY7GV4i92" href="#p-YgY7GV4i92" tabindex="-1" role="presentation"></a>Quando tivermos desenhado nossa obra-prima, vamos querer salvá-la para depois. Devemos adicionar um botão para baixar a imagem atual como arquivo de imagem. Este controle fornece esse botão:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-4+FAPgY7mH" href="#c-4+FAPgY7mH" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> SaveButton {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">state</span>) {
+    <span class="tok-keyword">this</span>.picture = state.picture;
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;button&quot;</span>, {
+      <span class="tok-definition">onclick</span>: () =&gt; <span class="tok-keyword">this</span>.save()
+    }, <span class="tok-string">&quot;💾 Save&quot;</span>);
+  }
+  <span class="tok-definition">save</span>() {
+    <span class="tok-keyword">let</span> <span class="tok-definition">canvas</span> = elt(<span class="tok-string">&quot;canvas&quot;</span>);
+    drawPicture(<span class="tok-keyword">this</span>.picture, canvas, <span class="tok-number">1</span>);
+    <span class="tok-keyword">let</span> <span class="tok-definition">link</span> = elt(<span class="tok-string">&quot;a&quot;</span>, {
+      <span class="tok-definition">href</span>: canvas.toDataURL(),
+      <span class="tok-definition">download</span>: <span class="tok-string">&quot;pixelart.png&quot;</span>
+    });
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+  <span class="tok-definition">syncState</span>(<span class="tok-definition">state</span>) { <span class="tok-keyword">this</span>.picture = state.picture; }
+}</pre>
+
+<p><a class="p_ident" id="p-kG5WynN6xX" href="#p-kG5WynN6xX" tabindex="-1" role="presentation"></a>O componente mantém o rastreamento da imagem atual para que possa acessá-la ao salvar. Para criar o arquivo de imagem, ele usa um elemento <code>&lt;canvas&gt;</code> no qual desenha a imagem (em uma escala de um pixel por pixel).</p>
+
+<p><a class="p_ident" id="p-8qFD1jwv+/" href="#p-8qFD1jwv+/" tabindex="-1" role="presentation"></a>O método <code>toDataURL</code> em um elemento canvas cria uma URL que usa o esquema <code>data:</code>. Diferente de URLs <code>http:</code> e <code>https:</code>, URLs de dados contêm o recurso inteiro na URL. Elas geralmente são muito longas, mas nos permitem criar links funcionais para imagens arbitrárias, aqui mesmo no navegador.</p>
+
+<p><a class="p_ident" id="p-y/DqSLYWYW" href="#p-y/DqSLYWYW" tabindex="-1" role="presentation"></a>Para realmente fazer o navegador baixar a imagem, então criamos um elemento de link que aponta para esta URL e tem um atributo <code>download</code>. Tais links, quando clicados, fazem o navegador mostrar um diálogo de salvar arquivo. Adicionamos esse link ao documento, simulamos um clique nele e o removemos novamente. Você pode fazer muita coisa com tecnologia de navegador, mas às vezes a forma de fazer é bastante estranha.</p>
+
+<p><a class="p_ident" id="p-84SBcoHU9l" href="#p-84SBcoHU9l" tabindex="-1" role="presentation"></a>E fica pior. Também vamos querer poder carregar arquivos de imagem existentes em nossa aplicação. Para isso, novamente definimos um componente de botão.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-6tKjwwpwls" href="#c-6tKjwwpwls" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> LoadButton {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">_</span>, {dispatch}) {
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;button&quot;</span>, {
+      <span class="tok-definition">onclick</span>: () =&gt; startLoad(dispatch)
+    }, <span class="tok-string">&quot;📁 Load&quot;</span>);
+  }
+  <span class="tok-definition">syncState</span>() {}
+}
+
+<span class="tok-keyword">function</span> <span class="tok-definition">startLoad</span>(<span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">input</span> = elt(<span class="tok-string">&quot;input&quot;</span>, {
+    <span class="tok-definition">type</span>: <span class="tok-string">&quot;file&quot;</span>,
+    <span class="tok-definition">onchange</span>: () =&gt; finishLoad(input.files[<span class="tok-number">0</span>], dispatch)
+  });
+  document.body.appendChild(input);
+  input.click();
+  input.remove();
+}</pre>
+
+<p><a class="p_ident" id="p-sYrTxnxpnL" href="#p-sYrTxnxpnL" tabindex="-1" role="presentation"></a>Para acessar um arquivo no computador do usuário, precisamos que o usuário selecione o arquivo através de um campo de entrada de arquivo. Mas não queremos que o botão de carregar pareça um campo de entrada de arquivo, então criamos o campo de entrada de arquivo quando o botão é clicado e então fingimos que esse campo de entrada de arquivo foi clicado.</p>
+
+<p><a class="p_ident" id="p-dJ/CWaRxFw" href="#p-dJ/CWaRxFw" tabindex="-1" role="presentation"></a>Quando o usuário selecionou um arquivo, podemos usar <code>FileReader</code> para acessar seu conteúdo, novamente como uma URL de dados. Essa URL pode ser usada para criar um elemento <code>&lt;img&gt;</code>, mas como não podemos acessar diretamente os pixels em tal imagem, não podemos criar um objeto <code>Picture</code> a partir dela.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bRy4XNFu3R" href="#c-bRy4XNFu3R" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">finishLoad</span>(<span class="tok-definition">file</span>, <span class="tok-definition">dispatch</span>) {
+  <span class="tok-keyword">if</span> (file == <span class="tok-keyword">null</span>) <span class="tok-keyword">return</span>;
+  <span class="tok-keyword">let</span> <span class="tok-definition">reader</span> = <span class="tok-keyword">new</span> FileReader();
+  reader.addEventListener(<span class="tok-string">&quot;load&quot;</span>, () =&gt; {
+    <span class="tok-keyword">let</span> <span class="tok-definition">image</span> = elt(<span class="tok-string">&quot;img&quot;</span>, {
+      <span class="tok-definition">onload</span>: () =&gt; dispatch({
+        <span class="tok-definition">picture</span>: pictureFromImage(image)
+      }),
+      <span class="tok-definition">src</span>: reader.result
+    });
+  });
+  reader.readAsDataURL(file);
+}</pre>
+
+<p><a class="p_ident" id="p-1U03HULr75" href="#p-1U03HULr75" tabindex="-1" role="presentation"></a>Para acessar os pixels, devemos primeiro desenhar a imagem em um elemento <code>&lt;canvas&gt;</code>. O contexto do canvas tem um método <code>getImageData</code> que permite a um script ler seus pixels. Então, uma vez que a imagem está no canvas, podemos acessá-la e construir um objeto <code>Picture</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bHE23Qbgos" href="#c-bHE23Qbgos" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">pictureFromImage</span>(<span class="tok-definition">image</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">width</span> = Math.min(<span class="tok-number">100</span>, image.width);
+  <span class="tok-keyword">let</span> <span class="tok-definition">height</span> = Math.min(<span class="tok-number">100</span>, image.height);
+  <span class="tok-keyword">let</span> <span class="tok-definition">canvas</span> = elt(<span class="tok-string">&quot;canvas&quot;</span>, {<span class="tok-definition">width</span>, <span class="tok-definition">height</span>});
+  <span class="tok-keyword">let</span> <span class="tok-definition">cx</span> = canvas.getContext(<span class="tok-string">&quot;2d&quot;</span>);
+  cx.drawImage(image, <span class="tok-number">0</span>, <span class="tok-number">0</span>);
+  <span class="tok-keyword">let</span> <span class="tok-definition">pixels</span> = [];
+  <span class="tok-keyword">let</span> {data} = cx.getImageData(<span class="tok-number">0</span>, <span class="tok-number">0</span>, width, height);
+
+  <span class="tok-keyword">function</span> <span class="tok-definition">hex</span>(<span class="tok-definition">n</span>) {
+    <span class="tok-keyword">return</span> n.toString(<span class="tok-number">16</span>).padStart(<span class="tok-number">2</span>, <span class="tok-string">&quot;0&quot;</span>);
+  }
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">i</span> = <span class="tok-number">0</span>; i &lt; data.length; i += <span class="tok-number">4</span>) {
+    <span class="tok-keyword">let</span> [<span class="tok-definition">r</span>, <span class="tok-definition">g</span>, <span class="tok-definition">b</span>] = data.slice(i, i + <span class="tok-number">3</span>);
+    pixels.push(<span class="tok-string">&quot;#&quot;</span> + hex(r) + hex(g) + hex(b));
+  }
+  <span class="tok-keyword">return</span> <span class="tok-keyword">new</span> Picture(width, height, pixels);
+}</pre>
+
+<p><a class="p_ident" id="p-CQ6cj+1Ghn" href="#p-CQ6cj+1Ghn" tabindex="-1" role="presentation"></a>Vamos limitar o tamanho das imagens a 100 por 100 pixels, já que qualquer coisa maior vai parecer <em>enorme</em> em nossa exibição e pode desacelerar a interface.</p>
+
+<p><a class="p_ident" id="p-eMZD6UXiex" href="#p-eMZD6UXiex" tabindex="-1" role="presentation"></a>A propriedade <code>data</code> do objeto retornado por <code>getImageData</code> é um array de componentes de cor. Para cada pixel no retângulo especificado pelos argumentos, ela contém quatro valores que representam os componentes vermelho, verde, azul e <em>alfa</em> da cor do pixel, como números entre 0 e 255. A parte alfa representa opacidade — quando é 0, o pixel é totalmente transparente, e quando é 255, é totalmente opaco. Para nosso propósito, podemos ignorá-la.</p>
+
+<p><a class="p_ident" id="p-CujKuJU5A7" href="#p-CujKuJU5A7" tabindex="-1" role="presentation"></a>Os dois dígitos hexadecimais por componente, como usados em nossa notação de cor, correspondem precisamente ao intervalo de 0 a 255 — dois dígitos de base 16 podem expressar 16<sup>2</sup> = 256 números diferentes. O método <code>toString</code> dos números pode receber uma base como argumento, então <code>n.toString(16)</code> produzirá uma representação em string em base 16. Temos que nos certificar de que cada número ocupe dois dígitos, então a função auxiliar <code>hex</code> chama <code>padStart</code> para adicionar um 0 inicial quando necessário.</p>
+
+<p><a class="p_ident" id="p-f+0+qOnA3X" href="#p-f+0+qOnA3X" tabindex="-1" role="presentation"></a>Agora podemos carregar e salvar! Resta apenas mais um recurso antes de terminarmos.</p>
+
+<h2><a class="h_ident" id="h-R2ZTJI5s10" href="#h-R2ZTJI5s10" tabindex="-1" role="presentation"></a>Histórico de desfazer</h2>
+
+<p><a class="p_ident" id="p-AVzVBZtDSm" href="#p-AVzVBZtDSm" tabindex="-1" role="presentation"></a>Metade do processo de edição é cometer pequenos erros e corrigi-los, então um recurso importante em um programa de desenho é um histórico de desfazer.</p>
+
+<p><a class="p_ident" id="p-VizL9tFywz" href="#p-VizL9tFywz" tabindex="-1" role="presentation"></a>Para poder desfazer mudanças, precisamos armazenar versões anteriores da imagem. Como as imagens são valores imutáveis, isso é fácil. Mas requer um campo adicional no estado da aplicação.</p>
+
+<p><a class="p_ident" id="p-BLzYTy24UA" href="#p-BLzYTy24UA" tabindex="-1" role="presentation"></a>Vamos adicionar um array <code>done</code> para manter versões anteriores da imagem. Manter esta propriedade requer uma função de atualização de estado mais complicada que adiciona imagens ao array.</p>
+
+<p><a class="p_ident" id="p-3Ag41U1+Tq" href="#p-3Ag41U1+Tq" tabindex="-1" role="presentation"></a>Não queremos armazenar <em>toda</em> mudança — apenas mudanças que estejam separadas por uma certa quantidade de tempo. Para poder fazer isso, vamos precisar de uma segunda propriedade, <code>doneAt</code>, para rastrear o momento em que armazenamos pela última vez uma imagem no histórico.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-ZVURrzkhxG" href="#c-ZVURrzkhxG" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">historyUpdateState</span>(<span class="tok-definition">state</span>, <span class="tok-definition">action</span>) {
+  <span class="tok-keyword">if</span> (action.undo == true) {
+    <span class="tok-keyword">if</span> (state.done.length == <span class="tok-number">0</span>) <span class="tok-keyword">return</span> state;
+    <span class="tok-keyword">return</span> {
+      ...state,
+      <span class="tok-definition">picture</span>: state.done[<span class="tok-number">0</span>],
+      <span class="tok-definition">done</span>: state.done.slice(<span class="tok-number">1</span>),
+      <span class="tok-definition">doneAt</span>: <span class="tok-number">0</span>
+    };
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (action.picture &amp;&amp;
+             state.doneAt &lt; Date.now() - <span class="tok-number">1000</span>) {
+    <span class="tok-keyword">return</span> {
+      ...state,
+      ...action,
+      <span class="tok-definition">done</span>: [state.picture, ...state.done],
+      <span class="tok-definition">doneAt</span>: Date.now()
+    };
+  } <span class="tok-keyword">else</span> {
+    <span class="tok-keyword">return</span> {...state, ...action};
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-ArDRKFFFxY" href="#p-ArDRKFFFxY" tabindex="-1" role="presentation"></a>Quando a ação é uma ação de desfazer, a função pega a imagem mais recente do histórico e a torna a imagem atual. Ela define <code>doneAt</code> como zero para que a próxima mudança seja garantida de armazenar a imagem de volta no histórico, permitindo que você reverta para ela outra vez se quiser.</p>
+
+<p><a class="p_ident" id="p-r0DmrmWSqZ" href="#p-r0DmrmWSqZ" tabindex="-1" role="presentation"></a>Caso contrário, se a ação contém uma nova imagem e a última vez que armazenamos algo foi há mais de um segundo (1000 milissegundos), as propriedades <code>done</code> e <code>doneAt</code> são atualizadas para armazenar a imagem anterior.</p>
+
+<p><a class="p_ident" id="p-aojvhOWGnf" href="#p-aojvhOWGnf" tabindex="-1" role="presentation"></a>O componente do botão de desfazer não faz muito. Ele despacha ações de desfazer quando clicado e se desabilita quando não há nada para desfazer.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-V5SwZIdQv8" href="#c-V5SwZIdQv8" tabindex="-1" role="presentation"></a><span class="tok-keyword">class</span> UndoButton {
+  <span class="tok-definition">constructor</span>(<span class="tok-definition">state</span>, {dispatch}) {
+    <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;button&quot;</span>, {
+      <span class="tok-definition">onclick</span>: () =&gt; dispatch({<span class="tok-definition">undo</span>: true}),
+      <span class="tok-definition">disabled</span>: state.done.length == <span class="tok-number">0</span>
+    }, <span class="tok-string">&quot;⮪ Undo&quot;</span>);
+  }
+  <span class="tok-definition">syncState</span>(<span class="tok-definition">state</span>) {
+    <span class="tok-keyword">this</span>.dom.disabled = state.done.length == <span class="tok-number">0</span>;
+  }
+}</pre>
+
+<h2><a class="h_ident" id="h-Y/kOIrLMSU" href="#h-Y/kOIrLMSU" tabindex="-1" role="presentation"></a>Vamos desenhar</h2>
+
+<p><a class="p_ident" id="p-9+UcJ6b30F" href="#p-9+UcJ6b30F" tabindex="-1" role="presentation"></a>Para configurar a aplicação, precisamos criar um estado, um conjunto de ferramentas, um conjunto de controles e uma função de despacho. Podemos passá-los ao construtor <code>PixelEditor</code> para criar o componente principal. Como vamos precisar criar vários editores nos exercícios, primeiro definimos algumas variáveis.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-PyNgZwUySd" href="#c-PyNgZwUySd" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">startState</span> = {
+  <span class="tok-definition">tool</span>: <span class="tok-string">&quot;draw&quot;</span>,
+  <span class="tok-definition">color</span>: <span class="tok-string">&quot;#000000&quot;</span>,
+  <span class="tok-definition">picture</span>: Picture.empty(<span class="tok-number">60</span>, <span class="tok-number">30</span>, <span class="tok-string">&quot;#f0f0f0&quot;</span>),
+  <span class="tok-definition">done</span>: [],
+  <span class="tok-definition">doneAt</span>: <span class="tok-number">0</span>
+};
+
+<span class="tok-keyword">const</span> <span class="tok-definition">baseTools</span> = {<span class="tok-definition">draw</span>, <span class="tok-definition">fill</span>, <span class="tok-definition">rectangle</span>, <span class="tok-definition">pick</span>};
+
+<span class="tok-keyword">const</span> <span class="tok-definition">baseControls</span> = [
+  ToolSelect, ColorSelect, SaveButton, LoadButton, UndoButton
+];
+
+<span class="tok-keyword">function</span> <span class="tok-definition">startPixelEditor</span>({state = startState,
+                           tools = baseTools,
+                           controls = baseControls}) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">app</span> = <span class="tok-keyword">new</span> PixelEditor(state, {
+    <span class="tok-definition">tools</span>,
+    <span class="tok-definition">controls</span>,
+    <span class="tok-definition">dispatch</span>(<span class="tok-definition">action</span>) {
+      state = historyUpdateState(state, action);
+      app.syncState(state);
+    }
+  });
+  <span class="tok-keyword">return</span> app.dom;
+}</pre>
+
+<p><a class="p_ident" id="p-+WOWA/JsiA" href="#p-+WOWA/JsiA" tabindex="-1" role="presentation"></a>Ao desestruturar um objeto ou array, você pode usar <code>=</code> após um nome de variável para dar à variável um valor padrão, que é usado quando a propriedade está faltando ou contém <code>undefined</code>. A função <code>startPixelEditor</code> faz uso disso para aceitar um objeto com várias propriedades opcionais como argumento. Se você não fornecer uma propriedade <code>tools</code>, por exemplo, <code>tools</code> será vinculada a <code>baseTools</code>.</p>
+
+<p><a class="p_ident" id="p-QvkKVc+WTT" href="#p-QvkKVc+WTT" tabindex="-1" role="presentation"></a>É assim que colocamos um editor real na tela:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-eYhWs5adxG" href="#c-eYhWs5adxG" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">div</span>&gt;&lt;/<span class="tok-typeName">div</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;
+  document.querySelector(<span class="tok-string">&quot;div&quot;</span>)
+    .appendChild(startPixelEditor({}));
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-NCpti5gPj8" href="#p-NCpti5gPj8" tabindex="-1" role="presentation"></a>Vá em frente e desenhe algo.</p>
+
+<h2><a class="h_ident" id="h-Abvsic9oYr" href="#h-Abvsic9oYr" tabindex="-1" role="presentation"></a>Por que isso é tão difícil?</h2>
+
+<p><a class="p_ident" id="p-TseLeVpqWy" href="#p-TseLeVpqWy" tabindex="-1" role="presentation"></a>A tecnologia de navegador é incrível. Ela fornece um poderoso conjunto de blocos de construção de interface, formas de estilizá-los e manipulá-los, e ferramentas para inspecionar e depurar suas aplicações. O software que você escreve para o navegador pode ser executado em quase todo computador e celular do planeta.</p>
+
+<p><a class="p_ident" id="p-D83VAuHI08" href="#p-D83VAuHI08" tabindex="-1" role="presentation"></a>Ao mesmo tempo, a tecnologia de navegador é ridícula. Você precisa aprender um grande número de truques bobos e fatos obscuros para dominá-la, e o modelo de programação padrão que ela fornece é tão problemático que a maioria dos programadores prefere cobri-lo com várias camadas de abstração em vez de lidar com ele diretamente.</p>
+
+<p><a class="p_ident" id="p-7PG1DjCr9X" href="#p-7PG1DjCr9X" tabindex="-1" role="presentation"></a>Embora a situação esteja definitivamente melhorando, ela o faz principalmente na forma de mais elementos sendo adicionados para resolver deficiências — criando ainda mais complexidade. Um recurso usado por um milhão de websites não pode realmente ser substituído. Mesmo que pudesse, seria difícil decidir pelo que deveria ser substituído.</p>
+
+<p><a class="p_ident" id="p-EyRrYnfX7y" href="#p-EyRrYnfX7y" tabindex="-1" role="presentation"></a>A tecnologia nunca existe no vácuo — somos limitados por nossas ferramentas e pelos fatores sociais, econômicos e históricos que as produziram. Isso pode ser irritante, mas é geralmente mais produtivo tentar construir um bom entendimento de como a realidade técnica <em>existente</em> funciona — e por que ela é do jeito que é — do que se revoltar contra ela ou esperar por outra realidade.</p>
+
+<p><a class="p_ident" id="p-G0hpwY2Uer" href="#p-G0hpwY2Uer" tabindex="-1" role="presentation"></a>Novas abstrações <em>podem</em> ser úteis. O modelo de componentes e a convenção de fluxo de dados que usei neste capítulo é uma forma rudimentar disso. Como mencionado, existem bibliotecas que tentam tornar a programação de interface de usuário mais agradável. No momento da escrita, <a href="https://reactjs.org/">React</a> e <a href="https://svelte.dev/">Svelte</a> são escolhas populares, mas existe toda uma indústria artesanal de tais frameworks. Se você está interessado em programar aplicações web, recomendo investigar alguns deles para entender como funcionam e quais benefícios fornecem.</p>
+
+<h2><a class="h_ident" id="h-0CpJUZuhQJ" href="#h-0CpJUZuhQJ" tabindex="-1" role="presentation"></a>Exercícios</h2>
+
+<p><a class="p_ident" id="p-6TXt5gqE+e" href="#p-6TXt5gqE+e" tabindex="-1" role="presentation"></a>Ainda há espaço para melhorias em nosso programa. Vamos adicionar mais alguns recursos como exercícios.</p>
+
+<h3><a class="i_ident" id="i-HpUA8gRBBU" href="#i-HpUA8gRBBU" tabindex="-1" role="presentation"></a>Atalhos de teclado</h3>
+
+<p><a class="p_ident" id="p-KSpYkVmKC0" href="#p-KSpYkVmKC0" tabindex="-1" role="presentation"></a>Adicione atalhos de teclado à aplicação. A primeira letra do nome de uma ferramenta seleciona a ferramenta, e <span class="keyname">ctrl</span>-Z ou <span class="keyname">command</span>-Z ativa o desfazer.</p>
+
+<p><a class="p_ident" id="p-0xLTFpiaF+" href="#p-0xLTFpiaF+" tabindex="-1" role="presentation"></a>Faça isso modificando o componente <code>PixelEditor</code>. Adicione uma propriedade <code>tabIndex</code> de 0 ao elemento <code>&lt;div&gt;</code> que o envolve para que ele possa receber foco do teclado. Note que a <em>propriedade</em> correspondente ao <em>atributo</em> <code>tabindex</code> é chamada <code>tabIndex</code>, com um I maiúsculo, e nossa função <code>elt</code> espera nomes de propriedades. Registre os manipuladores de eventos de tecla diretamente nesse elemento. Isso significa que você precisa clicar, tocar ou ir com tab até a aplicação antes de poder interagir com ela pelo teclado.</p>
+
+<p><a class="p_ident" id="p-nbVT17e2LF" href="#p-nbVT17e2LF" tabindex="-1" role="presentation"></a>Lembre-se de que eventos de teclado têm propriedades <code>ctrlKey</code> e <code>metaKey</code> (para <span class="keyname">command</span> no Mac) que você pode usar para ver se essas teclas estão pressionadas.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-JF0nWh5jdB" href="#c-JF0nWh5jdB" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">div</span>&gt;&lt;/<span class="tok-typeName">div</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-comment">// A classe PixelEditor original. Estenda o construtor.</span>
+  <span class="tok-keyword">class</span> PixelEditor {
+    <span class="tok-definition">constructor</span>(<span class="tok-definition">state</span>, <span class="tok-definition">config</span>) {
+      <span class="tok-keyword">let</span> {tools, controls, dispatch} = config;
+      <span class="tok-keyword">this</span>.state = state;
+
+      <span class="tok-keyword">this</span>.canvas = <span class="tok-keyword">new</span> PictureCanvas(state.picture, <span class="tok-definition">pos</span> =&gt; {
+        <span class="tok-keyword">let</span> <span class="tok-definition">tool</span> = tools[<span class="tok-keyword">this</span>.state.tool];
+        <span class="tok-keyword">let</span> <span class="tok-definition">onMove</span> = tool(pos, <span class="tok-keyword">this</span>.state, dispatch);
+        <span class="tok-keyword">if</span> (onMove) {
+          <span class="tok-keyword">return</span> <span class="tok-definition">pos</span> =&gt; onMove(pos, <span class="tok-keyword">this</span>.state, dispatch);
+        }
+      });
+      <span class="tok-keyword">this</span>.controls = controls.map(
+        <span class="tok-definition">Control</span> =&gt; <span class="tok-keyword">new</span> Control(state, config));
+      <span class="tok-keyword">this</span>.dom = elt(<span class="tok-string">&quot;div&quot;</span>, {}, <span class="tok-keyword">this</span>.canvas.dom, elt(<span class="tok-string">&quot;br&quot;</span>),
+                     ...<span class="tok-keyword">this</span>.controls.reduce(
+                       (<span class="tok-definition">a</span>, <span class="tok-definition">c</span>) =&gt; a.concat(<span class="tok-string">&quot; &quot;</span>, c.dom), []));
+    }
+    <span class="tok-definition">syncState</span>(<span class="tok-definition">state</span>) {
+      <span class="tok-keyword">this</span>.state = state;
+      <span class="tok-keyword">this</span>.canvas.syncState(state.picture);
+      <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">ctrl</span> <span class="tok-keyword">of</span> <span class="tok-keyword">this</span>.controls) ctrl.syncState(state);
+    }
+  }
+
+  document.querySelector(<span class="tok-string">&quot;div&quot;</span>)
+    .appendChild(startPixelEditor({}));
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-M1x+MTAlug" href="#p-M1x+MTAlug" tabindex="-1" role="presentation"></a>A propriedade <code>key</code> de eventos para teclas de letras será a letra minúscula em si, se <span class="keyname">shift</span> não estiver pressionado. Não estamos interessados em eventos de tecla com <span class="keyname">shift</span> aqui.</p>
+
+<p><a class="p_ident" id="p-9Kb0LHzbBk" href="#p-9Kb0LHzbBk" tabindex="-1" role="presentation"></a>Um manipulador <code>&quot;keydown&quot;</code> pode inspecionar seu objeto de evento para ver se corresponde a algum dos atalhos. Você pode obter automaticamente a lista de primeiras letras do objeto <code>tools</code> para que não precise escrevê-las manualmente.</p>
+
+<p><a class="p_ident" id="p-d7rhoLcR1J" href="#p-d7rhoLcR1J" tabindex="-1" role="presentation"></a>Quando o evento de tecla corresponde a um atalho, chame <code>preventDefault</code> nele e despache a ação apropriada.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-Q8mM98i6sV" href="#i-Q8mM98i6sV" tabindex="-1" role="presentation"></a>Desenho eficiente</h3>
+
+<p><a class="p_ident" id="p-56Bn0gNCyS" href="#p-56Bn0gNCyS" tabindex="-1" role="presentation"></a>Durante o desenho, a maior parte do trabalho que nossa aplicação faz acontece em <code>drawPicture</code>. Criar um novo estado e atualizar o resto do DOM não é muito caro, mas repintar todos os pixels no canvas é bastante trabalho.</p>
+
+<p><a class="p_ident" id="p-Qx5CtmFmzG" href="#p-Qx5CtmFmzG" tabindex="-1" role="presentation"></a>Encontre uma forma de tornar o método <code>syncState</code> de <code>PictureCanvas</code> mais rápido redesenhando apenas os pixels que realmente mudaram.</p>
+
+<p><a class="p_ident" id="p-vRkJKKXElS" href="#p-vRkJKKXElS" tabindex="-1" role="presentation"></a>Lembre-se de que <code>drawPicture</code> também é usada pelo botão de salvar, então se você a modificar, certifique-se de que as mudanças não quebrem o uso antigo ou crie uma nova versão com um nome diferente.</p>
+
+<p><a class="p_ident" id="p-fewLuk33XJ" href="#p-fewLuk33XJ" tabindex="-1" role="presentation"></a>Note também que mudar o tamanho de um elemento <code>&lt;canvas&gt;</code>, definindo suas propriedades <code>width</code> ou <code>height</code>, o limpa, tornando-o inteiramente transparente novamente.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-rayDoyDi3C" href="#c-rayDoyDi3C" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">div</span>&gt;&lt;/<span class="tok-typeName">div</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-comment">// Mude este método</span>
+  PictureCanvas.prototype.syncState = <span class="tok-keyword">function</span>(<span class="tok-definition">picture</span>) {
+    <span class="tok-keyword">if</span> (<span class="tok-keyword">this</span>.picture == picture) <span class="tok-keyword">return</span>;
+    <span class="tok-keyword">this</span>.picture = picture;
+    drawPicture(<span class="tok-keyword">this</span>.picture, <span class="tok-keyword">this</span>.dom, scale);
+  };
+
+  <span class="tok-comment">// Você pode querer usar ou mudar isso também</span>
+  <span class="tok-keyword">function</span> <span class="tok-definition">drawPicture</span>(<span class="tok-definition">picture</span>, <span class="tok-definition">canvas</span>, <span class="tok-definition">scale</span>) {
+    canvas.width = picture.width * scale;
+    canvas.height = picture.height * scale;
+    <span class="tok-keyword">let</span> <span class="tok-definition">cx</span> = canvas.getContext(<span class="tok-string">&quot;2d&quot;</span>);
+
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">y</span> = <span class="tok-number">0</span>; y &lt; picture.height; y++) {
+      <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">x</span> = <span class="tok-number">0</span>; x &lt; picture.width; x++) {
+        cx.fillStyle = picture.pixel(x, y);
+        cx.fillRect(x * scale, y * scale, scale, scale);
+      }
+    }
+  }
+
+  document.querySelector(<span class="tok-string">&quot;div&quot;</span>)
+    .appendChild(startPixelEditor({}));
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-aZck5BX+Cb" href="#p-aZck5BX+Cb" tabindex="-1" role="presentation"></a>Este exercício é um bom exemplo de como estruturas de dados imutáveis podem tornar o código <em>mais rápido</em>. Como temos tanto a imagem antiga quanto a nova, podemos compará-las e redesenhar apenas os pixels que mudaram de cor, economizando mais de 99 por cento do trabalho de desenho na maioria dos casos.</p>
+
+<p><a class="p_ident" id="p-/qSURl8dTO" href="#p-/qSURl8dTO" tabindex="-1" role="presentation"></a>Você pode escrever uma nova função <code>updatePicture</code> ou fazer <code>drawPicture</code> receber um argumento extra, que pode ser undefined ou a imagem anterior. Para cada pixel, a função verifica se uma imagem anterior foi passada com a mesma cor nessa posição e pula o pixel quando esse for o caso.</p>
+
+<p><a class="p_ident" id="p-2YB2nAEQ/7" href="#p-2YB2nAEQ/7" tabindex="-1" role="presentation"></a>Como o canvas é limpo quando mudamos seu tamanho, você também deve evitar tocar em suas propriedades <code>width</code> e <code>height</code> quando a imagem antiga e a nova têm o mesmo tamanho. Se forem diferentes, o que acontecerá quando uma nova imagem foi carregada, você pode definir a variável que guarda a imagem antiga como <code>null</code> depois de mudar o tamanho do canvas porque não deve pular nenhum pixel depois de mudar o tamanho do canvas.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-KDgLXBH0qh" href="#i-KDgLXBH0qh" tabindex="-1" role="presentation"></a>Círculos</h3>
+
+<p><a class="p_ident" id="p-0iugsRMdRO" href="#p-0iugsRMdRO" tabindex="-1" role="presentation"></a>Defina uma ferramenta chamada <code>circle</code> que desenha um círculo preenchido quando você arrasta. O centro do círculo fica no ponto onde o gesto de arrastar ou toque começa, e seu raio é determinado pela distância arrastada.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-sGJrT2pDd9" href="#c-sGJrT2pDd9" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">div</span>&gt;&lt;/<span class="tok-typeName">div</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">function</span> <span class="tok-definition">circle</span>(<span class="tok-definition">pos</span>, <span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+    <span class="tok-comment">// Seu código aqui</span>
+  }
+
+  <span class="tok-keyword">let</span> <span class="tok-definition">dom</span> = startPixelEditor({
+    <span class="tok-definition">tools</span>: {...baseTools, <span class="tok-definition">circle</span>}
+  });
+  document.querySelector(<span class="tok-string">&quot;div&quot;</span>).appendChild(dom);
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-BJvfhKRsp6" href="#p-BJvfhKRsp6" tabindex="-1" role="presentation"></a>Você pode se inspirar na ferramenta <code>rectangle</code>. Como naquela ferramenta, você vai querer continuar desenhando na imagem <em>inicial</em>, em vez da imagem atual, quando o ponteiro se move.</p>
+
+<p><a class="p_ident" id="p-A/PNSGyU29" href="#p-A/PNSGyU29" tabindex="-1" role="presentation"></a>Para descobrir quais pixels colorir, você pode usar o Teorema de Pitágoras. Primeiro descubra a distância entre a posição atual do ponteiro e a posição inicial pegando a raiz quadrada (<code>Math.sqrt</code>) da soma do quadrado (<code>x ** 2</code>) da diferença em coordenadas x e do quadrado da diferença em coordenadas y. Depois percorra um quadrado de pixels ao redor da posição inicial, cujos lados tenham pelo menos o dobro do raio, e colora aqueles que estão dentro do raio do círculo, novamente usando a fórmula de Pitágoras para calcular sua distância do centro.</p>
+
+<p><a class="p_ident" id="p-yNffTar5+O" href="#p-yNffTar5+O" tabindex="-1" role="presentation"></a>Certifique-se de não tentar colorir pixels que estão fora dos limites da imagem.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-CfT6+hty/P" href="#i-CfT6+hty/P" tabindex="-1" role="presentation"></a>Linhas corretas</h3>
+
+<p><a class="p_ident" id="p-MaQcqNTqbo" href="#p-MaQcqNTqbo" tabindex="-1" role="presentation"></a>Este é um exercício mais avançado que os três anteriores, e vai exigir que você projete uma solução para um problema não trivial. Certifique-se de ter bastante tempo e paciência antes de começar a trabalhar neste exercício, e não desanime com falhas iniciais.</p>
+
+<p><a class="p_ident" id="p-cY/KYHB1no" href="#p-cY/KYHB1no" tabindex="-1" role="presentation"></a>Na maioria dos navegadores, quando você seleciona a ferramenta <code>draw</code> e arrasta rapidamente pela imagem, não obtém uma linha fechada. Em vez disso, obtém pontos com espaços entre eles porque os eventos <code>&quot;mousemove&quot;</code> ou <code>&quot;touchmove&quot;</code> não dispararam rápido o suficiente para atingir cada pixel.</p>
+
+<p><a class="p_ident" id="p-VR703IjTRi" href="#p-VR703IjTRi" tabindex="-1" role="presentation"></a>Melhore a ferramenta <code>draw</code> para fazê-la desenhar uma linha completa. Isso significa que você tem que fazer a função manipuladora de movimento lembrar a posição anterior e conectá-la à atual.</p>
+
+<p><a class="p_ident" id="p-Ghy37UHoAc" href="#p-Ghy37UHoAc" tabindex="-1" role="presentation"></a>Para fazer isso, já que os pixels podem estar a uma distância arbitrária, você terá que escrever uma função geral de desenho de linha.</p>
+
+<p><a class="p_ident" id="p-kehXd3GPIn" href="#p-kehXd3GPIn" tabindex="-1" role="presentation"></a>Uma linha entre dois pixels é uma cadeia conectada de pixels, tão reta quanto possível, indo do início ao fim. Pixels diagonalmente adjacentes contam como conectados. Uma linha inclinada deve parecer com a imagem da esquerda, não a imagem da direita.</p><figure><img src="img/line-grid.svg" alt="Diagram of two pixelated lines, one light, skipping across pixels diagonally, and one heavy, with all pixels connected horizontally or vertically"></figure>
+
+<p><a class="p_ident" id="p-ppspVNCb67" href="#p-ppspVNCb67" tabindex="-1" role="presentation"></a>Finalmente, se temos código que desenha uma linha entre dois pontos arbitrários, podemos também usá-lo para definir uma ferramenta <code>line</code>, que desenha uma linha reta entre o início e o fim de um arraste.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-PpeA8gKeF4" href="#c-PpeA8gKeF4" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">div</span>&gt;&lt;/<span class="tok-typeName">div</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-comment">// A ferramenta de desenho antiga. Reescreva isso.</span>
+  <span class="tok-keyword">function</span> <span class="tok-definition">draw</span>(<span class="tok-definition">pos</span>, <span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+    <span class="tok-keyword">function</span> <span class="tok-definition">drawPixel</span>({x, y}, <span class="tok-definition">state</span>) {
+      <span class="tok-keyword">let</span> <span class="tok-definition">drawn</span> = {<span class="tok-definition">x</span>, <span class="tok-definition">y</span>, <span class="tok-definition">color</span>: state.color};
+      dispatch({<span class="tok-definition">picture</span>: state.picture.draw([drawn])});
+    }
+    drawPixel(pos, state);
+    <span class="tok-keyword">return</span> drawPixel;
+  }
+
+  <span class="tok-keyword">function</span> <span class="tok-definition">line</span>(<span class="tok-definition">pos</span>, <span class="tok-definition">state</span>, <span class="tok-definition">dispatch</span>) {
+    <span class="tok-comment">// Seu código aqui</span>
+  }
+
+  <span class="tok-keyword">let</span> <span class="tok-definition">dom</span> = startPixelEditor({
+    <span class="tok-definition">tools</span>: {<span class="tok-definition">draw</span>, <span class="tok-definition">line</span>, <span class="tok-definition">fill</span>, <span class="tok-definition">rectangle</span>, <span class="tok-definition">pick</span>}
+  });
+  document.querySelector(<span class="tok-string">&quot;div&quot;</span>).appendChild(dom);
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-vZOhkjTYjs" href="#p-vZOhkjTYjs" tabindex="-1" role="presentation"></a>O problema de desenhar uma linha pixelada é que na verdade são quatro problemas semelhantes mas ligeiramente diferentes. Desenhar uma linha horizontal da esquerda para a direita é fácil — você itera sobre as coordenadas x e colore um pixel a cada passo. Se a linha tem uma inclinação leve (menos de 45 graus ou ¼π radianos), você pode interpolar a coordenada y ao longo da inclinação. Você ainda precisa de um pixel por posição <em>x</em>, com a posição <em>y</em> desses pixels determinada pela inclinação.</p>
+
+<p><a class="p_ident" id="p-hIky4Ms3E8" href="#p-hIky4Ms3E8" tabindex="-1" role="presentation"></a>Mas assim que sua inclinação ultrapassa 45 graus, você precisa trocar a forma como trata as coordenadas. Agora você precisa de um pixel por posição <em>y</em>, já que a linha sobe mais do que vai para o lado. E então, quando você ultrapassa 135 graus, tem que voltar a iterar sobre as coordenadas x, mas da direita para a esquerda.</p>
+
+<p><a class="p_ident" id="p-uDUmA+YLwy" href="#p-uDUmA+YLwy" tabindex="-1" role="presentation"></a>Na verdade, você não precisa escrever quatro loops. Como desenhar uma linha de <em>A</em> a <em>B</em> é o mesmo que desenhar uma linha de <em>B</em> a <em>A</em>, você pode trocar as posições inicial e final para linhas que vão da direita para a esquerda e tratá-las como indo da esquerda para a direita.</p>
+
+<p><a class="p_ident" id="p-fnhpneIt68" href="#p-fnhpneIt68" tabindex="-1" role="presentation"></a>Então você precisa de dois loops diferentes. A primeira coisa que sua função de desenho de linha deve fazer é verificar se a diferença entre as coordenadas x é maior que a diferença entre as coordenadas y. Se for, esta é uma linha mais horizontalizada, e se não, uma mais verticalizada.</p>
+
+<p><a class="p_ident" id="p-axyr3LDtSk" href="#p-axyr3LDtSk" tabindex="-1" role="presentation"></a>Certifique-se de comparar os valores <em>absolutos</em> das diferenças <em>x</em> e <em>y</em>, que você pode obter com <code>Math.abs</code>.</p>
+
+<p><a class="p_ident" id="p-2lbmMjCXqe" href="#p-2lbmMjCXqe" tabindex="-1" role="presentation"></a>Uma vez que sabe ao longo de qual eixo estará iterando, pode verificar se o ponto inicial tem uma coordenada maior ao longo desse eixo que o ponto final e trocá-los se necessário. Uma forma sucinta de trocar os valores de duas variáveis em JavaScript usa atribuição por desestruturação assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-/XtfsVpMBL" href="#c-/XtfsVpMBL" tabindex="-1" role="presentation"></a>[<span class="tok-definition">start</span>, <span class="tok-definition">end</span>] = [end, start];</pre>
+
+<p><a class="p_ident" id="p-iws9uRgIDz" href="#p-iws9uRgIDz" tabindex="-1" role="presentation"></a>Então você pode calcular a inclinação da linha, que determina a quantidade que a coordenada no outro eixo muda para cada passo que você dá ao longo do eixo principal. Com isso, pode rodar um loop ao longo do eixo principal enquanto também rastreia a posição correspondente no outro eixo, e pode desenhar pixels a cada iteração. Certifique-se de arredondar as coordenadas do eixo não principal, já que provavelmente serão fracionárias e o método <code>draw</code> não responde bem a coordenadas fracionárias.</p>
+
+</div></details><nav><a href="18_http.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="20_node.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

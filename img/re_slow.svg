@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   height="180.30476"
+   version="1.1"
+   width="217.52544">
+  <path
+     d="m 149.04519,91.683302 h 13.4275"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path4"/>
+  <path
+     d="m 135.6177,91.683302 q 13.42749,0 13.42749,13.427498 v 60.42373 q 0,13.42749 -13.42749,13.42749 H 34.911488 q -13.427496,0 -13.427496,-13.42749 V 105.1108 q 0,-13.427498 13.427496,-13.427498"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path6"/>
+  <path
+     d="M 149.04519,91.683302 H 135.6177"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path8"/>
+  <path
+     d="M 21.483992,91.683302 H 34.911488"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path10"/>
+  <path
+     d="M 135.6177,91.683302 H 122.1902"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path12"/>
+  <path
+     d="M 34.911488,91.683302 H 48.338983"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path14"/>
+  <path
+     d="m 108.76272,91.683302 q 13.42748,0 13.42748,13.427498 v 33.56873 q 0,13.4275 -13.42748,13.4275 H 61.766478 q -13.427495,0 -13.427495,-13.4275 V 105.1108 q 0,-13.427498 13.427495,-13.427498"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path16"/>
+  <path
+     d="M 122.1902,91.683302 H 108.76272"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path18"/>
+  <path
+     d="M 48.338983,91.683302 H 61.766478"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path20"/>
+  <desc
+     id="desc22">Created with Raphaël 2.1.0</desc>
+  <defs
+     id="defs24" />
+  <rect
+     x="162.4727"
+     y="74.898933"
+     width="33.568737"
+     height="33.568737"
+     r="0"
+     rx="4.0282488"
+     ry="4.0282488"
+     style="fill:#dae9e5;stroke:#dae9e5;stroke-width:1.3427496"
+     id="rect26" />
+  <text
+     x="179.25706"
+     y="91.683304"
+     font="10px &quot;Arial&quot;"
+     style="font-size:16.11299515px;font-style:normal;font-variant:normal;font-weight:normal;line-height:normal;text-anchor:middle;fill:#000000;stroke:none;font-family:Arial"
+     font-size="12px"
+     id="text28">
+    <tspan
+       dy="6.0423727"
+       id="tspan30">&quot;b&quot;</tspan>
+  </text>
+  <rect
+     x="34.911488"
+     y="13.803831"
+     width="100.70621"
+     height="151.7307"
+     r="0"
+     rx="4.0282488"
+     ry="4.0282488"
+     style="fill:none;stroke:#a0a0a0;stroke-width:2.68549919;stroke-dasharray:8.05649719, 2.68549906"
+     id="rect32" />
+  <text
+     x="64.451981"
+     y="5.0759606"
+     font="10px &quot;Arial&quot;"
+     style="font-size:13.427495px;font-style:normal;font-variant:normal;font-weight:normal;line-height:normal;text-anchor:middle;fill:#000000;stroke:none;font-family:Arial"
+     font-size="10px"
+     id="text34">
+    <tspan
+       dy="4.6996231"
+       id="tspan36">Group #1</tspan>
+  </text>
+  <rect
+     x="61.766479"
+     y="44.687069"
+     width="46.996235"
+     height="93.99247"
+     r="0"
+     rx="4.0282488"
+     ry="4.0282488"
+     style="fill:#cbcbba;stroke:#cbcbba;stroke-width:1.3427496"
+     id="rect38" />
+  <text
+     x="85.264595"
+     y="35.959198"
+     font="10px &quot;Arial&quot;"
+     style="font-size:13.427495px;font-style:normal;font-variant:normal;font-weight:normal;line-height:normal;text-anchor:middle;fill:#000000;stroke:none;font-family:Arial"
+     font-size="10px"
+     id="text40">
+    <tspan
+       dy="4.6996231"
+       id="tspan42">One of:</tspan>
+  </text>
+  <rect
+     x="68.480232"
+     y="98.397057"
+     width="33.568737"
+     height="33.568737"
+     r="0"
+     rx="4.0282488"
+     ry="4.0282488"
+     style="fill:#dae9e5;stroke:#dae9e5;stroke-width:1.3427496"
+     id="rect44" />
+  <text
+     x="85.264595"
+     y="115.18143"
+     font="10px &quot;Arial&quot;"
+     style="font-size:16.11299515px;font-style:normal;font-variant:normal;font-weight:normal;line-height:normal;text-anchor:middle;fill:#000000;stroke:none;font-family:Arial"
+     font-size="12px"
+     id="text46">
+    <tspan
+       dy="6.0423727"
+       id="tspan48">&quot;1&quot;</tspan>
+  </text>
+  <rect
+     x="68.480232"
+     y="51.400818"
+     width="33.568737"
+     height="33.568737"
+     r="0"
+     rx="4.0282488"
+     ry="4.0282488"
+     style="fill:#dae9e5;stroke:#dae9e5;stroke-width:1.3427496"
+     id="rect50" />
+  <text
+     x="85.264595"
+     y="68.185188"
+     font="10px &quot;Arial&quot;"
+     style="font-size:16.11299515px;font-style:normal;font-variant:normal;font-weight:normal;line-height:normal;text-anchor:middle;fill:#000000;stroke:none;font-family:Arial"
+     font-size="12px"
+     id="text52">
+    <tspan
+       dy="6.0423727"
+       id="tspan54">&quot;0&quot;</tspan>
+  </text>
+  <path
+     d="M 8.0564968,91.683302 H 21.483992"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path56"/>
+  <circle
+     cx="10"
+     cy="81"
+     r="5"
+     style="fill:#6b6659;stroke:#000000;stroke-width:2"
+     id="circle58"
+     transform="matrix(1.3427496,0,0,1.3427496,-5.3709984,-17.079408)" />
+  <path
+     d="M 209.46892,91.683302 H 196.04143"
+     style="fill:none;stroke:#000000;stroke-width:2.68549919"
+     id="path60"/>
+  <circle
+     cx="160"
+     cy="81"
+     r="5"
+     style="fill:#6b6659;stroke:#000000;stroke-width:2"
+     id="circle62"
+     transform="matrix(1.3427496,0,0,1.3427496,-5.3709984,-17.079408)" />
+</svg>

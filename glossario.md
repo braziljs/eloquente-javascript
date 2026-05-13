@@ -1,25 +1,61 @@
 # Glossário
-Essa página tem como objetivo reunir termos técnicos (ou não) e suas respectivas traduções para mantermos uma padrão uniforme nos capítulos.  Esse é um documento orgânico que irá ser atualizado de forma colaborativa a medida que novos termos forem surgindo.
 
-# Traduções (Original - Tradução)
+Termos técnicos e suas traduções para manter a consistência entre capítulos.
 
-* Debug - Debugar ([#155](https://github.com/braziljs/eloquente-javascript/issues/155))
-* Writable stream - Stream de escrita ([#115](https://github.com/braziljs/eloquente-javascript/issues/115))
-* Thread - Thread ([#98](https://github.com/braziljs/eloquente-javascript/issues/98))
-* Callback - Callback ([#97](https://github.com/braziljs/eloquente-javascript/issues/97))
-* Let’s get coding - Vamos codar ([#92](https://github.com/braziljs/eloquente-javascript/issues/92))
-* Body - Corpo 
-* Client - Cliente
-* Encoded - Codificado
-* Prefetch - Pré-carregar
-* Query String - String de pesquisa
-* Resource - Recurso
-* Request - Request
-* Response - Resposta
-* String - String
-* URL Encoding - Codificação da URL
-* Array - Array
-* Wrapper - Wrapper ([#273](https://github.com/braziljs/eloquente-javascript/issues/273))
+## Termos que NÃO traduzimos (mantidos em inglês)
 
-## Como contribuir?
-No arquivo [CONTRIBUTING.md](https://github.com/braziljs/eloquente-javascript/blob/master/CONTRIBUTING.md), há uma seção chamada **"Dúvidas em tradução de termos, palavras, expressões etc..."** explicando mais detalhes sobre como contribuir. Se você tem alguma sugestão para melhorar alguma tradução já feita, basta comentar na issue de referência sua sugestão que vamos discutir a proposta de alteração.
+- Array, String, Boolean, Number, Object
+- callback, Promise, async/await
+- bug, debug, debugar
+- framework, library
+- browser, Node.js
+- loop, scope, closure
+- getter, setter
+- template literal
+- spread operator
+- destructuring
+- module, import, export
+- DOM, HTTP, URL, JSON, API
+- class, prototype, constructor
+- iterator, generator
+- RegExp (expressão regular quando no texto corrido)
+- stack, heap
+- wrapper
+- thread
+
+## Termos que traduzimos
+
+- function → função
+- variable → variável
+- value → valor
+- type → tipo
+- operator → operador
+- expression → expressão
+- statement → instrução/declaração
+- binding → vínculo (ou "variável" quando contextualmente claro)
+- property → propriedade
+- method → método
+- parameter → parâmetro
+- argument → argumento
+- return → retornar
+- error → erro
+- exception → exceção
+- event → evento
+- handler → manipulador
+- request → requisição
+- response → resposta
+- server → servidor
+- client → cliente
+- file → arquivo
+- stream → stream (manter em inglês)
+- package → pacote
+- dependency → dependência
+- environment → ambiente
+
+## Convenções de estilo
+
+- Use "você" (não "o senhor" ou "tu")
+- Termos em inglês mantidos no texto: usar *itálico*
+- Código inline: manter em inglês dentro de backticks
+- Títulos de capítulos e seções: traduzir
+- Nomes de exercícios: traduzir

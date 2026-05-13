@@ -1,0 +1,513 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estrutura do Programa :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":2}</script></head>
+
+<article>
+<nav><a href="01_values.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="03_functions.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>Estrutura do Programa</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-J/zCYrllfQ" href="#p-J/zCYrllfQ" tabindex="-1" role="presentation"></a>And my heart glows bright red under my filmy, translucent skin and they have to administer 10cc of JavaScript to get me to come back. (I respond well to toxins in the blood.) Man, that stuff will kick the peaches right out your gills!</p>
+
+<footer>_why, <cite>Why's (Poignant) Guide to Ruby</cite></footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_2.jpg" alt="Illustration showing a number of tentacles holding chess pieces"></figure>
+
+<p><a class="p_ident" id="p-Rxf0+POiNv" href="#p-Rxf0+POiNv" tabindex="-1" role="presentation"></a>Neste capítulo, começaremos a fazer coisas que podem realmente ser chamadas de <em>programação</em>. Expandiremos nosso domínio da linguagem JavaScript além dos substantivos e fragmentos de frases que vimos até agora, até o ponto em que podemos expressar prosa significativa.</p>
+
+<h2><a class="h_ident" id="h-TFsWWpHb64" href="#h-TFsWWpHb64" tabindex="-1" role="presentation"></a>Expressões e instruções</h2>
+
+<p><a class="p_ident" id="p-hdx/QFm/KS" href="#p-hdx/QFm/KS" tabindex="-1" role="presentation"></a>No <a href="01_values.html">Capítulo 1</a>, criamos valores e aplicamos operadores a eles para obter novos valores. Criar valores dessa forma é a substância principal de qualquer programa JavaScript. Mas essa substância precisa ser enquadrada em uma estrutura maior para ser útil. É isso que abordaremos neste capítulo.</p>
+
+<p><a class="p_ident" id="p-W41hGg8QB2" href="#p-W41hGg8QB2" tabindex="-1" role="presentation"></a>Um fragmento de código que produz um valor é chamado de <em>expressão</em>. Todo valor escrito literalmente (como <code>22</code> ou <code>&quot;psychoanalysis&quot;</code>) é uma expressão. Uma expressão entre parênteses também é uma expressão, assim como um operador binário aplicado a duas expressões ou um operador unário aplicado a uma.</p>
+
+<p><a class="p_ident" id="p-DlePwiPfx+" href="#p-DlePwiPfx+" tabindex="-1" role="presentation"></a>Isso mostra parte da beleza de uma interface baseada em linguagem. Expressões podem conter outras expressões de forma similar a como subfrases em linguagens humanas são aninhadas — uma subfrase pode conter suas próprias subfrases, e assim por diante. Isso nos permite construir expressões que descrevem computações arbitrariamente complexas.</p>
+
+<p><a class="p_ident" id="p-ioEJ8yFeyH" href="#p-ioEJ8yFeyH" tabindex="-1" role="presentation"></a>Se uma expressão corresponde a um fragmento de frase, uma <em>instrução</em> JavaScript corresponde a uma frase completa. Um programa é uma lista de instruções.</p>
+
+<p><a class="p_ident" id="p-pJVW/2coHK" href="#p-pJVW/2coHK" tabindex="-1" role="presentation"></a>O tipo mais simples de instrução é uma expressão com um ponto e vírgula depois dela. Este é um programa:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-hjwmfcgDR0" href="#c-hjwmfcgDR0" tabindex="-1" role="presentation"></a><span class="tok-number">1</span>;
+!false;</pre>
+
+<p><a class="p_ident" id="p-yP6SDi39lH" href="#p-yP6SDi39lH" tabindex="-1" role="presentation"></a>É um programa inútil, porém. Uma expressão pode se contentar em apenas produzir um valor, que pode então ser usado pelo código que a envolve. No entanto, uma instrução existe por si só, então se ela não afetar o mundo, é inútil. Ela pode exibir algo na tela, como com <code>console.log</code>, ou mudar o estado da máquina de uma forma que afetará as instruções que vêm depois dela. Essas mudanças são chamadas de <em>efeito colateral</em>. As instruções no exemplo anterior apenas produzem os valores <code>1</code> e <code>true</code> e depois os jogam fora imediatamente. Isso não deixa nenhuma impressão no mundo. Quando você executa esse programa, nada observável acontece.</p>
+
+<p><a class="p_ident" id="p-bUGXwCwTZx" href="#p-bUGXwCwTZx" tabindex="-1" role="presentation"></a>Em alguns casos, JavaScript permite que você omita o ponto e vírgula no final de uma instrução. Em outros casos, ele precisa estar lá, ou a próxima linha será tratada como parte da mesma instrução. As regras para quando ele pode ser omitido com segurança são um tanto complexas e propensas a erros. Então, neste livro, toda instrução que precisa de um ponto e vírgula sempre terá um. Recomendo que você faça o mesmo, pelo menos até ter aprendido mais sobre as sutilezas dos pontos e vírgulas ausentes.</p>
+
+<h2><a class="h_ident" id="h-lnOC+GBEtu" href="#h-lnOC+GBEtu" tabindex="-1" role="presentation"></a>Bindings</h2>
+
+<p><a class="p_ident" id="p-RA0RrnsTmC" href="#p-RA0RrnsTmC" tabindex="-1" role="presentation"></a>Como um programa mantém um estado interno? Como ele lembra coisas? Vimos como produzir novos valores a partir de valores antigos, mas isso não muda os valores antigos, e o novo valor precisa ser usado imediatamente ou se dissipará novamente. Para capturar e manter valores, JavaScript fornece uma coisa chamada <em>binding</em>, ou <em>variável</em>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-aT9yLxdY/V" href="#c-aT9yLxdY/V" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">caught</span> = <span class="tok-number">5</span> * <span class="tok-number">5</span>;</pre>
+
+<p><a class="p_ident" id="p-zeXwJNmbgJ" href="#p-zeXwJNmbgJ" tabindex="-1" role="presentation"></a>Isso nos dá um segundo tipo de instrução. A palavra especial (<em>palavra-chave</em>) <code>let</code> indica que esta frase vai definir um binding. Ela é seguida pelo nome do binding e, se quisermos imediatamente lhe dar um valor, por um operador <code>=</code> e uma expressão.</p>
+
+<p><a class="p_ident" id="p-8uE/5MSVY9" href="#p-8uE/5MSVY9" tabindex="-1" role="presentation"></a>O exemplo cria um binding chamado <code>caught</code> e o usa para agarrar o número que é produzido pela multiplicação de 5 por 5.</p>
+
+<p><a class="p_ident" id="p-7HNq1/4mXr" href="#p-7HNq1/4mXr" tabindex="-1" role="presentation"></a>Após um binding ter sido definido, seu nome pode ser usado como uma expressão. O valor de tal expressão é o valor que o binding mantém no momento. Aqui está um exemplo:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-FfLIqaoaFx" href="#c-FfLIqaoaFx" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">ten</span> = <span class="tok-number">10</span>;
+console.log(ten * ten);
+<span class="tok-comment">// → 100</span></pre>
+
+<p><a class="p_ident" id="p-GKHw/djZuu" href="#p-GKHw/djZuu" tabindex="-1" role="presentation"></a>Quando um binding aponta para um valor, isso não significa que está amarrado a esse valor para sempre. O operador <code>=</code> pode ser usado a qualquer momento em bindings existentes para desconectá-los de seu valor atual e fazê-los apontar para um novo:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-FiZBrHz3CX" href="#c-FiZBrHz3CX" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">mood</span> = <span class="tok-string">&quot;light&quot;</span>;
+console.log(mood);
+<span class="tok-comment">// → light</span>
+mood = <span class="tok-string">&quot;dark&quot;</span>;
+console.log(mood);
+<span class="tok-comment">// → dark</span></pre>
+
+<p><a class="p_ident" id="p-FCKk4PprNc" href="#p-FCKk4PprNc" tabindex="-1" role="presentation"></a>Você deve imaginar bindings como tentáculos em vez de caixas. Eles não <em>contêm</em> valores; eles os <em>agarram</em> — dois bindings podem se referir ao mesmo valor. Um programa pode acessar apenas os valores aos quais ainda tem uma referência. Quando você precisa lembrar de algo, você ou faz crescer um tentáculo para segurá-lo ou reacopla um dos seus tentáculos existentes a ele.</p>
+
+<p><a class="p_ident" id="p-IJUFVqvv+F" href="#p-IJUFVqvv+F" tabindex="-1" role="presentation"></a>Vejamos outro exemplo. Para lembrar o número de dólares que Luigi ainda lhe deve, você cria um binding. Quando ele paga $35 de volta, você dá a esse binding um novo valor.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-UpFQBNACng" href="#c-UpFQBNACng" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">luigisDebt</span> = <span class="tok-number">140</span>;
+luigisDebt = luigisDebt - <span class="tok-number">35</span>;
+console.log(luigisDebt);
+<span class="tok-comment">// → 105</span></pre>
+
+<p><a class="p_ident" id="p-lgghD5/27k" href="#p-lgghD5/27k" tabindex="-1" role="presentation"></a>Quando você define um binding sem lhe dar um valor, o tentáculo não tem nada para agarrar, então termina no ar. Se você pedir o valor de um binding vazio, obterá o valor <code>undefined</code>.</p>
+
+<p><a class="p_ident" id="p-5ig8DqNK7D" href="#p-5ig8DqNK7D" tabindex="-1" role="presentation"></a>Uma única instrução <code>let</code> pode definir múltiplos bindings. As definições devem ser separadas por vírgulas:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-pT4pqev8kx" href="#c-pT4pqev8kx" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">one</span> = <span class="tok-number">1</span>, <span class="tok-definition">two</span> = <span class="tok-number">2</span>;
+console.log(one + two);
+<span class="tok-comment">// → 3</span></pre>
+
+<p><a class="p_ident" id="p-rJf/D2cURP" href="#p-rJf/D2cURP" tabindex="-1" role="presentation"></a>As palavras <code>var</code> e <code>const</code> também podem ser usadas para criar bindings, de forma similar a <code>let</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-8QmBe23E5V" href="#c-8QmBe23E5V" tabindex="-1" role="presentation"></a><span class="tok-keyword">var</span> <span class="tok-definition">name</span> = <span class="tok-string">&quot;Ayda&quot;</span>;
+<span class="tok-keyword">const</span> <span class="tok-definition">greeting</span> = <span class="tok-string">&quot;Hello &quot;</span>;
+console.log(greeting + name);
+<span class="tok-comment">// → Hello Ayda</span></pre>
+
+<p><a class="p_ident" id="p-27jn1+pkHq" href="#p-27jn1+pkHq" tabindex="-1" role="presentation"></a>A primeira delas, <code>var</code> (abreviação de “variable”), é a forma como bindings eram declarados no JavaScript pré-2015, quando <code>let</code> ainda não existia. Voltarei à forma precisa como difere de <code>let</code> no <a href="03_functions.html">próximo capítulo</a>. Por enquanto, lembre-se de que ela faz basicamente a mesma coisa, mas raramente a usaremos neste livro porque se comporta de forma estranha em algumas situações.</p>
+
+<p><a class="p_ident" id="p-0ydcU/NoXo" href="#p-0ydcU/NoXo" tabindex="-1" role="presentation"></a>A palavra <code>const</code> significa <em>constante</em>. Ela define um binding constante, que aponta para o mesmo valor enquanto existir. Isso é útil para bindings que apenas dão um nome a um valor para que você possa facilmente se referir a ele depois.</p>
+
+<h2><a class="h_ident" id="h-9Am0e9E6Us" href="#h-9Am0e9E6Us" tabindex="-1" role="presentation"></a>Nomes de bindings</h2>
+
+<p><a class="p_ident" id="p-ghA6+kg22B" href="#p-ghA6+kg22B" tabindex="-1" role="presentation"></a>Nomes de binding podem ser qualquer sequência de uma ou mais letras. Dígitos podem fazer parte de nomes de binding — <code>catch22</code> é um nome válido, por exemplo — mas o nome não pode começar com um dígito. Um nome de binding pode incluir cifrões (<code>$</code>) ou sublinhados (<code>_</code>), mas nenhuma outra pontuação ou caractere especial.</p>
+
+<p><a class="p_ident" id="p-5zvUhO6d1Q" href="#p-5zvUhO6d1Q" tabindex="-1" role="presentation"></a>Palavras com significado especial, como <code>let</code>, são <em>palavra-chaves</em> e não podem ser usadas como nomes de binding. Há também uma série de palavras que são “reservadas para uso” em versões futuros do JavaScript, que também não podem ser usadas como nomes de binding. A lista completa de palavras-chave e palavras reservadas é bastante longa:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-7BGolnv7qC" href="#c-7BGolnv7qC" tabindex="-1" role="presentation"></a>break case catch class const continue debugger default
+delete do else enum export extends false finally for
+function if implements import interface in instanceof let
+new package private protected public return static super
+switch this throw true try typeof var void while with yield</pre>
+
+<p><a class="p_ident" id="p-/vSzvYjUwH" href="#p-/vSzvYjUwH" tabindex="-1" role="presentation"></a>Não se preocupe em memorizar essa lista. Quando criar um binding produzir um erro de sintaxe inesperado, verifique se você está tentando definir uma palavra reservada.</p>
+
+<h2><a class="h_ident" id="h-PAmZlzbQEF" href="#h-PAmZlzbQEF" tabindex="-1" role="presentation"></a>O ambiente</h2>
+
+<p><a class="p_ident" id="p-du9QhjY6GY" href="#p-du9QhjY6GY" tabindex="-1" role="presentation"></a>A coleção de bindings e seus valores que existem em um dado momento é chamada de <em>ambiente</em>. Quando um programa inicia, esse ambiente não está vazio. Ele sempre contém bindings que fazem parte do padrão da linguagem e, na maioria das vezes, também possui bindings que fornecem formas de interagir com o sistema ao redor. Por exemplo, em um navegador, existem funções para interagir com o site atualmente carregado e para ler entrada de mouse e teclado.</p>
+
+<h2><a class="h_ident" id="h-cmy9jJkA18" href="#h-cmy9jJkA18" tabindex="-1" role="presentation"></a>Funções</h2>
+
+<p><a class="p_ident" id="p-ErL15Lazxq" href="#p-ErL15Lazxq" tabindex="-1" role="presentation"></a>Muitos dos valores fornecidos no ambiente padrão têm o tipo <em>função</em>. Uma função é um pedaço de programa envolvido em um valor. Tais valores podem ser <em>aplicados</em> para executar o programa envolvido. Por exemplo, em um ambiente de navegador, o binding <code>prompt</code> contém uma função que mostra um pequeno diálogo pedindo entrada do usuário. Ela é usada assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-QSUssd4nHv" href="#c-QSUssd4nHv" tabindex="-1" role="presentation"></a>prompt(<span class="tok-string">&quot;Enter passcode&quot;</span>);</pre><figure><img src="img/prompt.png" alt="A prompt dialog that says 'enter passcode'"></figure>
+
+<p><a class="p_ident" id="p-s6/92sCk/D" href="#p-s6/92sCk/D" tabindex="-1" role="presentation"></a>Executar uma função é chamado de <em>invocar</em>, <em>chamar</em> ou <em>aplicar</em> a função. Você pode chamar uma função colocando parênteses após uma expressão que produz um valor de função. Geralmente você usará diretamente o nome do binding que contém a função. Os valores entre os parênteses são dados ao programa dentro da função. No exemplo, a função <code>prompt</code> usa a string que lhe damos como o texto a mostrar na caixa de diálogo. Valores dados a funções são chamados de <em>argumentos</em>. Funções diferentes podem precisar de um número ou tipos diferentes de argumentos.</p>
+
+<p><a class="p_ident" id="p-dQL2z1R0mh" href="#p-dQL2z1R0mh" tabindex="-1" role="presentation"></a>A função <code>prompt</code> não é muito usada na programação web moderna, principalmente porque você não tem controle sobre a aparência do diálogo resultante, mas pode ser útil em programas de brinquedo e experimentos.</p>
+
+<h2><a class="h_ident" id="h-rYe8ahaW9r" href="#h-rYe8ahaW9r" tabindex="-1" role="presentation"></a>A função console.log</h2>
+
+<p><a class="p_ident" id="p-Q6vRwCY7PU" href="#p-Q6vRwCY7PU" tabindex="-1" role="presentation"></a>Nos exemplos, usei <code>console.log</code> para exibir valores. A maioria dos sistemas JavaScript (incluindo todos os navegadores web modernos e o Node.js) fornece uma função <code>console.log</code> que escreve seus argumentos em <em>algum</em> dispositivo de saída de texto. Nos navegadores, a saída vai para o console JavaScript. Essa parte da interface do navegador está oculta por padrão, mas a maioria dos navegadores a abre quando você pressiona F12 ou, em um Mac, <span class="keyname">command</span>-<span class="keyname">option</span>-I. Se isso não funcionar, procure nos menus por um item chamado Developer Tools ou similar.</p>
+
+<p><a class="p_ident" id="p-FiCDbe3Fa0" href="#p-FiCDbe3Fa0" tabindex="-1" role="presentation"></a>Ao executar os exemplos (ou seu próprio código) nas páginas deste livro, a saída de <code>console.log</code> será mostrada após o exemplo, em vez de no console JavaScript do navegador.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-TuaqUrwlKB" href="#c-TuaqUrwlKB" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">x</span> = <span class="tok-number">30</span>;
+console.log(<span class="tok-string">&quot;the value of x is&quot;</span>, x);
+<span class="tok-comment">// → the value of x is 30</span></pre>
+
+<p><a class="p_ident" id="p-ZmGbTQWf33" href="#p-ZmGbTQWf33" tabindex="-1" role="presentation"></a>Embora nomes de binding não possam conter caractere ponto, <code>console.log</code> tem um. Isso porque <code>console.log</code> não é um binding simples, mas uma expressão que recupera a propriedade <code>log</code> do valor mantido pelo binding <code>console</code>. Descobriremos exatamente o que isso significa no <a href="04_data.html#properties">Capítulo 4</a>.</p>
+
+<h2 id="return_values"><a class="h_ident" id="h-xdOUAXPBXv" href="#h-xdOUAXPBXv" tabindex="-1" role="presentation"></a>Valores de retorno</h2>
+
+<p><a class="p_ident" id="p-HrwKK45y2/" href="#p-HrwKK45y2/" tabindex="-1" role="presentation"></a>Mostrar uma caixa de diálogo ou escrever texto na tela é um <em>efeito colateral</em>. Muitas funções são úteis por causa dos efeitos colaterais que produzem. Funções também podem produzir valores, caso em que não precisam ter um efeito colateral para ser úteis. Por exemplo, a função <code>Math.max</code> recebe qualquer quantidade de argumentos numéricos e retorna o maior.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-PEuTYZX6NI" href="#c-PEuTYZX6NI" tabindex="-1" role="presentation"></a>console.log(Math.max(<span class="tok-number">2</span>, <span class="tok-number">4</span>));
+<span class="tok-comment">// → 4</span></pre>
+
+<p><a class="p_ident" id="p-qBVBVOQqHG" href="#p-qBVBVOQqHG" tabindex="-1" role="presentation"></a>Quando uma função produz um valor, diz-se que ela <em>retorna</em> esse valor. Qualquer coisa que produz um valor é uma expressão em JavaScript, o que significa que chamadas de função podem ser usadas dentro de expressões maiores. No código a seguir, uma chamada a <code>Math.min</code>, que é o oposto de <code>Math.max</code>, é usada como parte de uma expressão de soma:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-V4eUUr1Irj" href="#c-V4eUUr1Irj" tabindex="-1" role="presentation"></a>console.log(Math.min(<span class="tok-number">2</span>, <span class="tok-number">4</span>) + <span class="tok-number">100</span>);
+<span class="tok-comment">// → 102</span></pre>
+
+<p><a class="p_ident" id="p-4P/neo6rc8" href="#p-4P/neo6rc8" tabindex="-1" role="presentation"></a>O <a href="03_functions.html">Capítulo 3</a> explicará como escrever suas próprias funções.</p>
+
+<h2><a class="h_ident" id="h-OVx6jKPb1F" href="#h-OVx6jKPb1F" tabindex="-1" role="presentation"></a>Fluxo de controle</h2>
+
+<p><a class="p_ident" id="p-uevsHVOXMm" href="#p-uevsHVOXMm" tabindex="-1" role="presentation"></a>Quando seu programa contém mais de uma instrução, as instruções são executadas como se fossem uma história, de cima para baixo. Por exemplo, o programa a seguir tem duas instruções. A primeira pede ao usuário um número, e a segunda, que é executada após a primeira, mostra o quadrado desse número:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-6hF1Rg3sJ/" href="#c-6hF1Rg3sJ/" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">theNumber</span> = Number(prompt(<span class="tok-string">&quot;Pick a number&quot;</span>));
+console.log(<span class="tok-string">&quot;Your number is the square root of &quot;</span> +
+            theNumber * theNumber);</pre>
+
+<p><a class="p_ident" id="p-TBFWTWxexW" href="#p-TBFWTWxexW" tabindex="-1" role="presentation"></a>A função <code>Number</code> converte um valor para um número. Precisamos dessa conversão porque o resultado de <code>prompt</code> é um valor de string, e queremos um número. Existem funções similares chamadas <code>String</code> e <code>Boolean</code> que convertem valores para esses tipos.</p>
+
+<p><a class="p_ident" id="p-IhvuPP0uz/" href="#p-IhvuPP0uz/" tabindex="-1" role="presentation"></a>Aqui está a representação esquemática bastante trivial do fluxo de controle em linha reta:</p><figure><img src="img/controlflow-straight.svg" alt="Diagram showing a straight arrow"></figure>
+
+<h2><a class="h_ident" id="h-e/yCj0DZvL" href="#h-e/yCj0DZvL" tabindex="-1" role="presentation"></a>Execução condicional</h2>
+
+<p><a class="p_ident" id="p-iI14YM5anw" href="#p-iI14YM5anw" tabindex="-1" role="presentation"></a>Nem todos os programas são estradas retas. Podemos, por exemplo, querer criar uma estrada ramificada onde o programa toma o caminho adequado com base na situação em questão. Isso é chamado de <em>execução condicional</em>.</p><figure><img src="img/controlflow-if.svg" alt="Diagram of an arrow that splits in two, and then rejoins again"></figure>
+
+<p><a class="p_ident" id="p-EZ6P6sf1/H" href="#p-EZ6P6sf1/H" tabindex="-1" role="presentation"></a>A execução condicional é criada com a palavra-chave <code>if</code> em JavaScript. No caso simples, queremos que algum código seja executado se, e somente se, uma certa condição for verdadeira. Podemos, por exemplo, querer mostrar o quadrado da entrada apenas se a entrada for realmente um número:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-D0zJWB8mO1" href="#c-D0zJWB8mO1" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">theNumber</span> = Number(prompt(<span class="tok-string">&quot;Pick a number&quot;</span>));
+<span class="tok-keyword">if</span> (!Number.isNaN(theNumber)) {
+  console.log(<span class="tok-string">&quot;Your number is the square root of &quot;</span> +
+              theNumber * theNumber);
+}</pre>
+
+<p><a class="p_ident" id="p-yqSVJpLwsv" href="#p-yqSVJpLwsv" tabindex="-1" role="presentation"></a>Com essa modificação, se você digitar “parrot”, nenhuma saída é mostrada.</p>
+
+<p><a class="p_ident" id="p-RZIyxaFdkJ" href="#p-RZIyxaFdkJ" tabindex="-1" role="presentation"></a>A palavra-chave <code>if</code> executa ou pula uma instrução dependendo do valor de uma expressão booleana. A expressão decisória é escrita após a palavra-chave, entre parênteses, seguida pela instrução a executar.</p>
+
+<p><a class="p_ident" id="p-1Hv8D2bvkW" href="#p-1Hv8D2bvkW" tabindex="-1" role="presentation"></a>A função <code>Number.isNaN</code> é uma função padrão do JavaScript que retorna <code>true</code> apenas se o argumento que recebe for <code>NaN</code>. A função <code>Number</code> retorna <code>NaN</code> quando você lhe dá uma string que não representa um número válido. Assim, a condição se traduz como “a menos que <code>theNumber</code> não seja um número, faça isso”.</p>
+
+<p><a class="p_ident" id="p-zso40gKO4K" href="#p-zso40gKO4K" tabindex="-1" role="presentation"></a>A instrução após o <code>if</code> está envolvida em chaves (<code>{</code> e <code>}</code>) neste exemplo. As chaves podem ser usadas para agrupar qualquer número de instruções em uma única instrução, chamada de <em>bloco</em>. Você também poderia tê-las omitido neste caso, já que contêm apenas uma única instrução, mas para evitar ter que pensar se são necessárias, a maioria dos programadores JavaScript as usa em toda instrução envolvida como esta. Seguiremos essa convenção na maior parte deste livro, exceto pela ocasional instrução de uma linha.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-/Ndk5rqq2Z" href="#c-/Ndk5rqq2Z" tabindex="-1" role="presentation"></a><span class="tok-keyword">if</span> (<span class="tok-number">1</span> + <span class="tok-number">1</span> == <span class="tok-number">2</span>) console.log(<span class="tok-string">&quot;It's true&quot;</span>);
+<span class="tok-comment">// → It's true</span></pre>
+
+<p><a class="p_ident" id="p-caYagzgTGc" href="#p-caYagzgTGc" tabindex="-1" role="presentation"></a>Frequentemente você não terá apenas código que executa quando uma condição é verdadeira, mas também código que lida com o outro caso. Esse caminho alternativo é representado pela segunda seta no diagrama. Você pode usar a palavra-chave <code>else</code>, junto com <code>if</code>, para criar dois caminhos de execução separados e alternativos:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-kLpqX2fnaC" href="#c-kLpqX2fnaC" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">theNumber</span> = Number(prompt(<span class="tok-string">&quot;Pick a number&quot;</span>));
+<span class="tok-keyword">if</span> (!Number.isNaN(theNumber)) {
+  console.log(<span class="tok-string">&quot;Your number is the square root of &quot;</span> +
+              theNumber * theNumber);
+} <span class="tok-keyword">else</span> {
+  console.log(<span class="tok-string">&quot;Hey. Why didn't you give me a number?&quot;</span>);
+}</pre>
+
+<p><a class="p_ident" id="p-2WN7KK3T5y" href="#p-2WN7KK3T5y" tabindex="-1" role="presentation"></a>Se você tiver mais de dois caminhos para escolher, pode “encadear” múltiplos pares <code>if</code>/<code>else</code> juntos. Aqui está um exemplo:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-QrvIive0zT" href="#c-QrvIive0zT" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">num</span> = Number(prompt(<span class="tok-string">&quot;Pick a number&quot;</span>));
+
+<span class="tok-keyword">if</span> (num &lt; <span class="tok-number">10</span>) {
+  console.log(<span class="tok-string">&quot;Small&quot;</span>);
+} <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (num &lt; <span class="tok-number">100</span>) {
+  console.log(<span class="tok-string">&quot;Medium&quot;</span>);
+} <span class="tok-keyword">else</span> {
+  console.log(<span class="tok-string">&quot;Large&quot;</span>);
+}</pre>
+
+<p><a class="p_ident" id="p-Hu7tSsz5Mb" href="#p-Hu7tSsz5Mb" tabindex="-1" role="presentation"></a>O programa primeiro verificará se <code>num</code> é menor que 10. Se for, ele escolhe esse caminho, mostra <code>&quot;Small&quot;</code> e termina. Se não for, ele toma o caminho <code>else</code>, que por sua vez contém um segundo <code>if</code>. Se a segunda condição (<code>&lt; 100</code>) for verdadeira, isso significa que o número é pelo menos 10 mas menor que 100, e <code>&quot;Medium&quot;</code> é mostrado. Se não for, o segundo e último caminho <code>else</code> é escolhido.</p>
+
+<p><a class="p_ident" id="p-q76wWhjQzV" href="#p-q76wWhjQzV" tabindex="-1" role="presentation"></a>O esquema para esse programa se parece com algo assim:</p><figure><img src="img/controlflow-nested-if.svg" alt="Diagram showing arrow that splits in two, with on the branches splitting again, before all branches rejoin again"></figure>
+
+<h2 id="loops"><a class="h_ident" id="h-OC3iF55Ezb" href="#h-OC3iF55Ezb" tabindex="-1" role="presentation"></a>Loops while e do</h2>
+
+<p><a class="p_ident" id="p-og8rq124nk" href="#p-og8rq124nk" tabindex="-1" role="presentation"></a>Considere um programa que exibe todos os números pares de 0 a 12. Uma forma de escrever isso é a seguinte:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-NiH5lbw9eg" href="#c-NiH5lbw9eg" tabindex="-1" role="presentation"></a>console.log(<span class="tok-number">0</span>);
+console.log(<span class="tok-number">2</span>);
+console.log(<span class="tok-number">4</span>);
+console.log(<span class="tok-number">6</span>);
+console.log(<span class="tok-number">8</span>);
+console.log(<span class="tok-number">10</span>);
+console.log(<span class="tok-number">12</span>);</pre>
+
+<p><a class="p_ident" id="p-ggkbehakoB" href="#p-ggkbehakoB" tabindex="-1" role="presentation"></a>Isso funciona, mas a ideia de escrever um programa é fazer <em>menos</em> trabalho, não mais. Se precisássemos de todos os números pares menores que 1.000, essa abordagem seria inviável. O que precisamos é de uma forma de executar um trecho de código múltiplas vezes. Essa forma de fluxo de controle é chamada de <em>loop</em>.</p><figure><img src="img/controlflow-loop.svg" alt="Diagram showing an arrow to a point which has a cyclic arrow going back to itself and another arrow going further"></figure>
+
+<p><a class="p_ident" id="p-DA2EcxE6Ok" href="#p-DA2EcxE6Ok" tabindex="-1" role="presentation"></a>O fluxo de controle de loop nos permite voltar a algum ponto no programa onde estávamos antes e repeti-lo com nosso estado atual do programa. Se combinarmos isso com um binding que conta, podemos fazer algo assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-jMUfZIZChZ" href="#c-jMUfZIZChZ" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">number</span> = <span class="tok-number">0</span>;
+<span class="tok-keyword">while</span> (number &lt;= <span class="tok-number">12</span>) {
+  console.log(number);
+  number = number + <span class="tok-number">2</span>;
+}
+<span class="tok-comment">// → 0</span>
+<span class="tok-comment">// → 2</span>
+<span class="tok-comment">//   … etcetera</span></pre>
+
+<p><a class="p_ident" id="p-pwAXS3sDmw" href="#p-pwAXS3sDmw" tabindex="-1" role="presentation"></a>Uma instrução começando com a palavra-chave <code>while</code> cria um loop. A palavra <code>while</code> é seguida por uma expressão entre parênteses e depois uma instrução, assim como <code>if</code>. O loop continua entrando nessa instrução enquanto a expressão produzir um valor que resulte em <code>true</code> quando convertido para booleano.</p>
+
+<p><a class="p_ident" id="p-Xfcp8Uwdzi" href="#p-Xfcp8Uwdzi" tabindex="-1" role="presentation"></a>O binding <code>number</code> demonstra a forma como um binding pode acompanhar o progresso de um programa. Toda vez que o loop se repete, <code>number</code> recebe um valor que é 2 a mais que seu valor anterior. No início de cada repetição, ele é comparado com o número 12 para decidir se o trabalho do programa está terminado.</p>
+
+<p><a class="p_ident" id="p-8wIgD7akAy" href="#p-8wIgD7akAy" tabindex="-1" role="presentation"></a>Como um exemplo que realmente faz algo útil, agora podemos escrever um programa que calcula e mostra o valor de 2<sup>10</sup> (2 elevado à 10ª potência). Usamos dois bindings: um para acompanhar nosso resultado e um para contar quantas vezes multiplicamos esse resultado por 2. O loop testa se o segundo binding já atingiu 10 e, se não, atualiza ambos os bindings.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-9AxUm9n4M9" href="#c-9AxUm9n4M9" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">result</span> = <span class="tok-number">1</span>;
+<span class="tok-keyword">let</span> <span class="tok-definition">counter</span> = <span class="tok-number">0</span>;
+<span class="tok-keyword">while</span> (counter &lt; <span class="tok-number">10</span>) {
+  result = result * <span class="tok-number">2</span>;
+  counter = counter + <span class="tok-number">1</span>;
+}
+console.log(result);
+<span class="tok-comment">// → 1024</span></pre>
+
+<p><a class="p_ident" id="p-/0FF7HgDUz" href="#p-/0FF7HgDUz" tabindex="-1" role="presentation"></a>O contador também poderia ter começado em <code>1</code> e verificado <code>&lt;= 10</code>, mas por razões que ficarão aparentes no <a href="04_data.html#array_indexing">Capítulo 4</a>, é uma boa ideia se acostumar a contar a partir de 0.</p>
+
+<p><a class="p_ident" id="p-wPXhpiFS2N" href="#p-wPXhpiFS2N" tabindex="-1" role="presentation"></a>Note que JavaScript também tem um operador para exponenciação (<code>2 ** 10</code>), que você usaria para calcular isso em código real — mas isso teria arruinado o exemplo.</p>
+
+<p><a class="p_ident" id="p-8TT6UEvEmb" href="#p-8TT6UEvEmb" tabindex="-1" role="presentation"></a>Um loop <code>do</code> é uma estrutura de controle similar ao loop <code>while</code>. Difere apenas em um ponto: um loop <code>do</code> sempre executa seu corpo pelo menos uma vez, e começa a testar se deve parar apenas após essa primeira execução. Para refletir isso, o teste aparece após o corpo do loop:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-t9QNhogtDA" href="#c-t9QNhogtDA" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">yourName</span>;
+<span class="tok-keyword">do</span> {
+  yourName = prompt(<span class="tok-string">&quot;Who are you?&quot;</span>);
+} <span class="tok-keyword">while</span> (!yourName);
+console.log(<span class="tok-string">&quot;Hello &quot;</span> + yourName);</pre>
+
+<p><a class="p_ident" id="p-vwNcMP5UD4" href="#p-vwNcMP5UD4" tabindex="-1" role="presentation"></a>Este programa forçará você a inserir um nome. Ele perguntará repetidamente até obter algo que não seja uma string vazia. Aplicar o operador <code>!</code> converterá um valor para o tipo booleano antes de negá-lo, e todas as strings exceto <code>&quot;&quot;</code> se convertem para <code>true</code>. Isso significa que o loop continua rodando até que você forneça um nome não vazio.</p>
+
+<h2><a class="h_ident" id="h-gSI8At3tLe" href="#h-gSI8At3tLe" tabindex="-1" role="presentation"></a>Indentando Código</h2>
+
+<p><a class="p_ident" id="p-vRLi/3xdfG" href="#p-vRLi/3xdfG" tabindex="-1" role="presentation"></a>Nos exemplos, tenho adicionado espaços na frente de instruções que fazem parte de alguma instrução maior. Esses espaços não são necessários — o computador aceitará o programa perfeitamente sem eles. Na verdade, até as quebras de linha em programas são opcionais. Você poderia escrever um programa como uma única linha longa se quisesse.</p>
+
+<p><a class="p_ident" id="p-rptJvtj8Ie" href="#p-rptJvtj8Ie" tabindex="-1" role="presentation"></a>O papel dessa indentação dentro de blocos é fazer a estrutura do código se destacar para leitores humanos. Em código onde novos blocos são abertos dentro de outros blocos, pode se tornar difícil ver onde um bloco termina e outro começa. Com indentação adequada, a forma visual de um programa corresponde à forma dos blocos dentro dele. Gosto de usar dois espaços para cada bloco aberto, mas gostos variam — algumas pessoas usam quatro espaços, e algumas usam caractere de tabulação. O importante é que cada novo bloco adicione a mesma quantidade de espaço.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Dmd8L2VV0d" href="#c-Dmd8L2VV0d" tabindex="-1" role="presentation"></a><span class="tok-keyword">if</span> (false != true) {
+  console.log(<span class="tok-string">&quot;That makes sense.&quot;</span>);
+  <span class="tok-keyword">if</span> (<span class="tok-number">1</span> &lt; <span class="tok-number">2</span>) {
+    console.log(<span class="tok-string">&quot;No surprise there.&quot;</span>);
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-CHAYYpPWy/" href="#p-CHAYYpPWy/" tabindex="-1" role="presentation"></a>A maioria dos editores de código (incluindo o deste livro) ajudará indentando automaticamente novas linhas na quantidade adequada.</p>
+
+<h2><a class="h_ident" id="h-TGZ/MdzGIb" href="#h-TGZ/MdzGIb" tabindex="-1" role="presentation"></a>Loops for</h2>
+
+<p><a class="p_ident" id="p-w1lxtRy+7o" href="#p-w1lxtRy+7o" tabindex="-1" role="presentation"></a>Muitos loops seguem o padrão mostrado nos exemplos de <code>while</code>. Primeiro um binding “contador” é criado para acompanhar o progresso do loop. Depois vem um loop <code>while</code>, geralmente com uma expressão de teste que verifica se o contador atingiu seu valor final. No final do corpo do loop, o contador é atualizado para acompanhar o progresso.</p>
+
+<p><a class="p_ident" id="p-uBIzITN2q8" href="#p-uBIzITN2q8" tabindex="-1" role="presentation"></a>Como esse padrão é tão comum, JavaScript e linguagens similares fornecem uma forma ligeiramente mais curta e mais abrangente, o loop <code>for</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bv526eAQ8J" href="#c-bv526eAQ8J" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">number</span> = <span class="tok-number">0</span>; number &lt;= <span class="tok-number">12</span>; number = number + <span class="tok-number">2</span>) {
+  console.log(number);
+}
+<span class="tok-comment">// → 0</span>
+<span class="tok-comment">// → 2</span>
+<span class="tok-comment">//   … etcetera</span></pre>
+
+<p><a class="p_ident" id="p-nTQ2RwyfCI" href="#p-nTQ2RwyfCI" tabindex="-1" role="presentation"></a>Este programa é exatamente equivalente ao <a href="02_program_structure.html#loops">exemplo anterior</a> de impressão de números pares. A única mudança é que todas as instruções que são relacionadas ao “estado” do loop estão agrupadas juntas após <code>for</code>.</p>
+
+<p><a class="p_ident" id="p-uoSLkbi5OX" href="#p-uoSLkbi5OX" tabindex="-1" role="presentation"></a>Os parênteses após uma palavra-chave <code>for</code> devem conter dois ponto e vírgulas. A parte antes do primeiro ponto e vírgula <em>inicializa</em> o loop, geralmente definindo um binding. A segunda parte é a expressão que <em>verifica</em> se o loop deve continuar. A parte final <em>atualiza</em> o estado do loop após cada iteração. Na maioria dos casos, isso é mais curto e claro que uma construção <code>while</code>.</p>
+
+<p><a class="p_ident" id="p-OaldIrswai" href="#p-OaldIrswai" tabindex="-1" role="presentation"></a>Este é o código que calcula 2<sup>10</sup> usando <code>for</code> em vez de <code>while</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-BPd5Bl+eyt" href="#c-BPd5Bl+eyt" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">result</span> = <span class="tok-number">1</span>;
+<span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">counter</span> = <span class="tok-number">0</span>; counter &lt; <span class="tok-number">10</span>; counter = counter + <span class="tok-number">1</span>) {
+  result = result * <span class="tok-number">2</span>;
+}
+console.log(result);
+<span class="tok-comment">// → 1024</span></pre>
+
+<h2><a class="h_ident" id="h-i6hHhilCkl" href="#h-i6hHhilCkl" tabindex="-1" role="presentation"></a>Saindo de um Loop</h2>
+
+<p><a class="p_ident" id="p-/ar3e/NhMD" href="#p-/ar3e/NhMD" tabindex="-1" role="presentation"></a>Fazer a condição do loop produzir <code>false</code> não é a única forma de um loop terminar. A instrução <code>break</code> tem o efeito de imediatamente saltar para fora do loop que a envolve. Seu uso é demonstrado no programa a seguir, que encontra o primeiro número que é tanto maior ou igual a 20 quanto divisível por 7:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-G/xQzCJ2hv" href="#c-G/xQzCJ2hv" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">current</span> = <span class="tok-number">20</span>; ; current = current + <span class="tok-number">1</span>) {
+  <span class="tok-keyword">if</span> (current % <span class="tok-number">7</span> == <span class="tok-number">0</span>) {
+    console.log(current);
+    <span class="tok-keyword">break</span>;
+  }
+}
+<span class="tok-comment">// → 21</span></pre>
+
+<p><a class="p_ident" id="p-CSJE46pVMo" href="#p-CSJE46pVMo" tabindex="-1" role="presentation"></a>Usar o operador resto (<code>%</code>) é uma forma fácil de testar se um número é divisível por outro número. Se for, o resto da divisão é zero.</p>
+
+<p><a class="p_ident" id="p-GvuM6qnCmx" href="#p-GvuM6qnCmx" tabindex="-1" role="presentation"></a>A construção <code>for</code> no exemplo não tem uma parte que verifica o final do loop. Isso significa que o loop nunca parará a menos que a instrução <code>break</code> dentro dele seja executada.</p>
+
+<p><a class="p_ident" id="p-TSaEbWh1PZ" href="#p-TSaEbWh1PZ" tabindex="-1" role="presentation"></a>Se você removesse essa instrução <code>break</code> ou acidentalmente escrevesse uma condição final que sempre produz <code>true</code>, seu programa ficaria preso em um <em>loop infinito</em>. Um programa preso em um loop infinito nunca terminará de executar, o que geralmente é uma coisa ruim.</p>
+
+<p><a class="p_ident" id="p-wUTZubiCky" href="#p-wUTZubiCky" tabindex="-1" role="presentation"></a>Se você criar um loop infinito em um dos exemplos nestas páginas, geralmente será perguntado se quer parar o script após alguns segundos. Se isso falhar, você terá que fechar a aba em que está trabalhando para se recuperar.</p>
+
+<p><a class="p_ident" id="p-LR+9Wr85oe" href="#p-LR+9Wr85oe" tabindex="-1" role="presentation"></a>A palavra-chave <code>continue</code> é similar a <code>break</code> no sentido de que influencia o progresso de um loop. Quando <code>continue</code> é encontrado em um corpo de loop, o controle salta para fora do corpo e continua com a próxima iteração do loop.</p>
+
+<h2><a class="h_ident" id="h-0NWtgeuR2I" href="#h-0NWtgeuR2I" tabindex="-1" role="presentation"></a>Atualizando bindings sucintamente</h2>
+
+<p><a class="p_ident" id="p-eMgin5EQeI" href="#p-eMgin5EQeI" tabindex="-1" role="presentation"></a>Especialmente ao fazer loops, um programa frequentemente precisa “atualizar” um binding para manter um valor baseado no valor anterior desse binding.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-aegdj8V5XM" href="#c-aegdj8V5XM" tabindex="-1" role="presentation"></a>counter = counter + <span class="tok-number">1</span>;</pre>
+
+<p><a class="p_ident" id="p-VektJIPUc7" href="#p-VektJIPUc7" tabindex="-1" role="presentation"></a>JavaScript fornece um atalho para isso:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-/XU8FyoU4+" href="#c-/XU8FyoU4+" tabindex="-1" role="presentation"></a>counter += <span class="tok-number">1</span>;</pre>
+
+<p><a class="p_ident" id="p-L4CsXOE6IQ" href="#p-L4CsXOE6IQ" tabindex="-1" role="presentation"></a>Atalhos similares funcionam para muitos outros operadores, como <code>result *= 2</code> para dobrar <code>result</code> ou <code>counter -= 1</code> para contar para baixo.</p>
+
+<p><a class="p_ident" id="p-5kAPpa9UvF" href="#p-5kAPpa9UvF" tabindex="-1" role="presentation"></a>Isso nos permite encurtar ainda mais nosso exemplo de contagem:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-h8HkwMM+IM" href="#c-h8HkwMM+IM" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">number</span> = <span class="tok-number">0</span>; number &lt;= <span class="tok-number">12</span>; number += <span class="tok-number">2</span>) {
+  console.log(number);
+}</pre>
+
+<p><a class="p_ident" id="p-nEYOeotL4g" href="#p-nEYOeotL4g" tabindex="-1" role="presentation"></a>Para <code>counter += 1</code> e <code>counter -= 1</code>, existem equivalentes ainda mais curtos: <code>counter++</code> e <code>counter--</code>.</p>
+
+<h2><a class="h_ident" id="h-C0PrzWIVfz" href="#h-C0PrzWIVfz" tabindex="-1" role="presentation"></a>Despachando com um valor usando switch</h2>
+
+<p><a class="p_ident" id="p-oY1Ujtu8Uv" href="#p-oY1Ujtu8Uv" tabindex="-1" role="presentation"></a>Não é incomum que código tenha esta aparência:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Q96dt8DAU9" href="#c-Q96dt8DAU9" tabindex="-1" role="presentation"></a><span class="tok-keyword">if</span> (x == <span class="tok-string">&quot;value1&quot;</span>) action1();
+<span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (x == <span class="tok-string">&quot;value2&quot;</span>) action2();
+<span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (x == <span class="tok-string">&quot;value3&quot;</span>) action3();
+<span class="tok-keyword">else</span> defaultAction();</pre>
+
+<p><a class="p_ident" id="p-9N79A/Ots6" href="#p-9N79A/Ots6" tabindex="-1" role="presentation"></a>Existe uma construção chamada <code>switch</code> que se destina a expressar tal “despacho” de forma mais direta. Infelizmente, a sintaxe que JavaScript usa para isso (que herdou da linhagem de linguagens C/Java) é um tanto desajeitada — uma cadeia de instruções <code>if</code> pode parecer melhor. Aqui está um exemplo:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-B7WAWZEgcU" href="#c-B7WAWZEgcU" tabindex="-1" role="presentation"></a><span class="tok-keyword">switch</span> (prompt(<span class="tok-string">&quot;What is the weather like?&quot;</span>)) {
+  <span class="tok-keyword">case</span> <span class="tok-string">&quot;rainy&quot;</span>:
+    console.log(<span class="tok-string">&quot;Remember to bring an umbrella.&quot;</span>);
+    <span class="tok-keyword">break</span>;
+  <span class="tok-keyword">case</span> <span class="tok-string">&quot;sunny&quot;</span>:
+    console.log(<span class="tok-string">&quot;Dress lightly.&quot;</span>);
+  <span class="tok-keyword">case</span> <span class="tok-string">&quot;cloudy&quot;</span>:
+    console.log(<span class="tok-string">&quot;Go outside.&quot;</span>);
+    <span class="tok-keyword">break</span>;
+  <span class="tok-keyword">default</span>:
+    console.log(<span class="tok-string">&quot;Unknown weather type!&quot;</span>);
+    <span class="tok-keyword">break</span>;
+}</pre>
+
+<p><a class="p_ident" id="p-ElUdkOqtq7" href="#p-ElUdkOqtq7" tabindex="-1" role="presentation"></a>Você pode colocar quantas etiquetas <code>case</code> quiser dentro do bloco aberto por <code>switch</code>. O programa começará a executar na etiqueta que corresponde ao valor que <code>switch</code> recebeu, ou em <code>default</code> se nenhum valor correspondente for encontrado. Ele continuará executando, mesmo através de outras etiquetas, até encontrar uma instrução <code>break</code>. Em alguns casos, como o caso <code>&quot;sunny&quot;</code> no exemplo, isso pode ser usado para compartilhar código entre casos (ele recomenda ir para fora tanto para tempo ensolarado quanto nublado). Mas tenha cuidado — é fácil esquecer tal <code>break</code>, o que fará o programa executar código que você não quer que seja executado.</p>
+
+<h2><a class="h_ident" id="h-LOMgWOMigi" href="#h-LOMgWOMigi" tabindex="-1" role="presentation"></a>Capitalização</h2>
+
+<p><a class="p_ident" id="p-sSDidd3I16" href="#p-sSDidd3I16" tabindex="-1" role="presentation"></a>Nomes de binding não podem conter espaços, mas muitas vezes é útil usar múltiplas palavras para descrever claramente o que o binding representa. Essas são basicamente suas opções para escrever um nome de binding com várias palavras:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-HtUFwP9TF9" href="#c-HtUFwP9TF9" tabindex="-1" role="presentation"></a>fuzzylittleturtle
+fuzzy_little_turtle
+FuzzyLittleTurtle
+fuzzyLittleTurtle</pre>
+
+<p><a class="p_ident" id="p-SvbBTF0CoD" href="#p-SvbBTF0CoD" tabindex="-1" role="presentation"></a>O primeiro estilo pode ser difícil de ler. Gosto bastante da aparência dos sublinhados, embora esse estilo seja um pouco doloroso de digitar. As funções padrão do JavaScript, e a maioria dos programadores JavaScript, seguem o último estilo — capitalizam cada palavra exceto a primeira. Não é difícil se acostumar com coisas pequenas assim, e código com estilos de nomeação mistos pode ser irritante de ler, então seguimos essa convenção.</p>
+
+<p><a class="p_ident" id="p-x887bRLwH0" href="#p-x887bRLwH0" tabindex="-1" role="presentation"></a>Em alguns casos, como na função <code>Number</code>, a primeira letra de um binding também é capitalizada. Isso foi feito para marcar essa função como um construtor. Ficará claro o que é um construtor no <a href="06_object.html#constructors">Capítulo 6</a>. Por enquanto, o importante é não se incomodar com essa aparente falta de consistência.</p>
+
+<h2><a class="h_ident" id="h-b+MFP6DOfn" href="#h-b+MFP6DOfn" tabindex="-1" role="presentation"></a>Comentários</h2>
+
+<p><a class="p_ident" id="p-h5oh3JpXC6" href="#p-h5oh3JpXC6" tabindex="-1" role="presentation"></a>Frequentemente, código bruto não transmite toda a informação que você quer que um programa transmita para leitores humanos, ou o transmite de forma tão críptica que as pessoas podem não entendê-lo. Em outros momentos, você pode querer incluir alguns pensamentos relacionados como parte do seu programa. É para isso que servem os <em>comentários</em>.</p>
+
+<p><a class="p_ident" id="p-jbxDGwb5ym" href="#p-jbxDGwb5ym" tabindex="-1" role="presentation"></a>Um comentário é um pedaço de texto que faz parte de um programa mas é completamente ignorado pelo computador. JavaScript tem duas formas de escrever comentários. Para escrever um comentário de uma linha, você pode usar dois caracteres de barra (<code>//</code>) e depois o texto do comentário após eles:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-/8e+JeWltg" href="#c-/8e+JeWltg" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">accountBalance</span> = calculateBalance(account);
+<span class="tok-comment">// It's a green hollow where a river sings</span>
+accountBalance.adjust();
+<span class="tok-comment">// Madly catching white tatters in the grass.</span>
+<span class="tok-keyword">let</span> <span class="tok-definition">report</span> = <span class="tok-keyword">new</span> Report();
+<span class="tok-comment">// Where the sun on the proud mountain rings:</span>
+addToReport(accountBalance, report);
+<span class="tok-comment">// It's a little valley, foaming like light in a glass.</span></pre>
+
+<p><a class="p_ident" id="p-dmVOo2ITfx" href="#p-dmVOo2ITfx" tabindex="-1" role="presentation"></a>Um comentário <code>//</code> vai apenas até o final da linha. Uma seção de texto entre <code>/*</code> e <code>*/</code> será ignorada em sua totalidade, independentemente de conter quebras de linha. Isso é útil para adicionar blocos de informação sobre um arquivo ou trecho de programa:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-YIpKcFFP1r" href="#c-YIpKcFFP1r" tabindex="-1" role="presentation"></a><span class="tok-comment">/*</span>
+<span class="tok-comment">  I first found this number scrawled on the back of an old</span>
+<span class="tok-comment">  notebook. Since then, it has often dropped by, showing up in</span>
+<span class="tok-comment">  phone numbers and the serial numbers of products that I've</span>
+<span class="tok-comment">  bought. It obviously likes me, so I've decided to keep it.</span>
+<span class="tok-comment">*/</span>
+<span class="tok-keyword">const</span> <span class="tok-definition">myNumber</span> = <span class="tok-number">11213</span>;</pre>
+
+<h2><a class="h_ident" id="h-741R75mvqx" href="#h-741R75mvqx" tabindex="-1" role="presentation"></a>Resumo</h2>
+
+<p><a class="p_ident" id="p-vnqj63w2/z" href="#p-vnqj63w2/z" tabindex="-1" role="presentation"></a>Agora você sabe que um programa é construído a partir de instruções, que por sua vez às vezes contêm mais instruções. Instruções tendem a conter expressões, que por sua vez podem ser construídas a partir de expressões menores.</p>
+
+<p><a class="p_ident" id="p-+1bVmmQd5w" href="#p-+1bVmmQd5w" tabindex="-1" role="presentation"></a>Colocar instruções uma após a outra lhe dá um programa que é executado de cima para baixo. Você pode introduzir perturbações no fluxo de controle usando instruções condicionais (<code>if</code>, <code>else</code> e <code>switch</code>) e de loop (<code>while</code>, <code>do</code> e <code>for</code>).</p>
+
+<p><a class="p_ident" id="p-KlnaXkUogG" href="#p-KlnaXkUogG" tabindex="-1" role="presentation"></a>Bindings podem ser usados para arquivar pedaços de dados sob um nome, e são úteis para acompanhar estado em seu programa. O ambiente é o conjunto de bindings que são definidos. Sistemas JavaScript sempre colocam uma série de bindings padrão úteis em seu ambiente.</p>
+
+<p><a class="p_ident" id="p-MGE2G8xv7v" href="#p-MGE2G8xv7v" tabindex="-1" role="presentation"></a>Funções são valores especiais que encapsulam um pedaço de programa. Você pode invocá-las escrevendo <code>functionName(argument1, argument2)</code>. Tal chamada de função é uma expressão e pode produzir um valor.</p>
+
+<h2><a class="h_ident" id="h-0CpJUZuhQJ" href="#h-0CpJUZuhQJ" tabindex="-1" role="presentation"></a>Exercícios</h2>
+
+<p><a class="p_ident" id="p-IR+Uaktudk" href="#p-IR+Uaktudk" tabindex="-1" role="presentation"></a>Se você não tem certeza de como testar suas soluções para os exercícios, consulte a <a href="00_intro.html">introdução</a>.</p>
+
+<p><a class="p_ident" id="p-q5HGrILqoe" href="#p-q5HGrILqoe" tabindex="-1" role="presentation"></a>Cada exercício começa com uma descrição do problema. Leia essa descrição e tente resolver o exercício. Se tiver problemas, considere ler as dicas após o exercício. Você pode encontrar soluções completas para os exercícios online em <a href="https://eloquentjavascript.net/code#2"><em>https://eloquentjavascript.net/code</em></a>. Se quiser aprender algo com os exercícios, recomendo olhar as soluções apenas depois de ter resolvido o exercício, ou pelo menos depois de tê-lo atacado tempo e esforço suficientes para ter uma leve dor de cabeça.</p>
+
+<h3><a class="i_ident" id="i-sXuO7gUszD" href="#i-sXuO7gUszD" tabindex="-1" role="presentation"></a>Fazendo um triângulo com loop</h3>
+
+<p><a class="p_ident" id="p-0zA4MBrflT" href="#p-0zA4MBrflT" tabindex="-1" role="presentation"></a>Escreva um loop que faça sete chamadas a <code>console.log</code> para exibir o seguinte triângulo:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-iAdOqXrnTq" href="#c-iAdOqXrnTq" tabindex="-1" role="presentation"></a>#
+##
+###
+####
+#####
+######
+#######</pre>
+
+<p><a class="p_ident" id="p-5ToeTDYsXt" href="#p-5ToeTDYsXt" tabindex="-1" role="presentation"></a>Pode ser útil saber que você pode encontrar o comprimento de uma string escrevendo <code>.length</code> após ela.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-qHvXAGuPvV" href="#c-qHvXAGuPvV" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">abc</span> = <span class="tok-string">&quot;abc&quot;</span>;
+console.log(abc.length);
+<span class="tok-comment">// → 3</span></pre>
+
+<p><a class="p_ident" id="p-HtHwFt/eku" href="#p-HtHwFt/eku" tabindex="-1" role="presentation"></a>A maioria dos exercícios contém um trecho de código que você pode modificar para resolver o exercício. Lembre-se de que você pode clicar em blocos de código para editá-los.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bnD9sP38vo" href="#c-bnD9sP38vo" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-JZD4HqruVW" href="#p-JZD4HqruVW" tabindex="-1" role="presentation"></a>Você pode começar com um programa que imprime os números de 1 a 7, que pode derivar fazendo algumas modificações no <a href="02_program_structure.html#loops">exemplo de impressão de números pares</a> dado anteriormente no capítulo, onde o loop <code>for</code> foi introduzido.</p>
+
+<p><a class="p_ident" id="p-pema/QOCM1" href="#p-pema/QOCM1" tabindex="-1" role="presentation"></a>Agora considere a equivalência entre números e strings de caracteres cerquilha. Você pode ir de 1 para 2 adicionando 1 (<code>+= 1</code>). Você pode ir de <code>&quot;#&quot;</code> para <code>&quot;##&quot;</code> adicionando um caractere (<code>+= &quot;#&quot;</code>). Assim, sua solução pode seguir de perto o programa de impressão de números.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-rebKE3gdjV" href="#i-rebKE3gdjV" tabindex="-1" role="presentation"></a>FizzBuzz</h3>
+
+<p><a class="p_ident" id="p-HwlxkMphur" href="#p-HwlxkMphur" tabindex="-1" role="presentation"></a>Escreva um programa que use <code>console.log</code> para imprimir todos os números de 1 a 100, com duas exceções. Para números divisíveis por 3, imprima <code>&quot;Fizz&quot;</code> em vez do número, e para números divisíveis por 5 (e não por 3), imprima <code>&quot;Buzz&quot;</code> em vez do número.</p>
+
+<p><a class="p_ident" id="p-9AYt4j8Byt" href="#p-9AYt4j8Byt" tabindex="-1" role="presentation"></a>Quando isso estiver funcionando, modifique seu programa para imprimir <code>&quot;FizzBuzz&quot;</code> para números que são divisíveis por ambos 3 e 5 (e ainda imprimir <code>&quot;Fizz&quot;</code> ou <code>&quot;Buzz&quot;</code> para números divisíveis por apenas um deles).</p>
+
+<p><a class="p_ident" id="p-ep/oFO3Jxo" href="#p-ep/oFO3Jxo" tabindex="-1" role="presentation"></a>(Isso é na verdade uma pergunta de entrevista que supostamente elimina uma porcentagem significativa de candidatos a programador. Então se você resolveu, seu valor no mercado de trabalho acabou de subir.)</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bnD9sP38vo_1" href="#c-bnD9sP38vo_1" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-0UFhdciP5j" href="#p-0UFhdciP5j" tabindex="-1" role="presentation"></a>Percorrer os números é claramente um trabalho de loop, e selecionar o que imprimir é uma questão de execução condicional. Lembre-se do truque de usar o operador resto (<code>%</code>) para verificar se um número é divisível por outro número (tem resto zero).</p>
+
+<p><a class="p_ident" id="p-PAri8d4Va2" href="#p-PAri8d4Va2" tabindex="-1" role="presentation"></a>Na primeira versão, há três resultados possíveis para cada número, então você terá que criar uma cadeia <code>if</code>/<code>else if</code>/<code>else</code>.</p>
+
+<p><a class="p_ident" id="p-Wd6BUUSzim" href="#p-Wd6BUUSzim" tabindex="-1" role="presentation"></a>A segunda versão do programa tem uma solução direta e uma engenhosa. A solução simples é adicionar outro “ramo” condicional para testar precisamente a condição dada. Para a solução engenhosa, construa uma string contendo a palavra ou palavras a serem exibidas e imprima essa palavra ou o número se não houver palavra, potencialmente fazendo bom uso do operador <code>||</code>.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-MhKaQsnu2s" href="#i-MhKaQsnu2s" tabindex="-1" role="presentation"></a>Tabuleiro de xadrez</h3>
+
+<p><a class="p_ident" id="p-nx+SwK1YhQ" href="#p-nx+SwK1YhQ" tabindex="-1" role="presentation"></a>Escreva um programa que cria uma string que representa uma grade 8×8, usando caracteres de nova linha para separar linhas. Em cada posição da grade há um espaço ou um caractere &quot;#&quot;. Os caracteres devem formar um tabuleiro de xadrez.</p>
+
+<p><a class="p_ident" id="p-4ZHkuvsPvS" href="#p-4ZHkuvsPvS" tabindex="-1" role="presentation"></a>Passar essa string para <code>console.log</code> deve mostrar algo assim:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-7bNzisP4Fe" href="#c-7bNzisP4Fe" tabindex="-1" role="presentation"></a> # # # #
+# # # #
+ # # # #
+# # # #
+ # # # #
+# # # #
+ # # # #
+# # # #</pre>
+
+<p><a class="p_ident" id="p-jE05VOQBKD" href="#p-jE05VOQBKD" tabindex="-1" role="presentation"></a>Quando tiver um programa que gera esse padrão, defina um binding <code>size = 8</code> e mude o programa para que funcione para qualquer <code>size</code>, produzindo uma grade da largura e altura fornecidas.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-bnD9sP38vo_2" href="#c-bnD9sP38vo_2" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-F1o9whHlf8" href="#p-F1o9whHlf8" tabindex="-1" role="presentation"></a>Você pode construir a string começando com uma vazia (<code>&quot;&quot;</code>) e repetidamente adicionando caracteres. Um caractere de nova linha é escrito <code>&quot;\n&quot;</code>.</p>
+
+<p><a class="p_ident" id="p-PoR//v+4Om" href="#p-PoR//v+4Om" tabindex="-1" role="presentation"></a>Para trabalhar com duas dimensões, você precisará de um loop dentro de um loop. Coloque chaves ao redor dos corpos de ambos os loops para facilitar ver onde começam e terminam. Tente indentar adequadamente esses corpos. A ordem dos loops deve seguir a ordem em que construímos a string (linha por linha, da esquerda para a direita, de cima para baixo). Então o loop externo lida com as linhas, e o loop interno lida com os caracteres em uma linha.</p>
+
+<p><a class="p_ident" id="p-8bGfIFAHVf" href="#p-8bGfIFAHVf" tabindex="-1" role="presentation"></a>Você precisará de dois bindings para acompanhar seu progresso. Para saber se deve colocar um espaço ou um cerquilha em uma dada posição, você pode testar se a soma dos dois contadores é par (<code>% 2</code>).</p>
+
+<p><a class="p_ident" id="p-AflYjy8uVA" href="#p-AflYjy8uVA" tabindex="-1" role="presentation"></a>Terminar uma linha adicionando um caractere de nova linha deve acontecer após a linha ter sido construída, então faça isso após o loop interno mas dentro do loop externo.</p>
+
+</div></details><nav><a href="01_values.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="03_functions.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

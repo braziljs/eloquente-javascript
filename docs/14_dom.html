@@ -1,0 +1,566 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O Modelo de Objeto do Documento :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":14}</script></head>
+
+<article>
+<nav><a href="13_browser.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="15_event.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>O Modelo de Objeto do Documento</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-yqipqPLrLS" href="#p-yqipqPLrLS" tabindex="-1" role="presentation"></a>Too bad! Same old story! Once you’ve finished building your house you notice you’ve accidentally learned something that you really should have known—before you started.</p>
+
+<footer>Friedrich Nietzsche, <cite>Beyond Good and Evil</cite></footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_14.jpg" alt="Illustration showing a tree with letters, pictures, and gears hanging on its branches"></figure>
+
+<p><a class="p_ident" id="p-zpLHnPXGEu" href="#p-zpLHnPXGEu" tabindex="-1" role="presentation"></a>Quando você abre uma página web, seu navegador recupera o texto HTML da página e o analisa, da mesma forma que nosso parser do <a href="12_language.html#parsing">Capítulo 12</a> analisava programas. O navegador constrói um modelo da estrutura do documento e usa esse modelo para desenhar a página na tela.</p>
+
+<p><a class="p_ident" id="p-49BlBARSSv" href="#p-49BlBARSSv" tabindex="-1" role="presentation"></a>Essa representação do documento é um dos brinquedos que um programa JavaScript tem disponível em sua sandbox. É uma estrutura de dados que você pode ler ou modificar. Ela funciona como uma estrutura de dados <em>ao vivo</em>: quando é modificada, a página na tela é atualizada para refletir as mudanças.</p>
+
+<h2><a class="h_ident" id="h-jVvg6Bf+U4" href="#h-jVvg6Bf+U4" tabindex="-1" role="presentation"></a>Estrutura do documento</h2>
+
+<p><a class="p_ident" id="p-QIHzn6he8R" href="#p-QIHzn6he8R" tabindex="-1" role="presentation"></a>Você pode imaginar um documento HTML como um conjunto aninhado de caixas. Tags como <code>&lt;body&gt;</code> e <code>&lt;/body&gt;</code> envolvem outras tags, que por sua vez contêm outras tags ou texto. Aqui está o documento de exemplo do <a href="13_browser.html">capítulo anterior</a>:</p>
+
+<pre tabindex="0" class="snippet" data-language="html"  data-sandbox="homepage"><a class="c_ident" id="c-4wSSl86LKl" href="#c-4wSSl86LKl" tabindex="-1" role="presentation"></a><span class="tok-meta">&lt;!doctype html&gt;</span>
+&lt;<span class="tok-typeName">html</span>&gt;
+  &lt;<span class="tok-typeName">head</span>&gt;
+    &lt;<span class="tok-typeName">title</span>&gt;My home page&lt;/<span class="tok-typeName">title</span>&gt;
+  &lt;/<span class="tok-typeName">head</span>&gt;
+  &lt;<span class="tok-typeName">body</span>&gt;
+    &lt;<span class="tok-typeName">h1</span>&gt;My home page&lt;/<span class="tok-typeName">h1</span>&gt;
+    &lt;<span class="tok-typeName">p</span>&gt;Hello, I am Marijn and this is my home page.&lt;/<span class="tok-typeName">p</span>&gt;
+    &lt;<span class="tok-typeName">p</span>&gt;I also wrote a book! Read it
+      &lt;<span class="tok-typeName">a</span> href=<span class="tok-string">&quot;http://eloquentjavascript.net&quot;</span>&gt;here&lt;/<span class="tok-typeName">a</span>&gt;.&lt;/<span class="tok-typeName">p</span>&gt;
+  &lt;/<span class="tok-typeName">body</span>&gt;
+&lt;/<span class="tok-typeName">html</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-snJ0U5Db3F" href="#p-snJ0U5Db3F" tabindex="-1" role="presentation"></a>Esta página tem a seguinte estrutura:</p><figure><img src="img/html-boxes.svg" alt="Diagram showing an HTML document as a set of nested boxes. The outer box is labeled 'html' and contains two boxes labeled 'head' and 'body'. Inside those are further boxes, with some of the innermost boxes containing the document's text."></figure>
+
+<p><a class="p_ident" id="p-M9Wkif48t1" href="#p-M9Wkif48t1" tabindex="-1" role="presentation"></a>A estrutura de dados que o navegador usa para representar o documento segue essa forma. Para cada caixa, existe um objeto, com o qual podemos interagir para descobrir coisas como qual tag HTML ele representa e quais caixas e texto ele contém. Essa representação é chamada de <em>Modelo de Objeto do Documento</em>, ou <em>DOM</em> para abreviar.</p>
+
+<p><a class="p_ident" id="p-ObqEkHM/Lz" href="#p-ObqEkHM/Lz" tabindex="-1" role="presentation"></a>A vinculação global <code>document</code> nos dá acesso a esses objetos. Sua propriedade <code>documentElement</code> se refere ao objeto representando a tag <code>&lt;html&gt;</code>. Como todo documento HTML tem um cabeçalho e um corpo, ele também tem propriedades <code>head</code> e <code>body</code> apontando para esses elementos.</p>
+
+<h2><a class="h_ident" id="h-b0t/jaGik/" href="#h-b0t/jaGik/" tabindex="-1" role="presentation"></a>Árvores</h2>
+
+<p><a class="p_ident" id="p-utpXCGeQLU" href="#p-utpXCGeQLU" tabindex="-1" role="presentation"></a>Pense nas árvores sintáticas do <a href="12_language.html#parsing">Capítulo 12</a> por um momento. Suas estruturas são notavelmente similares à estrutura do documento de um navegador. Cada <em>nó</em> pode se referir a outros nós, <em>filhos</em>, que por sua vez podem ter seus próprios filhos. Essa forma é típica de estruturas aninhadas, onde elementos podem conter subelementos que são similares a eles mesmos.</p>
+
+<p><a class="p_ident" id="p-30lSA2Ve2/" href="#p-30lSA2Ve2/" tabindex="-1" role="presentation"></a>Chamamos uma estrutura de dados de <em>árvore</em> quando ela tem uma estrutura ramificada, sem ciclos (um nó não pode conter a si mesmo, direta ou indiretamente), e uma única <em>raiz</em> bem definida. No caso do DOM, <code>document.<wbr>documentElement</code> serve como a raiz.</p>
+
+<p><a class="p_ident" id="p-ojjIJuaD51" href="#p-ojjIJuaD51" tabindex="-1" role="presentation"></a>Árvores aparecem muito em ciência da computação. Além de representar estruturas recursivas como documentos HTML ou programas, elas são frequentemente usadas para manter conjuntos ordenados de dados, pois elementos geralmente podem ser encontrados ou inseridos mais eficientemente em uma árvore do que em um array plano.</p>
+
+<p><a class="p_ident" id="p-65kFOQUdFt" href="#p-65kFOQUdFt" tabindex="-1" role="presentation"></a>Uma árvore típica tem diferentes tipos de nós. A árvore sintática da <a href="12_language.html">linguagem Egg</a> tinha identificadores, valores e nós de aplicação. Nós de aplicação podem ter filhos, enquanto identificadores e valores são <em>folhas</em>, ou nós sem filhos.</p>
+
+<p><a class="p_ident" id="p-KCHhUUrWBt" href="#p-KCHhUUrWBt" tabindex="-1" role="presentation"></a>O mesmo vale para o DOM. Nós de <em>elementos</em>, que representam tags HTML, determinam a estrutura do documento. Eles podem ter nó filhos. Um exemplo de tal nó é <code>document.body</code>. Alguns desses filhos podem ser nós folha, como pedaços de texto ou nós de comentário.</p>
+
+<p><a class="p_ident" id="p-Bc8agQfTFl" href="#p-Bc8agQfTFl" tabindex="-1" role="presentation"></a>Cada objeto de nó DOM tem uma propriedade <code>nodeType</code>, que contém um código (número) que identifica o tipo do nó. Elementos têm o código 1, que também é definido como a propriedade constante <code>Node.<wbr>ELEMENT_NODE</code>. Nós de texto, representando uma seção de texto no documento, recebem o código 3 (<code>Node.TEXT_NODE</code>). Comentários têm o código 8 (<code>Node.<wbr>COMMENT_NODE</code>).</p>
+
+<p><a class="p_ident" id="p-BCBx9ZToKx" href="#p-BCBx9ZToKx" tabindex="-1" role="presentation"></a>Outra forma de visualizar nossa árvore do documento é a seguinte:</p><figure><img src="img/html-tree.svg" alt="Diagram showing the HTML document as a tree, with arrows from parent nodes to child nodes"></figure>
+
+<p><a class="p_ident" id="p-eOU1qHuAbK" href="#p-eOU1qHuAbK" tabindex="-1" role="presentation"></a>As folhas são nós de texto, e as setas indicam relacionamentos pai-filho entre nós.</p>
+
+<h2 id="standard"><a class="h_ident" id="h-xGO8Zs/mIj" href="#h-xGO8Zs/mIj" tabindex="-1" role="presentation"></a>O padrão</h2>
+
+<p><a class="p_ident" id="p-77p/90XmkI" href="#p-77p/90XmkI" tabindex="-1" role="presentation"></a>Usar códigos numéricos crípticos para representar tipos de nó não é algo muito ao estilo do JavaScript. Mais adiante neste capítulo, veremos que outras partes da interface do DOM também parecem desajeitadas e estranhas. Isso é porque a interface do DOM não foi projetada apenas para JavaScript. Em vez disso, ela tenta ser uma interface neutra em relação à linguagem que pode ser usada em outros sistemas também — não apenas para HTML, mas também para XML, que é um formato de dados genérico com uma sintaxe similar ao HTML.</p>
+
+<p><a class="p_ident" id="p-LJ1OMNR2Xu" href="#p-LJ1OMNR2Xu" tabindex="-1" role="presentation"></a>Isso é lamentável. Padrões são frequentemente úteis. Mas neste caso, a vantagem (consistência entre linguagens) não é tão convincente. Ter uma interface que é devidamente integrada com a linguagem que você está usando economizará mais tempo do que ter uma interface familiar entre linguagens.</p>
+
+<p><a class="p_ident" id="p-CPRfGnPhG6" href="#p-CPRfGnPhG6" tabindex="-1" role="presentation"></a>Como exemplo dessa integração precária, considere a propriedade <code>childNodes</code> que nós de elemento no DOM possuem. Essa propriedade contém um objeto semelhante a um array, com uma propriedade <code>length</code> e propriedades rotuladas por números para acessar os nós filhos. Mas é uma instância do tipo <code>NodeList</code>, não um array real, então não possui métodos como <code>slice</code> e <code>map</code>.</p>
+
+<p><a class="p_ident" id="p-jWzup/3Jgc" href="#p-jWzup/3Jgc" tabindex="-1" role="presentation"></a>Depois há problemas simplesmente causados por design ruim. Por exemplo, não há como criar um novo nó e imediatamente adicionar filhos ou atributos a ele. Em vez disso, você precisa primeiro criá-lo e depois adicionar filhos e atributos um por um, usando efeitos colaterais. Código que interage pesadamente com o DOM tende a ficar longo, repetitivo e feio.</p>
+
+<p><a class="p_ident" id="p-yfp/3zDnEv" href="#p-yfp/3zDnEv" tabindex="-1" role="presentation"></a>Mas essas falhas não são fatais. Como JavaScript nos permite criar nossas próprias abstraçãoões, é possível projetar formas melhoradas de expressar as operações que estamos realizando. Muitas bibliotecas destinadas à programação em navegadores vêm com tais ferramentas.</p>
+
+<h2><a class="h_ident" id="h-QNgeBOr47q" href="#h-QNgeBOr47q" tabindex="-1" role="presentation"></a>Navegando pela árvore</h2>
+
+<p><a class="p_ident" id="p-O7Mk5JQ7bc" href="#p-O7Mk5JQ7bc" tabindex="-1" role="presentation"></a>Nós DOM contêm uma riqueza de links para outros nós próximos. O diagrama a seguir ilustra isso:</p><figure><img src="img/html-links.svg" alt="Diagram that shows the links between DOM nodes. The 'body' node is shown as a box, with a 'firstChild' arrow pointing at the 'h1' node at its start, a 'lastChild' arrow pointing at the last paragraph node, and 'childNodes' arrow pointing at an array of links to all its children. The middle paragraph has a 'previousSibling' arrow pointing at the node before it, a 'nextSibling' arrow to the node after it, and a 'parentNode' arrow pointing at the 'body' node."></figure>
+
+<p><a class="p_ident" id="p-hk9r6PAttw" href="#p-hk9r6PAttw" tabindex="-1" role="presentation"></a>Embora o diagrama mostre apenas um link de cada tipo, cada nó tem uma propriedade <code>parentNode</code> que aponta para o nó do qual faz parte, se houver. Da mesma forma, cada nó de elemento (tipo 1) tem uma propriedade <code>childNodes</code> que aponta para um objeto semelhante a array contendo seus filhos.</p>
+
+<p><a class="p_ident" id="p-4H4HkLsRyT" href="#p-4H4HkLsRyT" tabindex="-1" role="presentation"></a>Em teoria, você poderia se mover para qualquer lugar na árvore usando apenas esses links de pai e filho. Mas JavaScript também dá acesso a vários links de conveniência adicionais. As propriedades <code>firstChild</code> e <code>lastChild</code> apontam para os primeiros e últimos elementos filhos, ou têm o valor <code>null</code> para nós sem filhos. Da mesma forma, <code>previousSibling</code> e <code>nextSibling</code> apontam para nós adjacentes, que são nós com o mesmo pai que aparecem imediatamente antes ou depois do próprio nó. Para um primeiro filho, <code>previousSibling</code> será null, e para um último filho, <code>nextSibling</code> será null.</p>
+
+<p><a class="p_ident" id="p-KCdOC2s5Qx" href="#p-KCdOC2s5Qx" tabindex="-1" role="presentation"></a>Existe também a propriedade <code>children</code>, que é como <code>childNodes</code> mas contém apenas filhos de elemento (tipo 1), não outros tipos de nós filhos. Isso pode ser útil quando você não está interessado em nós de texto.</p>
+
+<p><a class="p_ident" id="p-bOEUq0bYCl" href="#p-bOEUq0bYCl" tabindex="-1" role="presentation"></a>Ao lidar com uma estrutura de dados aninhada como esta, funções recursivas são frequentemente úteis. A função a seguir varre um documento em busca de nós de texto contendo uma string dada e retorna <code>true</code> quando encontra um:</p>
+
+<pre id="talksAbout" tabindex="0" class="snippet" data-language="javascript"  data-sandbox="homepage"><a class="c_ident" id="c-6/D7aNG9Y+" href="#c-6/D7aNG9Y+" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">talksAbout</span>(<span class="tok-definition">node</span>, <span class="tok-definition">string</span>) {
+  <span class="tok-keyword">if</span> (node.nodeType == Node.ELEMENT_NODE) {
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">child</span> <span class="tok-keyword">of</span> node.childNodes) {
+      <span class="tok-keyword">if</span> (talksAbout(child, string)) {
+        <span class="tok-keyword">return</span> true;
+      }
+    }
+    <span class="tok-keyword">return</span> false;
+  } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (node.nodeType == Node.TEXT_NODE) {
+    <span class="tok-keyword">return</span> node.nodeValue.indexOf(string) &gt; -<span class="tok-number">1</span>;
+  }
+}
+
+console.log(talksAbout(document.body, <span class="tok-string">&quot;book&quot;</span>));
+<span class="tok-comment">// → true</span></pre>
+
+<p><a class="p_ident" id="p-Gam9EmcmNj" href="#p-Gam9EmcmNj" tabindex="-1" role="presentation"></a>A propriedade <code>nodeValue</code> de um nó de texto contém a string de texto que ele representa.</p>
+
+<h2><a class="h_ident" id="h-k3Afv/jCsp" href="#h-k3Afv/jCsp" tabindex="-1" role="presentation"></a>Encontrando elementos</h2>
+
+<p><a class="p_ident" id="p-ZYXIMO3MXA" href="#p-ZYXIMO3MXA" tabindex="-1" role="presentation"></a>Navegar por esses links entre pais, filhos e irmãos é frequentemente útil. Mas se quisermos encontrar um nó específico no documento, alcançá-lo começando em <code>document.body</code> e seguindo um caminho fixo de propriedades é uma má ideia. Fazer isso incorpora suposições em nosso programa sobre a estrutura precisa do documento — uma estrutura que você pode querer mudar depois. Outro fator complicante é que nós de texto são criados mesmo para os espaços em branco entre nós. A tag <code>&lt;body&gt;</code> do documento de exemplo não tem apenas três filhos (<code>&lt;h1&gt;</code> e dois elementos <code>&lt;p&gt;</code>), mas sete: esses três, mais os espaços antes, depois e entre eles.</p>
+
+<p><a class="p_ident" id="p-nmNPAx/IrH" href="#p-nmNPAx/IrH" tabindex="-1" role="presentation"></a>Se quisermos obter o atributo <code>href</code> do link naquele documento, não queremos dizer algo como “Pegue o segundo filho do sexto filho do corpo do documento”. Seria melhor se pudéssemos dizer “Pegue o primeiro link no documento”. E podemos.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript"  data-sandbox="homepage"><a class="c_ident" id="c-X6zFdF/80F" href="#c-X6zFdF/80F" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">link</span> = document.body.getElementsByTagName(<span class="tok-string">&quot;a&quot;</span>)[<span class="tok-number">0</span>];
+console.log(link.href);</pre>
+
+<p><a class="p_ident" id="p-+XQk5s/0Qs" href="#p-+XQk5s/0Qs" tabindex="-1" role="presentation"></a>Todos os nós de elemento têm um método <code>getElementsByTagName</code>, que coleta todos os elementos com o nome de tag dado que são descendentes (filhos diretos ou indiretos) daquele nó e os retorna como um objeto semelhante a array.</p>
+
+<p><a class="p_ident" id="p-xmSClsA7R4" href="#p-xmSClsA7R4" tabindex="-1" role="presentation"></a>Para encontrar um <em>único</em> nó específico, você pode dar a ele um atributo <code>id</code> e usar <code>document.<wbr>getElementById</code> em vez disso.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-CpFVpKYjsr" href="#c-CpFVpKYjsr" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span>&gt;My ostrich Gertrude:&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;&lt;<span class="tok-typeName">img</span> id=<span class="tok-string">&quot;gertrude&quot;</span> src=<span class="tok-string">&quot;img/ostrich.png&quot;</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">ostrich</span> = document.getElementById(<span class="tok-string">&quot;gertrude&quot;</span>);
+  console.log(ostrich.src);
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-dt5S7thkix" href="#p-dt5S7thkix" tabindex="-1" role="presentation"></a>Um terceiro método similar é <code>getElementsByClassName</code>, que, assim como <code>getElementsByTagName</code>, busca através dos conteúdos de um nó de elemento e recupera todos os elementos que têm a string dada em seu atributo <code>class</code>.</p>
+
+<h2><a class="h_ident" id="h-PbeKTHNCu4" href="#h-PbeKTHNCu4" tabindex="-1" role="presentation"></a>Alterando o documento</h2>
+
+<p><a class="p_ident" id="p-MyL6UcanOM" href="#p-MyL6UcanOM" tabindex="-1" role="presentation"></a>Quase tudo sobre a estrutura de dados do DOM pode ser alterado. A forma da árvore do documento pode ser modificada alterando relacionamentos pai-filho. Nós têm um método <code>remove</code> para removê-los de seu nó pai atual. Para adicionar um nó filho a um nó de elemento, podemos usar <code>appendChild</code>, que o coloca no final da lista de filhos, ou <code>insertBefore</code>, que insere o nó dado como primeiro argumento antes do nó dado como segundo argumento.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-xdAyPFCEJ5" href="#c-xdAyPFCEJ5" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span>&gt;One&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;Two&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;Three&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">paragraphs</span> = document.body.getElementsByTagName(<span class="tok-string">&quot;p&quot;</span>);
+  document.body.insertBefore(paragraphs[<span class="tok-number">2</span>], paragraphs[<span class="tok-number">0</span>]);
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-mN3POT0X/o" href="#p-mN3POT0X/o" tabindex="-1" role="presentation"></a>Um nó pode existir no documento em apenas um lugar. Assim, inserir o parágrafo <em>Three</em> na frente do parágrafo <em>One</em> irá primeiro removê-lo do final do documento e depois inseri-lo na frente, resultando em <em>Three</em>/<em>One</em>/<em>Two</em>. Todas as operações que inserem um nó em algum lugar irão, como efeito colateral, fazer com que ele seja removido de sua posição atual (se tiver uma).</p>
+
+<p><a class="p_ident" id="p-MgDGfbkPtn" href="#p-MgDGfbkPtn" tabindex="-1" role="presentation"></a>O método <code>replaceChild</code> é usado para substituir um nó filho por outro. Ele recebe como argumentos dois nós: um novo nó e o nó a ser substituído. O nó substituído deve ser um filho do elemento no qual o método é chamado. Note que tanto <code>replaceChild</code> quanto <code>insertBefore</code> esperam o nó <em>novo</em> como seu primeiro argumento.</p>
+
+<h2><a class="h_ident" id="h-aW0JNiooPn" href="#h-aW0JNiooPn" tabindex="-1" role="presentation"></a>Criando nós</h2>
+
+<p><a class="p_ident" id="p-aRA+ukBFIG" href="#p-aRA+ukBFIG" tabindex="-1" role="presentation"></a>Digamos que queremos escrever um script que substitua todas as imagems (<code>tags &lt;img&gt;</code>) no documento pelo texto contido em seus atributos <code>alt</code>, que especifica uma representação textual alternativa da imagem. Isso envolve não apenas remover as imagens, mas também adicionar um novo nó de texto para substituí-las.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-x13nsyh4X4" href="#c-x13nsyh4X4" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span>&gt;The &lt;<span class="tok-typeName">img</span> src=<span class="tok-string">&quot;img/cat.png&quot;</span> alt=<span class="tok-string">&quot;Cat&quot;</span>&gt; in the
+  &lt;<span class="tok-typeName">img</span> src=<span class="tok-string">&quot;img/hat.png&quot;</span> alt=<span class="tok-string">&quot;Hat&quot;</span>&gt;.&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">p</span>&gt;&lt;<span class="tok-typeName">button</span> onclick=<span class="tok-string">&quot;</span>replaceImages()<span class="tok-string">&quot;</span>&gt;Replace&lt;/<span class="tok-typeName">button</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">function</span> <span class="tok-definition">replaceImages</span>() {
+    <span class="tok-keyword">let</span> <span class="tok-definition">images</span> = document.body.getElementsByTagName(<span class="tok-string">&quot;img&quot;</span>);
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">i</span> = images.length - <span class="tok-number">1</span>; i &gt;= <span class="tok-number">0</span>; i--) {
+      <span class="tok-keyword">let</span> <span class="tok-definition">image</span> = images[i];
+      <span class="tok-keyword">if</span> (image.alt) {
+        <span class="tok-keyword">let</span> <span class="tok-definition">text</span> = document.createTextNode(image.alt);
+        image.parentNode.replaceChild(text, image);
+      }
+    }
+  }
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-fZk6IlO0DS" href="#p-fZk6IlO0DS" tabindex="-1" role="presentation"></a>Dado uma string, <code>createTextNode</code> nos dá um nó de texto que podemos inserir no documento para fazê-lo aparecer na tela.</p>
+
+<p><a class="p_ident" id="p-ICH+1s4UWa" href="#p-ICH+1s4UWa" tabindex="-1" role="presentation"></a>O loop que percorre as imagens começa do final da lista. Isso é necessário porque a lista de nós retornada por um método como <code>getElementsByTagName</code> (ou uma propriedade como <code>childNodes</code>) é <em>ao vivo</em>. Ou seja, ela é atualizada conforme o documento muda. Se começássemos do início, remover a primeira imagem faria a lista perder seu primeiro elemento, de forma que na segunda vez que o loop se repetisse, quando <code>i</code> fosse 1, ele pararia porque o comprimento da coleção agora também é 1.</p>
+
+<p><a class="p_ident" id="p-2a2D2Yr98b" href="#p-2a2D2Yr98b" tabindex="-1" role="presentation"></a>Se você quer uma coleção <em>sólida</em> de nós, em oposição a uma ao vivo, pode converter a coleção em um array real chamando <code>Array.from</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-YYMkVyoN/K" href="#c-YYMkVyoN/K" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">arrayish</span> = {<span class="tok-number">0</span>: <span class="tok-string">&quot;one&quot;</span>, <span class="tok-number">1</span>: <span class="tok-string">&quot;two&quot;</span>, <span class="tok-definition">length</span>: <span class="tok-number">2</span>};
+<span class="tok-keyword">let</span> <span class="tok-definition">array</span> = Array.from(arrayish);
+console.log(array.map(<span class="tok-definition">s</span> =&gt; s.toUpperCase()));
+<span class="tok-comment">// → [&quot;ONE&quot;, &quot;TWO&quot;]</span></pre>
+
+<p><a class="p_ident" id="p-SMj5n27HKK" href="#p-SMj5n27HKK" tabindex="-1" role="presentation"></a>Para criar nós de elemento, você pode usar o método <code>document.<wbr>createElement</code>. Esse método recebe um nome de tag e retorna um novo nó vazio do tipo dado.</p>
+
+<p id="elt"><a class="p_ident" id="p-wwpXWw69XZ" href="#p-wwpXWw69XZ" tabindex="-1" role="presentation"></a>O exemplo a seguir define uma utilidade <code>elt</code>, que cria um nó de elemento e trata o restante de seus argumentos como filhos daquele nó. Essa função é então usada para adicionar uma atribuição a uma citação.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-yKu7txUDrU" href="#c-yKu7txUDrU" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">blockquote</span> id=<span class="tok-string">&quot;quote&quot;</span>&gt;
+  No book can ever be finished. While working on it we learn
+  just enough to find it immature the moment we turn away
+  from it.
+&lt;/<span class="tok-typeName">blockquote</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">function</span> <span class="tok-definition">elt</span>(<span class="tok-definition">type</span>, ...<span class="tok-definition">children</span>) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">node</span> = document.createElement(type);
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">child</span> <span class="tok-keyword">of</span> children) {
+      <span class="tok-keyword">if</span> (<span class="tok-keyword">typeof</span> child != <span class="tok-string">&quot;string&quot;</span>) node.appendChild(child);
+      <span class="tok-keyword">else</span> node.appendChild(document.createTextNode(child));
+    }
+    <span class="tok-keyword">return</span> node;
+  }
+
+  document.getElementById(<span class="tok-string">&quot;quote&quot;</span>).appendChild(
+    elt(<span class="tok-string">&quot;footer&quot;</span>, <span class="tok-string">&quot;—&quot;</span>,
+        elt(<span class="tok-string">&quot;strong&quot;</span>, <span class="tok-string">&quot;Karl Popper&quot;</span>),
+        <span class="tok-string">&quot;, preface to the second edition of &quot;</span>,
+        elt(<span class="tok-string">&quot;em&quot;</span>, <span class="tok-string">&quot;The Open Society and Its Enemies&quot;</span>),
+        <span class="tok-string">&quot;, 1950&quot;</span>));
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<h2><a class="h_ident" id="h-vZcxSH0zRq" href="#h-vZcxSH0zRq" tabindex="-1" role="presentation"></a>Atributos</h2>
+
+<p><a class="p_ident" id="p-9ZmjBUjcbd" href="#p-9ZmjBUjcbd" tabindex="-1" role="presentation"></a>Alguns atributos de elemento, como <code>href</code> para links, podem ser acessados através de uma propriedade de mesmo nome no objeto DOM do elemento. Esse é o caso para a maioria dos atributos padrão comumente usados.</p>
+
+<p><a class="p_ident" id="p-7jF8rsejt0" href="#p-7jF8rsejt0" tabindex="-1" role="presentation"></a>HTML permite que você defina qualquer atributo que quiser em nós. Isso pode ser útil porque permite armazenar informações extras em um documento. Para ler ou alterar atributos personalizados, que não estão disponíveis como propriedades regulares de objeto, você deve usar os métodos <code>getAttribute</code> e <code>setAttribute</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-S977zg3XyT" href="#c-S977zg3XyT" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span> data-classified=<span class="tok-string">&quot;secret&quot;</span>&gt;The launch code is 00000000.&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span> data-classified=<span class="tok-string">&quot;unclassified&quot;</span>&gt;I have two feet.&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">paras</span> = document.body.getElementsByTagName(<span class="tok-string">&quot;p&quot;</span>);
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">para</span> <span class="tok-keyword">of</span> Array.from(paras)) {
+    <span class="tok-keyword">if</span> (para.getAttribute(<span class="tok-string">&quot;data-classified&quot;</span>) == <span class="tok-string">&quot;secret&quot;</span>) {
+      para.remove();
+    }
+  }
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-0QN+zYNnNb" href="#p-0QN+zYNnNb" tabindex="-1" role="presentation"></a>É recomendado prefixar os nomes de tais atributos inventados com <code>data-</code> para garantir que não conflitem com nenhum outro atributo.</p>
+
+<p><a class="p_ident" id="p-J5AJIfo9K9" href="#p-J5AJIfo9K9" tabindex="-1" role="presentation"></a>Existe um atributo comumente usado, <code>class</code>, que é uma palavra-chave na linguagem JavaScript. Por razões históricas — algumas implementações antigas de JavaScript não conseguiam lidar com nomes de propriedade que coincidissem com palavras-chave — a propriedade usada para acessar esse atributo é chamada <code>className</code>. Você também pode acessá-lo por seu nome real, <code>&quot;class&quot;</code>, com os métodos <code>getAttribute</code> e <code>setAttribute</code>.</p>
+
+<h2><a class="h_ident" id="h-lyrY2KUDl7" href="#h-lyrY2KUDl7" tabindex="-1" role="presentation"></a>Layout</h2>
+
+<p><a class="p_ident" id="p-xaqiFHAzrD" href="#p-xaqiFHAzrD" tabindex="-1" role="presentation"></a>Você pode ter notado que diferentes tipos de elementos são dispostos de maneira diferente. Alguns, como parágrafos (<code>&lt;p&gt;</code>) ou cabeçalhos (<code>&lt;h1&gt;</code>), ocupam toda a largura do documento e são renderizados em linhas separadas. Estes são chamados de elementos de <em>bloco</em>. Outros, como links (<code>&lt;a&gt;</code>) ou o elemento <code>&lt;strong&gt;</code>, são renderizados na mesma linha que o texto ao redor. Tais elementos são chamados de elementos <em>inline</em>.</p>
+
+<p><a class="p_ident" id="p-qthGUUG/aR" href="#p-qthGUUG/aR" tabindex="-1" role="presentation"></a>Para qualquer documento, navegadores são capazes de calcular um layout, que dá a cada elemento um tamanho e posição baseados em seu tipo e conteúdo. Esse layout é então usado para realmente desenhar o documento.</p>
+
+<p><a class="p_ident" id="p-pHpuYkz/IN" href="#p-pHpuYkz/IN" tabindex="-1" role="presentation"></a>O tamanho e posição de um elemento podem ser acessados a partir do JavaScript. As propriedades <code>offsetWidth</code> e <code>offsetHeight</code> fornecem o espaço que o elemento ocupa em <em>pixels</em>. Um pixel é a unidade básica de medida no navegador. Tradicionalmente corresponde ao menor ponto que a tela pode desenhar, mas em displays modernos, que podem desenhar pontos <em>muito</em> pequenos, isso pode não ser mais o caso, e um pixel do navegador pode abranger múltiplos pontos do display.</p>
+
+<p><a class="p_ident" id="p-E2uZ/biMzK" href="#p-E2uZ/biMzK" tabindex="-1" role="presentation"></a>Da mesma forma, <code>clientWidth</code> e <code>clientHeight</code> fornecem o tamanho do espaço <em>dentro</em> do elemento, ignorando a largura da borda.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-/s46j4ur3o" href="#c-/s46j4ur3o" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span> style=<span class="tok-string">&quot;</span>border: <span class="tok-number">3</span><span class="tok-keyword">px</span> <span class="tok-atom">solid</span> <span class="tok-atom">red</span><span class="tok-string">&quot;</span>&gt;
+  I'm boxed in
+&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">para</span> = document.body.getElementsByTagName(<span class="tok-string">&quot;p&quot;</span>)[<span class="tok-number">0</span>];
+  console.log(<span class="tok-string">&quot;clientHeight:&quot;</span>, para.clientHeight);
+  <span class="tok-comment">// → 19</span>
+  console.log(<span class="tok-string">&quot;offsetHeight:&quot;</span>, para.offsetHeight);
+  <span class="tok-comment">// → 25</span>
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p id="boundingRect"><a class="p_ident" id="p-SnxBu2DBuy" href="#p-SnxBu2DBuy" tabindex="-1" role="presentation"></a>A forma mais eficaz de encontrar a posição precisa de um elemento na tela é o método <code>getBoundingClientRect</code>. Ele retorna um objeto com propriedades <code>top</code>, <code>bottom</code>, <code>left</code> e <code>right</code>, indicando as posições em pixels dos lados do elemento em relação ao canto superior esquerdo da tela. Se você quiser posições em pixels relativas ao documento inteiro, deve adicionar a posição de rolagem atual, que pode ser encontrada nas vinculações <code>pageXOffset</code> e <code>pageYOffset</code>.</p>
+
+<p><a class="p_ident" id="p-xONC1ht1Xh" href="#p-xONC1ht1Xh" tabindex="-1" role="presentation"></a>Calcular o layout de um documento pode ser bastante trabalhoso. No interesse da velocidade, motores de navegador não recalculam imediatamente o layout de um documento toda vez que você o altera, mas esperam o máximo que podem antes de fazê-lo. Quando um programa JavaScript que alterou o documento termina de executar, o navegador terá que calcular um novo layout para desenhar o documento alterado na tela. Quando um programa <em>pede</em> a posição ou tamanho de algo lendo propriedades como <code>offsetHeight</code> ou chamando <code>getBoundingClientRect</code>, fornecer essa informação também requer calcular um layout.</p>
+
+<p><a class="p_ident" id="p-X5eGjKdnMt" href="#p-X5eGjKdnMt" tabindex="-1" role="presentation"></a>Um programa que alterna repetidamente entre ler informações de layout do DOM e alterar o DOM força muitos cálculos de layout e consequentemente rodará muito devagar. O código a seguir é um exemplo disso. Ele contém dois programas diferentes que constroem uma linha de caracteres <em>X</em> com 2.000 pixels de largura e medem o tempo que cada um leva.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-vTBbQzV/Zp" href="#c-vTBbQzV/Zp" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span>&gt;&lt;<span class="tok-typeName">span</span> id=<span class="tok-string">&quot;one&quot;</span>&gt;&lt;/<span class="tok-typeName">span</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;&lt;<span class="tok-typeName">span</span> id=<span class="tok-string">&quot;two&quot;</span>&gt;&lt;/<span class="tok-typeName">span</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">function</span> <span class="tok-definition">time</span>(<span class="tok-definition">name</span>, <span class="tok-definition">action</span>) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">start</span> = Date.now(); <span class="tok-comment">// Tempo atual em milissegundos</span>
+    action();
+    console.log(name, <span class="tok-string">&quot;took&quot;</span>, Date.now() - start, <span class="tok-string">&quot;ms&quot;</span>);
+  }
+
+  time(<span class="tok-string">&quot;naive&quot;</span>, () =&gt; {
+    <span class="tok-keyword">let</span> <span class="tok-definition">target</span> = document.getElementById(<span class="tok-string">&quot;one&quot;</span>);
+    <span class="tok-keyword">while</span> (target.offsetWidth &lt; <span class="tok-number">2000</span>) {
+      target.appendChild(document.createTextNode(<span class="tok-string">&quot;X&quot;</span>));
+    }
+  });
+  <span class="tok-comment">// → naive took 32 ms</span>
+
+  time(<span class="tok-string">&quot;clever&quot;</span>, <span class="tok-keyword">function</span>() {
+    <span class="tok-keyword">let</span> <span class="tok-definition">target</span> = document.getElementById(<span class="tok-string">&quot;two&quot;</span>);
+    target.appendChild(document.createTextNode(<span class="tok-string">&quot;XXXXX&quot;</span>));
+    <span class="tok-keyword">let</span> <span class="tok-definition">total</span> = Math.ceil(<span class="tok-number">2000</span> / (target.offsetWidth / <span class="tok-number">5</span>));
+    target.firstChild.nodeValue = <span class="tok-string">&quot;X&quot;</span>.repeat(total);
+  });
+  <span class="tok-comment">// → clever took 1 ms</span>
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<h2><a class="h_ident" id="h-cv0naTq5te" href="#h-cv0naTq5te" tabindex="-1" role="presentation"></a>Estilos</h2>
+
+<p><a class="p_ident" id="p-TbQWCEN2O5" href="#p-TbQWCEN2O5" tabindex="-1" role="presentation"></a>Vimos que diferentes elementos HTML são desenhados de formas diferentes. Alguns são exibidos como blocos, outros inline. Alguns adicionam estilo — <code>&lt;strong&gt;</code> torna seu conteúdo negrito, e <code>&lt;a&gt;</code> o torna azul e sublinhado.</p>
+
+<p><a class="p_ident" id="p-Nizj5uO/dl" href="#p-Nizj5uO/dl" tabindex="-1" role="presentation"></a>A forma como uma tag <code>&lt;img&gt;</code> mostra uma imagem ou uma tag <code>&lt;a&gt;</code> faz um link ser seguido quando clicado está fortemente ligada ao tipo do elemento. Mas podemos alterar o estilo associado a um elemento, como a cor do texto ou o sublinhado. Aqui está um exemplo que usa a propriedade <code>style</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-Qie8s1kOFZ" href="#c-Qie8s1kOFZ" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span>&gt;&lt;<span class="tok-typeName">a</span> href=<span class="tok-string">&quot;.&quot;</span>&gt;Normal link&lt;/<span class="tok-typeName">a</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;&lt;<span class="tok-typeName">a</span> href=<span class="tok-string">&quot;.&quot;</span> style=<span class="tok-string">&quot;</span>color: <span class="tok-atom">green</span><span class="tok-string">&quot;</span>&gt;Green link&lt;/<span class="tok-typeName">a</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-nG7vszAWyo" href="#p-nG7vszAWyo" tabindex="-1" role="presentation"></a>Um atributo de estilo pode conter uma ou mais <em>declaraçãoões</em>, que são uma propriedade (como <code>color</code>) seguida por dois-pontos e um valor (como <code>green</code>). Quando há mais de uma declaração, elas devem ser separadas por ponto e vírgulas, como em <code>&quot;color: red; border: none&quot;</code>.</p>
+
+<p><a class="p_ident" id="p-gmVG2QV2gA" href="#p-gmVG2QV2gA" tabindex="-1" role="presentation"></a>Muitos aspectos do documento podem ser influenciados pela estilização. Por exemplo, a propriedade <code>display</code> controla se um elemento é exibido como bloco ou como elemento inline.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-NN8SrlwTXB" href="#c-NN8SrlwTXB" tabindex="-1" role="presentation"></a>This text is displayed &lt;<span class="tok-typeName">strong</span>&gt;inline&lt;/<span class="tok-typeName">strong</span>&gt;,
+&lt;<span class="tok-typeName">strong</span> style=<span class="tok-string">&quot;</span>display: <span class="tok-atom">block</span><span class="tok-string">&quot;</span>&gt;as a block&lt;/<span class="tok-typeName">strong</span>&gt;, and
+&lt;<span class="tok-typeName">strong</span> style=<span class="tok-string">&quot;</span>display: <span class="tok-atom">none</span><span class="tok-string">&quot;</span>&gt;not at all&lt;/<span class="tok-typeName">strong</span>&gt;.</pre>
+
+<p><a class="p_ident" id="p-MSBxHncHP6" href="#p-MSBxHncHP6" tabindex="-1" role="presentation"></a>A tag <code>block</code> ficará em sua própria linha, já que elementos de bloco não são exibidos inline com o texto ao redor. A última tag não é exibida de forma alguma — <code>display: none</code> impede que um elemento apareça na tela. Esta é uma forma de esconder elementos. Frequentemente é preferível a removê-los do documento inteiramente, porque torna fácil revelá-los novamente mais tarde.</p>
+
+<p><a class="p_ident" id="p-UAj1KJyTmk" href="#p-UAj1KJyTmk" tabindex="-1" role="presentation"></a>Código JavaScript pode manipular diretamente o estilo de um elemento através da propriedade <code>style</code> do elemento. Essa propriedade contém um objeto que tem propriedades para todas as propriedades de estilo possíveis. Os valores dessas propriedades são strings, nas quais podemos escrever para alterar um aspecto particular do estilo do elemento.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-WtWpdICuOL" href="#c-WtWpdICuOL" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span> id=<span class="tok-string">&quot;para&quot;</span> style=<span class="tok-string">&quot;</span>color: <span class="tok-atom">purple</span><span class="tok-string">&quot;</span>&gt;
+  Nice text
+&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">para</span> = document.getElementById(<span class="tok-string">&quot;para&quot;</span>);
+  console.log(para.style.color);
+  para.style.color = <span class="tok-string">&quot;magenta&quot;</span>;
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-A1hTI3lNHy" href="#p-A1hTI3lNHy" tabindex="-1" role="presentation"></a>Alguns nomes de propriedades de estilo contêm hífens, como <code>font-family</code>. Como tais nomes de propriedade são estranhos de trabalhar em JavaScript (você teria que escrever <code>style[&quot;font-family&quot;]</code>), os nomes das propriedades no objeto <code>style</code> para tais propriedades têm seus hífens removidos e as letras após eles capitalizadas (<code>style.fontFamily</code>).</p>
+
+<h2><a class="h_ident" id="h-YusqpanN8e" href="#h-YusqpanN8e" tabindex="-1" role="presentation"></a>Estilos em cascata</h2>
+
+<p><a class="p_ident" id="p-4fIzW+82Vb" href="#p-4fIzW+82Vb" tabindex="-1" role="presentation"></a>O sistema de estilos para HTML é chamado de <em>CSS</em>, de <em>Cascading Style Sheets</em> (Folhas de Estilo em Cascata). Uma <em>folha de estilo</em> é um conjunto de regras sobre como estilizar elementos em um documento. Ela pode ser escrita dentro de uma tag <code>&lt;style&gt;</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-WnNZqmUMzQ" href="#c-WnNZqmUMzQ" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">style</span>&gt;
+  <span class="tok-typeName">strong</span> {
+    font-style: <span class="tok-atom">italic</span>;
+    color: <span class="tok-atom">gray</span>;
+  }
+&lt;/<span class="tok-typeName">style</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;Now &lt;<span class="tok-typeName">strong</span>&gt;strong text&lt;/<span class="tok-typeName">strong</span>&gt; is italic and gray.&lt;/<span class="tok-typeName">p</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-WVHrfE7lRt" href="#p-WVHrfE7lRt" tabindex="-1" role="presentation"></a>O <em>cascata</em> no nome se refere ao fato de que múltiplas regras são combinadas para produzir o estilo final de um elemento. No exemplo, o estilo padrão para tags <code>&lt;strong&gt;</code>, que lhes dá <code>font-weight: bold</code>, é sobreposto pela regra na tag <code>&lt;style&gt;</code>, que adiciona <code>font-style</code> e <code>color</code>.</p>
+
+<p><a class="p_ident" id="p-w4CxlScv4U" href="#p-w4CxlScv4U" tabindex="-1" role="presentation"></a>Quando múltiplas regras definem um valor para a mesma propriedade, a regra lida mais recentemente obtém uma precedência maior e vence. Por exemplo, se a regra na tag <code>&lt;style&gt;</code> incluísse <code>font-weight: normal</code>, contradizendo a regra padrão de <code>font-weight</code>, o texto seria normal, <em>não</em> negrito. Estilos em um atributo <code>style</code> aplicado diretamente ao nó têm a precedência mais alta e sempre vencem.</p>
+
+<p><a class="p_ident" id="p-59QBIkkUoe" href="#p-59QBIkkUoe" tabindex="-1" role="presentation"></a>É possível direcionar coisas além de nomes de tag em regras CSS. Uma regra para <code>.abc</code> se aplica a todos os elementos com <code>&quot;abc&quot;</code> em seu atributo <code>class</code>. Uma regra para <code>#xyz</code> se aplica ao elemento com um atributo <code>id</code> de <code>&quot;xyz&quot;</code> (que deve ser único dentro do documento).</p>
+
+<pre class="snippet" data-language="css" ><a class="c_ident" id="c-1/0N2nH9Td" href="#c-1/0N2nH9Td" tabindex="-1" role="presentation"></a>.subtle {
+  color: <span class="tok-atom">gray</span>;
+  font-size: <span class="tok-number">80</span><span class="tok-keyword">%</span>;
+}
+#header {
+  background: <span class="tok-atom">blue</span>;
+  color: <span class="tok-atom">white</span>;
+}
+<span class="tok-comment">/* elementos p com id main e com classes a e b */</span>
+<span class="tok-typeName">p</span>#main.a.b {
+  margin-bottom: <span class="tok-number">20</span><span class="tok-keyword">px</span>;
+}</pre>
+
+<p><a class="p_ident" id="p-tlV02NIjqS" href="#p-tlV02NIjqS" tabindex="-1" role="presentation"></a>A regra de precedência que favorece a regra definida mais recentemente se aplica apenas quando as regras têm a mesma <em>especificidade</em>. A especificidade de uma regra é uma medida de quão precisamente ela descreve os elementos correspondentes, determinada pelo número e tipo (tag, classe ou ID) de aspectos do elemento que ela requer. Por exemplo, uma regra que direciona <code>p.a</code> é mais específica do que regras que direcionam <code>p</code> ou apenas <code>.a</code> e, portanto, teria precedência sobre elas.</p>
+
+<p><a class="p_ident" id="p-r5HRCrbesM" href="#p-r5HRCrbesM" tabindex="-1" role="presentation"></a>A notação <code>p &gt; a {…}</code> aplica os estilos dados a todas as tags <code>&lt;a&gt;</code> que são filhos diretos de tags <code>&lt;p&gt;</code>. Da mesma forma, <code>p a {…}</code> se aplica a todas as tags <code>&lt;a&gt;</code> dentro de tags <code>&lt;p&gt;</code>, sejam eles filhos diretos ou indiretos.</p>
+
+<h2><a class="h_ident" id="h-KjdFqdfSmz" href="#h-KjdFqdfSmz" tabindex="-1" role="presentation"></a>Seletores de consulta</h2>
+
+<p><a class="p_ident" id="p-2kLtzMTMmC" href="#p-2kLtzMTMmC" tabindex="-1" role="presentation"></a>Não usaremos folhas de estilo muito neste livro. Entendê-las é útil ao programar no navegador, mas são complexas o suficiente para justificar um livro separado. A principal razão pela qual introduzi a sintaxe de <em>seletor</em> — a notação usada em folhas de estilo para determinar a quais elementos um conjunto de estilos se aplica — é que podemos usar essa mesma minilinguagem como uma forma eficaz de encontrar elementos DOM.</p>
+
+<p><a class="p_ident" id="p-fZ5UkUo4K9" href="#p-fZ5UkUo4K9" tabindex="-1" role="presentation"></a>O método <code>querySelectorAll</code>, que é definido tanto no objeto <code>document</code> quanto em nós de elemento, recebe uma string de seletor e retorna um <code>NodeList</code> contendo todos os elementos que ele corresponde.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-xuEHkqG90Q" href="#c-xuEHkqG90Q" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span>&gt;And if you go chasing
+  &lt;<span class="tok-typeName">span</span> class=<span class="tok-string">&quot;animal&quot;</span>&gt;rabbits&lt;/<span class="tok-typeName">span</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;And you know you're going to fall&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;Tell 'em a &lt;<span class="tok-typeName">span</span> class=<span class="tok-string">&quot;character&quot;</span>&gt;hookah smoking
+  &lt;<span class="tok-typeName">span</span> class=<span class="tok-string">&quot;animal&quot;</span>&gt;caterpillar&lt;/<span class="tok-typeName">span</span>&gt;&lt;/<span class="tok-typeName">span</span>&gt;&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;Has given you the call&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">function</span> <span class="tok-definition">count</span>(<span class="tok-definition">selector</span>) {
+    <span class="tok-keyword">return</span> document.querySelectorAll(selector).length;
+  }
+  console.log(count(<span class="tok-string">&quot;p&quot;</span>));           <span class="tok-comment">// Todos os elementos &lt;p&gt;</span>
+  <span class="tok-comment">// → 4</span>
+  console.log(count(<span class="tok-string">&quot;.animal&quot;</span>));     <span class="tok-comment">// Classe animal</span>
+  <span class="tok-comment">// → 2</span>
+  console.log(count(<span class="tok-string">&quot;p .animal&quot;</span>));   <span class="tok-comment">// Animal dentro de &lt;p&gt;</span>
+  <span class="tok-comment">// → 2</span>
+  console.log(count(<span class="tok-string">&quot;p &gt; .animal&quot;</span>)); <span class="tok-comment">// Filho direto de &lt;p&gt;</span>
+  <span class="tok-comment">// → 1</span>
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-aAqxYn9DtH" href="#p-aAqxYn9DtH" tabindex="-1" role="presentation"></a>Ao contrário de métodos como <code>getElementsByTagName</code>, o objeto retornado por <code>querySelectorAll</code> <em>não</em> é ao vivo. Ele não mudará quando você alterar o documento. Ainda não é um array real, porém, então você precisa chamar <code>Array.from</code> se quiser tratá-lo como um.</p>
+
+<p><a class="p_ident" id="p-XuqW9f/cus" href="#p-XuqW9f/cus" tabindex="-1" role="presentation"></a>O método <code>querySelector</code> (sem a parte <code>All</code>) funciona de forma similar. Este é útil se você quer um único elemento específico. Ele retornará apenas o primeiro elemento correspondente, ou <code>null</code> quando nenhum elemento corresponder.</p>
+
+<h2 id="animation"><a class="h_ident" id="h-zSTKb6B8Nb" href="#h-zSTKb6B8Nb" tabindex="-1" role="presentation"></a>Posicionamento e animação</h2>
+
+<p><a class="p_ident" id="p-pmGiY1+ZxH" href="#p-pmGiY1+ZxH" tabindex="-1" role="presentation"></a>A propriedade de estilo <code>position</code> influencia o layout de forma poderosa. Ela tem um valor padrão de <code>static</code>, significando que o elemento fica em seu lugar normal no documento. Quando é definida como <code>relative</code>, o elemento ainda ocupa espaço no documento, mas agora as propriedades de estilo <code>top</code> e <code>left</code> podem ser usadas para movê-lo em relação àquele lugar normal. Quando <code>position</code> é definida como <code>absolute</code>, o elemento é removido do fluxo normal do documento — ou seja, ele não ocupa mais espaço e pode se sobrepor a outros elementos. Suas propriedades <code>top</code> e <code>left</code> podem ser usadas para posicioná-lo absolutamente em relação ao canto superior esquerdo do elemento envolvente mais próximo cuja propriedade <code>position</code> não seja <code>static</code>, ou em relação ao documento se nenhum elemento envolvente assim existir.</p>
+
+<p><a class="p_ident" id="p-+QvqJTGMuw" href="#p-+QvqJTGMuw" tabindex="-1" role="presentation"></a>Podemos usar isso para criar uma animação. O documento a seguir exibe uma imagem de um gato que se move em uma elipse:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-SCZYa8azNm" href="#c-SCZYa8azNm" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">p</span> style=<span class="tok-string">&quot;</span>text-align: <span class="tok-atom">center</span><span class="tok-string">&quot;</span>&gt;
+  &lt;<span class="tok-typeName">img</span> src=<span class="tok-string">&quot;img/cat.png&quot;</span> style=<span class="tok-string">&quot;</span>position: <span class="tok-atom">relative</span><span class="tok-string">&quot;</span>&gt;
+&lt;/<span class="tok-typeName">p</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">cat</span> = document.querySelector(<span class="tok-string">&quot;img&quot;</span>);
+  <span class="tok-keyword">let</span> <span class="tok-definition">angle</span> = Math.PI / <span class="tok-number">2</span>;
+  <span class="tok-keyword">function</span> <span class="tok-definition">animate</span>(<span class="tok-definition">time</span>, <span class="tok-definition">lastTime</span>) {
+    <span class="tok-keyword">if</span> (lastTime != <span class="tok-keyword">null</span>) {
+      angle += (time - lastTime) * <span class="tok-number">0.001</span>;
+    }
+    cat.style.top = (Math.sin(angle) * <span class="tok-number">20</span>) + <span class="tok-string">&quot;px&quot;</span>;
+    cat.style.left = (Math.cos(angle) * <span class="tok-number">200</span>) + <span class="tok-string">&quot;px&quot;</span>;
+    requestAnimationFrame(<span class="tok-definition">newTime</span> =&gt; animate(newTime, time));
+  }
+  requestAnimationFrame(animate);
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-kHnjaOLCx/" href="#p-kHnjaOLCx/" tabindex="-1" role="presentation"></a>Nossa imagem está centralizada na página e tem <code>position</code> definida como <code>relative</code>. Atualizaremos repetidamente os estilos <code>top</code> e <code>left</code> dessa imagem para movê-la.</p>
+
+<p id="animationFrame"><a class="p_ident" id="p-/tmN5fDqkU" href="#p-/tmN5fDqkU" tabindex="-1" role="presentation"></a>O script usa <code>requestAnimationFrame</code> para agendar a função <code>animate</code> para rodar sempre que o navegador estiver pronto para repintar a tela. A própria função <code>animate</code> chama <code>requestAnimationFrame</code> novamente para agendar a próxima atualização. Quando a janela (ou aba) do navegador está ativa, isso causará atualizações a uma taxa de cerca de 60 por segundo, o que tende a produzir uma animação de boa aparência.</p>
+
+<p><a class="p_ident" id="p-xVUl2hLU0V" href="#p-xVUl2hLU0V" tabindex="-1" role="presentation"></a>Se apenas atualizássemos o DOM em um loop, a página congelaria e nada apareceria na tela. Navegadores não atualizam seu display enquanto um programa JavaScript está rodando, nem permitem qualquer interação com a página. É por isso que precisamos de <code>requestAnimationFrame</code> — ele informa ao navegador que terminamos por agora, e ele pode prosseguir e fazer as coisas que navegadores fazem, como atualizar a tela e responder a ações do usuário.</p>
+
+<p><a class="p_ident" id="p-5fctJZvf7e" href="#p-5fctJZvf7e" tabindex="-1" role="presentation"></a>A função de animação recebe o tempo atual como argumento. Para garantir que o movimento do gato por milissegundo seja estável, ela baseia a velocidade na qual o ângulo muda na diferença entre o tempo atual e a última vez que a função foi executada. Se simplesmente movesse o ângulo por uma quantidade fixa por passo, o movimento engasgaria quando, por exemplo, outra tarefa pesada rodando no mesmo computador impedisse a função de rodar por uma fração de segundo.</p>
+
+<p id="sin_cos"><a class="p_ident" id="p-glAaL/duDt" href="#p-glAaL/duDt" tabindex="-1" role="presentation"></a>Mover-se em círculos é feito usando as funções trigonométricas <code>Math.cos</code> e <code>Math.sin</code>. Para aqueles que não estão familiarizados com estas, vou apresentá-las brevemente, já que as usaremos ocasionalmente neste livro.</p>
+
+<p><a class="p_ident" id="p-IevV58tHL9" href="#p-IevV58tHL9" tabindex="-1" role="presentation"></a><code>Math.cos</code> e <code>Math.sin</code> são úteis para encontrar pontos que ficam em um círculo ao redor do ponto (0, 0) com raio 1. Ambas as funções interpretam seu argumento como a posição neste círculo, com 0 denotando o ponto no extremo direito do círculo, indo no sentido horário até que 2π (cerca de 6,28) tenha nos levado ao redor de todo o círculo. <code>Math.cos</code> diz a coordenada x do ponto que corresponde à posição dada, e <code>Math.sin</code> produz a coordenada y. Posições (ou ângulos) maiores que 2π ou menores que 0 são válidas — a rotação se repete, de modo que <em>a</em>+2π se refere ao mesmo ângulo que <em>a</em>.</p>
+
+<p><a class="p_ident" id="p-V3B7wQ1Td5" href="#p-V3B7wQ1Td5" tabindex="-1" role="presentation"></a>Essa unidade para medir ângulos é chamada de radianos — um círculo completo é 2π radianos, similar a como são 360 graus quando medimos em graus. A constante π está disponível como <code>Math.PI</code> em JavaScript.</p><figure><img src="img/cos_sin.svg" alt="Diagram showing the use of cosine and sine to compute coordinates. A circle with radius 1 is shown with two points on it. The angle from the right side of the circle to the point, in radians, is used to compute the position of each point by using 'cos(angle)' for the horizontal distance from the center of the circle and sin(angle) for the vertical distance."></figure>
+
+<p><a class="p_ident" id="p-qQJd+WwccR" href="#p-qQJd+WwccR" tabindex="-1" role="presentation"></a>O código de animação do gato mantém um contador, <code>angle</code>, para o ângulo atual da animação e o incrementa toda vez que a função <code>animate</code> é chamada. Ele pode então usar esse ângulo para calcular a posição atual do elemento de imagem. O estilo <code>top</code> é calculado com <code>Math.sin</code> e multiplicado por 20, que é o raio vertical da nossa elipse. O estilo <code>left</code> é baseado em <code>Math.cos</code> e multiplicado por 200, de modo que a elipse é muito mais larga do que alta.</p>
+
+<p><a class="p_ident" id="p-MsEmtQ7pEz" href="#p-MsEmtQ7pEz" tabindex="-1" role="presentation"></a>Note que estilos geralmente precisam de <em>unidades</em>. Neste caso, temos que acrescentar <code>&quot;px&quot;</code> ao número para dizer ao navegador que estamos contando em pixels (em oposição a centímetros, “ems” ou outras unidades). Isso é fácil de esquecer. Usar números sem unidades fará com que seu estilo seja ignorado — a menos que o número seja 0, que sempre significa a mesma coisa, independentemente da unidade.</p>
+
+<h2><a class="h_ident" id="h-741R75mvqx" href="#h-741R75mvqx" tabindex="-1" role="presentation"></a>Resumo</h2>
+
+<p><a class="p_ident" id="p-Q1WpH47INY" href="#p-Q1WpH47INY" tabindex="-1" role="presentation"></a>Programas JavaScript podem inspecionar e interferir no documento que o navegador está exibindo através de uma estrutura de dados chamada DOM. Essa estrutura de dados representa o modelo do documento pelo navegador, e um programa JavaScript pode modificá-la para alterar o documento visível.</p>
+
+<p><a class="p_ident" id="p-bIX5B/w7Zu" href="#p-bIX5B/w7Zu" tabindex="-1" role="presentation"></a>O DOM é organizado como uma árvore, onde elementos são arranjados hierarquicamente de acordo com a estrutura do documento. Os objetos representando elementos têm propriedades como <code>parentNode</code> e <code>childNodes</code>, que podem ser usadas para navegar por essa árvore.</p>
+
+<p><a class="p_ident" id="p-bzv0AgEGMJ" href="#p-bzv0AgEGMJ" tabindex="-1" role="presentation"></a>A forma como um documento é exibido pode ser influenciada por <em>estilos</em>, tanto anexando estilos diretamente a nós quanto definindo regras que correspondam a certos nós. Há muitas propriedades de estilo diferentes, como <code>color</code> ou <code>display</code>. Código JavaScript pode manipular o estilo de um elemento diretamente através de sua propriedade <code>style</code>.</p>
+
+<h2><a class="h_ident" id="h-0CpJUZuhQJ" href="#h-0CpJUZuhQJ" tabindex="-1" role="presentation"></a>Exercícios</h2>
+
+<h3 id="exercise_table"><a class="i_ident" id="i-mMLwdWM60p" href="#i-mMLwdWM60p" tabindex="-1" role="presentation"></a>Construa uma tabela</h3>
+
+<p><a class="p_ident" id="p-yEYEHeBa7T" href="#p-yEYEHeBa7T" tabindex="-1" role="presentation"></a>Uma tabela HTML é construída com a seguinte estrutura de tags:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-MudCG4cYiG" href="#c-MudCG4cYiG" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">table</span>&gt;
+  &lt;<span class="tok-typeName">tr</span>&gt;
+    &lt;<span class="tok-typeName">th</span>&gt;name&lt;/<span class="tok-typeName">th</span>&gt;
+    &lt;<span class="tok-typeName">th</span>&gt;height&lt;/<span class="tok-typeName">th</span>&gt;
+    &lt;<span class="tok-typeName">th</span>&gt;place&lt;/<span class="tok-typeName">th</span>&gt;
+  &lt;/<span class="tok-typeName">tr</span>&gt;
+  &lt;<span class="tok-typeName">tr</span>&gt;
+    &lt;<span class="tok-typeName">td</span>&gt;Kilimanjaro&lt;/<span class="tok-typeName">td</span>&gt;
+    &lt;<span class="tok-typeName">td</span>&gt;5895&lt;/<span class="tok-typeName">td</span>&gt;
+    &lt;<span class="tok-typeName">td</span>&gt;Tanzania&lt;/<span class="tok-typeName">td</span>&gt;
+  &lt;/<span class="tok-typeName">tr</span>&gt;
+&lt;/<span class="tok-typeName">table</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-3JG5X0leVO" href="#p-3JG5X0leVO" tabindex="-1" role="presentation"></a>Para cada <em>linha</em>, a tag <code>&lt;table&gt;</code> contém uma tag <code>&lt;tr&gt;</code>. Dentro dessas tags <code>&lt;tr&gt;</code>, podemos colocar elementos de célula: tanto células de cabeçalho (<code>&lt;th&gt;</code>) quanto células regulares (<code>&lt;td&gt;</code>).</p>
+
+<p><a class="p_ident" id="p-Y1mA+r6gUG" href="#p-Y1mA+r6gUG" tabindex="-1" role="presentation"></a>Dado um conjunto de dados de montanhas, um array de objetos com propriedades <code>name</code>, <code>height</code> e <code>place</code>, gere a estrutura DOM para uma tabela que enumere os objetos. Ela deve ter uma coluna por chave e uma linha por objeto, mais uma linha de cabeçalho com elementos <code>&lt;th&gt;</code> no topo, listando os nomes das colunas.</p>
+
+<p><a class="p_ident" id="p-O6FFjYfNNb" href="#p-O6FFjYfNNb" tabindex="-1" role="presentation"></a>Escreva isso de forma que as colunas sejam automaticamente derivadas dos objetos, pegando os nomes das propriedades do primeiro objeto nos dados.</p>
+
+<p><a class="p_ident" id="p-cwtOtWE2xG" href="#p-cwtOtWE2xG" tabindex="-1" role="presentation"></a>Mostre a tabela resultante no documento adicionando-a ao elemento que tem um atributo <code>id</code> de <code>&quot;mountains&quot;</code>.</p>
+
+<p><a class="p_ident" id="p-orj8Hgnz+J" href="#p-orj8Hgnz+J" tabindex="-1" role="presentation"></a>Quando tiver isso funcionando, alinhe à direita as células que contêm valores numéricos definindo sua propriedade <code>style.textAlign</code> como <code>&quot;right&quot;</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-cZM2gLkRNj" href="#c-cZM2gLkRNj" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">h1</span>&gt;Mountains&lt;/<span class="tok-typeName">h1</span>&gt;
+
+&lt;<span class="tok-typeName">div</span> id=<span class="tok-string">&quot;mountains&quot;</span>&gt;&lt;/<span class="tok-typeName">div</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">const</span> <span class="tok-definition">MOUNTAINS</span> = [
+    {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Kilimanjaro&quot;</span>, <span class="tok-definition">height</span>: <span class="tok-number">5895</span>, <span class="tok-definition">place</span>: <span class="tok-string">&quot;Tanzania&quot;</span>},
+    {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Everest&quot;</span>, <span class="tok-definition">height</span>: <span class="tok-number">8848</span>, <span class="tok-definition">place</span>: <span class="tok-string">&quot;Nepal&quot;</span>},
+    {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Mount Fuji&quot;</span>, <span class="tok-definition">height</span>: <span class="tok-number">3776</span>, <span class="tok-definition">place</span>: <span class="tok-string">&quot;Japan&quot;</span>},
+    {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Vaalserberg&quot;</span>, <span class="tok-definition">height</span>: <span class="tok-number">323</span>, <span class="tok-definition">place</span>: <span class="tok-string">&quot;Netherlands&quot;</span>},
+    {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Denali&quot;</span>, <span class="tok-definition">height</span>: <span class="tok-number">6168</span>, <span class="tok-definition">place</span>: <span class="tok-string">&quot;United States&quot;</span>},
+    {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Popocatepetl&quot;</span>, <span class="tok-definition">height</span>: <span class="tok-number">5465</span>, <span class="tok-definition">place</span>: <span class="tok-string">&quot;Mexico&quot;</span>},
+    {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Mont Blanc&quot;</span>, <span class="tok-definition">height</span>: <span class="tok-number">4808</span>, <span class="tok-definition">place</span>: <span class="tok-string">&quot;Italy/France&quot;</span>}
+  ];
+
+  <span class="tok-comment">// Seu código aqui</span>
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-kkuVxP9DAk" href="#p-kkuVxP9DAk" tabindex="-1" role="presentation"></a>Você pode usar <code>document.<wbr>createElement</code> para criar novos nós de elemento, <code>document.<wbr>createTextNode</code> para criar nós de texto, e o método <code>appendChild</code> para colocar nós dentro de outros nós.</p>
+
+<p><a class="p_ident" id="p-qkO+TqSt8W" href="#p-qkO+TqSt8W" tabindex="-1" role="presentation"></a>Você vai querer fazer um loop pelos nomes das chaves uma vez para preencher a linha do topo e depois novamente para cada objeto no array para construir as linhas de dados. Para obter um array de nomes de chaves do primeiro objeto, <code>Object.keys</code> será útil.</p>
+
+<p><a class="p_ident" id="p-W0irJBkDaM" href="#p-W0irJBkDaM" tabindex="-1" role="presentation"></a>Para adicionar a tabela ao nó pai correto, você pode usar <code>document.<wbr>getElementById</code> ou <code>document.<wbr>querySelector</code> com <code>&quot;#mountains&quot;</code> para encontrar o nó.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-eBlBL38l06" href="#i-eBlBL38l06" tabindex="-1" role="presentation"></a>Elementos por nome de tag</h3>
+
+<p><a class="p_ident" id="p-mdde9jO+R2" href="#p-mdde9jO+R2" tabindex="-1" role="presentation"></a>O método <code>document.<wbr>getElementsByTagName</code> retorna todos os elementos filhos com um dado nome de tag. Implemente sua própria versão disso como uma função que recebe um nó e uma string (o nome da tag) como argumentos e retorna um array contendo todos os nós de elemento descendentes com o dado nome de tag. Sua função deve percorrer o documento por si mesma. Ela não pode usar um método como <code>querySelectorAll</code> para fazer o trabalho.</p>
+
+<p><a class="p_ident" id="p-mTQhTlNRE4" href="#p-mTQhTlNRE4" tabindex="-1" role="presentation"></a>Para encontrar o nome da tag de um elemento, use sua propriedade <code>nodeName</code>. Mas note que isso retornará o nome da tag todo em maiúsculas. Use os métodos de string <code>toLowerCase</code> ou <code>toUpperCase</code> para compensar isso.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-PiZnHJCVUL" href="#c-PiZnHJCVUL" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">h1</span>&gt;Heading with a &lt;<span class="tok-typeName">span</span>&gt;span&lt;/<span class="tok-typeName">span</span>&gt; element.&lt;/<span class="tok-typeName">h1</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;A paragraph with &lt;<span class="tok-typeName">span</span>&gt;one&lt;/<span class="tok-typeName">span</span>&gt;, &lt;<span class="tok-typeName">span</span>&gt;two&lt;/<span class="tok-typeName">span</span>&gt;
+  spans.&lt;/<span class="tok-typeName">p</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">function</span> <span class="tok-definition">byTagName</span>(<span class="tok-definition">node</span>, <span class="tok-definition">tagName</span>) {
+    <span class="tok-comment">// Seu código aqui.</span>
+  }
+
+  console.log(byTagName(document.body, <span class="tok-string">&quot;h1&quot;</span>).length);
+  <span class="tok-comment">// → 1</span>
+  console.log(byTagName(document.body, <span class="tok-string">&quot;span&quot;</span>).length);
+  <span class="tok-comment">// → 3</span>
+  <span class="tok-keyword">let</span> <span class="tok-definition">para</span> = document.querySelector(<span class="tok-string">&quot;p&quot;</span>);
+  console.log(byTagName(para, <span class="tok-string">&quot;span&quot;</span>).length);
+  <span class="tok-comment">// → 2</span>
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-fEKukG3lES" href="#p-fEKukG3lES" tabindex="-1" role="presentation"></a>A solução é mais facilmente expressa com uma função recursiva, similar à <a href="14_dom.html#talksAbout">função <code>talksAbout</code></a> definida anteriormente neste capítulo.</p>
+
+<p><a class="p_ident" id="p-Hb6hFixYtF" href="#p-Hb6hFixYtF" tabindex="-1" role="presentation"></a>Você poderia chamar <code>byTagname</code> recursivamente, concatenando os arrays resultantes para produzir a saída. Ou poderia criar uma função interna que se chama recursivamente e que tem acesso a uma vinculação de array definida na função externa, à qual ela pode adicionar os elementos correspondentes que encontra. Não esqueça de chamar a função interna uma vez a partir da função externa para iniciar o processo.</p>
+
+<p><a class="p_ident" id="p-Ki+GpK7ccz" href="#p-Ki+GpK7ccz" tabindex="-1" role="presentation"></a>A função recursiva deve verificar o tipo do nó. Aqui estamos interessados apenas no tipo de nó 1 (<code>Node.<wbr>ELEMENT_NODE</code>). Para tais nós, devemos fazer um loop pelos seus filhos e, para cada filho, verificar se o filho corresponde à consulta enquanto também fazemos uma chamada recursiva nele para inspecionar seus próprios filhos.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-LGNmKQaRMH" href="#i-LGNmKQaRMH" tabindex="-1" role="presentation"></a>O chapéu do gato</h3>
+
+<p><a class="p_ident" id="p-WI2+v2ZJXy" href="#p-WI2+v2ZJXy" tabindex="-1" role="presentation"></a>Estenda a animação do gato definida <a href="14_dom.html#animation">anteriormente</a> para que tanto o gato quanto seu chapéu (<code>&lt;img src=&quot;img/<wbr>hat.<wbr>png&quot;&gt;</code>) orbitem em lados opostos da elipse.</p>
+
+<p><a class="p_ident" id="p-YZwIHJKlqo" href="#p-YZwIHJKlqo" tabindex="-1" role="presentation"></a>Ou faça o chapéu circular ao redor do gato. Ou altere a animação de alguma outra forma interessante.</p>
+
+<p><a class="p_ident" id="p-KNQVqJDF++" href="#p-KNQVqJDF++" tabindex="-1" role="presentation"></a>Para facilitar o posicionamento de múltiplos objetos, você provavelmente vai querer mudar para posicionamento absoluto. Isso significa que <code>top</code> e <code>left</code> são contados em relação ao canto superior esquerdo do documento. Para evitar usar coordenadas negativas, que fariam a imagem se mover para fora da página visível, você pode adicionar um número fixo de pixels aos valores de posição.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-A0PvsRzqVn" href="#c-A0PvsRzqVn" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">style</span>&gt;<span class="tok-typeName">body</span> { min-height: <span class="tok-number">200</span><span class="tok-keyword">px</span> }&lt;/<span class="tok-typeName">style</span>&gt;
+&lt;<span class="tok-typeName">img</span> src=<span class="tok-string">&quot;img/cat.png&quot;</span> id=<span class="tok-string">&quot;cat&quot;</span> style=<span class="tok-string">&quot;</span>position: <span class="tok-atom">absolute</span><span class="tok-string">&quot;</span>&gt;
+&lt;<span class="tok-typeName">img</span> src=<span class="tok-string">&quot;img/hat.png&quot;</span> id=<span class="tok-string">&quot;hat&quot;</span> style=<span class="tok-string">&quot;</span>position: <span class="tok-atom">absolute</span><span class="tok-string">&quot;</span>&gt;
+
+&lt;<span class="tok-typeName">script</span>&gt;
+  <span class="tok-keyword">let</span> <span class="tok-definition">cat</span> = document.querySelector(<span class="tok-string">&quot;#cat&quot;</span>);
+  <span class="tok-keyword">let</span> <span class="tok-definition">hat</span> = document.querySelector(<span class="tok-string">&quot;#hat&quot;</span>);
+
+  <span class="tok-keyword">let</span> <span class="tok-definition">angle</span> = <span class="tok-number">0</span>;
+  <span class="tok-keyword">let</span> <span class="tok-definition">lastTime</span> = <span class="tok-keyword">null</span>;
+  <span class="tok-keyword">function</span> <span class="tok-definition">animate</span>(<span class="tok-definition">time</span>) {
+    <span class="tok-keyword">if</span> (lastTime != <span class="tok-keyword">null</span>) angle += (time - lastTime) * <span class="tok-number">0.001</span>;
+    lastTime = time;
+    cat.style.top = (Math.sin(angle) * <span class="tok-number">40</span> + <span class="tok-number">40</span>) + <span class="tok-string">&quot;px&quot;</span>;
+    cat.style.left = (Math.cos(angle) * <span class="tok-number">200</span> + <span class="tok-number">230</span>) + <span class="tok-string">&quot;px&quot;</span>;
+
+    <span class="tok-comment">// Suas extensões aqui.</span>
+
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-BLmMUcFdUi" href="#p-BLmMUcFdUi" tabindex="-1" role="presentation"></a><code>Math.cos</code> e <code>Math.sin</code> medem ângulos em radianos, onde um círculo completo é 2π. Para um dado ângulo, você pode obter o ângulo oposto adicionando metade disso, que é <code>Math.PI</code>. Isso pode ser útil para colocar o chapéu no lado oposto da órbita.</p>
+
+</div></details><nav><a href="13_browser.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="15_event.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

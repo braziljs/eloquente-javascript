@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="238.243" height="104.359">
+   <defs>
+      <marker id="a" orient="auto" overflow="visible" refX="0" refY="0">
+         <path fill-rule="evenodd" stroke="#000" stroke-width=".2pt" d="m-1.2 0-1 1 3.5-1-3.5-1 1 1z" />
+      </marker>
+   </defs>
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="m226.695 431.707 27.78 1.01"
+      transform="translate(-222.695 -394.464)" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)"
+      d="M274.764 441.217c2.143 43.572 36.6 44.466 47.393 47.428" transform="translate(-222.695 -394.464)" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="m411.187 433.728 35.356 1.01"
+      transform="translate(-222.695 -394.464)" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="M278.693 425.193s60.886-56.966 122.75-4.57"
+      transform="translate(-222.695 -394.464)" />
+   <path fill="red"
+      d="M51.26 44.359a6.06 6.06 0 1 1 0-12.122 6.06 6.06 0 1 1 0 12.122zM119.832 104.359a6.06 6.06 0 1 1 0-12.122 6.06 6.06 0 1 1 0 12.122z" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="M341.55 484.432s.963-38.822 55.964-46.858"
+      transform="translate(-222.695 -394.464)" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)"
+      d="M350.836 490.146c24.928-3.905 44.715-30.846 52.036-41.143" transform="translate(-222.695 -394.464)" />
+</svg>

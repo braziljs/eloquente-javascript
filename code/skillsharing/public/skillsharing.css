@@ -1,0 +1,11 @@
+.talk { margin: 40px 0; }
+
+.comment { font-style: italic; margin: 0; }
+.comment strong { font-style: normal; }
+
+.talk h2 { font-size: 130%; margin-bottom: 0; }
+.talk h2 button { vertical-align: bottom; }
+
+h1, h3 { margin-bottom: 0.33em; }
+
+label input { display: block; width: 30em; }

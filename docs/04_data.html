@@ -1,0 +1,809 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estruturas de Dados: Objetos e Arrays :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":4,"load_files":["code/journal.js","code/chapter/04_data.js"]}</script></head>
+
+<article>
+<nav><a href="03_functions.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="05_higher_order.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>Estruturas de Dados: Objetos e Arrays</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-3DGxnMhaad" href="#p-3DGxnMhaad" tabindex="-1" role="presentation"></a>On two occasions I have been asked, ‘Pray, Mr. Babbage, if you put into the machine wrong figures, will the right answers come out?’ [...] I am not able rightly to apprehend the kind of confusion of ideas that could provoke such a question.</p>
+
+<footer>Charles Babbage, <cite>Passages from the Life of a Philosopher (1864)</cite></footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_4.jpg" alt="Illustration of a squirrel next to a pile of books and a pair of glasses. A moon and stars are visible in the background."></figure>
+
+<p><a class="p_ident" id="p-cJkvp5QY0b" href="#p-cJkvp5QY0b" tabindex="-1" role="presentation"></a>Números, booleanos e strings são os átomos a partir dos quais estruturas de dados são construídas. Muitos tipos de informação requerem mais de um átomo, porém. <em>Objetos</em> nos permitem agrupar valores — incluindo outros objetos — para construir estruturas mais complexas.</p>
+
+<p><a class="p_ident" id="p-/rUvgwHeLu" href="#p-/rUvgwHeLu" tabindex="-1" role="presentation"></a>Os programas que construímos até agora foram limitados pelo fato de que operavam apenas sobre tipos de dados simples. Após aprender o básico de estruturas de dados neste capítulo, você saberá o suficiente para começar a escrever programas úteis.</p>
+
+<p><a class="p_ident" id="p-sIxnTeBy6D" href="#p-sIxnTeBy6D" tabindex="-1" role="presentation"></a>O capítulo trabalhará com um exemplo de programação mais ou menos realista, introduzindo conceitos conforme se aplicam ao problema em questão. O código de exemplo frequentemente se apoiará em funções e bindings introduzidos anteriormente no livro.</p>
+
+<h2><a class="h_ident" id="h-pIFejNfoXi" href="#h-pIFejNfoXi" tabindex="-1" role="presentation"></a>O lobisomem-esquilo</h2>
+
+<p><a class="p_ident" id="p-ZOzHqTi3lX" href="#p-ZOzHqTi3lX" tabindex="-1" role="presentation"></a>De vez em quando, geralmente entre 20h e 22h, Jacques se vê transformando em um pequeno roedor peludo com uma cauda espessa.</p>
+
+<p><a class="p_ident" id="p-hCW+8sV9t7" href="#p-hCW+8sV9t7" tabindex="-1" role="presentation"></a>Por um lado, Jacques está bastante contente por não ter licantropia clássica. Transformar-se em um esquilo causa menos problemas do que transformar-se em um lobo. Em vez de ter que se preocupar em acidentalmente comer o vizinho (<em>isso</em> seria constrangedor), ele se preocupa em ser comido pelo gato do vizinho. Depois de duas ocasiões de acordar em um galho precariamente fino na copa de um carvalho, nu e desorientado, ele passou a trancar as portas e janelas do seu quarto à noite e colocar algumas nozes no chão para se manter ocupado.</p>
+
+<p><a class="p_ident" id="p-6qHzPXQ5ui" href="#p-6qHzPXQ5ui" tabindex="-1" role="presentation"></a>Mas Jacques preferiria se livrar totalmente de sua condição. As ocorrências irregulares da transformação o fazem suspeitar que podem ser desencadeadas por algo. Por um tempo, ele acreditou que acontecia apenas em dias em que estivera perto de carvalhos. Porém, evitar carvalhos não resolveu o problema.</p>
+
+<p><a class="p_ident" id="p-cO506dDspM" href="#p-cO506dDspM" tabindex="-1" role="presentation"></a>Mudando para uma abordagem mais científica, Jacques começou a manter um registro diário de tudo que faz em um dado dia e se mudou de forma. Com esses dados, ele espera restringir as condições que desencadeiam as transformações.</p>
+
+<p><a class="p_ident" id="p-yJnzlvAKkE" href="#p-yJnzlvAKkE" tabindex="-1" role="presentation"></a>A primeira coisa de que ele precisa é uma estrutura de dados para armazenar essa informação.</p>
+
+<h2><a class="h_ident" id="h-3d69qu57WK" href="#h-3d69qu57WK" tabindex="-1" role="presentation"></a>Conjuntos de dados</h2>
+
+<p><a class="p_ident" id="p-D14HJDA6hi" href="#p-D14HJDA6hi" tabindex="-1" role="presentation"></a>Para trabalhar com um pedaço de dados digitais, primeiro precisamos encontrar uma forma de representá-lo na memória da nossa máquina. Digamos, por exemplo, que queremos representar uma coleção dos números 2, 3, 5, 7 e 11.</p>
+
+<p><a class="p_ident" id="p-DA8XOWeqp6" href="#p-DA8XOWeqp6" tabindex="-1" role="presentation"></a>Poderíamos ser criativos com strings — afinal, strings podem ter qualquer comprimento, então podemos colocar muitos dados nelas — e usar <code>&quot;2 3 5 7 11&quot;</code> como nossa representação. Mas isso é desajeitado. Teríamos que de alguma forma extrair os dígitos e convertê-los de volta para números para acessá-los.</p>
+
+<p><a class="p_ident" id="p-r9R7UCZ89Y" href="#p-r9R7UCZ89Y" tabindex="-1" role="presentation"></a>Felizmente, JavaScript fornece um tipo de dado especificamente para armazenar sequências de valores. É chamado de <em>array</em> e é escrito como uma lista de valores entre colchetes, separados por vírgulas.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-05cIH1hy/D" href="#c-05cIH1hy/D" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">listOfNumbers</span> = [<span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">5</span>, <span class="tok-number">7</span>, <span class="tok-number">11</span>];
+console.log(listOfNumbers[<span class="tok-number">2</span>]);
+<span class="tok-comment">// → 5</span>
+console.log(listOfNumbers[<span class="tok-number">0</span>]);
+<span class="tok-comment">// → 2</span>
+console.log(listOfNumbers[<span class="tok-number">2</span> - <span class="tok-number">1</span>]);
+<span class="tok-comment">// → 3</span></pre>
+
+<p><a class="p_ident" id="p-w8/iLN4H1G" href="#p-w8/iLN4H1G" tabindex="-1" role="presentation"></a>A notação para acessar os elementos dentro de um array também usa colchetes. Um par de colchetes imediatamente após uma expressão, com outra expressão dentro deles, procurará o elemento na expressão à esquerda que corresponde ao <em>índice</em> dado pela expressão entre colchetes.</p>
+
+<p id="array_indexing"><a class="p_ident" id="p-/Hn+6vJCib" href="#p-/Hn+6vJCib" tabindex="-1" role="presentation"></a>O primeiro índice de um array é zero, não um, então o primeiro elemento é obtido com <code>listOfNumbers[0]</code>. A contagem baseada em zero tem uma longa tradição em tecnologia e de certas formas faz muito sentido, mas leva algum tempo para se acostumar. Pense no índice como o número de itens a pular, contando a partir do início do array.</p>
+
+<h2 id="properties"><a class="h_ident" id="h-+Jzs2GaL4c" href="#h-+Jzs2GaL4c" tabindex="-1" role="presentation"></a>Propriedades</h2>
+
+<p><a class="p_ident" id="p-14LVSPLWc3" href="#p-14LVSPLWc3" tabindex="-1" role="presentation"></a>Vimos algumas expressões como <code>myString.length</code> (para obter o comprimento de uma string) e <code>Math.max</code> (a função de máximo) em capítulos anteriores. Essas expressões acessam uma <em>propriedade</em> de algum valor. No primeiro caso, acessamos a propriedade <code>length</code> do valor em <code>myString</code>. No segundo, acessamos a propriedade chamada <code>max</code> no objeto <code>Math</code> (que é uma coleção de constantes e funções relacionadas à matemática).</p>
+
+<p><a class="p_ident" id="p-syv7KJxwVv" href="#p-syv7KJxwVv" tabindex="-1" role="presentation"></a>Quase todos os valores JavaScript têm propriedades. As exceções são <code>null</code> e <code>undefined</code>. Se você tentar acessar uma propriedade em um desses não-valores, obterá um erro:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-FNR95AymUx" href="#c-FNR95AymUx" tabindex="-1" role="presentation"></a><span class="tok-keyword">null</span>.length;
+<span class="tok-comment">// → TypeError: null has no properties</span></pre>
+
+<p><a class="p_ident" id="p-zaHARE+Rnu" href="#p-zaHARE+Rnu" tabindex="-1" role="presentation"></a>As duas principais formas de acessar propriedades em JavaScript são com um ponto e com colchetes. Tanto <code>value.x</code> quanto <code>value[x]</code> acessam uma propriedade em <code>value</code> — mas não necessariamente a mesma propriedade. A diferença está em como <code>x</code> é interpretado. Ao usar um ponto, a palavra após o ponto é o nome literal da propriedade. Ao usar colchetes, a expressão entre os colchetes é <em>avaliada</em> para obter o nome da propriedade. Enquanto <code>value.x</code> busca a propriedade de <code>value</code> chamada “x”, <code>value[x]</code> pega o valor da variável chamada <code>x</code> e o usa, convertido para string, como nome da propriedade.</p>
+
+<p><a class="p_ident" id="p-xUckg75R1T" href="#p-xUckg75R1T" tabindex="-1" role="presentation"></a>Se você sabe que a propriedade em que está interessado se chama <em>color</em>, você diz <code>value.color</code>. Se quer extrair a propriedade nomeada pelo valor mantido no binding <code>i</code>, você diz <code>value[i]</code>. Nomes de propriedades são strings. Podem ser qualquer string, mas a notação de ponto funciona apenas com nomes que parecem nomes válidos de binding — começando com uma letra ou sublinhado, e contendo apenas letras, números e sublinhados. Se quiser acessar uma propriedade chamada <em>2</em> ou <em>John Doe</em>, deve usar colchetes: <code>value[2]</code> ou <code>value[&quot;John Doe&quot;]</code>.</p>
+
+<p><a class="p_ident" id="p-EJIpStF2Cc" href="#p-EJIpStF2Cc" tabindex="-1" role="presentation"></a>Os elementos em um array são armazenados como propriedades do array, usando números como nomes de propriedades. Como você não pode usar a notação de ponto com números e geralmente quer usar um binding que contém o índice de qualquer forma, precisa usar a notação de colchetes para acessá-los.</p>
+
+<p><a class="p_ident" id="p-wcr8q2G6Gl" href="#p-wcr8q2G6Gl" tabindex="-1" role="presentation"></a>Assim como strings, arrays têm uma propriedade <code>length</code> que nos diz quantos elementos o array tem.</p>
+
+<h2 id="methods"><a class="h_ident" id="h-OYddlNFqr1" href="#h-OYddlNFqr1" tabindex="-1" role="presentation"></a>Métodos</h2>
+
+<p><a class="p_ident" id="p-2DQGenV3nZ" href="#p-2DQGenV3nZ" tabindex="-1" role="presentation"></a>Tanto valores de string quanto de array contêm, além da propriedade <code>length</code>, uma série de propriedades que contêm valores de função.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-prRDc5amqh" href="#c-prRDc5amqh" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">doh</span> = <span class="tok-string">&quot;Doh&quot;</span>;
+console.log(<span class="tok-keyword">typeof</span> doh.toUpperCase);
+<span class="tok-comment">// → function</span>
+console.log(doh.toUpperCase());
+<span class="tok-comment">// → DOH</span></pre>
+
+<p><a class="p_ident" id="p-geK10+flty" href="#p-geK10+flty" tabindex="-1" role="presentation"></a>Toda string tem uma propriedade <code>toUpperCase</code>. Quando chamada, retornará uma cópia da string em que todas as letras foram convertidas para maiúsculas. Existe também <code>toLowerCase</code>, que faz o inverso.</p>
+
+<p><a class="p_ident" id="p-WhXrzD836R" href="#p-WhXrzD836R" tabindex="-1" role="presentation"></a>Curiosamente, embora a chamada a <code>toUpperCase</code> não passe nenhum argumento, a função de alguma forma tem acesso à string <code>&quot;Doh&quot;</code>, o valor cuja propriedade chamamos. Você descobrirá como isso funciona no <a href="06_object.html#obj_methods">Capítulo 6</a>.</p>
+
+<p><a class="p_ident" id="p-PDAKPpKvd4" href="#p-PDAKPpKvd4" tabindex="-1" role="presentation"></a>Propriedades que contêm funções são geralmente chamadas de <em>métodos</em> do valor a que pertencem, como em “<code>toUpperCase</code> é um método de uma string”.</p>
+
+<p id="array_methods"><a class="p_ident" id="p-0PI9usjZcy" href="#p-0PI9usjZcy" tabindex="-1" role="presentation"></a>Este exemplo demonstra dois métodos que você pode usar para manipular arrays.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-RiFZUNk6gr" href="#c-RiFZUNk6gr" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">sequence</span> = [<span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>];
+sequence.push(<span class="tok-number">4</span>);
+sequence.push(<span class="tok-number">5</span>);
+console.log(sequence);
+<span class="tok-comment">// → [1, 2, 3, 4, 5]</span>
+console.log(sequence.pop());
+<span class="tok-comment">// → 5</span>
+console.log(sequence);
+<span class="tok-comment">// → [1, 2, 3, 4]</span></pre>
+
+<p><a class="p_ident" id="p-iCsr4AuVJI" href="#p-iCsr4AuVJI" tabindex="-1" role="presentation"></a>O método <code>push</code> adiciona valores ao final de um array. O método <code>pop</code> faz o oposto, removendo o último valor do array e retornando-o.</p>
+
+<p><a class="p_ident" id="p-HUxFfBx6lT" href="#p-HUxFfBx6lT" tabindex="-1" role="presentation"></a>Esses nomes um tanto bobos são os termos tradicionais para operações em uma <em>pilha</em>. Uma pilha, em programação, é uma estrutura de dados que permite empurrar valores para dentro dela e retirá-los na ordem inversa, de modo que o que foi adicionado por último é removido primeiro. Pilhas são comuns em programação — você pode lembrar da pilha de chamadas de funções do <a href="03_functions.html#stack">capítulo anterior</a>, que é um exemplo da mesma ideia.</p>
+
+<h2><a class="h_ident" id="h-WSNvRpk0Lx" href="#h-WSNvRpk0Lx" tabindex="-1" role="presentation"></a>Objetos</h2>
+
+<p><a class="p_ident" id="p-qPJPXW65uO" href="#p-qPJPXW65uO" tabindex="-1" role="presentation"></a>De volta ao lobisomem-esquilo. Um conjunto de entradas de registro diário pode ser representado como um array, mas as entradas não consistem apenas de um número ou uma string — cada entrada precisa armazenar uma lista de atividades e um valor booleano que indica se Jacques se transformou em esquilo ou não. Idealmente, gostaríamos de agrupar estes juntos em um único valor e então colocar esses valores agrupados em um array de entradas de registro.</p>
+
+<p><a class="p_ident" id="p-J0UJfns9lx" href="#p-J0UJfns9lx" tabindex="-1" role="presentation"></a>Valores do tipo <em>objeto</em> são coleções arbitrárias de propriedades. Uma forma de criar um objeto é usando chaves como uma expressão.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Y37a9WsXpl" href="#c-Y37a9WsXpl" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">day1</span> = {
+  <span class="tok-definition">squirrel</span>: false,
+  <span class="tok-definition">events</span>: [<span class="tok-string">&quot;work&quot;</span>, <span class="tok-string">&quot;touched tree&quot;</span>, <span class="tok-string">&quot;pizza&quot;</span>, <span class="tok-string">&quot;running&quot;</span>]
+};
+console.log(day1.squirrel);
+<span class="tok-comment">// → false</span>
+console.log(day1.wolf);
+<span class="tok-comment">// → undefined</span>
+day1.wolf = false;
+console.log(day1.wolf);
+<span class="tok-comment">// → false</span></pre>
+
+<p><a class="p_ident" id="p-BYeDr4x7RS" href="#p-BYeDr4x7RS" tabindex="-1" role="presentation"></a>Dentro das chaves, você escreve uma lista de propriedades separadas por vírgulas. Cada propriedade tem um nome seguido de dois-pontos e um valor. Quando um objeto é escrito em múltiplas linhas, indentá-lo como mostrado neste exemplo ajuda na legibilidade. Propriedades cujos nomes não são nomes válidos de binding ou números válidos devem ser colocados entre aspas:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-n8ErtKNPW/" href="#c-n8ErtKNPW/" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">descriptions</span> = {
+  <span class="tok-definition">work</span>: <span class="tok-string">&quot;Went to work&quot;</span>,
+  <span class="tok-string">&quot;touched tree&quot;</span>: <span class="tok-string">&quot;Touched a tree&quot;</span>
+};</pre>
+
+<p><a class="p_ident" id="p-uirvvbk+4f" href="#p-uirvvbk+4f" tabindex="-1" role="presentation"></a>Isso significa que chaves têm <em>dois</em> significados em JavaScript. No início de uma instrução, elas iniciam um bloco de instruções. Em qualquer outra posição, elas descrevem um objeto. Felizmente, raramente é útil iniciar uma instrução com um objeto em chaves, então a ambiguidade entre esses dois não é um grande problema. O único caso em que isso surge é quando você quer retornar um objeto de uma arrow function abreviada — você não pode escrever <code>n =&gt; {prop: n}</code> pois as chaves serão interpretadas como um corpo de função. Em vez disso, você precisa colocar parênteses ao redor do objeto para deixar claro que é uma expressão.</p>
+
+<p><a class="p_ident" id="p-YhAFffOfsF" href="#p-YhAFffOfsF" tabindex="-1" role="presentation"></a>Ler uma propriedade que não existe lhe dará o valor <code>undefined</code>.</p>
+
+<p><a class="p_ident" id="p-K6gvgTKhJS" href="#p-K6gvgTKhJS" tabindex="-1" role="presentation"></a>É possível atribuir um valor a uma expressão de propriedade com o operador <code>=</code>. Isso substituirá o valor da propriedade se ela já existia ou criará uma nova propriedade no objeto se não existia.</p>
+
+<p><a class="p_ident" id="p-Q8vU7HQU0/" href="#p-Q8vU7HQU0/" tabindex="-1" role="presentation"></a>Para retornar brevemente ao nosso modelo de tentáculos de bindings — bindings de propriedades são similares. Eles <em>agarram</em> valores, mas outros bindings e propriedades podem estar segurando esses mesmos valores. Você pode pensar em objetos como polvos com qualquer número de tentáculos, cada um com um nome escrito nele.</p>
+
+<p><a class="p_ident" id="p-bktQaveNQ1" href="#p-bktQaveNQ1" tabindex="-1" role="presentation"></a>O operador <code>delete</code> corta um tentáculo de tal polvo. É um operador unário que, quando aplicado a uma propriedade de objeto, removerá a propriedade nomeada do objeto. Isso não é algo comum de se fazer, mas é possível.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-66M3B1wG98" href="#c-66M3B1wG98" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">anObject</span> = {<span class="tok-definition">left</span>: <span class="tok-number">1</span>, <span class="tok-definition">right</span>: <span class="tok-number">2</span>};
+console.log(anObject.left);
+<span class="tok-comment">// → 1</span>
+<span class="tok-keyword">delete</span> anObject.left;
+console.log(anObject.left);
+<span class="tok-comment">// → undefined</span>
+console.log(<span class="tok-string">&quot;left&quot;</span> <span class="tok-keyword">in</span> anObject);
+<span class="tok-comment">// → false</span>
+console.log(<span class="tok-string">&quot;right&quot;</span> <span class="tok-keyword">in</span> anObject);
+<span class="tok-comment">// → true</span></pre>
+
+<p><a class="p_ident" id="p-XeCN5OuDxV" href="#p-XeCN5OuDxV" tabindex="-1" role="presentation"></a>O operador binário <code>in</code>, quando aplicado a uma string e um objeto, lhe diz se aquele objeto tem uma propriedade com aquele nome. A diferença entre definir uma propriedade como <code>undefined</code> e realmente deletá-la é que, no primeiro caso, o objeto ainda <em>tem</em> a propriedade (ela simplesmente não tem um valor muito interessante), enquanto no segundo caso, a propriedade não está mais presente e <code>in</code> retornará <code>false</code>.</p>
+
+<p><a class="p_ident" id="p-dUM1beN77H" href="#p-dUM1beN77H" tabindex="-1" role="presentation"></a>Para descobrir quais propriedades um objeto tem, você pode usar a função <code>Object.keys</code>. Dê a ela um objeto e ela retornará um array de strings — os nomes das propriedades do objeto:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-0oaalmpqn6" href="#c-0oaalmpqn6" tabindex="-1" role="presentation"></a>console.log(Object.keys({<span class="tok-definition">x</span>: <span class="tok-number">0</span>, <span class="tok-definition">y</span>: <span class="tok-number">0</span>, <span class="tok-definition">z</span>: <span class="tok-number">2</span>}));
+<span class="tok-comment">// → [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]</span></pre>
+
+<p><a class="p_ident" id="p-58qEDKh3fl" href="#p-58qEDKh3fl" tabindex="-1" role="presentation"></a>Há uma função <code>Object.assign</code> que copia todas as propriedades de um objeto para outro:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-ngXKayzwiT" href="#c-ngXKayzwiT" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">objectA</span> = {<span class="tok-definition">a</span>: <span class="tok-number">1</span>, <span class="tok-definition">b</span>: <span class="tok-number">2</span>};
+Object.assign(objectA, {<span class="tok-definition">b</span>: <span class="tok-number">3</span>, <span class="tok-definition">c</span>: <span class="tok-number">4</span>});
+console.log(objectA);
+<span class="tok-comment">// → {a: 1, b: 3, c: 4}</span></pre>
+
+<p><a class="p_ident" id="p-olCDbLb1Yf" href="#p-olCDbLb1Yf" tabindex="-1" role="presentation"></a>Arrays, então, são apenas um tipo de objeto especializado para armazenar sequências de coisas. Se você avaliar <code>typeof []</code>, ele produz <code>&quot;object&quot;</code>. Você pode visualizar arrays como polvos longos e achatados com todos os seus tentáculos em uma fileira organizada, rotulados com números.</p>
+
+<p><a class="p_ident" id="p-F0paELn/vy" href="#p-F0paELn/vy" tabindex="-1" role="presentation"></a>Jacques representará o diário que ele mantém como um array de objetos:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-i+2z3cgGj2" href="#c-i+2z3cgGj2" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">journal</span> = [
+  {<span class="tok-definition">events</span>: [<span class="tok-string">&quot;work&quot;</span>, <span class="tok-string">&quot;touched tree&quot;</span>, <span class="tok-string">&quot;pizza&quot;</span>,
+            <span class="tok-string">&quot;running&quot;</span>, <span class="tok-string">&quot;television&quot;</span>],
+   <span class="tok-definition">squirrel</span>: false},
+  {<span class="tok-definition">events</span>: [<span class="tok-string">&quot;work&quot;</span>, <span class="tok-string">&quot;ice cream&quot;</span>, <span class="tok-string">&quot;cauliflower&quot;</span>,
+            <span class="tok-string">&quot;lasagna&quot;</span>, <span class="tok-string">&quot;touched tree&quot;</span>, <span class="tok-string">&quot;brushed teeth&quot;</span>],
+   <span class="tok-definition">squirrel</span>: false},
+  {<span class="tok-definition">events</span>: [<span class="tok-string">&quot;weekend&quot;</span>, <span class="tok-string">&quot;cycling&quot;</span>, <span class="tok-string">&quot;break&quot;</span>, <span class="tok-string">&quot;peanuts&quot;</span>,
+            <span class="tok-string">&quot;beer&quot;</span>],
+   <span class="tok-definition">squirrel</span>: true},
+  <span class="tok-comment">/* E assim por diante... */</span>
+];</pre>
+
+<h2><a class="h_ident" id="h-XLXrst9IQb" href="#h-XLXrst9IQb" tabindex="-1" role="presentation"></a>Mutabilidade</h2>
+
+<p><a class="p_ident" id="p-a/zhCGCm/H" href="#p-a/zhCGCm/H" tabindex="-1" role="presentation"></a>Em breve chegaremos à programação de verdade, mas primeiro, há mais um pedaço de teoria para entender.</p>
+
+<p><a class="p_ident" id="p-mS2Vgl6G77" href="#p-mS2Vgl6G77" tabindex="-1" role="presentation"></a>Vimos que valores de objetos podem ser modificados. Os tipos de valores discutidos em capítulos anteriores, como números, strings e booleanos, são todos <em>imutáveis</em> — é impossível mudar valores desses tipos. Você pode combiná-los e derivar novos valores deles, mas quando você pega um valor de string específico, esse valor sempre permanecerá o mesmo. O texto dentro dele não pode ser alterado. Se você tem uma string que contém <code>&quot;cat&quot;</code>, não é possível que outro código mude um caractere na sua string para fazê-la dizer <code>&quot;rat&quot;</code>.</p>
+
+<p><a class="p_ident" id="p-zvQSTOL1kn" href="#p-zvQSTOL1kn" tabindex="-1" role="presentation"></a>Objetos funcionam de forma diferente. Você <em>pode</em> mudar suas propriedades, fazendo com que um único valor de objeto tenha conteúdo diferente em momentos diferentes.</p>
+
+<p><a class="p_ident" id="p-6UjGEvXGgB" href="#p-6UjGEvXGgB" tabindex="-1" role="presentation"></a>Quando temos dois números, 120 e 120, podemos considerá-los precisamente o mesmo número, quer se refiram ou não aos mesmos bits físicos. Com objetos, há uma diferença entre ter duas referências ao mesmo objeto e ter dois objetos diferentes que contêm as mesmas propriedades. Considere o seguinte código:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-I1Dv6D46/p" href="#c-I1Dv6D46/p" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">object1</span> = {<span class="tok-definition">value</span>: <span class="tok-number">10</span>};
+<span class="tok-keyword">let</span> <span class="tok-definition">object2</span> = object1;
+<span class="tok-keyword">let</span> <span class="tok-definition">object3</span> = {<span class="tok-definition">value</span>: <span class="tok-number">10</span>};
+
+console.log(object1 == object2);
+<span class="tok-comment">// → true</span>
+console.log(object1 == object3);
+<span class="tok-comment">// → false</span>
+
+object1.value = <span class="tok-number">15</span>;
+console.log(object2.value);
+<span class="tok-comment">// → 15</span>
+console.log(object3.value);
+<span class="tok-comment">// → 10</span></pre>
+
+<p><a class="p_ident" id="p-c1fxwsDhME" href="#p-c1fxwsDhME" tabindex="-1" role="presentation"></a>Os bindings <code>object1</code> e <code>object2</code> agarram o <em>mesmo</em> objeto, razão pela qual mudar <code>object1</code> também muda o valor de <code>object2</code>. Diz-se que eles têm a mesma <em>identidade</em>. O binding <code>object3</code> aponta para um objeto diferente, que inicialmente contém as mesmas propriedades que <code>object1</code> mas vive uma vida separada.</p>
+
+<p><a class="p_ident" id="p-gozNNNSLL8" href="#p-gozNNNSLL8" tabindex="-1" role="presentation"></a>Bindings também podem ser mutáveis ou constantes, mas isso é separado da forma como seus valores se comportam. Embora valores numéricos não mudem, você pode usar um binding <code>let</code> para acompanhar um número que muda, mudando o valor para o qual o binding aponta. Similarmente, embora um binding <code>const</code> para um objeto não possa ser mudado e continuará a apontar para o mesmo objeto, o <em>conteúdo</em> desse objeto pode mudar.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-9L6C2Ls9ni" href="#c-9L6C2Ls9ni" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">score</span> = {<span class="tok-definition">visitors</span>: <span class="tok-number">0</span>, <span class="tok-definition">home</span>: <span class="tok-number">0</span>};
+<span class="tok-comment">// Isso é ok</span>
+score.visitors = <span class="tok-number">1</span>;
+<span class="tok-comment">// Isso não é permitido</span>
+score = {<span class="tok-definition">visitors</span>: <span class="tok-number">1</span>, <span class="tok-definition">home</span>: <span class="tok-number">1</span>};</pre>
+
+<p><a class="p_ident" id="p-qGRE25dko3" href="#p-qGRE25dko3" tabindex="-1" role="presentation"></a>Quando você compara objetos com o operador <code>==</code> do JavaScript, ele compara por identidade: produzirá <code>true</code> apenas se ambos os objetos forem precisamente o mesmo valor. Comparar objetos diferentes retornará <code>false</code>, mesmo que tenham propriedades idênticas. Não há operação de comparação “profunda” embutida no JavaScript que compare objetos por conteúdo, mas é possível escrevê-la você mesmo (que é um dos <a href="04_data.html#exercise_deep_compare">exercícios</a> no final deste capítulo).</p>
+
+<h2><a class="h_ident" id="h-QURG0fbEvc" href="#h-QURG0fbEvc" tabindex="-1" role="presentation"></a>O registro do licantropo</h2>
+
+<p><a class="p_ident" id="p-KNvbCV8dZG" href="#p-KNvbCV8dZG" tabindex="-1" role="presentation"></a>Jacques inicia seu interpretador JavaScript e configura o ambiente necessário para manter seu diário:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-CI+dtzXW/x" href="#c-CI+dtzXW/x" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">journal</span> = [];
+
+<span class="tok-keyword">function</span> <span class="tok-definition">addEntry</span>(<span class="tok-definition">events</span>, <span class="tok-definition">squirrel</span>) {
+  journal.push({<span class="tok-definition">events</span>, <span class="tok-definition">squirrel</span>});
+}</pre>
+
+<p><a class="p_ident" id="p-42q54Jn/BG" href="#p-42q54Jn/BG" tabindex="-1" role="presentation"></a>Note que o objeto adicionado ao diário parece um pouco estranho. Em vez de declarar propriedades como <code>events: events</code>, ele apenas dá um nome de propriedade: <code>events</code>. Isso é uma abreviação que significa a mesma coisa — se um nome de propriedade em notação de chaves não é seguido por um valor, seu valor é tomado do binding com o mesmo nome.</p>
+
+<p><a class="p_ident" id="p-Az/Tk3/gXh" href="#p-Az/Tk3/gXh" tabindex="-1" role="presentation"></a>Toda noite às 22h — ou às vezes na manhã seguinte, após descer da prateleira mais alta de sua estante — Jacques registra o dia:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-S+F+R2oIfR" href="#c-S+F+R2oIfR" tabindex="-1" role="presentation"></a>addEntry([<span class="tok-string">&quot;work&quot;</span>, <span class="tok-string">&quot;touched tree&quot;</span>, <span class="tok-string">&quot;pizza&quot;</span>, <span class="tok-string">&quot;running&quot;</span>,
+          <span class="tok-string">&quot;television&quot;</span>], false);
+addEntry([<span class="tok-string">&quot;work&quot;</span>, <span class="tok-string">&quot;ice cream&quot;</span>, <span class="tok-string">&quot;cauliflower&quot;</span>, <span class="tok-string">&quot;lasagna&quot;</span>,
+          <span class="tok-string">&quot;touched tree&quot;</span>, <span class="tok-string">&quot;brushed teeth&quot;</span>], false);
+addEntry([<span class="tok-string">&quot;weekend&quot;</span>, <span class="tok-string">&quot;cycling&quot;</span>, <span class="tok-string">&quot;break&quot;</span>, <span class="tok-string">&quot;peanuts&quot;</span>,
+          <span class="tok-string">&quot;beer&quot;</span>], true);</pre>
+
+<p><a class="p_ident" id="p-zhdI1z9iar" href="#p-zhdI1z9iar" tabindex="-1" role="presentation"></a>Uma vez que tenha pontos de dados suficientes, pretende usar estatística para descobrir quais desses eventos podem estar relacionados às esquilificações.</p>
+
+<p><a class="p_ident" id="p-e9Yr63Obzl" href="#p-e9Yr63Obzl" tabindex="-1" role="presentation"></a><em>Correlação</em> é uma medida de dependência entre variáveis estatísticas. Uma variável estatística não é exatamente a mesma coisa que uma variável de programação. Em estatística, você tipicamente tem um conjunto de <em>medições</em>, e cada variável é medida para cada medição. Correlação entre variáveis é geralmente expressa como um valor que varia de -1 a 1. Correlação zero significa que as variáveis não estão relacionadas. Uma correlação de 1 indica que as duas são perfeitamente relacionadas — se você sabe uma, também sabe a outra. Menos 1 também significa que as variáveis são perfeitamente relacionadas mas são opostas — quando uma é verdadeira, a outra é falsa.</p>
+
+<p><a class="p_ident" id="p-/zEJpX0Cas" href="#p-/zEJpX0Cas" tabindex="-1" role="presentation"></a>Para calcular a medida de correlação entre duas variáveis booleanas, podemos usar o <em>coeficiente phi</em> (<em>ϕ</em>). Esta é uma fórmula cuja entrada é uma tabela de frequência contendo o número de vezes que as diferentes combinações das variáveis foram observadas. A saída da fórmula é um número entre -1 e 1 que descreve a correlação.</p>
+
+<p><a class="p_ident" id="p-FCSusEJglB" href="#p-FCSusEJglB" tabindex="-1" role="presentation"></a>Poderíamos pegar o evento de comer pizza e colocá-lo em uma tabela de frequência como esta, onde cada número indica o número de vezes que essa combinação ocorreu em nossas medições.</p><figure><img src="img/pizza-squirrel.svg" alt="A two-by-two table showing the pizza variable on the horizontal, and the squirrel variable on the vertical axis. Each cell show how many time that combination occurred. In 76 cases, neither happened. In 9 cases, only pizza was true. In 4 cases only squirrel was true. And in one case both occurred."></figure>
+
+<p><a class="p_ident" id="p-mX7/nTlG2Q" href="#p-mX7/nTlG2Q" tabindex="-1" role="presentation"></a>Se chamarmos essa tabela de <em>n</em>, podemos calcular <em>ϕ</em> usando a seguinte fórmula:</p><div> <table style="border-collapse: collapse; margin-left: 1em;"><tr>   <td style="vertical-align: middle"><em>ϕ</em> =</td>   <td style="padding-left: .5em">     <div style="border-bottom: 1px solid black; padding: 0 7px;"><em>n</em><sub>11</sub><em>n</em><sub>00</sub> −       <em>n</em><sub>10</sub><em>n</em><sub>01</sub></div>     <div style="padding: 0 7px;">√<span style="border-top: 1px solid black; position: relative; top: 2px;">       <span style="position: relative; top: -4px"><em>n</em><sub>1•</sub><em>n</em><sub>0•</sub><em>n</em><sub>•1</sub><em>n</em><sub>•0</sub></span>     </span></div>   </td> </tr></table> </div>
+
+
+<p><a class="p_ident" id="p-jx6MkA2bwh" href="#p-jx6MkA2bwh" tabindex="-1" role="presentation"></a>(Se neste ponto você está largando o livro para focar em um terrível flashback de aulas de matemática do ensino médio — espere! Não tenho a intenção de torturá-lo com páginas infinitas de notação críptica — é apenas essa fórmula por enquanto. E mesmo com essa, tudo que fazemos é transformá-la em JavaScript.)</p>
+
+<p><a class="p_ident" id="p-a00Cp2yCH4" href="#p-a00Cp2yCH4" tabindex="-1" role="presentation"></a>A notação <em>n</em><sub>01</sub> indica o número de medições onde a primeira variável (esquilidade) é falsa (0) e a segunda variável (pizza) é verdadeira (1). Na tabela de pizza, <em>n</em><sub>01</sub> é 9.</p>
+
+<p><a class="p_ident" id="p-MTVoL/9DDA" href="#p-MTVoL/9DDA" tabindex="-1" role="presentation"></a>O valor <em>n</em><sub>1•</sub> se refere à soma de todas as medições onde a primeira variável é verdadeira, que é 5 na tabela de exemplo. Da mesma forma, <em>n</em><sub>•0</sub> se refere à soma das medições onde a segunda variável é falsa.</p>
+
+<p><a class="p_ident" id="p-Njpolv4jnO" href="#p-Njpolv4jnO" tabindex="-1" role="presentation"></a>Então para a tabela de pizza, a parte acima da linha de divisão (o dividendo) seria 1×76−4×9 = 40, e a parte abaixo (o divisor) seria a raiz quadrada de 5×85×10×80, ou √340.000. Isso resulta em <em>ϕ</em> ≈ 0,069, que é minúsculo. Comer pizza não parece ter influência nas transformações.</p>
+
+<h2><a class="h_ident" id="h-JnqrIgGfuv" href="#h-JnqrIgGfuv" tabindex="-1" role="presentation"></a>Calculando correlação</h2>
+
+<p><a class="p_ident" id="p-Jl+Qr0mGAM" href="#p-Jl+Qr0mGAM" tabindex="-1" role="presentation"></a>Podemos representar uma tabela dois-por-dois em JavaScript com um array de quatro elementos (<code>[76, 9, 4, 1]</code>). Poderíamos também usar outras representações, como um array contendo dois arrays de dois elementos (<code>[[76, 9], [4, 1]]</code>) ou um objeto com nomes de propriedade como <code>&quot;11&quot;</code> e <code>&quot;01&quot;</code>, mas o array plano é simples e torna as expressões que acessam a tabela agradavelmente curtas. Interpretaremos os índices do array como números binários de dois bits, onde o dígito mais à esquerda (mais significativo) se refere à variável esquilo e o dígito mais à direita (menos significativo) se refere à variável do evento. Por exemplo, o número binário <code>10</code> se refere ao caso em que Jacques se transformou em esquilo, mas o evento (digamos, “pizza”) não ocorreu. Isso aconteceu quatro vezes. E como o binário <code>10</code> é 2 em notação decimal, armazenaremos esse número no índice 2 do array.</p>
+
+<p id="phi_function"><a class="p_ident" id="p-iUMWtFMz9W" href="#p-iUMWtFMz9W" tabindex="-1" role="presentation"></a>Esta é a função que calcula o coeficiente <em>ϕ</em> a partir de tal array:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-AnoNjFldkv" href="#c-AnoNjFldkv" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">phi</span>(<span class="tok-definition">table</span>) {
+  <span class="tok-keyword">return</span> (table[<span class="tok-number">3</span>] * table[<span class="tok-number">0</span>] - table[<span class="tok-number">2</span>] * table[<span class="tok-number">1</span>]) /
+    Math.sqrt((table[<span class="tok-number">2</span>] + table[<span class="tok-number">3</span>]) *
+              (table[<span class="tok-number">0</span>] + table[<span class="tok-number">1</span>]) *
+              (table[<span class="tok-number">1</span>] + table[<span class="tok-number">3</span>]) *
+              (table[<span class="tok-number">0</span>] + table[<span class="tok-number">2</span>]));
+}
+
+console.log(phi([<span class="tok-number">76</span>, <span class="tok-number">9</span>, <span class="tok-number">4</span>, <span class="tok-number">1</span>]));
+<span class="tok-comment">// → 0.068599434</span></pre>
+
+<p><a class="p_ident" id="p-RKLALChzMN" href="#p-RKLALChzMN" tabindex="-1" role="presentation"></a>Esta é uma tradução direta da fórmula <em>ϕ</em> para JavaScript. <code>Math.sqrt</code> é a função de raiz quadrada, conforme fornecida pelo objeto <code>Math</code> em um ambiente JavaScript padrão. Temos que adicionar dois campos da tabela para obter campos como n<sub>1•</sub> porque as somas de linhas ou colunas não são armazenadas diretamente em nossa estrutura de dados.</p>
+
+<p><a class="p_ident" id="p-nTVEsQvtjS" href="#p-nTVEsQvtjS" tabindex="-1" role="presentation"></a>Jacques mantém seu diário por três meses. O conjunto de dados resultante está disponível no <a href="https://eloquentjavascript.net/code#4">sandbox de codificação</a> para este capítulo, onde é armazenado no binding <code>JOURNAL</code>, e em um <a href="https://eloquentjavascript.net/code/journal.js">arquivo</a> para download.</p>
+
+<p><a class="p_ident" id="p-O8BKeQex0H" href="#p-O8BKeQex0H" tabindex="-1" role="presentation"></a>Para extrair uma tabela dois-por-dois para um evento específico do diário, devemos percorrer todas as entradas e contabilizar quantas vezes o evento ocorre em relação às transformações em esquilo:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-rfea+FwMb5" href="#c-rfea+FwMb5" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">tableFor</span>(<span class="tok-definition">event</span>, <span class="tok-definition">journal</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">table</span> = [<span class="tok-number">0</span>, <span class="tok-number">0</span>, <span class="tok-number">0</span>, <span class="tok-number">0</span>];
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">i</span> = <span class="tok-number">0</span>; i &lt; journal.length; i++) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">entry</span> = journal[i], <span class="tok-definition">index</span> = <span class="tok-number">0</span>;
+    <span class="tok-keyword">if</span> (entry.events.includes(event)) index += <span class="tok-number">1</span>;
+    <span class="tok-keyword">if</span> (entry.squirrel) index += <span class="tok-number">2</span>;
+    table[index] += <span class="tok-number">1</span>;
+  }
+  <span class="tok-keyword">return</span> table;
+}
+
+console.log(tableFor(<span class="tok-string">&quot;pizza&quot;</span>, JOURNAL));
+<span class="tok-comment">// → [76, 9, 4, 1]</span></pre>
+
+<p><a class="p_ident" id="p-z7qRf6xlkl" href="#p-z7qRf6xlkl" tabindex="-1" role="presentation"></a>Arrays têm um método <code>includes</code> que verifica se um dado valor existe no array. A função usa isso para determinar se o nome do evento em que está interessada faz parte da lista de eventos para um dado dia.</p>
+
+<p><a class="p_ident" id="p-7n2v0XcNe1" href="#p-7n2v0XcNe1" tabindex="-1" role="presentation"></a>O corpo do loop em <code>tableFor</code> descobre em qual caixa da tabela cada entrada do diário se encaixa verificando se a entrada contém o evento específico em que está interessada e se o evento acontece junto com um incidente de esquilo. O loop então adiciona um à caixa correta na tabela.</p>
+
+<p><a class="p_ident" id="p-/MiZo0QT6r" href="#p-/MiZo0QT6r" tabindex="-1" role="presentation"></a>Agora temos as ferramentas necessárias para calcular correlações individuais. O único passo restante é encontrar uma correlação para cada tipo de evento que foi registrado e ver se algo se destaca.</p>
+
+<h2 id="for_of_loop"><a class="h_ident" id="h-CuG39qPzF8" href="#h-CuG39qPzF8" tabindex="-1" role="presentation"></a>Loops de array</h2>
+
+<p><a class="p_ident" id="p-Fhgf+Smm5B" href="#p-Fhgf+Smm5B" tabindex="-1" role="presentation"></a>Na função <code>tableFor</code>, há um loop assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-2CnMHS47tB" href="#c-2CnMHS47tB" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">i</span> = <span class="tok-number">0</span>; i &lt; JOURNAL.length; i++) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">entry</span> = JOURNAL[i];
+  <span class="tok-comment">// Fazer algo com entry</span>
+}</pre>
+
+<p><a class="p_ident" id="p-Ps3UOzYMZn" href="#p-Ps3UOzYMZn" tabindex="-1" role="presentation"></a>Esse tipo de loop é comum no JavaScript clássico — percorrer arrays um elemento de cada vez é algo que surge muito, e para fazer isso você executa um contador pelo comprimento do array e seleciona cada elemento por vez.</p>
+
+<p><a class="p_ident" id="p-3Lms31cBPT" href="#p-3Lms31cBPT" tabindex="-1" role="presentation"></a>Há uma forma mais simples de escrever tais loops no JavaScript moderno:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-OXsCQPvDE1" href="#c-OXsCQPvDE1" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">entry</span> <span class="tok-keyword">of</span> JOURNAL) {
+  console.log(<span class="tok-string2">`</span>${entry.events.length}<span class="tok-string2"> events.`</span>);
+}</pre>
+
+<p><a class="p_ident" id="p-mZfTef7l5e" href="#p-mZfTef7l5e" tabindex="-1" role="presentation"></a>Quando um loop <code>for</code> usa a palavra <code>of</code> após sua definição de variável, ele percorrerá os elementos do valor dado após <code>of</code>. Isso funciona não apenas para arrays mas também para strings e algumas outras estruturas de dados. Discutiremos <em>como</em> funciona no <a href="06_object.html">Capítulo 6</a>.</p>
+
+<h2 id="analysis"><a class="h_ident" id="h-2S9ze6rtc4" href="#h-2S9ze6rtc4" tabindex="-1" role="presentation"></a>A análise final</h2>
+
+<p><a class="p_ident" id="p-MrmehNW+2V" href="#p-MrmehNW+2V" tabindex="-1" role="presentation"></a>Precisamos calcular uma correlação para cada tipo de evento que ocorre no conjunto de dados. Para fazer isso, primeiro precisamos <em>encontrar</em> cada tipo de evento.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-P6cqJZBL1M" href="#c-P6cqJZBL1M" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">journalEvents</span>(<span class="tok-definition">journal</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">events</span> = [];
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">entry</span> <span class="tok-keyword">of</span> journal) {
+    <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">event</span> <span class="tok-keyword">of</span> entry.events) {
+      <span class="tok-keyword">if</span> (!events.includes(event)) {
+        events.push(event);
+      }
+    }
+  }
+  <span class="tok-keyword">return</span> events;
+}
+
+console.log(journalEvents(JOURNAL));
+<span class="tok-comment">// → [&quot;carrot&quot;, &quot;exercise&quot;, &quot;weekend&quot;, &quot;bread&quot;, …]</span></pre>
+
+<p><a class="p_ident" id="p-OwpmE7vwCQ" href="#p-OwpmE7vwCQ" tabindex="-1" role="presentation"></a>Adicionando quaisquer nomes de eventos que ainda não estão nele ao array <code>events</code>, a função coleta cada tipo de evento.</p>
+
+<p><a class="p_ident" id="p-h+AQj9KeBl" href="#p-h+AQj9KeBl" tabindex="-1" role="presentation"></a>Usando essa função, podemos ver todas as correlações:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-U1HLdHxWmg" href="#c-U1HLdHxWmg" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">event</span> <span class="tok-keyword">of</span> journalEvents(JOURNAL)) {
+  console.log(event + <span class="tok-string">&quot;:&quot;</span>, phi(tableFor(event, JOURNAL)));
+}
+<span class="tok-comment">// → carrot:   0.0140970969</span>
+<span class="tok-comment">// → exercise: 0.0685994341</span>
+<span class="tok-comment">// → weekend:  0.1371988681</span>
+<span class="tok-comment">// → bread:   -0.0757554019</span>
+<span class="tok-comment">// → pudding: -0.0648203724</span>
+<span class="tok-comment">// E assim por diante...</span></pre>
+
+<p><a class="p_ident" id="p-XFC96tTamF" href="#p-XFC96tTamF" tabindex="-1" role="presentation"></a>A maioria das correlações parece estar perto de zero. Comer cenouras, pão ou pudim aparentemente não desencadeia a licantropia-esquilo. As transformações <em>parecem</em> ocorrer um pouco mais nos finais de semana. Vamos filtrar os resultados para mostrar apenas correlações maiores que 0,1 ou menores que -0,1:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-hBXzmb7hPU" href="#c-hBXzmb7hPU" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">event</span> <span class="tok-keyword">of</span> journalEvents(JOURNAL)) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">correlation</span> = phi(tableFor(event, JOURNAL));
+  <span class="tok-keyword">if</span> (correlation &gt; <span class="tok-number">0.1</span> || correlation &lt; -<span class="tok-number">0.1</span>) {
+    console.log(event + <span class="tok-string">&quot;:&quot;</span>, correlation);
+  }
+}
+<span class="tok-comment">// → weekend:        0.1371988681</span>
+<span class="tok-comment">// → brushed teeth: -0.3805211953</span>
+<span class="tok-comment">// → candy:          0.1296407447</span>
+<span class="tok-comment">// → work:          -0.1371988681</span>
+<span class="tok-comment">// → spaghetti:      0.2425356250</span>
+<span class="tok-comment">// → reading:        0.1106828054</span>
+<span class="tok-comment">// → peanuts:        0.5902679812</span></pre>
+
+<p><a class="p_ident" id="p-W3CA70s1Ak" href="#p-W3CA70s1Ak" tabindex="-1" role="presentation"></a>Ahá! Há dois fatores com uma correlação claramente mais forte que os outros. Comer amendoins tem um forte efeito positivo na chance de se transformar em esquilo, enquanto escovar os dentes tem um significativo efeito negativo.</p>
+
+<p><a class="p_ident" id="p-kSv+p3v72j" href="#p-kSv+p3v72j" tabindex="-1" role="presentation"></a>Interessante. Vamos tentar algo.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-x7WUJStSIp" href="#c-x7WUJStSIp" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">entry</span> <span class="tok-keyword">of</span> JOURNAL) {
+  <span class="tok-keyword">if</span> (entry.events.includes(<span class="tok-string">&quot;peanuts&quot;</span>) &amp;&amp;
+     !entry.events.includes(<span class="tok-string">&quot;brushed teeth&quot;</span>)) {
+    entry.events.push(<span class="tok-string">&quot;peanut teeth&quot;</span>);
+  }
+}
+console.log(phi(tableFor(<span class="tok-string">&quot;peanut teeth&quot;</span>, JOURNAL)));
+<span class="tok-comment">// → 1</span></pre>
+
+<p><a class="p_ident" id="p-stKekdffsC" href="#p-stKekdffsC" tabindex="-1" role="presentation"></a>É um resultado forte. O fenômeno ocorre precisamente quando Jacques come amendoins e não escova os dentes. Se pelo menos ele não fosse tão desleixado com a higiene dental, nem teria notado sua aflição.</p>
+
+<p><a class="p_ident" id="p-Fk2ta/w75Y" href="#p-Fk2ta/w75Y" tabindex="-1" role="presentation"></a>Sabendo disso, Jacques para de comer amendoins completamente e descobre que suas transformações param.</p>
+
+<p><a class="p_ident" id="p-lQ7g/TkQbh" href="#p-lQ7g/TkQbh" tabindex="-1" role="presentation"></a>Mas são necessários apenas alguns meses para ele notar que algo está faltando nessa forma inteiramente humana de viver. Sem suas aventuras selvagens, Jacques quase não se sente vivo. Ele decide que prefere ser um animal selvagem em tempo integral. Depois de construir uma bela casinha na árvore na floresta e equipá-la com um dispensador de pasta de amendoim e um suprimento de pasta de amendoim para dez anos, ele se transforma uma última vez, e vive a curta e energética vida de um esquilo.</p>
+
+<h2><a class="h_ident" id="h-bFw7wN7mZL" href="#h-bFw7wN7mZL" tabindex="-1" role="presentation"></a>Mais sobre arrays</h2>
+
+<p><a class="p_ident" id="p-OwUryGKgQI" href="#p-OwUryGKgQI" tabindex="-1" role="presentation"></a>Antes de terminar o capítulo, quero apresentar mais alguns conceitos relacionados a objetos. Começarei com alguns métodos de array geralmente úteis.</p>
+
+<p><a class="p_ident" id="p-Xua9lhkmwy" href="#p-Xua9lhkmwy" tabindex="-1" role="presentation"></a>Vimos <code>push</code> e <code>pop</code>, que adicionam e removem elementos no final de um array, <a href="04_data.html#array_methods">mais cedo</a> neste capítulo. Os métodos correspondentes para adicionar e remover coisas no início de um array são chamados <code>unshift</code> e <code>shift</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Vq1IBpy+hP" href="#c-Vq1IBpy+hP" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">todoList</span> = [];
+<span class="tok-keyword">function</span> <span class="tok-definition">remember</span>(<span class="tok-definition">task</span>) {
+  todoList.push(task);
+}
+<span class="tok-keyword">function</span> <span class="tok-definition">getTask</span>() {
+  <span class="tok-keyword">return</span> todoList.shift();
+}
+<span class="tok-keyword">function</span> <span class="tok-definition">rememberUrgently</span>(<span class="tok-definition">task</span>) {
+  todoList.unshift(task);
+}</pre>
+
+<p><a class="p_ident" id="p-4N81rsyKWh" href="#p-4N81rsyKWh" tabindex="-1" role="presentation"></a>Esse programa gerencia uma fila de tarefas. Você adiciona tarefas ao final da fila chamando <code>remember(&quot;groceries&quot;)</code>, e quando está pronto para fazer algo, chama <code>getTask()</code> para obter (e remover) o item da frente da fila. A função <code>rememberUrgently</code> também adiciona uma tarefa, mas a adiciona à frente em vez do final da fila.</p>
+
+<p><a class="p_ident" id="p-B+Lg/OWiDp" href="#p-B+Lg/OWiDp" tabindex="-1" role="presentation"></a>Para buscar um valor específico, arrays fornecem um método <code>indexOf</code>. O método busca pelo array do início ao fim e retorna o índice em que o valor solicitado foi encontrado — ou -1 se não foi encontrado. Para buscar do final em vez do início, há um método similar chamado <code>lastIndexOf</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-N+G0EtTfto" href="#c-N+G0EtTfto" tabindex="-1" role="presentation"></a>console.log([<span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">2</span>, <span class="tok-number">1</span>].indexOf(<span class="tok-number">2</span>));
+<span class="tok-comment">// → 1</span>
+console.log([<span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">2</span>, <span class="tok-number">1</span>].lastIndexOf(<span class="tok-number">2</span>));
+<span class="tok-comment">// → 3</span></pre>
+
+<p><a class="p_ident" id="p-6D+nkGinYu" href="#p-6D+nkGinYu" tabindex="-1" role="presentation"></a>Tanto <code>indexOf</code> quanto <code>lastIndexOf</code> aceitam um segundo argumento opcional que indica de onde começar a busca.</p>
+
+<p><a class="p_ident" id="p-rmj3QsPfHi" href="#p-rmj3QsPfHi" tabindex="-1" role="presentation"></a>Outro método fundamental de array é <code>slice</code>, que recebe índices de início e fim e retorna um array que contém apenas os elementos entre eles. O índice de início é inclusivo e o índice de fim é exclusivo.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-zCBzPnMpIk" href="#c-zCBzPnMpIk" tabindex="-1" role="presentation"></a>console.log([<span class="tok-number">0</span>, <span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">4</span>].slice(<span class="tok-number">2</span>, <span class="tok-number">4</span>));
+<span class="tok-comment">// → [2, 3]</span>
+console.log([<span class="tok-number">0</span>, <span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">4</span>].slice(<span class="tok-number">2</span>));
+<span class="tok-comment">// → [2, 3, 4]</span></pre>
+
+<p><a class="p_ident" id="p-lBOc2yOEQg" href="#p-lBOc2yOEQg" tabindex="-1" role="presentation"></a>Quando o índice de fim não é dado, <code>slice</code> pegará todos os elementos após o índice de início. Você também pode omitir o índice de início para copiar o array inteiro.</p>
+
+<p><a class="p_ident" id="p-LsfZgigIx/" href="#p-LsfZgigIx/" tabindex="-1" role="presentation"></a>O método <code>concat</code> pode ser usado para juntar arrays e criar um novo array, similar ao que o operador <code>+</code> faz para strings.</p>
+
+<p><a class="p_ident" id="p-ZMtWCZ1ylS" href="#p-ZMtWCZ1ylS" tabindex="-1" role="presentation"></a>O exemplo a seguir mostra tanto <code>concat</code> quanto <code>slice</code> em ação. Ele recebe um array e um índice e retorna um novo array que é uma cópia do array original com o elemento no índice dado removido:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-q+NBMNgFFy" href="#c-q+NBMNgFFy" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">remove</span>(<span class="tok-definition">array</span>, <span class="tok-definition">index</span>) {
+  <span class="tok-keyword">return</span> array.slice(<span class="tok-number">0</span>, index)
+    .concat(array.slice(index + <span class="tok-number">1</span>));
+}
+console.log(remove([<span class="tok-string">&quot;a&quot;</span>, <span class="tok-string">&quot;b&quot;</span>, <span class="tok-string">&quot;c&quot;</span>, <span class="tok-string">&quot;d&quot;</span>, <span class="tok-string">&quot;e&quot;</span>], <span class="tok-number">2</span>));
+<span class="tok-comment">// → [&quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;e&quot;]</span></pre>
+
+<p><a class="p_ident" id="p-jOXUHI2bsN" href="#p-jOXUHI2bsN" tabindex="-1" role="presentation"></a>Se você passar a <code>concat</code> um argumento que não é um array, esse valor será adicionado ao novo array como se fosse um array de um elemento.</p>
+
+<h2><a class="h_ident" id="h-nml8OLw4cl" href="#h-nml8OLw4cl" tabindex="-1" role="presentation"></a>Strings e suas propriedades</h2>
+
+<p><a class="p_ident" id="p-BnN4Yf6XJA" href="#p-BnN4Yf6XJA" tabindex="-1" role="presentation"></a>Podemos ler propriedades como <code>length</code> e <code>toUpperCase</code> de valores de string. Mas se tentarmos adicionar uma nova propriedade, ela não persiste.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-xvzL9wErq7" href="#c-xvzL9wErq7" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">kim</span> = <span class="tok-string">&quot;Kim&quot;</span>;
+kim.age = <span class="tok-number">88</span>;
+console.log(kim.age);
+<span class="tok-comment">// → undefined</span></pre>
+
+<p><a class="p_ident" id="p-759zsWuAC4" href="#p-759zsWuAC4" tabindex="-1" role="presentation"></a>Valores do tipo string, number e Boolean não são objetos, e embora a linguagem não reclame se você tentar definir novas propriedades neles, na verdade não armazena essas propriedades. Como mencionado antes, tais valores são imutáveis e não podem ser alterados.</p>
+
+<p><a class="p_ident" id="p-G5d5tVuZQX" href="#p-G5d5tVuZQX" tabindex="-1" role="presentation"></a>Mas esses tipos têm propriedades embutidas. Toda string tem uma série de métodos. Alguns muito úteis são <code>slice</code> e <code>indexOf</code>, que se assemelham aos métodos de array com o mesmo nome:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-/Tmq1doYeG" href="#c-/Tmq1doYeG" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;coconuts&quot;</span>.slice(<span class="tok-number">4</span>, <span class="tok-number">7</span>));
+<span class="tok-comment">// → nut</span>
+console.log(<span class="tok-string">&quot;coconut&quot;</span>.indexOf(<span class="tok-string">&quot;u&quot;</span>));
+<span class="tok-comment">// → 5</span></pre>
+
+<p><a class="p_ident" id="p-Jlc4mE4PHe" href="#p-Jlc4mE4PHe" tabindex="-1" role="presentation"></a>Uma diferença é que o <code>indexOf</code> de uma string pode buscar uma string contendo mais de um caractere, enquanto o método de array correspondente busca apenas um único elemento:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-xM5/GBnZVG" href="#c-xM5/GBnZVG" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;one two three&quot;</span>.indexOf(<span class="tok-string">&quot;ee&quot;</span>));
+<span class="tok-comment">// → 11</span></pre>
+
+<p><a class="p_ident" id="p-XOHGWUYx3T" href="#p-XOHGWUYx3T" tabindex="-1" role="presentation"></a>O método <code>trim</code> remove espaços em branco (espaços, novas linhas, tabulações e caracteres similares) do início e do final de uma string:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-0AfLRWyjq0" href="#c-0AfLRWyjq0" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;  okay </span><span class="tok-string2">\n</span><span class="tok-string"> &quot;</span>.trim());
+<span class="tok-comment">// → okay</span></pre>
+
+<p id="padStart"><a class="p_ident" id="p-uJSC24zDkR" href="#p-uJSC24zDkR" tabindex="-1" role="presentation"></a>A função <code>zeroPad</code> do <a href="03_functions.html">capítulo anterior</a> também existe como método. É chamada <code>padStart</code> e recebe o comprimento desejado e o caractere de preenchimento como argumentos:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-SJbD9MiYu+" href="#c-SJbD9MiYu+" tabindex="-1" role="presentation"></a>console.log(String(<span class="tok-number">6</span>).padStart(<span class="tok-number">3</span>, <span class="tok-string">&quot;0&quot;</span>));
+<span class="tok-comment">// → 006</span></pre>
+
+<p id="split"><a class="p_ident" id="p-G7gFHyNJ+R" href="#p-G7gFHyNJ+R" tabindex="-1" role="presentation"></a>Você pode dividir uma string em cada ocorrência de outra string com <code>split</code> e juntá-la novamente com <code>join</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-/rV2Ed5e8V" href="#c-/rV2Ed5e8V" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">sentence</span> = <span class="tok-string">&quot;Secretarybirds specialize in stomping&quot;</span>;
+<span class="tok-keyword">let</span> <span class="tok-definition">words</span> = sentence.split(<span class="tok-string">&quot; &quot;</span>);
+console.log(words);
+<span class="tok-comment">// → [&quot;Secretarybirds&quot;, &quot;specialize&quot;, &quot;in&quot;, &quot;stomping&quot;]</span>
+console.log(words.join(<span class="tok-string">&quot;. &quot;</span>));
+<span class="tok-comment">// → Secretarybirds. specialize. in. stomping</span></pre>
+
+<p><a class="p_ident" id="p-M5v7Q2KnQp" href="#p-M5v7Q2KnQp" tabindex="-1" role="presentation"></a>Uma string pode ser repetida com o método <code>repeat</code>, que cria uma nova string contendo múltiplas cópias da string original, coladas juntas:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-70WotkNADb" href="#c-70WotkNADb" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;LA&quot;</span>.repeat(<span class="tok-number">3</span>));
+<span class="tok-comment">// → LALALA</span></pre>
+
+<p><a class="p_ident" id="p-0zZrccKeFn" href="#p-0zZrccKeFn" tabindex="-1" role="presentation"></a>Já vimos a propriedade <code>length</code> do tipo string. Acessar os caracteres individuais em uma string se parece com acessar elementos de um array (com uma complicação que discutiremos no <a href="05_higher_order.html#code_units">Capítulo 5</a>).</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Aeop9AuKAb" href="#c-Aeop9AuKAb" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">string</span> = <span class="tok-string">&quot;abc&quot;</span>;
+console.log(string.length);
+<span class="tok-comment">// → 3</span>
+console.log(string[<span class="tok-number">1</span>]);
+<span class="tok-comment">// → b</span></pre>
+
+<h2 id="rest_parameters"><a class="h_ident" id="h-5raXyQU2Gt" href="#h-5raXyQU2Gt" tabindex="-1" role="presentation"></a>Parâmetros rest</h2>
+
+<p><a class="p_ident" id="p-Xbxxpc6JIl" href="#p-Xbxxpc6JIl" tabindex="-1" role="presentation"></a>Pode ser útil para uma função aceitar qualquer número de argumentos. Por exemplo, <code>Math.max</code> calcula o máximo de <em>todos</em> os argumentos que recebe. Para escrever tal função, você coloca três pontos antes do último parâmetro da função, assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-UXPbyGFVIB" href="#c-UXPbyGFVIB" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">max</span>(...<span class="tok-definition">numbers</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">result</span> = -Infinity;
+  <span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">number</span> <span class="tok-keyword">of</span> numbers) {
+    <span class="tok-keyword">if</span> (number &gt; result) result = number;
+  }
+  <span class="tok-keyword">return</span> result;
+}
+console.log(max(<span class="tok-number">4</span>, <span class="tok-number">1</span>, <span class="tok-number">9</span>, -<span class="tok-number">2</span>));
+<span class="tok-comment">// → 9</span></pre>
+
+<p><a class="p_ident" id="p-QsO5xQcLBN" href="#p-QsO5xQcLBN" tabindex="-1" role="presentation"></a>Quando tal função é chamada, o <em>parâmetro rest</em> é vinculado a um array contendo todos os argumentos subsequentes. Se houver outros parâmetros antes dele, seus valores não fazem parte desse array. Quando, como em <code>max</code>, é o único parâmetro, ele conterá todos os argumentos.</p>
+
+<p><a class="p_ident" id="p-0yKbStg0ja" href="#p-0yKbStg0ja" tabindex="-1" role="presentation"></a>Você pode usar uma notação similar de três pontos para <em>chamar</em> uma função com um array de argumentos.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-h9hmTe3vix" href="#c-h9hmTe3vix" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">numbers</span> = [<span class="tok-number">5</span>, <span class="tok-number">1</span>, <span class="tok-number">7</span>];
+console.log(max(...numbers));
+<span class="tok-comment">// → 7</span></pre>
+
+<p><a class="p_ident" id="p-qLN1eGMw1W" href="#p-qLN1eGMw1W" tabindex="-1" role="presentation"></a>Isso “espalha” o array na chamada de função, passando seus elementos como argumentos separados. É possível incluir um array assim junto com outros argumentos, como em <code>max(9, .<wbr>.<wbr>.<wbr>numbers, 2)</code>.</p>
+
+<p><a class="p_ident" id="p-zmluC1U0rq" href="#p-zmluC1U0rq" tabindex="-1" role="presentation"></a>A notação de colchetes de array similarmente permite que o operador de três pontos espalhe outro array no novo array:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-4t+LJt3Kyo" href="#c-4t+LJt3Kyo" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">words</span> = [<span class="tok-string">&quot;never&quot;</span>, <span class="tok-string">&quot;fully&quot;</span>];
+console.log([<span class="tok-string">&quot;will&quot;</span>, ...words, <span class="tok-string">&quot;understand&quot;</span>]);
+<span class="tok-comment">// → [&quot;will&quot;, &quot;never&quot;, &quot;fully&quot;, &quot;understand&quot;]</span></pre>
+
+<p><a class="p_ident" id="p-MYhZmF3pMN" href="#p-MYhZmF3pMN" tabindex="-1" role="presentation"></a>Isso funciona até em objetos com chaves, onde adiciona todas as propriedades de outro objeto. Se uma propriedade é adicionada múltiplas vezes, o último valor a ser adicionado vence:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-R8ckVyEB1L" href="#c-R8ckVyEB1L" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">coordinates</span> = {<span class="tok-definition">x</span>: <span class="tok-number">10</span>, <span class="tok-definition">y</span>: <span class="tok-number">0</span>};
+console.log({...coordinates, <span class="tok-definition">y</span>: <span class="tok-number">5</span>, <span class="tok-definition">z</span>: <span class="tok-number">1</span>});
+<span class="tok-comment">// → {x: 10, y: 5, z: 1}</span></pre>
+
+<h2><a class="h_ident" id="h-LWsoTPNoSW" href="#h-LWsoTPNoSW" tabindex="-1" role="presentation"></a>O objeto Math</h2>
+
+<p><a class="p_ident" id="p-b9RDc0dNm5" href="#p-b9RDc0dNm5" tabindex="-1" role="presentation"></a>Como já vimos, <code>Math</code> é um saco de utilidades numéricas, como <code>Math.max</code> (máximo), <code>Math.min</code> (mínimo) e <code>Math.sqrt</code> (raiz quadrada).</p>
+
+<p id="namespace_pollution"><a class="p_ident" id="p-5aiZChh73t" href="#p-5aiZChh73t" tabindex="-1" role="presentation"></a>O objeto <code>Math</code> é usado como contêiner para agrupar funcionalidades relacionadas. Há apenas um objeto <code>Math</code>, e ele quase nunca é útil como valor. Em vez disso, ele fornece um <em>namespace</em> para que todas essas funções e valores não precisem ser bindings globais.</p>
+
+<p><a class="p_ident" id="p-53skDFo5oK" href="#p-53skDFo5oK" tabindex="-1" role="presentation"></a>Ter muitos bindings globais “polui” o namespace. Quanto mais nomes forem tomados, mais provável é que você acidentalmente sobrescreva o valor de algum binding existente. Por exemplo, não é improvável que você queira nomear algo como <code>max</code> em um de seus programas. Como a função <code>max</code> embutida do JavaScript está guardada com segurança dentro do objeto <code>Math</code>, você não precisa se preocupar em sobrescrevê-la.</p>
+
+<p><a class="p_ident" id="p-FMqQZcujlU" href="#p-FMqQZcujlU" tabindex="-1" role="presentation"></a>Muitas linguagens irão pará-lo, ou pelo menos avisá-lo, quando você estiver definindo um binding com um nome que já está tomado. JavaScript faz isso para bindings que você declarou com <code>let</code> ou <code>const</code> mas — perversamente — não para bindings padrão nem para bindings declarados com <code>var</code> ou <code>function</code>.</p>
+
+<p><a class="p_ident" id="p-zc/hCJVkFq" href="#p-zc/hCJVkFq" tabindex="-1" role="presentation"></a>De volta ao objeto <code>Math</code>. Se precisar fazer trigonometria, <code>Math</code> pode ajudar. Ele contém <code>cos</code> (cosseno), <code>sin</code> (seno) e <code>tan</code> (tangente), bem como suas funções inversas, <code>acos</code>, <code>asin</code> e <code>atan</code>, respectivamente. O número π (pi) — ou pelo menos a aproximação mais próxima que cabe em um número JavaScript — está disponível como <code>Math.PI</code>. Há uma velha tradição de programação de escrever os nomes de valores constantes em letras maiúsculas.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-54zxf+2nsU" href="#c-54zxf+2nsU" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">randomPointOnCircle</span>(<span class="tok-definition">radius</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">angle</span> = Math.random() * <span class="tok-number">2</span> * Math.PI;
+  <span class="tok-keyword">return</span> {<span class="tok-definition">x</span>: radius * Math.cos(angle),
+          <span class="tok-definition">y</span>: radius * Math.sin(angle)};
+}
+console.log(randomPointOnCircle(<span class="tok-number">2</span>));
+<span class="tok-comment">// → {x: 0.3667, y: 1.966}</span></pre>
+
+<p><a class="p_ident" id="p-yNut6cSJ9U" href="#p-yNut6cSJ9U" tabindex="-1" role="presentation"></a>Se você não está familiarizado com senos e cossenos, não se preocupe. Vou explicá-los quando forem usados no <a href="14_dom.html#sin_cos">Capítulo 14</a>.</p>
+
+<p><a class="p_ident" id="p-SLES2MeHTe" href="#p-SLES2MeHTe" tabindex="-1" role="presentation"></a>O exemplo anterior usou <code>Math.random</code>. Esta é uma função que retorna um novo número pseudoaleatório entre 0 (inclusivo) e 1 (exclusivo) toda vez que você a chama:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-+gqW4B1qk1" href="#c-+gqW4B1qk1" tabindex="-1" role="presentation"></a>console.log(Math.random());
+<span class="tok-comment">// → 0.36993729369714856</span>
+console.log(Math.random());
+<span class="tok-comment">// → 0.727367032552138</span>
+console.log(Math.random());
+<span class="tok-comment">// → 0.40180766698904335</span></pre>
+
+<p><a class="p_ident" id="p-KtPcsWJz3h" href="#p-KtPcsWJz3h" tabindex="-1" role="presentation"></a>Embora computadores sejam máquinas determinísticas — sempre reagem da mesma forma dado o mesmo input — é possível fazê-los produzir números que parecem aleatórios. Para fazer isso, a máquina mantém algum valor oculto, e sempre que você pede um novo número aleatório, ela realiza computações complicadas nesse valor oculto para criar um novo valor. Ela armazena um novo valor e retorna algum número derivado dele. Dessa forma, pode produzir números sempre novos e difíceis de prever de uma forma que <em>parece</em> aleatória.</p>
+
+<p><a class="p_ident" id="p-xV01m7eNEb" href="#p-xV01m7eNEb" tabindex="-1" role="presentation"></a>Se quisermos um número inteiro aleatório em vez de um fracionário, podemos usar <code>Math.floor</code> (que arredonda para baixo até o número inteiro mais próximo) no resultado de <code>Math.random</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-LlfOX4tbSH" href="#c-LlfOX4tbSH" tabindex="-1" role="presentation"></a>console.log(Math.floor(Math.random() * <span class="tok-number">10</span>));
+<span class="tok-comment">// → 2</span></pre>
+
+<p><a class="p_ident" id="p-POeqSe5bZD" href="#p-POeqSe5bZD" tabindex="-1" role="presentation"></a>Multiplicar o número aleatório por 10 nos dá um número maior ou igual a 0 e menor que 10. Como <code>Math.floor</code> arredonda para baixo, essa expressão produzirá, com chance igual, qualquer número de 0 a 9.</p>
+
+<p><a class="p_ident" id="p-GNxmX4nMwW" href="#p-GNxmX4nMwW" tabindex="-1" role="presentation"></a>Há também as funções <code>Math.ceil</code> (de “ceiling” ou “teto”, que arredonda para cima até um número inteiro), <code>Math.round</code> (para o número inteiro mais próximo) e <code>Math.abs</code>, que pega o valor absoluto de um número, significando que nega valores negativos mas deixa os positivos como estão.</p>
+
+<h2><a class="h_ident" id="h-lntnIGFaIF" href="#h-lntnIGFaIF" tabindex="-1" role="presentation"></a>Desestruturação</h2>
+
+<p><a class="p_ident" id="p-SjtxQMeojZ" href="#p-SjtxQMeojZ" tabindex="-1" role="presentation"></a>Vamos retornar à função <code>phi</code> por um momento.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-8p90ivE8ZI" href="#c-8p90ivE8ZI" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">phi</span>(<span class="tok-definition">table</span>) {
+  <span class="tok-keyword">return</span> (table[<span class="tok-number">3</span>] * table[<span class="tok-number">0</span>] - table[<span class="tok-number">2</span>] * table[<span class="tok-number">1</span>]) /
+    Math.sqrt((table[<span class="tok-number">2</span>] + table[<span class="tok-number">3</span>]) *
+              (table[<span class="tok-number">0</span>] + table[<span class="tok-number">1</span>]) *
+              (table[<span class="tok-number">1</span>] + table[<span class="tok-number">3</span>]) *
+              (table[<span class="tok-number">0</span>] + table[<span class="tok-number">2</span>]));
+}</pre>
+
+<p><a class="p_ident" id="p-kUTW6QUd4B" href="#p-kUTW6QUd4B" tabindex="-1" role="presentation"></a>Uma razão pela qual esta função é desajeitada de ler é que temos um binding apontando para nosso array, mas preferiríamos muito ter bindings para os <em>elementos</em> do array — ou seja, <code>let n00 = table[0]</code> e assim por diante. Felizmente, há uma forma sucinta de fazer isso em JavaScript:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-z2cboTL/zX" href="#c-z2cboTL/zX" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">phi</span>([<span class="tok-definition">n00</span>, <span class="tok-definition">n01</span>, <span class="tok-definition">n10</span>, <span class="tok-definition">n11</span>]) {
+  <span class="tok-keyword">return</span> (n11 * n00 - n10 * n01) /
+    Math.sqrt((n10 + n11) * (n00 + n01) *
+              (n01 + n11) * (n00 + n10));
+}</pre>
+
+<p><a class="p_ident" id="p-bn7DNMeAWa" href="#p-bn7DNMeAWa" tabindex="-1" role="presentation"></a>Isso também funciona para bindings criados com <code>let</code>, <code>var</code> ou <code>const</code>. Se você sabe que o valor que está vinculando é um array, pode usar colchetes para “olhar dentro” do valor, vinculando seu conteúdo.</p>
+
+<p><a class="p_ident" id="p-rz4KKmiJjt" href="#p-rz4KKmiJjt" tabindex="-1" role="presentation"></a>Um truque similar funciona para objetos, usando chaves em vez de colchetes.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-ZXEdn9Xbfc" href="#c-ZXEdn9Xbfc" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> {name} = {<span class="tok-definition">name</span>: <span class="tok-string">&quot;Faraji&quot;</span>, <span class="tok-definition">age</span>: <span class="tok-number">23</span>};
+console.log(name);
+<span class="tok-comment">// → Faraji</span></pre>
+
+<p><a class="p_ident" id="p-cD3B1YI1qB" href="#p-cD3B1YI1qB" tabindex="-1" role="presentation"></a>Note que se você tentar desestruturar <code>null</code> ou <code>undefined</code>, obterá um erro, assim como obteria se tentasse acessar diretamente uma propriedade desses valores.</p>
+
+<h2><a class="h_ident" id="h-BjwLy/Pikj" href="#h-BjwLy/Pikj" tabindex="-1" role="presentation"></a>Acesso opcional a propriedades</h2>
+
+<p><a class="p_ident" id="p-M6x1+xIxJx" href="#p-M6x1+xIxJx" tabindex="-1" role="presentation"></a>Quando você não tem certeza se um dado valor produz um objeto, mas ainda quer ler uma propriedade dele quando produz, pode usar uma variante da notação de ponto: <code>object?.property</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-DLFJL/nC30" href="#c-DLFJL/nC30" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">city</span>(<span class="tok-definition">object</span>) {
+  <span class="tok-keyword">return</span> object.address?.city;
+}
+console.log(city({<span class="tok-definition">address</span>: {<span class="tok-definition">city</span>: <span class="tok-string">&quot;Toronto&quot;</span>}}));
+<span class="tok-comment">// → Toronto</span>
+console.log(city({<span class="tok-definition">name</span>: <span class="tok-string">&quot;Vera&quot;</span>}));
+<span class="tok-comment">// → undefined</span></pre>
+
+<p><a class="p_ident" id="p-rCp6fFdFTt" href="#p-rCp6fFdFTt" tabindex="-1" role="presentation"></a>A expressão <code>a?.b</code> significa o mesmo que <code>a.b</code> quando <code>a</code> não é null nem undefined. Quando é, ela avalia para <code>undefined</code>. Isso pode ser conveniente quando, como no exemplo, você não tem certeza de que uma dada propriedade existe ou quando uma variável pode conter um valor indefinido.</p>
+
+<p><a class="p_ident" id="p-7FZzFwPHGx" href="#p-7FZzFwPHGx" tabindex="-1" role="presentation"></a>Uma notação similar pode ser usada com acesso por colchetes, e até com chamadas de função, colocando <code>?.</code> na frente dos parênteses ou colchetes:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Zkj/5F9HnZ" href="#c-Zkj/5F9HnZ" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;string&quot;</span>.notAMethod?.());
+<span class="tok-comment">// → undefined</span>
+console.log({}.arrayProp?.[<span class="tok-number">0</span>]);
+<span class="tok-comment">// → undefined</span></pre>
+
+<h2><a class="h_ident" id="h-AxpOdvCznQ" href="#h-AxpOdvCznQ" tabindex="-1" role="presentation"></a>JSON</h2>
+
+<p><a class="p_ident" id="p-WdKzT+uwX5" href="#p-WdKzT+uwX5" tabindex="-1" role="presentation"></a>Como propriedades agarram seu valor em vez de contê-lo, objetos e arrays são armazenados na memória do computador como sequências de bits contendo os <em>endereços</em> — o lugar na memória — de seu conteúdo. Um array com outro array dentro dele consiste em (pelo menos) uma região de memória para o array interno e outra para o array externo, contendo (entre outras coisas) um número que representa o endereço do array interno.</p>
+
+<p><a class="p_ident" id="p-eH4DF/F8yf" href="#p-eH4DF/F8yf" tabindex="-1" role="presentation"></a>Se você quer salvar dados em um arquivo para uso posterior ou enviá-los para outro computador pela rede, precisa de alguma forma converter esses emaranhados de endereços de memória em uma descrição que possa ser armazenada ou enviada. Você <em>poderia</em> enviar toda a memória do seu computador junto com o endereço do valor em que está interessado, suponho, mas essa não parece ser a melhor abordagem.</p>
+
+<p><a class="p_ident" id="p-zU2ngxnUKr" href="#p-zU2ngxnUKr" tabindex="-1" role="presentation"></a>O que podemos fazer é <em>serializar</em> os dados. Isso significa convertê-los em uma descrição plana. Um formato de serialização popular é chamado <em>JSON</em> (pronuncia-se “Jason”), que significa JavaScript Object Notation. É amplamente usado como formato de armazenamento e comunicação de dados na web, mesmo com linguagens diferentes de JavaScript.</p>
+
+<p><a class="p_ident" id="p-BzJ6EYWFh+" href="#p-BzJ6EYWFh+" tabindex="-1" role="presentation"></a>JSON se parece com a forma do JavaScript de escrever arrays e objetos, com algumas restrições. Todos os nomes de propriedades devem estar entre aspas duplas, e apenas expressões de dados simples são permitidas — sem chamadas de função, bindings ou qualquer coisa que envolva computação real. Comentários não são permitidos em JSON.</p>
+
+<p><a class="p_ident" id="p-VwbA71Hc/J" href="#p-VwbA71Hc/J" tabindex="-1" role="presentation"></a>Uma entrada de diário pode parecer assim quando representada como dados JSON:</p>
+
+<pre class="snippet" data-language="json" ><a class="c_ident" id="c-A3jdCqz1Q6" href="#c-A3jdCqz1Q6" tabindex="-1" role="presentation"></a>{
+  <span class="tok-string">&quot;squirrel&quot;</span>: false,
+  <span class="tok-string">&quot;events&quot;</span>: [<span class="tok-string">&quot;work&quot;</span>, <span class="tok-string">&quot;touched tree&quot;</span>, <span class="tok-string">&quot;pizza&quot;</span>, <span class="tok-string">&quot;running&quot;</span>]
+}</pre>
+
+<p><a class="p_ident" id="p-/9dGhAhzSD" href="#p-/9dGhAhzSD" tabindex="-1" role="presentation"></a>JavaScript nos dá as funções <code>JSON.stringify</code> e <code>JSON.parse</code> para converter dados de e para esse formato. A primeira recebe um valor JavaScript e retorna uma string codificada em JSON. A segunda recebe tal string e a converte no valor que ela codifica:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-HYCgCsK7z1" href="#c-HYCgCsK7z1" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">string</span> = JSON.stringify({<span class="tok-definition">squirrel</span>: false,
+                             <span class="tok-definition">events</span>: [<span class="tok-string">&quot;weekend&quot;</span>]});
+console.log(string);
+<span class="tok-comment">// → {&quot;squirrel&quot;:false,&quot;events&quot;:[&quot;weekend&quot;]}</span>
+console.log(JSON.parse(string).events);
+<span class="tok-comment">// → [&quot;weekend&quot;]</span></pre>
+
+<h2><a class="h_ident" id="h-741R75mvqx" href="#h-741R75mvqx" tabindex="-1" role="presentation"></a>Resumo</h2>
+
+<p><a class="p_ident" id="p-q47ler9b/P" href="#p-q47ler9b/P" tabindex="-1" role="presentation"></a>Objetos e arrays fornecem formas de agrupar vários valores em um único valor. Isso nos permite colocar um monte de coisas relacionadas em um saco e correr com o saco em vez de envolver nossos braços ao redor de todas as coisas individuais e tentar segurá-las separadamente.</p>
+
+<p><a class="p_ident" id="p-2WrcEuMC9J" href="#p-2WrcEuMC9J" tabindex="-1" role="presentation"></a>A maioria dos valores em JavaScript tem propriedades, com as exceções sendo <code>null</code> e <code>undefined</code>. Propriedades são acessadas usando <code>value.prop</code> ou <code>value[&quot;prop&quot;]</code>. Objetos tendem a usar nomes para suas propriedades e armazenar um conjunto mais ou menos fixo delas. Arrays, por outro lado, geralmente contêm quantidades variáveis de valores conceitualmente idênticos e usam números (começando de 0) como nomes de suas propriedades.</p>
+
+<p><a class="p_ident" id="p-99mfP1ROtb" href="#p-99mfP1ROtb" tabindex="-1" role="presentation"></a><em>Existem</em> algumas propriedades nomeadas em arrays, como <code>length</code> e uma série de métodos. Métodos são funções que vivem em propriedades e (geralmente) agem sobre o valor do qual são propriedade.</p>
+
+<p><a class="p_ident" id="p-wc0PaLuf7P" href="#p-wc0PaLuf7P" tabindex="-1" role="presentation"></a>Você pode iterar sobre arrays usando um tipo especial de loop <code>for</code>: <code>for (let element of array)</code>.</p>
+
+<h2><a class="h_ident" id="h-0CpJUZuhQJ" href="#h-0CpJUZuhQJ" tabindex="-1" role="presentation"></a>Exercícios</h2>
+
+<h3><a class="i_ident" id="i-RD7zl/fir/" href="#i-RD7zl/fir/" tabindex="-1" role="presentation"></a>A soma de um intervalo</h3>
+
+<p><a class="p_ident" id="p-YOePbavjGk" href="#p-YOePbavjGk" tabindex="-1" role="presentation"></a>A <a href="00_intro.html">introdução</a> deste livro aludiu ao seguinte como uma forma elegante de calcular a soma de um intervalo de números:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-KTbQMmMCli" href="#c-KTbQMmMCli" tabindex="-1" role="presentation"></a>console.log(sum(range(<span class="tok-number">1</span>, <span class="tok-number">10</span>)));</pre>
+
+<p><a class="p_ident" id="p-2OuBy3Mxng" href="#p-2OuBy3Mxng" tabindex="-1" role="presentation"></a>Escreva uma função <code>range</code> que recebe dois argumentos, <code>start</code> e <code>end</code>, e retorna um array contendo todos os números de <code>start</code> até e incluindo <code>end</code>.</p>
+
+<p><a class="p_ident" id="p-0KyJTJOojV" href="#p-0KyJTJOojV" tabindex="-1" role="presentation"></a>Em seguida, escreva uma função <code>sum</code> que recebe um array de números e retorna a soma desses números. Execute o programa de exemplo e veja se ele de fato retorna 55.</p>
+
+<p><a class="p_ident" id="p-uLotOwUVFL" href="#p-uLotOwUVFL" tabindex="-1" role="presentation"></a>Como tarefa bônus, modifique sua função <code>range</code> para receber um terceiro argumento opcional que indica o valor de “passo” usado ao construir o array. Se nenhum passo for dado, os elementos devem subir em incrementos de um, correspondendo ao comportamento antigo. A chamada de função <code>range(1, 10, 2)</code> deve retornar <code>[1, 3, 5, 7, 9]</code>. Certifique-se de que isso também funciona com valores de passo negativos para que <code>range(5, 2, -1)</code> produza <code>[5, 4, 3, 2]</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-2ZqXBezigj" href="#c-2ZqXBezigj" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span>
+
+console.log(range(<span class="tok-number">1</span>, <span class="tok-number">10</span>));
+<span class="tok-comment">// → [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span>
+console.log(range(<span class="tok-number">5</span>, <span class="tok-number">2</span>, -<span class="tok-number">1</span>));
+<span class="tok-comment">// → [5, 4, 3, 2]</span>
+console.log(sum(range(<span class="tok-number">1</span>, <span class="tok-number">10</span>)));
+<span class="tok-comment">// → 55</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-4UDSOnFwFd" href="#p-4UDSOnFwFd" tabindex="-1" role="presentation"></a>Construir um array é mais facilmente feito inicializando primeiro um binding com <code>[]</code> (um novo array vazio) e chamando repetidamente seu método <code>push</code> para adicionar um valor. Não se esqueça de retornar o array no final da função.</p>
+
+<p><a class="p_ident" id="p-mhlMpszq75" href="#p-mhlMpszq75" tabindex="-1" role="presentation"></a>Como o limite final é inclusivo, você precisará usar o operador <code>&lt;=</code> em vez de <code>&lt;</code> para verificar o final do seu loop.</p>
+
+<p><a class="p_ident" id="p-DdqwQLvYra" href="#p-DdqwQLvYra" tabindex="-1" role="presentation"></a>O parâmetro de passo pode ser um parâmetro opcional que tem como padrão (usando o operador <code>=</code>) o valor 1.</p>
+
+<p><a class="p_ident" id="p-9rz0rfEeXx" href="#p-9rz0rfEeXx" tabindex="-1" role="presentation"></a>Fazer <code>range</code> entender valores de passo negativos é provavelmente melhor feito escrevendo dois loops separados — um para contar para cima e um para contar para baixo — porque a comparação que verifica se o loop terminou precisa ser <code>&gt;=</code> em vez de <code>&lt;=</code> quando contando para baixo.</p>
+
+<p><a class="p_ident" id="p-72+YyZj1aq" href="#p-72+YyZj1aq" tabindex="-1" role="presentation"></a>Também pode valer a pena usar um passo padrão diferente, nomeadamente -1, quando o final do intervalo é menor que o início. Dessa forma, <code>range(5, 2)</code> retorna algo significativo em vez de ficar preso em um loop infinito. É possível se referir a parâmetros anteriores no valor padrão de um parâmetro.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-pXelF2fiRp" href="#i-pXelF2fiRp" tabindex="-1" role="presentation"></a>Invertendo um array</h3>
+
+<p><a class="p_ident" id="p-wXWqghoYb+" href="#p-wXWqghoYb+" tabindex="-1" role="presentation"></a>Arrays têm um método <code>reverse</code> que muda o array invertendo a ordem em que seus elementos aparecem. Para este exercício, escreva duas funções, <code>reverseArray</code> e <code>reverseArrayInPlace</code>. A primeira, <code>reverseArray</code>, deve receber um array como argumento e produzir um <em>novo</em> array que tem os mesmos elementos na ordem inversa. A segunda, <code>reverseArrayInPlace</code>, deve fazer o que o método <code>reverse</code> faz: <em>modificar</em> o array dado como argumento invertendo seus elementos. Nenhuma das duas pode usar o método <code>reverse</code> padrão.</p>
+
+<p><a class="p_ident" id="p-eXD5sqK33w" href="#p-eXD5sqK33w" tabindex="-1" role="presentation"></a>Pensando nas notas sobre efeitos colaterais e funções puras no <a href="03_functions.html#pure">capítulo anterior</a>, qual variante você espera ser útil em mais situações? Qual é mais rápida?</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-u6C6drLhht" href="#c-u6C6drLhht" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span>
+
+<span class="tok-keyword">let</span> <span class="tok-definition">myArray</span> = [<span class="tok-string">&quot;A&quot;</span>, <span class="tok-string">&quot;B&quot;</span>, <span class="tok-string">&quot;C&quot;</span>];
+console.log(reverseArray(myArray));
+<span class="tok-comment">// → [&quot;C&quot;, &quot;B&quot;, &quot;A&quot;];</span>
+console.log(myArray);
+<span class="tok-comment">// → [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;];</span>
+<span class="tok-keyword">let</span> <span class="tok-definition">arrayValue</span> = [<span class="tok-number">1</span>, <span class="tok-number">2</span>, <span class="tok-number">3</span>, <span class="tok-number">4</span>, <span class="tok-number">5</span>];
+reverseArrayInPlace(arrayValue);
+console.log(arrayValue);
+<span class="tok-comment">// → [5, 4, 3, 2, 1]</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-UAK+vPqynN" href="#p-UAK+vPqynN" tabindex="-1" role="presentation"></a>Existem duas formas óbvias de implementar <code>reverseArray</code>. A primeira é simplesmente percorrer o array de entrada da frente para trás e usar o método <code>unshift</code> no novo array para inserir cada elemento no seu início. A segunda é percorrer o array de entrada de trás para frente e usar o método <code>push</code>. Iterar sobre um array de trás para frente requer uma especificação <code>for</code> (um tanto desajeitada), como <code>(let i = array.<wbr>length - 1; i &gt;= 0; i--)</code>.</p>
+
+<p><a class="p_ident" id="p-k0AxWneMjY" href="#p-k0AxWneMjY" tabindex="-1" role="presentation"></a>Inverter o array no lugar é mais difícil. Você precisa ter cuidado para não sobrescrever elementos que precisará depois. Usar <code>reverseArray</code> ou copiar o array inteiro (<code>array.slice()</code> é uma boa forma de copiar um array) funciona mas é trapaça.</p>
+
+<p><a class="p_ident" id="p-e05llYqVGD" href="#p-e05llYqVGD" tabindex="-1" role="presentation"></a>O truque é <em>trocar</em> o primeiro e o último elementos, depois o segundo e o penúltimo, e assim por diante. Você pode fazer isso percorrendo metade do comprimento do array (use <code>Math.floor</code> para arredondar para baixo — você não precisa tocar o elemento do meio em um array com número ímpar de elementos) e trocando o elemento na posição <code>i</code> com o da posição <code>array.<wbr>length - 1 - i</code>. Você pode usar um binding local para manter brevemente um dos elementos, sobrescrever aquele com sua imagem espelhada e então colocar o valor do binding local no lugar onde a imagem espelhada estava.</p>
+
+</div></details>
+
+<h3 id="list"><a class="i_ident" id="i-H8zjQuaws6" href="#i-H8zjQuaws6" tabindex="-1" role="presentation"></a>Uma lista</h3>
+
+<p><a class="p_ident" id="p-oN2arfN7YW" href="#p-oN2arfN7YW" tabindex="-1" role="presentation"></a>Como blobs genéricos de valores, objetos podem ser usados para construir todo tipo de estruturas de dados. Uma estrutura de dados comum é a <em>lista</em> (não confundir com arrays). Uma lista é um conjunto aninhado de objetos, com o primeiro objeto contendo uma referência ao segundo, o segundo ao terceiro, e assim por diante:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-kYAco70aHD" href="#c-kYAco70aHD" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">list</span> = {
+  <span class="tok-definition">value</span>: <span class="tok-number">1</span>,
+  <span class="tok-definition">rest</span>: {
+    <span class="tok-definition">value</span>: <span class="tok-number">2</span>,
+    <span class="tok-definition">rest</span>: {
+      <span class="tok-definition">value</span>: <span class="tok-number">3</span>,
+      <span class="tok-definition">rest</span>: <span class="tok-keyword">null</span>
+    }
+  }
+};</pre>
+
+<p><a class="p_ident" id="p-gxG3m1889a" href="#p-gxG3m1889a" tabindex="-1" role="presentation"></a>Os objetos resultantes formam uma cadeia, como mostrado no diagrama a seguir:</p><figure><img src="img/linked-list.svg" alt="A diagram showing the memory structure of a linked list. There are 3 cells, each with a value field holding a number, and a 'rest' field with an arrow to the rest of the list. The first cell's arrow points at the second cell, the second cell's arrow at the last cell, and the last cell's 'rest' field holds null."></figure>
+
+<p><a class="p_ident" id="p-g/hgUzrjp8" href="#p-g/hgUzrjp8" tabindex="-1" role="presentation"></a>Uma coisa legal sobre listas é que elas podem compartilhar partes de sua estrutura. Por exemplo, se eu criar dois novos valores <code>{value: 0, rest: list}</code> e <code>{value: -1, rest: list}</code> (com <code>list</code> se referindo ao binding definido antes), ambos são listas independentes, mas compartilham a estrutura que compõe seus últimos três elementos. A lista original também continua sendo uma lista válida de três elementos.</p>
+
+<p><a class="p_ident" id="p-NDd3odFuJE" href="#p-NDd3odFuJE" tabindex="-1" role="presentation"></a>Escreva uma função <code>arrayToList</code> que constrói uma estrutura de lista como a mostrada quando recebe <code>[1, 2, 3]</code> como argumento. Também escreva uma função <code>listToArray</code> que produz um array a partir de uma lista. Adicione as funções auxiliares <code>prepend</code>, que recebe um elemento e uma lista e cria uma nova lista que adiciona o elemento à frente da lista de entrada, e <code>nth</code>, que recebe uma lista e um número e retorna o elemento na posição dada na lista (com zero se referindo ao primeiro elemento) ou <code>undefined</code> quando não há tal elemento.</p>
+
+<p><a class="p_ident" id="p-qyADK7fLmy" href="#p-qyADK7fLmy" tabindex="-1" role="presentation"></a>Se ainda não o fez, também escreva uma versão recursiva de <code>nth</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-UT958Ym38y" href="#c-UT958Ym38y" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span>
+
+console.log(arrayToList([<span class="tok-number">10</span>, <span class="tok-number">20</span>]));
+<span class="tok-comment">// → {value: 10, rest: {value: 20, rest: null}}</span>
+console.log(listToArray(arrayToList([<span class="tok-number">10</span>, <span class="tok-number">20</span>, <span class="tok-number">30</span>])));
+<span class="tok-comment">// → [10, 20, 30]</span>
+console.log(prepend(<span class="tok-number">10</span>, prepend(<span class="tok-number">20</span>, <span class="tok-keyword">null</span>)));
+<span class="tok-comment">// → {value: 10, rest: {value: 20, rest: null}}</span>
+console.log(nth(arrayToList([<span class="tok-number">10</span>, <span class="tok-number">20</span>, <span class="tok-number">30</span>]), <span class="tok-number">1</span>));
+<span class="tok-comment">// → 20</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-TiOI48qkhZ" href="#p-TiOI48qkhZ" tabindex="-1" role="presentation"></a>Construir uma lista é mais fácil quando feito de trás para frente. Então <code>arrayToList</code> poderia iterar sobre o array de trás para frente (veja o exercício anterior) e, para cada elemento, adicionar um objeto à lista. Você pode usar um binding local para manter a parte da lista que foi construída até agora e usar uma atribuição como <code>list = {value: X, rest: list}</code> para adicionar um elemento.</p>
+
+<p><a class="p_ident" id="p-Vess6D+37T" href="#p-Vess6D+37T" tabindex="-1" role="presentation"></a>Para percorrer uma lista (em <code>listToArray</code> e <code>nth</code>), uma especificação de loop <code>for</code> como esta pode ser usada:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-HLrOQGihFR" href="#c-HLrOQGihFR" tabindex="-1" role="presentation"></a><span class="tok-keyword">for</span> (<span class="tok-keyword">let</span> <span class="tok-definition">node</span> = list; node; node = node.rest) {}</pre>
+
+<p><a class="p_ident" id="p-Z+AzhwhiHd" href="#p-Z+AzhwhiHd" tabindex="-1" role="presentation"></a>Consegue ver como funciona? A cada iteração do loop, <code>node</code> aponta para a sublista atual, e o corpo pode ler sua propriedade <code>value</code> para obter o elemento atual. No final de uma iteração, <code>node</code> avança para a próxima sublista. Quando é <code>null</code>, chegamos ao final da lista, e o loop termina.</p>
+
+<p><a class="p_ident" id="p-1F0o8+v/EV" href="#p-1F0o8+v/EV" tabindex="-1" role="presentation"></a>A versão recursiva de <code>nth</code> vai, similarmente, olhar para uma parte cada vez menor da “cauda” da lista e ao mesmo tempo contar o índice para baixo até chegar a zero, momento em que pode retornar a propriedade <code>value</code> do nó que está olhando. Para obter o elemento zero de uma lista, basta pegar a propriedade <code>value</code> de seu nó cabeça. Para obter o elemento <em>N</em> + 1, você pega o <em>N</em>-ésimo elemento da lista que está na propriedade <code>rest</code> desta lista.</p>
+
+</div></details>
+
+<h3 id="exercise_deep_compare"><a class="i_ident" id="i-yKlaeYBR00" href="#i-yKlaeYBR00" tabindex="-1" role="presentation"></a>Comparação profunda</h3>
+
+<p><a class="p_ident" id="p-d+QP1yN0+O" href="#p-d+QP1yN0+O" tabindex="-1" role="presentation"></a>O operador <code>==</code> compara objetos por identidade, mas às vezes você prefere comparar os valores de suas propriedades reais.</p>
+
+<p><a class="p_ident" id="p-AmrJLDE6EM" href="#p-AmrJLDE6EM" tabindex="-1" role="presentation"></a>Escreva uma função <code>deepEqual</code> que recebe dois valores e retorna <code>true</code> apenas se eles forem o mesmo valor ou forem objetos com as mesmas propriedades, onde os valores das propriedades são iguais quando comparados com uma chamada recursiva a <code>deepEqual</code>.</p>
+
+<p><a class="p_ident" id="p-IvWafbH0rj" href="#p-IvWafbH0rj" tabindex="-1" role="presentation"></a>Para descobrir se valores devem ser comparados diretamente (usando o operador <code>===</code> para isso) ou ter suas propriedades comparadas, você pode usar o operador <code>typeof</code>. Se ele produzir <code>&quot;object&quot;</code> para ambos os valores, você deve fazer uma comparação profunda. Mas precisa considerar uma exceção boba: por um acidente histórico, <code>typeof null</code> também produz <code>&quot;object&quot;</code>.</p>
+
+<p><a class="p_ident" id="p-F12kXb6exg" href="#p-F12kXb6exg" tabindex="-1" role="presentation"></a>A função <code>Object.keys</code> será útil quando você precisar percorrer as propriedades dos objetos para compará-los.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-wuwsvxwaTX" href="#c-wuwsvxwaTX" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span>
+
+<span class="tok-keyword">let</span> <span class="tok-definition">obj</span> = {<span class="tok-definition">here</span>: {<span class="tok-definition">is</span>: <span class="tok-string">&quot;an&quot;</span>}, <span class="tok-definition">object</span>: <span class="tok-number">2</span>};
+console.log(deepEqual(obj, obj));
+<span class="tok-comment">// → true</span>
+console.log(deepEqual(obj, {<span class="tok-definition">here</span>: <span class="tok-number">1</span>, <span class="tok-definition">object</span>: <span class="tok-number">2</span>}));
+<span class="tok-comment">// → false</span>
+console.log(deepEqual(obj, {<span class="tok-definition">here</span>: {<span class="tok-definition">is</span>: <span class="tok-string">&quot;an&quot;</span>}, <span class="tok-definition">object</span>: <span class="tok-number">2</span>}));
+<span class="tok-comment">// → true</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-QvGhhLzmsn" href="#p-QvGhhLzmsn" tabindex="-1" role="presentation"></a>Seu teste para se você está lidando com um objeto real se parecerá com algo como <code>typeof x == &quot;object&quot; &amp;&amp; x != null</code>. Tenha cuidado para comparar propriedades apenas quando <em>ambos</em> os argumentos forem objetos. Em todos os outros casos, você pode simplesmente retornar imediatamente o resultado de aplicar <code>===</code>.</p>
+
+<p><a class="p_ident" id="p-g9s4EtY95M" href="#p-g9s4EtY95M" tabindex="-1" role="presentation"></a>Use <code>Object.keys</code> para percorrer as propriedades. Você precisa testar se ambos os objetos têm o mesmo conjunto de nomes de propriedades e se essas propriedades têm valores idênticos. Uma forma de fazer isso é garantir que ambos os objetos tenham o mesmo número de propriedades (os comprimentos das listas de propriedades são os mesmos). E então, ao percorrer as propriedades de um dos objetos para compará-las, sempre primeiro certifique-se de que o outro realmente tem uma propriedade com aquele nome. Se tiverem o mesmo número de propriedades e todas as propriedades de um também existirem no outro, eles têm o mesmo conjunto de nomes de propriedades.</p>
+
+<p><a class="p_ident" id="p-9JUP90o1Iy" href="#p-9JUP90o1Iy" tabindex="-1" role="presentation"></a>Retornar o valor correto da função é melhor feito retornando imediatamente <code>false</code> quando uma diferença é encontrada e retornando <code>true</code> no final da função.</p>
+
+</div></details><nav><a href="03_functions.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="05_higher_order.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

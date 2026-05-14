@@ -1,5 +1,9 @@
 # JavaScript Eloquente — 4ª edição
 
+<p align="center">
+  <img src="img/cover.jpg" alt="Capa de JavaScript Eloquente, 4ª edição" width="300">
+</p>
+
 **Uma introdução moderna ao JavaScript, programação e maravilhas digitais.**
 
 Tradução em Português Brasileiro do livro [Eloquent JavaScript](https://eloquentjavascript.net/) de Marijn Haverbeke.

@@ -32,7 +32,7 @@
     "mold-template": "^2.0.1"
   },
   "devDependencies": {
-    "jsdom": "^20.0.0",
+    "jsdom": "^29.1.1",
     "promise": "^8.0.1"
   },
   "scripts": {

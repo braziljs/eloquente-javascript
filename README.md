@@ -45,3 +45,7 @@ Tradução em Português Brasileiro do livro [Eloquent JavaScript](https://eloqu
 - **Tradução:** Comunidade BrazilJS
 - [Versão original em inglês](https://eloquentjavascript.net/)
 - Licenciado sob [Creative Commons BY-NC 3.0](http://creativecommons.org/licenses/by-nc/3.0/)
+
+### Colaboradores
+
+[Lista completa no GitHub](https://github.com/braziljs/eloquente-javascript/graphs/contributors) — tradução, revisão e infraestrutura ao longo dos anos pela Comunidade BrazilJS. Obrigado a todas e todos.

@@ -1,8 +1,6 @@
 # JavaScript Eloquente — 4ª edição
 
-<p align="center">
-  <img src="img/cover.jpg" alt="Capa de JavaScript Eloquente, 4ª edição" width="300">
-</p>
+<img src="img/cover.jpg" alt="Capa de JavaScript Eloquente, 4ª edição" width="300">
 
 **Uma introdução moderna ao JavaScript, programação e maravilhas digitais.**
 

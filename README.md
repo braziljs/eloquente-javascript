@@ -7,6 +7,8 @@
 Tradução em Português Brasileiro do livro [Eloquent JavaScript](https://eloquentjavascript.net/) de Marijn Haverbeke.
 
 **Ler online:** <https://braziljs.github.io/eloquente-javascript/>
+**Baixar PDF:** <https://braziljs.github.io/eloquente-javascript/JavaScript_Eloquente.pdf>
+**Baixar EPUB:** <https://braziljs.github.io/eloquente-javascript/JavaScript_Eloquente.epub>
 
 ## Conteúdo
 

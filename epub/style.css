@@ -1,0 +1,160 @@
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 700;
+  src: url(font/cinzel_bold.otf);
+}
+
+@font-face {
+  font-family: 'PT Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url(font/pt_mono.otf);
+}
+
+body {
+  font-family: Georgia, 'Nimbus Roman No9 L', 'Century Schoolbook L', serif;
+  font-size: 100%;
+  line-height: 1.45;
+  color: black;
+  background: white;
+  text-align: left;
+}
+
+article {
+  padding: 2em 0 5em 0;
+}
+
+pre {
+  padding: 5px 0 5px 15px;
+  line-height: 1.35;
+  margin: 1rem 0;
+  position: relative;
+  font-size: 90%;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+code, pre {
+  font-family: 'PT Mono', monospace;
+}
+
+code {
+  padding: 0 2px;
+}
+
+h1, h2, h3 {
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 700;
+  margin: 1rem 0;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: 130%;
+}
+h2 {
+  font-size: 115%;
+}
+h3 {
+  font-size: 100%;
+}
+
+div.chap_num {
+  font-family: 'Cinzel', Georgia, serif;
+  margin-bottom: -0.8rem;
+}
+
+blockquote {
+  margin: 0 0 0 3em;
+  padding: 0;
+  font-size: 85%;
+}
+
+blockquote p {
+  color: #333;
+}
+
+blockquote p:first-of-type:before {
+  content: '“';
+}
+
+blockquote p:last-of-type:after {
+  content: '”';
+}
+
+p + footer {
+  margin-top: -.5em;
+}
+
+blockquote footer cite {
+  font-style: italic;
+}
+
+blockquote footer:before {
+  content: '—';
+}
+
+figure img {
+  max-width: 80%;
+  margin-left: 30px;
+}
+
+figure.chapter {
+  text-align: center;
+  margin: 3em 0 2em;
+}
+
+figure.chapter img {
+  max-width: 75%;
+}
+
+figure.framed img {
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+span.keyname { font-variant: small-caps }
+
+td {
+  vertical-align: top;
+}
+
+td + td {
+  padding-left: 1em;
+}
+
+table {
+  margin-left: 15px;
+}
+
+sub, sup {
+  line-height: 1;
+}
+
+sub {
+  font-size: 60%;
+}
+sup {
+  font-size: 70%;
+}
+
+ol li p {
+  margin: 0;
+}
+
+/* Syntax highlighting */
+.cm-keyword {color: #506;}
+.cm-atom {color: #106;}
+.cm-number {color: #042;}
+.cm-def {color: #009;}
+.cm-variable-2, .cm-attribute {color: #027;}
+.cm-variable-3 {color: #072;}
+.cm-comment {color: #740;}
+.cm-string {color: #700;}
+.cm-string-2 {color: #740;}
+.cm-tag {color: #170;}
+.cm-keyword {color: #708;}
+.cm-atom {color: #219;}
+.cm-number {color: #164;}
+.cm-def {color: #00f;}

@@ -1,0 +1,181 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavaScript e o Navegador :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":13}</script></head>
+
+<article>
+<nav><a href="12_language.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="14_dom.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>JavaScript e o Navegador</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-QvqpbswJB1" href="#p-QvqpbswJB1" tabindex="-1" role="presentation"></a>The dream behind the web is of a common information space in which we communicate by sharing information. Its universality is essential: the fact that a hypertext link can point to anything, be it personal, local or global, be it draft or highly polished.</p>
+
+<footer>Tim Berners-Lee, <cite>The World Wide Web: A Very Short Personal History</cite></footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_13.jpg" alt="Illustration showing a telephone switchboard"></figure>
+
+<p><a class="p_ident" id="p-Hhl4Z+jULw" href="#p-Hhl4Z+jULw" tabindex="-1" role="presentation"></a>Os próximos capítulos deste livro discutirão navegadores web. Sem navegadores, não haveria JavaScript — ou se houvesse, ninguém jamais teria prestado atenção nele.</p>
+
+<p><a class="p_ident" id="p-ydV6Se+vjq" href="#p-ydV6Se+vjq" tabindex="-1" role="presentation"></a>A tecnologia web tem sido descentralizada desde o início, não apenas tecnicamente, mas também na forma como evoluiu. Vários fabricantes de navegadores adicionaram novas funcionalidades de forma improvisada e às vezes mal pensada, as quais foram então — às vezes — adotadas por outros, e finalmente estabelecidas em padrões.</p>
+
+<p><a class="p_ident" id="p-4nYYiUPFL3" href="#p-4nYYiUPFL3" tabindex="-1" role="presentation"></a>Isso é tanto uma bênção quanto uma maldição. Por um lado, é empoderador não ter uma entidade central controlando um sistema, mas tê-lo sendo melhorado por diversas partes trabalhando em colaboração frouxa (ou ocasionalmente, hostilidade aberta). Por outro lado, a forma desordenada como a web foi desenvolvida significa que o sistema resultante não é exatamente um exemplo brilhante de consistência interna. Algumas partes são francamente confusas e mal projetadas.</p>
+
+<h2><a class="h_ident" id="h-OzWncSOaJ6" href="#h-OzWncSOaJ6" tabindex="-1" role="presentation"></a>Redes e a Internet</h2>
+
+<p><a class="p_ident" id="p-3+9AYaqf33" href="#p-3+9AYaqf33" tabindex="-1" role="presentation"></a>Redes de computadores existem desde os anos 1950. Se você colocar cabos entre dois ou mais computadores e permitir que eles enviem dados de um lado para outro através desses cabos, você pode fazer todo tipo de coisas maravilhosas.</p>
+
+<p><a class="p_ident" id="p-mDqtEax/oD" href="#p-mDqtEax/oD" tabindex="-1" role="presentation"></a>Se conectar duas máquinas no mesmo prédio nos permite fazer coisas maravilhosas, conectar máquinas por todo o planeta deve ser ainda melhor. A tecnologia para começar a implementar essa visão foi desenvolvida nos anos 1980, e a rede resultante é chamada de <em>internet</em>. Ela correspondeu à sua promessa.</p>
+
+<p><a class="p_ident" id="p-p4sYg2tKE/" href="#p-p4sYg2tKE/" tabindex="-1" role="presentation"></a>Um computador pode usar essa rede para enviar bits a outro computador. Para que qualquer comunicação efetiva surja desse envio de bits, os computadores em ambos os lados devem saber o que os bits devem representar. O significado de qualquer sequência de bits depende inteiramente do tipo de coisa que está tentando expressar e do mecanismo de codificação usado.</p>
+
+<p><a class="p_ident" id="p-BNL9kERcUX" href="#p-BNL9kERcUX" tabindex="-1" role="presentation"></a>Um <em>protocolo de rede</em> descreve um estilo de comunicação sobre uma rede. Existem protocolos para enviar e-mail, para buscar e-mail, para compartilhar arquivos, e até para controlar computadores que foram infectados por software malicioso.</p>
+
+<p><a class="p_ident" id="p-/wFEaWpMfZ" href="#p-/wFEaWpMfZ" tabindex="-1" role="presentation"></a>O <em>Protocolo de Transferência de Hipertexto</em> (HTTP) é um protocolo para recuperar recursos nomeados (pedaços de informação, como páginas web ou imagens). Ele especifica que o lado que faz a requisição deve começar com uma linha como esta, nomeando o recurso e a versão do protocolo que está tentando usar:</p>
+
+<pre class="snippet" data-language="http" ><a class="c_ident" id="c-lC/Gwm2hWr" href="#c-lC/Gwm2hWr" tabindex="-1" role="presentation"></a><span class="tok-keyword">GET</span> <span class="tok-string2">/index.html</span> <span class="tok-keyword">HTTP/1.1</span></pre>
+
+<p><a class="p_ident" id="p-gDUVKjOpCN" href="#p-gDUVKjOpCN" tabindex="-1" role="presentation"></a>Existem muito mais regras sobre como o requisitante pode incluir mais informações na requisição e como o outro lado, que retorna o recurso, empacota seu conteúdo. Veremos o HTTP com um pouco mais de detalhe no <a href="18_http.html">Capítulo 18</a>.</p>
+
+<p><a class="p_ident" id="p-XLF+O4YF9q" href="#p-XLF+O4YF9q" tabindex="-1" role="presentation"></a>A maioria dos protocolos é construída sobre outros protocolos. O HTTP trata a rede como um dispositivo semelhante a um fluxo no qual você pode colocar bits e fazer com que cheguem ao destino correto na ordem correta. Fornecer essas garantias sobre o envio primitivo de dados que a rede oferece já é um problema bastante complicado.</p>
+
+<p><a class="p_ident" id="p-56kFi/tZAc" href="#p-56kFi/tZAc" tabindex="-1" role="presentation"></a>O <em>Protocolo de Controle de Transmissão</em> (TCP) é um protocolo que resolve esse problema. Todos os dispositivos conectados à internet o “falam”, e a maior parte da comunicação na internet é construída sobre ele.</p>
+
+<p><a class="p_ident" id="p-Me7D6xtluD" href="#p-Me7D6xtluD" tabindex="-1" role="presentation"></a>Uma conexão TCP funciona da seguinte forma: um computador deve estar esperando, ou <em>escutando</em>, que outros computadores comecem a falar com ele. Para poder escutar diferentes tipos de comunicação ao mesmo tempo em uma única máquina, cada ouvinte tem um número (chamado de <em>porta</em>) associado a ele. A maioria dos protocolos especifica qual porta deve ser usada por padrão. Por exemplo, quando queremos enviar um e-mail usando o protocolo SMTP, a máquina pela qual o enviamos deve estar escutando na porta 25.</p>
+
+<p><a class="p_ident" id="p-k+tzQgXbii" href="#p-k+tzQgXbii" tabindex="-1" role="presentation"></a>Outro computador pode então estabelecer uma conexão conectando-se à máquina alvo usando o número de porta correto. Se a máquina alvo puder ser alcançada e estiver escutando naquela porta, a conexão é criada com sucesso. O computador que escuta é chamado de <em>servidor</em>, e o computador que se conecta é chamado de <em>cliente</em>.</p>
+
+<p><a class="p_ident" id="p-ZXeWAPs34o" href="#p-ZXeWAPs34o" tabindex="-1" role="presentation"></a>Tal conexão funciona como um tubo de mão dupla por onde bits podem fluir — as máquinas em ambos os lados podem colocar dados nele. Uma vez que os bits são transmitidos com sucesso, eles podem ser lidos novamente pela máquina do outro lado. Este é um modelo conveniente. Pode-se dizer que o TCP fornece uma abstração da rede.</p>
+
+<h2 id="web"><a class="h_ident" id="h-rnopUvcYA8" href="#h-rnopUvcYA8" tabindex="-1" role="presentation"></a>A Web</h2>
+
+<p><a class="p_ident" id="p-6tJgBrsq0Z" href="#p-6tJgBrsq0Z" tabindex="-1" role="presentation"></a>A <em>World Wide Web</em> (que não deve ser confundida com a internet como um todo) é um conjunto de protocolos e formatos que nos permite visitar páginas web em um navegador. A palavra <em>Web</em> se refere ao fato de que tais páginas podem facilmente se vincular umas às outras, conectando-se assim em uma enorme malha pela qual os usuários podem navegar.</p>
+
+<p><a class="p_ident" id="p-E5NF/RN1Op" href="#p-E5NF/RN1Op" tabindex="-1" role="presentation"></a>Para se tornar parte da web, tudo que você precisa fazer é conectar uma máquina à internet e fazê-la escutar na porta 80 com o protocolo HTTP para que outros computadores possam pedir documentos a ela.</p>
+
+<p><a class="p_ident" id="p-RIjjkQCDwp" href="#p-RIjjkQCDwp" tabindex="-1" role="presentation"></a>Cada documento na web é nomeado por um <em>localizador uniforme de recursos</em> (URL), que se parece com algo assim:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-gA+LuLTTKM" href="#c-gA+LuLTTKM" tabindex="-1" role="presentation"></a>  http://eloquentjavascript.net/13_browser.html
+ |      |                      |               |
+ protocolo     servidor               caminho</pre>
+
+<p><a class="p_ident" id="p-+1XeGRYk6M" href="#p-+1XeGRYk6M" tabindex="-1" role="presentation"></a>A primeira parte nos diz que essa URL usa o protocolo HTTP (ao contrário, por exemplo, de HTTP criptografado, que seria <em>https://</em>). Em seguida vem a parte que identifica de qual servidor estamos solicitando o documento. Por último vem uma string de caminho que identifica o documento (ou <em>recurso</em>) em que estamos interessados.</p>
+
+<p><a class="p_ident" id="p-xeTKJB99iI" href="#p-xeTKJB99iI" tabindex="-1" role="presentation"></a>Máquinas conectadas à internet recebem um <em>endereço IP</em>, um número que pode ser usado para enviar mensagens àquela máquina, e se parece com algo como <code>149.210.142.219</code> ou <code>2001:4860:4860::8888</code>. Como listas de números mais ou menos aleatórios são difíceis de lembrar e estranhas de digitar, você pode registrar um nome de <em>domínio</em> para um endereço ou conjunto de endereços. Registrei <em>eloquentjavascript.net</em> para apontar para o endereço IP de uma máquina que controlo e posso assim usar esse nome de domínio para servir páginas web.</p>
+
+<p><a class="p_ident" id="p-UgLuobe5l8" href="#p-UgLuobe5l8" tabindex="-1" role="presentation"></a>Se você digitar essa URL na barra de endereço do seu navegador, o navegador tentará recuperar e exibir o documento naquela URL. Primeiro, seu navegador precisa descobrir a que endereço <em>eloquentjavascript.net</em> se refere. Então, usando o protocolo HTTP, ele fará uma conexão com o servidor naquele endereço e pedirá o recurso <em>/13_browser.html</em>. Se tudo correr bem, o servidor enviará de volta um documento, que seu navegador então exibirá na sua tela.</p>
+
+<h2><a class="h_ident" id="h-n3OM6EV/KR" href="#h-n3OM6EV/KR" tabindex="-1" role="presentation"></a>HTML</h2>
+
+<p><a class="p_ident" id="p-dU4WYMh5N+" href="#p-dU4WYMh5N+" tabindex="-1" role="presentation"></a><em>HTML</em>, que significa Linguagem de Marcação de Hipertexto, é o formato de documento usado para páginas web. Um documento HTML contém texto, assim como <em>tags</em> que dão estrutura ao texto, descrevendo coisas como links, parágrafos e cabeçalhos.</p>
+
+<p><a class="p_ident" id="p-zQ/5BSjWHr" href="#p-zQ/5BSjWHr" tabindex="-1" role="presentation"></a>Um documento HTML curto pode se parecer com isto:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-4GPwlAMrQs" href="#c-4GPwlAMrQs" tabindex="-1" role="presentation"></a><span class="tok-meta">&lt;!doctype html&gt;</span>
+&lt;<span class="tok-typeName">html</span>&gt;
+  &lt;<span class="tok-typeName">head</span>&gt;
+    &lt;<span class="tok-typeName">meta</span> charset=<span class="tok-string">&quot;utf-8&quot;</span>&gt;
+    &lt;<span class="tok-typeName">title</span>&gt;My home page&lt;/<span class="tok-typeName">title</span>&gt;
+  &lt;/<span class="tok-typeName">head</span>&gt;
+  &lt;<span class="tok-typeName">body</span>&gt;
+    &lt;<span class="tok-typeName">h1</span>&gt;My home page&lt;/<span class="tok-typeName">h1</span>&gt;
+    &lt;<span class="tok-typeName">p</span>&gt;Hello, I am Marijn and this is my home page.&lt;/<span class="tok-typeName">p</span>&gt;
+    &lt;<span class="tok-typeName">p</span>&gt;I also wrote a book! Read it
+      &lt;<span class="tok-typeName">a</span> href=<span class="tok-string">&quot;http://eloquentjavascript.net&quot;</span>&gt;here&lt;/<span class="tok-typeName">a</span>&gt;.&lt;/<span class="tok-typeName">p</span>&gt;
+  &lt;/<span class="tok-typeName">body</span>&gt;
+&lt;/<span class="tok-typeName">html</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-Xr/ez4Xi9D" href="#p-Xr/ez4Xi9D" tabindex="-1" role="presentation"></a>As tags, envolvidas em colchetes angulares (<code>&lt;</code> e <code>&gt;</code>, os símbolos de <em>menor que</em> e <em>maior que</em>), fornecem informações sobre a estrutura do documento. O outro texto é apenas texto simples.</p>
+
+<p><a class="p_ident" id="p-pAdNYn9ZKY" href="#p-pAdNYn9ZKY" tabindex="-1" role="presentation"></a>O documento começa com <code>&lt;!doctype html&gt;</code>, que diz ao navegador para interpretar a página como HTML <em>moderno</em>, em oposição a estilos obsoletos usados no passado.</p>
+
+<p><a class="p_ident" id="p-Z6TyI3L974" href="#p-Z6TyI3L974" tabindex="-1" role="presentation"></a>Documentos HTML têm um cabeçalho (head) e um corpo (body). O cabeçalho contém informações <em>sobre</em> o documento, e o corpo contém o documento em si. Neste caso, o cabeçalho declara que o título deste documento é “My home page” e que usa a codificação UTF-8, que é uma forma de codificar texto Unicode como dados binários. O corpo do documento contém um cabeçalho (<code>&lt;h1&gt;</code>, significando “cabeçalho 1” — <code>&lt;h2&gt;</code> a <code>&lt;h6&gt;</code> produzem subcabeçalhos) e dois parágrafos (<code>&lt;p&gt;</code>).</p>
+
+<p><a class="p_ident" id="p-wwE1b2nfGv" href="#p-wwE1b2nfGv" tabindex="-1" role="presentation"></a>Tags vêm em diversas formas. Um elemento, como o corpo, um parágrafo ou um link, é iniciado por uma <em>tag de abertura</em> como <code>&lt;p&gt;</code> e terminado por uma <em>tag de fechamento</em> como <code>&lt;/p&gt;</code>. Algumas tags de abertura, como a de link (<code>&lt;a&gt;</code>), contêm informações extras na forma de pares <code>nome=&quot;valor&quot;</code>. Estes são chamados de <em>atributos</em>. Neste caso, o destino do link é indicado com <code>href=&quot;http://<wbr>eloquentjavascript.<wbr>net&quot;</code>, onde <code>href</code> significa “referência de hipertexto”.</p>
+
+<p><a class="p_ident" id="p-TK2SfU8E8h" href="#p-TK2SfU8E8h" tabindex="-1" role="presentation"></a>Alguns tipos de tags não envolvem nada e portanto não precisam ser fechadas. A tag de metadados <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code> é um exemplo disso.</p>
+
+<p><a class="p_ident" id="p-MqNQZb+HD5" href="#p-MqNQZb+HD5" tabindex="-1" role="presentation"></a>Para poder incluir colchetes angulares no texto de um documento, mesmo que eles tenham um significado especial em HTML, mais uma forma de notação especial precisa ser introduzida. Um colchete angular de abertura simples é escrito como <code>&amp;lt;</code> (“menor que”), e um de fechamento como <code>&amp;gt;</code> (“maior que”). Em HTML, um caractere de e-comercial (<code>&amp;</code>) seguido por um nome ou código de caractere e um ponto e vírgula (<code>;</code>) é chamado de <em>entidade</em> e será substituído pelo caractere que codifica.</p>
+
+<p><a class="p_ident" id="p-uOXBIuYaxW" href="#p-uOXBIuYaxW" tabindex="-1" role="presentation"></a>Isso é análogo à forma como barras invertidas são usadas em strings JavaScript. Como esse mecanismo dá aos caracteres de e-comercial um significado especial também, eles precisam ser escapados como <code>&amp;amp;</code>. Dentro de valores de atributos, que são envolvidos em aspas duplas, <code>&amp;quot;</code> pode ser usado para inserir um caractere de aspas literal.</p>
+
+<p><a class="p_ident" id="p-XH5JWHz5hI" href="#p-XH5JWHz5hI" tabindex="-1" role="presentation"></a>HTML é analisado de forma notavelmente tolerante a erros. Quando tags que deveriam estar lá estão faltando, o navegador as adiciona automaticamente. A forma como isso é feito foi padronizada, e você pode confiar que todos os navegadores modernos farão da mesma forma.</p>
+
+<p><a class="p_ident" id="p-ygppYROwr0" href="#p-ygppYROwr0" tabindex="-1" role="presentation"></a>O documento a seguir será tratado da mesma forma que o mostrado anteriormente:</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-uW331sfiez" href="#c-uW331sfiez" tabindex="-1" role="presentation"></a><span class="tok-meta">&lt;!doctype html&gt;</span>
+
+&lt;<span class="tok-typeName">meta</span> charset=<span class="tok-string">utf-8</span>&gt;
+&lt;<span class="tok-typeName">title</span>&gt;My home page&lt;/<span class="tok-typeName">title</span>&gt;
+
+&lt;<span class="tok-typeName">h1</span>&gt;My home page&lt;/<span class="tok-typeName">h1</span>&gt;
+&lt;<span class="tok-typeName">p</span>&gt;Hello, I am Marijn and this is my home page.
+&lt;<span class="tok-typeName">p</span>&gt;I also wrote a book! Read it
+  &lt;<span class="tok-typeName">a</span> href=<span class="tok-string">http://eloquentjavascript.net</span>&gt;here&lt;/<span class="tok-typeName">a</span>&gt;.</pre>
+
+<p><a class="p_ident" id="p-e7/OQxt+go" href="#p-e7/OQxt+go" tabindex="-1" role="presentation"></a>As tags <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> e <code>&lt;body&gt;</code> sumiram completamente. O navegador sabe que <code>&lt;meta&gt;</code> e <code>&lt;title&gt;</code> pertencem ao cabeçalho e que <code>&lt;h1&gt;</code> significa que o corpo começou. Além disso, não estou mais fechando explicitamente os parágrafos, já que abrir um novo parágrafo ou terminar o documento os fechará implicitamente. As aspas em torno dos valores dos atributos também foram removidas.</p>
+
+<p><a class="p_ident" id="p-ZJSojnItXe" href="#p-ZJSojnItXe" tabindex="-1" role="presentation"></a>Este livro geralmente omitirá as tags <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> e <code>&lt;body&gt;</code> dos exemplos para mantê-los curtos e livres de desordem. Mas eu <em>vou</em> fechar tags e incluir aspas em torno de atributos.</p>
+
+<p><a class="p_ident" id="p-LWn9lffDDH" href="#p-LWn9lffDDH" tabindex="-1" role="presentation"></a>Também geralmente omitirei a declaração de doctype e de <code>charset</code>. Não tome isso como incentivo para removê-las de documentos HTML. Navegadores frequentemente farão coisas ridículas quando você as esquece. Considere o doctype e os metadados de <code>charset</code> como implicitamente presentes nos exemplos, mesmo quando não são mostrados no texto.</p>
+
+<h2 id="script_tag"><a class="h_ident" id="h-nUqCvPgyCW" href="#h-nUqCvPgyCW" tabindex="-1" role="presentation"></a>HTML e JavaScript</h2>
+
+<p><a class="p_ident" id="p-YTmFK3a77Y" href="#p-YTmFK3a77Y" tabindex="-1" role="presentation"></a>No contexto deste livro, a tag HTML mais importante é <code>&lt;script&gt;</code>, que nos permite incluir um trecho de JavaScript em um documento.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-r/8m2Qh59j" href="#c-r/8m2Qh59j" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">h1</span>&gt;Testing alert&lt;/<span class="tok-typeName">h1</span>&gt;
+&lt;<span class="tok-typeName">script</span>&gt;alert(<span class="tok-string">&quot;hello!&quot;</span>);&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-Lhupbz4OVJ" href="#p-Lhupbz4OVJ" tabindex="-1" role="presentation"></a>Tal script será executado assim que sua tag <code>&lt;script&gt;</code> for encontrada enquanto o navegador lê o HTML. Esta página exibirá um diálogo quando aberta — a função <code>alert</code> se assemelha a <code>prompt</code>, pois abre uma pequena janela, mas apenas mostra uma mensagem sem pedir entrada.</p>
+
+<p><a class="p_ident" id="p-9NANOEowJa" href="#p-9NANOEowJa" tabindex="-1" role="presentation"></a>Incluir programas grandes diretamente em documentos HTML é frequentemente impraticável. A tag <code>&lt;script&gt;</code> pode receber um atributo <code>src</code> para buscar um arquivo de script (um arquivo de texto contendo um programa JavaScript) de uma URL.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-UGuRtQ4i0u" href="#c-UGuRtQ4i0u" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">h1</span>&gt;Testing alert&lt;/<span class="tok-typeName">h1</span>&gt;
+&lt;<span class="tok-typeName">script</span> src=<span class="tok-string">&quot;code/hello.js&quot;</span>&gt;&lt;/<span class="tok-typeName">script</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-BXT9VHeYmA" href="#p-BXT9VHeYmA" tabindex="-1" role="presentation"></a>O arquivo <em>code/hello.js</em> incluído aqui contém o mesmo programa — <code>alert(&quot;hello!&quot;)</code>. Quando uma página HTML referencia outras URLs como parte de si mesma, como um arquivo de imagem ou um script, navegadores web as recuperarão imediatamente e as incluirão na página.</p>
+
+<p><a class="p_ident" id="p-6SA1zeUrTN" href="#p-6SA1zeUrTN" tabindex="-1" role="presentation"></a>Uma tag de script deve sempre ser fechada com <code>&lt;/script&gt;</code>, mesmo que faça referência a um arquivo de script e não contenha nenhum código. Se você esquecer disso, o restante da página será interpretado como parte do script.</p>
+
+<p><a class="p_ident" id="p-u6qBgdAzIy" href="#p-u6qBgdAzIy" tabindex="-1" role="presentation"></a>Você pode carregar módulos ES (veja <a href="10_modules.html#es">Capítulo 10</a>) no navegador dando à sua tag de script um atributo <code>type=&quot;module&quot;</code>. Tais módulos podem depender de outros módulos usando URLs relativas a si mesmos como nomes de módulo em declarações <code>import</code>.</p>
+
+<p><a class="p_ident" id="p-IveygM0U0r" href="#p-IveygM0U0r" tabindex="-1" role="presentation"></a>Alguns atributos também podem conter um programa JavaScript. A tag <code>&lt;button&gt;</code> (que aparece como um botão) suporta um atributo <code>onclick</code>. O valor do atributo será executado sempre que o botão for clicado.</p>
+
+<pre tabindex="0" class="snippet" data-language="html" ><a class="c_ident" id="c-2a6WfPL3P2" href="#c-2a6WfPL3P2" tabindex="-1" role="presentation"></a>&lt;<span class="tok-typeName">button</span> onclick=<span class="tok-string">&quot;</span>alert(<span class="tok-string">'Boom!'</span>);<span class="tok-string">&quot;</span>&gt;DO NOT PRESS&lt;/<span class="tok-typeName">button</span>&gt;</pre>
+
+<p><a class="p_ident" id="p-hsFsWkDP2e" href="#p-hsFsWkDP2e" tabindex="-1" role="presentation"></a>Note que tive que usar aspas simples para a string no atributo <code>onclick</code> porque aspas duplas já estão sendo usadas para delimitar o atributo inteiro. Eu também poderia ter usado <code>&amp;quot;</code> para escapar as aspas internas.</p>
+
+<h2><a class="h_ident" id="h-bFyhegsTm6" href="#h-bFyhegsTm6" tabindex="-1" role="presentation"></a>Na sandbox</h2>
+
+<p><a class="p_ident" id="p-vAYbIli6f6" href="#p-vAYbIli6f6" tabindex="-1" role="presentation"></a>Executar programas baixados da internet é potencialmente perigoso. Você não sabe muito sobre as pessoas por trás da maioria dos sites que visita, e elas não necessariamente têm boas intenções. Executar programas de agentes maliciosos é como você tem seu computador infectado por vírus, seus dados roubados e suas contas hackeadas.</p>
+
+<p><a class="p_ident" id="p-dsos79sU7w" href="#p-dsos79sU7w" tabindex="-1" role="presentation"></a>No entanto, a atração da web é que você pode navegá-la sem necessariamente confiar em todas as páginas que visita. É por isso que navegadores limitam severamente as coisas que um programa JavaScript pode fazer: ele não pode olhar os arquivos no seu computador ou modificar qualquer coisa não relacionada à página web em que está incorporado.</p>
+
+<p><a class="p_ident" id="p-wV8l+VfYdd" href="#p-wV8l+VfYdd" tabindex="-1" role="presentation"></a>Isolar um ambiente de programação dessa forma é chamado de <em>sandbox</em>, a ideia sendo que o programa está brincando inofensivamente em uma caixa de areia. Mas você deve imaginar esse tipo particular de caixa de areia como tendo uma gaiola de barras de aço grossas sobre ela, para que os programas brincando nela não possam realmente escapar.</p>
+
+<p><a class="p_ident" id="p-RQUuw/9eOI" href="#p-RQUuw/9eOI" tabindex="-1" role="presentation"></a>A parte difícil do sandboxing é permitir que programas tenham espaço suficiente para serem úteis enquanto os restringe de fazer qualquer coisa perigosa. Muitas funcionalidades úteis, como se comunicar com outros servidores ou ler o conteúdo da área de transferência, também podem ser usadas para fins problemáticos que invadem a privacidade.</p>
+
+<p><a class="p_ident" id="p-/p9JNMqlxw" href="#p-/p9JNMqlxw" tabindex="-1" role="presentation"></a>De vez em quando, alguém aparece com uma nova forma de contornar as limitações de um navegador e fazer algo prejudicial, variando de vazar informações privadas menores a tomar controle da máquina inteira em que o navegador está rodando. Os desenvolvedores do navegador respondem corrigindo a falha, e tudo fica bem novamente — até que o próximo problema seja descoberto, e esperançosamente divulgado publicamente em vez de secretamente explorado por alguma agência governamental ou organização criminosa.</p>
+
+<h2><a class="h_ident" id="h-IEYLb5wsC+" href="#h-IEYLb5wsC+" tabindex="-1" role="presentation"></a>Compatibilidade e as guerras dos navegadores</h2>
+
+<p><a class="p_ident" id="p-/dshxdekZQ" href="#p-/dshxdekZQ" tabindex="-1" role="presentation"></a>Nos estágios iniciais da web, um navegador chamado Mosaic dominava o mercado. Depois de alguns anos, o equilíbrio mudou para o Netscape, que foi, por sua vez, amplamente suplantado pelo Internet Explorer da Microsoft. Em qualquer momento em que um único navegador era dominante, o fabricante desse navegador se sentia no direito de inventar unilateralmente novas funcionalidades para a web. Como a maioria dos usuários usava o navegador mais popular, sites simplesmente começavam a usar essas funcionalidades — sem se importar com os outros navegadores.</p>
+
+<p><a class="p_ident" id="p-pIHOBxWqwR" href="#p-pIHOBxWqwR" tabindex="-1" role="presentation"></a>Essa foi a era sombria da compatibilidade, frequentemente chamada de <em>guerras dos navegadores</em>. Desenvolvedores web ficaram com não uma web unificada, mas duas ou três plataformas incompatíveis. Para piorar as coisas, os navegadores em uso por volta de 2003 eram todos cheios de bugs, e é claro que os bugs eram diferentes para cada navegador. A vida era difícil para pessoas que escreviam páginas web.</p>
+
+<p><a class="p_ident" id="p-AAjPjIskuN" href="#p-AAjPjIskuN" tabindex="-1" role="presentation"></a>O Mozilla Firefox, uma ramificação sem fins lucrativos do Netscape, desafiou a posição do Internet Explorer no final dos anos 2000. Como a Microsoft não estava particularmente interessada em se manter competitiva na época, o Firefox tomou grande parte de sua fatia de mercado. Mais ou menos na mesma época, o Google lançou seu navegador Chrome e o Safari da Apple ganhou popularidade, levando a uma situação em que havia quatro grandes participantes, em vez de um.</p>
+
+<p><a class="p_ident" id="p-oDzd2YKJxq" href="#p-oDzd2YKJxq" tabindex="-1" role="presentation"></a>Os novos participantes tinham uma atitude mais séria em relação a padrões e melhores práticas de engenharia, nos dando menos incompatibilidade e menos bugs. A Microsoft, vendo sua participação de mercado desmoronar, adotou essas atitudes em seu navegador Edge, que substituiu o Internet Explorer. Se você está começando a aprender desenvolvimento web hoje, considere-se sortudo. As versões mais recentes dos principais navegadores se comportam de forma bastante uniforme e têm relativamente poucos bugs.</p>
+
+<p><a class="p_ident" id="p-OKQafU8zQC" href="#p-OKQafU8zQC" tabindex="-1" role="presentation"></a>Infelizmente, com a participação de mercado do Firefox ficando cada vez menor, e o Edge se tornando apenas um invólucro em torno do núcleo do Chrome em 2018, essa uniformidade pode novamente tomar a forma de um único fornecedor — Google, dessa vez — tendo controle suficiente sobre o mercado de navegadores para impor sua ideia do que a web deveria ser ao resto do mundo.</p>
+
+<p><a class="p_ident" id="p-pd8oNxsGlY" href="#p-pd8oNxsGlY" tabindex="-1" role="presentation"></a>Pelo que vale, essa longa cadeia de eventos históricos e acidentes produziu a plataforma web que temos hoje. Nos próximos capítulos, vamos escrever programas para ela.</p><nav><a href="12_language.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="14_dom.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

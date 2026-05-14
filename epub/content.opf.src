@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" xml:lang="en" unique-identifier="pub-id" prefix="cc: http://creativecommons.org/ns#">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:title id="title">Eloquent JavaScript</dc:title>
+    <meta refines="#title" property="title-type">main</meta>
+    <dc:creator id="creator">Marijn Haverbeke</dc:creator>
+    <meta refines="#creator" property="file-as">HAVERBEKE, MARIJN</meta>
+    <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
+    <dc:identifier id="pub-id">net.eloquentjavascript</dc:identifier>
+    <dc:language>en-US</dc:language>
+    <dc:rights>This work is shared with the public using the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) license.</dc:rights>
+    <link rel="cc:license" href="https://creativecommons.org/licenses/by-nc/3.0/"/>
+    <meta property="cc:attributionURL">https://eloquentjavascript.net/</meta>
+    <meta property="dcterms:modified">2018-02-25T22:07:00Z</meta>
+  </metadata>
+  <manifest>
+    <item id="titlepage" href="titlepage.xhtml" media-type="application/xhtml+xml"/>
+    <item id="frontmatter" href="frontmatter.xhtml" media-type="application/xhtml+xml"/>
+    <item id="toc" properties="nav" href="toc.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c00_intro" href="00_intro.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c01_values" href="01_values.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c02_program_structure" href="02_program_structure.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c03_functions" href="03_functions.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c04_data" href="04_data.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c05_higher_order" href="05_higher_order.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c06_object" href="06_object.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c07_robot" href="07_robot.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c08_error" href="08_error.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c09_regexp" href="09_regexp.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c10_modules" href="10_modules.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c11_async" href="11_async.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c12_language" href="12_language.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c13_browser" href="13_browser.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c14_dom" href="14_dom.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c15_event" href="15_event.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c16_game" href="16_game.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c17_canvas" href="17_canvas.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c18_http" href="18_http.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c19_paint" href="19_paint.xhtml" media-type="application/xhtml+xml" properties="svg"/>
+    <item id="c20_node" href="20_node.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c21_skillsharing" href="21_skillsharing.xhtml" media-type="application/xhtml+xml"/>
+    <item id="c_hints" href="hints.xhtml" media-type="application/xhtml+xml"/>
+    <item id="style" href="style.css" media-type="text/css"/>
+    <item id="font.cinzel.bold" href="font/cinzel_bold.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="font.pt.regular" href="font/pt_mono.otf" media-type="application/vnd.ms-opentype"/>
+{{images}}
+  </manifest>
+  <spine>
+    <itemref idref="titlepage" linear="yes"/>
+    <itemref idref="frontmatter" linear="yes"/>
+    <itemref idref="toc" linear="yes"/>
+    <itemref idref="c00_intro" linear="yes"/>
+    <itemref idref="c01_values" linear="yes"/>
+    <itemref idref="c02_program_structure" linear="yes"/>
+    <itemref idref="c03_functions" linear="yes"/>
+    <itemref idref="c04_data" linear="yes"/>
+    <itemref idref="c05_higher_order" linear="yes"/>
+    <itemref idref="c06_object" linear="yes"/>
+    <itemref idref="c07_robot" linear="yes"/>
+    <itemref idref="c08_error" linear="yes"/>
+    <itemref idref="c09_regexp" linear="yes"/>
+    <itemref idref="c10_modules" linear="yes"/>
+    <itemref idref="c11_async" linear="yes"/>
+    <itemref idref="c12_language" linear="yes"/>
+    <itemref idref="c13_browser" linear="yes"/>
+    <itemref idref="c14_dom" linear="yes"/>
+    <itemref idref="c15_event" linear="yes"/>
+    <itemref idref="c16_game" linear="yes"/>
+    <itemref idref="c17_canvas" linear="yes"/>
+    <itemref idref="c18_http" linear="yes"/>
+    <itemref idref="c19_paint" linear="yes"/>
+    <itemref idref="c20_node" linear="yes"/>
+    <itemref idref="c21_skillsharing" linear="yes"/>
+    <itemref idref="c_hints" linear="yes"/>
+  </spine>
+</package>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="204.481" height="20">
+   <defs>
+      <marker id="a" orient="auto" overflow="visible" refX="0" refY="0">
+         <path fill-rule="evenodd" stroke="#000" stroke-width=".2pt" d="m-1.2 0-1 1 3.5-1-3.5-1 1 1z" />
+      </marker>
+   </defs>
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="M218.236 384.25H408.65"
+      transform="translate(-218.219 -373.8)" />
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="205.101" height="85.751">
+   <defs>
+      <marker id="a" orient="auto" overflow="visible" refX="0" refY="0">
+         <path fill-rule="evenodd" stroke="#000" stroke-width=".2pt" d="m-1.2 0-1 1 3.5-1-3.5-1 1 1z" />
+      </marker>
+   </defs>
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="m-815.783 118.92 1.01 27.778"
+      transform="rotate(-90 -445.094 -326.312)" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="M-807.702 168.417s67.68 38.385 7.07 95.964"
+      transform="rotate(-90 -445.094 -326.312)" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="m-813.763 274.483 1.01 35.355"
+      transform="rotate(-90 -445.094 -326.312)" />
+   <path fill="none" stroke="#000" stroke-width="8" marker-end="url(#a)" d="M-820.87 168.417s-67.68 38.385-7.07 95.964"
+      transform="rotate(-90 -445.094 -326.312)" />
+   <path fill="red" d="M47.398 37.262a6.06 6.06 0 1 1 0 12.122 6.06 6.06 0 0 1 0-12.122z" />
+</svg>

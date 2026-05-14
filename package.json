@@ -1,0 +1,41 @@
+{
+  "name": "Eloquent-JavaScript",
+  "license": "CC BY-NC 3.0",
+  "version": "0.1.0",
+  "author": "Marijn Haverbeke <marijn@haverbeke.berlin>",
+  "description": "Sources for the book Eloquent JavaScript",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/marijnh/Eloquent-JavaScript.git"
+  },
+  "dependencies": {
+    "rollup": "^3.28.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "acorn": "^8.0.0",
+    "acorn-walk": "^8.0.0",
+    "@codemirror/view": "^6.20.0",
+    "@codemirror/state": "^6.2.0",
+    "@codemirror/language": "^6.9.0",
+    "@codemirror/lang-css": "^6.2.0",
+    "@codemirror/lang-html": "^6.4.0",
+    "@codemirror/lang-javascript": "^6.2.0",
+    "@codemirror/legacy-modes": "^6.3.0",
+    "codemirror": "^6.0.0",
+    "@lezer/common": "^1.1.0",
+    "@lezer/highlight": "^1.1.0",
+    "jszip": "^3.10.0",
+    "markdown-it": "^14.0.0",
+    "markdown-it-sub": "^2.0.0",
+    "markdown-it-sup": "^2.0.0",
+    "mime": "^2.3.1",
+    "mold-template": "^2.0.1"
+  },
+  "devDependencies": {
+    "jsdom": "^20.0.0",
+    "promise": "^8.0.1"
+  },
+  "scripts": {
+    "test": "make test"
+  }
+}

@@ -1,0 +1,13 @@
+.picturepanel {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: -ms-fit-content;
+  width: fit-content;
+  max-width: 500px;
+  max-height: 300px;
+  border: 2px solid silver;
+  overflow: auto;
+  position: relative;
+}
+.picturepanel canvas { display: block; }
+.toolbar > * { margin-right: 5px; }

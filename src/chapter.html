@@ -1,0 +1,34 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><<t $in.title>> :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css">
+  <<if $in.page>>
+    <script>
+      var page = <<h JSON.stringify($in.page)>>
+    </script>
+  <</if>>
+</head>
+
+<article>
+<nav>
+  <<if $in.prev_link>><a href="<<t $in.prev_link>>.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <</if>>
+  <a href="index.html" title="capa" aria-label="capa">●</a>
+  <<if $in.next_link>> <a href="<<t $in.next_link>>.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a><</if>>
+  &nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1<<if $in.id>> id="<<t $in.id>>"<</if>>><<if $in.chap_num>><span class=chap_num>Capítulo <<t $in.chap_num>></span><</if>><<t $in.title>></h1>
+
+<<h $in.content>>
+
+<nav>
+  <<if $in.prev_link>><a href="<<t $in.prev_link>>.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <</if>>
+  <a href="index.html" title="capa" aria-label="capa">●</a>
+  <<if $in.next_link>> <a href="<<t $in.next_link>>.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a><</if>>
+  &nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

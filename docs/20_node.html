@@ -1,0 +1,507 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Node.js :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":20}</script></head>
+
+<article>
+<nav><a href="19_paint.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="21_skillsharing.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>Node.js</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-+54rsGVj13" href="#p-+54rsGVj13" tabindex="-1" role="presentation"></a>Um estudante perguntou: ‘Os programadores de antigamente usavam apenas máquinas simples e nenhuma linguagem de programação, mas mesmo assim faziam programas bonitos. Por que usamos máquinas complicadas e linguagens de programação?’ Fu-Tzu respondeu: ‘Os construtores de antigamente usavam apenas gravetos e argila, mas mesmo assim faziam cabanas bonitas.’</p>
+
+<footer>Master Yuan-Ma, <cite>The Book of Programming</cite></footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_20.jpg" alt="Illustration showing a telephone pole with a tangle of wires going in all directions"></figure>
+
+<p><a class="p_ident" id="p-OmZj4s0nrM" href="#p-OmZj4s0nrM" tabindex="-1" role="presentation"></a>Até agora, usamos a linguagem JavaScript em um único ambiente: o navegador. Este capítulo e o <a href="21_skillsharing.html">próximo</a> apresentarão brevemente o Node.js, um programa que permite aplicar suas habilidades de JavaScript fora do navegador. Com ele, você pode construir qualquer coisa, desde pequenas ferramentas de linha de comando até servidores HTTP que alimentam websites dinâmicos.</p>
+
+<p><a class="p_ident" id="p-zUaGglaMSo" href="#p-zUaGglaMSo" tabindex="-1" role="presentation"></a>Estes capítulos visam ensinar os principais conceitos que o Node.js usa e dar informações suficientes para escrever programas úteis para ele. Eles não tentam ser um tratamento completo, ou mesmo detalhado, da plataforma.</p>
+
+<p><a class="p_ident" id="p-OddPF91d2o" href="#p-OddPF91d2o" tabindex="-1" role="presentation"></a>Enquanto você podia executar o código dos capítulos anteriores diretamente nestas páginas, porque era JavaScript puro ou escrito para o navegador, os exemplos de código neste capítulo são escritos para Node e geralmente não rodarão no navegador.</p>
+
+<p><a class="p_ident" id="p-5MVfKxbR74" href="#p-5MVfKxbR74" tabindex="-1" role="presentation"></a>Se você quiser acompanhar e executar o código neste capítulo, precisará instalar o Node.js versão 18 ou superior. Para isso, vá a <a href="https://nodejs.org"><em>https://nodejs.org</em></a> e siga as instruções de instalação para seu sistema operacional. Você também pode encontrar mais documentação do Node.js lá.</p>
+
+<h2><a class="h_ident" id="h-AHhhaocnYX" href="#h-AHhhaocnYX" tabindex="-1" role="presentation"></a>Contexto</h2>
+
+<p><a class="p_ident" id="p-MKUITy9k33" href="#p-MKUITy9k33" tabindex="-1" role="presentation"></a>Ao construir sistemas que se comunicam pela rede, a forma como você gerencia entrada e saída — ou seja, a leitura e escrita de dados na rede e no disco rígido — pode fazer uma grande diferença em quão rápido um sistema responde ao usuário ou a requisições de rede.</p>
+
+<p><a class="p_ident" id="p-h/EYBUCHL5" href="#p-h/EYBUCHL5" tabindex="-1" role="presentation"></a>Em tais programas, programação assíncrona é frequentemente útil. Ela permite que o programa envie e receba dados de e para múltiplos dispositivos ao mesmo tempo sem complicado gerenciamento de threads e sincronização.</p>
+
+<p><a class="p_ident" id="p-UV1z036ZJq" href="#p-UV1z036ZJq" tabindex="-1" role="presentation"></a>Node foi inicialmente concebido para tornar a programação assíncrona fácil e conveniente. JavaScript se presta bem a um sistema como Node. É uma das poucas linguagens de programação que não tem uma forma embutida de fazer entrada e saída. Assim, JavaScript pôde se encaixar na abordagem bastante excêntrica do Node para programação de rede e sistema de arquivos sem acabar com duas interfaces inconsistentes. Em 2009, quando Node estava sendo projetado, as pessoas já estavam fazendo programação baseada em callbacks no navegador, então a comunidade em torno da linguagem estava acostumada a um estilo de programação assíncrona.</p>
+
+<h2><a class="h_ident" id="h-t4nKIkq+DL" href="#h-t4nKIkq+DL" tabindex="-1" role="presentation"></a>O comando node</h2>
+
+<p><a class="p_ident" id="p-dCPpA7wNA7" href="#p-dCPpA7wNA7" tabindex="-1" role="presentation"></a>Quando o Node.js é instalado em um sistema, ele fornece um programa chamado <code>node</code>, que é usado para executar arquivos JavaScript. Digamos que você tenha um arquivo <code>hello.js</code>, contendo este código:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Ys/5/PYPJK" href="#c-Ys/5/PYPJK" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">message</span> = <span class="tok-string">&quot;Hello world&quot;</span>;
+console.log(message);</pre>
+
+<p><a class="p_ident" id="p-nF3GzhUYY1" href="#p-nF3GzhUYY1" tabindex="-1" role="presentation"></a>Você pode então executar <code>node</code> a partir da linha de comando assim para executar o programa:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-+NijqTTZNf" href="#c-+NijqTTZNf" tabindex="-1" role="presentation"></a>$ node hello.js
+Hello world</pre>
+
+<p><a class="p_ident" id="p-nDgDraIsN5" href="#p-nDgDraIsN5" tabindex="-1" role="presentation"></a>O método <code>console.log</code> no Node faz algo similar ao que faz no navegador. Ele imprime um texto. Mas no Node, o texto irá para o fluxo de saída padrão do processo em vez de para o console JavaScript de um navegador. Quando executar <code>node</code> a partir da linha de comando, isso significa que você vê os valores registrados em seu terminal.</p>
+
+<p><a class="p_ident" id="p-94eVjRF7KR" href="#p-94eVjRF7KR" tabindex="-1" role="presentation"></a>Se você executar <code>node</code> sem dar a ele um arquivo, ele fornece um prompt no qual você pode digitar código JavaScript e imediatamente ver o resultado.</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-d/9k6S5oD+" href="#c-d/9k6S5oD+" tabindex="-1" role="presentation"></a>$ node
+&gt; 1 + 1
+2
+&gt; [-1, -2, -3].map(Math.abs)
+[1, 2, 3]
+&gt; process.exit(0)
+$</pre>
+
+<p><a class="p_ident" id="p-wqoEVWUB8X" href="#p-wqoEVWUB8X" tabindex="-1" role="presentation"></a>A variável <code>process</code>, assim como a variável <code>console</code>, está disponível globalmente no Node. Ela fornece várias formas de inspecionar e manipular o programa atual. O método <code>exit</code> encerra o processo e pode receber um código de status de saída, que diz ao programa que iniciou o <code>node</code> (neste caso, o shell da linha de comando) se o programa completou com sucesso (código zero) ou encontrou um erro (qualquer outro código).</p>
+
+<p><a class="p_ident" id="p-t+GDXHAIsz" href="#p-t+GDXHAIsz" tabindex="-1" role="presentation"></a>Para encontrar os argumentos de linha de comando passados ao seu script, você pode ler <code>process.argv</code>, que é um array de strings. Note que ele também inclui o nome do comando <code>node</code> e o nome do seu script, então os argumentos reais começam no índice 2. Se <code>showargv.js</code> contém a instrução <code>console.<wbr>log(process.<wbr>argv)</code>, você poderia executá-lo assim:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-WCisDZr57g" href="#c-WCisDZr57g" tabindex="-1" role="presentation"></a>$ node showargv.js one --and two
+[&quot;node&quot;, &quot;/tmp/showargv.js&quot;, &quot;one&quot;, &quot;--and&quot;, &quot;two&quot;]</pre>
+
+<p><a class="p_ident" id="p-p6AuNAR82b" href="#p-p6AuNAR82b" tabindex="-1" role="presentation"></a>Todas as variáveis globais padrão do JavaScript, como <code>Array</code>, <code>Math</code> e <code>JSON</code>, também estão presentes no ambiente do Node. Funcionalidades relacionadas ao navegador, como <code>document</code> ou <code>prompt</code>, não estão.</p>
+
+<h2><a class="h_ident" id="h-45kWH4U4Bd" href="#h-45kWH4U4Bd" tabindex="-1" role="presentation"></a>Módulos</h2>
+
+<p><a class="p_ident" id="p-+j2yvew07d" href="#p-+j2yvew07d" tabindex="-1" role="presentation"></a>Além das variáveis que mencionei, como <code>console</code> e <code>process</code>, o Node coloca poucas variáveis adicionais no escopo global. Se você quiser acessar funcionalidades embutidas, tem que pedir ao sistema de módulos.</p>
+
+<p><a class="p_ident" id="p-yBEbYYPVgd" href="#p-yBEbYYPVgd" tabindex="-1" role="presentation"></a>Node começou usando o sistema de módulos CommonJS, baseado na função <code>require</code>, que vimos no <a href="10_modules.html#commonjs">Capítulo 10</a>. Ele ainda usará este sistema por padrão quando você carregar um arquivo <code>.js</code>.</p>
+
+<p><a class="p_ident" id="p-VYEobkHEAJ" href="#p-VYEobkHEAJ" tabindex="-1" role="presentation"></a>Mas hoje, Node também suporta o sistema de módulos ES mais moderno. Quando o nome de um arquivo de script termina em <code>.mjs</code>, ele é considerado como tal módulo, e você pode usar <code>import</code> e <code>export</code> nele (mas não <code>require</code>). Usaremos módulos ES neste capítulo.</p>
+
+<p><a class="p_ident" id="p-wV57Qp60RX" href="#p-wV57Qp60RX" tabindex="-1" role="presentation"></a>Ao importar um módulo — seja com <code>require</code> ou <code>import</code> — o Node tem que resolver a string dada para um arquivo real que possa carregar. Nomes que começam com <code>/</code>, <code>./</code> ou <code>../</code> são resolvidos como arquivos, relativos ao caminho do módulo atual. Aqui, <code>.</code> representa o diretório atual, <code>../</code> o diretório acima, e <code>/</code> a raiz do sistema de arquivos. Se você pedir <code>&quot;./<wbr>graph.<wbr>mjs&quot;</code> do arquivo <code>/<wbr>tmp/<wbr>robot/<wbr>robot.<wbr>mjs</code>, o Node tentará carregar o arquivo <code>/<wbr>tmp/<wbr>robot/<wbr>graph.<wbr>mjs</code>.</p>
+
+<p><a class="p_ident" id="p-5Wf22jVehp" href="#p-5Wf22jVehp" tabindex="-1" role="presentation"></a>Quando uma string que não parece um caminho relativo ou absoluto é importada, assume-se que ela se refere a um módulo embutido ou a um módulo instalado em um diretório <code>node_modules</code>. Por exemplo, importar de <code>&quot;node:fs&quot;</code> lhe dará o módulo embutido de sistema de arquivos do Node. Importar <code>&quot;robot&quot;</code> pode tentar carregar a biblioteca encontrada em <code>node_modules/<wbr>robot/<wbr></code>. É comum instalar tais bibliotecas usando NPM, ao qual voltaremos em um momento.</p>
+
+<p><a class="p_ident" id="p-rvObiszlbU" href="#p-rvObiszlbU" tabindex="-1" role="presentation"></a>Vamos montar um pequeno projeto consistindo de dois arquivos. O primeiro, chamado <code>main.mjs</code>, define um script que pode ser chamado da linha de comando para inverter uma string.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-7WK+2c06TR" href="#c-7WK+2c06TR" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">reverse</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;./reverse.mjs&quot;</span>;
+
+<span class="tok-comment">// O índice 2 contém o primeiro argumento real da linha de comando</span>
+<span class="tok-keyword">let</span> <span class="tok-definition">argument</span> = process.argv[<span class="tok-number">2</span>];
+
+console.log(reverse(argument));</pre>
+
+<p><a class="p_ident" id="p-wyvVRuZkar" href="#p-wyvVRuZkar" tabindex="-1" role="presentation"></a>O arquivo <code>reverse.mjs</code> define uma biblioteca para inverter strings, que pode ser usada tanto por esta ferramenta de linha de comando quanto por outros scripts que precisem de acesso direto a uma função de inversão de strings.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-p8FJa0H1D4" href="#c-p8FJa0H1D4" tabindex="-1" role="presentation"></a><span class="tok-keyword">export</span> <span class="tok-keyword">function</span> <span class="tok-definition">reverse</span>(<span class="tok-definition">string</span>) {
+  <span class="tok-keyword">return</span> Array.from(string).reverse().join(<span class="tok-string">&quot;&quot;</span>);
+}</pre>
+
+<p><a class="p_ident" id="p-eJi/YZHk+X" href="#p-eJi/YZHk+X" tabindex="-1" role="presentation"></a>Lembre-se de que <code>export</code> é usado para declarar que uma variável é parte da interface do módulo. Isso permite que <code>main.mjs</code> importe e use a função.</p>
+
+<p><a class="p_ident" id="p-khxIU41PF9" href="#p-khxIU41PF9" tabindex="-1" role="presentation"></a>Podemos agora chamar nossa ferramenta assim:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-LYQo5Arp8G" href="#c-LYQo5Arp8G" tabindex="-1" role="presentation"></a>$ node main.mjs JavaScript
+tpircSavaJ</pre>
+
+<h2><a class="h_ident" id="h-asYEJQSO3D" href="#h-asYEJQSO3D" tabindex="-1" role="presentation"></a>Instalando com NPM</h2>
+
+<p><a class="p_ident" id="p-4udPIfOrBl" href="#p-4udPIfOrBl" tabindex="-1" role="presentation"></a>NPM, introduzido no <a href="10_modules.html#modules_npm">Capítulo 10</a>, é um repositório online de módulos JavaScript, muitos dos quais são escritos especificamente para Node. Quando você instala Node no seu computador, também obtém o comando <code>npm</code>, que pode usar para interagir com este repositório.</p>
+
+<p><a class="p_ident" id="p-ByU/TrZdYR" href="#p-ByU/TrZdYR" tabindex="-1" role="presentation"></a>O principal uso do NPM é baixar pacotes. Vimos o pacote <code>ini</code> no <a href="10_modules.html#modules_ini">Capítulo 10</a>. Podemos usar NPM para buscar e instalar esse pacote em nosso computador.</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-K3dytBLqfv" href="#c-K3dytBLqfv" tabindex="-1" role="presentation"></a>$ npm install ini
+added 1 package in 723ms
+
+$ node
+&gt; const {parse} = require(&quot;ini&quot;);
+&gt; parse(&quot;x = 1\ny = 2&quot;);
+{ x: '1', y: '2' }</pre>
+
+<p><a class="p_ident" id="p-GkX6InyYq0" href="#p-GkX6InyYq0" tabindex="-1" role="presentation"></a>Após executar <code>npm install</code>, o NPM terá criado um diretório chamado <code>node_modules</code>. Dentro desse diretório haverá um diretório <code>ini</code> que contém a biblioteca. Você pode abri-lo e olhar o código. Quando importamos <code>&quot;ini&quot;</code>, esta biblioteca é carregada, e podemos chamar sua propriedade <code>parse</code> para analisar um arquivo de configuração.</p>
+
+<p><a class="p_ident" id="p-vWXYznoD7q" href="#p-vWXYznoD7q" tabindex="-1" role="presentation"></a>Por padrão, NPM instala pacotes sob o diretório atual em vez de em um lugar central. Se você está acostumado com outros gerenciadores de pacotes, isso pode parecer incomum, mas tem vantagens — coloca cada aplicação em controle total dos pacotes que instala e torna mais fácil gerenciar versões e limpar ao remover uma aplicação.</p>
+
+<h3><a class="i_ident" id="i-HRr+d4pShb" href="#i-HRr+d4pShb" tabindex="-1" role="presentation"></a>Arquivos de pacote</h3>
+
+<p><a class="p_ident" id="p-OvQlutNxnA" href="#p-OvQlutNxnA" tabindex="-1" role="presentation"></a>Após executar <code>npm install</code> para instalar algum pacote, você encontrará não apenas um diretório <code>node_modules</code> mas também um arquivo chamado <code>package.json</code> em seu diretório atual. É recomendado ter tal arquivo para cada projeto. Você pode criá-lo manualmente ou executar <code>npm init</code>. Este arquivo contém informações sobre o projeto, como seu nome e versão, e lista suas dependências.</p>
+
+<p><a class="p_ident" id="p-NmiPedpgrM" href="#p-NmiPedpgrM" tabindex="-1" role="presentation"></a>A simulação do robô do <a href="07_robot.html">Capítulo 7</a>, como modularizada no exercício do <a href="10_modules.html#modular_robot">Capítulo 10</a>, pode ter um arquivo <code>package.json</code> assim:</p>
+
+<pre class="snippet" data-language="json" ><a class="c_ident" id="c-uk0kgUiaJg" href="#c-uk0kgUiaJg" tabindex="-1" role="presentation"></a>{
+  <span class="tok-string">&quot;author&quot;</span>: <span class="tok-string">&quot;Marijn Haverbeke&quot;</span>,
+  <span class="tok-string">&quot;name&quot;</span>: <span class="tok-string">&quot;eloquent-javascript-robot&quot;</span>,
+  <span class="tok-string">&quot;description&quot;</span>: <span class="tok-string">&quot;Simulation of a package-delivery robot&quot;</span>,
+  <span class="tok-string">&quot;version&quot;</span>: <span class="tok-string">&quot;1.0.0&quot;</span>,
+  <span class="tok-string">&quot;main&quot;</span>: <span class="tok-string">&quot;run.mjs&quot;</span>,
+  <span class="tok-string">&quot;dependencies&quot;</span>: {
+    <span class="tok-string">&quot;dijkstrajs&quot;</span>: <span class="tok-string">&quot;^1.0.1&quot;</span>,
+    <span class="tok-string">&quot;random-item&quot;</span>: <span class="tok-string">&quot;^1.0.0&quot;</span>
+  },
+  <span class="tok-string">&quot;license&quot;</span>: <span class="tok-string">&quot;ISC&quot;</span>
+}</pre>
+
+<p><a class="p_ident" id="p-i/SynBUIXZ" href="#p-i/SynBUIXZ" tabindex="-1" role="presentation"></a>Quando você executa <code>npm install</code> sem nomear um pacote para instalar, NPM instalará as dependências listadas em <code>package.json</code>. Quando você instala um pacote específico que ainda não está listado como dependência, NPM o adicionará a <code>package.json</code>.</p>
+
+<h3><a class="i_ident" id="i-BSmtMFf5At" href="#i-BSmtMFf5At" tabindex="-1" role="presentation"></a>Versões</h3>
+
+<p><a class="p_ident" id="p-9zeCkxApRm" href="#p-9zeCkxApRm" tabindex="-1" role="presentation"></a>Um arquivo <code>package.json</code> lista tanto a versão do próprio programa quanto as versões de suas dependências. Versões são uma forma de lidar com o fato de que pacotes evoluem separadamente, e código escrito para funcionar com um pacote como ele existia em um momento pode não funcionar com uma versão posterior e modificada do pacote.</p>
+
+<p><a class="p_ident" id="p-xuizF7MdHF" href="#p-xuizF7MdHF" tabindex="-1" role="presentation"></a>NPM exige que seus pacotes sigam um esquema chamado <em>versionamento semântico</em>, que codifica algumas informações sobre quais versões são <em>compatíveis</em> (não quebram a interface antiga) no número da versão. Uma versão semântica consiste em três números separados por pontos, como <code>2.3.0</code>. Toda vez que nova funcionalidade é adicionada, o número do meio deve ser incrementado. Toda vez que a compatibilidade é quebrada, de forma que código existente que usa o pacote pode não funcionar com a nova versão, o primeiro número deve ser incrementado.</p>
+
+<p><a class="p_ident" id="p-GRS93FRUrp" href="#p-GRS93FRUrp" tabindex="-1" role="presentation"></a>Um caractere de circunflexo (<code>^</code>) na frente do número da versão para uma dependência em <code>package.json</code> indica que qualquer versão compatível com o número dado pode ser instalada. Por exemplo, <code>&quot;^2.<wbr>3.<wbr>0&quot;</code> significaria que qualquer versão maior ou igual a 2.3.0 e menor que 3.0.0 é permitida.</p>
+
+<p><a class="p_ident" id="p-0VEPLa5QHF" href="#p-0VEPLa5QHF" tabindex="-1" role="presentation"></a>O comando <code>npm</code> também é usado para publicar novos pacotes ou novas versões de pacotes. Se você executar <code>npm publish</code> em um diretório que tem um arquivo <code>package.json</code>, ele publicará um pacote com o nome e versão listados no arquivo JSON no registro. Qualquer pessoa pode publicar pacotes no NPM — embora apenas sob um nome de pacote que não esteja em uso ainda, já que não seria bom se pessoas aleatórias pudessem atualizar pacotes existentes.</p>
+
+<p><a class="p_ident" id="p-AA6BITR3f2" href="#p-AA6BITR3f2" tabindex="-1" role="presentation"></a>Este livro não vai entrar em mais detalhes do uso do NPM. Consulte <a href="https://npmjs.com"><em>https://npmjs.com</em></a> para mais documentação e uma forma de pesquisar pacotes.</p>
+
+<h2><a class="h_ident" id="h-Z5b7/ADuYp" href="#h-Z5b7/ADuYp" tabindex="-1" role="presentation"></a>O módulo de sistema de arquivos</h2>
+
+<p><a class="p_ident" id="p-r4Fh7qLwJp" href="#p-r4Fh7qLwJp" tabindex="-1" role="presentation"></a>Um dos módulos embutidos mais usados no Node é o módulo <code>node:fs</code>, que significa <em>sistema de arquivos</em>. Ele exporta funções para trabalhar com arquivos e diretórios.</p>
+
+<p><a class="p_ident" id="p-eFMt1Gvj5N" href="#p-eFMt1Gvj5N" tabindex="-1" role="presentation"></a>Por exemplo, a função chamada <code>readFile</code> lê um arquivo e depois chama um callback com o conteúdo do arquivo.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-vwpa9FujQK" href="#c-vwpa9FujQK" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">readFile</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs&quot;</span>;
+readFile(<span class="tok-string">&quot;file.txt&quot;</span>, <span class="tok-string">&quot;utf8&quot;</span>, (<span class="tok-definition">error</span>, <span class="tok-definition">text</span>) =&gt; {
+  <span class="tok-keyword">if</span> (error) <span class="tok-keyword">throw</span> error;
+  console.log(<span class="tok-string">&quot;The file contains:&quot;</span>, text);
+});</pre>
+
+<p><a class="p_ident" id="p-PnPmLSr0oO" href="#p-PnPmLSr0oO" tabindex="-1" role="presentation"></a>O segundo argumento para <code>readFile</code> indica a <em>codificação de caracteres</em> usada para decodificar o arquivo em uma string. Existem várias formas pelas quais texto pode ser codificado em dados binários, mas a maioria dos sistemas modernos usa UTF-8. A menos que você tenha razões para acreditar que outra codificação é usada, passe <code>&quot;utf8&quot;</code> ao ler um arquivo de texto. Se você não passar uma codificação, o Node assumirá que você está interessado nos dados binários e lhe dará um objeto <code>Buffer</code> em vez de uma string. Este é um objeto semelhante a array que contém números representando os bytes (pedaços de dados de 8 bits) nos arquivos.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-a0H6Ao5E+M" href="#c-a0H6Ao5E+M" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">readFile</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs&quot;</span>;
+readFile(<span class="tok-string">&quot;file.txt&quot;</span>, (<span class="tok-definition">error</span>, <span class="tok-definition">buffer</span>) =&gt; {
+  <span class="tok-keyword">if</span> (error) <span class="tok-keyword">throw</span> error;
+  console.log(<span class="tok-string">&quot;The file contained&quot;</span>, buffer.length, <span class="tok-string">&quot;bytes.&quot;</span>,
+              <span class="tok-string">&quot;The first byte is:&quot;</span>, buffer[<span class="tok-number">0</span>]);
+});</pre>
+
+<p><a class="p_ident" id="p-wqp0pjgKkJ" href="#p-wqp0pjgKkJ" tabindex="-1" role="presentation"></a>Uma função semelhante, <code>writeFile</code>, é usada para escrever um arquivo no disco.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-EBPVY7LdZ1" href="#c-EBPVY7LdZ1" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">writeFile</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs&quot;</span>;
+writeFile(<span class="tok-string">&quot;graffiti.txt&quot;</span>, <span class="tok-string">&quot;Node was here&quot;</span>, <span class="tok-definition">err</span> =&gt; {
+  <span class="tok-keyword">if</span> (err) console.log(<span class="tok-string2">`Failed to write file: </span>${err}<span class="tok-string2">`</span>);
+  <span class="tok-keyword">else</span> console.log(<span class="tok-string">&quot;File written.&quot;</span>);
+});</pre>
+
+<p><a class="p_ident" id="p-bogTCjkYRp" href="#p-bogTCjkYRp" tabindex="-1" role="presentation"></a>Aqui não foi necessário especificar a codificação — <code>writeFile</code> assumirá que, quando recebe uma string para escrever, em vez de um objeto <code>Buffer</code>, deve escrevê-la como texto usando sua codificação de caracteres padrão, que é UTF-8.</p>
+
+<p><a class="p_ident" id="p-jsDJji7Scu" href="#p-jsDJji7Scu" tabindex="-1" role="presentation"></a>O módulo <code>node:fs</code> contém muitas outras funções úteis: <code>readdir</code> lhe dará os arquivos em um diretório como um array de strings, <code>stat</code> recuperará informações sobre um arquivo, <code>rename</code> renomeará um arquivo, <code>unlink</code> removerá um, e assim por diante. Veja a documentação em <a href="https://nodejs.org"><em>https://nodejs.org</em></a> para detalhes.</p>
+
+<p><a class="p_ident" id="p-6qAYMnGAGk" href="#p-6qAYMnGAGk" tabindex="-1" role="presentation"></a>A maioria destas recebe uma função de callback como último parâmetro, que chamam com um erro (o primeiro argumento) ou com um resultado bem-sucedido (o segundo). Como vimos no <a href="11_async.html">Capítulo 11</a>, existem desvantagens neste estilo de programação — a maior delas sendo que o tratamento de erros se torna verboso e propenso a erros.</p>
+
+<p><a class="p_ident" id="p-fZuj+YCtho" href="#p-fZuj+YCtho" tabindex="-1" role="presentation"></a>O módulo <code>node:fs/promises</code> exporta a maioria das mesmas funções que o módulo antigo <code>node:fs</code>, mas usa promises em vez de funções de callback.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-UnYqgzBSbm" href="#c-UnYqgzBSbm" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">readFile</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs/promises&quot;</span>;
+readFile(<span class="tok-string">&quot;file.txt&quot;</span>, <span class="tok-string">&quot;utf8&quot;</span>)
+  .then(<span class="tok-definition">text</span> =&gt; console.log(<span class="tok-string">&quot;The file contains:&quot;</span>, text));</pre>
+
+<p><a class="p_ident" id="p-awHXab85bh" href="#p-awHXab85bh" tabindex="-1" role="presentation"></a>Às vezes você não precisa de assincronicidade e ela só atrapalha. Muitas das funções em <code>node:fs</code> também têm uma variante síncrona, que tem o mesmo nome com <code>Sync</code> adicionado ao final. Por exemplo, a versão síncrona de <code>readFile</code> é chamada <code>readFileSync</code>.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-Xb5Jjk4nDg" href="#c-Xb5Jjk4nDg" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">readFileSync</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs&quot;</span>;
+console.log(<span class="tok-string">&quot;The file contains:&quot;</span>,
+            readFileSync(<span class="tok-string">&quot;file.txt&quot;</span>, <span class="tok-string">&quot;utf8&quot;</span>));</pre>
+
+<p><a class="p_ident" id="p-FednwNI1Du" href="#p-FednwNI1Du" tabindex="-1" role="presentation"></a>Note que enquanto tal operação síncrona está sendo realizada, seu programa é parado inteiramente. Se ele deveria estar respondendo ao usuário ou a outras máquinas na rede, ficar preso em uma ação síncrona pode produzir atrasos incômodos.</p>
+
+<h2><a class="h_ident" id="h-FMdFuCsYCf" href="#h-FMdFuCsYCf" tabindex="-1" role="presentation"></a>O módulo HTTP</h2>
+
+<p><a class="p_ident" id="p-+OIcO6RBqG" href="#p-+OIcO6RBqG" tabindex="-1" role="presentation"></a>Outro módulo central é chamado <code>node:http</code>. Ele fornece funcionalidade para executar um servidor HTTP.</p>
+
+<p><a class="p_ident" id="p-/ncxTaMwyY" href="#p-/ncxTaMwyY" tabindex="-1" role="presentation"></a>Isso é tudo que é preciso para iniciar um servidor HTTP:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-iG/Ok1vO37" href="#c-iG/Ok1vO37" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">createServer</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:http&quot;</span>;
+<span class="tok-keyword">let</span> <span class="tok-definition">server</span> = createServer((<span class="tok-definition">request</span>, <span class="tok-definition">response</span>) =&gt; {
+  response.writeHead(<span class="tok-number">200</span>, {<span class="tok-string">&quot;Content-Type&quot;</span>: <span class="tok-string">&quot;text/html&quot;</span>});
+  response.write(<span class="tok-string2">`</span>
+<span class="tok-string2">    &lt;h1&gt;Hello!&lt;/h1&gt;</span>
+<span class="tok-string2">    &lt;p&gt;You asked for &lt;code&gt;</span>${request.url}<span class="tok-string2">&lt;/code&gt;&lt;/p&gt;`</span>);
+  response.end();
+});
+server.listen(<span class="tok-number">8000</span>);
+console.log(<span class="tok-string">&quot;Listening! (port 8000)&quot;</span>);</pre>
+
+<p><a class="p_ident" id="p-KAK5rduhkO" href="#p-KAK5rduhkO" tabindex="-1" role="presentation"></a>Se você executar este script em sua própria máquina, pode apontar seu navegador para <a href="http://localhost:8000/hello"><em>http://localhost:8000/hello</em></a> para fazer uma requisição ao seu servidor. Ele responderá com uma pequena página HTML.</p>
+
+<p><a class="p_ident" id="p-poeUbDaWxA" href="#p-poeUbDaWxA" tabindex="-1" role="presentation"></a>A função passada como argumento para <code>createServer</code> é chamada toda vez que um cliente se conecta ao servidor. As variáveis <code>request</code> e <code>response</code> são objetos representando os dados de entrada e de saída. O primeiro contém informações sobre a requisição, como sua propriedade <code>url</code>, que nos diz para qual URL a requisição foi feita.</p>
+
+<p><a class="p_ident" id="p-3RzaZbsGC5" href="#p-3RzaZbsGC5" tabindex="-1" role="presentation"></a>Quando você abre aquela página no seu navegador, ele envia uma requisição para seu próprio computador. Isso faz a função do servidor ser executada e enviar de volta uma resposta, que você pode então ver no navegador.</p>
+
+<p><a class="p_ident" id="p-5qOivXlk3f" href="#p-5qOivXlk3f" tabindex="-1" role="presentation"></a>Para enviar algo ao cliente, você chama métodos no objeto <code>response</code>. O primeiro, <code>writeHead</code>, escreverá os cabeçalhos da resposta (veja <a href="18_http.html#headers">Capítulo 18</a>). Você dá a ele o código de status (200 para “OK” neste caso) e um objeto que contém valores de cabeçalhos. O exemplo define o cabeçalho <code>Content-Type</code> para informar ao cliente que estaremos enviando de volta um documento HTML.</p>
+
+<p><a class="p_ident" id="p-Gn8nDHZ/Gv" href="#p-Gn8nDHZ/Gv" tabindex="-1" role="presentation"></a>Em seguida, o corpo real da resposta (o próprio documento) é enviado com <code>response.write</code>. Você pode chamar este método múltiplas vezes se quiser enviar a resposta pedaço por pedaço — por exemplo, para transmitir dados ao cliente conforme se tornam disponíveis. Finalmente, <code>response.end</code> sinaliza o fim da resposta.</p>
+
+<p><a class="p_ident" id="p-byN7tkH1oe" href="#p-byN7tkH1oe" tabindex="-1" role="presentation"></a>A chamada a <code>server.listen</code> faz com que o servidor comece a esperar por conexões na porta 8000. É por isso que você tem que se conectar a <em>localhost:8000</em> para falar com este servidor, em vez de apenas <em>localhost</em>, que usaria a porta padrão 80.</p>
+
+<p><a class="p_ident" id="p-8TJLzrO7CU" href="#p-8TJLzrO7CU" tabindex="-1" role="presentation"></a>Quando você executa este script, o processo simplesmente fica lá esperando. Quando um script está ouvindo eventos — neste caso, conexões de rede — <code>node</code> não sairá automaticamente quando chegar ao final do script. Para fechá-lo, pressione <span class="keyname">ctrl</span>-C.</p>
+
+<p><a class="p_ident" id="p-UtO0TvPRlj" href="#p-UtO0TvPRlj" tabindex="-1" role="presentation"></a>Um servidor web real geralmente faz mais do que o do exemplo — ele olha o método da requisição (a propriedade <code>method</code>) para ver que ação o cliente está tentando realizar e olha a URL da requisição para descobrir em qual recurso esta ação está sendo realizada. Veremos um servidor mais avançado <a href="20_node.html#file_server">mais adiante neste capítulo</a>.</p>
+
+<p><a class="p_ident" id="p-zAz42PoAyy" href="#p-zAz42PoAyy" tabindex="-1" role="presentation"></a>O módulo <code>node:http</code> também fornece uma função <code>request</code> que pode ser usada para fazer requisições HTTP. No entanto, ela é muito mais trabalhosa de usar do que <code>fetch</code>, que vimos no <a href="18_http.html">Capítulo 18</a>. Felizmente, <code>fetch</code> também está disponível no Node como uma variável global. A menos que você queira fazer algo muito específico, como processar o documento de resposta pedaço por pedaço conforme os dados chegam pela rede, eu recomendo usar <code>fetch</code>.</p>
+
+<h2><a class="h_ident" id="h-dJhdomfGgD" href="#h-dJhdomfGgD" tabindex="-1" role="presentation"></a>Streams</h2>
+
+<p><a class="p_ident" id="p-UAOtS2Wev2" href="#p-UAOtS2Wev2" tabindex="-1" role="presentation"></a>O objeto de resposta no qual o servidor HTTP podia escrever é um exemplo de um objeto de <em>stream gravável</em>, que é um conceito amplamente usado no Node. Tais objetos têm um método <code>write</code> ao qual pode ser passada uma string ou um objeto <code>Buffer</code> para escrever algo no stream. Seu método <code>end</code> fecha o stream e opcionalmente recebe um valor para escrever no stream antes de fechar. Ambos os métodos também podem receber um callback como argumento adicional, que chamarão quando a escrita ou o fechamento tiver terminado.</p>
+
+<p><a class="p_ident" id="p-bgr4a82pdy" href="#p-bgr4a82pdy" tabindex="-1" role="presentation"></a>É possível criar um stream gravável que aponta para um arquivo com a função <code>createWriteStream</code> do módulo <code>node:fs</code>. Você pode então usar o método <code>write</code> no objeto resultante para escrever o arquivo pedaço por pedaço, em vez de de uma só vez, como com <code>writeFile</code>.</p>
+
+<p><a class="p_ident" id="p-nj9ugzYmaS" href="#p-nj9ugzYmaS" tabindex="-1" role="presentation"></a><em>Streams de leitura</em> são um pouco mais complexos. O argumento <code>request</code> para o callback do servidor HTTP é um stream de leitura. Ler de um stream é feito usando manipuladores de eventos em vez de métodos.</p>
+
+<p><a class="p_ident" id="p-jQGwwAEhsB" href="#p-jQGwwAEhsB" tabindex="-1" role="presentation"></a>Objetos que emitem eventos no Node têm um método chamado <code>on</code> que é similar ao método <code>addEventListener</code> no navegador. Você dá a ele um nome de evento e depois uma função, e ele registrará aquela função para ser chamada sempre que o evento dado ocorrer.</p>
+
+<p><a class="p_ident" id="p-cHVM7NPx7v" href="#p-cHVM7NPx7v" tabindex="-1" role="presentation"></a>Streams de leitura têm eventos <code>&quot;data&quot;</code> e <code>&quot;end&quot;</code>. O primeiro é disparado toda vez que dados chegam, e o segundo é chamado quando o stream chega ao fim. Este modelo é mais adequado para dados <em>streaming</em> que podem ser imediatamente processados, mesmo quando o documento inteiro ainda não está disponível. Um arquivo pode ser lido como um stream de leitura usando a função <code>createReadStream</code> de <code>node:fs</code>.</p>
+
+<p><a class="p_ident" id="p-apcFm5N9nM" href="#p-apcFm5N9nM" tabindex="-1" role="presentation"></a>Este código cria um servidor que lê corpos de requisição e os transmite de volta ao cliente como texto todo em maiúsculas:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-WGmsdnB9wt" href="#c-WGmsdnB9wt" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">createServer</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:http&quot;</span>;
+createServer((<span class="tok-definition">request</span>, <span class="tok-definition">response</span>) =&gt; {
+  response.writeHead(<span class="tok-number">200</span>, {<span class="tok-string">&quot;Content-Type&quot;</span>: <span class="tok-string">&quot;text/plain&quot;</span>});
+  request.on(<span class="tok-string">&quot;data&quot;</span>, <span class="tok-definition">chunk</span> =&gt;
+    response.write(chunk.toString().toUpperCase()));
+  request.on(<span class="tok-string">&quot;end&quot;</span>, () =&gt; response.end());
+}).listen(<span class="tok-number">8000</span>);</pre>
+
+<p><a class="p_ident" id="p-ilT7dx4eih" href="#p-ilT7dx4eih" tabindex="-1" role="presentation"></a>O valor <code>chunk</code> passado ao manipulador de dados será um <code>Buffer</code> binário. Podemos convertê-lo em uma string decodificando-o como caracteres codificados em UTF-8 com seu método <code>toString</code>.</p>
+
+<p><a class="p_ident" id="p-SN9zj2czxi" href="#p-SN9zj2czxi" tabindex="-1" role="presentation"></a>O código a seguir, quando executado com o servidor de maiúsculas ativo, enviará uma requisição àquele servidor e exibirá a resposta que recebe:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-sOV/OX0P/s" href="#c-sOV/OX0P/s" tabindex="-1" role="presentation"></a>fetch(<span class="tok-string">&quot;http://localhost:8000/&quot;</span>, {
+  <span class="tok-definition">method</span>: <span class="tok-string">&quot;POST&quot;</span>,
+  <span class="tok-definition">body</span>: <span class="tok-string">&quot;Hello server&quot;</span>
+}).then(<span class="tok-definition">resp</span> =&gt; resp.text()).then(console.log);
+<span class="tok-comment">// → HELLO SERVER</span></pre>
+
+<h2 id="file_server"><a class="h_ident" id="h-UgntTg8Oj3" href="#h-UgntTg8Oj3" tabindex="-1" role="presentation"></a>Um servidor de arquivos</h2>
+
+<p><a class="p_ident" id="p-mhCDztCLxL" href="#p-mhCDztCLxL" tabindex="-1" role="presentation"></a>Vamos combinar nosso conhecimento recém-adquirido sobre servidores HTTP e trabalho com o sistema de arquivos para criar uma ponte entre os dois: um servidor HTTP que permite acesso remoto a um sistema de arquivos. Tal servidor tem todos os tipos de usos — permite que aplicações web armazenem e compartilhem dados, ou pode dar a um grupo de pessoas acesso compartilhado a um conjunto de arquivos.</p>
+
+<p><a class="p_ident" id="p-8j4H9r0IYi" href="#p-8j4H9r0IYi" tabindex="-1" role="presentation"></a>Quando tratamos arquivos como recursos HTTP, os métodos HTTP <code>GET</code>, <code>PUT</code> e <code>DELETE</code> podem ser usados para ler, escrever e deletar os arquivos, respectivamente. Interpretaremos o caminho na requisição como o caminho do arquivo ao qual a requisição se refere.</p>
+
+<p><a class="p_ident" id="p-anLRz92xFF" href="#p-anLRz92xFF" tabindex="-1" role="presentation"></a>Provavelmente não queremos compartilhar todo nosso sistema de arquivos, então interpretaremos esses caminhos como começando no diretório de trabalho do servidor, que é o diretório no qual ele foi iniciado. Se eu executasse o servidor a partir de <code>/tmp/public/</code> (ou <code>C:\tmp\public\</code> no Windows), então uma requisição para <code>/file.txt</code> deveria se referir a <code>/<wbr>tmp/<wbr>public/<wbr>file.<wbr>txt</code> (ou <code>C:\tmp\public\file.<wbr>txt</code>).</p>
+
+<p><a class="p_ident" id="p-M5DNijk/d7" href="#p-M5DNijk/d7" tabindex="-1" role="presentation"></a>Construiremos o programa pedaço por pedaço, usando um objeto chamado <code>methods</code> para armazenar as funções que tratam os vários métodos HTTP. Manipuladores de método são funções <code>async</code> que recebem o objeto de requisição como argumento e retornam uma promise que resolve para um objeto que descreve a resposta.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-mWWezc7Wv0" href="#c-mWWezc7Wv0" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">createServer</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:http&quot;</span>;
+
+<span class="tok-keyword">const</span> <span class="tok-definition">methods</span> = Object.create(<span class="tok-keyword">null</span>);
+
+createServer((<span class="tok-definition">request</span>, <span class="tok-definition">response</span>) =&gt; {
+  <span class="tok-keyword">let</span> <span class="tok-definition">handler</span> = methods[request.method] || notAllowed;
+  handler(request).catch(<span class="tok-definition">error</span> =&gt; {
+    <span class="tok-keyword">if</span> (error.status != <span class="tok-keyword">null</span>) <span class="tok-keyword">return</span> error;
+    <span class="tok-keyword">return</span> {<span class="tok-definition">body</span>: String(error), <span class="tok-definition">status</span>: <span class="tok-number">500</span>};
+  }).then(({body, status = <span class="tok-number">200</span>, type = <span class="tok-string">&quot;text/plain&quot;</span>}) =&gt; {
+    response.writeHead(status, {<span class="tok-string">&quot;Content-Type&quot;</span>: type});
+    <span class="tok-keyword">if</span> (body?.pipe) body.pipe(response);
+    <span class="tok-keyword">else</span> response.end(body);
+  });
+}).listen(<span class="tok-number">8000</span>);
+
+<span class="tok-keyword">async</span> <span class="tok-keyword">function</span> <span class="tok-definition">notAllowed</span>(<span class="tok-definition">request</span>) {
+  <span class="tok-keyword">return</span> {
+    <span class="tok-definition">status</span>: <span class="tok-number">405</span>,
+    <span class="tok-definition">body</span>: <span class="tok-string2">`Method </span>${request.method}<span class="tok-string2"> not allowed.`</span>
+  };
+}</pre>
+
+<p><a class="p_ident" id="p-fzLfMIDmHS" href="#p-fzLfMIDmHS" tabindex="-1" role="presentation"></a>Isso inicia um servidor que apenas retorna respostas de erro 405, que é o código usado para indicar que o servidor se recusa a tratar um determinado método.</p>
+
+<p><a class="p_ident" id="p-kDJYVDTTCG" href="#p-kDJYVDTTCG" tabindex="-1" role="presentation"></a>Quando a promise de um manipulador de requisição é rejeitada, a chamada <code>catch</code> traduz o erro em um objeto de resposta, se já não for um, para que o servidor possa enviar de volta uma resposta de erro para informar ao cliente que falhou ao tratar a requisição.</p>
+
+<p><a class="p_ident" id="p-BQZxelniHU" href="#p-BQZxelniHU" tabindex="-1" role="presentation"></a>O campo <code>status</code> da descrição da resposta pode ser omitido, caso em que o padrão é 200 (OK). O tipo de conteúdo, na propriedade <code>type</code>, também pode ser deixado de fora, caso em que assume-se que a resposta é texto simples.</p>
+
+<p><a class="p_ident" id="p-BTqmYoyAZr" href="#p-BTqmYoyAZr" tabindex="-1" role="presentation"></a>Quando o valor de <code>body</code> é um stream de leitura, ele terá um método <code>pipe</code> que podemos usar para encaminhar todo o conteúdo de um stream de leitura para um stream gravável. Se não for, assume-se que é <code>null</code> (sem corpo), uma string, ou um buffer, e é passado diretamente ao método <code>end</code> da resposta.</p>
+
+<p><a class="p_ident" id="p-sUDNRoLNwh" href="#p-sUDNRoLNwh" tabindex="-1" role="presentation"></a>Para descobrir qual caminho de arquivo corresponde a uma URL de requisição, a função <code>urlPath</code> usa a classe embutida <code>URL</code> (que também existe no navegador) para analisar a URL. Este construtor espera uma URL completa, não apenas a parte que começa com a barra que obtemos de <code>request.url</code>, então damos a ele um nome de domínio falso para preencher. Ele extrai seu pathname, que será algo como <code>&quot;/<wbr>file.<wbr>txt&quot;</code>, decodifica para se livrar dos códigos de escape estilo <code>%20</code>, e o resolve relativo ao diretório de trabalho do programa.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-K/wCTdn3jM" href="#c-K/wCTdn3jM" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">resolve</span>, <span class="tok-definition">sep</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:path&quot;</span>;
+
+<span class="tok-keyword">const</span> <span class="tok-definition">baseDirectory</span> = process.cwd();
+
+<span class="tok-keyword">function</span> <span class="tok-definition">urlPath</span>(<span class="tok-definition">url</span>) {
+  <span class="tok-keyword">let</span> {pathname} = <span class="tok-keyword">new</span> URL(url, <span class="tok-string">&quot;http://d&quot;</span>);
+  <span class="tok-keyword">let</span> <span class="tok-definition">path</span> = resolve(decodeURIComponent(pathname).slice(<span class="tok-number">1</span>));
+  <span class="tok-keyword">if</span> (path != baseDirectory &amp;&amp;
+      !path.startsWith(baseDirectory + sep)) {
+    <span class="tok-keyword">throw</span> {<span class="tok-definition">status</span>: <span class="tok-number">403</span>, <span class="tok-definition">body</span>: <span class="tok-string">&quot;Forbidden&quot;</span>};
+  }
+  <span class="tok-keyword">return</span> path;
+}</pre>
+
+<p><a class="p_ident" id="p-mSVcFiPgJz" href="#p-mSVcFiPgJz" tabindex="-1" role="presentation"></a>Assim que você configura um programa para aceitar requisições de rede, tem que começar a se preocupar com segurança. Neste caso, se não formos cuidadosos, é provável que acidentalmente exponhamos todo nosso sistema de arquivos à rede.</p>
+
+<p><a class="p_ident" id="p-woJMua5yaP" href="#p-woJMua5yaP" tabindex="-1" role="presentation"></a>Caminhos de arquivo são strings no Node. Para mapear tal string para um arquivo real, há uma quantidade não trivial de interpretação acontecendo. Caminhos podem, por exemplo, incluir <code>../</code> para se referir a um diretório pai. Uma fonte óbvia de problemas seriam requisições para caminhos como <code>/../secret_file</code>.</p>
+
+<p><a class="p_ident" id="p-wCmDr9tiCv" href="#p-wCmDr9tiCv" tabindex="-1" role="presentation"></a>Para evitar tais problemas, <code>urlPath</code> usa a função <code>resolve</code> do módulo <code>node:path</code>, que resolve caminhos relativos. Ela então verifica que o resultado está <em>abaixo</em> do diretório de trabalho. A função <code>process.cwd</code> (onde <code>cwd</code> significa <em>diretório de trabalho atual</em>) pode ser usada para encontrar este diretório de trabalho. A variável <code>sep</code> do pacote <code>node:path</code> é o separador de caminho do sistema — uma barra invertida no Windows e uma barra normal na maioria dos outros sistemas. Quando o caminho não começa com o diretório base, a função lança um objeto de resposta de erro, usando o código de status HTTP indicando que o acesso ao recurso é proibido.</p>
+
+<p><a class="p_ident" id="p-MVqSkDzWut" href="#p-MVqSkDzWut" tabindex="-1" role="presentation"></a>Vamos configurar o método <code>GET</code> para retornar uma lista de arquivos ao ler um diretório e para retornar o conteúdo do arquivo ao ler um arquivo regular.</p>
+
+<p><a class="p_ident" id="p-VDEASCo65M" href="#p-VDEASCo65M" tabindex="-1" role="presentation"></a>Uma questão complicada é que tipo de cabeçalho <code>Content-Type</code> devemos definir ao retornar o conteúdo de um arquivo. Como esses arquivos podem ser qualquer coisa, nosso servidor não pode simplesmente retornar o mesmo tipo de conteúdo para todos eles. NPM pode nos ajudar novamente aqui. O pacote <code>mime-types</code> (indicadores de tipo de conteúdo como <code>text/plain</code> também são chamados de <em>tipo MIMEs</em>) conhece o tipo correto para um grande número de extensões de arquivo.</p>
+
+<p><a class="p_ident" id="p-yHRfJIOknf" href="#p-yHRfJIOknf" tabindex="-1" role="presentation"></a>O seguinte comando <code>npm</code>, no diretório onde o script do servidor está, instala uma versão específica de <code>mime</code>:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-EObiWUZetK" href="#c-EObiWUZetK" tabindex="-1" role="presentation"></a>$ npm install mime-types@2.1.0</pre>
+
+<p><a class="p_ident" id="p-TdiuVJgXo2" href="#p-TdiuVJgXo2" tabindex="-1" role="presentation"></a>Quando um arquivo solicitado não existe, o código de status HTTP correto a retornar é 404. Usaremos a função <code>stat</code>, que procura informações sobre um arquivo, para descobrir tanto se o arquivo existe quanto se é um diretório.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-nfmdPfwRar" href="#c-nfmdPfwRar" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">createReadStream</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs&quot;</span>;
+<span class="tok-keyword">import</span> {<span class="tok-definition">stat</span>, <span class="tok-definition">readdir</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs/promises&quot;</span>;
+<span class="tok-keyword">import</span> {<span class="tok-definition">lookup</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;mime-types&quot;</span>;
+
+methods.GET = <span class="tok-keyword">async</span> <span class="tok-keyword">function</span>(<span class="tok-definition">request</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">path</span> = urlPath(request.url);
+  <span class="tok-keyword">let</span> <span class="tok-definition">stats</span>;
+  <span class="tok-keyword">try</span> {
+    stats = <span class="tok-keyword">await</span> stat(path);
+  } <span class="tok-keyword">catch</span> (<span class="tok-definition">error</span>) {
+    <span class="tok-keyword">if</span> (error.code != <span class="tok-string">&quot;ENOENT&quot;</span>) <span class="tok-keyword">throw</span> error;
+    <span class="tok-keyword">else</span> <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">404</span>, <span class="tok-definition">body</span>: <span class="tok-string">&quot;File not found&quot;</span>};
+  }
+  <span class="tok-keyword">if</span> (stats.isDirectory()) {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">body</span>: (<span class="tok-keyword">await</span> readdir(path)).join(<span class="tok-string">&quot;</span><span class="tok-string2">\n</span><span class="tok-string">&quot;</span>)};
+  } <span class="tok-keyword">else</span> {
+    <span class="tok-keyword">return</span> {<span class="tok-definition">body</span>: createReadStream(path),
+            <span class="tok-definition">type</span>: lookup(path)};
+  }
+};</pre>
+
+<p><a class="p_ident" id="p-i+l3wF3E8U" href="#p-i+l3wF3E8U" tabindex="-1" role="presentation"></a>Porque tem que acessar o disco e, portanto, pode demorar um pouco, <code>stat</code> é assíncrono. Como estamos usando promises em vez do estilo de callback, tem que ser importado de <code>node:fs/promises</code> em vez de diretamente de <code>node:fs</code>.</p>
+
+<p><a class="p_ident" id="p-tHw6x4txvn" href="#p-tHw6x4txvn" tabindex="-1" role="presentation"></a>Quando o arquivo não existe, <code>stat</code> lançará um objeto de erro com uma propriedade <code>code</code> de <code>&quot;ENOENT&quot;</code>. Esses códigos um tanto obscuros, inspirados no Unix, são como você reconhece tipos de erro no Node.</p>
+
+<p><a class="p_ident" id="p-9zS+iYsZBS" href="#p-9zS+iYsZBS" tabindex="-1" role="presentation"></a>O objeto <code>stats</code> retornado por <code>stat</code> nos diz várias coisas sobre um arquivo, como seu tamanho (propriedade <code>size</code>) e sua data de modificação (propriedade <code>mtime</code>). Aqui estamos interessados na questão de se ele é um diretório ou um arquivo regular, que o método <code>isDirectory</code> nos diz.</p>
+
+<p><a class="p_ident" id="p-iuKfDDR+0p" href="#p-iuKfDDR+0p" tabindex="-1" role="presentation"></a>Usamos <code>readdir</code> para ler o array de arquivos em um diretório e retorná-lo ao cliente. Para arquivos normais, criamos um stream de leitura com <code>createReadStream</code> e retornamos isso como o corpo, junto com o tipo de conteúdo que o pacote <code>mime</code> nos dá para o nome do arquivo.</p>
+
+<p><a class="p_ident" id="p-4mndkExXxO" href="#p-4mndkExXxO" tabindex="-1" role="presentation"></a>O código para tratar requisições <code>DELETE</code> é ligeiramente mais simples.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-JlCZDm9eg3" href="#c-JlCZDm9eg3" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">rmdir</span>, <span class="tok-definition">unlink</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs/promises&quot;</span>;
+
+methods.DELETE = <span class="tok-keyword">async</span> <span class="tok-keyword">function</span>(<span class="tok-definition">request</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">path</span> = urlPath(request.url);
+  <span class="tok-keyword">let</span> <span class="tok-definition">stats</span>;
+  <span class="tok-keyword">try</span> {
+    stats = <span class="tok-keyword">await</span> stat(path);
+  } <span class="tok-keyword">catch</span> (<span class="tok-definition">error</span>) {
+    <span class="tok-keyword">if</span> (error.code != <span class="tok-string">&quot;ENOENT&quot;</span>) <span class="tok-keyword">throw</span> error;
+    <span class="tok-keyword">else</span> <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">204</span>};
+  }
+  <span class="tok-keyword">if</span> (stats.isDirectory()) <span class="tok-keyword">await</span> rmdir(path);
+  <span class="tok-keyword">else</span> <span class="tok-keyword">await</span> unlink(path);
+  <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">204</span>};
+};</pre>
+
+<p><a class="p_ident" id="p-LBOs+Db7Gu" href="#p-LBOs+Db7Gu" tabindex="-1" role="presentation"></a>Quando uma resposta HTTP não contém nenhum dado, o código de status 204 (“sem conteúdo”) pode ser usado para indicar isso. Como a resposta à exclusão não precisa transmitir nenhuma informação além de se a operação foi bem-sucedida, isso é uma coisa sensata a retornar aqui.</p>
+
+<p><a class="p_ident" id="p-paXauSo4Lo" href="#p-paXauSo4Lo" tabindex="-1" role="presentation"></a>Você pode estar se perguntando por que tentar deletar um arquivo inexistente retorna um código de sucesso em vez de um erro. Quando o arquivo sendo deletado não está lá, você poderia dizer que o objetivo da requisição já foi cumprido. O padrão HTTP nos encoraja a tornar requisições <em>idempotentes</em>, o que significa que fazer a mesma requisição múltiplas vezes produz o mesmo resultado que fazê-la uma vez. De certa forma, se você tenta deletar algo que já se foi, o efeito que estava tentando criar foi alcançado — a coisa não está mais lá.</p>
+
+<p><a class="p_ident" id="p-L84KFGPfVw" href="#p-L84KFGPfVw" tabindex="-1" role="presentation"></a>Este é o manipulador para requisições <code>PUT</code>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-ChtmXskNos" href="#c-ChtmXskNos" tabindex="-1" role="presentation"></a><span class="tok-keyword">import</span> {<span class="tok-definition">createWriteStream</span>} <span class="tok-keyword">from</span> <span class="tok-string">&quot;node:fs&quot;</span>;
+
+<span class="tok-keyword">function</span> <span class="tok-definition">pipeStream</span>(<span class="tok-definition">from</span>, <span class="tok-definition">to</span>) {
+  <span class="tok-keyword">return</span> <span class="tok-keyword">new</span> Promise((<span class="tok-definition">resolve</span>, <span class="tok-definition">reject</span>) =&gt; {
+    from.on(<span class="tok-string">&quot;error&quot;</span>, reject);
+    to.on(<span class="tok-string">&quot;error&quot;</span>, reject);
+    to.on(<span class="tok-string">&quot;finish&quot;</span>, resolve);
+    from.pipe(to);
+  });
+}
+
+methods.PUT = <span class="tok-keyword">async</span> <span class="tok-keyword">function</span>(<span class="tok-definition">request</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">path</span> = urlPath(request.url);
+  <span class="tok-keyword">await</span> pipeStream(request, createWriteStream(path));
+  <span class="tok-keyword">return</span> {<span class="tok-definition">status</span>: <span class="tok-number">204</span>};
+};</pre>
+
+<p><a class="p_ident" id="p-+Fl/DlmBtN" href="#p-+Fl/DlmBtN" tabindex="-1" role="presentation"></a>Não precisamos verificar se o arquivo existe desta vez — se existir, simplesmente sobrescreveremos. Novamente usamos <code>pipe</code> para mover dados de um stream de leitura para um gravável, neste caso da requisição para o arquivo. Mas como <code>pipe</code> não é escrito para retornar uma promise, temos que escrever um wrapper, <code>pipeStream</code>, que cria uma promise em torno do resultado de chamar <code>pipe</code>.</p>
+
+<p><a class="p_ident" id="p-dK9VWPdgb8" href="#p-dK9VWPdgb8" tabindex="-1" role="presentation"></a>Quando algo dá errado ao abrir o arquivo, <code>createWriteStream</code> ainda retornará um stream, mas esse stream disparará um evento <code>&quot;error&quot;</code>. O stream da requisição também pode falhar — por exemplo, se a rede cair. Então conectamos os eventos <code>&quot;error&quot;</code> de ambos os streams para rejeitar a promise. Quando <code>pipe</code> termina, ele fechará o stream de saída, o que faz disparar um evento <code>&quot;finish&quot;</code>. É nesse ponto que podemos resolver a promise com sucesso (retornando nada).</p>
+
+<p><a class="p_ident" id="p-lUpFbQX+Eb" href="#p-lUpFbQX+Eb" tabindex="-1" role="presentation"></a>O script completo para o servidor está disponível em <a href="https://eloquentjavascript.net/code/file_server.mjs"><em>https://eloquentjavascript.net/code/file_server.mjs</em></a>. Você pode baixá-lo e, depois de instalar suas dependências, executá-lo com Node para iniciar seu próprio servidor de arquivos. E, é claro, você pode modificá-lo e estendê-lo para resolver os exercícios deste capítulo ou para experimentar.</p>
+
+<p><a class="p_ident" id="p-ZpyUVn14w0" href="#p-ZpyUVn14w0" tabindex="-1" role="presentation"></a>A ferramenta de linha de comando <code>curl</code>, amplamente disponível em sistemas do tipo Unix (como macOS e Linux), pode ser usada para fazer requisições HTTP. A sessão a seguir testa brevemente nosso servidor. A opção <code>-X</code> é usada para definir o método da requisição, e <code>-d</code> é usada para incluir um corpo de requisição.</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-qgxdz4oRrt" href="#c-qgxdz4oRrt" tabindex="-1" role="presentation"></a>$ curl http://localhost:8000/file.txt
+File not found
+$ curl -X PUT -d CONTENT http://localhost:8000/file.txt
+$ curl http://localhost:8000/file.txt
+CONTENT
+$ curl -X DELETE http://localhost:8000/file.txt
+$ curl http://localhost:8000/file.txt
+File not found</pre>
+
+<p><a class="p_ident" id="p-GiumjPTitf" href="#p-GiumjPTitf" tabindex="-1" role="presentation"></a>A primeira requisição para <code>file.txt</code> falha pois o arquivo ainda não existe. A requisição <code>PUT</code> cria o arquivo, e eis que a próxima requisição o recupera com sucesso. Depois de deletá-lo com uma requisição <code>DELETE</code>, o arquivo está novamente ausente.</p>
+
+<h2><a class="h_ident" id="h-741R75mvqx" href="#h-741R75mvqx" tabindex="-1" role="presentation"></a>Resumo</h2>
+
+<p><a class="p_ident" id="p-gd572G9pRS" href="#p-gd572G9pRS" tabindex="-1" role="presentation"></a>Node é um sistema agradável e pequeno que nos permite executar JavaScript em um contexto fora do navegador. Foi originalmente projetado para tarefas de rede para desempenhar o papel de um nó em uma rede, mas se presta a todos os tipos de tarefas de scripting. Se escrever JavaScript é algo que você gosta, automatizar tarefas com Node pode funcionar bem para você.</p>
+
+<p><a class="p_ident" id="p-6+tTpU+qwN" href="#p-6+tTpU+qwN" tabindex="-1" role="presentation"></a>NPM fornece pacotes para tudo que você possa imaginar (e algumas coisas que provavelmente nunca imaginaria), e permite que você busque e instale esses pacotes com o programa <code>npm</code>. Node vem com vários módulos embutidos, incluindo o módulo <code>node:fs</code> para trabalhar com o sistema de arquivos e o módulo <code>node:http</code> para executar servidores HTTP.</p>
+
+<p><a class="p_ident" id="p-AGjB76GgJN" href="#p-AGjB76GgJN" tabindex="-1" role="presentation"></a>Toda entrada e saída no Node é feita de forma assíncrona, a menos que você use explicitamente uma variante síncrona de uma função, como <code>readFileSync</code>. Node originalmente usava callbacks para funcionalidades assíncronas, mas o pacote <code>node:fs/promises</code> fornece uma interface baseada em promises para o sistema de arquivos.</p>
+
+<h2><a class="h_ident" id="h-0CpJUZuhQJ" href="#h-0CpJUZuhQJ" tabindex="-1" role="presentation"></a>Exercícios</h2>
+
+<h3><a class="i_ident" id="i-+dSQBc0M53" href="#i-+dSQBc0M53" tabindex="-1" role="presentation"></a>Ferramenta de busca</h3>
+
+<p><a class="p_ident" id="p-VuYyJgBvzm" href="#p-VuYyJgBvzm" tabindex="-1" role="presentation"></a>Em sistemas Unix, existe uma ferramenta de linha de comando chamada <code>grep</code> que pode ser usada para buscar rapidamente em arquivos por uma expressão regular.</p>
+
+<p><a class="p_ident" id="p-vDKoSKUiBh" href="#p-vDKoSKUiBh" tabindex="-1" role="presentation"></a>Escreva um script Node que possa ser executado a partir da linha de comando e age de forma semelhante ao <code>grep</code>. Ele trata seu primeiro argumento de linha de comando como uma expressão regular e trata quaisquer argumentos adicionais como arquivos para buscar. Ele deve exibir os nomes de qualquer arquivo cujo conteúdo corresponda à expressão regular.</p>
+
+<p><a class="p_ident" id="p-EQwPMzEMbT" href="#p-EQwPMzEMbT" tabindex="-1" role="presentation"></a>Quando isso funcionar, estenda-o para que, quando um dos argumentos for um diretório, ele busque em todos os arquivos naquele diretório e seus subdiretórios.</p>
+
+<p><a class="p_ident" id="p-zZh6Sr2cyc" href="#p-zZh6Sr2cyc" tabindex="-1" role="presentation"></a>Use funções de sistema de arquivos assíncronas ou síncronas como achar melhor. Configurar as coisas para que múltiplas ações assíncronas sejam solicitadas ao mesmo tempo pode acelerar um pouco as coisas, mas não muito, já que a maioria dos sistemas de arquivos só pode ler uma coisa de cada vez.</p>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-Z3eWTTHCXL" href="#p-Z3eWTTHCXL" tabindex="-1" role="presentation"></a>Seu primeiro argumento de linha de comando, a expressão regular, pode ser encontrado em <code>process.argv[2]</code>. Os arquivos de entrada vêm depois disso. Você pode usar o construtor <code>RegExp</code> para ir de uma string para um objeto de expressão regular.</p>
+
+<p><a class="p_ident" id="p-ML8TZYAK8w" href="#p-ML8TZYAK8w" tabindex="-1" role="presentation"></a>Fazer isso sincronamente, com <code>readFileSync</code>, é mais direto, mas se você usar <code>node:fs/promises</code> para obter funções que retornam promises e escrever uma função <code>async</code>, o código fica semelhante.</p>
+
+<p><a class="p_ident" id="p-8Mt03nZjbq" href="#p-8Mt03nZjbq" tabindex="-1" role="presentation"></a>Para descobrir se algo é um diretório, você pode novamente usar <code>stat</code> (ou <code>statSync</code>) e o método <code>isDirectory</code> do objeto stats.</p>
+
+<p><a class="p_ident" id="p-XyrBsa+u+f" href="#p-XyrBsa+u+f" tabindex="-1" role="presentation"></a>Explorar um diretório é um processo ramificado. Você pode fazê-lo usando uma função recursiva ou mantendo um array de trabalho (arquivos que ainda precisam ser explorados). Para encontrar os arquivos em um diretório, você pode chamar <code>readdir</code> ou <code>readdirSync</code>. Note a capitalização estranha — as funções de sistema de arquivos do Node são vagamente baseadas em funções padrão do Unix, como <code>readdir</code>, que são todas minúsculas, mas então adiciona <code>Sync</code> com uma letra maiúscula.</p>
+
+<p><a class="p_ident" id="p-1P+zGEsIYR" href="#p-1P+zGEsIYR" tabindex="-1" role="presentation"></a>Para ir de um nome de arquivo lido com <code>readdir</code> para um nome de caminho completo, você tem que combiná-lo com o nome do diretório, seja colocando <code>sep</code> de <code>node:path</code> entre eles ou usando a função <code>join</code> do mesmo pacote.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-b2OcTROusU" href="#i-b2OcTROusU" tabindex="-1" role="presentation"></a>Criação de diretório</h3>
+
+<p><a class="p_ident" id="p-5g/zaHv1fy" href="#p-5g/zaHv1fy" tabindex="-1" role="presentation"></a>Embora o método <code>DELETE</code> em nosso servidor de arquivos seja capaz de deletar diretórios (usando <code>rmdir</code>), o servidor atualmente não fornece nenhuma forma de <em>criar</em> um diretório.</p>
+
+<p><a class="p_ident" id="p-O16jkRaHeN" href="#p-O16jkRaHeN" tabindex="-1" role="presentation"></a>Adicione suporte para o método <code>MKCOL</code> (“make collection”), que deve criar um diretório chamando <code>mkdir</code> do módulo <code>node:fs</code>. <code>MKCOL</code> não é um método HTTP amplamente usado, mas existe para este mesmo propósito no padrão <em>WebDAV</em>, que especifica um conjunto de convenções sobre HTTP que o tornam adequado para criar documentos.</p>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-Ocr1DkgMYL" href="#p-Ocr1DkgMYL" tabindex="-1" role="presentation"></a>Você pode usar a função que implementa o método <code>DELETE</code> como modelo para o método <code>MKCOL</code>. Quando nenhum arquivo é encontrado, tente criar um diretório com <code>mkdir</code>. Quando um diretório existe naquele caminho, você pode retornar uma resposta 204 para que requisições de criação de diretório sejam idempotentes. Se um arquivo não-diretório existe aqui, retorne um código de erro. O código 400 (“bad request”) seria apropriado.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-uVzPCv+uXm" href="#i-uVzPCv+uXm" tabindex="-1" role="presentation"></a>Um espaço público na web</h3>
+
+<p><a class="p_ident" id="p-sRoh0x4Oq7" href="#p-sRoh0x4Oq7" tabindex="-1" role="presentation"></a>Como o servidor de arquivos serve qualquer tipo de arquivo e inclui o cabeçalho <code>Content-Type</code> correto, você pode usá-lo para servir um website. Dado que este servidor permite que qualquer pessoa delete e substitua arquivos, isso resultaria em um tipo interessante de website: um que pode ser modificado, melhorado e vandalizado por qualquer pessoa que dedique tempo para fazer a requisição HTTP correta.</p>
+
+<p><a class="p_ident" id="p-oGJR9J04jd" href="#p-oGJR9J04jd" tabindex="-1" role="presentation"></a>Escreva uma página HTML básica que inclua um arquivo JavaScript simples. Coloque os arquivos em um diretório servido pelo servidor de arquivos e abra-os no seu navegador.</p>
+
+<p><a class="p_ident" id="p-pQ4fnD2ufU" href="#p-pQ4fnD2ufU" tabindex="-1" role="presentation"></a>Em seguida, como exercício avançado ou até um projeto de fim de semana, combine todo o conhecimento que adquiriu deste livro para construir uma interface mais amigável para modificar o website — de <em>dentro</em> do website.</p>
+
+<p><a class="p_ident" id="p-aahxUYfqCJ" href="#p-aahxUYfqCJ" tabindex="-1" role="presentation"></a>Use um formulário HTML para editar o conteúdo dos arquivos que compõem o website, permitindo ao usuário atualizá-los no servidor usando requisições HTTP, como descrito no <a href="18_http.html">Capítulo 18</a>.</p>
+
+<p><a class="p_ident" id="p-m6CscgPCAU" href="#p-m6CscgPCAU" tabindex="-1" role="presentation"></a>Comece tornando apenas um único arquivo editável. Depois faça com que o usuário possa selecionar qual arquivo editar. Use o fato de que nosso servidor de arquivos retorna listas de arquivos ao ler um diretório.</p>
+
+<p><a class="p_ident" id="p-FOJj8pUblK" href="#p-FOJj8pUblK" tabindex="-1" role="presentation"></a>Não trabalhe diretamente no código exposto pelo servidor de arquivos, pois se você cometer um erro, é provável que danifique os arquivos lá. Em vez disso, mantenha seu trabalho fora do diretório acessível publicamente e copie-o para lá ao testar.</p>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-ceV7tRPQcX" href="#p-ceV7tRPQcX" tabindex="-1" role="presentation"></a>Você pode criar um elemento <code>&lt;textarea&gt;</code> para conter o conteúdo do arquivo que está sendo editado. Uma requisição <code>GET</code>, usando <code>fetch</code>, pode recuperar o conteúdo atual do arquivo. Você pode usar URLs relativos como <em>index.html</em>, em vez de <a href="http://localhost:8000/index.html"><em>http://localhost:8000/index.html</em></a>, para se referir a arquivos no mesmo servidor que o script em execução.</p>
+
+<p><a class="p_ident" id="p-3LK6d5Y/lu" href="#p-3LK6d5Y/lu" tabindex="-1" role="presentation"></a>Então, quando o usuário clicar em um botão (você pode usar um elemento <code>&lt;form&gt;</code> e evento <code>&quot;submit&quot;</code>), faça uma requisição <code>PUT</code> para a mesma URL, com o conteúdo do <code>&lt;textarea&gt;</code> como corpo da requisição, para salvar o arquivo.</p>
+
+<p><a class="p_ident" id="p-taHra6gLeH" href="#p-taHra6gLeH" tabindex="-1" role="presentation"></a>Você pode então adicionar um elemento <code>&lt;select&gt;</code> que contenha todos os arquivos no diretório raiz do servidor adicionando elementos <code>&lt;option&gt;</code> contendo as linhas retornadas por uma requisição <code>GET</code> para a URL <code>/</code>. Quando o usuário selecionar outro arquivo (um evento <code>&quot;change&quot;</code> no campo), o script deve buscar e exibir aquele arquivo. Ao salvar um arquivo, use o nome de arquivo atualmente selecionado.</p>
+
+</div></details><nav><a href="19_paint.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="21_skillsharing.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

@@ -1,0 +1,223 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Introdução :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":0,"load_files":["code/intro.js"]}</script></head>
+
+<article>
+<nav><a href="index.html" title="capa" aria-label="capa">●</a> <a href="01_values.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>Introdução</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-WxpVCMFVw3" href="#p-WxpVCMFVw3" tabindex="-1" role="presentation"></a>We think we are creating the system for our own purposes. We believe we are making it in our own image... But the computer is not really like us. It is a projection of a very slim part of ourselves: that portion devoted to logic, order, rule, and clarity.</p>
+
+<footer>Ellen Ullman, <cite>Close to the Machine: Technophilia and Its Discontents</cite></footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_00.jpg" alt="Illustration of a screwdriver next to a circuit board of about the same size"></figure>
+
+<p><a class="p_ident" id="p-VHWSCR4Hzg" href="#p-VHWSCR4Hzg" tabindex="-1" role="presentation"></a>Este é um livro sobre instruir computadores. Computadores são tão comuns quanto chaves de fenda hoje em dia, mas são consideravelmente mais complexos, e fazer com que façam o que você quer nem sempre é fácil.</p>
+
+<p><a class="p_ident" id="p-JlSn0D+uYU" href="#p-JlSn0D+uYU" tabindex="-1" role="presentation"></a>Se a tarefa que você tem para o seu computador é uma tarefa comum e bem compreendida, como mostrar seus e-mails ou funcionar como uma calculadora, você pode abrir o aplicativo apropriado e começar a trabalhar. Mas para tarefas únicas ou abertas, geralmente não existe um aplicativo apropriado.</p>
+
+<p><a class="p_ident" id="p-iACQ2Kf0wC" href="#p-iACQ2Kf0wC" tabindex="-1" role="presentation"></a>É aí que a programação pode entrar. <em>Programar</em> é o ato de construir um <em>programa</em> — um conjunto de instruções precisas que dizem ao computador o que fazer. Como computadores são bestas burras e pedantes, programar é fundamentalmente tedioso e frustrante.</p>
+
+<p><a class="p_ident" id="p-MVw34pPS+L" href="#p-MVw34pPS+L" tabindex="-1" role="presentation"></a>Felizmente, se você consegue superar esse fato — e talvez até gostar do rigor de pensar em termos que máquinas burras conseguem lidar — programar pode ser gratificante. Permite que você faça coisas em segundos que levariam uma <em>eternidade</em> manualmente. É uma forma de fazer sua ferramenta computacional realizar coisas que não conseguia antes. Além disso, é um maravilhoso jogo de resolução de quebra-cabeças e pensamento abstrato.</p>
+
+<p><a class="p_ident" id="p-J8e4Jnj7E0" href="#p-J8e4Jnj7E0" tabindex="-1" role="presentation"></a>A maioria da programação é feita com linguagens de programação. Uma <em>linguagem de programação</em> é uma linguagem artificialmente construída usada para instruir computadores. É interessante que a forma mais eficaz que encontramos para nos comunicar com um computador tome tanto emprestado da forma como nos comunicamos uns com os outros. Assim como as linguagens humanas, linguagens de computador permitem que palavras e frases sejam combinadas de novas formas, tornando possível expressar conceitos sempre novos.</p>
+
+<p><a class="p_ident" id="p-8UfaffaviI" href="#p-8UfaffaviI" tabindex="-1" role="presentation"></a>Em determinado momento, interfaces baseadas em linguagem, como os prompts do BASIC e do DOS dos anos 1980 e 1990, eram o principal método de interação com computadores. Para uso rotineiro do computador, essas foram amplamente substituídas por interfaces visuais, que são mais fáceis de aprender mas oferecem menos liberdade. Mas se você souber onde procurar, as linguagens ainda estão lá. Uma delas, <em>JavaScript</em>, está embutida em todos os navegadores web modernos — e, portanto, está disponível em praticamente todos os dispositivos.</p>
+
+<p><a class="p_ident" id="p-omkuo64nFw" href="#p-omkuo64nFw" tabindex="-1" role="presentation"></a>Este livro tentará familiarizá-lo o suficiente com essa linguagem para que você possa fazer coisas úteis e divertidas com ela.</p>
+
+<h2><a class="h_ident" id="h-MiilbY+QgQ" href="#h-MiilbY+QgQ" tabindex="-1" role="presentation"></a>Sobre programação</h2>
+
+<p><a class="p_ident" id="p-TNZIhVmCOp" href="#p-TNZIhVmCOp" tabindex="-1" role="presentation"></a>Além de explicar JavaScript, vou apresentar os princípios básicos da programação. Programar, acontece que, é difícil. As regras fundamentais são simples e claras, mas programas construídos sobre essas regras tendem a se tornar complexos o suficiente para introduzir suas próprias regras e complexidade. Você está construindo seu próprio labirinto, de certa forma, e pode facilmente se perder nele.</p>
+
+<p><a class="p_ident" id="p-JSP/6+dJ1G" href="#p-JSP/6+dJ1G" tabindex="-1" role="presentation"></a>Haverá momentos em que a leitura deste livro parecerá terrivelmente frustrante. Se você é novo em programação, haverá muito material novo para digerir. Muito desse material será então <em>combinado</em> de formas que exigem que você faça conexões adicionais.</p>
+
+<p><a class="p_ident" id="p-W2sQQRRJKY" href="#p-W2sQQRRJKY" tabindex="-1" role="presentation"></a>Cabe a você fazer o esforço necessário. Quando estiver com dificuldades para acompanhar o livro, não tire conclusões precipitadas sobre suas próprias capacidades. Você está bem — só precisa continuar. Faça uma pausa, releia algum material e certifique-se de ler e compreender os programas de exemplo e os exercícios. Aprender é trabalho árduo, mas tudo que você aprende é seu e tornará o aprendizado futuro mais fácil.</p>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-HlVjBUwbnu" href="#p-HlVjBUwbnu" tabindex="-1" role="presentation"></a>When action grows unprofitable, gather information; when information grows unprofitable, sleep.</p>
+
+<footer>Ursula K. Le Guin, <cite>The Left Hand of Darkness</cite></footer>
+
+</blockquote>
+
+<p><a class="p_ident" id="p-rqnjATJc/B" href="#p-rqnjATJc/B" tabindex="-1" role="presentation"></a>Um programa é muitas coisas. É um pedaço de texto digitado por um programador, é a força diretriz que faz o computador fazer o que faz, são dados na memória do computador e, ao mesmo tempo, controla as ações realizadas nessa memória. Analogias que tentam comparar programas a objetos familiares tendem a ficar aquém. Uma que se encaixa superficialmente é comparar um programa a uma máquina — muitas partes separadas tendem a estar envolvidas, e para fazer a coisa toda funcionar, precisamos considerar as formas como essas partes se interconectam e contribuem para o funcionamento do todo.</p>
+
+<p><a class="p_ident" id="p-gwovbdng+/" href="#p-gwovbdng+/" tabindex="-1" role="presentation"></a>Um computador é uma máquina física que atua como hospedeiro dessas máquinas imateriais. Computadores em si só conseguem fazer coisas estupidamente diretas. A razão pela qual são tão úteis é que fazem essas coisas a uma velocidade incrivelmente alta. Um programa pode combinar engenhosamente um enorme número dessas ações simples para fazer coisas muito complicadas.</p>
+
+<p><a class="p_ident" id="p-ERYgNdIWmA" href="#p-ERYgNdIWmA" tabindex="-1" role="presentation"></a>Um programa é uma construção do pensamento. Não custa nada construí-lo, não tem peso e cresce facilmente sob nossos dedos que digitam. Mas conforme um programa cresce, também cresce sua complexidade. A habilidade de programar é a habilidade de construir programas que não confundam o programador. Os melhores programas são aqueles que conseguem fazer algo interessante enquanto ainda são fáceis de entender.</p>
+
+<p><a class="p_ident" id="p-ijzEWEy4i+" href="#p-ijzEWEy4i+" tabindex="-1" role="presentation"></a>Alguns programadores acreditam que essa complexidade é melhor gerenciada usando apenas um pequeno conjunto de técnicas bem compreendidas em seus programas. Eles compuseram regras estritas (“melhores práticas”) prescrevendo a forma que os programas devem ter e cuidadosamente permanecem dentro de sua pequena zona segura.</p>
+
+<p><a class="p_ident" id="p-g9uCU4ztyE" href="#p-g9uCU4ztyE" tabindex="-1" role="presentation"></a>Isso não é apenas chato — é ineficaz. Novos problemas frequentemente requerem novas soluções. O campo da programação é jovem e ainda está se desenvolvendo rapidamente, e é variado o suficiente para ter espaço para abordagens completamente diferentes. Há muitos erros terríveis a se cometer em design de programas, e você deveria ir em frente e cometê-los pelo menos uma vez para que os compreenda. A noção do que faz um bom programa se desenvolve com prática, não é aprendida a partir de uma lista de regras.</p>
+
+<h2><a class="h_ident" id="h-Md+H0DguZX" href="#h-Md+H0DguZX" tabindex="-1" role="presentation"></a>Por que a linguagem importa</h2>
+
+<p><a class="p_ident" id="p-5EH3lviVpP" href="#p-5EH3lviVpP" tabindex="-1" role="presentation"></a>No início, no nascimento da computação, não havia linguagens de programação. Programas tinham esta aparência:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-D6PkB3Wa2f" href="#c-D6PkB3Wa2f" tabindex="-1" role="presentation"></a>00110001 00000000 00000000
+00110001 00000001 00000001
+00110011 00000001 00000010
+01010001 00001011 00000010
+00100010 00000010 00001000
+01000011 00000001 00000000
+01000001 00000001 00000001
+00010000 00000010 00000000
+01100010 00000000 00000000</pre>
+
+<p><a class="p_ident" id="p-4xkWsyPS9/" href="#p-4xkWsyPS9/" tabindex="-1" role="presentation"></a>Esse é um programa para somar os números de 1 a 10 e imprimir o resultado: <code>1 + 2 + .<wbr>.<wbr>.<wbr> + 10 = 55</code>. Ele poderia rodar em uma máquina hipotética simples. Para programar os primeiros computadores, era necessário posicionar grandes conjuntos de interruptores na posição correta ou fazer furos em tiras de papelão e alimentá-las no computador. Você pode imaginar quão tedioso e propenso a erros esse procedimento era. Mesmo escrever programas simples exigia muita astúcia e disciplina. Os complexos eram quase inconcebíveis.</p>
+
+<p><a class="p_ident" id="p-trB5/yfdaM" href="#p-trB5/yfdaM" tabindex="-1" role="presentation"></a>É claro que inserir manualmente esses padrões arcanos de bits (os zeros e uns) dava ao programador uma profunda sensação de ser um mago poderoso. E isso tem que valer algo em termos de satisfação no trabalho.</p>
+
+<p><a class="p_ident" id="p-8nuFXFf3qA" href="#p-8nuFXFf3qA" tabindex="-1" role="presentation"></a>Cada linha do programa anterior contém uma única instrução. Poderia ser escrito em português assim:</p>
+
+<ol>
+
+<li>
+
+<p><a class="p_ident" id="p-H2t8Fj3cWr" href="#p-H2t8Fj3cWr" tabindex="-1" role="presentation"></a>Armazene o número 0 na posição de memória 0.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-Hr2R8EBmhZ" href="#p-Hr2R8EBmhZ" tabindex="-1" role="presentation"></a>Armazene o número 1 na posição de memória 1.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-bRf8GyvAPU" href="#p-bRf8GyvAPU" tabindex="-1" role="presentation"></a>Armazene o valor da posição de memória 1 na posição de memória 2.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-t+ozNTXcfE" href="#p-t+ozNTXcfE" tabindex="-1" role="presentation"></a>Subtraia o número 11 do valor na posição de memória 2.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-noYBz5QKb1" href="#p-noYBz5QKb1" tabindex="-1" role="presentation"></a>Se o valor na posição de memória 2 for o número 0, continue na instrução 9.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-lPxzTqqQ8E" href="#p-lPxzTqqQ8E" tabindex="-1" role="presentation"></a>Some o valor da posição de memória 1 à posição de memória 0.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-yrb5ShBpwP" href="#p-yrb5ShBpwP" tabindex="-1" role="presentation"></a>Some o número 1 ao valor da posição de memória 1.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-p/AXmRW1Rk" href="#p-p/AXmRW1Rk" tabindex="-1" role="presentation"></a>Continue na instrução 3.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-ZfwB22ypC7" href="#p-ZfwB22ypC7" tabindex="-1" role="presentation"></a>Exiba o valor da posição de memória 0.</p></li>
+
+</ol>
+
+<p><a class="p_ident" id="p-iJObNG9zW0" href="#p-iJObNG9zW0" tabindex="-1" role="presentation"></a>Embora isso já seja mais legível que a sopa de bits, ainda é bastante obscuro. Usar nomes em vez de números para as instruções e posições de memória ajuda.</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-tkXNRVPX8M" href="#c-tkXNRVPX8M" tabindex="-1" role="presentation"></a>  Set &quot;total&quot; to 0.
+  Set &quot;count&quot; to 1.
+[loop]
+  Set &quot;compare&quot; to &quot;count&quot;.
+  Subtract 11 from &quot;compare&quot;.
+  If &quot;compare&quot; is 0, continue at [end].
+  Add &quot;count&quot; to &quot;total&quot;.
+  Add 1 to &quot;count&quot;.
+  Continue at [loop].
+[end]
+  Output &quot;total&quot;.</pre>
+
+<p><a class="p_ident" id="p-/0ya3s+uan" href="#p-/0ya3s+uan" tabindex="-1" role="presentation"></a>Você consegue ver como o programa funciona neste ponto? As duas primeiras linhas dão a duas posições de memória seus valores iniciais: <code>total</code> será usado para construir o resultado da computação, e <code>count</code> acompanhará o número que estamos olhando no momento. As linhas usando <code>compare</code> são provavelmente as mais confusas. O programa quer verificar se <code>count</code> é igual a 11 para decidir se pode parar de executar. Como nossa máquina hipotética é bastante primitiva, ela só consegue testar se um número é zero e tomar uma decisão com base nisso. Portanto, usa a posição de memória rotulada <code>compare</code> para calcular o valor de <code>count - 11</code> e toma uma decisão com base nesse valor. As duas linhas seguintes adicionam o valor de <code>count</code> ao resultado e incrementam <code>count</code> em 1 toda vez que o programa decide que <code>count</code> ainda não é 11.</p>
+
+<p><a class="p_ident" id="p-n+pr1Sv6gU" href="#p-n+pr1Sv6gU" tabindex="-1" role="presentation"></a>Aqui está o mesmo programa em JavaScript:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-KfhVPRGaZ0" href="#c-KfhVPRGaZ0" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">total</span> = <span class="tok-number">0</span>, <span class="tok-definition">count</span> = <span class="tok-number">1</span>;
+<span class="tok-keyword">while</span> (count &lt;= <span class="tok-number">10</span>) {
+  total += count;
+  count += <span class="tok-number">1</span>;
+}
+console.log(total);
+<span class="tok-comment">// → 55</span></pre>
+
+<p><a class="p_ident" id="p-l4pR4buNlS" href="#p-l4pR4buNlS" tabindex="-1" role="presentation"></a>Esta versão nos dá algumas melhorias a mais. Mais importante, não há mais necessidade de especificar a forma como queremos que o programa salte para frente e para trás — a construção <code>while</code> cuida disso. Ela continua executando o bloco (envolvido em chaves) abaixo dela enquanto a condição fornecida se mantiver verdadeira. Essa condição é <code>count &lt;= 10</code>, que significa “count é menor ou igual a 10”. Não precisamos mais criar um valor temporário e compará-lo com zero, o que era apenas um detalhe desinteressante. Parte do poder das linguagens de programação é que elas podem cuidar de detalhes desinteressantes para nós.</p>
+
+<p><a class="p_ident" id="p-Rd6PUp6W50" href="#p-Rd6PUp6W50" tabindex="-1" role="presentation"></a>No final do programa, após a construção <code>while</code> ter terminado, a operação <code>console.log</code> é usada para escrever o resultado.</p>
+
+<p><a class="p_ident" id="p-9xp/tIzdHA" href="#p-9xp/tIzdHA" tabindex="-1" role="presentation"></a>Finalmente, aqui está como o programa poderia ficar se tivéssemos as operações convenientes <code>range</code> e <code>sum</code> disponíveis, que respectivamente criam uma coleção de números dentro de um intervalo e calculam a soma de uma coleção de números:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-yYSVMpVrKE" href="#c-yYSVMpVrKE" tabindex="-1" role="presentation"></a>console.log(sum(range(<span class="tok-number">1</span>, <span class="tok-number">10</span>)));
+<span class="tok-comment">// → 55</span></pre>
+
+<p><a class="p_ident" id="p-dnbD/mmB3z" href="#p-dnbD/mmB3z" tabindex="-1" role="presentation"></a>A moral desta história é que o mesmo programa pode ser expresso de formas longas e curtas, ilegíveis e legíveis. A primeira versão do programa era extremamente obscura, enquanto esta última é quase inglês: <code>log</code> a <code>sum</code> do <code>range</code> de números de 1 a 10. (Veremos em <a href="04_data.html">capítulos posteriores</a> como definir operações como <code>sum</code> e <code>range</code>.)</p>
+
+<p><a class="p_ident" id="p-LCX9DSdWlu" href="#p-LCX9DSdWlu" tabindex="-1" role="presentation"></a>Uma boa linguagem de programação ajuda o programador ao permitir que fale sobre as ações que o computador deve realizar em um nível mais alto. Ajuda a omitir detalhes, fornece blocos de construção convenientes (como <code>while</code> e <code>console.log</code>), permite que você defina seus próprios blocos de construção (como <code>sum</code> e <code>range</code>) e torna esses blocos fáceis de compor.</p>
+
+<h2><a class="h_ident" id="h-rhHeoh0gew" href="#h-rhHeoh0gew" tabindex="-1" role="presentation"></a>O que é JavaScript?</h2>
+
+<p><a class="p_ident" id="p-VNiFrFV4tp" href="#p-VNiFrFV4tp" tabindex="-1" role="presentation"></a>JavaScript foi introduzido em 1995 como uma forma de adicionar programas a páginas web no navegador Netscape Navigator. A linguagem foi desde então adotada por todos os outros principais navegadores web gráficos. Tornou possíveis as aplicações web modernas — ou seja, aplicações com as quais você pode interagir diretamente sem precisar recarregar a página a cada ação. JavaScript também é usado em sites mais tradicionais para fornecer diversas formas de interatividade e engenhosidade.</p>
+
+<p><a class="p_ident" id="p-CFkk6dmWcc" href="#p-CFkk6dmWcc" tabindex="-1" role="presentation"></a>É importante notar que JavaScript não tem quase nada a ver com a linguagem de programação chamada Java. O nome similar foi inspirado por considerações de marketing em vez de bom senso. Quando o JavaScript estava sendo introduzido, a linguagem Java estava sendo fortemente divulgada e ganhando popularidade. Alguém achou que seria uma boa ideia tentar surfar nesse sucesso. Agora estamos presos ao nome.</p>
+
+<p><a class="p_ident" id="p-OCDngNWeS9" href="#p-OCDngNWeS9" tabindex="-1" role="presentation"></a>Após sua adoção fora da Netscape, um documento de padrão foi escrito para descrever a forma como a linguagem JavaScript deveria funcionar, para que os diversos softwares que afirmavam suportar JavaScript pudessem ter certeza de que realmente forneciam a mesma linguagem. Isso é chamado de padrão ECMAScript, em homenagem à organização Ecma International que conduziu a padronização. Na prática, os termos ECMAScript e JavaScript podem ser usados de forma intercambiável — são dois nomes para a mesma linguagem.</p>
+
+<p><a class="p_ident" id="p-SwyobsBg7t" href="#p-SwyobsBg7t" tabindex="-1" role="presentation"></a>Há quem diga coisas <em>terríveis</em> sobre JavaScript. Muitas dessas coisas são verdade. Quando fui obrigado a escrever algo em JavaScript pela primeira vez, rapidamente passei a desprezá-lo. Ele aceitava quase qualquer coisa que eu digitava, mas interpretava de uma forma completamente diferente do que eu queria dizer. Isso tinha muito a ver com o fato de que eu não fazia ideia do que estava fazendo, é claro, mas há um problema real aqui: JavaScript é ridiculamente liberal no que permite. A ideia por trás desse design era que tornaria a programação em JavaScript mais fácil para iniciantes. Na realidade, isso geralmente torna mais difícil encontrar problemas em seus programas, porque o sistema não os apontará para você.</p>
+
+<p><a class="p_ident" id="p-puP6CGqE3x" href="#p-puP6CGqE3x" tabindex="-1" role="presentation"></a>Essa flexibilidade também tem suas vantagens, no entanto. Ela deixa espaço para técnicas que são impossíveis em linguagens mais rígidas e proporciona um estilo de programação agradável e informal. Depois de aprender a linguagem adequadamente e trabalhar com ela por um tempo, passei a realmente <em>gostar</em> de JavaScript.</p>
+
+<p><a class="p_ident" id="p-Eml7jBbfyJ" href="#p-Eml7jBbfyJ" tabindex="-1" role="presentation"></a>Houve várias versões de JavaScript. A versão 3 do ECMAScript era a versão amplamente suportada durante a ascensão do JavaScript ao domínio, aproximadamente entre 2000 e 2010. Durante esse período, estava em andamento o trabalho em uma ambiciosa versão 4, que planejava uma série de melhorias e extensões radicais à linguagem. Mudar uma linguagem viva e amplamente usada de forma tão radical acabou sendo politicamente difícil, e o trabalho na versão 4 foi abandonado em 2008. Uma versão 5 muito menos ambiciosa, que fez apenas algumas melhorias incontroverssas, saiu em 2009. Em 2015, saiu a versão 6, uma atualização importante que incluiu algumas das ideias planejadas para a versão 4. Desde então, temos tido atualizações novas e pequenas a cada ano.</p>
+
+<p><a class="p_ident" id="p-X6Q4FHTYIu" href="#p-X6Q4FHTYIu" tabindex="-1" role="presentation"></a>O fato de JavaScript estar evoluindo significa que os navegadores precisam acompanhar constantemente. Se você está usando um navegador mais antigo, ele pode não suportar todos os recursos. Os designers da linguagem são cuidadosos para não fazer nenhuma mudança que possa quebrar programas existentes, então novos navegadores ainda podem executar programas antigos. Neste livro, estou usando a versão 2024 do JavaScript.</p>
+
+<p><a class="p_ident" id="p-H1cTYx3Vls" href="#p-H1cTYx3Vls" tabindex="-1" role="presentation"></a>Navegadores web não são as únicas plataformas em que JavaScript é usado. Alguns bancos de dados, como MongoDB e CouchDB, usam JavaScript como sua linguagem de scripting e consulta. Várias plataformas para programação desktop e servidor, mais notavelmente o projeto Node.js (assunto do <a href="20_node.html">Capítulo 20</a>), fornecem um ambiente para programar JavaScript fora do navegador.</p>
+
+<h2><a class="h_ident" id="h-04HdiJYOCc" href="#h-04HdiJYOCc" tabindex="-1" role="presentation"></a>Código, e o que fazer com ele</h2>
+
+<p><a class="p_ident" id="p-Ojq6taLBZ6" href="#p-Ojq6taLBZ6" tabindex="-1" role="presentation"></a><em>Código</em> é o texto que compõe programas. A maioria dos capítulos neste livro contém bastante código. Acredito que ler código e escrever código são partes indispensáveis de aprender a programar. Tente não apenas passar os olhos pelos exemplos — leia-os atentamente e entenda-os. Isso pode ser lento e confuso no início, mas prometo que você rapidamente pegará o jeito. O mesmo vale para os exercícios. Não presuma que os entendeu até ter realmente escrito uma solução funcional.</p>
+
+<p><a class="p_ident" id="p-JBnM22o+X/" href="#p-JBnM22o+X/" tabindex="-1" role="presentation"></a>Recomendo que você tente suas soluções para os exercícios em um interpretador JavaScript real. Dessa forma, você terá feedback imediato sobre se o que está fazendo está funcionando e, espero, ficará tentado a experimentar e ir além dos exercícios.</p>
+
+<p><a class="p_ident" id="p-lVOBa7wltE" href="#p-lVOBa7wltE" tabindex="-1" role="presentation"></a>Ao ler este livro em seu navegador, você pode editar (e executar) todos os programas de exemplo clicando neles.</p>
+
+<p><a class="p_ident" id="p-2bHsLDu/Dp" href="#p-2bHsLDu/Dp" tabindex="-1" role="presentation"></a>Executar os programas definidos neste livro fora do site do livro requer algum cuidado. Muitos exemplos são autossuficientes e devem funcionar em qualquer ambiente JavaScript. Mas código em capítulos posteriores é frequentemente escrito para um ambiente específico (o navegador ou Node.js) e só pode ser executado lá. Além disso, muitos capítulos definem programas maiores, e os trechos de código que aparecem neles dependem uns dos outros ou de arquivos externos. O <a href="https://eloquentjavascript.net/code">sandbox</a> no site fornece links para arquivos ZIP contendo todos os scripts e arquivos de dados necessários para executar o código de um determinado capítulo.</p>
+
+<h2><a class="h_ident" id="h-1p8ysuBmNU" href="#h-1p8ysuBmNU" tabindex="-1" role="presentation"></a>Visão geral deste livro</h2>
+
+<p><a class="p_ident" id="p-RE1URcSVCK" href="#p-RE1URcSVCK" tabindex="-1" role="presentation"></a>Este livro contém aproximadamente três partes. Os primeiros 12 capítulos discutem a linguagem JavaScript. Os sete capítulos seguintes são sobre navegadores web e a forma como JavaScript é usado para programá-los. Finalmente, dois capítulos são dedicados ao Node.js, outro ambiente para programar JavaScript. Há cinco <em>capítulos de projeto</em> no livro que descrevem programas de exemplo maiores para dar a você uma amostra de programação real.</p>
+
+<p><a class="p_ident" id="p-rj/roq49aH" href="#p-rj/roq49aH" tabindex="-1" role="presentation"></a>A parte sobre a linguagem do livro começa com quatro capítulos que introduzem a estrutura básica da linguagem JavaScript. Eles discutem <a href="02_program_structure.html">estruturas de controle</a> (como a palavra <code>while</code> que você viu nesta introdução), <a href="03_functions.html">funções</a> (escrever seus próprios blocos de construção) e <a href="04_data.html">estruturas de dados</a>. Depois desses, você será capaz de escrever programas básicos. Em seguida, os Capítulos <a href="05_higher_order.html">5</a> e <a href="06_object.html">6</a> introduzem técnicas para usar funções e objetos para escrever código mais <em>abstrato</em> e manter a complexidade sob controle.</p>
+
+<p><a class="p_ident" id="p-2Hq90s77De" href="#p-2Hq90s77De" tabindex="-1" role="presentation"></a>Após um <a href="07_robot.html">primeiro capítulo de projeto</a> que constrói um robô de entregas rudimentar, a parte sobre a linguagem do livro continua com capítulos sobre <a href="08_error.html">tratamento de erros e correção de bugs</a>, <a href="09_regexp.html">expressões regulares</a> (uma ferramenta importante para trabalhar com texto), <a href="10_modules.html">modularidade</a> (outra defesa contra a complexidade) e <a href="11_async.html">programação assíncrona</a> (lidando com eventos que levam tempo). O <a href="12_language.html">segundo capítulo de projeto</a>, onde implementamos uma linguagem de programação, conclui a primeira parte do livro.</p>
+
+<p><a class="p_ident" id="p-c3YaQ1KoF9" href="#p-c3YaQ1KoF9" tabindex="-1" role="presentation"></a>A segunda parte do livro, Capítulos <a href="13_browser.html">13</a> a <a href="19_paint.html">19</a>, descreve as ferramentas que o JavaScript no navegador tem acesso. Você aprenderá a exibir coisas na tela (Capítulos <a href="14_dom.html">14</a> e <a href="17_canvas.html">17</a>), responder a entrada do usuário (<a href="15_event.html">Capítulo 15</a>) e se comunicar pela rede (<a href="18_http.html">Capítulo 18</a>). Há novamente dois capítulos de projeto nesta parte: construir um <a href="16_game.html">jogo de plataforma</a> e um <a href="19_paint.html">programa de pintura de pixels</a>.</p>
+
+<p><a class="p_ident" id="p-rNqRh7CaL6" href="#p-rNqRh7CaL6" tabindex="-1" role="presentation"></a>O <a href="20_node.html">Capítulo 20</a> descreve Node.js, e o <a href="21_skillsharing.html">Capítulo 21</a> constrói um pequeno site usando essa ferramenta.</p>
+
+<h2><a class="h_ident" id="h-Q5eQTQrnkG" href="#h-Q5eQTQrnkG" tabindex="-1" role="presentation"></a>Convenções tipográficas</h2>
+
+<p><a class="p_ident" id="p-gERtuD+oPJ" href="#p-gERtuD+oPJ" tabindex="-1" role="presentation"></a>Neste livro, texto escrito em uma fonte <code>monoespaçada</code> representará elementos de programas. Às vezes são fragmentos autossuficientes, e às vezes apenas se referem a parte de um programa próximo. Programas (dos quais você já viu alguns) são escritos da seguinte forma:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-5GjN2pXyt/" href="#c-5GjN2pXyt/" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">factorial</span>(<span class="tok-definition">n</span>) {
+  <span class="tok-keyword">if</span> (n == <span class="tok-number">0</span>) {
+    <span class="tok-keyword">return</span> <span class="tok-number">1</span>;
+  } <span class="tok-keyword">else</span> {
+    <span class="tok-keyword">return</span> factorial(n - <span class="tok-number">1</span>) * n;
+  }
+}</pre>
+
+<p><a class="p_ident" id="p-wWd1KFpz7O" href="#p-wWd1KFpz7O" tabindex="-1" role="presentation"></a>Às vezes, para mostrar a saída que um programa produz, a saída esperada é escrita depois dele, com duas barras e uma seta na frente.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-jUF93Xlrf8" href="#c-jUF93Xlrf8" tabindex="-1" role="presentation"></a>console.log(factorial(<span class="tok-number">8</span>));
+<span class="tok-comment">// → 40320</span></pre>
+
+<p><a class="p_ident" id="p-kgqJDDDL52" href="#p-kgqJDDDL52" tabindex="-1" role="presentation"></a>Boa sorte!</p><nav><a href="index.html" title="capa" aria-label="capa">●</a> <a href="01_values.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

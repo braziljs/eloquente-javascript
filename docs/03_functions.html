@@ -1,0 +1,561 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Funções :: JavaScript Eloquente</title>
+  <link rel=stylesheet href="css/ejs.css"><script>
+      var page = {"type":"chapter","number":3}</script></head>
+
+<article>
+<nav><a href="02_program_structure.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="04_data.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+
+<h1>Funções</h1>
+
+<blockquote>
+
+<p><a class="p_ident" id="p-hkFlscMSbe" href="#p-hkFlscMSbe" tabindex="-1" role="presentation"></a>People think that computer science is the art of geniuses but the actual reality is the opposite, just many people doing things that build on each other, like a wall of mini stones.</p>
+
+<footer>Donald Knuth</footer>
+
+</blockquote><figure class="chapter framed"><img src="img/chapter_picture_3.jpg" alt="Illustration of fern leaves with a fractal shape, bees in the background"></figure>
+
+<p><a class="p_ident" id="p-tyYBTPxAeA" href="#p-tyYBTPxAeA" tabindex="-1" role="presentation"></a>Funções são uma das ferramentas mais centrais na programação JavaScript. O conceito de envolver um pedaço de programa em um valor tem muitos usos. Nos dá uma forma de estruturar programas maiores, reduzir repetição, associar nomes a subprogramas e isolar esses subprogramas uns dos outros.</p>
+
+<p><a class="p_ident" id="p-4yHCh73Nti" href="#p-4yHCh73Nti" tabindex="-1" role="presentation"></a>A aplicação mais óbvia de funções é definir novo vocabulário. Criar novas palavras em prosa é geralmente mau estilo, mas em programação é indispensável.</p>
+
+<p><a class="p_ident" id="p-tGScMiIl1S" href="#p-tGScMiIl1S" tabindex="-1" role="presentation"></a>Falantes adultos típicos de inglês têm cerca de 20.000 palavras em seu vocabulário. Poucas linguagens de programação vêm com 20.000 comandos embutidos. E o vocabulário que <em>está</em> disponível tende a ser definido de forma mais precisa, e portanto menos flexível, que na linguagem humana. Portanto, <em>temos</em> que introduzir novas palavras para evitar verbosidade excessiva.</p>
+
+<h2><a class="h_ident" id="h-GeXEedG89k" href="#h-GeXEedG89k" tabindex="-1" role="presentation"></a>Definindo uma função</h2>
+
+<p><a class="p_ident" id="p-w/IE35dHV9" href="#p-w/IE35dHV9" tabindex="-1" role="presentation"></a>Uma definição de função é um binding regular onde o valor do binding é uma função. Por exemplo, este código define <code>square</code> para se referir a uma função que produz o quadrado de um dado número:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-JW7vLBZMWv" href="#c-JW7vLBZMWv" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">square</span> = <span class="tok-keyword">function</span>(<span class="tok-definition">x</span>) {
+  <span class="tok-keyword">return</span> x * x;
+};
+
+console.log(square(<span class="tok-number">12</span>));
+<span class="tok-comment">// → 144</span></pre>
+
+<p><a class="p_ident" id="p-ZQGtjU2wL4" href="#p-ZQGtjU2wL4" tabindex="-1" role="presentation"></a>Uma função é criada com uma expressão que começa com a palavra-chave <code>function</code>. Funções têm um conjunto de <em>parâmetros</em> (neste caso, apenas <code>x</code>) e um <em>corpo</em>, que contém as instruções que devem ser executadas quando a função é chamada. O corpo de uma função criada dessa forma deve sempre estar envolvido em chaves, mesmo quando consiste em apenas uma única instrução.</p>
+
+<p><a class="p_ident" id="p-YT2HwdToNJ" href="#p-YT2HwdToNJ" tabindex="-1" role="presentation"></a>Uma função pode ter múltiplos parâmetros ou nenhum parâmetro. No exemplo a seguir, <code>makeNoise</code> não lista nenhum nome de parâmetro, enquanto <code>roundTo</code> (que arredonda <code>n</code> para o múltiplo mais próximo de <code>step</code>) lista dois:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-AraW0VhQRe" href="#c-AraW0VhQRe" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">makeNoise</span> = <span class="tok-keyword">function</span>() {
+  console.log(<span class="tok-string">&quot;Pling!&quot;</span>);
+};
+
+makeNoise();
+<span class="tok-comment">// → Pling!</span>
+
+<span class="tok-keyword">const</span> <span class="tok-definition">roundTo</span> = <span class="tok-keyword">function</span>(<span class="tok-definition">n</span>, <span class="tok-definition">step</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">remainder</span> = n % step;
+  <span class="tok-keyword">return</span> n - remainder + (remainder &lt; step / <span class="tok-number">2</span> ? <span class="tok-number">0</span> : step);
+};
+
+console.log(roundTo(<span class="tok-number">23</span>, <span class="tok-number">10</span>));
+<span class="tok-comment">// → 20</span></pre>
+
+<p><a class="p_ident" id="p-LCWbfU/RP/" href="#p-LCWbfU/RP/" tabindex="-1" role="presentation"></a>Algumas funções, como <code>roundTo</code> e <code>square</code>, produzem um valor, e outras não, como <code>makeNoise</code>, cujo único resultado é um efeito colateral. Uma instrução <code>return</code> determina o valor que a função retorna. Quando o controle encontra tal instrução, ele imediatamente salta para fora da função atual e dá o valor retornado ao código que chamou a função. Uma palavra-chave <code>return</code> sem uma expressão após ela fará a função retornar <code>undefined</code>. Funções que não têm uma instrução <code>return</code>, como <code>makeNoise</code>, similarmente retornam <code>undefined</code>.</p>
+
+<p><a class="p_ident" id="p-NjoD7SJ1t7" href="#p-NjoD7SJ1t7" tabindex="-1" role="presentation"></a>Parâmetros de uma função se comportam como bindings regulares, mas seus valores iniciais são dados pelo <em>chamador</em> da função, não pelo código na própria função.</p>
+
+<h2><a class="h_ident" id="h-L8y5rSxEsj" href="#h-L8y5rSxEsj" tabindex="-1" role="presentation"></a>Bindings e escopos</h2>
+
+<p><a class="p_ident" id="p-jeKuIUZQy/" href="#p-jeKuIUZQy/" tabindex="-1" role="presentation"></a>Cada binding tem um <em>escopo</em>, que é a parte do programa na qual o binding é visível. Para bindings definidos fora de qualquer função, bloco ou módulo (veja <a href="10_modules.html">Capítulo 10</a>), o escopo é o programa inteiro — você pode se referir a tais bindings onde quiser. Estes são chamados de <em>globais</em>.</p>
+
+<p><a class="p_ident" id="p-cBeqaxsSAv" href="#p-cBeqaxsSAv" tabindex="-1" role="presentation"></a>Bindings criados para parâmetros de funções ou declarados dentro de uma função podem ser referenciados apenas naquela função, então são conhecidos como bindings <em>locais</em>. Toda vez que a função é chamada, novas instâncias desses bindings são criadas. Isso fornece algum isolamento entre funções — cada chamada de função age em seu próprio pequeno mundo (seu ambiente local) e frequentemente pode ser entendida sem saber muito sobre o que está acontecendo no ambiente global.</p>
+
+<p><a class="p_ident" id="p-esAVRIBB3k" href="#p-esAVRIBB3k" tabindex="-1" role="presentation"></a>Bindings declarados com <code>let</code> e <code>const</code> são de fato locais ao <em>bloco</em> em que são declarados, então se você criar um desses dentro de um loop, o código antes e depois do loop não pode “vê-lo”. No JavaScript pré-2015, apenas funções criavam novos escopos, então bindings no estilo antigo, criados com a palavra-chave <code>var</code>, são visíveis em toda a função em que aparecem — ou em todo o escopo global, se não estiverem em uma função.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-vYQ8/3Zs2o" href="#c-vYQ8/3Zs2o" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">x</span> = <span class="tok-number">10</span>;   <span class="tok-comment">// global</span>
+<span class="tok-keyword">if</span> (true) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">y</span> = <span class="tok-number">20</span>; <span class="tok-comment">// local ao bloco</span>
+  <span class="tok-keyword">var</span> <span class="tok-definition">z</span> = <span class="tok-number">30</span>; <span class="tok-comment">// também global</span>
+}</pre>
+
+<p><a class="p_ident" id="p-N4FcR9oG2L" href="#p-N4FcR9oG2L" tabindex="-1" role="presentation"></a>Cada escopo pode “olhar para fora” no escopo ao seu redor, então <code>x</code> é visível dentro do bloco no exemplo. A exceção é quando múltiplos bindings têm o mesmo nome — nesse caso, o código pode ver apenas o mais interno. Por exemplo, quando o código dentro da função <code>halve</code> se refere a <code>n</code>, ele está vendo seu <em>próprio</em> <code>n</code>, não o <code>n</code> global.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-5g6POeoiQv" href="#c-5g6POeoiQv" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">halve</span> = <span class="tok-keyword">function</span>(<span class="tok-definition">n</span>) {
+  <span class="tok-keyword">return</span> n / <span class="tok-number">2</span>;
+};
+
+<span class="tok-keyword">let</span> <span class="tok-definition">n</span> = <span class="tok-number">10</span>;
+console.log(halve(<span class="tok-number">100</span>));
+<span class="tok-comment">// → 50</span>
+console.log(n);
+<span class="tok-comment">// → 10</span></pre>
+
+<h2 id="scoping"><a class="h_ident" id="h-LxM9e/5eFK" href="#h-LxM9e/5eFK" tabindex="-1" role="presentation"></a>Escopo aninhado</h2>
+
+<p><a class="p_ident" id="p-vSP20Balql" href="#p-vSP20Balql" tabindex="-1" role="presentation"></a>JavaScript distingue não apenas bindings globais e locais. Blocos e funções podem ser criados dentro de outros blocos e funções, produzindo múltiplos graus de localidade.</p>
+
+<p><a class="p_ident" id="p-jDcb5VCnFa" href="#p-jDcb5VCnFa" tabindex="-1" role="presentation"></a>Por exemplo, esta função — que exibe os ingredientes necessários para fazer uma porção de homus — tem outra função dentro dela:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-cOSfyI1GsW" href="#c-cOSfyI1GsW" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">hummus</span> = <span class="tok-keyword">function</span>(<span class="tok-definition">factor</span>) {
+  <span class="tok-keyword">const</span> <span class="tok-definition">ingredient</span> = <span class="tok-keyword">function</span>(<span class="tok-definition">amount</span>, <span class="tok-definition">unit</span>, <span class="tok-definition">name</span>) {
+    <span class="tok-keyword">let</span> <span class="tok-definition">ingredientAmount</span> = amount * factor;
+    <span class="tok-keyword">if</span> (ingredientAmount &gt; <span class="tok-number">1</span>) {
+      unit += <span class="tok-string">&quot;s&quot;</span>;
+    }
+    console.log(<span class="tok-string2">`</span>${ingredientAmount}<span class="tok-string2"> </span>${unit}<span class="tok-string2"> </span>${name}<span class="tok-string2">`</span>);
+  };
+  ingredient(<span class="tok-number">1</span>, <span class="tok-string">&quot;can&quot;</span>, <span class="tok-string">&quot;chickpeas&quot;</span>);
+  ingredient(<span class="tok-number">0.25</span>, <span class="tok-string">&quot;cup&quot;</span>, <span class="tok-string">&quot;tahini&quot;</span>);
+  ingredient(<span class="tok-number">0.25</span>, <span class="tok-string">&quot;cup&quot;</span>, <span class="tok-string">&quot;lemon juice&quot;</span>);
+  ingredient(<span class="tok-number">1</span>, <span class="tok-string">&quot;clove&quot;</span>, <span class="tok-string">&quot;garlic&quot;</span>);
+  ingredient(<span class="tok-number">2</span>, <span class="tok-string">&quot;tablespoon&quot;</span>, <span class="tok-string">&quot;olive oil&quot;</span>);
+  ingredient(<span class="tok-number">0.5</span>, <span class="tok-string">&quot;teaspoon&quot;</span>, <span class="tok-string">&quot;cumin&quot;</span>);
+};</pre>
+
+<p><a class="p_ident" id="p-wkkE4f2vfy" href="#p-wkkE4f2vfy" tabindex="-1" role="presentation"></a>O código dentro da função <code>ingredient</code> pode ver o binding <code>factor</code> da função externa, mas seus bindings locais, como <code>unit</code> ou <code>ingredientAmount</code>, não são visíveis na função externa.</p>
+
+<p><a class="p_ident" id="p-F5Dau60Jzd" href="#p-F5Dau60Jzd" tabindex="-1" role="presentation"></a>O conjunto de bindings visíveis dentro de um bloco é determinado pelo lugar daquele bloco no texto do programa. Cada escopo local também pode ver todos os escopos locais que o contêm, e todos os escopos podem ver o escopo global. Essa abordagem à visibilidade de bindings é chamada de <em>escopo léxico</em>.</p>
+
+<h2><a class="h_ident" id="h-FQh8XD7ZSt" href="#h-FQh8XD7ZSt" tabindex="-1" role="presentation"></a>Funções como valores</h2>
+
+<p><a class="p_ident" id="p-Ru5iQypKCf" href="#p-Ru5iQypKCf" tabindex="-1" role="presentation"></a>Um binding de função geralmente atua simplesmente como um nome para um pedaço específico do programa. Tal binding é definido uma vez e nunca alterado. Isso torna fácil confundir a função e seu nome.</p>
+
+<p><a class="p_ident" id="p-6fkwx0KaPd" href="#p-6fkwx0KaPd" tabindex="-1" role="presentation"></a>Mas os dois são diferentes. Um valor de função pode fazer todas as coisas que outros valores podem — você pode usá-lo em expressões arbitrárias, não apenas chamá-lo. É possível armazenar um valor de função em um novo binding, passá-lo como argumento para uma função, e assim por diante. Similarmente, um binding que contém uma função ainda é apenas um binding regular e pode, se não for constante, receber um novo valor, assim:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-o74CMNIBQf" href="#c-o74CMNIBQf" tabindex="-1" role="presentation"></a><span class="tok-keyword">let</span> <span class="tok-definition">launchMissiles</span> = <span class="tok-keyword">function</span>() {
+  missileSystem.launch(<span class="tok-string">&quot;now&quot;</span>);
+};
+<span class="tok-keyword">if</span> (safeMode) {
+  launchMissiles = <span class="tok-keyword">function</span>() {<span class="tok-comment">/* não faz nada */</span>};
+}</pre>
+
+<p><a class="p_ident" id="p-AmImEJ2uMR" href="#p-AmImEJ2uMR" tabindex="-1" role="presentation"></a>No <a href="05_higher_order.html">Capítulo 5</a>, discutiremos as coisas interessantes que podemos fazer passando valores de função para outras funções.</p>
+
+<h2><a class="h_ident" id="h-bwWJCtIRMv" href="#h-bwWJCtIRMv" tabindex="-1" role="presentation"></a>Notação de declaração</h2>
+
+<p><a class="p_ident" id="p-SWzMDUtWUa" href="#p-SWzMDUtWUa" tabindex="-1" role="presentation"></a>Existe uma forma ligeiramente mais curta de criar um binding de função. Quando a palavra-chave <code>function</code> é usada no início de uma instrução, funciona de forma diferente:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-4uHhsg+h7S" href="#c-4uHhsg+h7S" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">square</span>(<span class="tok-definition">x</span>) {
+  <span class="tok-keyword">return</span> x * x;
+}</pre>
+
+<p><a class="p_ident" id="p-VLqTQkhRbE" href="#p-VLqTQkhRbE" tabindex="-1" role="presentation"></a>Isso é uma <em>declaração</em> de função. A instrução define o binding <code>square</code> e o aponta para a função dada. É ligeiramente mais fácil de escrever e não requer um ponto e vírgula após a função.</p>
+
+<p><a class="p_ident" id="p-x+QXWg6JbS" href="#p-x+QXWg6JbS" tabindex="-1" role="presentation"></a>Há uma sutileza com essa forma de definição de função.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-41Tuq8c/gg" href="#c-41Tuq8c/gg" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;The future says:&quot;</span>, future());
+
+<span class="tok-keyword">function</span> <span class="tok-definition">future</span>() {
+  <span class="tok-keyword">return</span> <span class="tok-string">&quot;You'll never have flying cars&quot;</span>;
+}</pre>
+
+<p><a class="p_ident" id="p-Kvvm+Mo49e" href="#p-Kvvm+Mo49e" tabindex="-1" role="presentation"></a>O código anterior funciona, embora a função seja definida <em>abaixo</em> do código que a usa. Declarações de função não fazem parte do fluxo de controle regular de cima para baixo. Elas são conceitualmente movidas para o topo de seu escopo e podem ser usadas por todo o código nesse escopo. Isso às vezes é útil porque oferece a liberdade de ordenar o código de uma forma que pareça mais clara, sem se preocupar em ter que definir todas as funções antes que sejam usadas.</p>
+
+<h2><a class="h_ident" id="h-/G0LSjQxoo" href="#h-/G0LSjQxoo" tabindex="-1" role="presentation"></a>Arrow functions</h2>
+
+<p><a class="p_ident" id="p-y452WXcEx4" href="#p-y452WXcEx4" tabindex="-1" role="presentation"></a>Existe uma terceira notação para funções, que parece muito diferente das outras. Em vez da palavra-chave <code>function</code>, ela usa uma seta (<code>=&gt;</code>) composta por um sinal de igual e um caractere de maior-que (não confundir com o operador maior-ou-igual, que é escrito <code>&gt;=</code>):</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-5zMRAvLyub" href="#c-5zMRAvLyub" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">roundTo</span> = (<span class="tok-definition">n</span>, <span class="tok-definition">step</span>) =&gt; {
+  <span class="tok-keyword">let</span> <span class="tok-definition">remainder</span> = n % step;
+  <span class="tok-keyword">return</span> n - remainder + (remainder &lt; step / <span class="tok-number">2</span> ? <span class="tok-number">0</span> : step);
+};</pre>
+
+<p><a class="p_ident" id="p-JLGXkskpTq" href="#p-JLGXkskpTq" tabindex="-1" role="presentation"></a>A seta vem <em>após</em> a lista de parâmetros e é seguida pelo corpo da função. Expressa algo como “esta entrada (os parâmetros) produz este resultado (o corpo)”.</p>
+
+<p><a class="p_ident" id="p-vntSThgCvj" href="#p-vntSThgCvj" tabindex="-1" role="presentation"></a>Quando há apenas um nome de parâmetro, você pode omitir os parênteses ao redor da lista de parâmetros. Se o corpo for uma única expressão em vez de um bloco entre chaves, essa expressão será retornada pela função. Então, estas duas definições de <code>square</code> fazem a mesma coisa:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-VIDIsvgTjA" href="#c-VIDIsvgTjA" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">square1</span> = (<span class="tok-definition">x</span>) =&gt; { <span class="tok-keyword">return</span> x * x; };
+<span class="tok-keyword">const</span> <span class="tok-definition">square2</span> = <span class="tok-definition">x</span> =&gt; x * x;</pre>
+
+<p><a class="p_ident" id="p-5JZJtO+bKh" href="#p-5JZJtO+bKh" tabindex="-1" role="presentation"></a>Quando uma arrow function não tem parâmetros, sua lista de parâmetros é apenas um conjunto vazio de parênteses.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-VfJZoQnqTl" href="#c-VfJZoQnqTl" tabindex="-1" role="presentation"></a><span class="tok-keyword">const</span> <span class="tok-definition">horn</span> = () =&gt; {
+  console.log(<span class="tok-string">&quot;Toot&quot;</span>);
+};</pre>
+
+<p><a class="p_ident" id="p-ZkQTElX/XN" href="#p-ZkQTElX/XN" tabindex="-1" role="presentation"></a>Não há razão profunda para ter tanto arrow functions quanto expressões <code>function</code> na linguagem. Além de um detalhe menor, que discutiremos no <a href="06_object.html">Capítulo 6</a>, elas fazem a mesma coisa. Arrow functions foram adicionadas em 2015, principalmente para tornar possível escrever pequenas expressões de função de forma menos verbosa. Nós as usaremos frequentemente no <a href="05_higher_order.html">Capítulo 5</a>.</p>
+
+<h2 id="stack"><a class="h_ident" id="h-5hCkJI84lf" href="#h-5hCkJI84lf" tabindex="-1" role="presentation"></a>A pilha de chamadas</h2>
+
+<p><a class="p_ident" id="p-5sIpyf0AMJ" href="#p-5sIpyf0AMJ" tabindex="-1" role="presentation"></a>A forma como o controle flui através de funções é um pouco envolvente. Vamos dar uma olhada mais de perto. Aqui está um programa simples que faz algumas chamadas de função:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-vruWG+bXUz" href="#c-vruWG+bXUz" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">greet</span>(<span class="tok-definition">who</span>) {
+  console.log(<span class="tok-string">&quot;Hello &quot;</span> + who);
+}
+greet(<span class="tok-string">&quot;Harry&quot;</span>);
+console.log(<span class="tok-string">&quot;Bye&quot;</span>);</pre>
+
+<p><a class="p_ident" id="p-Jk1tB2Pd+W" href="#p-Jk1tB2Pd+W" tabindex="-1" role="presentation"></a>Uma execução desse programa vai aproximadamente assim: a chamada a <code>greet</code> faz o controle saltar para o início dessa função (linha 2). A função chama <code>console.log</code>, que toma o controle, faz seu trabalho, e então retorna o controle para a linha 2. Lá, ele alcança o final da função <code>greet</code>, então retorna ao lugar que a chamou — linha 4. A linha seguinte chama <code>console.log</code> novamente. Após isso retornar, o programa alcança seu fim.</p>
+
+<p><a class="p_ident" id="p-aiS9R5FDW6" href="#p-aiS9R5FDW6" tabindex="-1" role="presentation"></a>Poderíamos mostrar o fluxo de controle esquematicamente assim:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-m+m9KdYWhN" href="#c-m+m9KdYWhN" tabindex="-1" role="presentation"></a>fora de função
+  em greet
+    em console.log
+  em greet
+fora de função
+  em console.log
+fora de função</pre>
+
+<p><a class="p_ident" id="p-RwkXay9K6a" href="#p-RwkXay9K6a" tabindex="-1" role="presentation"></a>Como uma função tem que saltar de volta ao lugar que a chamou quando retorna, o computador deve lembrar o contexto de onde a chamada aconteceu. Em um caso, <code>console.log</code> tem que retornar à função <code>greet</code> quando termina. No outro caso, retorna ao final do programa.</p>
+
+<p><a class="p_ident" id="p-xKHZ1LnwDl" href="#p-xKHZ1LnwDl" tabindex="-1" role="presentation"></a>O lugar onde o computador armazena esse contexto é a <em>pilha de chamadas</em>. Toda vez que uma função é chamada, o contexto atual é armazenado no topo dessa pilha. Quando uma função retorna, ela remove o contexto do topo da pilha e usa esse contexto para continuar a execução.</p>
+
+<p><a class="p_ident" id="p-0gXXenMA/V" href="#p-0gXXenMA/V" tabindex="-1" role="presentation"></a>Armazenar essa pilha requer espaço na memória do computador. Quando a pilha cresce demais, o computador falhará com uma mensagem como “out of stack space” ou “too much recursion”. O código a seguir ilustra isso fazendo ao computador uma pergunta realmente difícil que causa um vaivém infinito entre duas funções. Ou melhor, <em>seria</em> infinito se o computador tivesse uma pilha infinita. Como está, ficaremos sem espaço, ou “estouraremos a pilha”.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-fZaWglCohr" href="#c-fZaWglCohr" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">chicken</span>() {
+  <span class="tok-keyword">return</span> egg();
+}
+<span class="tok-keyword">function</span> <span class="tok-definition">egg</span>() {
+  <span class="tok-keyword">return</span> chicken();
+}
+console.log(chicken() + <span class="tok-string">&quot; came first.&quot;</span>);
+<span class="tok-comment">// → ??</span></pre>
+
+<h2><a class="h_ident" id="h-GVQid2Xk2R" href="#h-GVQid2Xk2R" tabindex="-1" role="presentation"></a>Argumentos Opcionais</h2>
+
+<p><a class="p_ident" id="p-wQ/JfQxH/s" href="#p-wQ/JfQxH/s" tabindex="-1" role="presentation"></a>O código a seguir é permitido e executa sem nenhum problema:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-IckdVt0tqA" href="#c-IckdVt0tqA" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">square</span>(<span class="tok-definition">x</span>) { <span class="tok-keyword">return</span> x * x; }
+console.log(square(<span class="tok-number">4</span>, true, <span class="tok-string">&quot;hedgehog&quot;</span>));
+<span class="tok-comment">// → 16</span></pre>
+
+<p><a class="p_ident" id="p-6MYfKisJ0R" href="#p-6MYfKisJ0R" tabindex="-1" role="presentation"></a>Definimos <code>square</code> com apenas um parâmetro. No entanto, quando a chamamos com três, a linguagem não reclama. Ela ignora os argumentos extras e calcula o quadrado do primeiro.</p>
+
+<p><a class="p_ident" id="p-TTz8c+OgKV" href="#p-TTz8c+OgKV" tabindex="-1" role="presentation"></a>JavaScript é extremamente tolerante quanto ao número de argumentos que você pode passar para uma função. Se você passar muitos, os extras são ignorados. Se passar poucos, os parâmetros faltantes recebem o valor <code>undefined</code>.</p>
+
+<p><a class="p_ident" id="p-OPP451cmfn" href="#p-OPP451cmfn" tabindex="-1" role="presentation"></a>A desvantagem disso é que é possível — provável, até — que você acidentalmente passe o número errado de argumentos para funções. E ninguém lhe dirá sobre isso. A vantagem é que você pode usar esse comportamento para permitir que uma função seja chamada com diferentes números de argumentos. Por exemplo, esta função <code>minus</code> tenta imitar o operador <code>-</code> agindo sobre um ou dois argumentos:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-8zGcY0SKdo" href="#c-8zGcY0SKdo" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">minus</span>(<span class="tok-definition">a</span>, <span class="tok-definition">b</span>) {
+  <span class="tok-keyword">if</span> (b === undefined) <span class="tok-keyword">return</span> -a;
+  <span class="tok-keyword">else</span> <span class="tok-keyword">return</span> a - b;
+}
+
+console.log(minus(<span class="tok-number">10</span>));
+<span class="tok-comment">// → -10</span>
+console.log(minus(<span class="tok-number">10</span>, <span class="tok-number">5</span>));
+<span class="tok-comment">// → 5</span></pre>
+
+<p id="roundTo"><a class="p_ident" id="p-xXyGKjJ8BS" href="#p-xXyGKjJ8BS" tabindex="-1" role="presentation"></a>Se você escrever um operador <code>=</code> após um parâmetro, seguido de uma expressão, o valor dessa expressão substituirá o argumento quando ele não for fornecido. Por exemplo, esta versão de <code>roundTo</code> torna seu segundo argumento opcional. Se você não o fornecer ou passar o valor <code>undefined</code>, ele terá como padrão o valor um:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-lf5l9+817Y" href="#c-lf5l9+817Y" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">roundTo</span>(<span class="tok-definition">n</span>, <span class="tok-definition">step</span> = <span class="tok-number">1</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">remainder</span> = n % step;
+  <span class="tok-keyword">return</span> n - remainder + (remainder &lt; step / <span class="tok-number">2</span> ? <span class="tok-number">0</span> : step);
+};
+
+console.log(roundTo(<span class="tok-number">4.5</span>));
+<span class="tok-comment">// → 5</span>
+console.log(roundTo(<span class="tok-number">4.5</span>, <span class="tok-number">2</span>));
+<span class="tok-comment">// → 4</span></pre>
+
+<p><a class="p_ident" id="p-cxchEktuFn" href="#p-cxchEktuFn" tabindex="-1" role="presentation"></a>O <a href="04_data.html#rest_parameters">próximo capítulo</a> apresentará uma forma pela qual o corpo de uma função pode obter a lista completa de argumentos que lhe foi passada. Isso é útil porque permite que uma função aceite qualquer número de argumentos. Por exemplo, <code>console.log</code> faz isso, exibindo todos os valores que lhe são dados:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-RvkwVkcUZ7" href="#c-RvkwVkcUZ7" tabindex="-1" role="presentation"></a>console.log(<span class="tok-string">&quot;C&quot;</span>, <span class="tok-string">&quot;O&quot;</span>, <span class="tok-number">2</span>);
+<span class="tok-comment">// → C O 2</span></pre>
+
+<h2><a class="h_ident" id="h-hOd+yVxaku" href="#h-hOd+yVxaku" tabindex="-1" role="presentation"></a>Closure</h2>
+
+<p><a class="p_ident" id="p-cwTb2y3yei" href="#p-cwTb2y3yei" tabindex="-1" role="presentation"></a>A capacidade de tratar funções como valores, combinada com o fato de que bindings locais são recriados toda vez que uma função é chamada, traz uma pergunta interessante: o que acontece com bindings locais quando a chamada de função que os criou não está mais ativa?</p>
+
+<p><a class="p_ident" id="p-aXIfkCWRRN" href="#p-aXIfkCWRRN" tabindex="-1" role="presentation"></a>O código a seguir mostra um exemplo disso. Ele define uma função, <code>wrapValue</code>, que cria um binding local. Então retorna uma função que acessa e retorna esse binding local.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-DF70h3opbx" href="#c-DF70h3opbx" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">wrapValue</span>(<span class="tok-definition">n</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">local</span> = n;
+  <span class="tok-keyword">return</span> () =&gt; local;
+}
+
+<span class="tok-keyword">let</span> <span class="tok-definition">wrap1</span> = wrapValue(<span class="tok-number">1</span>);
+<span class="tok-keyword">let</span> <span class="tok-definition">wrap2</span> = wrapValue(<span class="tok-number">2</span>);
+console.log(wrap1());
+<span class="tok-comment">// → 1</span>
+console.log(wrap2());
+<span class="tok-comment">// → 2</span></pre>
+
+<p><a class="p_ident" id="p-26iDhzNjz9" href="#p-26iDhzNjz9" tabindex="-1" role="presentation"></a>Isso é permitido e funciona como você esperaria — ambas as instâncias do binding ainda podem ser acessadas. Essa situação é uma boa demonstração do fato de que bindings locais são criados novamente para cada chamada, e chamadas diferentes não afetam os bindings locais uma da outra.</p>
+
+<p><a class="p_ident" id="p-iGW5TQNjUi" href="#p-iGW5TQNjUi" tabindex="-1" role="presentation"></a>Esse recurso — poder referenciar uma instância específica de um binding local em um escopo envolvente — é chamado de <em>closure</em>. Uma função que referencia bindings de escopos locais ao seu redor é chamada de <em>uma</em> closure. Esse comportamento não apenas o libera de ter que se preocupar com o tempo de vida dos bindings, mas também torna possível usar valores de função de formas criativas.</p>
+
+<p><a class="p_ident" id="p-GDTWgP7q16" href="#p-GDTWgP7q16" tabindex="-1" role="presentation"></a>Com uma pequena mudança, podemos transformar o exemplo anterior em uma forma de criar funções que multiplicam por um valor arbitrário.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-iIlCVmvMSs" href="#c-iIlCVmvMSs" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">multiplier</span>(<span class="tok-definition">factor</span>) {
+  <span class="tok-keyword">return</span> <span class="tok-definition">number</span> =&gt; number * factor;
+}
+
+<span class="tok-keyword">let</span> <span class="tok-definition">twice</span> = multiplier(<span class="tok-number">2</span>);
+console.log(twice(<span class="tok-number">5</span>));
+<span class="tok-comment">// → 10</span></pre>
+
+<p><a class="p_ident" id="p-n7wfi9B/Ke" href="#p-n7wfi9B/Ke" tabindex="-1" role="presentation"></a>O binding explícito <code>local</code> do exemplo <code>wrapValue</code> não é realmente necessário, já que um parâmetro é em si um binding local.</p>
+
+<p><a class="p_ident" id="p-DBcveKmNaZ" href="#p-DBcveKmNaZ" tabindex="-1" role="presentation"></a>Pensar sobre programas assim requer alguma prática. Um bom modelo mental é pensar em valores de função como contendo tanto o código em seu corpo quanto o ambiente em que são criados. Quando chamada, o corpo da função vê o ambiente em que foi criada, não o ambiente em que é chamada.</p>
+
+<p><a class="p_ident" id="p-eZkuD9hBvJ" href="#p-eZkuD9hBvJ" tabindex="-1" role="presentation"></a>No exemplo anterior, <code>multiplier</code> é chamada e cria um ambiente em que seu parâmetro <code>factor</code> está vinculado a 2. O valor de função que ela retorna, que é armazenado em <code>twice</code>, lembra esse ambiente para que, quando chamado, multiplique seu argumento por 2.</p>
+
+<h2><a class="h_ident" id="h-m0RJ+PSORv" href="#h-m0RJ+PSORv" tabindex="-1" role="presentation"></a>Recursão</h2>
+
+<p><a class="p_ident" id="p-Ve+5pvx4NY" href="#p-Ve+5pvx4NY" tabindex="-1" role="presentation"></a>É perfeitamente aceitável que uma função chame a si mesma, desde que não faça isso com tanta frequência que estoure a pilha. Uma função que chama a si mesma é chamada de <em>recursiva</em>. Recursão permite que algumas funções sejam escritas em um estilo diferente. Tome, por exemplo, esta função <code>power</code>, que faz o mesmo que o operador <code>**</code> (exponenciação):</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-agdELfiRGm" href="#c-agdELfiRGm" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">power</span>(<span class="tok-definition">base</span>, <span class="tok-definition">exponent</span>) {
+  <span class="tok-keyword">if</span> (exponent == <span class="tok-number">0</span>) {
+    <span class="tok-keyword">return</span> <span class="tok-number">1</span>;
+  } <span class="tok-keyword">else</span> {
+    <span class="tok-keyword">return</span> base * power(base, exponent - <span class="tok-number">1</span>);
+  }
+}
+
+console.log(power(<span class="tok-number">2</span>, <span class="tok-number">3</span>));
+<span class="tok-comment">// → 8</span></pre>
+
+<p><a class="p_ident" id="p-Ldfpv3n/1t" href="#p-Ldfpv3n/1t" tabindex="-1" role="presentation"></a>Isso é bastante próximo da forma como matemáticos definem exponenciação e descreve o conceito de forma indiscutivelmente mais clara que o loop que usamos no <a href="02_program_structure.html">Capítulo 2</a>. A função chama a si mesma múltiplas vezes com expoentes cada vez menores para alcançar a multiplicação repetida.</p>
+
+<p><a class="p_ident" id="p-+7QyfkkZoa" href="#p-+7QyfkkZoa" tabindex="-1" role="presentation"></a>No entanto, essa implementação tem um problema: em implementações típicas de JavaScript, ela é cerca de três vezes mais lenta que uma versão usando um loop <code>for</code>. Percorrer um loop simples é geralmente mais barato que chamar uma função múltiplas vezes.</p>
+
+<p><a class="p_ident" id="p-SYe5M9NmiC" href="#p-SYe5M9NmiC" tabindex="-1" role="presentation"></a>O dilema de velocidade versus elegância é interessante. Você pode vê-lo como uma espécie de contínuo entre amigabilidade para humanos e amigabilidade para máquinas. Quase qualquer programa pode ser tornado mais rápido tornando-o maior e mais complicado. O programador tem que encontrar um equilíbrio apropriado.</p>
+
+<p><a class="p_ident" id="p-8w0jLm8Yr/" href="#p-8w0jLm8Yr/" tabindex="-1" role="presentation"></a>No caso da função <code>power</code>, uma versão inelegante (com loop) ainda é bastante simples e fácil de ler. Não faz muito sentido substituí-la por uma função recursiva. Frequentemente, porém, um programa lida com conceitos tão complexos que abrir mão de alguma eficiência para tornar o programa mais direto é útil.</p>
+
+<p><a class="p_ident" id="p-jKVtO0niX8" href="#p-jKVtO0niX8" tabindex="-1" role="presentation"></a>Preocupar-se com eficiência pode ser uma distração. É mais um fator que complica o design do programa, e quando você está fazendo algo que já é difícil, essa coisa extra para se preocupar pode ser paralisante.</p>
+
+<p><a class="p_ident" id="p-VjHjn8OqzO" href="#p-VjHjn8OqzO" tabindex="-1" role="presentation"></a>Portanto, você geralmente deve começar escrevendo algo que é correto e fácil de entender. Se estiver preocupado que é lento demais — o que geralmente não é, já que a maioria do código simplesmente não é executado com frequência suficiente para levar uma quantidade significativa de tempo — você pode medir depois e melhorar se necessário.</p>
+
+<p><a class="p_ident" id="p-/00c4bNblW" href="#p-/00c4bNblW" tabindex="-1" role="presentation"></a>Recursão nem sempre é apenas uma alternativa ineficiente ao loop. Alguns problemas são realmente mais fáceis de resolver com recursão do que com loops. Na maioria das vezes, são problemas que requerem explorar ou processar várias “ramificações”, cada uma das quais pode se ramificar novamente em ainda mais ramificações.</p>
+
+<p id="recursive_puzzle"><a class="p_ident" id="p-eb2tqvr0XU" href="#p-eb2tqvr0XU" tabindex="-1" role="presentation"></a>Considere este quebra-cabeça: começando do número 1 e repetidamente somando 5 ou multiplicando por 3, um conjunto infinito de números pode ser produzido. Como você escreveria uma função que, dado um número, tenta encontrar uma sequência de tais adições e multiplicações que produz esse número? Por exemplo, o número 13 pode ser alcançado primeiro multiplicando por 3 e depois somando 5 duas vezes, enquanto o número 15 não pode ser alcançado de forma alguma.</p>
+
+<p><a class="p_ident" id="p-wBTVfy4JRz" href="#p-wBTVfy4JRz" tabindex="-1" role="presentation"></a>Aqui está uma solução recursiva:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-wJPUK69VFE" href="#c-wJPUK69VFE" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">findSolution</span>(<span class="tok-definition">target</span>) {
+  <span class="tok-keyword">function</span> <span class="tok-definition">find</span>(<span class="tok-definition">current</span>, <span class="tok-definition">history</span>) {
+    <span class="tok-keyword">if</span> (current == target) {
+      <span class="tok-keyword">return</span> history;
+    } <span class="tok-keyword">else</span> <span class="tok-keyword">if</span> (current &gt; target) {
+      <span class="tok-keyword">return</span> <span class="tok-keyword">null</span>;
+    } <span class="tok-keyword">else</span> {
+      <span class="tok-keyword">return</span> find(current + <span class="tok-number">5</span>, <span class="tok-string2">`(</span>${history}<span class="tok-string2"> + 5)`</span>) ??
+             find(current * <span class="tok-number">3</span>, <span class="tok-string2">`(</span>${history}<span class="tok-string2"> * 3)`</span>);
+    }
+  }
+  <span class="tok-keyword">return</span> find(<span class="tok-number">1</span>, <span class="tok-string">&quot;1&quot;</span>);
+}
+
+console.log(findSolution(<span class="tok-number">24</span>));
+<span class="tok-comment">// → (((1 * 3) + 5) * 3)</span></pre>
+
+<p><a class="p_ident" id="p-2OV3FHz1KQ" href="#p-2OV3FHz1KQ" tabindex="-1" role="presentation"></a>Note que este programa não necessariamente encontra a sequência <em>mais curta</em> de operações. Ele se satisfaz quando encontra qualquer sequência.</p>
+
+<p><a class="p_ident" id="p-+M7SHn3ysl" href="#p-+M7SHn3ysl" tabindex="-1" role="presentation"></a>Tudo bem se você não ver como este código funciona imediatamente. Vamos percorrê-lo, já que é um ótimo exercício de pensamento recursivo.</p>
+
+<p><a class="p_ident" id="p-CBtVwofmIO" href="#p-CBtVwofmIO" tabindex="-1" role="presentation"></a>A função interna <code>find</code> faz a recursão real. Ela recebe dois argumentos: o número atual e uma string que registra como chegamos a esse número. Se encontra uma solução, retorna uma string que mostra como chegar ao alvo. Se não pode encontrar nenhuma solução a partir deste número, retorna <code>null</code>.</p>
+
+<p><a class="p_ident" id="p-ghplc/m+pY" href="#p-ghplc/m+pY" tabindex="-1" role="presentation"></a>Para fazer isso, a função realiza uma de três ações. Se o número atual é o número alvo, o histórico atual é uma forma de alcançar esse alvo, então ele é retornado. Se o número atual é maior que o alvo, não faz sentido explorar mais esse caminho porque tanto somar quanto multiplicar só tornarão o número maior, então retorna <code>null</code>. Finalmente, se ainda estamos abaixo do número alvo, a função tenta ambos os caminhos possíveis que começam do número atual, chamando a si mesma duas vezes, uma para adição e uma para multiplicação. Se a primeira chamada retorna algo que não é <code>null</code>, ele é retornado. Caso contrário, a segunda chamada é retornada, independentemente de produzir uma string ou <code>null</code>.</p>
+
+<p><a class="p_ident" id="p-6oGy7tCagB" href="#p-6oGy7tCagB" tabindex="-1" role="presentation"></a>Para entender melhor como essa função produz o efeito que estamos procurando, vejamos todas as chamadas a <code>find</code> que são feitas ao procurar uma solução para o número 13:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-8Tu68NM9ZU" href="#c-8Tu68NM9ZU" tabindex="-1" role="presentation"></a>find(1, &quot;1&quot;)
+  find(6, &quot;(1 + 5)&quot;)
+    find(11, &quot;((1 + 5) + 5)&quot;)
+      find(16, &quot;(((1 + 5) + 5) + 5)&quot;)
+        grande demais
+      find(33, &quot;(((1 + 5) + 5) * 3)&quot;)
+        grande demais
+    find(18, &quot;((1 + 5) * 3)&quot;)
+      grande demais
+  find(3, &quot;(1 * 3)&quot;)
+    find(8, &quot;((1 * 3) + 5)&quot;)
+      find(13, &quot;(((1 * 3) + 5) + 5)&quot;)
+        encontrado!</pre>
+
+<p><a class="p_ident" id="p-6GEnIJiR97" href="#p-6GEnIJiR97" tabindex="-1" role="presentation"></a>A indentação indica a profundidade da pilha de chamadas. A primeira vez que <code>find</code> é chamada, a função começa chamando a si mesma para explorar a solução que começa com <code>(1 + 5)</code>. Essa chamada recursará ainda mais para explorar <em>toda</em> solução continuada que produza um número menor ou igual ao número alvo. Como não encontra uma que atinja o alvo, retorna <code>null</code> de volta à primeira chamada. Lá o operador <code>??</code> faz com que a chamada que explora <code>(1 * 3)</code> aconteça. Essa busca tem mais sorte — sua primeira chamada recursiva, através de <em>outra</em> chamada recursiva, encontra o número alvo. Essa chamada mais interna retorna uma string, e cada um dos operadores <code>??</code> nas chamadas intermediárias passa essa string adiante, finalmente retornando a solução.</p>
+
+<h2><a class="h_ident" id="h-MY/I1Xzu/7" href="#h-MY/I1Xzu/7" tabindex="-1" role="presentation"></a>Crescendo funções</h2>
+
+<p><a class="p_ident" id="p-BgRA8dali8" href="#p-BgRA8dali8" tabindex="-1" role="presentation"></a>Existem duas formas mais ou menos naturais de funções serem introduzidas em programas.</p>
+
+<p><a class="p_ident" id="p-KKbkTM2xa9" href="#p-KKbkTM2xa9" tabindex="-1" role="presentation"></a>A primeira ocorre quando você se encontra escrevendo código similar múltiplas vezes. Você preferiria não fazer isso, já que ter mais código significa mais espaço para erros se esconderem e mais material para ler para pessoas tentando entender o programa. Então você pega a funcionalidade repetida, encontra um bom nome para ela e a coloca em uma função.</p>
+
+<p><a class="p_ident" id="p-lgNHF2E3FM" href="#p-lgNHF2E3FM" tabindex="-1" role="presentation"></a>A segunda forma é que você descobre que precisa de alguma funcionalidade que ainda não escreveu e que parece merecer sua própria função. Você começa nomeando a função e depois escreve seu corpo. Pode até começar a escrever código que usa a função antes de realmente definir a função em si.</p>
+
+<p><a class="p_ident" id="p-c/0G+xr3HY" href="#p-c/0G+xr3HY" tabindex="-1" role="presentation"></a>Quão difícil é encontrar um bom nome para uma função é uma boa indicação de quão claro é o conceito que você está tentando envolver. Vamos percorrer um exemplo.</p>
+
+<p><a class="p_ident" id="p-YpgdCEdcPb" href="#p-YpgdCEdcPb" tabindex="-1" role="presentation"></a>Queremos escrever um programa que imprime dois números: os números de vacas e galinhas em uma fazenda, com as palavras <code>Cows</code> e <code>Chickens</code> depois deles e zeros preenchidos antes de ambos os números para que sejam sempre três dígitos:</p>
+
+<pre class="snippet" data-language="null" ><a class="c_ident" id="c-NGDR3Ll2Zn" href="#c-NGDR3Ll2Zn" tabindex="-1" role="presentation"></a>007 Cows
+011 Chickens</pre>
+
+<p><a class="p_ident" id="p-Jds1XZq6p/" href="#p-Jds1XZq6p/" tabindex="-1" role="presentation"></a>Isso pede uma função de dois argumentos — o número de vacas e o número de galinhas. Vamos codificar.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-RO+Vw8FSPK" href="#c-RO+Vw8FSPK" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">printFarmInventory</span>(<span class="tok-definition">cows</span>, <span class="tok-definition">chickens</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">cowString</span> = String(cows);
+  <span class="tok-keyword">while</span> (cowString.length &lt; <span class="tok-number">3</span>) {
+    cowString = <span class="tok-string">&quot;0&quot;</span> + cowString;
+  }
+  console.log(<span class="tok-string2">`</span>${cowString}<span class="tok-string2"> Cows`</span>);
+  <span class="tok-keyword">let</span> <span class="tok-definition">chickenString</span> = String(chickens);
+  <span class="tok-keyword">while</span> (chickenString.length &lt; <span class="tok-number">3</span>) {
+    chickenString = <span class="tok-string">&quot;0&quot;</span> + chickenString;
+  }
+  console.log(<span class="tok-string2">`</span>${chickenString}<span class="tok-string2"> Chickens`</span>);
+}
+printFarmInventory(<span class="tok-number">7</span>, <span class="tok-number">11</span>);</pre>
+
+<p><a class="p_ident" id="p-k7+JOMrCCq" href="#p-k7+JOMrCCq" tabindex="-1" role="presentation"></a>Escrever <code>.length</code> após uma expressão de string nos dará o comprimento dessa string. Assim, os loops <code>while</code> continuam adicionando zeros na frente das strings de números até que tenham pelo menos três caracteres de comprimento.</p>
+
+<p><a class="p_ident" id="p-VlPxUHxkZF" href="#p-VlPxUHxkZF" tabindex="-1" role="presentation"></a>Missão cumprida! Mas assim que estamos prestes a enviar o código ao fazendeiro (junto com uma fatura salgada), ela liga e nos diz que também começou a criar porcos, e se não poderíamos por favor estender o software para também imprimir porcos?</p>
+
+<p><a class="p_ident" id="p-ApACuta2b2" href="#p-ApACuta2b2" tabindex="-1" role="presentation"></a>Claro que podemos. Mas bem quando estamos no processo de copiar e colar essas quatro linhas mais uma vez, paramos e reconsideramos. Tem que haver uma forma melhor. Aqui está uma primeira tentativa:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-RHETS/If7p" href="#c-RHETS/If7p" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">printZeroPaddedWithLabel</span>(<span class="tok-definition">number</span>, <span class="tok-definition">label</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">numberString</span> = String(number);
+  <span class="tok-keyword">while</span> (numberString.length &lt; <span class="tok-number">3</span>) {
+    numberString = <span class="tok-string">&quot;0&quot;</span> + numberString;
+  }
+  console.log(<span class="tok-string2">`</span>${numberString}<span class="tok-string2"> </span>${label}<span class="tok-string2">`</span>);
+}
+
+<span class="tok-keyword">function</span> <span class="tok-definition">printFarmInventory</span>(<span class="tok-definition">cows</span>, <span class="tok-definition">chickens</span>, <span class="tok-definition">pigs</span>) {
+  printZeroPaddedWithLabel(cows, <span class="tok-string">&quot;Cows&quot;</span>);
+  printZeroPaddedWithLabel(chickens, <span class="tok-string">&quot;Chickens&quot;</span>);
+  printZeroPaddedWithLabel(pigs, <span class="tok-string">&quot;Pigs&quot;</span>);
+}
+
+printFarmInventory(<span class="tok-number">7</span>, <span class="tok-number">11</span>, <span class="tok-number">3</span>);</pre>
+
+<p><a class="p_ident" id="p-PfHhX4v3XH" href="#p-PfHhX4v3XH" tabindex="-1" role="presentation"></a>Funciona! Mas esse nome, <code>printZeroPaddedWithLabel</code>, é um pouco desajeitado. Ele conflita três coisas — imprimir, preencher com zeros e adicionar um rótulo — em uma única função.</p>
+
+<p><a class="p_ident" id="p-DBLpcVRMfF" href="#p-DBLpcVRMfF" tabindex="-1" role="presentation"></a>Em vez de extrair a parte repetida do nosso programa por inteiro, vamos tentar selecionar um único <em>conceito</em>:</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-L3v+xO5gBH" href="#c-L3v+xO5gBH" tabindex="-1" role="presentation"></a><span class="tok-keyword">function</span> <span class="tok-definition">zeroPad</span>(<span class="tok-definition">number</span>, <span class="tok-definition">width</span>) {
+  <span class="tok-keyword">let</span> <span class="tok-definition">string</span> = String(number);
+  <span class="tok-keyword">while</span> (string.length &lt; width) {
+    string = <span class="tok-string">&quot;0&quot;</span> + string;
+  }
+  <span class="tok-keyword">return</span> string;
+}
+
+<span class="tok-keyword">function</span> <span class="tok-definition">printFarmInventory</span>(<span class="tok-definition">cows</span>, <span class="tok-definition">chickens</span>, <span class="tok-definition">pigs</span>) {
+  console.log(<span class="tok-string2">`</span>${zeroPad(cows, <span class="tok-number">3</span>)}<span class="tok-string2"> Cows`</span>);
+  console.log(<span class="tok-string2">`</span>${zeroPad(chickens, <span class="tok-number">3</span>)}<span class="tok-string2"> Chickens`</span>);
+  console.log(<span class="tok-string2">`</span>${zeroPad(pigs, <span class="tok-number">3</span>)}<span class="tok-string2"> Pigs`</span>);
+}
+
+printFarmInventory(<span class="tok-number">7</span>, <span class="tok-number">16</span>, <span class="tok-number">3</span>);</pre>
+
+<p><a class="p_ident" id="p-mCdSYeQcRf" href="#p-mCdSYeQcRf" tabindex="-1" role="presentation"></a>Uma função com um nome bonito e óbvio como <code>zeroPad</code> torna mais fácil para alguém que lê o código descobrir o que ela faz. Tal função também é útil em mais situações do que apenas esse programa específico. Por exemplo, você poderia usá-la para ajudar a imprimir tabelas de números bem alinhadas.</p>
+
+<p><a class="p_ident" id="p-7HDOpzZC6m" href="#p-7HDOpzZC6m" tabindex="-1" role="presentation"></a>Quão inteligente e versátil <em>deve</em> ser nossa função? Poderíamos escrever qualquer coisa, desde uma função terrivelmente simples que só pode preencher um número com três caracteres de largura até um sistema generalizado e complicado de formatação de números que lida com números fracionários, números negativos, alinhamento de pontos decimais, preenchimento com diferentes caracteres, e assim por diante.</p>
+
+<p><a class="p_ident" id="p-GNEEiWy9rT" href="#p-GNEEiWy9rT" tabindex="-1" role="presentation"></a>Um princípio útil é se abster de adicionar esperteza a menos que você tenha certeza absoluta de que vai precisar. Pode ser tentador escrever “frameworks” gerais para cada pedaço de funcionalidade que encontrar. Resista a esse impulso. Você não fará nenhum trabalho real — estará muito ocupado escrevendo código que nunca usa.</p>
+
+<h2 id="pure"><a class="h_ident" id="h-0vfOKlMTKj" href="#h-0vfOKlMTKj" tabindex="-1" role="presentation"></a>Funções e efeitos colaterais</h2>
+
+<p><a class="p_ident" id="p-3hOMsHFYz3" href="#p-3hOMsHFYz3" tabindex="-1" role="presentation"></a>Funções podem ser grosseiramente divididas naquelas que são chamadas por seus efeitos colaterais e naquelas que são chamadas por seu valor de retorno (embora também seja possível ter efeitos colaterais e retornar um valor).</p>
+
+<p><a class="p_ident" id="p-vlL8P3lIRV" href="#p-vlL8P3lIRV" tabindex="-1" role="presentation"></a>A primeira função auxiliar no exemplo fazenda, <code>printZeroPaddedWithLabel</code>, é chamada por seu efeito colateral: ela imprime uma linha. A segunda versão, <code>zeroPad</code>, é chamada por seu valor de retorno. Não é coincidência que a segunda é útil em mais situações que a primeira. Funções que criam valores são mais fáceis de combinar de novas formas do que funções que diretamente realizam efeitos colaterais.</p>
+
+<p><a class="p_ident" id="p-UlerMfqLjr" href="#p-UlerMfqLjr" tabindex="-1" role="presentation"></a>Uma função <em>pura</em> é um tipo específico de função produtora de valor que não apenas não tem efeitos colaterais mas também não depende de efeitos colaterais de outro código — por exemplo, não lê bindings globais cujo valor pode mudar. Uma função pura tem a propriedade agradável de que, quando chamada com os mesmos argumentos, sempre produz o mesmo valor (e não faz mais nada). Uma chamada a tal função pode ser substituída por seu valor de retorno sem mudar o significado do código. Quando você não tem certeza de que uma função pura está funcionando corretamente, pode testá-la simplesmente chamando-a e saber que se funcionar naquele contexto, funcionará em qualquer contexto. Funções não puras tendem a exigir mais estrutura para serem testadas.</p>
+
+<p><a class="p_ident" id="p-eq8tWGqWx4" href="#p-eq8tWGqWx4" tabindex="-1" role="presentation"></a>Ainda assim, não é preciso se sentir mal ao escrever funções que não são puras. Efeitos colaterais são frequentemente úteis. Não há como escrever uma versão pura de <code>console.log</code>, por exemplo, e <code>console.log</code> é bom de ter. Algumas operações também são mais fáceis de expressar de forma eficiente quando usamos efeitos colaterais.</p>
+
+<h2><a class="h_ident" id="h-741R75mvqx" href="#h-741R75mvqx" tabindex="-1" role="presentation"></a>Resumo</h2>
+
+<p><a class="p_ident" id="p-OuaGLWVU0S" href="#p-OuaGLWVU0S" tabindex="-1" role="presentation"></a>Este capítulo ensinou como escrever suas próprias funções. A palavra-chave <code>function</code>, quando usada como expressão, pode criar um valor de função. Quando usada como instrução, pode ser usada para declarar um binding e dar a ele uma função como valor. Arrow functions são mais uma forma de criar funções.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-NAFFWKy97i" href="#c-NAFFWKy97i" tabindex="-1" role="presentation"></a><span class="tok-comment">// Definir f para conter um valor de função</span>
+<span class="tok-keyword">const</span> <span class="tok-definition">f</span> = <span class="tok-keyword">function</span>(<span class="tok-definition">a</span>) {
+  console.log(a + <span class="tok-number">2</span>);
+};
+
+<span class="tok-comment">// Declarar g como uma função</span>
+<span class="tok-keyword">function</span> <span class="tok-definition">g</span>(<span class="tok-definition">a</span>, <span class="tok-definition">b</span>) {
+  <span class="tok-keyword">return</span> a * b * <span class="tok-number">3.5</span>;
+}
+
+<span class="tok-comment">// Um valor de função menos verboso</span>
+<span class="tok-keyword">let</span> <span class="tok-definition">h</span> = <span class="tok-definition">a</span> =&gt; a % <span class="tok-number">3</span>;</pre>
+
+<p><a class="p_ident" id="p-/HXmkIhGV6" href="#p-/HXmkIhGV6" tabindex="-1" role="presentation"></a>Uma parte fundamental de entender funções é entender escopos. Cada bloco cria um novo escopo. Parâmetros e bindings declarados em um dado escopo são locais e não visíveis de fora. Bindings declarados com <code>var</code> se comportam de forma diferente — acabam no escopo da função mais próxima ou no escopo global.</p>
+
+<p><a class="p_ident" id="p-XMc6uUGf+9" href="#p-XMc6uUGf+9" tabindex="-1" role="presentation"></a>Separar as tarefas que seu programa executa em diferentes funções é útil. Você não terá que se repetir tanto, e funções podem ajudar a organizar um programa agrupando código em partes que fazem coisas específicas.</p>
+
+<h2><a class="h_ident" id="h-0CpJUZuhQJ" href="#h-0CpJUZuhQJ" tabindex="-1" role="presentation"></a>Exercícios</h2>
+
+<h3><a class="i_ident" id="i-mzHH/MSSBA" href="#i-mzHH/MSSBA" tabindex="-1" role="presentation"></a>Mínimo</h3>
+
+<p><a class="p_ident" id="p-kGxrbcm+o1" href="#p-kGxrbcm+o1" tabindex="-1" role="presentation"></a>O <a href="02_program_structure.html#return_values">capítulo anterior</a> introduziu a função padrão <code>Math.min</code> que retorna seu menor argumento. Podemos escrever uma função como essa nós mesmos agora. Defina a função <code>min</code> que recebe dois argumentos e retorna o menor deles.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-56NF/91L+h" href="#c-56NF/91L+h" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span>
+
+console.log(min(<span class="tok-number">0</span>, <span class="tok-number">10</span>));
+<span class="tok-comment">// → 0</span>
+console.log(min(<span class="tok-number">0</span>, -<span class="tok-number">10</span>));
+<span class="tok-comment">// → -10</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-rfQVUwgdk+" href="#p-rfQVUwgdk+" tabindex="-1" role="presentation"></a>Se tiver dificuldade em colocar chaves e parênteses no lugar certo para obter uma definição de função válida, comece copiando um dos exemplos neste capítulo e modificando-o.</p>
+
+<p><a class="p_ident" id="p-6d7+ydBP+g" href="#p-6d7+ydBP+g" tabindex="-1" role="presentation"></a>Uma função pode conter múltiplas instruções <code>return</code>.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-m0RJ+PSORv" href="#i-m0RJ+PSORv" tabindex="-1" role="presentation"></a>Recursão</h3>
+
+<p><a class="p_ident" id="p-ULfnq3KJfM" href="#p-ULfnq3KJfM" tabindex="-1" role="presentation"></a>Vimos que podemos usar <code>%</code> (o operador resto) para testar se um número é par ou ímpar usando <code>% 2</code> para ver se é divisível por dois. Aqui está outra forma de definir se um número inteiro positivo é par ou ímpar:</p>
+
+<ul>
+
+<li>
+
+<p><a class="p_ident" id="p-hzoeI8jmA/" href="#p-hzoeI8jmA/" tabindex="-1" role="presentation"></a>Zero é par.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-RKndXoEVRK" href="#p-RKndXoEVRK" tabindex="-1" role="presentation"></a>Um é ímpar.</p></li>
+
+<li>
+
+<p><a class="p_ident" id="p-47BK7BHWtL" href="#p-47BK7BHWtL" tabindex="-1" role="presentation"></a>Para qualquer outro número <em>N</em>, sua paridade é a mesma de <em>N</em> - 2.</p></li></ul>
+
+<p><a class="p_ident" id="p-DmcCLOTYgj" href="#p-DmcCLOTYgj" tabindex="-1" role="presentation"></a>Defina uma função recursiva <code>isEven</code> correspondendo a essa descrição. A função deve aceitar um único parâmetro (um número inteiro positivo) e retornar um booleano.</p>
+
+<p><a class="p_ident" id="p-mjfN0qQYXn" href="#p-mjfN0qQYXn" tabindex="-1" role="presentation"></a>Teste-a com 50 e 75. Veja como ela se comporta com -1. Por quê? Você consegue pensar em uma forma de corrigir isso?</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-2W+Zk6CH2Y" href="#c-2W+Zk6CH2Y" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span>
+
+console.log(isEven(<span class="tok-number">50</span>));
+<span class="tok-comment">// → true</span>
+console.log(isEven(<span class="tok-number">75</span>));
+<span class="tok-comment">// → false</span>
+console.log(isEven(-<span class="tok-number">1</span>));
+<span class="tok-comment">// → ??</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-KlAwBJc//n" href="#p-KlAwBJc//n" tabindex="-1" role="presentation"></a>Sua função provavelmente se parecerá um pouco com a função interna <code>find</code> no <a href="03_functions.html#recursive_puzzle">exemplo</a> recursivo <code>findSolution</code> neste capítulo, com uma cadeia <code>if</code>/<code>else if</code>/<code>else</code> que testa qual dos três casos se aplica. O <code>else</code> final, correspondendo ao terceiro caso, faz a chamada recursiva. Cada um dos ramos deve conter uma instrução <code>return</code> ou de alguma outra forma garantir que um valor específico seja retornado.</p>
+
+<p><a class="p_ident" id="p-+IAQs5FC1v" href="#p-+IAQs5FC1v" tabindex="-1" role="presentation"></a>Quando receber um número negativo, a função recursará repetidamente, passando a si mesma um número cada vez mais negativo, ficando assim cada vez mais longe de retornar um resultado. Ela eventualmente ficará sem espaço na pilha e abortará.</p>
+
+</div></details>
+
+<h3><a class="i_ident" id="i-z38AHDwu64" href="#i-z38AHDwu64" tabindex="-1" role="presentation"></a>Contando feijões</h3>
+
+<p><a class="p_ident" id="p-PilNqlIc06" href="#p-PilNqlIc06" tabindex="-1" role="presentation"></a>Você pode obter o <em>N</em>-ésimo caractere, ou letra, de uma string escrevendo <code>[N]</code> após a string (por exemplo, <code>string[2]</code>). O valor resultante será uma string contendo apenas um caractere (por exemplo, <code>&quot;b&quot;</code>). O primeiro caractere está na posição 0, o que faz com que o último seja encontrado na posição <code>string.<wbr>length - 1</code>. Em outras palavras, uma string de dois caracteres tem comprimento 2, e seus caracteres estão nas posições 0 e 1.</p>
+
+<p><a class="p_ident" id="p-ENTbXSl106" href="#p-ENTbXSl106" tabindex="-1" role="presentation"></a>Escreva uma função chamada <code>countBs</code> que recebe uma string como seu único argumento e retorna um número que indica quantos caracteres B maiúsculos existem na string.</p>
+
+<p><a class="p_ident" id="p-FXOSVXwHoZ" href="#p-FXOSVXwHoZ" tabindex="-1" role="presentation"></a>Em seguida, escreva uma função chamada <code>countChar</code> que se comporta como <code>countBs</code>, exceto que recebe um segundo argumento que indica o caractere que deve ser contado (em vez de contar apenas caracteres B maiúsculos). Reescreva <code>countBs</code> para fazer uso dessa nova função.</p>
+
+<pre tabindex="0" class="snippet" data-language="javascript" ><a class="c_ident" id="c-e4QHy9fG5N" href="#c-e4QHy9fG5N" tabindex="-1" role="presentation"></a><span class="tok-comment">// Seu código aqui.</span>
+
+console.log(countBs(<span class="tok-string">&quot;BOB&quot;</span>));
+<span class="tok-comment">// → 2</span>
+console.log(countChar(<span class="tok-string">&quot;kakkerlak&quot;</span>, <span class="tok-string">&quot;k&quot;</span>));
+<span class="tok-comment">// → 4</span></pre>
+
+<details class="solution"><summary>Display hints...</summary><div class="solution-text">
+
+<p><a class="p_ident" id="p-RBuC9ih9EC" href="#p-RBuC9ih9EC" tabindex="-1" role="presentation"></a>Sua função precisará de um loop que olhe cada caractere na string. Pode executar um índice de zero até um abaixo do comprimento (<code>&lt; string.<wbr>length</code>). Se o caractere na posição atual for o mesmo que o que a função está procurando, ela adiciona 1 a uma variável contadora. Uma vez que o loop tenha terminado, o contador pode ser retornado.</p>
+
+<p><a class="p_ident" id="p-BZJJ6EJjO6" href="#p-BZJJ6EJjO6" tabindex="-1" role="presentation"></a>Tome cuidado para tornar todos os bindings usados na função <em>locais</em> à função, declarando-os adequadamente com a palavra-chave <code>let</code> ou <code>const</code>.</p>
+
+</div></details><nav><a href="02_program_structure.html" title="capítulo anterior" aria-label="capítulo anterior">◂</a> <a href="index.html" title="capa" aria-label="capa">●</a> <a href="04_data.html" title="próximo capítulo" aria-label="próximo capítulo">▸</a>&nbsp;<button class=help title="ajuda" aria-label="ajuda"><strong>?</strong></button>
+</nav>
+</article>
+
+<script src="ejs.js"></script>

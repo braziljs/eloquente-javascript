@@ -11,7 +11,7 @@
   "dependencies": {
     "rollup": "^3.28.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.0",
     "acorn": "^8.0.0",
     "acorn-walk": "^8.0.0",
     "@codemirror/view": "^6.20.0",

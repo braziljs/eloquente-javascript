@@ -46,6 +46,8 @@ Tradução em Português Brasileiro do livro [Eloquent JavaScript](https://eloqu
 - [Versão original em inglês](https://eloquentjavascript.net/)
 - Licenciado sob [Creative Commons BY-NC 3.0](http://creativecommons.org/licenses/by-nc/3.0/)
 
+**Sobre esta tradução:** a 4ª edição foi traduzida com auxílio de inteligência artificial e está aberta a revisão da comunidade. Contribuições, correções e melhorias via PRs são bem-vindas e essenciais para a qualidade contínua do texto.
+
 ### Colaboradores
 
 [Lista completa no GitHub](https://github.com/braziljs/eloquente-javascript/graphs/contributors) — tradução, revisão e infraestrutura ao longo dos anos pela Comunidade BrazilJS. Obrigado a todas e todos.
